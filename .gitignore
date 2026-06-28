@@ -182,3 +182,9 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Project Koios harness artifacts
+.archon-runs/
+opencode/sandbox/
+opencode/sessions/
+goose/sessions/

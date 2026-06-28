@@ -16,7 +16,12 @@ Rules in `rules/` are incorporated by reference:
 - `rules/build.md` — implementation flow
 - `rules/validation.md` — gates to run before finishing
 - `rules/specification_gate.md` — consult vs execute
+- `rules/handoff.md` — what an implementation-ready handoff must contain
 - `rules/tool_policy.md` — permissions
+
+## Checklists
+
+- `checklists/multi-repo-execution-readiness.md` — execution checklist for the approved multi-repo ownership and extraction plan
 
 ## Setup per repo
 
