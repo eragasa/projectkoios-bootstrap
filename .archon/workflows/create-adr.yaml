@@ -5,12 +5,11 @@ provider: codex
 nodes:
   - id: generate
     prompt: |
-      Generate an Architecture Decision Record (ADR) file.
+      Generate an Architecture Decision Record (ADR) file and save it.
 
       Context from the user: $ARGUMENTS
 
       Follow the format of existing ADRs in the `architecture/` directory.
-      The filename should be `adr.<YYYYMMDD>.md` — use today's date.
 
       Required sections:
       - Title (# adr.<YYYYMMDD>: <title>)
@@ -19,18 +18,11 @@ nodes:
       - Decision (what was decided)
       - Rationale (why this option over others)
       - Consequences (what this means going forward)
+      - Alternatives considered (other options and why they were rejected)
 
-      Also include an "Alternatives considered" section if relevant.
+      Determine the filename as `adr.<YYYYMMDD>.md` using today's date and a
+      short slug from the title.
 
-      Return the complete file content as your output — no extra commentary.
-    allowed_tools: []
-    output_format:
-      type: object
-      properties:
-        filename:
-          type: string
-          description: The ADR filename (e.g. adr.20260630.md)
-        content:
-          type: string
-          description: The full markdown content of the ADR
-      required: [filename, content]
+      Write the file to the `architecture/` directory.
+
+      Confirm the filename and path once written.
