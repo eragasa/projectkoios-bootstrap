@@ -1,0 +1,37 @@
+name: create-adr
+description: Generate a new Architecture Decision Record following the existing ADR format
+provider: claude
+model: sonnet
+
+nodes:
+  - id: generate
+    prompt: |
+      Generate an Architecture Decision Record (ADR) file.
+
+      Context from the user: $ARGUMENTS
+
+      Follow the format of existing ADRs in the `architecture/` directory.
+      The filename should be `adr.<YYYYMMDD>.md` — use today's date.
+
+      Required sections:
+      - Title (# adr.<YYYYMMDD>: <title>)
+      - Status (Accepted / Proposed / Deprecated)
+      - Context (why this decision is needed)
+      - Decision (what was decided)
+      - Rationale (why this option over others)
+      - Consequences (what this means going forward)
+
+      Also include an "Alternatives considered" section if relevant.
+
+      Return the complete file content as your output — no extra commentary.
+    allowed_tools: []
+    output_format:
+      type: object
+      properties:
+        filename:
+          type: string
+          description: The ADR filename (e.g. adr.20260630.md)
+        content:
+          type: string
+          description: The full markdown content of the ADR
+      required: [filename, content]
