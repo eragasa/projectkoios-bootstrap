@@ -1,0 +1,61 @@
+# Handoff: Multi-repo extraction — Phases 2–5 completion
+
+## Objective
+Execute the approved multi-repo ownership plan: extract `search/indexing`, `api/runtime`, and `vault/obsidian` packages from the `projectkoios` mothership into their component repos (`projectkoios-search`, `projectkoios-api`, `projectkoios-obsidian`).
+
+## In-scope
+- Move `projectkoios.search/`, `projectkoios.indexing/` → `projectkoios-search`
+- Move `projectkoios.api/`, `projectkoios.runtime/` → `projectkoios-api`
+- Move `projectkoios.vault/` → `projectkoios-obsidian` (renamed to `projectkoios.obsidian/`)
+- Extract `VaultConfiguration` into `obsidian/config.py` to break the `obsidian → api` cycle
+- Strip mothership of all runtime deps (only `chunking/` and `repositories/` remain, with `dependencies = []`)
+- Add `py.typed` markers + mypy namespace config to all 4 repos
+- Update `maps/packages.md`
+- Validate: pytest, ruff, mypy, editable installs
+
+## Non-goals
+- No `projectkoios-ingestion`, `projectkoios-references`, `projectkoios-workflow`, or `projectkoios-agent` extraction (not in scope of this handoff)
+- No `projectkoios.vault` → `projectkoios.obsidian` compatibility shim (direct migration, no callers outside codebase)
+- No CI/CD pipelines
+
+## Files changed
+
+### `projectkoios` (mothership) — `5eeee9a`
+**31 files**: `pyproject.toml` (+mypy config), `py.typed`, `docs/adr.20260629.namespace-and-ingestion-extraction.md`; deleted 24 files (api, indexing, ingestion, runtime, search, vault and their tests)
+
+### `projectkoios-search` — `558d266`
+**9 files**: `pyproject.toml` (+mypy config), `py.typed`, `search/models.py`, `search/protocols.py`, `search/service.py`, `indexing/__init__.py`, `indexing/in_memory_chunk_index.py`, `tests/.../test__InMemoryChunkIndex.py`
+
+### `projectkoios-api` — `efb10ea`
+**15 files**: `pyproject.toml` (+mypy config + fastapi/uvicorn/pydantic deps), `py.typed`, `api/app.py`, `api/config.py`, `api/main.py`, `api/models.py`, `api/routers/{core,search}.py`, `runtime/services.py`, 4 test files
+
+### `projectkoios-obsidian` — `0c3d246`
+**4 files**: `pyproject.toml` (+mypy config), `py.typed`, `obsidian/config.py`, `obsidian/service.py`
+
+### `projectkoios-bootstrap` — `df66ae9`
+**1 file**: `maps/packages.md` (updated ownership table)
+
+## Validation results
+
+| Repo | pytest | ruff | mypy |
+|------|--------|------|------|
+| projectkoios | 42 passed | ✅ | ✅ 10 files |
+| projectkoios-search | 9 passed | ✅ | ✅ 6 files |
+| projectkoios-api | 9 passed | ✅ | ✅ 10 files |
+| projectkoios-obsidian | 0 tests (none yet) | ✅ | ✅ 3 files |
+
+All editable installs resolve cross-repo imports.
+
+## Deviations from plan
+- `projectkoios` added as a pip dependency in `projectkoios-search`/`projectkoios-api` `pyproject.toml` was attempted but reverted — pip can't resolve local sibling packages from PyPI. Sibling packages must be installed manually (`pip install -e ../projectkoios`). mypy paths use relative `mypy_path` instead.
+- `dependencies = ["projectkoios"]` removed from both repos.
+
+## Architecture questions
+- Should `projectkoios` (mothership) become a published package for automatic dependency resolution? Currently it has `dependencies = []` and must be installed via editable path.
+- The `projectkoios-ingestion` repo exists but was not touched — verify its `pyproject.toml` has `namespaces = true`.
+
+## Follow-up
+1. Add `py.typed` + mypy config to `projectkoios-ingestion`, `projectkoios-references`, `projectkoios-workflow`, `projectkoios-agent` when they receive extracted code
+2. Consider adding `graphify-out/` to `.gitignore` across all repos
+3. Write obsidian package tests
+4. Consider a `requirements.txt` or convenience script to `pip install -e` all sibling packages at once
