@@ -1,0 +1,2 @@
+# Archon workflow: Create an ADR
+# Usage: archon run create-adr --title="..."
