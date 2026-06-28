@@ -1,7 +1,6 @@
 name: create-adr
 description: Generate a new Architecture Decision Record following the existing ADR format
 provider: codex
-model: sonnet
 
 nodes:
   - id: generate

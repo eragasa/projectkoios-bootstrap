@@ -1,7 +1,6 @@
 name: plan-feature
 description: Plan a new feature — scope, approach, implementation steps, and open questions
 provider: codex
-model: sonnet
 
 nodes:
   - id: gather-context
