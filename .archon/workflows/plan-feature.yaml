@@ -1,6 +1,6 @@
 name: plan-feature
 description: Plan a new feature — scope, approach, implementation steps, and open questions
-provider: claude
+provider: codex
 model: sonnet
 
 nodes:
