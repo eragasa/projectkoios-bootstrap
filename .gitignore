@@ -188,3 +188,6 @@ __marimo__/
 opencode/sandbox/
 opencode/sessions/
 goose/sessions/
+
+# Graphify AST cache (regenerated on extract)
+graphify-out/cache/ast/

@@ -21,3 +21,7 @@ See `../maps/` for the workspace layout:
 - Read `../maps/vault_paths.md` before vault operations
 - Do not write to the vault unless the user requests artifact generation or export
 - Link notes using `[[wikilink]]` syntax
+
+## Handoff support
+
+Use `prompts/research-support.md` when Archon or a user needs research packaged for planning or implementation handoff.

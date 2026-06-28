@@ -1,4 +1,4 @@
-# adr.20260629: Use Codex as the AI assistant for Archon workflows
+# adr.20260629: Use Pi as the AI assistant for Archon workflows
 
 ## Status
 
@@ -19,51 +19,51 @@ judgment, repository awareness, and file-editing behavior.
 
 ## Decision
 
-Use Codex as the AI assistant for Archon workflows in Project Koios.
+Use Pi as the AI assistant for Archon workflows in Project Koios.
 
 Archon remains responsible for workflow orchestration, task routing, worktree
-management, and repeatable process structure. Codex is responsible for
+management, and repeatable process structure. Pi is responsible for
 performing the delegated engineering work inside those workflows, including
 repository inspection, ADR drafting, implementation planning, file edits, and
 validation where applicable.
 
 ## Rationale
 
-**Strong fit for repository-aware engineering tasks.** Codex is designed to
+**Strong fit for repository-aware engineering tasks.** Pi is designed to
 inspect a codebase, follow existing conventions, make scoped edits, and verify
 the result. That fits the architecture and planning workflows assigned to
 Archon.
 
 **Clear separation of responsibilities.** Archon coordinates the workflow;
-Codex performs the work. Keeping orchestration and execution separate avoids
+Pi performs the work. Keeping orchestration and execution separate avoids
 overloading Archon with assistant-specific behavior while still giving Project
 Koios a consistent default execution agent.
 
-**Consistent ADR and planning outputs.** Codex can read the existing
+**Consistent ADR and planning outputs.** Pi can read the existing
 `architecture/` directory before writing new records, which helps future ADRs
 match the repository's established structure and tone.
 
 **Works within isolated worktrees.** Archon-created worktrees provide a clean
-execution boundary for delegated tasks. Codex can operate inside that boundary
+execution boundary for delegated tasks. Pi can operate inside that boundary
 without requiring Project Koios component repositories to depend on the
 bootstrap harness.
 
 ## Consequences
 
-Archon workflow definitions should assume Codex is the default assistant unless
+Archon workflow definitions should assume Pi is the default assistant unless
 a workflow explicitly declares another agent.
 
-Prompts under `archon/` should be written for Codex-style execution: inspect
+Prompts under `archon/` should be written for Pi-style execution: inspect
 the repository first, preserve existing conventions, make concrete file
 changes when requested, and report the resulting paths and verification.
 
 Architecture workflows should continue to store durable decisions in
-`architecture/`, while Codex-generated outputs should remain scoped to the
+`architecture/`, while Pi-generated outputs should remain scoped to the
 worktree and task requested by Archon.
 
 If a workflow requires capabilities better served by another harness, such as
 runtime coding sessions in opencode or knowledge-management tasks in Goose, it
-should route the work to that harness instead of forcing it through Codex under
+should route the work to that harness instead of forcing it through Pi under
 Archon.
 
 ## Alternatives considered
@@ -73,6 +73,12 @@ Archon.
 Rejected. Leaving the assistant unspecified makes workflow results dependent
 on ad hoc operator choices and reduces consistency across ADRs, plans, and
 architecture reviews.
+
+### Use Codex as the assistant for Archon workflows
+
+Rejected. Codex remains a viable workflow provider, but Project Koios now
+standardizes on Pi for its default Archon execution path to keep assistant
+selection aligned with current repository practice.
 
 ### Use opencode as the assistant for Archon workflows
 

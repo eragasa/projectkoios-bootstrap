@@ -101,11 +101,11 @@ archon workflow run <workflow-name> --branch <branch-name> "<message>"
 
 **CRITICAL RULES**:
 
-1. **Prefer detached runs** — In Pi, long-running Archon workflows should usually be started with `--detach`, then monitored with `archon workflow runs`, `archon workflow get <run-id> --json`, or the `manage-run` skill.
+1. **Always run in background** — Archon workflows are long-running. Always invoke the Bash tool with `run_in_background: true`. Use `/tasks` or the TaskOutput tool to check on progress.
 
 2. **Always use worktree isolation** — Use the `--branch` flag unless the user explicitly requests otherwise. This creates an isolated environment so Archon works without affecting the main branch.
 
-3. **One workflow per invocation** — Start each workflow separately. For concurrent work, launch separate detached runs.
+3. **One workflow per shell** — Each workflow blocks its shell. Run multiple workflows as separate background tasks.
 
 ### Isolation Modes
 
@@ -145,13 +145,13 @@ If no specific workflow matches, use `archon-assist` as the fallback. The live w
 
 ### Multi-Issue Invocation
 
-When the user mentions multiple issues, PRs, or tasks — start each as a **separate detached run**:
+When the user mentions multiple issues, PRs, or tasks — run each as a **separate background task**:
 
 ```bash
 # Each gets its own worktree — they won't conflict
-archon workflow run archon-fix-github-issue --branch fix/issue-10 "Fix issue #10" --detach
-archon workflow run archon-fix-github-issue --branch fix/issue-11 "Fix issue #11" --detach
-archon workflow run archon-fix-github-issue --branch fix/issue-12 "Fix issue #12" --detach
+archon workflow run archon-fix-github-issue --branch fix/issue-10 "Fix issue #10"
+archon workflow run archon-fix-github-issue --branch fix/issue-11 "Fix issue #11"
+archon workflow run archon-fix-github-issue --branch fix/issue-12 "Fix issue #12"
 ```
 
 Never combine multiple issues into a single command.
@@ -321,12 +321,12 @@ For details: Read `references/dag-advanced.md`
 
 **User**: "Use Archon to fix issue #42"
 ```bash
-archon workflow run archon-fix-github-issue --branch fix/issue-42 "Fix issue #42" --detach
+archon workflow run archon-fix-github-issue --branch fix/issue-42 "Fix issue #42"
 ```
 
 **User**: "Have Archon review PR #15"
 ```bash
-archon workflow run archon-comprehensive-pr-review --branch review/pr-15 "Review PR #15" --detach
+archon workflow run archon-comprehensive-pr-review --branch review/pr-15 "Review PR #15"
 ```
 
 **User**: "Create a workflow that reviews code and runs tests"

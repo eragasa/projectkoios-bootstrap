@@ -1,16 +1,16 @@
 # Graph Report - projectkoios-bootstrap  (2026-06-29)
 
 ## Corpus Check
-- 74 files · ~62,991 words
+- 111 files · ~99,178 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 824 nodes · 757 edges · 67 communities (52 shown, 15 thin omitted)
+- 1268 nodes · 1168 edges · 100 communities (82 shown, 18 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `aec6b444`
+- Built from commit: `b036a249`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -81,18 +81,51 @@
 - [[_COMMUNITY_Community 64|Community 64]]
 - [[_COMMUNITY_Community 65|Community 65]]
 - [[_COMMUNITY_Community 66|Community 66]]
+- [[_COMMUNITY_Community 67|Community 67]]
+- [[_COMMUNITY_Community 68|Community 68]]
+- [[_COMMUNITY_Community 69|Community 69]]
+- [[_COMMUNITY_Community 70|Community 70]]
+- [[_COMMUNITY_Community 71|Community 71]]
+- [[_COMMUNITY_Community 72|Community 72]]
+- [[_COMMUNITY_Community 73|Community 73]]
+- [[_COMMUNITY_Community 74|Community 74]]
+- [[_COMMUNITY_Community 75|Community 75]]
+- [[_COMMUNITY_Community 76|Community 76]]
+- [[_COMMUNITY_Community 77|Community 77]]
+- [[_COMMUNITY_Community 78|Community 78]]
+- [[_COMMUNITY_Community 79|Community 79]]
+- [[_COMMUNITY_Community 80|Community 80]]
+- [[_COMMUNITY_Community 81|Community 81]]
+- [[_COMMUNITY_Community 82|Community 82]]
+- [[_COMMUNITY_Community 83|Community 83]]
+- [[_COMMUNITY_Community 84|Community 84]]
+- [[_COMMUNITY_Community 85|Community 85]]
+- [[_COMMUNITY_Community 86|Community 86]]
+- [[_COMMUNITY_Community 87|Community 87]]
+- [[_COMMUNITY_Community 88|Community 88]]
+- [[_COMMUNITY_Community 89|Community 89]]
+- [[_COMMUNITY_Community 90|Community 90]]
+- [[_COMMUNITY_Community 91|Community 91]]
+- [[_COMMUNITY_Community 92|Community 92]]
+- [[_COMMUNITY_Community 93|Community 93]]
+- [[_COMMUNITY_Community 94|Community 94]]
+- [[_COMMUNITY_Community 95|Community 95]]
+- [[_COMMUNITY_Community 96|Community 96]]
+- [[_COMMUNITY_Community 97|Community 97]]
+- [[_COMMUNITY_Community 98|Community 98]]
+- [[_COMMUNITY_Community 99|Community 99]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `Workflow Authoring` - 18 edges
 2. `Workflow Authoring` - 18 edges
-3. `Archon Setup Wizard` - 14 edges
+3. `Workflow Authoring` - 18 edges
 4. `Archon Setup Wizard` - 14 edges
-5. `Workflow Commands` - 13 edges
-6. `Workflow Commands` - 13 edges
-7. `What You Must Do When Invoked` - 12 edges
-8. `Authoring Command Files` - 12 edges
-9. `Authoring Command Files` - 12 edges
-10. `/graphify` - 10 edges
+5. `Archon Setup Wizard` - 14 edges
+6. `Archon Setup Wizard` - 14 edges
+7. `Workflow Commands` - 13 edges
+8. `Workflow Commands` - 13 edges
+9. `Workflow Commands` - 13 edges
+10. `Authoring Command Files` - 12 edges
 
 ## Surprising Connections (you probably didn't know these)
 - None detected - all connections are within the same source files.
@@ -100,7 +133,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (67 total, 15 thin omitted)
+## Communities (100 total, 18 thin omitted)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.04
@@ -199,8 +232,8 @@ Cohesion: 0.14
 Nodes (13): `archon workflow abandon <run-id> [--json]`, `archon workflow approve <run-id> [comment] [--json]`, `archon workflow get <run-id> [--verbose] [--json]`, `archon workflow reject <run-id> [reason] [--json]`, `archon workflow resume <run-id> [--json]`, `archon workflow run <workflow> "<message>" --detach [--json]`, `archon workflow runs [--all] [--status <s>] [--limit <n>] [--json]`, `archon workflow status [--verbose] [--json]` (+5 more)
 
 ### Community 24 - "Community 24"
-Cohesion: 0.17
-Nodes (11): adr.20260629: Use Codex as the AI assistant for Archon workflows, Alternatives considered, Consequences, Context, Decision, Rationale, Select the assistant separately for every workflow, Status (+3 more)
+Cohesion: 0.15
+Nodes (12): adr.20260629: Use Pi as the AI assistant for Archon workflows, Alternatives considered, Consequences, Context, Decision, Rationale, Select the assistant separately for every workflow, Status (+4 more)
 
 ### Community 25 - "Community 25"
 Cohesion: 0.17
@@ -279,16 +312,16 @@ Cohesion: 0.29
 Nodes (6): 1. Install Dependencies, 2. Link the CLI Globally, 3. Verify Installation, 4. Authenticate Claude, CLI Setup Guide, Notes
 
 ### Community 44 - "Community 44"
-Cohesion: 0.29
-Nodes (6): AGENTS.md — opencode harness, Common commands, Conventions, Rules, Setup per repo, Workspace layout
+Cohesion: 0.25
+Nodes (7): AGENTS.md — opencode harness, Checklists, Common commands, Conventions, Rules, Setup per repo, Workspace layout
 
 ### Community 45 - "Community 45"
 Cohesion: 0.33
 Nodes (5): For /graphify explain, For /graphify path, graphify reference: query, path, explain, Step 0 — Constrained query expansion (REQUIRED before traversal), Step 1 — Traversal
 
 ### Community 46 - "Community 46"
-Cohesion: 0.40
-Nodes (4): Domain, Goose — Project Koios knowledge management agent, Maps, Vault rules
+Cohesion: 0.33
+Nodes (5): Domain, Goose — Project Koios knowledge management agent, Handoff support, Maps, Vault rules
 
 ### Community 47 - "Community 47"
 Cohesion: 0.50
@@ -306,16 +339,136 @@ Nodes (3): For git commit hook, For native CLAUDE.md integration, graphify refer
 Cohesion: 0.50
 Nodes (3): For --cluster-only, For --update (incremental re-extraction), graphify reference: incremental update and cluster-only
 
+### Community 67 - "Community 67"
+Cohesion: 0.08
+Nodes (24): For /graphify add and --watch, For /graphify query, For the commit hook and native CLAUDE.md integration, For --update and --cluster-only, /graphify, Honesty Rules, Interpreter guard for subcommands, Part A - Structural extraction for code files (+16 more)
+
+### Community 68 - "Community 68"
+Cohesion: 0.22
+Nodes (8): graphify reference: extra exports and benchmark, Step 6b - Wiki (only if --wiki flag), Step 7 - Neo4j export (only if --neo4j or --neo4j-push flag), Step 7a - FalkorDB export (only if --falkordb or --falkordb-push flag), Step 7b - SVG export (only if --svg flag), Step 7c - GraphML export (only if --graphml flag), Step 7d - MCP server (only if --mcp flag), Step 8 - Token reduction benchmark (only if total_words > 5000)
+
+### Community 69 - "Community 69"
+Cohesion: 0.33
+Nodes (5): For /graphify explain, For /graphify path, graphify reference: query, path, explain, Step 0 — Constrained query expansion (REQUIRED before traversal), Step 1 — Traversal
+
+### Community 70 - "Community 70"
+Cohesion: 0.50
+Nodes (3): For /graphify add, For --watch, graphify reference: add a URL and watch a folder
+
+### Community 71 - "Community 71"
+Cohesion: 0.50
+Nodes (3): For git commit hook, For native CLAUDE.md integration, graphify reference: commit hook and native CLAUDE.md integration
+
+### Community 72 - "Community 72"
+Cohesion: 0.50
+Nodes (3): For --cluster-only, For --update (incremental re-extraction), graphify reference: incremental update and cluster-only
+
+### Community 76 - "Community 76"
+Cohesion: 0.13
+Nodes (14): Archon → Goose, Archon → opencode, Goose → Archon, Guardrails, Handoff artifacts, Harness boundaries, opencode → Archon, Ownership (+6 more)
+
+### Community 77 - "Community 77"
+Cohesion: 0.33
+Nodes (5): Acceptable inputs, Completion report back to Archon or user, Handoff contract, If the handoff is incomplete, Required from Archon plans
+
+### Community 78 - "Community 78"
+Cohesion: 0.40
+Nodes (4): Harness definitions, Harness routing, Output requirement, Rules
+
+### Community 79 - "Community 79"
+Cohesion: 0.40
+Nodes (4): Deliverables, Do not do, Focus, Research support
+
+### Community 80 - "Community 80"
+Cohesion: 0.04
+Nodes (48): Approval Nodes, Approve and Reject Commands, Bash Node, Cancel Nodes, Claude SDK Advanced Options, Codex-Specific Options, Command Node, Complete Example (+40 more)
+
+### Community 81 - "Community 81"
+Cohesion: 0.07
+Nodes (26): 1. Create a Discord Application, 2. Create a Bot, 3. Generate Invite URL, 4. Get Your User ID, 5. Add to `.env` (in the archon repo root), 6. Start the Server, 7. Test, Discord Bot Setup Guide (+18 more)
+
+### Community 82 - "Community 82"
+Cohesion: 0.07
+Nodes (28): `archon chat <message>`, Archon CLI Command Reference, `archon complete <branch> [flags]`, `archon continue <branch> [flags] [message]`, `archon isolation cleanup [days]`, `archon isolation list`, `archon setup [--spawn]`, `archon validate commands [name]` (+20 more)
+
+### Community 83 - "Community 83"
+Cohesion: 0.07
+Nodes (27): Advanced Features: Hooks, MCP, Skills, Retry, Automatic Tool Wildcards, Claude vs Codex: How Each Gets MCP and Skills, Combining Skills with MCP, Common Patterns, Config File Format, Environment Variable Expansion, Error Classification (+19 more)
+
+### Community 84 - "Community 84"
+Cohesion: 0.09
+Nodes (22): 4a: Launch the Setup Wizard, 4b: Wait for User Confirmation, 4c: Verify Configuration, 4d: Run Database Migrations (PostgreSQL only), Archon Setup Wizard, Config Files (YAML), Configuration Reference, Context (+14 more)
+
+### Community 85 - "Community 85"
+Cohesion: 0.09
+Nodes (21): 1. Use deterministic nodes for deterministic work, 2. Use `output_format` for every node whose output downstream `when:` reads, 3. `trigger_rule: none_failed_min_one_success` after conditional branches, 4. `context: fresh` requires artifacts for state passing, 5. Cheap models for glue, strong models for substance, 6. Write the workflow description for routing, 7. Validate before shipping, 8. Design the artifact chain before writing command files (+13 more)
+
+### Community 86 - "Community 86"
+Cohesion: 0.09
+Nodes (21): Advanced Features (Command/Prompt Nodes, Claude Only), Archon CLI Skill, Authoring Quick Start, Available Workflows (live), Core Command, Creating a Command File, Example Files, Example Interactions (+13 more)
+
+### Community 87 - "Community 87"
+Cohesion: 0.12
+Nodes (16): Archon Configuration Guide, Environment Variable Overrides, For Global Config (~/.archon/config.yaml), For Repo Config (<repo>/.archon/config.yaml), Global Config (~/.archon/config.yaml), Global Config Options, Precedence Order (highest wins), Reference: All Configuration Options (+8 more)
+
+### Community 88 - "Community 88"
+Cohesion: 0.14
+Nodes (13): Anti-Patterns, Artifact Conventions, Authoring Command Files, Complex Command Example, Discovery and Priority, File Format, File Location, Frontmatter Fields (+5 more)
+
+### Community 89 - "Community 89"
+Cohesion: 0.14
+Nodes (13): Approval gate not appearing on web UI, Artifact Locations, "Claude Code not found" / "Codex CLI binary not found", Common Failure Modes, Escalation: when nothing makes sense, Log Locations, `MCP server connection failed: <plugin>` noise in chat, "No base branch could be resolved" (+5 more)
+
+### Community 90 - "Community 90"
+Cohesion: 0.14
+Nodes (13): `archon workflow abandon <run-id> [--json]`, `archon workflow approve <run-id> [comment] [--json]`, `archon workflow get <run-id> [--verbose] [--json]`, `archon workflow reject <run-id> [reason] [--json]`, `archon workflow resume <run-id> [--json]`, `archon workflow run <workflow> "<message>" --detach [--json]`, `archon workflow runs [--all] [--status <s>] [--limit <n>] [--json]`, `archon workflow status [--verbose] [--json]` (+5 more)
+
+### Community 91 - "Community 91"
+Cohesion: 0.17
+Nodes (11): 1. Invoke the workflow, 2. Monitor for pause, 3. Fetch and relay the output — BE TRANSPARENT, 4. Collect user response and resume, 5. Repeat until workflow completes, Approval Commands, Identifying Interactive Workflows, Interactive Workflow Guide (+3 more)
+
+### Community 92 - "Community 92"
+Cohesion: 0.18
+Nodes (10): 0. Check Existing .env Values, 1. Set Up a Public URL (ngrok), 2. Start ngrok, 3. Generate a Webhook Secret, 4. Collect GitHub Token and Username, 5. Write to `.env`, 6. Configure the Repository Webhook, 7. Verify the Webhook (+2 more)
+
+### Community 93 - "Community 93"
+Cohesion: 0.18
+Nodes (10): Namespace packaging, Opencode checklist — multi-repo execution readiness, Phase 1 — execution-readiness normalization, Phase 2 — search extraction, Phase 3 — API extraction, Phase 4 — obsidian/vault extraction, Phase 5 — mothership cleanup, Preconditions (+2 more)
+
+### Community 94 - "Community 94"
+Cohesion: 0.20
+Nodes (9): Directory Structure, .gitignore Considerations, Global Configuration, How Bundled Defaults Work, Initializing Archon in a Repository, Minimal config.yaml, Per-Project Env Injection, Three-Path Env Model (+1 more)
+
+### Community 95 - "Community 95"
+Cohesion: 0.20
+Nodes (9): Approve or reject a paused run (two steps), How output works, Manage Archon Runs, Monitor a run to completion, Patterns, Recent runs (live), Reference, Start work without blocking (+1 more)
+
+### Community 96 - "Community 96"
+Cohesion: 0.22
+Nodes (8): Command Name, PHASE_1_CHECKPOINT, Phase 1: LOAD, PHASE_2_CHECKPOINT, Phase 2: EXECUTE, PHASE_3_CHECKPOINT, Phase 3: GENERATE, Phase 4: REPORT
+
+### Community 97 - "Community 97"
+Cohesion: 0.22
+Nodes (8): Cross-References to Detailed Guides, Inline `agents:` (Task-tool sub-agents), Master Matrix: Parameters × Node Types, Parameter Matrix (Quick Reference), Parameter Selection by Intent, Providers at a Glance, Silent Failures (what gets ignored without erroring), Ten Principles for Safe Workflow Design
+
+### Community 98 - "Community 98"
+Cohesion: 0.22
+Nodes (8): Context Auto-Append, Escaped Dollar Signs, Node Output Details (DAG Only), Substitution Order, Variable Availability, Variable Substitution Reference, Variable Table, Where Variables Are Substituted
+
+### Community 99 - "Community 99"
+Cohesion: 0.29
+Nodes (6): 1. Install Dependencies, 2. Link the CLI Globally, 3. Verify Installation, 4. Authenticate Claude, CLI Setup Guide, Notes
+
 ## Knowledge Gaps
-- **611 isolated node(s):** `npx`, `@modelcontextprotocol/server-filesystem`, `Usage`, `What graphify is for`, `Step 0 - GitHub repos and multi-path merge (only if a URL or several paths)` (+606 more)
+- **942 isolated node(s):** `npx`, `@modelcontextprotocol/server-filesystem`, `Available Workflows (live)`, `Routing`, `When to reach for the live docs` (+937 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **15 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **18 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **What connects `npx`, `@modelcontextprotocol/server-filesystem`, `Usage` to the rest of the system?**
-  _611 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **What connects `npx`, `@modelcontextprotocol/server-filesystem`, `Available Workflows (live)` to the rest of the system?**
+  _942 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
   _Cohesion score 0.04081632653061224 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**

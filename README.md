@@ -24,7 +24,11 @@ projectkoios-bootstrap/
 ```bash
 brew install python uv
 # opencode: https://opencode.ai
-# Archon CLI: curl -fsSL https://archon.diy/install | bash
+# Archon CLI:
+mkdir -p ~/.local/bin
+curl -fsSL https://github.com/coleam00/Archon/releases/latest/download/archon-darwin-arm64 \
+  -o ~/.local/bin/archon
+chmod +x ~/.local/bin/archon
 # Goose CLI: https://goose-docs.ai/docs/quickstart
 ```
 
@@ -64,17 +68,22 @@ goose run --hints goose/AGENT.md
 
 ### Archon — architecture and design
 
+Project workflows in this repo default to Pi.
+
 ```bash
 cd ~/repos/projectkoios-bootstrap
 
+# List workflows
+archon workflow list
+
 # Run a design review workflow
-archon run archon/workflows/design-review.yaml
+archon workflow run design-review "architecture/some-doc.md"
 
 # Create a new ADR
-archon run archon/workflows/create-adr.yaml
+archon workflow run create-adr "decision summary"
 
 # Plan a feature
-archon run archon/workflows/plan-feature.yaml
+archon workflow run plan-feature "feature request"
 ```
 
 ## Workspace

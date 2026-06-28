@@ -1,6 +1,6 @@
 name: design-review
 description: Review a design document or ADR and provide structured feedback
-provider: codex
+provider: pi
 
 nodes:
   - id: fetch-doc

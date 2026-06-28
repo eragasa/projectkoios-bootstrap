@@ -15,8 +15,8 @@
     "semantic_hash": ""
   },
   ".archon/config.yaml": {
-    "mtime": 1782670925.5522442,
-    "ast_hash": "3db7f1ae20e14559ed9ab80b15f4f7e1",
+    "mtime": 1782677621.4727051,
+    "ast_hash": "6e435bf155ed02876d843bcf810dadd7",
     "semantic_hash": ""
   },
   ".opencode/skills/graphify/SKILL.md": {
@@ -65,23 +65,18 @@
     "semantic_hash": ""
   },
   "AGENTS.md": {
-    "mtime": 1782672784.8307588,
-    "ast_hash": "62c05a2bf20bf036a0b2633478663e64",
+    "mtime": 1782676622.3679564,
+    "ast_hash": "68368c7a9a27d29916c81d210ff7d992",
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1782662297.5188556,
-    "ast_hash": "f9817432aa3ffc3551202a0d2d4845db",
+    "mtime": 1782677661.3800201,
+    "ast_hash": "fe7e1e4ea7f1706c902750aacccdcba3",
     "semantic_hash": ""
   },
   "architecture/adr.20260628.md": {
     "mtime": 1782661885.5970893,
     "ast_hash": "8fa109639654a917b0e4d2ea09fb0bcd",
-    "semantic_hash": ""
-  },
-  "architecture/adr.20260629.codex-for-archon-workflows.md": {
-    "mtime": 1782671610.3001857,
-    "ast_hash": "1f8db2e8de4a40b73e6eca804f0e9adf",
     "semantic_hash": ""
   },
   "architecture/adr.20260629.md": {
@@ -90,117 +85,117 @@
     "semantic_hash": ""
   },
   "archon/skills/.agents/skills/archon/SKILL.md": {
-    "mtime": 1782668978.8141751,
+    "mtime": 1782680231.1661885,
     "ast_hash": "6ee256bde110fe6381535f9ecd6dae06",
     "semantic_hash": ""
   },
   "archon/skills/.agents/skills/archon/examples/command-template.md": {
-    "mtime": 1782668978.814382,
+    "mtime": 1782680231.1662352,
     "ast_hash": "289617e44887dad7b95789d54e173b11",
     "semantic_hash": ""
   },
   "archon/skills/.agents/skills/archon/examples/dag-workflow.yaml": {
-    "mtime": 1782668978.8146594,
+    "mtime": 1782680231.166257,
     "ast_hash": "f5774e90b5b8398bbd4dc31345ce024a",
     "semantic_hash": ""
   },
   "archon/skills/.agents/skills/archon/guides/cli.md": {
-    "mtime": 1782668978.8148494,
+    "mtime": 1782680231.1663954,
     "ast_hash": "4cc158e11da051595bf9ccbe80c83a11",
     "semantic_hash": ""
   },
   "archon/skills/.agents/skills/archon/guides/config.md": {
-    "mtime": 1782668978.8150265,
+    "mtime": 1782680231.166419,
     "ast_hash": "027f09941c6f9d0b14085fe230e6f2e8",
     "semantic_hash": ""
   },
   "archon/skills/.agents/skills/archon/guides/discord.md": {
-    "mtime": 1782668978.8151295,
+    "mtime": 1782680231.1664433,
     "ast_hash": "f9bb9a0cd7f324d6e8ea777912366b5f",
     "semantic_hash": ""
   },
   "archon/skills/.agents/skills/archon/guides/github.md": {
-    "mtime": 1782668978.8153136,
+    "mtime": 1782680231.1664734,
     "ast_hash": "92c130f6938c06d051b9e6f0a75e4da8",
     "semantic_hash": ""
   },
   "archon/skills/.agents/skills/archon/guides/server.md": {
-    "mtime": 1782668978.8154233,
+    "mtime": 1782680231.1664999,
     "ast_hash": "0f3052526268790e90f240153a7d05b4",
     "semantic_hash": ""
   },
   "archon/skills/.agents/skills/archon/guides/setup.md": {
-    "mtime": 1782668978.815608,
+    "mtime": 1782680231.1665301,
     "ast_hash": "7e9e7d3b675274196cd0956c1901b195",
     "semantic_hash": ""
   },
   "archon/skills/.agents/skills/archon/guides/slack.md": {
-    "mtime": 1782668978.8157063,
+    "mtime": 1782680231.1665518,
     "ast_hash": "f1e4813bf8c4ea61b30ddc89ff63ad67",
     "semantic_hash": ""
   },
   "archon/skills/.agents/skills/archon/guides/telegram.md": {
-    "mtime": 1782668978.8158014,
+    "mtime": 1782680231.166573,
     "ast_hash": "77a445cac76518ba5fa02ec8d6922619",
     "semantic_hash": ""
   },
   "archon/skills/.agents/skills/archon/references/authoring-commands.md": {
-    "mtime": 1782668978.816043,
+    "mtime": 1782680231.1665957,
     "ast_hash": "e85adc07696a0e43152a1c2ba736855a",
     "semantic_hash": ""
   },
   "archon/skills/.agents/skills/archon/references/cli-commands.md": {
-    "mtime": 1782668978.8162692,
+    "mtime": 1782680231.1666183,
     "ast_hash": "9a903c6852c40a64ee3927dd61b50cfe",
     "semantic_hash": ""
   },
   "archon/skills/.agents/skills/archon/references/dag-advanced.md": {
-    "mtime": 1782668978.8164876,
+    "mtime": 1782680231.1666408,
     "ast_hash": "1d7ef50e6a9f589452abad6de69f1f9a",
     "semantic_hash": ""
   },
   "archon/skills/.agents/skills/archon/references/good-practices.md": {
-    "mtime": 1782668978.816706,
+    "mtime": 1782680231.1666641,
     "ast_hash": "537271a40282e8171714c4f68bf5b917",
     "semantic_hash": ""
   },
   "archon/skills/.agents/skills/archon/references/interactive-workflows.md": {
-    "mtime": 1782668978.8168988,
+    "mtime": 1782680231.16669,
     "ast_hash": "e626ef7e3d5f7c2ad34b539c116598b6",
     "semantic_hash": ""
   },
   "archon/skills/.agents/skills/archon/references/parameter-matrix.md": {
-    "mtime": 1782668978.8170257,
+    "mtime": 1782680231.1667151,
     "ast_hash": "bc49adb88c985458c1b1e57528906825",
     "semantic_hash": ""
   },
   "archon/skills/.agents/skills/archon/references/repo-init.md": {
-    "mtime": 1782668978.8171988,
+    "mtime": 1782680231.1667395,
     "ast_hash": "cf23f8215c8b6f162b62d2ffd62796b7",
     "semantic_hash": ""
   },
   "archon/skills/.agents/skills/archon/references/troubleshooting.md": {
-    "mtime": 1782668978.81738,
+    "mtime": 1782680231.1667645,
     "ast_hash": "503752305a7d8dc26c1468024cb1b241",
     "semantic_hash": ""
   },
   "archon/skills/.agents/skills/archon/references/variables.md": {
-    "mtime": 1782668978.817501,
+    "mtime": 1782680231.1667876,
     "ast_hash": "2d5ac22a0bd41dd20c9e77839ab55bf5",
     "semantic_hash": ""
   },
   "archon/skills/.agents/skills/archon/references/workflow-dag.md": {
-    "mtime": 1782668978.8176253,
+    "mtime": 1782680231.1668134,
     "ast_hash": "2fcb5ecba5b550bddd3b2d10879c5c51",
     "semantic_hash": ""
   },
   "archon/skills/.agents/skills/manage-run/SKILL.md": {
-    "mtime": 1782668978.8178887,
+    "mtime": 1782680231.1668375,
     "ast_hash": "f1435d1d6247c8404029ef5f43c86397",
     "semantic_hash": ""
   },
   "archon/skills/.agents/skills/manage-run/references/commands.md": {
-    "mtime": 1782668978.818116,
+    "mtime": 1782680231.1668594,
     "ast_hash": "f7a4a013c8698f38a53143963c19590f",
     "semantic_hash": ""
   },
@@ -210,8 +205,8 @@
     "semantic_hash": ""
   },
   "archon/skills/.claude/skills/archon/SKILL.md": {
-    "mtime": 1782668978.8080652,
-    "ast_hash": "6ee256bde110fe6381535f9ecd6dae06",
+    "mtime": 1782679301.8615043,
+    "ast_hash": "6a2c36e27a0a0461443665d903a4613d",
     "semantic_hash": ""
   },
   "archon/skills/.claude/skills/archon/examples/command-template.md": {
@@ -325,23 +320,23 @@
     "semantic_hash": ""
   },
   "archon/workflows/create-adr.yaml": {
-    "mtime": 1782671971.9908717,
-    "ast_hash": "71f068db0218c64d2030ade2c3307691",
+    "mtime": 1782677557.9169106,
+    "ast_hash": "65ee0aac6619e5aade9869d820e0102a",
     "semantic_hash": ""
   },
   "archon/workflows/design-review.yaml": {
-    "mtime": 1782671973.4356709,
-    "ast_hash": "fac47c91d00344aaa21a6bcdbad6ff2d",
+    "mtime": 1782677555.8935544,
+    "ast_hash": "8af83fb7589e0e47e34a2795cf3987f9",
     "semantic_hash": ""
   },
   "archon/workflows/plan-feature.yaml": {
-    "mtime": 1782671975.2444136,
-    "ast_hash": "6d8c663d3ffaf3cef62de531792fcdef",
+    "mtime": 1782680516.8354666,
+    "ast_hash": "130353db229a687ddba1fc882a333d60",
     "semantic_hash": ""
   },
   "goose/AGENT.md": {
-    "mtime": 1782661897.290531,
-    "ast_hash": "38d337929904688b57dd3f81af709801",
+    "mtime": 1782678189.9894843,
+    "ast_hash": "c5706998a149a124eba1d6867dffb2d9",
     "semantic_hash": ""
   },
   "goose/prompts/curate.md": {
@@ -380,8 +375,8 @@
     "semantic_hash": ""
   },
   "opencode/AGENTS.md": {
-    "mtime": 1782661964.2275755,
-    "ast_hash": "942c68008866d06dde9e89a7b78a483d",
+    "mtime": 1782680822.8949118,
+    "ast_hash": "e095e8e94c03e1e6044faeaa4fd98100",
     "semantic_hash": ""
   },
   "opencode/rules/build.md": {
@@ -402,6 +397,201 @@
   "opencode/rules/validation.md": {
     "mtime": 1782661903.5912888,
     "ast_hash": "094d85ebf656a2813daa1a8993dd3f7b",
+    "semantic_hash": ""
+  },
+  ".pi/agent/skills/graphify/SKILL.md": {
+    "mtime": 1782674811.2494297,
+    "ast_hash": "5bc28728a68fa52adb97f26b0ffa1324",
+    "semantic_hash": ""
+  },
+  ".pi/agent/skills/graphify/references/add-watch.md": {
+    "mtime": 1782672781.250097,
+    "ast_hash": "d59d027fe449f06aa03905a01184e779",
+    "semantic_hash": ""
+  },
+  ".pi/agent/skills/graphify/references/exports.md": {
+    "mtime": 1782672781.25016,
+    "ast_hash": "9da2a2152e60a22f07f05fed5158f287",
+    "semantic_hash": ""
+  },
+  ".pi/agent/skills/graphify/references/extraction-spec.md": {
+    "mtime": 1782672781.2503164,
+    "ast_hash": "bf895ec4d4e40f5f66f7d31c2a9bd4a7",
+    "semantic_hash": ""
+  },
+  ".pi/agent/skills/graphify/references/github-and-merge.md": {
+    "mtime": 1782672781.2504542,
+    "ast_hash": "cde13df085e4c492aeb7ba298a996d0d",
+    "semantic_hash": ""
+  },
+  ".pi/agent/skills/graphify/references/hooks.md": {
+    "mtime": 1782672781.2505503,
+    "ast_hash": "3f545db6ce646650bb9de588f5512a27",
+    "semantic_hash": ""
+  },
+  ".pi/agent/skills/graphify/references/query.md": {
+    "mtime": 1782672781.2506392,
+    "ast_hash": "9e5aadc2c57ab561bc56600fcfa70735",
+    "semantic_hash": ""
+  },
+  ".pi/agent/skills/graphify/references/transcribe.md": {
+    "mtime": 1782672781.2506883,
+    "ast_hash": "67b6a5fa6c0974e18f60db9f8932fbd8",
+    "semantic_hash": ""
+  },
+  ".pi/agent/skills/graphify/references/update.md": {
+    "mtime": 1782672781.2508032,
+    "ast_hash": "c698309979460d0f02ba616417844399",
+    "semantic_hash": ""
+  },
+  "architecture/adr.20260629.pi-for-archon-workflows.md": {
+    "mtime": 1782677684.2743635,
+    "ast_hash": "4a9f50994de2083596e10a4d6b971975",
+    "semantic_hash": ""
+  },
+  ".pi/settings.json": {
+    "mtime": 1782677793.2944877,
+    "ast_hash": "a386d5306343202969929bb4fd8f59bb",
+    "semantic_hash": ""
+  },
+  "architecture/harness-boundaries.md": {
+    "mtime": 1782678181.440926,
+    "ast_hash": "79fa31a850505bfb74b406348d0c8df8",
+    "semantic_hash": ""
+  },
+  "archon/prompts/harness-routing.md": {
+    "mtime": 1782678181.441028,
+    "ast_hash": "58a9fc4f66c5c1bfa4b940311c55c187",
+    "semantic_hash": ""
+  },
+  "goose/prompts/research-support.md": {
+    "mtime": 1782678181.4410088,
+    "ast_hash": "8ec41ba596dc5dc3508261ad5f7cc9a6",
+    "semantic_hash": ""
+  },
+  "opencode/rules/handoff.md": {
+    "mtime": 1782678181.4409268,
+    "ast_hash": "46ff326b2e026e8e4d5eb97e35f1ba59",
+    "semantic_hash": ""
+  },
+  ".claude/skills/archon/SKILL.md": {
+    "mtime": 1782680231.1644855,
+    "ast_hash": "6ee256bde110fe6381535f9ecd6dae06",
+    "semantic_hash": ""
+  },
+  ".claude/skills/archon/examples/command-template.md": {
+    "mtime": 1782680231.1646047,
+    "ast_hash": "289617e44887dad7b95789d54e173b11",
+    "semantic_hash": ""
+  },
+  ".claude/skills/archon/examples/dag-workflow.yaml": {
+    "mtime": 1782680231.1646996,
+    "ast_hash": "f5774e90b5b8398bbd4dc31345ce024a",
+    "semantic_hash": ""
+  },
+  ".claude/skills/archon/guides/cli.md": {
+    "mtime": 1782680231.1647813,
+    "ast_hash": "4cc158e11da051595bf9ccbe80c83a11",
+    "semantic_hash": ""
+  },
+  ".claude/skills/archon/guides/config.md": {
+    "mtime": 1782680231.164863,
+    "ast_hash": "027f09941c6f9d0b14085fe230e6f2e8",
+    "semantic_hash": ""
+  },
+  ".claude/skills/archon/guides/discord.md": {
+    "mtime": 1782680231.1649065,
+    "ast_hash": "f9bb9a0cd7f324d6e8ea777912366b5f",
+    "semantic_hash": ""
+  },
+  ".claude/skills/archon/guides/github.md": {
+    "mtime": 1782680231.1649835,
+    "ast_hash": "92c130f6938c06d051b9e6f0a75e4da8",
+    "semantic_hash": ""
+  },
+  ".claude/skills/archon/guides/server.md": {
+    "mtime": 1782680231.1650238,
+    "ast_hash": "0f3052526268790e90f240153a7d05b4",
+    "semantic_hash": ""
+  },
+  ".claude/skills/archon/guides/setup.md": {
+    "mtime": 1782680231.1650739,
+    "ast_hash": "7e9e7d3b675274196cd0956c1901b195",
+    "semantic_hash": ""
+  },
+  ".claude/skills/archon/guides/slack.md": {
+    "mtime": 1782680231.1651127,
+    "ast_hash": "f1e4813bf8c4ea61b30ddc89ff63ad67",
+    "semantic_hash": ""
+  },
+  ".claude/skills/archon/guides/telegram.md": {
+    "mtime": 1782680231.1653335,
+    "ast_hash": "77a445cac76518ba5fa02ec8d6922619",
+    "semantic_hash": ""
+  },
+  ".claude/skills/archon/references/authoring-commands.md": {
+    "mtime": 1782680231.1654372,
+    "ast_hash": "e85adc07696a0e43152a1c2ba736855a",
+    "semantic_hash": ""
+  },
+  ".claude/skills/archon/references/cli-commands.md": {
+    "mtime": 1782680231.1654987,
+    "ast_hash": "9a903c6852c40a64ee3927dd61b50cfe",
+    "semantic_hash": ""
+  },
+  ".claude/skills/archon/references/dag-advanced.md": {
+    "mtime": 1782680231.1655602,
+    "ast_hash": "1d7ef50e6a9f589452abad6de69f1f9a",
+    "semantic_hash": ""
+  },
+  ".claude/skills/archon/references/good-practices.md": {
+    "mtime": 1782680231.165625,
+    "ast_hash": "537271a40282e8171714c4f68bf5b917",
+    "semantic_hash": ""
+  },
+  ".claude/skills/archon/references/interactive-workflows.md": {
+    "mtime": 1782680231.1657045,
+    "ast_hash": "e626ef7e3d5f7c2ad34b539c116598b6",
+    "semantic_hash": ""
+  },
+  ".claude/skills/archon/references/parameter-matrix.md": {
+    "mtime": 1782680231.1657538,
+    "ast_hash": "bc49adb88c985458c1b1e57528906825",
+    "semantic_hash": ""
+  },
+  ".claude/skills/archon/references/repo-init.md": {
+    "mtime": 1782680231.1658201,
+    "ast_hash": "cf23f8215c8b6f162b62d2ffd62796b7",
+    "semantic_hash": ""
+  },
+  ".claude/skills/archon/references/troubleshooting.md": {
+    "mtime": 1782680231.1658912,
+    "ast_hash": "503752305a7d8dc26c1468024cb1b241",
+    "semantic_hash": ""
+  },
+  ".claude/skills/archon/references/variables.md": {
+    "mtime": 1782680231.1659253,
+    "ast_hash": "2d5ac22a0bd41dd20c9e77839ab55bf5",
+    "semantic_hash": ""
+  },
+  ".claude/skills/archon/references/workflow-dag.md": {
+    "mtime": 1782680231.1659746,
+    "ast_hash": "2fcb5ecba5b550bddd3b2d10879c5c51",
+    "semantic_hash": ""
+  },
+  ".claude/skills/manage-run/SKILL.md": {
+    "mtime": 1782680231.166062,
+    "ast_hash": "f1435d1d6247c8404029ef5f43c86397",
+    "semantic_hash": ""
+  },
+  ".claude/skills/manage-run/references/commands.md": {
+    "mtime": 1782680231.16615,
+    "ast_hash": "f7a4a013c8698f38a53143963c19590f",
+    "semantic_hash": ""
+  },
+  "opencode/checklists/multi-repo-execution-readiness.md": {
+    "mtime": 1782680797.7220094,
+    "ast_hash": "2839374b78ee4a394444085209b74ce6",
     "semantic_hash": ""
   }
 }

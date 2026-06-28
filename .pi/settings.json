@@ -1,0 +1,6 @@
+{
+  "enableSkillCommands": true,
+  "skills": [
+    "archon/skills/.agents/skills"
+  ]
+}
