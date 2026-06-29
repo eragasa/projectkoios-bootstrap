@@ -7,12 +7,12 @@ It does not own domain architecture; that belongs in the `projectkoios` mothersh
 
 - [What this repo is for](#what-this-repo-is-for)
 - [Harnesses](#harnesses)
-- [Current operator path](#current-operator-path)
+- [Athena](#athena)
 - [Meta-harness](#meta-harness)
 - [Directions for all harnesses](#directions-for-all-harnesses)
-- [Directions for pi](#directions-for-pi)
-- [Directions for archon](#directions-for-archon)
-- [Directions for opencode](#directions-for-opencode)
+- [Directions for Hermes (pi)](#directions-for-hermes-pi)
+- [Directions for Athena (archon)](#directions-for-athena-archon)
+- [Directions for Vulcan (opencode)](#directions-for-vulcan-opencode)
 - [Harness configs](#harness-configs)
 - [Routing guide](#routing-guide)
 - [Artifact handoff](#artifact-handoff)
@@ -38,22 +38,21 @@ Do not use this repo for:
 
 | Harness | Name | Role |
 |---------|------|------|
-| pi | pi | Meta-harness — orchestration, operations, handoff coordination |
+| pi | **Hermes** | Meta-harness — orchestration, operations, handoff coordination |
 | archon (archon.diy) | **Athena** | Architecture design, ADRs, planning |
 | opencode | **Vulcan** | Code writing, tests, validation |
 | goose | **Koios** | Knowledge management, vault ops |
 
-## Current operator path
+## Athena
 
-Until pi can invoke Archon directly, Codex serves as the delegated
-access/operator layer for Archon workflows. Codex is not pi; Codex
-invokes Archon, relays artifacts, and carries out run-control steps
-that require access mediation. Codex must identify itself as delegated
-access (not as pi) and preserve provenance headers that distinguish
-origin, sender, acting role, and mediator.
+Athena is the spec and architecture system for Project Koios. It comprises
+two layers that operate as one role:
+- **Codex** handles intake, interviewing, and pre-work to scope requests
+  before they enter an Archon workflow.
+- **Archon** runs the workflow — producing architecture specs, acceptance
+  criteria, and implementation briefs.
 
-Target state: pi resumes ownership of the operator interface once it can
-invoke Archon directly.
+Athena operates as a single spec agent with a unified handoff boundary.
 
 ## Meta-harness
 
@@ -66,7 +65,7 @@ This repo operates a role-based meta-harness that separates specification, imple
 | Spec agent | archon | Athena | Architecture, scope, acceptance criteria |
 | Code agent | opencode | Vulcan | Implementation, tests, validation |
 | Knowledge agent | goose | Koios | Durable notes, provenance, vault ops |
-| Meta-harness | pi | pi | Routing, orchestration, completion gating |
+| Meta-harness | pi | Hermes | Routing, orchestration, completion gating |
 
 ### Artifact model
 
@@ -75,19 +74,19 @@ Agents communicate through typed artifacts. An artifact must be explicit enough 
 | Artifact | Owner | Meaning |
 |---|---|---|
 | `user-request` | user | Original task or instruction |
-| `architecture-spec` | spec agent (archon) | Bounded architecture decision |
-| `acceptance-criteria` | spec agent (archon) | Inspectable criteria for completion |
-| `implementation-brief` | spec agent (archon) | Concrete instructions for implementation |
-| `implementation-plan` | code agent (opencode) | Planned file-level changes |
-| `patch` | code agent (opencode) | Repository modification |
-| `test-results` | code agent (opencode) | Validation output |
-| `implementation-report` | code agent (opencode) | Summary of what changed |
-| `deviation-report` | code agent (opencode) | Mismatch between spec and reality |
-| `knowledge-note` | knowledge agent (goose) | Durable note from validated artifacts |
-| `provenance-index` | knowledge agent (goose) | Mapping from claims to sources |
-| `routing-decision` | meta-harness (pi) | Next agent/action selection |
-| `revision-request` | meta-harness (pi) | Required correction to an artifact |
-| `completion-decision` | meta-harness (pi) | Final acceptance or rejection |
+| `architecture-spec` | spec agent (Athena) | Bounded architecture decision |
+| `acceptance-criteria` | spec agent (Athena) | Inspectable criteria for completion |
+| `implementation-brief` | spec agent (Athena) | Concrete instructions for implementation |
+| `implementation-plan` | code agent (Vulcan) | Planned file-level changes |
+| `patch` | code agent (Vulcan) | Repository modification |
+| `test-results` | code agent (Vulcan) | Validation output |
+| `implementation-report` | code agent (Vulcan) | Summary of what changed |
+| `deviation-report` | code agent (Vulcan) | Mismatch between spec and reality |
+| `knowledge-note` | knowledge agent (Koios) | Durable note from validated artifacts |
+| `provenance-index` | knowledge agent (Koios) | Mapping from claims to sources |
+| `routing-decision` | meta-harness (Hermes) | Next agent/action selection |
+| `revision-request` | meta-harness (Hermes) | Required correction to an artifact |
+| `completion-decision` | meta-harness (Hermes) | Final acceptance or rejection |
 
 Artifacts are stored in each harness's `handoffs/` directory.
 
@@ -97,11 +96,11 @@ Artifacts are stored in each harness's `handoffs/` directory.
 user-request → architecture-spec → implementation → validation → knowledge capture → completion
 ```
 
-1. Meta-harness (pi) routes process/completion/disagreement tasks; design ambiguity defaults to archon first.
-2. Spec agent (archon) produces `architecture-spec` and `acceptance-criteria`.
-3. Code agent (opencode) produces `patch`, `test-results`, and `implementation-report`. If the spec cannot be satisfied, produce a `deviation-report` which may trigger a spec revision loop.
-4. Knowledge agent (goose) produces `knowledge-note` and `provenance-index`.
-5. Meta-harness (pi) checks artifacts against acceptance criteria and issues `completion-decision`.
+1. Hermes routes process/completion/disagreement tasks; design ambiguity defaults to Athena first.
+2. Athena produces `architecture-spec` and `acceptance-criteria`.
+3. Vulcan produces `patch`, `test-results`, and `implementation-report`. If the spec cannot be satisfied, produce a `deviation-report` which may trigger a spec revision loop.
+4. Koios produces `knowledge-note` and `provenance-index`.
+5. Hermes checks artifacts against acceptance criteria and issues `completion-decision`.
 
 ### Authority rules
 
@@ -121,11 +120,11 @@ A lower-authority artifact must be revised when it conflicts with a higher-autho
 ### Default decision rule
 
 When in doubt:
-- Route design uncertainty to archon first
-- Route lightweight config changes and direct edits to the meta-harness (pi)
-- Route complex implementation, tests, and validation to the code agent (opencode)
-- Route durable documentation to the knowledge agent (goose)
-- Route disagreement or completion checks to the meta-harness (pi)
+- Route design uncertainty to Athena first
+- Route lightweight config changes and direct edits to the meta-harness (Hermes)
+- Route complex implementation, tests, and validation to the code agent (Vulcan)
+- Route durable documentation to the knowledge agent (Koios)
+- Route disagreement or completion checks to the meta-harness (Hermes)
 
 A specialist handoff is justified when it reduces ambiguity, improves
 validation, or preserves durable knowledge; otherwise it is ceremony. See
@@ -141,9 +140,9 @@ validation, or preserves durable knowledge; otherwise it is ceremony. See
 - Keep local secrets out of git.
 - Prefer the harness that matches the work type instead of forcing everything through one tool.
 
-## Directions for pi
+## Directions for Hermes (pi)
 
-Use pi for orchestration and direct operations:
+Use Hermes (pi) for orchestration and direct operations:
 - run commands, edit files, inspect repo and filesystem state
 - manage harness configs, bootstrap setup, repo maintenance
 - start, inspect, approve, reject, resume, or cancel Archon workflow runs
@@ -151,27 +150,21 @@ Use pi for orchestration and direct operations:
 - read and write handoff artifacts
 - route tasks to the appropriate specialized harness
 
-Pi is the meta-harness operator. It is not limited to routing — it can
+Hermes is the meta-harness operator. It is not limited to routing — it can
 execute tasks directly when no specialist is required. But to respect the
 separation of concerns:
-- route architecture and planning ambiguity to archon
-- route complex implementation, tests, and bug fixes to opencode
-- route knowledge curation and vault work to goose
+- route architecture and planning ambiguity to Athena
+- route complex implementation, tests, and bug fixes to Vulcan
+- route knowledge curation and vault work to Koios
 
-Transition note: while pi cannot invoke Archon directly, Codex acts as a
-delegated operator layer. Codex may invoke Archon workflows, relay
-artifacts, and carry out run-control steps, but must identify itself
-as delegated access (not as pi) and preserve provenance headers
-that distinguish origin, sender, acting role, and mediator.
-
-Pi routes user work to individual Project Koios repositories. Each
+Hermes routes user work to individual Project Koios repositories. Each
 repository may run its own repo-local meta-harness instance with its
 own handoffs, run state, and operational rules. Bootstrap-shared
 guidance in `projectkoios-bootstrap` is distinct from repo-local
 artifacts — this repo owns the conventions; target repos own their
 local harness state.
 
-### Session protocol for pi
+### Session protocol for Hermes
 
 At session start:
 - check `archon/handoffs/`, `opencode/handoffs/`, and `pi/handoffs/` for new or active artifacts
@@ -184,31 +177,31 @@ At session stop:
 - write or update the relevant handoff if work must continue in another harness
 - ask before commit/push unless the user already directed it
 
-## Directions for archon
+## Directions for Athena (archon)
 
-Use archon (Athena) for:
+Use Athena (archon) for:
 - architecture and planning
 - ADRs and durable decisions
 - workflow design
 - resolving ambiguous cross-cutting project choices
 
-Archon should:
+Athena should:
 - write implementation-ready plans
 - place downstream work in `archon/handoffs/` using the [handoff file convention](#handoff-file-convention)
 - keep architecture out of this config repo unless it is about bootstrap structure
 
-## Directions for opencode
+## Directions for Vulcan (opencode)
 
-Use opencode (Vulcan) for:
+Use Vulcan (opencode) for:
 - implementation
 - tests and validation
 - bug fixes
 - code changes that follow an approved plan
 
-Opencode should:
+Vulcan should:
 - read the plan or handoff artifact first
 - place completion reports and questions in `opencode/handoffs/`
-- escalate design ambiguity back to archon instead of inventing policy
+- escalate design ambiguity back to Athena instead of inventing policy
 
 ## Harness configs
 
@@ -226,11 +219,11 @@ Local configs are NEVER committed to this repo.
 
 | Task type | Route to |
 |----------|----------|
-| architecture, ADRs, planning | archon |
-| implementation, tests, validation | opencode |
-| research, vault, knowledge tasks | goose |
-| run control, orchestration, handoff coordination | pi |
-| unclear cross-harness decisions | archon first |
+| architecture, ADRs, planning | Athena |
+| implementation, tests, validation | Vulcan |
+| research, vault, knowledge tasks | Koios |
+| run control, orchestration, handoff coordination | Hermes |
+| unclear cross-harness decisions | Athena first |
 
 ## Artifact handoff
 
@@ -239,9 +232,9 @@ Each harness writes completion reports and artifacts to its own `handoffs/` dire
 
 | From | To | Path |
 |------|----|------|
-| archon (Athena) | opencode (Vulcan) | `archon/handoffs/` — `architecture-spec`, `implementation-brief` |
-| opencode (Vulcan) | archon (Athena) | `opencode/handoffs/` — `implementation-report`, `deviation-report` |
-| goose (Koios) | archon (Athena) | `goose/handoffs/` — `knowledge-note`, `provenance-index` |
+| Athena (archon) | Vulcan (opencode) | `archon/handoffs/` — `architecture-spec`, `implementation-brief` |
+| Vulcan (opencode) | Athena (archon) | `opencode/handoffs/` — `implementation-report`, `deviation-report` |
+| Koios (goose) | Athena (archon) | `goose/handoffs/` — `knowledge-note`, `provenance-index` |
 
 Each harness should assume no session memory beyond its current artifact and filesystem state.
 
@@ -258,18 +251,9 @@ Example: `2026-06-29.214500_graphify-out-stale-cleanup.md`
 Origin: <harness-name>
 Created: <YYYY-MM-DD HH:MM>
 From: <agent-name>
-Acting-As: <harness-role>   (optional, if different from From)
 To: <agent-name>
 Status: <draft|active|complete>
-Scope: <repository-scope>   (optional, e.g. projectkoios-bootstrap)
-Delegated-Operator: <layer> (optional, when mediation occurs)
 ```
-
-`Acting-As` identifies the harness role the sender was performing if
-different from the sender's identity. `Scope` bounds the artifact to a
-single repository or context. `Delegated-Operator` records the access
-layer or mediator (e.g. Codex) when the sender acted through an
-intermediary.
 
 ## Secrets and safety
 
@@ -299,10 +283,10 @@ projectkoios-bootstrap/
 ├── maps/                ← workspace topology (repos, packages, vault)
 ├── src/python/          ← Python CLI package (bootstrap tooling)
 ├── scripts/             ← CLI wrappers
-├── archon/              ← Archon workflows and prompts
+├── archon/              ← Athena (archon) workflows and prompts
 ├── opencode/            ← opencode rules and runtime harness
 ├── goose/               ← Goose agent rules and prompts
-├── pi/                  ← pi-specific harness config
+├── pi/                  ← Hermes (pi) harness config
 ├── skills/              ← meta-harness skills in development
 ├── AGENTS.md            ← this file
 └── pyproject.toml       ← Python project metadata
