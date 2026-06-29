@@ -4,9 +4,9 @@ When producing a plan for Project Koios, assign each step to exactly one harness
 
 ## Harness definitions
 
-- `archon/` — architecture decisions, ADRs, planning, design review, workflow authoring
-- `opencode/` — implementation, tests, validation, runtime debugging, consistency review
-- `goose/` — research support, source ingestion, vault curation, note organization, UI-bootstrap knowledge tasks
+- `archon/` (spec agent) — architecture decisions, ADRs, planning, design review, workflow authoring
+- `opencode/` (code agent) — implementation, tests, validation, runtime debugging, consistency review
+- `goose/` (knowledge agent) — research support, source ingestion, vault curation, note organization, UI-bootstrap knowledge tasks
 
 ## Rules
 
