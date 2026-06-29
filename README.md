@@ -77,6 +77,19 @@ projectkoios harnesses stop      # kill koios session
 Read `maps/repositories.md`, `maps/packages.md`, and `maps/vault_paths.md`
 before touching any code. All component repos are siblings under `~/repos/`.
 
+## Local Generated State
+
+`graphify-out/` is a generated local database used by Graphify and is ignored by
+git. Fresh clones will not receive it. Existing clones may still have stale local
+database files after a pull; if needed, clean them with:
+
+```bash
+git clean -fdX graphify-out/
+```
+
+You can also delete `graphify-out/` manually. Graphify will regenerate it when
+needed.
+
 ## Architecture
 
 - Bootstrap architecture: `doc/architecture.00.md`
