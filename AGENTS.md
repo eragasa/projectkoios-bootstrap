@@ -3,6 +3,23 @@
 This repo is the shared config store for Project Koios.
 It does not own domain architecture; that belongs in the `projectkoios` mothership repository.
 
+## Contents
+
+- [What this repo is for](#what-this-repo-is-for)
+- [Harnesses](#harnesses)
+- [Meta-harness](#meta-harness)
+- [Directions for all harnesses](#directions-for-all-harnesses)
+- [Directions for pi](#directions-for-pi)
+- [Directions for archon](#directions-for-archon)
+- [Directions for opencode](#directions-for-opencode)
+- [Harness configs](#harness-configs)
+- [Routing guide](#routing-guide)
+- [Artifact handoff](#artifact-handoff)
+- [Secrets and safety](#secrets-and-safety)
+- [Bootstrapping](#bootstrapping)
+- [Layout](#layout)
+- [Mothership](#mothership)
+
 ## What this repo is for
 
 Use this repo to manage:
@@ -27,7 +44,7 @@ Do not use this repo for:
 
 ## Meta-harness
 
-This repo operates a role-based meta-harness that separates specification, implementation, and knowledge capture into distinct agent roles.
+This repo operates a role-based meta-harness that separates specification, implementation, and knowledge capture into distinct agent roles. See `doc/meta-harness.md` for the full framework detail on skill model, disagreement handling, completion gates, escalation rules, and anti-patterns.
 
 ### Role mapping
 
@@ -61,29 +78,15 @@ Agents communicate through typed artifacts. An artifact must be explicit enough 
 
 Artifacts are stored in each harness's `handoffs/` directory.
 
-### Skill model
-
-A skill is a typed transition from input artifacts to output artifacts:
-
-```
-S : A₁ + A₂ + ... + Aₙ → B₁ + B₂ + ... + Bₘ
-```
-
-Each skill defines when it is used, which agent owns it, which artifacts it consumes and produces, the procedure, failure modes, and escalation rules.
-
-One skill = one bounded transformation. Do not write skills as personality instructions or broad essays.
-
-Skills in development live in `skills/`. When stable, they may be deployed to each harness's directory.
-
 ### Standard workflow
 
 ```
 user-request → architecture-spec → implementation → validation → knowledge capture → completion
 ```
 
-1. Meta-harness (pi) receives the `user-request` and routes it.
+1. Meta-harness (pi) routes process/completion/disagreement tasks; design ambiguity defaults to archon first.
 2. Spec agent (archon) produces `architecture-spec` and `acceptance-criteria`.
-3. Code agent (opencode) produces `patch`, `test-results`, and `implementation-report`.
+3. Code agent (opencode) produces `patch`, `test-results`, and `implementation-report`. If the spec cannot be satisfied, produce a `deviation-report` which may trigger a spec revision loop.
 4. Knowledge agent (goose) produces `knowledge-note` and `provenance-index`.
 5. Meta-harness (pi) checks artifacts against acceptance criteria and issues `completion-decision`.
 
@@ -102,46 +105,13 @@ When artifacts disagree, resolve using this order:
 
 A lower-authority artifact must be revised when it conflicts with a higher-authority artifact.
 
-### Disagreement handling
-
-When disagreement occurs, the meta-harness (pi) identifies the conflicting claims and their artifacts, the authority level of each artifact, the controlling claim, and which artifact must be revised and by which agent. Output is a `revision-request`.
-
-### Completion gates
-
-A task is complete only when required output artifacts exist and satisfy acceptance criteria.
-
-- **Architecture work**: scope statement, non-goals, public API intent (if applicable), unresolved questions, downstream instructions.
-- **Implementation work**: patch (or explicit statement none needed), tests (or explicit reason not applicable), implementation report, deviations from spec.
-- **Knowledge work**: durable notes (or explicit statement none needed), provenance for factual claims, classification (decision, implementation fact, rationale, open question).
-- **Coordination work**: routing decision, revision request, escalation request, or completion decision.
-
-### Escalation rules
-
-Escalate to user only when the harness cannot resolve the issue from available artifacts. Escalate when user intent is ambiguous, two valid options have different project consequences, repo state contradicts the request, implementation requires destructive changes, acceptance criteria cannot be inferred, or a decision requires user preference.
-
-Do not escalate for routine implementation details, when a reasonable minimal patch exists, or merely because the task is large.
-
-### Anti-patterns
-
-- One agent doing specification, implementation, and knowledge capture in the same step
-- Skills that describe personality rather than procedure
-- Hidden handoffs or undocumented assumptions
-- Implementation without acceptance criteria
-- Notes without provenance
-- Architecture changes hidden inside patches
-- Knowledge notes treated as authority over repository state
-- Tests added only after implementation without describing public behavior
-- Disagreement resolved by blending incompatible claims
-
 ### Default decision rule
 
 When in doubt:
-- Route design uncertainty to the spec agent (archon)
+- Route design uncertainty to archon first
 - Route file changes to the code agent (opencode)
 - Route durable documentation to the knowledge agent (goose)
 - Route disagreement or completion checks to the meta-harness (pi)
-
-Prefer the smallest reversible step that preserves artifact clarity.
 
 ## Directions for all harnesses
 
@@ -218,9 +188,9 @@ Each harness writes completion reports and artifacts to its own `handoffs/` dire
 
 | From | To | Path |
 |------|----|------|
-| archon (Athena) | opencode (Vulcan) | `archon/handoffs/` — implementation-ready plans |
-| opencode (Vulcan) | archon (Athena) | `opencode/handoffs/` — completion reports, architecture questions |
-| goose (Koios) | archon (Athena) | `goose/handoffs/` — research summaries for planning |
+| archon (Athena) | opencode (Vulcan) | `archon/handoffs/` — `architecture-spec`, `implementation-brief` |
+| opencode (Vulcan) | archon (Athena) | `opencode/handoffs/` — `implementation-report`, `deviation-report` |
+| goose (Koios) | archon (Athena) | `goose/handoffs/` — `knowledge-note`, `provenance-index` |
 
 Each harness should assume no session memory beyond its current artifact and filesystem state.
 
