@@ -1,10 +1,13 @@
 import shutil
 
-from projectkoios.bootstrap.models import HARNESSES, GLOBAL_DIR
+from projectkoios.bootstrap.models import GLOBAL_DIR, HARNESSES
 
 
 def register(subparsers) -> None:
-    parser = subparsers.add_parser("init", help="Copy agents/global/*.example → ~/.<harness>/")
+    parser = subparsers.add_parser(
+        "init",
+        help="Copy agents/global/*.example → ~/.<harness>/",
+    )
     parser.set_defaults(func=run)
 
 

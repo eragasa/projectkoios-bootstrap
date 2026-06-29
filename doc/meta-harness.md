@@ -111,6 +111,14 @@ For coordination work, completion requires:
 
 * routing decision, revision request, escalation request, or completion decision.
 
+### Closing superseded handoffs
+
+Historical handoff artifacts are immutable by default. When an active handoff is
+superseded or its acceptance criteria are already satisfied, pi should write a
+new completion-decision handoff instead of editing the old header. The closure
+artifact must list the stale handoff, the controlling evidence, and the closure
+result.
+
 ## Escalation rules
 
 Escalate to the user only when the harness cannot resolve the issue from available artifacts.

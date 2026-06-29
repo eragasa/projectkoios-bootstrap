@@ -1,10 +1,18 @@
 import argparse
 
-from projectkoios.bootstrap.commands import harnesses, init, install, validate_harnesses
+from projectkoios.bootstrap.commands import (
+    harnesses,
+    init,
+    install,
+    validate_harnesses,
+)
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(prog="projectkoios", description="Project Koios bootstrap CLI")
+    parser = argparse.ArgumentParser(
+        prog="projectkoios",
+        description="Project Koios bootstrap CLI",
+    )
     subparsers = parser.add_subparsers(dest="command")
     subparsers.required = True
 

@@ -38,7 +38,7 @@ python3 -m venv --prompt projectkoios-bootstrap .venv && source .venv/bin/activa
 |--------|---------|
 | Run tests | `pytest` |
 | Lint | `ruff check .` |
-| Typecheck | `mypy src/python` |
+| Typecheck | `mypy -p projectkoios.bootstrap` |
 
 ## Conventions
 

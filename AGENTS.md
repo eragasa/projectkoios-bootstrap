@@ -231,6 +231,12 @@ Each harness writes completion reports and artifacts to its own `handoffs/` dire
 
 Each harness should assume no session memory beyond its current artifact and filesystem state.
 
+Historical handoffs are immutable by default. If an active artifact has been
+satisfied or superseded, do not edit its header unless the task explicitly
+requires that mutation. Pi records closure by writing a new
+`completion-decision` handoff that names the stale artifact, controlling
+evidence, and closure result.
+
 ### Handoff file convention
 
 All new handoff files use:

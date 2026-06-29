@@ -1,7 +1,7 @@
-from collections.abc import Callable
 import os
 import subprocess
 import sys
+from collections.abc import Callable
 
 from projectkoios.bootstrap.models import REPO_ROOT
 
@@ -15,12 +15,22 @@ SCRATCH_WINDOW = "scratch"
 def register(subparsers) -> None:
     p = subparsers.add_parser("harnesses", help="Manage tmux koios session")
     p.add_argument("action", choices=["start", "show", "connect", "stop"])
-    p.add_argument("name", nargs="?", default="archon", help="Window name (for connect)")
+    p.add_argument(
+        "name",
+        nargs="?",
+        default="archon",
+        help="Window name (for connect)",
+    )
     p.set_defaults(func=run)
 
 
 def _tmux(*args: str, check: bool = True) -> subprocess.CompletedProcess:
-    return subprocess.run(["tmux", *args], check=check, capture_output=True, text=True)
+    return subprocess.run(
+        ["tmux", *args],
+        check=check,
+        capture_output=True,
+        text=True,
+    )
 
 
 def _session_exists() -> bool:
@@ -31,7 +41,14 @@ def _session_exists() -> bool:
 def _window_exists(name: str) -> bool:
     if not _session_exists():
         return False
-    r = _tmux("list-windows", "-t", SESSION, "-F", "#{window_name}", check=False)
+    r = _tmux(
+        "list-windows",
+        "-t",
+        SESSION,
+        "-F",
+        "#{window_name}",
+        check=False,
+    )
     return name in r.stdout.splitlines()
 
 
@@ -47,7 +64,16 @@ def _start() -> None:
     if _session_exists():
         print(f"exists: {SESSION}")
     else:
-        _tmux("new-session", "-d", "-s", SESSION, "-n", ARCHON_WINDOW, "-c", str(REPO_ROOT))
+        _tmux(
+            "new-session",
+            "-d",
+            "-s",
+            SESSION,
+            "-n",
+            ARCHON_WINDOW,
+            "-c",
+            str(REPO_ROOT),
+        )
         _tmux("send-keys", "-t", f"{SESSION}:{ARCHON_WINDOW}", "pi", "C-m")
         print(f"started: {SESSION}")
 
@@ -83,23 +109,41 @@ def _show() -> None:
         if not _window_exists(name):
             print(f"  {name} state=missing")
             continue
-        r = _tmux("display-message", "-p", "-t", f"{SESSION}:{name}",
-                  "#{window_name} active=#{window_active} panes=#{window_panes}")
+        r = _tmux(
+            "display-message",
+            "-p",
+            "-t",
+            f"{SESSION}:{name}",
+            "#{window_name} active=#{window_active} panes=#{window_panes}",
+        )
         print(f"  {r.stdout.strip()}")
 
 
 def _connect(name: str) -> None:
-    windows = {"archon": ARCHON_WINDOW, "opencode": OPENCODE_WINDOW,
-               "goose": GOOSE_WINDOW, "scratch": SCRATCH_WINDOW}
+    windows = {
+        "archon": ARCHON_WINDOW,
+        "opencode": OPENCODE_WINDOW,
+        "goose": GOOSE_WINDOW,
+        "scratch": SCRATCH_WINDOW,
+    }
     win = windows.get(name)
     if win is None:
-        print(f"error: unknown workspace '{name}' (expected: archon, opencode, goose, scratch)")
+        print(
+            f"error: unknown workspace '{name}' "
+            "(expected: archon, opencode, goose, scratch)"
+        )
         sys.exit(1)
     if not _session_exists():
-        print(f"error: session {SESSION} does not exist (run 'harnesses start' first)")
+        print(
+            f"error: session {SESSION} does not exist "
+            "(run 'harnesses start' first)"
+        )
         sys.exit(1)
     if not _window_exists(win):
-        print(f"error: workspace '{win}' does not exist (run 'harnesses start' first)")
+        print(
+            f"error: workspace '{win}' does not exist "
+            "(run 'harnesses start' first)"
+        )
         sys.exit(1)
 
     if _in_tmux():
@@ -134,7 +178,12 @@ def _check_tmux() -> None:
 
 def run(args) -> None:
     _check_tmux()
-    actions: dict[str, Callable[..., None]] = {"start": _start, "show": _show, "connect": _connect, "stop": _stop}
+    actions: dict[str, Callable[..., None]] = {
+        "start": _start,
+        "show": _show,
+        "connect": _connect,
+        "stop": _stop,
+    }
     fn: Callable[..., None] = actions[args.action]
     if args.action == "connect":
         fn(args.name)

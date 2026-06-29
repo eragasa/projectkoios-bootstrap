@@ -1,12 +1,12 @@
 from __future__ import annotations
 
+import subprocess
 from pathlib import Path
 
 from projectkoios.bootstrap.validation.harnesses import (
     Severity,
     validate_harnesses,
 )
-
 
 ROOT_AGENTS = """# Root
 
@@ -108,6 +108,28 @@ def make_repo(root: Path) -> None:
         write(root / f"agents/global/{harness}/config.example")
 
 
+def make_git_repo(root: Path) -> None:
+    subprocess.run(["git", "init"], cwd=root, check=True, capture_output=True)
+    subprocess.run(
+        ["git", "config", "user.email", "test@example.invalid"],
+        cwd=root,
+        check=True,
+        capture_output=True,
+    )
+    subprocess.run(
+        ["git", "config", "user.name", "Test User"],
+        cwd=root,
+        check=True,
+        capture_output=True,
+    )
+    subprocess.run(
+        ["git", "add", "."],
+        cwd=root,
+        check=True,
+        capture_output=True,
+    )
+
+
 def messages(result) -> list[str]:
     return [finding.message for finding in result.findings]
 
@@ -140,7 +162,9 @@ def test__validate_harnesses__broken_relative_reference(tmp_path: Path) -> None:
 
     result = validate_harnesses(tmp_path)
 
-    assert any("broken repo-local reference" in message for message in messages(result))
+    assert any(
+        "broken repo-local reference" in message for message in messages(result)
+    )
     assert result.exit_code() == 1
 
 
@@ -176,5 +200,35 @@ def test__validate_harnesses__missing_opencode_rule_reference(
 
     result = validate_harnesses(tmp_path)
 
-    assert "missing opencode rule reference 'rules/session.md'" in messages(result)
+    assert (
+        "missing opencode rule reference 'rules/session.md'"
+        in messages(result)
+    )
     assert result.exit_code() == 1
+
+
+def test__validate_harnesses__warns_on_runtime_shaped_path(
+    tmp_path: Path,
+) -> None:
+    make_repo(tmp_path)
+    write(tmp_path / ".opencode/runtime.json")
+    make_git_repo(tmp_path)
+
+    result = validate_harnesses(tmp_path)
+
+    assert result.count(Severity.ERROR) == 0
+    assert "tracked runtime-shaped path is not allowlisted" in messages(result)
+    assert result.count(Severity.WARNING) == 1
+
+
+def test__validate_harnesses__allows_runtime_compatibility_path(
+    tmp_path: Path,
+) -> None:
+    make_repo(tmp_path)
+    write(tmp_path / ".opencode/opencode.json")
+    make_git_repo(tmp_path)
+
+    result = validate_harnesses(tmp_path)
+
+    assert result.count(Severity.ERROR) == 0
+    assert result.count(Severity.WARNING) == 0

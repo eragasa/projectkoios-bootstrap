@@ -10,6 +10,10 @@ Before doing other work in a new session:
 2. Check git branch, status, and the last few commits.
 3. Report pending work before making changes.
 
+If an active artifact is stale because later evidence satisfies or supersedes
+it, leave the historical header unchanged and write a pi completion-decision
+handoff that names the stale artifact, controlling evidence, and closure result.
+
 ## Session stop
 
 Before ending a session:

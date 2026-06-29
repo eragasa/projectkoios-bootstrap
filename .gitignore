@@ -184,6 +184,7 @@ __marimo__/
 .streamlit/secrets.toml
 
 # Project Koios harness runtime data (never commit)
+agents/local/
 .archon-runs/
 pi/agent/
 opencode/sandbox/

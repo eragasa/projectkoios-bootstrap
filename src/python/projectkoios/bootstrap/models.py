@@ -23,10 +23,30 @@ class Harness:
 
 
 HARNESSES: list[Harness] = [
-    Harness("pi", "pi", "Agent runtime — executes Archon workflows", Path.home() / ".pi"),
-    Harness("archon", "Athena", "Architecture design, ADRs, planning", Path.home() / ".archon"),
-    Harness("opencode", "Vulcan", "Code writing, tests, validation", Path.home() / ".opencode"),
-    Harness("goose", "Koios", "Knowledge management, vault ops", Path.home() / ".local/share/goose"),
+    Harness(
+        "pi",
+        "pi",
+        "Agent runtime — executes Archon workflows",
+        Path.home() / ".pi",
+    ),
+    Harness(
+        "archon",
+        "Athena",
+        "Architecture design, ADRs, planning",
+        Path.home() / ".archon",
+    ),
+    Harness(
+        "opencode",
+        "Vulcan",
+        "Code writing, tests, validation",
+        Path.home() / ".opencode",
+    ),
+    Harness(
+        "goose",
+        "Koios",
+        "Knowledge management, vault ops",
+        Path.home() / ".local/share/goose",
+    ),
 ]
 
 

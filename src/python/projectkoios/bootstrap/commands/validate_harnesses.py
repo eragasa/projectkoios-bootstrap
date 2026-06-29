@@ -1,11 +1,14 @@
 from __future__ import annotations
 
+import sys
 from argparse import ArgumentParser, Namespace
 from pathlib import Path
-import sys
 
 from projectkoios.bootstrap.models import REPO_ROOT
-from projectkoios.bootstrap.validation.harnesses import Severity, validate_harnesses
+from projectkoios.bootstrap.validation.harnesses import (
+    Severity,
+    validate_harnesses,
+)
 
 
 def register(subparsers) -> None:
