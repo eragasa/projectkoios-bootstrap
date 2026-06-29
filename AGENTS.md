@@ -37,7 +37,7 @@ Do not use this repo for:
 
 | Harness | Name | Role |
 |---------|------|------|
-| pi | pi | Agent runtime — executes Archon workflows |
+| pi | pi | Meta-harness — orchestration, operations, handoff coordination |
 | archon (archon.diy) | **Athena** | Architecture design, ADRs, planning |
 | opencode | **Vulcan** | Code writing, tests, validation |
 | goose | **Koios** | Knowledge management, vault ops |
@@ -109,7 +109,8 @@ A lower-authority artifact must be revised when it conflicts with a higher-autho
 
 When in doubt:
 - Route design uncertainty to archon first
-- Route file changes to the code agent (opencode)
+- Route lightweight config changes and direct edits to the meta-harness (pi)
+- Route complex implementation, tests, and validation to the code agent (opencode)
 - Route durable documentation to the knowledge agent (goose)
 - Route disagreement or completion checks to the meta-harness (pi)
 
@@ -122,16 +123,20 @@ When in doubt:
 
 ## Directions for pi
 
-Use pi for orchestration and runtime control:
+Use pi for orchestration and direct operations:
+- run commands, edit files, inspect repo and filesystem state
+- manage harness configs, bootstrap setup, repo maintenance
 - start, inspect, approve, reject, resume, or cancel Archon workflow runs
 - coordinate handoffs between harnesses
-- inspect the filesystem and repo state
-- perform lightweight repo operations when no specialized harness is required
+- read and write handoff artifacts
+- route tasks to the appropriate specialized harness
 
-Do not use pi for:
-- architecture design
-- implementation work
-- knowledge curation
+Pi is the meta-harness operator. It is not limited to routing — it can
+execute tasks directly when no specialist is required. But to respect the
+separation of concerns:
+- route architecture and planning ambiguity to archon
+- route complex implementation, tests, and bug fixes to opencode
+- route knowledge curation and vault work to goose
 
 ## Directions for archon
 
