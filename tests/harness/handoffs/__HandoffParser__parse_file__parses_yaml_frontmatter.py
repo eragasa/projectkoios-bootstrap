@@ -16,7 +16,7 @@ Repository: /Users/eugene/repos/projectkoios-bootstrap
 
 # Architecture spec: test
 
-Implementation brief for read-only evaluator.
+Architecture specification for read-only evaluator.
 """
 
 MISSING_FIELDS = """\
@@ -79,7 +79,7 @@ def test__HandoffParser__parse_file__nonexistent_file(tmp_path: Path) -> None:
     assert token is None
 
 
-def test__HandoffParser__parse_file__skips_non_markdown_files(tmp_path: Path) -> None:
+def test__HandoffParser__parse_file__parses_any_file_regardless_of_extension(tmp_path: Path) -> None:
     f = tmp_path / "notes.txt"
     f.write_text("Origin: Athena\nFrom: Athena\nTo: Vulcan", encoding="utf-8")
 

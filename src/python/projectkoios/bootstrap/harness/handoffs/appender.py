@@ -27,6 +27,8 @@ def _build_block(violations: list[Violation]) -> str:
 
 
 def _insert_or_append(content: str, block: str) -> str:
-    if VIOLATIONS_HEADING in content:
-        return content + block
-    return content.rstrip("\n") + "\n\n" + VIOLATIONS_HEADING + "\n" + block
+    heading_pos = content.find(VIOLATIONS_HEADING)
+    if heading_pos != -1:
+        after_heading = heading_pos + len(VIOLATIONS_HEADING)
+        return content[:after_heading] + "\n" + block.lstrip("\n") + content[after_heading:]
+    return content.rstrip("\n") + "\n\n" + VIOLATIONS_HEADING + "\n" + block.lstrip("\n")

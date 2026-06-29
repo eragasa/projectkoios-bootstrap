@@ -73,12 +73,18 @@ class HandoffParser:
 
         if "architecture" in title_lower or "spec" in title_lower:
             return "architecture-spec"
+        if "acceptance" in title_lower or "acceptance-criteria" in title_lower:
+            return "acceptance-criteria"
         if "implementation brief" in title_lower or "implementation-brief" in title_lower:
             return "implementation-brief"
+        if "implementation plan" in title_lower or "implementation-plan" in title_lower:
+            return "implementation-plan"
         if "implementation report" in title_lower or "implementation-report" in title_lower:
             return "implementation-report"
         if "patch" in title_lower:
             return "patch"
+        if "test results" in title_lower or "test-results" in title_lower:
+            return "test-results"
         if "routing" in title_lower:
             return "routing-decision"
         if "blockage" in title_lower or "blocked" in title_lower:
@@ -89,8 +95,10 @@ class HandoffParser:
             return "completion-decision"
         if "deviation" in title_lower:
             return "deviation-report"
-        if "knowledge" in title_lower or "provenance" in title_lower:
+        if "knowledge" in title_lower:
             return "knowledge-note"
+        if "provenance" in title_lower:
+            return "provenance-index"
         if from_hdr in ("vulcan", "opencode") and to_hdr in ("athena", "archon", "pi", "hermes"):
             return "implementation-report"
         if from_hdr in ("athena", "archon") and to_hdr in ("vulcan", "opencode"):

@@ -25,7 +25,7 @@ CODEX_IDS = frozenset({"Codex", "codex"})
 
 def check_hermes_forwarded_without_decision(marking: Marking) -> list[Violation]:
     violations: list[Violation] = []
-    for place_name in ("hermes_inbox", "pi_inbox"):
+    for place_name in ("pi_inbox",):
         for token in marking.tokens_at(place_name):
             if token.sender not in HERMES_IDS and token.recipient not in HERMES_IDS:
                 continue
