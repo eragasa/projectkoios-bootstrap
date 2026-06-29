@@ -9,6 +9,18 @@ class Harness:
     role: str
     config_dir: Path
 
+    @property
+    def skills_dir(self) -> Path:
+        return GLOBAL_DIR / self.name / "skills"
+
+    @property
+    def runtime_skills_dir(self) -> Path:
+        if self.name == "pi":
+            return Path.home() / ".pi" / "agent" / "skills"
+        if self.name == "opencode":
+            return Path.home() / ".opencode" / "skills"
+        return self.config_dir / "skills"
+
 
 HARNESSES: list[Harness] = [
     Harness("pi", "pi", "Agent runtime — executes Archon workflows", Path.home() / ".pi"),

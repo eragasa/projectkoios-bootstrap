@@ -234,6 +234,26 @@ def _check_global_examples(root: Path, findings: list[Finding]) -> None:
                     str(PurePosixPath("agents/global") / harness.name),
                 )
             )
+    _check_skills(root, findings)
+
+
+def _check_skills(root: Path, findings: list[Finding]) -> None:
+    for harness in HARNESSES:
+        skills_dir = root / "agents" / "global" / harness.name / "skills"
+        if not skills_dir.exists():
+            continue
+        for skill_dir in skills_dir.iterdir():
+            if not skill_dir.is_dir():
+                continue
+            skill_md = skill_dir / "SKILL.md"
+            if not skill_md.exists():
+                findings.append(
+                    Finding(
+                        Severity.WARNING,
+                        f"skill {skill_dir.name!r} missing SKILL.md",
+                        str(skill_md.relative_to(root)),
+                    )
+                )
 
 
 _EXCLUDED_FILES: frozenset[str] = frozenset({
