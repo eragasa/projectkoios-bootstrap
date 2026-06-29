@@ -1,3 +1,4 @@
+import os
 import shlex
 import subprocess
 import sys
@@ -36,7 +37,7 @@ def _window_exists(name: str) -> bool:
 
 
 def _in_tmux() -> bool:
-    return "TMUX" in sys.environ
+    return "TMUX" in os.environ
 
 
 def _start() -> None:

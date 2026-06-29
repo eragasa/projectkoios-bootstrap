@@ -22,7 +22,7 @@ Documented CLI for managing the koios tmux session and its four windows.
 
 `install` syncs the repo-managed pi harness config into `~/pi/agent/` and `~/.pi/agent/`.
 
-Bootstrap architecture notes: `docs/architecture.00.md`
+Bootstrap architecture notes: `doc/architecture.00.md`
 
 ### Workspace layout
 
