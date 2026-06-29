@@ -9,7 +9,8 @@ It separates harness concerns from the `projectkoios` mothership repository.
 - harness boundaries
 - install/sync behavior
 - shared context and maps
-- repo-local config for pi, Goose, and opencode
+- shared bootstrap guidance for pi, Goose, and opencode
+- repo-local config templates for pi, Goose, and opencode
 
 It does **not** own domain architecture for Project Koios product code.
 That belongs in the `projectkoios` repository and its ADRs.
@@ -31,7 +32,7 @@ projectkoios-bootstrap/
 
 | Harness | Role |
 |---|---|
-| `pi` | operator interface; runs Archon workflows |
+| `pi` | router/operator interface; routes repo-scoped work and can run Archon workflows |
 | `goose` | knowledge curation, ingestion, vault/bootstrap tasks |
 | `opencode` | implementation, tests, validation, runtime debugging |
 | `Archon` | orchestration and planning workflows |

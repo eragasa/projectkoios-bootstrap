@@ -47,8 +47,9 @@ Do not use this repo for:
 
 Athena is the spec and architecture system for Project Koios. It comprises
 two layers that operate as one role:
-- **Codex** handles intake, interviewing, and pre-work to scope requests
-  before they enter an Archon workflow.
+- **Codex** is a delegated access/operator layer used when direct pi
+  ownership is unavailable; it may invoke Archon workflows and relay
+  artifacts, but it is not `pi`.
 - **Archon** runs the workflow — producing architecture specs, acceptance
   criteria, and implementation briefs.
 
@@ -254,6 +255,24 @@ From: <agent-name>
 To: <agent-name>
 Status: <draft|active|complete>
 ```
+
+### Provenance fields
+
+When provenance needs more precision, include these fields or an equivalent
+block:
+
+- `Origin` — the original harness or system where the task began
+- `From` — the immediate sender or producer of the artifact
+- `Acting-As` — the harness role being represented, if different from `From`
+- `Scope` / `Repository` — the repository or repo-scope the artifact applies to
+- `Delegated-Operator` — the access layer or human mediator when one is
+  relaying work without becoming that harness
+
+Interpretation rule:
+- `From` answers who sent the artifact
+- `Acting-As` answers which harness role they represented
+- `Delegated-Operator` answers who mediated access
+
 
 ## Secrets and safety
 

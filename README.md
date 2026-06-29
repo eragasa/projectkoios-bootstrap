@@ -6,21 +6,21 @@ Shared harness config store for building and operating Project Koios.
 
 | Harness | Name | Tool | Domain |
 |---------|------|------|--------|
-| pi | pi | pi | Operator interface; runs Archon workflows |
+| pi | pi | pi | Router/operator interface; routes repo-scoped work and can run Archon workflows |
 | archon | **Athena** | [Archon](https://archon.diy) | Architecture decisions, ADRs, planning, design review |
 | opencode | **Vulcan** | opencode | Code implementation, tests, validation, runtime sessions |
 | goose | **Koios** | [Goose](https://goose-docs.ai) | Knowledge curation, vault ops, source ingestion, UI bootstrap |
 
 ## Current operator path
 
-Until Archon can run under `pi` directly, use Codex as the temporary
-operator/access layer for Archon workflows. In this mode, Codex is not a
-replacement identity for `pi`; it is the bridge used to start, inspect,
-approve, reject, resume, or cancel Archon/Athena runs and to read or write
-handoff artifacts.
+When direct `pi` ownership of Archon runs is unavailable, use Codex as the
+delegated operator/access layer for Archon workflows. Codex is not a
+replacement identity for `pi`; it mediates start, inspect, approve, reject,
+resume, or cancel actions and relays handoff artifacts on behalf of the
+operator.
 
-Target state: `pi` owns the operator interface again once it can run Archon
-reliably.
+Target state: `pi` owns the operator interface directly whenever the runtime
+path supports it.
 
 ## Prerequisites
 
