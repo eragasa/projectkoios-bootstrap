@@ -4,8 +4,29 @@ version = "0.1.0"
 description = "Bootstrap and harness management for Project Koios"
 requires-python = ">=3.12"
 
+[project.optional-dependencies]
+dev = [
+    "mypy",
+    "pytest",
+    "ruff",
+]
+
 [project.scripts]
 projectkoios = "projectkoios.bootstrap.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src/python"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 80
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.mypy]
+python_version = "3.12"
+packages = ["projectkoios.bootstrap"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -6,7 +6,10 @@ from projectkoios.bootstrap.models import HARNESSES, REPO_ROOT
 
 
 def register(subparsers) -> None:
-    parser = subparsers.add_parser("install", help="Symlink global configs and materialize skills")
+    parser = subparsers.add_parser(
+        "install",
+        help="Symlink global configs and materialize skills",
+    )
     parser.set_defaults(func=run)
 
 
@@ -55,12 +58,18 @@ def run(args) -> None:
         src = REPO_ROOT / "pi" / "agent" / name
         if src.exists():
             _ensure_symlink(str(src), str(pi_source_agent / name))
-            _ensure_symlink(str(pi_source_agent / name), str(pi_pi_agent / name))
+            _ensure_symlink(
+                str(pi_source_agent / name),
+                str(pi_pi_agent / name),
+            )
 
     system_md = REPO_ROOT / "pi" / "SYSTEM.md"
     if system_md.exists():
         _ensure_symlink(str(system_md), str(pi_source_home / "SYSTEM.md"))
-        _ensure_symlink(str(pi_source_home / "SYSTEM.md"), str(pi_pi_agent / "SYSTEM.md"))
+        _ensure_symlink(
+            str(pi_source_home / "SYSTEM.md"),
+            str(pi_pi_agent / "SYSTEM.md"),
+        )
 
     print("done: pi config synced")
     print("note: auth.json is intentionally not managed by install")

@@ -1,9 +1,11 @@
 from __future__ import annotations
 
+import re
+import subprocess
 from dataclasses import dataclass
 from enum import Enum
+from fnmatch import fnmatchcase
 from pathlib import Path, PurePosixPath
-import re
 
 from projectkoios.bootstrap.models import HARNESSES
 
@@ -26,7 +28,9 @@ class ValidationResult:
     findings: tuple[Finding, ...]
 
     def count(self, severity: Severity) -> int:
-        return sum(1 for finding in self.findings if finding.severity is severity)
+        return sum(
+            1 for finding in self.findings if finding.severity is severity
+        )
 
     def exit_code(self, *, strict: bool = False) -> int:
         if self.count(Severity.ERROR) > 0:
@@ -93,6 +97,28 @@ REFERENCE_ROOTS = (
     "src/python",
 )
 
+RUNTIME_SHAPED_ROOTS = (
+    ".pi",
+    ".opencode",
+    ".claude",
+    ".agents",
+    ".archon",
+)
+
+RUNTIME_COMPATIBILITY_ALLOWLIST = (
+    ".pi/settings.json",
+    ".pi/agent/skills/graphify/**",
+    ".opencode/opencode.json",
+    ".opencode/plugins/graphify.js",
+    ".opencode/skills/graphify/**",
+    ".claude/skills/archon/**",
+    ".claude/skills/manage-run/**",
+    ".agents/skills/archon",
+    ".agents/skills/manage-run",
+    ".archon/config.yaml",
+    ".archon/workflows",
+)
+
 LOCAL_LINK_PATTERN = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
 INLINE_CODE_PATTERN = re.compile(r"`([^`\n]+)`")
 _PATH_ROOT_PATTERN = "|".join(re.escape(r) for r in REFERENCE_ROOTS)
@@ -110,6 +136,7 @@ def validate_harnesses(root: Path, *, strict: bool = False) -> ValidationResult:
     _check_opencode_references(root, findings)
     _check_bootstrap_assumptions(root, findings)
     _check_global_examples(root, findings)
+    _check_runtime_shaped_paths(root, findings)
 
     findings.append(
         Finding(
@@ -125,7 +152,11 @@ def _check_canonical_files(root: Path, findings: list[Finding]) -> None:
         path = root / rel_path
         if not path.exists():
             findings.append(
-                Finding(Severity.ERROR, "missing canonical harness file", rel_path)
+                Finding(
+                    Severity.ERROR,
+                    "missing canonical harness file",
+                    rel_path,
+                )
             )
             continue
 
@@ -182,7 +213,11 @@ def _check_opencode_references(root: Path, findings: list[Finding]) -> None:
     for ref in sorted(set(re.findall(r"`(rules/[^`]+\.md)`", text))):
         if not (root / "opencode" / ref).exists():
             findings.append(
-                Finding(Severity.ERROR, f"missing opencode rule reference {ref!r}", rel_path)
+                Finding(
+                    Severity.ERROR,
+                    f"missing opencode rule reference {ref!r}",
+                    rel_path,
+                )
             )
     for ref in sorted(set(re.findall(r"`(checklists/[^`]+\.md)`", text))):
         if not (root / "opencode" / ref).exists():
@@ -221,16 +256,21 @@ def _check_global_examples(root: Path, findings: list[Finding]) -> None:
             findings.append(
                 Finding(
                     Severity.ERROR,
-                    f"missing global example directory for harness {harness.name!r}",
+                    "missing global example directory for harness "
+                    f"{harness.name!r}",
                     str(PurePosixPath("agents/global") / harness.name),
                 )
             )
             continue
-        if not any(item.name.endswith(".example") for item in harness_dir.iterdir()):
+        has_example = any(
+            item.name.endswith(".example") for item in harness_dir.iterdir()
+        )
+        if not has_example:
             findings.append(
                 Finding(
                     Severity.ERROR,
-                    f"missing .example config coverage for harness {harness.name!r}",
+                    ".example config coverage missing for harness "
+                    f"{harness.name!r}",
                     str(PurePosixPath("agents/global") / harness.name),
                 )
             )
@@ -254,6 +294,50 @@ def _check_skills(root: Path, findings: list[Finding]) -> None:
                         str(skill_md.relative_to(root)),
                     )
                 )
+
+
+def _check_runtime_shaped_paths(root: Path, findings: list[Finding]) -> None:
+    for rel_path in _tracked_runtime_shaped_paths(root):
+        if _is_runtime_compatibility_path(rel_path):
+            continue
+        findings.append(
+            Finding(
+                Severity.WARNING,
+                "tracked runtime-shaped path is not allowlisted",
+                rel_path,
+            )
+        )
+
+
+def _tracked_runtime_shaped_paths(root: Path) -> tuple[str, ...]:
+    try:
+        result = subprocess.run(
+            ["git", "-C", str(root), "ls-files", *RUNTIME_SHAPED_ROOTS],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+    except (FileNotFoundError, subprocess.CalledProcessError):
+        return ()
+    return tuple(
+        line
+        for line in result.stdout.splitlines()
+        if _has_runtime_shaped_root(line)
+    )
+
+
+def _has_runtime_shaped_root(rel_path: str) -> bool:
+    return any(
+        rel_path == root or rel_path.startswith(f"{root}/")
+        for root in RUNTIME_SHAPED_ROOTS
+    )
+
+
+def _is_runtime_compatibility_path(rel_path: str) -> bool:
+    return any(
+        fnmatchcase(rel_path, pattern)
+        for pattern in RUNTIME_COMPATIBILITY_ALLOWLIST
+    )
 
 
 _EXCLUDED_FILES: frozenset[str] = frozenset({

@@ -18,13 +18,15 @@ That belongs in the `projectkoios` repository and its ADRs.
 
 ```text
 projectkoios-bootstrap/
-├── docs/              ← bootstrap architecture notes
+├── doc/               ← bootstrap architecture notes
 ├── architecture/      ← ADRs and durable decisions
 ├── maps/              ← authoritative workspace layout
-├── archon/            ← Archon workflows and prompts
-├── opencode/          ← opencode rules and runtime harness
+├── agents/global/     ← committed shared harness config source
+├── agents/local/      ← ignored repo-local harness overrides
+├── archon/            ← Archon workflow and prompt source
+├── opencode/          ← opencode rules and harness instructions
 ├── goose/             ← Goose agent rules and prompts
-└── pi/                ← pi-specific harness config
+└── pi/                ← pi operator instructions
 ```
 
 ## Harness split
@@ -39,16 +41,22 @@ projectkoios-bootstrap/
 ## Shared-source strategy
 
 Keep shared instructions in this repo and sync them outward:
-- `projectkoios-bootstrap/pi/` for pi-specific instructions
-- `projectkoios-bootstrap/goose/` for Goose-specific instructions
-- `projectkoios-bootstrap/opencode/` for opencode-specific instructions
-- `projectkoios-bootstrap/maps/` for workspace truth
+- `agents/global/<harness>/` for committed shared harness config
+- `agents/local/<harness>/` for ignored repo-local overrides
+- harness directories such as `pi/`, `opencode/`, `goose/`, and `archon/` for
+  source docs, rules, prompts, and workflows owned by this bootstrap repo
+- `maps/` for workspace truth
 
 Install tooling should materialize the expected consumer locations, such as:
 - `~/.pi/agent/AGENTS.md`
 - `~/.pi/agent/SYSTEM.md`
 - `~/.pi/agent/prompts/`
 - `~/.pi/agent/skills/`
+
+Tool-native paths in the repository root, including `.pi/`, `.opencode/`,
+`.claude/`, `.agents/`, and `.archon/`, are not the long-term canonical source
+model. Existing tracked files in those paths are temporary compatibility shims
+until the relevant harness loaders can consume the shared source directly.
 
 ## Separation from projectkoios
 

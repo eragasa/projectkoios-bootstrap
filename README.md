@@ -77,6 +77,19 @@ projectkoios harnesses stop      # kill koios session
 Read `maps/repositories.md`, `maps/packages.md`, and `maps/vault_paths.md`
 before touching any code. All component repos are siblings under `~/repos/`.
 
+## Harness Config Layout
+
+Committed shared source lives under `agents/global/<harness>/`. Repo-local
+operator overrides may live under ignored `agents/local/<harness>/` paths.
+Installed or runtime state belongs in harness home directories such as
+`~/.pi/`, `~/.archon/`, `~/.opencode/`, and `~/.local/share/goose/`, or in
+ignored runtime directories.
+
+Some tool-native paths remain tracked temporarily as compatibility shims for
+current loaders. Treat new tracked files under `.pi/`, `.opencode/`,
+`.claude/`, `.agents/`, or `.archon/` as staged-migration candidates rather
+than canonical source.
+
 ## Local Generated State
 
 `graphify-out/` is a generated local database used by Graphify and is ignored by
