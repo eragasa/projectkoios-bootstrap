@@ -45,4 +45,4 @@ python3 -m venv --prompt projectkoios-bootstrap .venv && source .venv/bin/activa
 - **`from __future__ import annotations`** at top of every module
 - **Pydantic at boundaries only** — internal DTOs use `@dataclass(frozen=True)`
 - **ruff**: line-length=80, double quotes, lint=E/F/I/UP/B, target py312
-- **Tests**: pytest, named `test__SomeName.py`, functions `test__function__description`
+- **Tests**: see `doc/testing.md`
