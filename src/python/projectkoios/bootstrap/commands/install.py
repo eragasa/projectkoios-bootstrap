@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 
-from projectkoios.bootstrap.models import HARNESSES, GLOBAL_DIR, REPO_ROOT
+from projectkoios.bootstrap.models import REPO_ROOT
 
 
 def register(subparsers) -> None:

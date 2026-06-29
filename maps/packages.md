@@ -12,6 +12,6 @@ canonical location for a given concern.
 | References & citations | projectkoios-references | src/python/projectkoios/references/ |
 | Workflow engine & provenance | projectkoios-workflow | src/python/projectkoios/workflow/ |
 | Agent harness | projectkoios-agent | src/python/projectkoios/agent/ |
-| Meta-harness config | projectkoios-bootstrap | (no Python code — config only) |
+| Meta-harness config & bootstrap CLI | projectkoios-bootstrap | src/python/projectkoios/bootstrap/ |
 
 Update this file when packages are added, renamed, or relocated.

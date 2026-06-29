@@ -1,8 +1,7 @@
+from collections.abc import Callable
 import os
-import shlex
 import subprocess
 import sys
-from pathlib import Path
 
 from projectkoios.bootstrap.models import REPO_ROOT
 
@@ -54,7 +53,7 @@ def _start() -> None:
 
     windows: list[tuple[str, str]] = [
         (OPENCODE_WINDOW, "opencode"),
-        (GOOSE_WINDOW, f"goose run --instructions goose/AGENT.md"),
+        (GOOSE_WINDOW, "goose run --instructions goose/AGENT.md"),
         (SCRATCH_WINDOW, ""),
     ]
     for name, cmd in windows:
@@ -127,7 +126,7 @@ def _stop() -> None:
 
 def _check_tmux() -> None:
     try:
-        subprocess.run(["tmux", "--version"], check=True, capture_output=True)
+        subprocess.run(["tmux", "-V"], check=True, capture_output=True)
     except (FileNotFoundError, subprocess.CalledProcessError):
         print("error: tmux is not installed or not on PATH")
         sys.exit(1)
@@ -135,8 +134,8 @@ def _check_tmux() -> None:
 
 def run(args) -> None:
     _check_tmux()
-    actions = {"start": _start, "show": _show, "connect": _connect, "stop": _stop}
-    fn = actions[args.action]
+    actions: dict[str, Callable[..., None]] = {"start": _start, "show": _show, "connect": _connect, "stop": _stop}
+    fn: Callable[..., None] = actions[args.action]
     if args.action == "connect":
         fn(args.name)
     else:

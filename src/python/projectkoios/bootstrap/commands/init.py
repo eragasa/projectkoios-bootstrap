@@ -1,5 +1,4 @@
 import shutil
-from pathlib import Path
 
 from projectkoios.bootstrap.models import HARNESSES, GLOBAL_DIR
 

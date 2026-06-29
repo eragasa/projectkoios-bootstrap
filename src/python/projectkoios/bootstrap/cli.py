@@ -1,5 +1,4 @@
 import argparse
-import sys
 
 from projectkoios.bootstrap.commands import init, install, harnesses
 
