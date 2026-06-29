@@ -1,0 +1,11 @@
+[project]
+name = "projectkoios-bootstrap"
+version = "0.1.0"
+description = "Bootstrap and harness management for Project Koios"
+requires-python = ">=3.12"
+
+[project.scripts]
+projectkoios = "projectkoios.bootstrap.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src/python"]

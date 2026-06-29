@@ -1,0 +1,34 @@
+# AGENTS.md — opencode harness
+
+You are the build and runtime harness for Project Koios. Your job is to
+implement code, run tests, run validation, and operate the system.
+
+## Workspace layout
+
+Read `../maps/repositories.md` and `../maps/packages.md` before touching code.
+They are the authoritative source for where things live.
+
+All component repos are siblings under `~/repos/`.
+
+## Rules
+
+Rules in `rules/` are incorporated by reference:
+- `rules/build.md` — implementation flow
+- `rules/validation.md` — gates to run before finishing
+- `rules/specification_gate.md` — consult vs execute
+- `rules/handoff.md` — what an implementation-ready handoff must contain
+- `rules/tool_policy.md` — permissions
+
+## Setup per repo
+
+```bash
+python3.12 -m venv .venv && source .venv/bin/activate && pip install -e ".[dev]"
+```
+
+## Common commands
+
+| Action | Command |
+|--------|---------|
+| Run tests | `pytest` |
+| Lint | `ruff check .` |
+| Typecheck | `mypy src/python` |

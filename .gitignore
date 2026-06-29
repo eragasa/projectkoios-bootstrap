@@ -183,11 +183,19 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 
-# Project Koios harness artifacts
+# Project Koios harness runtime data (never commit)
 .archon-runs/
+pi/agent/
 opencode/sandbox/
 opencode/sessions/
 goose/sessions/
 
+# Graphify
+graphify-out/
+
 # Graphify AST cache (regenerated on extract)
 graphify-out/cache/ast/
+
+# Swap files
+*.swp
+*.swo

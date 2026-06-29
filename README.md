@@ -1,23 +1,15 @@
 # projectkoios-bootstrap
 
-The three-harness meta-harness for building and operating Project Koios.
-
-```
-projectkoios-bootstrap/
-├── architecture/   ← design docs and ADRs
-├── maps/           ← workspace layout (repos, packages, vault)
-├── archon/         ← Archon — architecture and design workflows
-├── opencode/       ← opencode — build and runtime
-└── goose/          ← Goose — knowledge management
-```
+Shared harness config store for building and operating Project Koios.
 
 ## Harnesses
 
-| Harness | Tool | Domain |
-|---------|------|--------|
-| **archon/** | [Archon](https://archon.diy) | Architecture decisions, ADRs, planning, design review |
-| **opencode/** | opencode | Code implementation, tests, validation, runtime sessions |
-| **goose/** | [Goose](https://goose-docs.ai) | Knowledge curation, vault ops, source ingestion, UI bootstrap |
+| Harness | Name | Tool | Domain |
+|---------|------|------|--------|
+| pi | pi | pi | Operator interface; runs Archon workflows |
+| archon | **Athena** | [Archon](https://archon.diy) | Architecture decisions, ADRs, planning, design review |
+| opencode | **Vulcan** | opencode | Code implementation, tests, validation, runtime sessions |
+| goose | **Koios** | [Goose](https://goose-docs.ai) | Knowledge curation, vault ops, source ingestion, UI bootstrap |
 
 ## Prerequisites
 
@@ -26,75 +18,55 @@ brew install python uv
 # opencode: https://opencode.ai
 # Archon CLI:
 mkdir -p ~/.local/bin
-curl -fsSL https://github.com/coleam00/Archon/releases/latest/download/archon-darwin-arm64 \
-  -o ~/.local/bin/archon
+curl -fsSL https://github.com/coleam00/Archon/releases/latest/download/archon-darwin-arm64 -o ~/.local/bin/archon
 chmod +x ~/.local/bin/archon
-# Goose CLI: https://goose-docs.ai/docs/quickstart
+# Goose: https://goose-docs.ai/docs/quickstart
 ```
 
 ## Commands
 
-### opencode — build and runtime
+### koios — tmux session and install
 
 ```bash
 cd ~/repos/projectkoios-bootstrap
 
-# Start an opencode session with the build harness rules
-opencode
+# Start or reuse the koios tmux session and four windows
+./scripts/koios harnesses start
 
-# Then within the session:
-# - Read maps/ to understand the workspace
-# - Read opencode/rules/ for build policies
-# - Implement code in the correct component repo (maps/packages.md)
-# - Run validation gates before finishing
+# Show koios workspace state
+./scripts/koios harnesses show
+
+# Focus one workspace window
+./scripts/koios harnesses connect archon
+./scripts/koios harnesses connect opencode
+./scripts/koios harnesses connect goose
+./scripts/koios harnesses connect scratch
+
+# Sync pi harness config into ~/pi/agent/ → ~/.pi/agent/
+./scripts/koios install
+
+# Stop the koios tmux session
+./scripts/koios harnesses stop
 ```
 
-### Goose — knowledge management
+### projectkoios — Python CLI
 
 ```bash
-cd ~/repos/projectkoios-bootstrap
-
-# Start a Goose session with the KM harness
-goose run
-
-# Or with explicit config path:
-goose run --hints goose/AGENT.md
-
-# Then within the session:
-# - Read maps/ for vault and repo locations
-# - Use prompts from goose/prompts/ for common tasks
-# - Run ingest.md, curate.md, search.md, or ui-bootstrap.md
-```
-
-### Archon — architecture and design
-
-Project workflows in this repo default to Pi.
-
-```bash
-cd ~/repos/projectkoios-bootstrap
-
-# List workflows
-archon workflow list
-
-# Run a design review workflow
-archon workflow run design-review "architecture/some-doc.md"
-
-# Create a new ADR
-archon workflow run create-adr "decision summary"
-
-# Plan a feature
-archon workflow run plan-feature "feature request"
+# After pip install -e .
+projectkoios bootstrap init      # copy agents/global/*.example → ~/.<harness>/
+projectkoios bootstrap install   # symlink global configs into place
+projectkoios harnesses start     # create tmux koios session
+projectkoios harnesses show      # list session/window state
+projectkoios harnesses connect   # focus a workspace window
+projectkoios harnesses stop      # kill koios session
 ```
 
 ## Workspace
 
 Read `maps/repositories.md`, `maps/packages.md`, and `maps/vault_paths.md`
-before touching any code. These are the authoritative source for where
-everything lives.
-
-All component repos are siblings under `~/repos/`.
+before touching any code. All component repos are siblings under `~/repos/`.
 
 ## Architecture
 
-See `architecture/adr.20260628.md` for the decision record behind this
-three-harness structure.
+- Bootstrap architecture: `doc/architecture.00.md`
+- ADR archive: `architecture/adr.20260628.md`

@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# koios — thin wrapper around the projectkoios Python CLI
+#
+# Until `projectkoios` is installed system-wide, delegates to the local
+# Python package equivalent: `python -m projectkoios.bootstrap "$@"`.
+#
+# Usage:
+#   koios bootstrap init              # copy agents/global/*.example → ~/.<harness>/
+#   koios bootstrap install           # symlink global configs into place
+#   koios harnesses start             # create tmux koios session
+#   koios harnesses show              # list session/window state
+#   koios harnesses connect [name]    # focus a workspace window
+#   koios harnesses stop              # kill koios session
+
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+export PYTHONPATH="${ROOT}/src/python:${PYTHONPATH:-}"
+
+PYTHON=""
+for candidate in python3.12 python3; do
+  if command -v "$candidate" >/dev/null 2>&1; then
+    PYTHON="$candidate"
+    break
+  fi
+done
+
+if [ -z "$PYTHON" ]; then
+  echo "error: python3 not found" >&2
+  exit 1
+fi
+
+exec "$PYTHON" -m projectkoios.bootstrap "$@"

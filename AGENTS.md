@@ -1,13 +1,77 @@
-## graphify
+# AGENTS.md — Project Koios bootstrap
 
-This project has a knowledge graph at `graphify-out/` with god nodes, community structure, and cross-file relationships.
+This repo is the shared config store for Project Koios. It does not own domain
+architecture — that belongs in the `projectkoios` mothership repository.
 
-When the user types `/graphify`, load and follow the `graphify` skill before doing anything else.
+## Harnesses
 
-Rules:
-- For codebase questions, if `graphify-out/graph.json` exists, run `graphify query "<question>"` first. Use `graphify path "<A>" "<B>"` for relationships and `graphify explain "<concept>"` for focused concepts. These usually return a smaller, more relevant subgraph than `GRAPH_REPORT.md` or raw source search.
-- If `graphify-out/graph.json` does not exist, graphify is unavailable, or the task requires exact edit-level verification, inspect the source directly.
-- Git-dirty files under `graphify-out/` are expected after hooks or incremental updates; this alone is not a reason to skip graphify. Only skip graphify if the task is about stale or incorrect graph output, graphify fails, or the user explicitly says not to use it.
-- If `graphify-out/wiki/index.md` exists, prefer it for broad navigation, but use source files when precise implementation details matter.
-- Read `graphify-out/GRAPH_REPORT.md` only for broad architecture review or when `query`/`path`/`explain` do not surface enough context.
-- After modifying code, run `graphify update .` when available to keep the graph current (AST-only, no API cost).
+| Harness | Name | Role |
+|---------|------|------|
+| pi | pi | Agent runtime — executes Archon workflows |
+| archon (archon.diy) | **Athena** | Architecture design, ADRs, planning |
+| opencode | **Vulcan** | Code writing, tests, validation |
+| goose | **Koios** | Knowledge management, vault ops |
+
+## Harness configs
+
+| Scope | Path | Contents |
+|-------|------|----------|
+| **Global (this repo)** | `agents/global/<harness>/` | Example configs, `.example` suffix, no secrets |
+| **Local** | `~/.pi/` | Per-machine pi config (auth tokens, local overrides) |
+| **Local** | `~/.archon/` | Per-machine archon config (worktree state, run history) |
+| **Local** | `~/.opencode/` | Per-machine opencode config (accounts, sessions) |
+| **Local** | `~/.local/share/goose/` | Per-machine goose runtime data |
+
+Local configs are NEVER committed to this repo.
+
+## Agent routing
+
+- Route architecture / planning / ADRs to **archon (Athena)**
+- Route implementation / tests / validation to **opencode (Vulcan)**
+- Route research / vault / knowledge tasks to **goose (Koios)**
+- Route operator / orchestration tasks to **pi**
+
+## Artifact handoff
+
+Handoff is the only way state moves between harnesses. Each harness writes
+completion reports and artifacts to its own `handoffs/` directory for the
+downstream harness to consume.
+
+| From | To | Path |
+|------|----|------|
+| archon (Athena) | opencode (Vulcan) | `archon/handoffs/` — implementation-ready plans |
+| opencode (Vulcan) | archon (Athena) | `opencode/handoffs/` — completion reports, architecture questions |
+| goose (Koios) | archon (Athena) | `goose/handoffs/` — research summaries for planning |
+
+Each harness starts with **zero session memory** — it reads only its current
+artifact and the filesystem. No conversation history carries forward.
+
+## Layout
+
+```
+projectkoios-bootstrap/
+├── agents/global/       ← example configs per harness (.example suffix)
+├── architecture/        ← ADRs and durable decisions (immutable archive)
+├── doc/                 ← mutable docs (system overview, future ADRs)
+├── maps/                ← workspace topology (repos, packages, vault)
+├── src/python/          ← Python CLI package (bootstrap tooling)
+├── scripts/             ← CLI wrappers
+├── archon/              ← Archon workflows and prompts
+├── opencode/            ← opencode rules and runtime harness
+├── goose/               ← Goose agent rules and prompts
+├── pi/                  ← pi-specific harness config
+├── AGENTS.md            ← this file
+└── pyproject.toml       ← Python project metadata
+```
+
+## Bootstrapping
+
+```bash
+projectkoios bootstrap init     # copy agents/global/*.example → ~/.<harness>/
+projectkoios bootstrap install  # symlink global configs into place
+```
+
+## Mothership
+
+`~/projectkoios/` is the Obsidian vault. Athena writes architecture docs there.
+This repo is the config store only.
