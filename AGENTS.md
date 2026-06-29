@@ -45,13 +45,15 @@ Do not use this repo for:
 
 ## Current operator path
 
-Until Archon can run under `pi` directly, Codex is the temporary
-operator/access layer for Archon workflows. Codex is not `pi`; Codex is the
-bridge used to start, inspect, approve, reject, resume, or cancel Archon
-runs and to read or write the relevant handoff artifacts.
+Until pi can invoke Archon directly, Codex serves as the delegated
+access/operator layer for Archon workflows. Codex is not pi; Codex
+invokes Archon, relays artifacts, and carries out run-control steps
+that require access mediation. Codex must identify itself as delegated
+access (not as pi) and preserve provenance headers that distinguish
+origin, sender, acting role, and mediator.
 
-Target state: `pi` resumes ownership of the operator interface once it can
-run Archon reliably.
+Target state: pi resumes ownership of the operator interface once it can
+invoke Archon directly.
 
 ## Meta-harness
 
@@ -156,10 +158,18 @@ separation of concerns:
 - route complex implementation, tests, and bug fixes to opencode
 - route knowledge curation and vault work to goose
 
-Transition note: while Archon cannot yet run under `pi` directly, Codex may
-perform these operator actions on behalf of the workflow. In that mode,
-Codex should preserve the same handoff and routing discipline, and should
-not describe itself as `pi`.
+Transition note: while pi cannot invoke Archon directly, Codex acts as a
+delegated operator layer. Codex may invoke Archon workflows, relay
+artifacts, and carry out run-control steps, but must identify itself
+as delegated access (not as pi) and preserve provenance headers
+that distinguish origin, sender, acting role, and mediator.
+
+Pi routes user work to individual Project Koios repositories. Each
+repository may run its own repo-local meta-harness instance with its
+own handoffs, run state, and operational rules. Bootstrap-shared
+guidance in `projectkoios-bootstrap` is distinct from repo-local
+artifacts — this repo owns the conventions; target repos own their
+local harness state.
 
 ### Session protocol for pi
 
@@ -248,9 +258,18 @@ Example: `2026-06-29.214500_graphify-out-stale-cleanup.md`
 Origin: <harness-name>
 Created: <YYYY-MM-DD HH:MM>
 From: <agent-name>
+Acting-As: <harness-role>   (optional, if different from From)
 To: <agent-name>
 Status: <draft|active|complete>
+Scope: <repository-scope>   (optional, e.g. projectkoios-bootstrap)
+Delegated-Operator: <layer> (optional, when mediation occurs)
 ```
+
+`Acting-As` identifies the harness role the sender was performing if
+different from the sender's identity. `Scope` bounds the artifact to a
+single repository or context. `Delegated-Operator` records the access
+layer or mediator (e.g. Codex) when the sender acted through an
+intermediary.
 
 ## Secrets and safety
 
