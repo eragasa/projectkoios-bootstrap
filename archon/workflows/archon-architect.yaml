@@ -16,7 +16,7 @@ description: |
   - Uses repo-appropriate Python and harness validation commands instead of Bun.
 
 provider: codex
-model: gpt-5.2
+model: gpt-5.5
 modelReasoningEffort: high
 webSearchMode: disabled
 
