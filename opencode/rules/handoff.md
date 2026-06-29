@@ -36,3 +36,20 @@ When execution finishes, report:
 - validations run and results
 - deviations from plan
 - follow-up work or architecture questions
+
+## Handoff file convention
+
+Handoff files written by opencode follow the shared convention defined in root `AGENTS.md`:
+
+**Filename:** `YYYYMMDD.HHMMSS_<topic>.md`
+Example: `2026-06-29.214500_implementation-report.md`
+
+**Header:**
+
+```
+Origin: opencode
+Created: <YYYY-MM-DD HH:MM>
+From: Vulcan
+To: <Athena|pi|user>
+Status: draft|active|complete
+```

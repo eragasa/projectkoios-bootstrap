@@ -30,6 +30,7 @@ specialist if it requires their domain expertise.
 - If `graphify-out/graph.json` exists, prefer `graphify query`, `graphify path`, or `graphify explain` before manual grepping or browsing.
 - See `opencode/AGENTS.md` and `goose/AGENT.md` for the other harnesses;
   do not duplicate their instructions here.
+- When writing handoff artifacts, follow the handoff file convention in root `AGENTS.md`.
 
 ## Reference
 

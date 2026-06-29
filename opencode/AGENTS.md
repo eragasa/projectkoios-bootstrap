@@ -20,6 +20,7 @@ Rules in `rules/` are incorporated by reference:
 - `rules/specification_gate.md` — consult vs execute
 - `rules/handoff.md` — what an implementation-ready handoff must contain
 - `rules/tool_policy.md` — permissions
+- `rules/session.md` — session start/end protocol
 
 ## Checklists
 

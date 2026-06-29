@@ -151,7 +151,7 @@ Use archon (Athena) for:
 
 Archon should:
 - write implementation-ready plans
-- place downstream work in `archon/handoffs/`
+- place downstream work in `archon/handoffs/` using the [handoff file convention](#handoff-file-convention)
 - keep architecture out of this config repo unless it is about bootstrap structure
 
 ## Directions for opencode
@@ -201,6 +201,23 @@ Each harness writes completion reports and artifacts to its own `handoffs/` dire
 | goose (Koios) | archon (Athena) | `goose/handoffs/` — `knowledge-note`, `provenance-index` |
 
 Each harness should assume no session memory beyond its current artifact and filesystem state.
+
+### Handoff file convention
+
+All new handoff files use:
+
+**Filename:** `YYYYMMDD.HHMMSS_<topic>.md`
+Example: `2026-06-29.214500_graphify-out-stale-cleanup.md`
+
+**Header:** These fields at the top of every handoff file:
+
+```
+Origin: <harness-name>
+Created: <YYYY-MM-DD HH:MM>
+From: <agent-name>
+To: <agent-name>
+Status: <draft|active|complete>
+```
 
 ## Secrets and safety
 
