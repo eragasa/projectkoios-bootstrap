@@ -125,6 +125,10 @@ When in doubt:
 - Route durable documentation to the knowledge agent (goose)
 - Route disagreement or completion checks to the meta-harness (pi)
 
+A specialist handoff is justified when it reduces ambiguity, improves
+validation, or preserves durable knowledge; otherwise it is ceremony. See
+`doc/meta-harness.md` for the routing thresholds.
+
 ## Directions for all harnesses
 
 - Read only the current artifact and filesystem state; do not rely on chat history.

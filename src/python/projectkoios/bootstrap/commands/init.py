@@ -23,6 +23,8 @@ def run(args) -> None:
         dst.mkdir(parents=True, exist_ok=True)
 
         for item in src.iterdir():
+            if item.is_dir():
+                continue
             name = item.name
             if name.endswith(".example"):
                 target_name = name.removesuffix(".example")

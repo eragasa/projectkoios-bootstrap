@@ -111,6 +111,26 @@ For coordination work, completion requires:
 
 * routing decision, revision request, escalation request, or completion decision.
 
+## Specialist routing discipline
+
+A specialist handoff is justified when it reduces ambiguity, improves
+validation, or preserves durable knowledge; otherwise it is ceremony.
+
+Use the operator directly for small, reversible, repo-local work: inspection,
+straightforward config changes, simple documentation edits, focused tests,
+handoff cleanup, commits, and run control.
+
+Route to the spec agent when the work has design ambiguity, policy conflict,
+cross-harness impact, ADR-worthy consequences, or unclear acceptance criteria.
+
+Route to the code agent when implementation is nontrivial, validation needs
+meaningful expansion, several modules are involved, or a bug fix requires deeper
+test coverage than the operator should carry inline.
+
+Route to the knowledge agent when the output must become durable project
+knowledge, provenance matters, or research/source ingestion is part of the
+task.
+
 ## Escalation rules
 
 Escalate to the user only when the harness cannot resolve the issue from available artifacts.
