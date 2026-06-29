@@ -19,7 +19,7 @@ export const GraphifyPlugin = async ({ directory }) => {
 
       if (input.tool === "bash") {
         output.args.command =
-          'echo "[graphify] knowledge graph at graphify-out/. For focused questions, run graphify query with your question (scoped subgraph, usually much smaller than GRAPH_REPORT.md) instead of grepping raw files. Read GRAPH_REPORT.md only for broad architecture context." && ' +
+          'echo "[graphify] use graphify first for repo and architecture questions. If graphify-out/graph.json exists, prefer graphify query, graphify path, or graphify explain before grepping raw files. Read GRAPH_REPORT.md only for broad context." && ' +
           output.args.command;
         reminded = true;
       }

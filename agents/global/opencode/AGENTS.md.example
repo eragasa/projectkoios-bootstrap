@@ -12,6 +12,8 @@ All component repos are siblings under `~/repos/`.
 
 ## Rules
 
+For codebase, architecture, file-relationship, and impact questions, use `graphify` first. If `graphify-out/graph.json` exists, prefer `graphify query`, `graphify path`, or `graphify explain` before manual grepping or browsing.
+
 Rules in `rules/` are incorporated by reference:
 - `rules/build.md` — implementation flow
 - `rules/validation.md` — gates to run before finishing
@@ -22,7 +24,7 @@ Rules in `rules/` are incorporated by reference:
 ## Setup per repo
 
 ```bash
-python3.12 -m venv .venv && source .venv/bin/activate && pip install -e ".[dev]"
+python3 -m venv --prompt projectkoios-bootstrap .venv && source .venv/bin/activate && pip install -e ".[dev]"
 ```
 
 ## Common commands

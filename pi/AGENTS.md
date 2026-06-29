@@ -26,6 +26,8 @@ specialist if it requires their domain expertise.
 ## Scope
 
 - Keep shared repo rules in the repository root `AGENTS.md`.
+- For codebase, architecture, file-relationship, and impact questions, use `graphify` first.
+- If `graphify-out/graph.json` exists, prefer `graphify query`, `graphify path`, or `graphify explain` before manual grepping or browsing.
 - See `opencode/AGENTS.md` and `goose/AGENT.md` for the other harnesses;
   do not duplicate their instructions here.
 

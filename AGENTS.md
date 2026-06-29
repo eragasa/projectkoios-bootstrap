@@ -117,6 +117,9 @@ When in doubt:
 ## Directions for all harnesses
 
 - Read only the current artifact and filesystem state; do not rely on chat history.
+- For codebase, architecture, file-relationship, and impact questions, use `graphify` first.
+- If `graphify-out/graph.json` exists, prefer `graphify query`, `graphify path`, or `graphify explain` before manual grepping or browsing.
+- Read `graphify-out/GRAPH_REPORT.md` only for broad architecture review.
 - Write handoff artifacts when work must continue in another harness.
 - Keep local secrets out of git.
 - Prefer the harness that matches the work type instead of forcing everything through one tool.
