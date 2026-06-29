@@ -2,9 +2,10 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from projectkoios.bootstrap.harness.data.artifact import ArtifactToken
+from projectkoios.bootstrap.harness.data.artifact import HandoffArtifact
 from projectkoios.bootstrap.harness.data.marking import Marking
-from projectkoios.bootstrap.harness.actions.guards import (
+from projectkoios.bootstrap.harness.data.violation import ViolationCode
+from projectkoios.bootstrap.harness.handoffs.guards import (
     check_hermes_forwarded_without_decision,
 )
 
@@ -14,8 +15,8 @@ def _token(
     kind: str = "user-request",
     sender: str = "Athena",
     recipient: str = "Vulcan",
-) -> ArtifactToken:
-    return ArtifactToken(
+) -> HandoffArtifact:
+    return HandoffArtifact(
         id=id,
         path=Path(f"/fake/{id}.md"),
         kind=kind,
@@ -71,4 +72,4 @@ def test__Guards__hermes_forwarded_without_decision__unknown_kind_in_pi_inbox_is
     marking = Marking(tokens_by_place={"pi_inbox": [token]})
     violations = check_hermes_forwarded_without_decision(marking)
     assert len(violations) == 1
-    assert violations[0].code == "hermes-forwarded-without-decision"
+    assert violations[0].code == ViolationCode.HERMES_FORWARDED_WITHOUT_DECISION

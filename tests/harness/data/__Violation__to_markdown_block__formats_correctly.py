@@ -1,14 +1,16 @@
 from __future__ import annotations
 
-from projectkoios.bootstrap.harness.data.violation import Violation
+from pathlib import Path
+
+from projectkoios.bootstrap.harness.data.violation import Violation, ViolationCode
 
 
 def test__Violation__to_markdown_block__formats_with_all_fields() -> None:
     v = Violation(
-        code="wrong-implementation-owner",
+        code=ViolationCode.WRONG_IMPLEMENTATION_OWNER,
         action="CompleteImplementation",
         actor="Hermes",
-        token_path="/fake/handoff.md",
+        path=Path("/fake/handoff.md"),
         reason="Only Vulcan may produce implementation-report artifacts.",
         required_owner="Vulcan",
         suggested_next_action="Route implementation completion to Vulcan.",
@@ -23,10 +25,10 @@ def test__Violation__to_markdown_block__formats_with_all_fields() -> None:
 
 def test__Violation__to_markdown_block__omits_optional_fields_when_none() -> None:
     v = Violation(
-        code="hermes-forwarded-without-decision",
+        code=ViolationCode.HERMES_FORWARDED_WITHOUT_DECISION,
         action="ForwardInboxState",
         actor="Hermes",
-        token_path="/fake/handoff.md",
+        path=Path("/fake/handoff.md"),
         reason="No routing decision produced.",
     )
     block = v.to_markdown_block()

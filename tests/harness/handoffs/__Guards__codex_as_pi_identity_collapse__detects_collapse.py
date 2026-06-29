@@ -2,15 +2,16 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from projectkoios.bootstrap.harness.data.artifact import ArtifactToken
+from projectkoios.bootstrap.harness.data.artifact import HandoffArtifact
 from projectkoios.bootstrap.harness.data.marking import Marking
-from projectkoios.bootstrap.harness.actions.guards import (
+from projectkoios.bootstrap.harness.data.violation import ViolationCode
+from projectkoios.bootstrap.harness.handoffs.guards import (
     check_codex_as_pi_identity_collapse,
 )
 
 
 def test__Guards__codex_as_pi_identity_collapse__codex_claiming_pi_origin_is_violation() -> None:
-    token = ArtifactToken(
+    token = HandoffArtifact(
         id="codex-pi",
         path=Path("/fake/codex-pi.md"),
         kind="routing-decision",
@@ -22,11 +23,11 @@ def test__Guards__codex_as_pi_identity_collapse__codex_claiming_pi_origin_is_vio
     marking = Marking(tokens_by_place={"pi_inbox": [token]})
     violations = check_codex_as_pi_identity_collapse(marking)
     assert len(violations) == 1
-    assert violations[0].code == "codex-as-pi-identity-collapse"
+    assert violations[0].code == ViolationCode.CODEX_AS_PI_IDENTITY_COLLAPSE
 
 
 def test__Guards__codex_as_pi_identity_collapse__codex_without_pi_claim_is_not_violation() -> None:
-    token = ArtifactToken(
+    token = HandoffArtifact(
         id="codex-no-pi",
         path=Path("/fake/codex-no-pi.md"),
         kind="routing-decision",
@@ -41,7 +42,7 @@ def test__Guards__codex_as_pi_identity_collapse__codex_without_pi_claim_is_not_v
 
 
 def test__Guards__codex_as_pi_identity_collapse__pi_actor_without_codex_is_not_violation() -> None:
-    token = ArtifactToken(
+    token = HandoffArtifact(
         id="real-pi",
         path=Path("/fake/real-pi.md"),
         kind="routing-decision",

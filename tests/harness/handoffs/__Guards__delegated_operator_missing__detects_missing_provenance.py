@@ -2,9 +2,10 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from projectkoios.bootstrap.harness.data.artifact import ArtifactToken
+from projectkoios.bootstrap.harness.data.artifact import HandoffArtifact
 from projectkoios.bootstrap.harness.data.marking import Marking
-from projectkoios.bootstrap.harness.actions.guards import (
+from projectkoios.bootstrap.harness.data.violation import ViolationCode
+from projectkoios.bootstrap.harness.handoffs.guards import (
     check_delegated_operator_missing,
 )
 
@@ -12,8 +13,8 @@ from projectkoios.bootstrap.harness.actions.guards import (
 def _codex_token(
     id: str,
     delegated_operator: str | None = None,
-) -> ArtifactToken:
-    return ArtifactToken(
+) -> HandoffArtifact:
+    return HandoffArtifact(
         id=id,
         path=Path(f"/fake/{id}.md"),
         kind="routing-decision",
@@ -36,12 +37,12 @@ def test__Guards__delegated_operator_missing__codex_without_provenance_is_violat
     marking = Marking(tokens_by_place={"pi_inbox": [token]})
     violations = check_delegated_operator_missing(marking)
     assert len(violations) == 1
-    assert violations[0].code == "delegated-operator-missing"
+    assert violations[0].code == ViolationCode.DELEGATED_OPERATOR_MISSING
     assert violations[0].actor == "Codex"
 
 
 def test__Guards__delegated_operator_missing__athena_artifact_no_violation() -> None:
-    token = ArtifactToken(
+    token = HandoffArtifact(
         id="athena-artifact",
         path=Path("/fake/athena.md"),
         kind="architecture-spec",

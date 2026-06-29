@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from projectkoios.bootstrap.harness.data.violation import ViolationCode
 from projectkoios.bootstrap.harness.handoffs.evaluator import HandoffEvaluator
 
 
@@ -61,7 +62,7 @@ def test__HandoffEvaluator__evaluate__hermes_impl_report_is_wrong_implementation
     violations = evaluator.evaluate()
 
     codes = {v.code for v in violations}
-    assert "wrong-implementation-owner" in codes
+    assert ViolationCode.WRONG_IMPLEMENTATION_OWNER in codes
 
 
 def test__HandoffEvaluator__evaluate__codex_with_delegated_provenance_passes(
@@ -76,7 +77,7 @@ def test__HandoffEvaluator__evaluate__codex_with_delegated_provenance_passes(
     evaluator = HandoffEvaluator(repo_root=root)
     violations = evaluator.evaluate()
 
-    assert "delegated-operator-missing" not in {v.code for v in violations}
+    assert ViolationCode.DELEGATED_OPERATOR_MISSING not in {v.code for v in violations}
 
 
 def test__HandoffEvaluator__evaluate__codex_without_delegated_provenance_is_violation(
@@ -91,7 +92,7 @@ def test__HandoffEvaluator__evaluate__codex_without_delegated_provenance_is_viol
     violations = evaluator.evaluate()
 
     codes = {v.code for v in violations}
-    assert "delegated-operator-missing" in codes
+    assert ViolationCode.DELEGATED_OPERATOR_MISSING in codes
 
 
 def test__HandoffEvaluator__evaluate__codex_claiming_pi_is_identity_collapse(
@@ -107,4 +108,4 @@ def test__HandoffEvaluator__evaluate__codex_claiming_pi_is_identity_collapse(
     violations = evaluator.evaluate()
 
     codes = {v.code for v in violations}
-    assert "codex-as-pi-identity-collapse" in codes
+    assert ViolationCode.CODEX_AS_PI_IDENTITY_COLLAPSE in codes

@@ -4,46 +4,36 @@ from pathlib import Path
 import re
 from uuid import uuid4
 
-from projectkoios.bootstrap.harness.data.artifact import ArtifactToken
+from projectkoios.bootstrap.harness.data.artifact import HandoffArtifact
 
 
 HEADER_FIELD_PATTERN = re.compile(r"^([A-Za-z][A-Za-z0-9_-]+):\s*(.*)$")
 
 
 class HandoffParser:
-    def __init__(self, handoffs_root: Path | None = None) -> None:
-        self.handoffs_root = handoffs_root
-
-    def parse_file(self, path: Path) -> ArtifactToken | None:
+    def parse_file(self, path: Path) -> HandoffArtifact | None:
         if not path.exists():
             return None
         text = path.read_text(encoding="utf-8")
         return self._parse_text(path, text)
 
-    def parse_directory(self, directory: Path) -> list[ArtifactToken]:
-        tokens: list[ArtifactToken] = []
+    def parse_directory(self, directory: Path) -> list[HandoffArtifact]:
+        result: list[HandoffArtifact] = []
         if not directory.exists():
-            return tokens
+            return result
         for path in sorted(directory.iterdir()):
             if path.is_file() and path.suffix == ".md":
                 token = self.parse_file(path)
                 if token is not None:
-                    tokens.append(token)
-        return tokens
+                    result.append(token)
+        return result
 
-    def parse_named_directories(self, directories: dict[str, Path]) -> list[ArtifactToken]:
-        tokens: list[ArtifactToken] = []
-        for place_name, directory in sorted(directories.items()):
-            for token in self.parse_directory(directory):
-                tokens.append(token)
-        return tokens
-
-    def _parse_text(self, path: Path, text: str) -> ArtifactToken | None:
+    def _parse_text(self, path: Path, text: str) -> HandoffArtifact | None:
         frontmatter = self._extract_frontmatter(text)
         if not frontmatter:
             return None
 
-        return ArtifactToken(
+        return HandoffArtifact(
             id=str(uuid4()),
             path=path,
             kind=self._infer_kind(frontmatter, text),
@@ -53,7 +43,6 @@ class HandoffParser:
             acting_as=frontmatter.get("Acting-As"),
             repository=frontmatter.get("Repository") or frontmatter.get("Scope"),
             status=frontmatter.get("Status", "active"),
-            authority_level=None,
             created_at=frontmatter.get("Created"),
             delegated_operator=frontmatter.get("Delegated-Operator"),
             provenance=[

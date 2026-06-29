@@ -4,7 +4,7 @@ from argparse import ArgumentParser, Namespace
 from pathlib import Path
 import sys
 
-from projectkoios.bootstrap.harness.actions.appender import ViolationAppender
+from projectkoios.bootstrap.harness.handoffs.appender import append_violations
 from projectkoios.bootstrap.harness.handoffs.evaluator import HandoffEvaluator
 from projectkoios.bootstrap.models import REPO_ROOT
 
@@ -50,12 +50,11 @@ def run_evaluate(args: Namespace) -> None:
         for path, file_violations in sorted(by_file.items()):
             print(f"\n{path}:")
             for v in file_violations:
-                print(f"  [{v.code}] {v.reason}")
+                print(f"  [{v.code.value}] {v.reason}")
     else:
-        appender = ViolationAppender(dry_run=False)
         for path, file_violations in sorted(by_file.items()):
             if path.exists():
-                appender.append(path, file_violations)
+                append_violations(path, file_violations)
                 print(f"  appended {len(file_violations)} violation(s) to {path}")
 
     print(

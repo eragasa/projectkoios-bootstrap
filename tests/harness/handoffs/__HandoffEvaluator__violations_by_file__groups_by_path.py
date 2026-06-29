@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from projectkoios.bootstrap.harness.data.violation import Violation
+from projectkoios.bootstrap.harness.data.violation import Violation, ViolationCode
 from projectkoios.bootstrap.harness.handoffs.evaluator import HandoffEvaluator
 
 
@@ -10,24 +10,24 @@ def test__HandoffEvaluator__violations_by_file__groups_by_path(tmp_path: Path) -
     evaluator = HandoffEvaluator(repo_root=tmp_path)
 
     v1 = Violation(
-        code="test-a",
+        code=ViolationCode.HERMES_FORWARDED_WITHOUT_DECISION,
         action="Action",
         actor="Actor",
-        token_path=str(tmp_path / "a.md"),
+        path=tmp_path / "a.md",
         reason="Reason A",
     )
     v2 = Violation(
-        code="test-b",
+        code=ViolationCode.WRONG_IMPLEMENTATION_OWNER,
         action="Action",
         actor="Actor",
-        token_path=str(tmp_path / "a.md"),
+        path=tmp_path / "a.md",
         reason="Reason B",
     )
     v3 = Violation(
-        code="test-c",
+        code=ViolationCode.DELEGATED_OPERATOR_MISSING,
         action="Action",
         actor="Actor",
-        token_path=str(tmp_path / "b.md"),
+        path=tmp_path / "b.md",
         reason="Reason C",
     )
 

@@ -5,7 +5,7 @@ from pathlib import Path
 
 
 @dataclass(frozen=True)
-class ArtifactToken:
+class HandoffArtifact:
     id: str
     path: Path
     kind: str
@@ -15,7 +15,6 @@ class ArtifactToken:
     acting_as: str | None = None
     repository: str | None = None
     status: str = "active"
-    authority_level: int | None = None
     created_at: str | None = None
     delegated_operator: str | None = None
     provenance: list[str] | None = None

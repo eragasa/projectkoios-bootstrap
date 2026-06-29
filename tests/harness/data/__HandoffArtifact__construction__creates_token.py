@@ -2,11 +2,11 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from projectkoios.bootstrap.harness.data.artifact import ArtifactToken
+from projectkoios.bootstrap.harness.data.artifact import HandoffArtifact
 
 
-def test__ArtifactToken__construction__creates_token() -> None:
-    token = ArtifactToken(
+def test__HandoffArtifact__construction__creates_token() -> None:
+    token = HandoffArtifact(
         id="test-1",
         path=Path("/fake/handoff.md"),
         kind="implementation-brief",
@@ -22,8 +22,8 @@ def test__ArtifactToken__construction__creates_token() -> None:
     assert token.status == "active"
 
 
-def test__ArtifactToken__construction__accepts_optional_fields() -> None:
-    token = ArtifactToken(
+def test__HandoffArtifact__construction__accepts_optional_fields() -> None:
+    token = HandoffArtifact(
         id="test-2",
         path=Path("/fake/handoff.md"),
         kind="implementation-report",
@@ -40,8 +40,8 @@ def test__ArtifactToken__construction__accepts_optional_fields() -> None:
     assert token.delegated_operator == "Codex"
 
 
-def test__ArtifactToken__construction__defaults_status_to_active() -> None:
-    token = ArtifactToken(
+def test__HandoffArtifact__construction__defaults_status_to_active() -> None:
+    token = HandoffArtifact(
         id="test-3",
         path=Path("/fake/handoff.md"),
         kind="routing-decision",
@@ -52,8 +52,8 @@ def test__ArtifactToken__construction__defaults_status_to_active() -> None:
     assert token.status == "active"
 
 
-def test__ArtifactToken__provenance_has_codex__detects_codex_in_delegated_operator() -> None:
-    token = ArtifactToken(
+def test__HandoffArtifact__provenance_has_codex__detects_codex_in_delegated_operator() -> None:
+    token = HandoffArtifact(
         id="test-4",
         path=Path("/fake/handoff.md"),
         kind="implementation-report",
@@ -65,8 +65,8 @@ def test__ArtifactToken__provenance_has_codex__detects_codex_in_delegated_operat
     assert token.provenance_has_codex() is True
 
 
-def test__ArtifactToken__provenance_has_codex__returns_false_when_no_codex() -> None:
-    token = ArtifactToken(
+def test__HandoffArtifact__provenance_has_codex__returns_false_when_no_codex() -> None:
+    token = HandoffArtifact(
         id="test-5",
         path=Path("/fake/handoff.md"),
         kind="implementation-brief",
@@ -77,8 +77,8 @@ def test__ArtifactToken__provenance_has_codex__returns_false_when_no_codex() -> 
     assert token.provenance_has_codex() is False
 
 
-def test__ArtifactToken__provenance_has_codex__detects_codex_in_provenance_list() -> None:
-    token = ArtifactToken(
+def test__HandoffArtifact__provenance_has_codex__detects_codex_in_provenance_list() -> None:
+    token = HandoffArtifact(
         id="test-6",
         path=Path("/fake/handoff.md"),
         kind="routing-decision",

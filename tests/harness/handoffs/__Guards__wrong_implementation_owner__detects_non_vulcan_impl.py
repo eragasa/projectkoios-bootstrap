@@ -2,9 +2,10 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from projectkoios.bootstrap.harness.data.artifact import ArtifactToken
+from projectkoios.bootstrap.harness.data.artifact import HandoffArtifact
 from projectkoios.bootstrap.harness.data.marking import Marking
-from projectkoios.bootstrap.harness.actions.guards import (
+from projectkoios.bootstrap.harness.data.violation import ViolationCode
+from projectkoios.bootstrap.harness.handoffs.guards import (
     check_wrong_implementation_owner,
 )
 
@@ -13,8 +14,8 @@ def _token(
     id: str,
     kind: str = "implementation-report",
     sender: str = "Vulcan",
-) -> ArtifactToken:
-    return ArtifactToken(
+) -> HandoffArtifact:
+    return HandoffArtifact(
         id=id,
         path=Path(f"/fake/{id}.md"),
         kind=kind,
@@ -43,7 +44,7 @@ def test__Guards__wrong_implementation_owner__hermes_impl_report_is_violation() 
     marking = Marking(tokens_by_place={"pi_inbox": [token]})
     violations = check_wrong_implementation_owner(marking)
     assert len(violations) == 1
-    assert violations[0].code == "wrong-implementation-owner"
+    assert violations[0].code == ViolationCode.WRONG_IMPLEMENTATION_OWNER
     assert violations[0].actor == "Hermes"
 
 
@@ -52,7 +53,7 @@ def test__Guards__wrong_implementation_owner__hermes_patch_is_violation() -> Non
     marking = Marking(tokens_by_place={"pi_inbox": [token]})
     violations = check_wrong_implementation_owner(marking)
     assert len(violations) == 1
-    assert violations[0].code == "wrong-implementation-owner"
+    assert violations[0].code == ViolationCode.WRONG_IMPLEMENTATION_OWNER
 
 
 def test__Guards__wrong_implementation_owner__athena_test_results_is_violation() -> None:
@@ -60,4 +61,4 @@ def test__Guards__wrong_implementation_owner__athena_test_results_is_violation()
     marking = Marking(tokens_by_place={"archon_inbox": [token]})
     violations = check_wrong_implementation_owner(marking)
     assert len(violations) == 1
-    assert violations[0].code == "wrong-implementation-owner"
+    assert violations[0].code == ViolationCode.WRONG_IMPLEMENTATION_OWNER

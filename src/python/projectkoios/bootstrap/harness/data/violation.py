@@ -1,20 +1,29 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from enum import StrEnum
+from pathlib import Path
+
+
+class ViolationCode(StrEnum):
+    HERMES_FORWARDED_WITHOUT_DECISION = "hermes-forwarded-without-decision"
+    WRONG_IMPLEMENTATION_OWNER = "wrong-implementation-owner"
+    DELEGATED_OPERATOR_MISSING = "delegated-operator-missing"
+    CODEX_AS_PI_IDENTITY_COLLAPSE = "codex-as-pi-identity-collapse"
 
 
 @dataclass(frozen=True)
 class Violation:
-    code: str
+    code: ViolationCode
     action: str
     actor: str
-    token_path: str
+    path: Path
     reason: str
     required_owner: str | None = None
     suggested_next_action: str | None = None
 
     def to_markdown_block(self) -> str:
-        lines = [f"- code: {self.code}"]
+        lines = [f"- code: {self.code.value}"]
         lines.append(f"  actor: {self.actor}")
         if self.required_owner:
             lines.append(f"  required_owner: {self.required_owner}")
