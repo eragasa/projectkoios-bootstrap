@@ -1,0 +1,328 @@
+name: archon-architect
+description: |
+  Use when: User wants an architectural sweep, complexity reduction, or codebase health improvement.
+  Triggers: "architect", "simplify codebase", "reduce complexity", "architectural sweep",
+            "clean up architecture", "codebase health", "fix architecture".
+  Does: Scans Python, Markdown, and YAML repo assets -> analyzes architecture with a
+        bootstrap/meta-harness lens -> plans targeted simplifications -> implements
+        scoped changes -> validates -> creates a PR.
+  NOT for: Single-file fixes, feature development, bug fixes, PR reviews.
+
+  Project override for projectkoios-bootstrap:
+  - Uses Codex instead of Claude.
+  - Uses Codex reasoning levels instead of Claude-only hooks.
+  - Encodes read/write guardrails in prompts because Codex ignores per-node hooks,
+    allowed_tools, and denied_tools.
+  - Uses repo-appropriate Python and harness validation commands instead of Bun.
+
+provider: codex
+model: gpt-5.2
+modelReasoningEffort: high
+webSearchMode: disabled
+
+nodes:
+  - id: scan-metrics
+    bash: |
+      set -euo pipefail
+
+      echo "=== FILE SIZE HOTSPOTS (top 40 source/config/docs files) ==="
+      find . \
+        \( -path './.git' -o -path './.venv' -o -path './__pycache__' -o -path '*/__pycache__' -o -path './src/python/projectkoios_bootstrap.egg-info' \) -prune -o \
+        \( -name '*.py' -o -name '*.md' -o -name '*.yaml' -o -name '*.yml' -o -name '*.toml' \) \
+        -type f -exec wc -l {} + 2>/dev/null | sort -rn | head -40
+
+      echo ""
+      echo "=== PYTHON IMPORT FAN-OUT (files with most imports) ==="
+      for f in $(find . -name '*.py' -not -path '*/.git/*' -not -path '*/.venv/*' -not -path '*/__pycache__/*' -not -path '*/projectkoios_bootstrap.egg-info/*'); do
+        count=$(grep -Ec "^(from |import )" "$f" 2>/dev/null) || count=0
+        if [ "$count" -gt 3 ]; then
+          echo "$count imports: $f"
+        fi
+      done | sort -rn | head -25
+
+      echo ""
+      echo "=== HARNESS CONFIG SURFACE ==="
+      find AGENTS.md pi opencode goose archon agents/global doc maps scripts src/python tests \
+        \( -path '*/__pycache__' -o -path '*/projectkoios_bootstrap.egg-info' \) -prune -o \
+        \( -name '*.md' -o -name '*.yaml' -o -name '*.yml' -o -name '*.py' -o -name '*.toml' \) \
+        -type f 2>/dev/null | sort
+
+      echo ""
+      echo "=== HANDOFF STATUS HEADERS ==="
+      for dir in archon/handoffs opencode/handoffs pi/handoffs; do
+        [ -d "$dir" ] || continue
+        for f in "$dir"/*.md; do
+          [ -f "$f" ] || continue
+          printf '%s: ' "$f"
+          sed -n '1,5p' "$f" | tr '\n' ' '
+          printf '\n'
+        done
+      done
+    timeout: 60000
+
+  - id: analyze
+    prompt: |
+      You are a senior software architect performing a codebase health assessment
+      for projectkoios-bootstrap.
+
+      This repo is a shared bootstrap/meta-harness config store. Do not make
+      product/domain architecture decisions for the Project Koios mothership.
+
+      ## Codebase Metrics
+
+      $scan-metrics.output
+
+      ## User Focus
+
+      $ARGUMENTS
+
+      ## Codex Guardrails
+
+      This is an analysis node. Do not modify files, run commits, push, or create
+      PRs. Read the repo and write only the requested assessment artifact.
+
+      ## Assessment Criteria
+
+      For each relevant file you read, evaluate:
+      - Harness responsibility: pi, archon/Athena, opencode/Vulcan, goose/Koios.
+      - Global/local/runtime separation.
+      - Handoff discipline and artifact clarity.
+      - Bootstrap repo scope versus mothership/domain scope.
+      - Repetition or drift across AGENTS.md, docs, prompts, skills, and workflows.
+      - Whether any abstraction or workflow step earns its complexity.
+
+      ## Instructions
+
+      1. Read AGENTS.md and the relevant files surfaced by the metrics.
+      2. Inspect active handoff artifacts enough to understand current process state.
+      3. Identify the top architectural/process concerns.
+      4. Prefer small, reversible cleanup opportunities over broad rewrites.
+      5. Do not propose changes outside this repo.
+
+      ## Output
+
+      Write a structured assessment to `$ARTIFACTS_DIR/architecture-assessment.md`:
+      - Executive summary, 3-5 sentences.
+      - Top findings ranked by impact.
+      - For each finding: files, issue, why it matters, estimated effort, risk.
+      - Explicit non-findings for things that should remain out of scope.
+    depends_on: [scan-metrics]
+    context: fresh
+    modelReasoningEffort: high
+
+  - id: plan
+    prompt: |
+      You are planning targeted architectural improvements for projectkoios-bootstrap.
+
+      ## Assessment
+
+      $analyze.output
+
+      ## Principles
+
+      - Keep this repo scoped to bootstrap, harness config, and workflow operations.
+      - Preserve harness boundaries and the artifact handoff model.
+      - Prefer direct documentation/config cleanup over new abstractions.
+      - Each change must be independently revertible.
+      - Do not mix behavior changes with documentation/process cleanup unless the
+        assessment clearly justifies it.
+      - Scope to what can be done safely in one pass.
+
+      ## Codex Guardrails
+
+      This is a planning node. Do not modify repo files. Produce the plan only.
+
+      ## Instructions
+
+      1. Select the top 1-3 highest-impact, lowest-risk improvements.
+      2. For each, specify exact files, intended edits, validation commands, and
+         expected handoff/report updates.
+      3. Order changes so each can be reviewed independently.
+      4. Include what must not be changed.
+
+      ## Output
+
+      Write a concise implementation plan to `$ARTIFACTS_DIR/architecture-plan.md`.
+      Also print the plan summary in your response for the next node.
+    depends_on: [analyze]
+    context: fresh
+    modelReasoningEffort: high
+
+  - id: simplify
+    prompt: |
+      You are implementing targeted architectural simplifications.
+
+      ## Plan
+
+      $plan.output
+
+      ## Codex Guardrails
+
+      - Follow the plan exactly.
+      - Do not add opportunistic cleanup.
+      - Preserve existing behavior unless the plan explicitly says otherwise.
+      - Do not edit machine-local secrets or runtime state.
+      - Do not touch product/domain architecture outside this bootstrap repo.
+      - After edits, inspect `git diff --stat` and make sure the scope still
+        matches the plan.
+
+      ## Instructions
+
+      1. Read `$ARTIFACTS_DIR/architecture-plan.md`.
+      2. Work through the plan items in order.
+      3. After each logical edit, run the smallest relevant validation command.
+      4. If a planned change proves risky or ambiguous, skip it and document why
+         in `$ARTIFACTS_DIR/implementation-notes.md`.
+      5. Do not commit unless the plan explicitly instructs a commit.
+    depends_on: [plan]
+    context: fresh
+    modelReasoningEffort: high
+
+  - id: validate
+    bash: |
+      set +e
+
+      if [ -x .venv/bin/python ]; then
+        PY=.venv/bin/python
+      else
+        PY=python3
+      fi
+
+      echo "Using Python: $PY"
+
+      echo "=== HARNESS VALIDATION ==="
+      PYTHONPATH=src/python "$PY" -m projectkoios.bootstrap.cli bootstrap validate-harnesses 2>&1
+      HARNESS_EXIT=$?
+
+      echo ""
+      echo "=== PYTEST ==="
+      "$PY" -m pytest --version >/dev/null 2>&1
+      if [ $? -eq 0 ]; then
+        PYTHONPATH=src/python "$PY" -m pytest tests 2>&1
+        PYTEST_EXIT=$?
+        PYTEST_STATUS=$([ $PYTEST_EXIT -eq 0 ] && echo 'PASS' || echo 'FAIL')
+      else
+        echo "pytest is not installed for $PY; skipping pytest in this environment"
+        PYTEST_EXIT=0
+        PYTEST_STATUS="SKIP"
+      fi
+
+      echo ""
+      echo "=== WORKFLOW VALIDATION ==="
+      archon validate workflows archon-architect 2>&1
+      WORKFLOW_EXIT=$?
+
+      echo ""
+      echo "=== GIT DIFF STAT ==="
+      git diff --stat
+
+      echo ""
+      echo "=== RESULTS ==="
+      echo "Harness validation: $([ $HARNESS_EXIT -eq 0 ] && echo 'PASS' || echo 'FAIL')"
+      echo "Pytest: $PYTEST_STATUS"
+      echo "Workflow validation: $([ $WORKFLOW_EXIT -eq 0 ] && echo 'PASS' || echo 'FAIL')"
+
+      if [ $HARNESS_EXIT -eq 0 ] && [ $PYTEST_EXIT -eq 0 ] && [ $WORKFLOW_EXIT -eq 0 ]; then
+        echo "VALIDATION_STATUS: PASS"
+      else
+        echo "VALIDATION_STATUS: FAIL"
+      fi
+    depends_on: [simplify]
+    timeout: 300000
+
+  - id: fix-failures
+    prompt: |
+      Review the validation output below.
+
+      ## Validation Output
+
+      $validate.output
+
+      ## Codex Guardrails
+
+      Fix validation failures only. Do not make additional architecture changes.
+      If a failure reveals that a prior simplification was unsafe, revert that
+      simplification rather than expanding scope.
+
+      ## Instructions
+
+      If the output ends with `VALIDATION_STATUS: PASS`, respond with
+      "All checks passed - no fixes needed." and stop.
+
+      If there are failures:
+      1. Diagnose the failing check.
+      2. Fix only what is needed for that check.
+      3. Rerun the specific failing check.
+      4. After all fixes, rerun the full validation suite from the validate node.
+      5. Record any skipped or reverted plan item in `$ARTIFACTS_DIR/implementation-notes.md`.
+    depends_on: [validate]
+    context: fresh
+    modelReasoningEffort: high
+
+  - id: create-pr
+    prompt: |
+      Create a pull request for the architectural improvements.
+
+      ## Context
+
+      - Architecture assessment: $analyze.output
+      - Plan: $plan.output
+      - Validation: $validate.output
+
+      ## Codex Guardrails
+
+      This node is for git and GitHub operations only. Do not modify source,
+      config, docs, or workflow files in this node except writing
+      `$ARTIFACTS_DIR/.pr-url`.
+
+      ## Instructions
+
+      1. Inspect `git status --short`.
+      2. Stage only files changed for this workflow.
+      3. Create a single commit if there are uncommitted workflow changes.
+      4. Push the current branch: `git push -u origin HEAD`.
+      5. Check for an existing PR: `gh pr list --head $(git branch --show-current)`.
+      6. Create the PR targeting `$BASE_BRANCH` if one does not exist.
+      7. Save the PR URL to `$ARTIFACTS_DIR/.pr-url`.
+
+      ## PR Body Format
+
+      ```markdown
+      ## Architectural Sweep
+
+      **Focus**: $ARGUMENTS
+
+      ### Assessment
+      [3-5 sentence summary]
+
+      ### Changes
+      [For each change: file, what changed, why]
+
+      ### Validation
+      - [x] Harness validation
+      - [x] Pytest
+      - [x] Workflow validation
+      - [x] Scope stayed inside projectkoios-bootstrap
+      ```
+    depends_on: [fix-failures]
+    context: fresh
+    modelReasoningEffort: medium
+
+  - id: verify-pr-base
+    bash: |
+      set -euo pipefail
+      HEAD_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+      PR_NUMBER=$(gh pr list --head "$HEAD_BRANCH" --state open --json number -q '.[0].number')
+      if [ -z "$PR_NUMBER" ]; then
+        echo "No open PR found for branch $HEAD_BRANCH" >&2
+        exit 1
+      fi
+      EXPECTED="$BASE_BRANCH"
+      ACTUAL=$(gh pr view "$PR_NUMBER" --json baseRefName -q '.baseRefName')
+      if [ "$ACTUAL" != "$EXPECTED" ]; then
+        echo "Base mismatch on PR #$PR_NUMBER: expected=$EXPECTED actual=$ACTUAL; re-targeting" >&2
+        gh pr edit "$PR_NUMBER" --base "$EXPECTED"
+      else
+        echo "PR base verified: $EXPECTED"
+      fi
+    depends_on: [create-pr]
