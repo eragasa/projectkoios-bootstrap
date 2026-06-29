@@ -1,0 +1,49 @@
+# Task: Handoff naming convention for multi-iteration work
+
+## Origin
+
+Pi → Archon.
+
+## Problem
+
+Current handoff files use a date-only prefix, which is hard to distinguish when there are multiple handoffs in one day.
+We also want it to be obvious who produced the handoff and when.
+
+## Smallest change for Vulcan
+
+Update the handoff guidance so new handoff files use a timestamped filename and an explicit metadata header.
+Apply the same rule consistently for pi, archon, and opencode handoffs.
+
+### Filename
+Use:
+`YYYYMMDD.HHMMSS_<topic>.md`
+
+Example:
+`2026-06-29.214500_graphify-out-stale-cleanup.md`
+
+### File header
+Require a short header at the top of each handoff with:
+- `Origin`
+- `Created`
+- `From`
+- `To`
+- `Status`
+
+## Scope
+
+- Update the shared handoff guidance in `AGENTS.md`
+- Update `pi/AGENTS.md` and archon handoff guidance so they use the same naming/header convention
+- Update the implementation handoff rule in `opencode/rules/handoff.md`
+- Keep existing handoff content format otherwise unchanged
+
+## Non-goals
+
+- No workflow automation
+- No file renaming of historical handoffs
+- No parser or tooling changes
+
+## Acceptance
+
+- New handoff files are clearly sortable and unique within a day
+- The author/origin is visible in the file header
+- The guidance is explicit enough for Archon and Vulcan to follow consistently
