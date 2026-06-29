@@ -12,7 +12,6 @@ def test__ViolationAppender__append_to_file__adds_violation_section(tmp_path: Pa
 
     v = Violation(
         code=ViolationCode.WRONG_IMPLEMENTATION_OWNER,
-        action="CompleteImplementation",
         actor="Hermes",
         path=f,
         reason="Only Vulcan may produce implementation reports.",
@@ -32,7 +31,6 @@ def test__ViolationAppender__append_to_file__appends_to_existing_violations(
 
     v = Violation(
         code=ViolationCode.DELEGATED_OPERATOR_MISSING,
-        action="MediateAccess",
         actor="Codex",
         path=f,
         reason="Missing delegated operator.",

@@ -8,7 +8,6 @@ from projectkoios.bootstrap.harness.data.violation import Violation, ViolationCo
 def test__Violation__to_markdown_block__formats_with_all_fields() -> None:
     v = Violation(
         code=ViolationCode.WRONG_IMPLEMENTATION_OWNER,
-        action="CompleteImplementation",
         actor="Hermes",
         path=Path("/fake/handoff.md"),
         reason="Only Vulcan may produce implementation-report artifacts.",
@@ -26,7 +25,6 @@ def test__Violation__to_markdown_block__formats_with_all_fields() -> None:
 def test__Violation__to_markdown_block__omits_optional_fields_when_none() -> None:
     v = Violation(
         code=ViolationCode.HERMES_FORWARDED_WITHOUT_DECISION,
-        action="ForwardInboxState",
         actor="Hermes",
         path=Path("/fake/handoff.md"),
         reason="No routing decision produced.",

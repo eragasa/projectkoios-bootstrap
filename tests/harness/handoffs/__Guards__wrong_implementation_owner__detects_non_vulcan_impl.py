@@ -11,13 +11,12 @@ from projectkoios.bootstrap.harness.handoffs.guards import (
 
 
 def _token(
-    id: str,
+    tag: str = "token",
     kind: str = "implementation-report",
     sender: str = "Vulcan",
 ) -> HandoffArtifact:
     return HandoffArtifact(
-        id=id,
-        path=Path(f"/fake/{id}.md"),
+        path=Path(f"/fake/{tag}.md"),
         kind=kind,
         origin=sender,
         sender=sender,

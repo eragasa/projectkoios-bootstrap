@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from pathlib import Path
 
 from projectkoios.bootstrap.harness.data.artifact import HandoffArtifact
 
@@ -9,7 +8,6 @@ from projectkoios.bootstrap.harness.data.artifact import HandoffArtifact
 @dataclass(frozen=True)
 class Marking:
     tokens_by_place: dict[str, list[HandoffArtifact]] = field(default_factory=dict)
-    source_root: Path | None = None
 
     def tokens_at(self, place: str) -> list[HandoffArtifact]:
         return list(self.tokens_by_place.get(place, []))

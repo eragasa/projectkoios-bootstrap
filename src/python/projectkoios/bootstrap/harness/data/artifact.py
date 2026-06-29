@@ -6,16 +6,12 @@ from pathlib import Path
 
 @dataclass(frozen=True)
 class HandoffArtifact:
-    id: str
     path: Path
     kind: str
     origin: str
     sender: str
     recipient: str
     acting_as: str | None = None
-    repository: str | None = None
-    status: str = "active"
-    created_at: str | None = None
     delegated_operator: str | None = None
     provenance: list[str] | None = None
 

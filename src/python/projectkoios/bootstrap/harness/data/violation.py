@@ -15,7 +15,6 @@ class ViolationCode(StrEnum):
 @dataclass(frozen=True)
 class Violation:
     code: ViolationCode
-    action: str
     actor: str
     path: Path
     reason: str

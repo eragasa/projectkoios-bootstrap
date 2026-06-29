@@ -11,12 +11,11 @@ from projectkoios.bootstrap.harness.handoffs.guards import (
 
 
 def _codex_token(
-    id: str,
+    tag: str = "codex",
     delegated_operator: str | None = None,
 ) -> HandoffArtifact:
     return HandoffArtifact(
-        id=id,
-        path=Path(f"/fake/{id}.md"),
+        path=Path(f"/fake/{tag}.md"),
         kind="routing-decision",
         origin="Codex",
         sender="Codex",
@@ -43,7 +42,6 @@ def test__Guards__delegated_operator_missing__codex_without_provenance_is_violat
 
 def test__Guards__delegated_operator_missing__athena_artifact_no_violation() -> None:
     token = HandoffArtifact(
-        id="athena-artifact",
         path=Path("/fake/athena.md"),
         kind="architecture-spec",
         origin="Athena",

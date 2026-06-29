@@ -46,7 +46,6 @@ def test__HandoffParser__parse_file__parses_valid_frontmatter(tmp_path: Path) ->
     assert token.origin == "Athena"
     assert token.sender == "Athena"
     assert token.recipient == "Vulcan"
-    assert token.status == "active"
     assert token.kind == "architecture-spec"
 
 

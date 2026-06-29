@@ -11,21 +11,18 @@ def test__HandoffEvaluator__violations_by_file__groups_by_path(tmp_path: Path) -
 
     v1 = Violation(
         code=ViolationCode.HERMES_FORWARDED_WITHOUT_DECISION,
-        action="Action",
         actor="Actor",
         path=tmp_path / "a.md",
         reason="Reason A",
     )
     v2 = Violation(
         code=ViolationCode.WRONG_IMPLEMENTATION_OWNER,
-        action="Action",
         actor="Actor",
         path=tmp_path / "a.md",
         reason="Reason B",
     )
     v3 = Violation(
         code=ViolationCode.DELEGATED_OPERATOR_MISSING,
-        action="Action",
         actor="Actor",
         path=tmp_path / "b.md",
         reason="Reason C",

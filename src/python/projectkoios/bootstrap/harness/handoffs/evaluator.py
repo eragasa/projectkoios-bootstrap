@@ -40,7 +40,6 @@ class HandoffEvaluator:
 
         return Marking(
             tokens_by_place=tokens_by_place,
-            source_root=self.repo_root,
         )
 
     def evaluate(self) -> list[Violation]:

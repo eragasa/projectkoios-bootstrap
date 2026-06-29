@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from pathlib import Path
 import re
-from uuid import uuid4
 
 from projectkoios.bootstrap.harness.data.artifact import HandoffArtifact
 
@@ -34,16 +33,12 @@ class HandoffParser:
             return None
 
         return HandoffArtifact(
-            id=str(uuid4()),
             path=path,
             kind=self._infer_kind(frontmatter, text),
             origin=frontmatter.get("Origin", ""),
             sender=frontmatter.get("From", ""),
             recipient=frontmatter.get("To", ""),
             acting_as=frontmatter.get("Acting-As"),
-            repository=frontmatter.get("Repository") or frontmatter.get("Scope"),
-            status=frontmatter.get("Status", "active"),
-            created_at=frontmatter.get("Created"),
             delegated_operator=frontmatter.get("Delegated-Operator"),
             provenance=[
                 v for k, v in frontmatter.items()

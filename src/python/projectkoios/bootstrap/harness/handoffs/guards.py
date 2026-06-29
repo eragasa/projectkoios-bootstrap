@@ -32,7 +32,6 @@ def check_hermes_forwarded_without_decision(marking: Marking) -> list[Violation]
             if token.kind not in ACCEPTED_DECISION_KINDS and token.kind != "user-request":
                 violations.append(Violation(
                     code=ViolationCode.HERMES_FORWARDED_WITHOUT_DECISION,
-                    action="ForwardInboxState",
                     actor=token.sender,
                     path=token.path,
                     reason=(
@@ -57,7 +56,6 @@ def check_wrong_implementation_owner(marking: Marking) -> list[Violation]:
         if owner and owner.lower() != expected.lower() and owner != "opencode":
             violations.append(Violation(
                 code=ViolationCode.WRONG_IMPLEMENTATION_OWNER,
-                action="CompleteImplementation",
                 actor=owner,
                 path=token.path,
                 reason=(
@@ -84,7 +82,6 @@ def check_delegated_operator_missing(marking: Marking) -> list[Violation]:
         if is_codex_actor and not token.delegated_operator:
             violations.append(Violation(
                 code=ViolationCode.DELEGATED_OPERATOR_MISSING,
-                action="MediateAccess",
                 actor=token.sender,
                 path=token.path,
                 reason=(
@@ -115,7 +112,6 @@ def check_codex_as_pi_identity_collapse(marking: Marking) -> list[Violation]:
         if claims_pi_origin and is_codex_produced:
             violations.append(Violation(
                 code=ViolationCode.CODEX_AS_PI_IDENTITY_COLLAPSE,
-                action="ClaimPiAuthority",
                 actor=token.sender,
                 path=token.path,
                 reason=(
