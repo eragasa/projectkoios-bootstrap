@@ -7,6 +7,7 @@ It does not own domain architecture; that belongs in the `projectkoios` mothersh
 
 - [What this repo is for](#what-this-repo-is-for)
 - [Harnesses](#harnesses)
+- [Current operator path](#current-operator-path)
 - [Meta-harness](#meta-harness)
 - [Directions for all harnesses](#directions-for-all-harnesses)
 - [Directions for pi](#directions-for-pi)
@@ -41,6 +42,16 @@ Do not use this repo for:
 | archon (archon.diy) | **Athena** | Architecture design, ADRs, planning |
 | opencode | **Vulcan** | Code writing, tests, validation |
 | goose | **Koios** | Knowledge management, vault ops |
+
+## Current operator path
+
+Until Archon can run under `pi` directly, Codex is the temporary
+operator/access layer for Archon workflows. Codex is not `pi`; Codex is the
+bridge used to start, inspect, approve, reject, resume, or cancel Archon
+runs and to read or write the relevant handoff artifacts.
+
+Target state: `pi` resumes ownership of the operator interface once it can
+run Archon reliably.
 
 ## Meta-harness
 
@@ -140,6 +151,11 @@ separation of concerns:
 - route architecture and planning ambiguity to archon
 - route complex implementation, tests, and bug fixes to opencode
 - route knowledge curation and vault work to goose
+
+Transition note: while Archon cannot yet run under `pi` directly, Codex may
+perform these operator actions on behalf of the workflow. In that mode,
+Codex should preserve the same handoff and routing discipline, and should
+not describe itself as `pi`.
 
 ### Session protocol for pi
 

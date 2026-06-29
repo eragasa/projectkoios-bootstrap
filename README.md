@@ -11,6 +11,17 @@ Shared harness config store for building and operating Project Koios.
 | opencode | **Vulcan** | opencode | Code implementation, tests, validation, runtime sessions |
 | goose | **Koios** | [Goose](https://goose-docs.ai) | Knowledge curation, vault ops, source ingestion, UI bootstrap |
 
+## Current operator path
+
+Until Archon can run under `pi` directly, use Codex as the temporary
+operator/access layer for Archon workflows. In this mode, Codex is not a
+replacement identity for `pi`; it is the bridge used to start, inspect,
+approve, reject, resume, or cancel Archon/Athena runs and to read or write
+handoff artifacts.
+
+Target state: `pi` owns the operator interface again once it can run Archon
+reliably.
+
 ## Prerequisites
 
 ```bash
