@@ -18,5 +18,5 @@ HARNESSES: list[Harness] = [
 ]
 
 
-GLOBAL_DIR = Path(__file__).resolve().parent.parent.parent.parent.parent / "agents" / "global"
-REPO_ROOT = GLOBAL_DIR.parent
+REPO_ROOT = Path(__file__).resolve().parent.parent.parent.parent.parent
+GLOBAL_DIR = REPO_ROOT / "agents" / "global"
