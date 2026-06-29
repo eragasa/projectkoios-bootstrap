@@ -141,6 +141,19 @@ separation of concerns:
 - route complex implementation, tests, and bug fixes to opencode
 - route knowledge curation and vault work to goose
 
+### Session protocol for pi
+
+At session start:
+- check `archon/handoffs/`, `opencode/handoffs/`, and `pi/handoffs/` for new or active artifacts
+- check git status, branch, and recent commits
+- report what is pending before making changes
+
+At session stop:
+- if files changed, run the smallest relevant validation you can justify
+- report files changed and validation results
+- write or update the relevant handoff if work must continue in another harness
+- ask before commit/push unless the user already directed it
+
 ## Directions for archon
 
 Use archon (Athena) for:
