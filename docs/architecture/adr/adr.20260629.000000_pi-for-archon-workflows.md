@@ -1,4 +1,4 @@
-# adr.20260629: Use Pi as the AI assistant for Archon workflows
+# ADR 20260629.000000: Use Pi as the AI assistant for Archon workflows
 
 ## Status
 

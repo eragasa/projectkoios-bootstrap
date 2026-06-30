@@ -19,8 +19,8 @@ Project Koios meta-harness operations.
 
 ## Session start protocol
 
-1.  Inspect `archon/handoffs/`, `opencode/handoffs/`, and `pi/handoffs/`
-    for new or active artifacts.
+1.  Inspect `docs/archive/handoffs/` for any active artifacts not yet
+    processed.
 2.  Inspect `git status --short --branch` and recent commits.
 3.  Report pending active/draft artifacts before changing files.
 4.  Distinguish stale handoff claims from current git state.

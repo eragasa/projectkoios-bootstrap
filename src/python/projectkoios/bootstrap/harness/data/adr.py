@@ -14,10 +14,11 @@ class AdrStatus(StrEnum):
 
 
 @dataclass(frozen=True)
-class Adr:
-    """An Architecture Decision Record.
+class ArchitecturalDataRecord:
+    """An Architecture Decision Record (ADR).
 
-    Maps to ADR files under ``docs/architecture/adr/``.
+    Maps to ADR files under ``docs/architecture/adr/`` with the filename
+    convention ``adr.YYYYMMDD.HHMMSS_kebab-slug.md``.
     Provides a programmatic view independent of the file format.
     """
 

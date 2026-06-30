@@ -121,4 +121,4 @@ tests unless a future non-secret fixture exists.
 ## Architecture
 
 - Bootstrap architecture: `docs/architecture.00.md`
-- ADR archive: `docs/architecture/adr/adr.20260628.md`
+- ADR archive: `docs/architecture/adr/adr.20260628.000000_three-harness-meta-harness.md`

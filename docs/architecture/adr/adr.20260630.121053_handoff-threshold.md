@@ -37,7 +37,7 @@ notifications to other harnesses that have no stake in the work.
 
 ## Consequences
 
-- Less handoff file clutter in `pi/handoffs/`, `archon/handoffs/`, etc.
+- Handoff files are archived at `docs/archive/handoffs/` rather than cluttering harness root directories.
 - Sessions that need handoffs are clearly distinguished from sessions
   that don't.
 - New operators have fewer files to scan at session start.

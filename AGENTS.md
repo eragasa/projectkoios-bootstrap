@@ -89,7 +89,7 @@ Agents communicate through typed artifacts. An artifact must be explicit enough 
 | `revision-request` | meta-harness (Hermes) | Required correction to an artifact |
 | `completion-decision` | meta-harness (Hermes) | Final acceptance or rejection |
 
-Artifacts are stored in each harness's `handoffs/` directory.
+Artifacts are stored in each harness's `handoffs/` directory (now archived at `docs/archive/handoffs/`).
 
 ### Standard workflow
 
@@ -168,14 +168,14 @@ local harness state.
 ### Session protocol for Hermes
 
 At session start:
-- check `archon/handoffs/`, `opencode/handoffs/`, and `pi/handoffs/` for new or active artifacts
+- check `docs/archive/handoffs/` for any active artifacts not yet processed
+- check `docs/architecture/adr/` for draft ADRs needing review
 - check git status, branch, and recent commits
 - report what is pending before making changes
 
 At session stop:
 - if files changed, run the smallest relevant validation you can justify
 - report files changed and validation results
-- write or update the relevant handoff if work must continue in another harness
 - ask before commit/push unless the user already directed it
 
 ## Directions for Athena (archon)
@@ -188,7 +188,7 @@ Use Athena (archon) for:
 
 Athena should:
 - write implementation-ready plans
-- place downstream work in `archon/handoffs/` using the [handoff file convention](#handoff-file-convention)
+- place downstream work in ADRs under `docs/architecture/adr/`
 - keep architecture out of this config repo unless it is about bootstrap structure
 
 ## Directions for Vulcan (opencode)
@@ -200,8 +200,8 @@ Use Vulcan (opencode) for:
 - code changes that follow an approved plan
 
 Vulcan should:
-- read the plan or handoff artifact first
-- place completion reports and questions in `opencode/handoffs/`
+- read the plan or ADR first
+- place observations and recommendations in ADRs under `docs/architecture/adr/`
 - escalate design ambiguity back to Athena instead of inventing policy
 
 ## Harness configs
@@ -226,34 +226,48 @@ Local configs are NEVER committed to this repo.
 | run control, orchestration, handoff coordination | Hermes |
 | unclear cross-harness decisions | Athena first |
 
-## Artifact handoff
+## Artifact handoff (archived)
 
-Handoff is the standard way work moves between harnesses.
-Each harness writes completion reports and artifacts to its own `handoffs/` directory for the downstream harness to consume.
+Historical handoff artifacts are preserved in `docs/archive/handoffs/`.
+The current convention uses ADRs under `docs/architecture/adr/` for durable
+decisions and cross-harness communication. See [ADR file convention](#adr-file-convention).
 
-| From | To | Path |
-|------|----|------|
-| Athena (archon) | Vulcan (opencode) | `archon/handoffs/` — `architecture-spec`, `implementation-brief` |
-| Vulcan (opencode) | Athena (archon) | `opencode/handoffs/` — `implementation-report`, `deviation-report` |
-| Koios (goose) | Athena (archon) | `goose/handoffs/` — `knowledge-note`, `provenance-index` |
+Historical handoff directories and their roles:
 
-Each harness should assume no session memory beyond its current artifact and filesystem state.
+| From | To | Archived path |
+|------|----|---------------|
+| Athena (archon) | Vulcan (opencode) | `docs/archive/handoffs/archon/` |
+| Vulcan (opencode) | Athena (archon) | `docs/archive/handoffs/opencode/` |
+| Koios (goose) | Athena (archon) | `docs/archive/handoffs/goose/` |
+| Hermes (pi) | (self) | `docs/archive/handoffs/pi/` |
 
-### Handoff file convention
+### ADR file convention
 
-All new handoff files use:
+ADR files use the following convention:
 
-**Filename:** `YYYYMMDD.HHMMSS_<topic>.md`
-Example: `2026-06-29.214500_graphify-out-stale-cleanup.md`
+**Filename:** `adr.YYYYMMDD.HHMMSS_kebab-slug.md`
+Example: `adr.20260630.144732_runtime-role-separation.md`
 
-**Header:** These fields at the top of every handoff file:
+**Header:** Every ADR contains these sections:
 
 ```
-Origin: <harness-name>
-Created: <YYYY-MM-DD HH:MM>
-From: <agent-name>
-To: <agent-name>
-Status: <draft|active|complete>
+# ADR YYYYMMDD.HHMMSS: Title
+
+## Status
+
+draft | accepted | completed | superseded | rejected
+
+## Context
+
+...
+
+## Decision
+
+...
+
+## Consequences
+
+...
 ```
 
 ### Provenance fields

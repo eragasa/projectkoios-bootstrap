@@ -1,4 +1,4 @@
-# ADR20260629: Install Archon via curl rather than Homebrew
+# ADR 20260629.000000: Install Archon via curl rather than Homebrew
 
 ## Status
 

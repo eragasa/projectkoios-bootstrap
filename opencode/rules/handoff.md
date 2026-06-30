@@ -1,4 +1,4 @@
-# Handoff contract
+# Implementation contract
 
 opencode starts execution only when the incoming request is specific enough to implement and validate.
 
@@ -8,9 +8,9 @@ opencode starts execution only when the incoming request is specific enough to i
 - a tightly scoped user request with target repo and expected outcome
 - a bug report with enough reproduction detail to investigate
 
-## Required from Archon plans
+## Required from architecture plans
 
-Before implementation, the handoff should identify:
+Before implementation, the request should identify:
 - objective
 - in-scope work
 - non-goals
@@ -19,7 +19,7 @@ Before implementation, the handoff should identify:
 - validation expectations
 - unresolved questions
 
-## If the handoff is incomplete
+## If the request is incomplete
 
 Do not guess.
 
@@ -29,7 +29,7 @@ Switch to consultation mode and ask for the missing pieces, especially:
 - what counts as done
 - what tests or checks are required
 
-## Completion report back to Archon or user
+## Completion report
 
 When execution finishes, report:
 - files changed
@@ -37,19 +37,8 @@ When execution finishes, report:
 - deviations from plan
 - follow-up work or architecture questions
 
-## Handoff file convention
+## ADR convention
 
-Handoff files written by opencode follow the shared convention defined in root `AGENTS.md`:
-
-**Filename:** `YYYYMMDD.HHMMSS_<topic>.md`
-Example: `2026-06-29.214500_implementation-report.md`
-
-**Header:**
-
-```
-Origin: opencode
-Created: <YYYY-MM-DD HH:MM>
-From: Vulcan
-To: <Athena|pi|user>
-Status: draft|active|complete
-```
+Durable decisions and cross-harness observations are placed in ADRs
+under `docs/architecture/adr/`. See root `AGENTS.md` for the ADR file
+convention.

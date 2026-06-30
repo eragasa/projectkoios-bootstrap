@@ -32,12 +32,12 @@ violations without mutating any file.
 A place is a named inbox or state. The evaluator maps four handoff directories
 to fixed places:
 
-| Place | Directory | Purpose |
-|-------|-----------|---------|
-| `archon_inbox` | `archon/handoffs/` | Athena's active work |
-| `opencode_inbox` | `opencode/handoffs/` | Vulcan's active work |
-| `pi_inbox` | `pi/handoffs/` | Hermes's active work |
-| `goose_inbox` | `goose/handoffs/` | Koios's active work |
+| Place | Directory (now archived) | Purpose |
+|-------|--------------------------|---------|
+| `archon_inbox` | `docs/archive/handoffs/archon/` | Athena's active work |
+| `opencode_inbox` | `docs/archive/handoffs/opencode/` | Vulcan's active work |
+| `pi_inbox` | `docs/archive/handoffs/pi/` | Hermes's active work |
+| `goose_inbox` | `docs/archive/handoffs/goose/` | Koios's active work |
 
 Each handoff file becomes a token in its directory's place.
 

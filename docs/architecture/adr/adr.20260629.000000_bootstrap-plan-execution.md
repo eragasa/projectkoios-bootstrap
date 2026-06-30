@@ -1,4 +1,4 @@
-# ADR 20260629: Bootstrap plan execution
+# ADR 20260629.000000: Bootstrap plan execution
 
 ## Status
 
@@ -59,9 +59,10 @@ layout, and bootstrapping commands.
 
 ### Handoff convention
 
-Each harness writes completion reports to its own `handoffs/` directory for the
-downstream harness to consume. All agents start with zero session memory — only
-the current artifact and filesystem are loaded.
+Each harness writes completion reports to its own `handoffs/` directory (now
+archived at `docs/archive/handoffs/`) for the downstream harness to consume.
+All agents start with zero session memory — only the current artifact and
+filesystem are loaded.
 
 ## Deviations from plan
 
@@ -73,7 +74,7 @@ the current artifact and filesystem are loaded.
   Archon skills live in `archon/skills/` and are not example templates.
 - **`agents/global/goose/prompts/`** created as an empty directory. The actual
   goose prompts live in `goose/prompts/`.
-- **Python package deprecation note** from `adr.20260628.md` (which said the
+- **Python package deprecation note** from `adr.20260628.000000_three-harness-meta-harness.md` (which said the
   Python directory "becomes unused") is now outdated — the package is active.
 
 ## Consequences

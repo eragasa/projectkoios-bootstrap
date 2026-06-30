@@ -72,7 +72,7 @@ Primary files changed:
 - `README.md`
 - `src/python/projectkoios/bootstrap/validation/harnesses.py`
 - `tests/test__validate_harnesses.py`
-- `opencode/handoffs/20260630.135327_archon-health-bootstrap-hardening.md`
+- `docs/archive/handoffs/opencode/20260630.135327_archon-health-bootstrap-hardening.md`
 
 The work was pushed to `origin/master` at `f90e855`.
 

@@ -1,4 +1,4 @@
-# ADR20260628: Establish projectkoios-bootstrap as the three-harness meta-harness
+# ADR 20260628.000000: Establish projectkoios-bootstrap as the three-harness meta-harness
 
 ## Status
 

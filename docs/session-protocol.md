@@ -6,7 +6,7 @@ This document mirrors the session-start and session-stop rules for the pi meta-h
 
 Before doing other work in a new session:
 
-1. Check `archon/handoffs/`, `opencode/handoffs/`, and `pi/handoffs/` for new or active artifacts.
+1. Check `docs/archive/handoffs/` for any active artifacts not yet processed.
 2. Check git branch, status, and the last few commits.
 3. Report pending work before making changes.
 
