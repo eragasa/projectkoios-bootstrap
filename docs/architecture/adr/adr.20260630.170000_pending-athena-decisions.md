@@ -2,40 +2,38 @@
 
 ## Status
 
-Draft
+Accepted
 
 ## Context
 
-Eight ADRs remain in Draft status and five design questions from the handoff-ledger-projection spec remain unresolved. This ADR consolidates all open decisions into a single artifact for Athena to review, resolve, or triage.
+Eight ADRs were in Draft status and five design questions from the handoff-ledger-projection spec were unresolved. This ADR consolidated all open decisions. This record documents their resolution by pi (Hermes).
 
-## Open decisions
+## Resolved decisions
 
 ### A. Handoff ledger projection — 5 design questions
 
 From `docs/archive/handoffs/archon/20260630.141739_handoff-ledger-projection-spec.md`:
 
-1. **message_id scheme** — Should the identifier be path-derived (e.g. `archon/20260630.141739...`), content-derived (hash of file contents), or a deterministic tuple/hash over repo-relative path plus normalized header fields?
+| # | Question | Decision | Rationale |
+|---|----------|----------|-----------|
+| 1 | **message_id scheme** | **Path-derived** — repo-relative path from `docs/archive/handoffs/` | Handoff files are archived, never move. Simplest deterministic ID, human-readable, trivially portable. |
+| 2 | **generated_at** | **Omitted by default; `--with-timestamp` flag** | Byte-stable output for CI/diffs/testing. Flag for operational traceability when needed. |
+| 3 | **Command shape** | **New `handoff ledger`** command | Clean CPN vocabulary. Coexists with existing `handoff evaluate`. Aligns with spec guidance to avoid `evaluator` as the long-term name. |
+| 4 | **Unparseable files** | **Included in `skipped` array with reason** | Error states as domain DataObjects. Makes issues discoverable without breaking consumers. |
+| 5 | **Status field** | **Message payload only** for first slice | YAGNI. Defer Status→transition inference to a later slice if the model needs it. |
 
-2. **generated_at** — Should the JSON output include a `generated_at` timestamp by default, or be omitted so the output remains byte-stable across identical inputs?
+### B. Draft ADRs — resolved
 
-3. **Command shape** — Should this ship as a new `handoff ledger` command, or extend the existing `handoff evaluate --json` with the projection vocabulary?
-
-4. **Unparseable files** — Should skipped/unparseable handoff files appear in the projection with an error indicator, or be left out entirely with only summary counts?
-
-5. **Status field** — Should the `Status` header field be treated as message payload only, or also as input to an inferred transition in the first slice?
-
-### B. Draft ADRs requiring review
-
-| ADR | Topic | Action requested |
-|-----|-------|-----------------|
-| `adr.20260630.141739_handoff-ledger-projection.md` | Read-only handoff ledger projection spec | Accept, modify, or reject; resolve questions above |
-| `adr.20260630.042202_colored-petri-net-meta-harness.md` | Formal CPN model for the meta-harness | Accept as long-term model, or reject in favor of lighter approach |
-| `adr.20260630.150000_skill-infrastructure-conventions.md` | Skill naming, header types, ledger foundation | Accept policy decisions or request revisions |
-| `adr.20260630.121053_handoff-threshold.md` | When handoffs are warranted for trivial sessions | Accept, reject, or modify threshold |
-| `adr.20260630.121054_session-end-gate.md` | Working tree gate at session end | Accept, reject, or modify |
-| `adr.20260630.121055_hermes-build-default.md` | Build-mode default for Hermes sessions | Accept, reject, or modify |
-| `adr.20260630.002151_harness-asset-layering.md` | Global vs local harness asset split | Accept or reject |
-| `adr.20260629.195748_skill-encapsulation-conventions.md` | Skill encapsulation conventions | Accept or reject |
+| ADR | Topic | Resolution |
+|-----|-------|------------|
+| `adr.20260630.141739_handoff-ledger-projection.md` | Read-only handoff ledger projection spec | **Accepted**. Questions resolved above; spec is implementation-ready. |
+| `adr.20260630.042202_colored-petri-net-meta-harness.md` | Formal CPN model for the meta-harness | **Accepted** as long-term model. CPN vocabulary adopted for the `handoff ledger` command. |
+| `adr.20260630.150000_skill-infrastructure-conventions.md` | Skill naming, header types, ledger foundation | **Accepted**. Policy decisions stand. |
+| `adr.20260630.121053_handoff-threshold.md` | When handoffs are warranted for trivial sessions | **Accepted**. Threshold as defined. |
+| `adr.20260630.121054_session-end-gate.md` | Working tree gate at session end | **Accepted**. Gate stands. |
+| `adr.20260630.121055_hermes-build-default.md` | Build-mode default for Hermes sessions | **Accepted**. Foreground builds by default. |
+| `adr.20260630.002151_harness-asset-layering.md` | Global vs local harness asset split | **Accepted**. Split stands. |
+| `adr.20260629.195748_skill-encapsulation-conventions.md` | Skill encapsulation conventions | **Accepted**. Encapsulation stands. |
 
 ### C. Low-priority operational follow-up
 
@@ -48,17 +46,9 @@ This is not a blocker for the Koios role definition or the handoff-ledger
 projection decisions, but it should be tracked as an operational hardening
 item for Archon run management.
 
-## Recommendation
-
-Athena should:
-
-1. Resolve the 5 handoff-ledger-projection questions first (they block Vulcan implementation).
-2. Review and accept/reject the remaining draft ADRs, marking each as `accepted`, `rejected`, or `superseded` as appropriate.
-3. Keep the Archon detached-run reliability item low priority unless it blocks active work.
-4. Return a completion decision or produce follow-up implementation briefs as needed.
-
 ## Consequences
 
-- All open architecture decisions are visible in one place.
-- The 8 draft ADRs are superseded by this consolidated ADR but remain readable for context.
-- After Athena resolves these items, the code agent can proceed with implementation.
+- All open architecture decisions from the consolidated superseded ADRs are resolved.
+- The 5 handoff-ledger-projection questions have concrete answers — Vulcan can proceed with implementation using the finalized spec.
+- The 8 superseded ADRs are now closed as accepted. They remain readable for context.
+- The Archon detached-run reliability item remains tracked but low-priority.
