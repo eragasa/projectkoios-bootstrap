@@ -16,6 +16,7 @@ It does not own domain architecture; that belongs in the `projectkoios` mothersh
 - [Directions for Vulcan (opencode)](#directions-for-vulcan-opencode)
 - [Harness configs](#harness-configs)
 - [ADR file convention](#adr-file-convention)
+- [AAR file convention](#aar-file-convention)
 - [Secrets and safety](#secrets-and-safety)
 - [Bootstrapping](#bootstrapping)
 - [Layout](#layout)
@@ -91,10 +92,13 @@ Agents communicate through typed artifacts. An artifact must be explicit enough 
 | `deviation-report` | code agent (Vulcan) | Mismatch between spec and reality |
 | `knowledge-note` | knowledge agent (Koios) | Durable note from validated artifacts |
 | `provenance-index` | knowledge agent (Koios) | Mapping from claims to sources |
+| `after-action-report` | any harness | Process observations, protocol misses, and improvement candidates |
 Architecture/specification artifacts are stored as ADRs under
 `docs/architecture/adr/`. Historical harness handoffs are archived under
 `docs/archive/handoffs/` and should be treated as provenance, not the current
-active artifact surface.
+active artifact surface. Process AARs are stored under `docs/AAR/` and are
+non-authoritative unless promoted into an ADR, skill update, workflow change, or
+implementation task.
 
 ## High-leverage state
 
@@ -124,9 +128,9 @@ Default recommendations:
   reading when `graphify-out/graph.json` exists. Prefer `graphify query`,
   `graphify path`, or `graphify explain` to establish context, then read only
   the specific files or lines needed to verify or patch.
- - At session end, after meaningful repository file changes, run
-   `graphify update .` (AST-only, no LLM needed) so the next session starts from
-   current indexed state.
+- At session end, after meaningful repository file changes, run
+  `graphify update .` (AST-only, no LLM needed) so the next session starts from
+  current indexed state.
 - Treat Graphify as the cheapest broad-context read path. Do not manually scan
   large document/code surfaces before trying Graphify, unless Graphify is
   missing, stale in a way that blocks the task, or lacks the exact detail needed.
@@ -134,6 +138,11 @@ Default recommendations:
   `graphify path`, or `graphify explain` before manual grepping or browsing.
 - Read `graphify-out/GRAPH_REPORT.md` only for broad architecture review.
 - Keep local secrets out of git.
+- At session end, write an AAR under `docs/AAR/` when the session exposed
+  durable process lessons: protocol failures, repeated user corrections,
+  unclear routing, workflow/tool friction, validation gaps, or improvement
+  candidates. Do not write an AAR for trivial clean sessions with no reusable
+  process learning.
 
 ## Directions for Hermes (pi)
 
@@ -163,9 +172,11 @@ At session start:
 
 At session stop:
 - if files changed, run the smallest relevant validation you can justify
- - if meaningful repo files changed, run `graphify update .` (AST-only, no LLM
-   needed) before reporting final state unless unavailable or would block urgent
-   handoff
+- if meaningful repo files changed, run `graphify update .` (AST-only, no LLM
+  needed) before reporting final state unless unavailable or would block urgent
+  handoff
+- if the session exposed durable process lessons, write a process AAR under
+  `docs/AAR/` before final reporting
 - report files changed and validation results
 - ask before commit/push unless the user already directed it
 
@@ -255,6 +266,43 @@ Interpretation rule:
 - `Acting-As` answers which harness role they represented
 - `Delegated-Operator` answers who mediated access
 
+## AAR file convention
+
+AARs capture process lessons from a session. They are not ADRs, handoffs,
+completion decisions, or implementation reports. Use them to preserve protocol
+misses, workflow friction, tool ambiguity, repeated user corrections,
+validation gaps, and concrete improvement candidates.
+
+**Directory:** `docs/AAR/`
+
+**Filename:** `aar.YYYYMMDD.HHMMSS_kebab-topic.md`
+Example: `aar.20260701.012317_graphify-daemon-adr-session.md`
+
+Every AAR should include:
+
+```
+# AAR YYYYMMDD.HHMMSS: Title
+
+## Scope
+
+## What happened
+
+## Process issues
+
+## Proposed follow-up improvements
+
+## Candidate ADR or implementation topics
+
+## Current status
+```
+
+Interpretation rule:
+- AARs are process observation artifacts.
+- AARs do not change architecture authority, ADR status, routing, or completion
+  state by themselves.
+- Promote AAR findings through the normal lifecycle when they require durable
+  architecture, workflow, skill, documentation, or implementation changes.
+
 
 ## Secrets and safety
 
@@ -280,6 +328,7 @@ Use `init` for first-time setup and `install` when you want the global examples 
 projectkoios-bootstrap/
 ├── agents/global/       ← example configs per harness (.example suffix)
 ├── docs/                ← documentation, architecture, and ADRs
+│   ├── AAR/             ← after-action reports and process improvement notes
 │   ├── architecture/adr/ ← ADRs and durable decisions (single source of truth)
 ├── maps/                ← workspace topology (repos, packages, vault)
 ├── src/python/          ← Python CLI package (bootstrap tooling)

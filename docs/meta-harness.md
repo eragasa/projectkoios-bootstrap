@@ -83,6 +83,7 @@ metadata:
 | `routing-decision` | Hermes | pi |
 | `revision-request` | Hermes | pi |
 | `completion-decision` | Hermes | pi |
+| `after-action-report` | any harness | any harness |
 
 ## Workflow Ownership
 

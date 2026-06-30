@@ -26,6 +26,11 @@ Before ending a session:
 2. If meaningful repository files changed, run `graphify update .` (AST-only,
    no LLM needed) before final reporting unless unavailable or would block an
    urgent handoff.
-3. Report files changed and validation results.
-4. Write or update the relevant handoff if work must continue in another harness.
-5. Ask before commit/push unless the user already directed it.
+3. If the session exposed durable process lessons, write an AAR under
+   `docs/AAR/`. Use AARs for protocol failures, repeated user corrections,
+   unclear routing, workflow/tool friction, validation gaps, or improvement
+   candidates. Do not write an AAR for trivial clean sessions with no reusable
+   process learning.
+4. Report files changed and validation results.
+5. Write or update the relevant handoff if work must continue in another harness.
+6. Ask before commit/push unless the user already directed it.
