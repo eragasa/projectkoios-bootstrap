@@ -59,7 +59,7 @@ the repeated output needs machine validation.
 ## Consequences
 
 Athena gains a reusable decision-interview primitive for surfacing tradeoffs
-before implementation. Hermes can invoke or relay this behavior when a proposed
+before implementation begins. Hermes can invoke or relay this behavior when a proposed
 implementation has unresolved architectural choices.
 
 This accepts a small amount of prompt-level debt: the output is structured
@@ -71,6 +71,32 @@ The skill keeps future Petri-net compatibility open by requiring proposed
 options to identify states, transitions, guards, artifacts, approvals, traces,
 and repository ownership where relevant, without requiring a Petri-net engine in
 this slice.
+
+## architecture-spec
+
+The skill `athena-interview-user` is a repo-local Archon skill at
+`agents/global/archon/skills/athena-interview-user/SKILL.md`. It is a lean
+`SKILL.md` without scripts, references, or UI metadata. The current behavior is
+prompt/procedure driven; adding deterministic scripts or schemas now would build
+infrastructure before there is evidence that the repeated output needs machine
+validation.
+
+The skill:
+
+- is used when Athena/Archon must produce an architecture interview or
+  decision-support document before implementation begins
+- treats existing ADRs as context, not as files to replace
+- asks material clarifying questions before proposing solutions when required
+- evaluates all options through scope discipline, model separation, workflow
+  compatibility, and repository boundary clarity
+- preserves separation between `ObjectClass`, `ActionClass`, `ActionInstance`,
+  `Policy`, and `Trace`
+- proposes exactly four courses of action
+- recommends exactly one option
+- states the required human decision before implementation proceeds
+- produces the fixed document structure requested by the human architect
+- does not implement code, mutate ADR status, create workflows, or route work to
+  Vulcan by itself
 
 ## acceptance-criteria
 
@@ -90,12 +116,35 @@ this slice.
 
 ## implementation-brief
 
-Implement only the repo-local Archon skill:
+The skill file already exists at
+`agents/global/archon/skills/athena-interview-user/SKILL.md`. No implementation
+work is required. This ADR documents the accepted skill; the implementation is
+already present on disk.
 
-- `agents/global/archon/skills/athena-interview-user/SKILL.md`
+## resolved-open-questions
 
-Do not add scripts, schemas, workflows, CLI commands, Petri-net machinery,
-status mutation commands, or mothership vault artifacts in this slice.
+1. Should the skill include scripts, schemas, or deterministic validation?
+   - Resolved: no. The current behavior is prompt/procedure driven. Adding
+     infrastructure before there is evidence of repeated output needing machine
+     validation is premature.
+
+2. Is implementation by Vulcan required?
+   - Resolved: no. The skill file already exists and matches this specification.
+     This is a no-implementation path; only validation evidence remains.
+
+3. Does this skill replace existing ADRs?
+   - Resolved: no. It treats existing ADRs as context and complements them with
+     decision-support documents.
+
+## non-goals
+
+- Do not add scripts, schemas, workflows, CLI commands, or Petri-net machinery
+  in this slice.
+- Do not implement automatic ADR status mutation.
+- Do not route work to Vulcan automatically.
+- Do not create mothership vault artifacts.
+- Do not define a machine-readable interview output schema until repeated use
+  demonstrates the need.
 
 ## validation-expectations
 
@@ -114,7 +163,8 @@ graphify update .
 
 ## routing
 
-After this Draft ADR and skill are created, route back to Hermes for review.
-If Hermes accepts the skill as sufficient, no Vulcan implementation is needed
-unless later work requires schema validation, workflow automation, or tests
-beyond the skill validator.
+After Hermes review, no Vulcan implementation is needed. The skill file already
+exists at `agents/global/archon/skills/athena-interview-user/SKILL.md`. Hermes
+may accept this ADR as-is. If later work requires schema validation, workflow
+automation, or tests beyond the skill validator, a new ADR should define that
+scope.

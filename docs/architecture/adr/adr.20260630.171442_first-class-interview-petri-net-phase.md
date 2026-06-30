@@ -260,6 +260,32 @@ Hermes owns routing and monitoring:
 Hermes should treat orphaned or detached Archon runs as local runtime state to
 inspect and clean up before relying on their output.
 
+### Lifecycle Compatibility
+
+The `intake.*` places defined here (`intake.unclarified`,
+`intake.interviewing`, `intake.blocked`, `intake.ready_for_review`) are
+**operational Petri-net places** for the interview workflow conduct. They are
+distinct from the `intake` status field defined in the accepted ADR lifecycle
+(`adr.20260630.175315_athena-owned-adr-lifecycle.md`), which is a lifecycle
+status on ADR artifacts.
+
+These operational places do not replace, override, or alias the ADR lifecycle
+phases or their `allowed_next` rules. Model separation is preserved: workflow
+places describe runtime conduct state; lifecycle status describes artifact
+maturity.
+
+When `spec-intake.ready` is routed by Hermes to `athena.ready` and
+`athena-handoff-spec` produces `architecture-spec`, `acceptance-criteria`, and
+`implementation-brief`, the resulting ADR artifact enters the accepted ADR
+lifecycle at the `proposed` phase. Athena proposes; Hermes (as the message bus)
+routes to `review`. This mapping is conceptual for the first implementation
+slice and does not require a Petri-net engine or automatic status edits.
+
+Future Hermes will operate as the message bus with a single UI controlling the
+meta-harness. The operational places defined here are forward-compatible with
+that model: Hermes routes tokens between places, while the ADR lifecycle tracks
+artifact status independently.
+
 ## Consequences
 
 This decision makes interactive intake an explicit Petri-net phase before
@@ -267,7 +293,29 @@ Athena specification, rather than burying exploration inside the monolithic
 `archon-piv-loop`. Acceptance criteria, implementation guidance, validation
 expectations, and Hermes return routing are below.
 
-## Acceptance-Criteria
+## architecture-spec
+
+Split the existing `archon-piv-loop` exploration behavior into a first-class,
+typed intake phase that runs before Athena specification. The interview loop
+remains interactive but no longer implies Archon is running a full
+Plan-Implement-Validate workflow. Its sole authority is to turn an underspecified
+user request into a durable `spec-intake` packet that Hermes routes to Athena.
+
+The target flow is:
+`user-request -> intake.unclarified -> conduct_interview / intake.interviewing -> interview-summary + spec-intake -> athena.ready -> athena-handoff-spec -> architecture-spec + acceptance-criteria + implementation-brief -> Hermes route to Vulcan`.
+
+`archon-piv-loop.yaml` remains source material, not the new authority boundary.
+The reusable part is its EXPLORE loop: inspect the repo before questioning, ask
+decision-oriented questions, iterate until explicit user convergence, then
+summarize. The new phase stops before Athena planning/specification.
+
+The `intake.*` places are operational Petri-net places, distinct from the ADR
+lifecycle `intake` status (see Lifecycle Compatibility above). When
+`spec-intake.ready` routes to `athena.ready` and `athena-handoff-spec` produces
+the downstream spec, the resulting ADR artifact enters the accepted lifecycle
+at the `proposed` phase.
+
+## acceptance-criteria
 
 Vulcan's implementation is acceptable when:
 
@@ -292,9 +340,13 @@ Vulcan's implementation is acceptable when:
 9. No machine-local config, secrets, run history, or credentials are modified or
    committed.
 10. Vulcan returns `implementation-report`, `test-results`, and, if needed,
-    `deviation-report` to Hermes.
+     `deviation-report` to Hermes.
+11. Documentation includes a lifecycle compatibility note distinguishing
+    `intake.*` operational places from the ADR lifecycle `intake` status, and
+    mapping `spec-intake.ready -> athena.ready` to the lifecycle `proposed`
+    phase.
 
-## Implementation-Brief
+## implementation-brief
 
 Vulcan should implement the smallest repo-local slice that makes the interview
 phase explicit.
@@ -336,7 +388,11 @@ Recommended work:
    - Produce `test-results` with validation commands and outputs.
    - Produce `deviation-report` for any intentional variance from this spec.
 
-## Resolved Open Questions
+## blocking-open-questions
+
+None.
+
+## resolved-open-questions
 
 1. Should the interview be embedded inside Athena specification?
    - Resolved: no. It is a pre-Athena intake phase.
@@ -363,7 +419,7 @@ Recommended work:
    - Resolved: Hermes. Vulcan reports; Hermes completes, revises, or routes to
      Koios for knowledge capture.
 
-## Non-Goals
+## non-goals
 
 - Do not implement code as part of this Athena pass.
 - Do not define Project Koios product/domain architecture.
@@ -374,7 +430,7 @@ Recommended work:
 - Do not push branches, create PRs, or modify machine-local Archon state.
 - Do not commit secrets, local runtime state, or credentials.
 
-## Validation Expectations
+## validation-expectations
 
 Vulcan should run the smallest relevant validation for the files changed:
 
@@ -389,7 +445,7 @@ Vulcan should run the smallest relevant validation for the files changed:
 If a validation command is unavailable, record the command attempted and the
 reason it could not run in `test-results`.
 
-## Handoff Routing Back To Hermes After Vulcan Reports
+## routing
 
 Vulcan must return to Hermes, not directly to Athena or Koios.
 
