@@ -1,5 +1,5 @@
 ---
-name: architecture-interview
+name: athena-interview-user
 description: |
   Use when Athena/Archon must question an implementation proposal before code
   begins and produce an architecture interview or decision-support document
@@ -13,7 +13,7 @@ description: |
   to Vulcan.
 ---
 
-# Architecture Interview
+# Athena Interview User
 
 ## Overview
 

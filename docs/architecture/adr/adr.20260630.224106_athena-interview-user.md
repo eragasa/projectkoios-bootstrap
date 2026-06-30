@@ -1,4 +1,4 @@
-# ADR 20260630.224106: Architecture interview skill
+# ADR 20260630.224106: Athena interview-user skill
 
 ## Status
 
@@ -31,8 +31,8 @@ decision for the mothership vault, and it is not a Vulcan implementation task.
 
 ## Decision
 
-Create a repo-local Archon skill named `architecture-interview` under
-`agents/global/archon/skills/architecture-interview/`.
+Create a repo-local Archon skill named `athena-interview-user` under
+`agents/global/archon/skills/athena-interview-user/`.
 
 The skill:
 
@@ -74,8 +74,8 @@ this slice.
 
 ## acceptance-criteria
 
-- `agents/global/archon/skills/architecture-interview/SKILL.md` exists.
-- The skill frontmatter name is exactly `architecture-interview`.
+- `agents/global/archon/skills/athena-interview-user/SKILL.md` exists.
+- The skill frontmatter name is exactly `athena-interview-user`.
 - The skill description clearly triggers on architecture interviews,
   implementation-proposal reviews, and decision-support documents for
   Athena/Archon.
@@ -92,7 +92,7 @@ this slice.
 
 Implement only the repo-local Archon skill:
 
-- `agents/global/archon/skills/architecture-interview/SKILL.md`
+- `agents/global/archon/skills/athena-interview-user/SKILL.md`
 
 Do not add scripts, schemas, workflows, CLI commands, Petri-net machinery,
 status mutation commands, or mothership vault artifacts in this slice.
@@ -103,7 +103,7 @@ Run:
 
 ```bash
 .venv/bin/python /Users/eugene/.codex/skills/.system/skill-creator/scripts/quick_validate.py \
-  agents/global/archon/skills/architecture-interview
+  agents/global/archon/skills/athena-interview-user
 ```
 
 After meaningful repository changes, run:
