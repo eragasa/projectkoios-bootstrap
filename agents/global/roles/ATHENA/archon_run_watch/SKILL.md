@@ -19,15 +19,18 @@ Project Koios meta-harness operations.
 
 ## Session start protocol
 
-1.  Inspect current ADRs, current handoff locations, git state, and recent
+1.  Use Graphify first for broad repo context when `graphify-out/graph.json`
+    exists. Prefer `graphify query`, `graphify path`, or `graphify explain`
+    before broad manual reads.
+2.  Inspect current ADRs, current handoff locations, git state, and recent
     commits.
-2.  Treat `docs/archive/handoffs/` as provenance only. Archived
+3.  Treat `docs/archive/handoffs/` as provenance only. Archived
     `Status: active` headers are historical claims, not authoritative current
     work.
-3.  Report stale or superseded archived claims when they explain confusing
+4.  Report stale or superseded archived claims when they explain confusing
     state, but do not ask the user to resolve questions already answered by
     later ADRs, implementation reports, or filesystem state.
-4.  Report pending current active/draft artifacts before changing files.
+5.  Report pending current active/draft artifacts before changing files.
 
 ## Routing decision table
 
@@ -80,4 +83,5 @@ instead.
 
 1.  No active Archon runs left unintentionally.
 2.  No generated runtime state committed.
-3.  If files changed, report changed files and validation.
+3.  If meaningful repo files changed, refresh Graphify when available.
+4.  If files changed, report changed files and validation.

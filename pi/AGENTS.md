@@ -30,6 +30,8 @@ specialist if it requires their domain expertise.
 - Keep shared repo rules in the repository root `AGENTS.md`.
 - For codebase, architecture, file-relationship, and impact questions, use `graphify` first.
 - If `graphify-out/graph.json` exists, prefer `graphify query`, `graphify path`, or `graphify explain` before manual grepping or browsing.
+- At session start, use Graphify before broad manual reads; at session stop,
+  refresh Graphify after meaningful repository changes when available.
 - See `opencode/AGENTS.md` and `goose/AGENT.md` for the other harnesses;
   do not duplicate their instructions here.
 - Route user work to individual Project Koios repositories; each
@@ -44,6 +46,7 @@ specialist if it requires their domain expertise.
 ## Session protocol
 
 At session start:
+- use Graphify first to establish current repo context when a graph exists
 - check inbound handoffs for provenance consistency before treating them as
   pi-authored
 - verify `Origin`, `From`, `Acting-As`, and `Scope` / `Repository` when
@@ -52,6 +55,7 @@ At session start:
   flag it for revision instead of consuming it as authoritative
 
 At session stop:
+- refresh Graphify after meaningful repository changes when available
 - preserve repo-local boundaries in any outgoing handoff
 - carry `Delegated-Operator` when mediation occurred
 

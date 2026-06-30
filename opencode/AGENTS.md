@@ -12,7 +12,11 @@ All component repos are siblings under `~/repos/`.
 
 ## Rules
 
-For codebase, architecture, file-relationship, and impact questions, use `graphify` first. If `graphify-out/graph.json` exists, prefer `graphify query`, `graphify path`, or `graphify explain` before manual grepping or browsing.
+For codebase, architecture, file-relationship, and impact questions, use
+`graphify` first. If `graphify-out/graph.json` exists, prefer `graphify query`,
+`graphify path`, or `graphify explain` before manual grepping or browsing.
+At session start, use Graphify before broad manual reads. At session end,
+refresh Graphify after meaningful repository changes when available.
 
 Rules in `rules/` are incorporated by reference:
 - `rules/build.md` — implementation flow

@@ -83,8 +83,20 @@ active artifact surface.
 ## Directions for all harnesses
 
 - Read only the current artifact and filesystem state; do not rely on chat history.
-- For codebase, architecture, file-relationship, and impact questions, use `graphify` first.
-- If `graphify-out/graph.json` exists, prefer `graphify query`, `graphify path`, or `graphify explain` before manual grepping or browsing.
+- For codebase, architecture, file-relationship, and impact questions, use
+  `graphify` first.
+- At new session start, all harnesses should use `graphify` before manual file
+  reading when `graphify-out/graph.json` exists. Prefer `graphify query`,
+  `graphify path`, or `graphify explain` to establish context, then read only
+  the specific files or lines needed to verify or patch.
+- At session end, after meaningful repository file changes, refresh the graph
+  with the repo-standard Graphify update flow so the next session starts from
+  current indexed state.
+- Treat Graphify as the cheapest broad-context read path. Do not manually scan
+  large document/code surfaces before trying Graphify, unless Graphify is
+  missing, stale in a way that blocks the task, or lacks the exact detail needed.
+- If `graphify-out/graph.json` exists, prefer `graphify query`,
+  `graphify path`, or `graphify explain` before manual grepping or browsing.
 - Read `graphify-out/GRAPH_REPORT.md` only for broad architecture review.
 - Keep local secrets out of git.
 
@@ -103,6 +115,8 @@ local runtime state to inspect and clean up before relying on their output.
 ### Session protocol for Hermes
 
 At session start:
+- use Graphify first for broad repo context before reading archived handoffs,
+  ADRs, or source files manually
 - check `docs/archive/handoffs/` only as provenance: archived `Status: active`
   headers are not authoritative current work by themselves
 - prefer current ADRs, current handoff locations, git state, and filesystem
@@ -113,6 +127,8 @@ At session start:
 
 At session stop:
 - if files changed, run the smallest relevant validation you can justify
+- if meaningful repo files changed, refresh Graphify before reporting final
+  state unless the refresh is unavailable or would block urgent handoff
 - report files changed and validation results
 - ask before commit/push unless the user already directed it
 
