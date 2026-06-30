@@ -14,9 +14,9 @@ ROOT_AGENTS = """# Root
 archon opencode goose pi
 ## Meta-harness
 ## Directions for all harnesses
-## Directions for pi
-## Directions for archon
-## Directions for opencode
+## Directions for Hermes (pi)
+## Directions for Athena (archon)
+## Directions for Vulcan (opencode)
 ## Routing guide
 ## Artifact handoff
 """
@@ -86,6 +86,7 @@ def make_repo(root: Path) -> None:
     write(root / "goose/AGENT.md", GOOSE_AGENT)
     write(root / "doc/meta-harness.md", META_HARNESS)
     write(root / "archon/prompts/harness-routing.md", HARNESS_ROUTING)
+    write(root / "archon/skills/.archon/config.yaml")
     write(root / "maps/repositories.md")
     write(root / "maps/packages.md")
     write(root / "maps/vault_paths.md")
@@ -106,6 +107,16 @@ def make_repo(root: Path) -> None:
 
     for harness in ("pi", "archon", "opencode", "goose"):
         write(root / f"agents/global/{harness}/config.example")
+    write(root / "agents/global/archon/config.yaml.example")
+
+    for workflow in (
+        "archon-piv-loop",
+        "archon-architect",
+        "create-adr",
+        "design-review",
+        "plan-feature",
+    ):
+        write(root / f"archon/workflows/{workflow}.yaml")
 
 
 def messages(result) -> list[str]:
@@ -177,4 +188,24 @@ def test__validate_harnesses__missing_opencode_rule_reference(
     result = validate_harnesses(tmp_path)
 
     assert "missing opencode rule reference 'rules/session.md'" in messages(result)
+    assert result.exit_code() == 1
+
+
+def test__validate_harnesses__missing_archon_workflow(tmp_path: Path) -> None:
+    make_repo(tmp_path)
+    (tmp_path / "archon/workflows/archon-piv-loop.yaml").unlink()
+
+    result = validate_harnesses(tmp_path)
+
+    assert "missing repo-local Archon workflow" in messages(result)
+    assert result.exit_code() == 1
+
+
+def test__validate_harnesses__missing_archon_project_config(tmp_path: Path) -> None:
+    make_repo(tmp_path)
+    (tmp_path / "archon/skills/.archon/config.yaml").unlink()
+
+    result = validate_harnesses(tmp_path)
+
+    assert "missing path assumed by bootstrap CLI code" in messages(result)
     assert result.exit_code() == 1
