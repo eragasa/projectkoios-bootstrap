@@ -1,0 +1,73 @@
+name: athena-revise-adr
+description: |
+  Use when: Hermes needs Athena to apply review-required revisions to an
+  existing Draft ADR in place, without authoring new architecture.
+  Does: Reads an ADR path and a revision directive, applies only the specified
+  revisions, preserves Draft status, and prints the path changed.
+  NOT for: authoring new ADRs, substantive architecture decisions, code
+  implementation, status promotion, or routing to Vulcan. For new architecture
+  use athena-handoff-spec; for promotion review use
+  athena_review-draft-for-promotion.
+
+provider: codex
+model: gpt-5.5
+webSearchMode: disabled
+worktree:
+  enabled: false
+
+nodes:
+  - id: fetch-adr
+    bash: |
+      set -eu
+      path="$ARGUMENTS"
+      if [ -z "$path" ]; then
+        echo "ERROR: ADR path required. Example: docs/architecture/adr/adr.YYYYMMDD.HHMMSS_slug.md"
+        exit 2
+      fi
+      if [ ! -f "$path" ]; then
+        echo "ERROR: ADR file not found: $path"
+        exit 2
+      fi
+      printf 'ADR_PATH=%s\n\n' "$path"
+      cat "$path"
+    timeout: 30000
+
+  - id: revise-adr
+    depends_on: [fetch-adr]
+    prompt: |
+      You are Athena for projectkoios-bootstrap.
+
+      ## Task
+
+      Apply review-required revisions to an existing Draft ADR in place. You are
+      revising, not authoring. The revision directive comes from the caller
+      (Hermes or a delegated operator) and references a prior
+      athena_review-draft-for-promotion run.
+
+      $ARGUMENTS
+
+      ## ADR Under Revision
+
+      $fetch-adr.output
+
+      ## Revision Authority
+
+      - Apply ONLY the revisions specified in the directive above.
+      - Do not introduce new architecture decisions.
+      - Do not alter substantive content beyond what the directive requires.
+      - Do not promote, accept, reject, complete, or supersede the ADR.
+      - Preserve Status: Draft unless the directive explicitly says otherwise.
+      - Do not create a new ADR; revise the existing file in place.
+      - Do not implement code, create workflows, or route to Vulcan.
+
+      ## Repository Rules
+
+      - Read AGENTS.md before acting.
+      - Keep scope inside projectkoios-bootstrap.
+      - Do not commit, push, or create a PR.
+      - Do not modify machine-local state or secrets.
+
+      ## Required Output
+
+      Print only the path changed and a concise summary of the revisions
+      applied. Do not print the full ADR content.

@@ -157,3 +157,11 @@ or tickets that should be captured.
 - Do not hide repository ownership or future workflow compatibility.
 - Do not collapse persistent objects, actions, policies, and traces into one
   model.
+- After the human selects an option, write the full interview document
+  (Existing ADR Context, Clarifying Questions, Architectural Decision Axes, all
+  four Options, Comparative Assessment, Recommended Course of Action, Required
+  Human Decision, and Notes for Archon) to
+  `$ARTIFACTS_DIR/architecture-interview-<slug>.md` before returning. The slug
+  should be a short kebab-case label derived from the implementation topic. This
+  ensures interview decisions survive session boundaries and are available to
+  Koios for knowledge capture.

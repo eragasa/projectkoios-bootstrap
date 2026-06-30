@@ -11,7 +11,7 @@ provider: codex
 model: gpt-5.5
 webSearchMode: disabled
 worktree:
-  enabled: false
+  enabled: true
 
 nodes:
   - id: fetch-adr
@@ -50,8 +50,42 @@ nodes:
       done
     timeout: 30000
 
+  - id: check-impl-targets
+    depends_on: [fetch-adr]
+    bash: |
+      set -eu
+      adr_path="$ARGUMENTS"
+      if [ -z "$adr_path" ] || [ ! -f "$adr_path" ]; then
+        printf 'check-impl-targets: no ADR path available, skipping.\n'
+        exit 0
+      fi
+      printf '== Implementation target existence check ==\n'
+      printf 'Extracting file paths from implementation-brief section of %s\n\n' "$adr_path"
+      # Extract the implementation-brief section (## implementation-brief to next ##)
+      section=$(awk '/^## implementation-brief/{found=1; next} /^## /{if(found) exit} found' "$adr_path" 2>/dev/null || true)
+      if [ -z "$section" ]; then
+        printf 'No implementation-brief section found or empty.\n'
+        exit 0
+      fi
+      printf 'Referenced paths in implementation-brief:\n'
+      found_any=0
+      # Extract bare paths with extensions (also catches paths inside backticks)
+      all_paths=$(printf '%s\n' "$section" | grep -oE '[a-zA-Z0-9_/.-]+/[a-zA-Z0-9_/.-]+\.(md|yaml|yml|py|ts|js|json|sh|toml)' | grep -v '^docs/architecture/adr/' | sort -u || true)
+      for path in $all_paths; do
+        found_any=1
+        if [ -e "$path" ]; then
+          printf '  EXISTS: %s\n' "$path"
+        else
+          printf '  MISSING: %s\n' "$path"
+        fi
+      done
+      if [ "$found_any" -eq 0 ]; then
+        printf 'No concrete file paths detected in implementation-brief.\n'
+      fi
+    timeout: 15000
+
   - id: review-for-promotion
-    depends_on: [fetch-adr, fetch-context]
+    depends_on: [fetch-adr, fetch-context, check-impl-targets]
     prompt: |
       You are Athena for projectkoios-bootstrap.
 
@@ -71,6 +105,14 @@ nodes:
       ## Repository Context
 
       $fetch-context.output
+
+      ## Implementation Target Existence Check
+
+      $check-impl-targets.output
+
+      If the implementation-brief references files that already EXIST on disk,
+      treat this as evidence that the ADR may be a no-implementation or
+      validation-only candidate, and surface it in the recommendation.
 
       ## Promotion Gate
 
@@ -96,6 +138,13 @@ nodes:
         has bounded target surfaces
       - if no implementation is required, the ADR states what Hermes should
         validate before completion
+
+      IMPORTANT: Return ALL blocking issues in a single pass. Do not stop at
+      the first failure cluster. Check surface contract (section headings,
+      required canonical section IDs) AND substantive content (lifecycle
+      alignment, scope discipline, model separation, provenance) simultaneously.
+      A Draft ADR that fails on 3 issues should receive all 3 in
+      required-revisions on the first review, not 3 separate revision rounds.
 
       ## Required Output
 
