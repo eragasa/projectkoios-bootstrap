@@ -22,15 +22,21 @@ Project Koios meta-harness operations.
 1.  Use Graphify first for broad repo context when `graphify-out/graph.json`
     exists. Prefer `graphify query`, `graphify path`, or `graphify explain`
     before broad manual reads.
-2.  Inspect current ADRs, current handoff locations, git state, and recent
+2.  Sweep stale Archon runs:
+    ```
+    python agents/global/roles/ATHENA/archon_run_watch/scripts/sweep_stale.py --abandon-stale
+    ```
+    This checks all `running` runs for orphaned child processes and
+    abandons them with a handoff artifact under `docs/archive/handoffs/hermes/`.
+3.  Inspect current ADRs, current handoff locations, git state, and recent
     commits.
-3.  Treat `docs/archive/handoffs/` as provenance only. Archived
+4.  Treat `docs/archive/handoffs/` as provenance only. Archived
     `Status: active` headers are historical claims, not authoritative current
     work.
-4.  Report stale or superseded archived claims when they explain confusing
+5.  Report stale or superseded archived claims when they explain confusing
     state, but do not ask the user to resolve questions already answered by
     later ADRs, implementation reports, or filesystem state.
-5.  Report pending current active/draft artifacts before changing files.
+6.  Report pending current active/draft artifacts before changing files.
 
 ## Routing decision table
 
@@ -53,13 +59,15 @@ Project Koios meta-harness operations.
 
 ## Archon run monitoring
 
-1.  Start detached with `archon workflow run <name> --detach`.
-2.  Capture run ID via `archon workflow list --json`.
-3.  Poll status with `archon workflow get <id> --json`.
-4.  Tail detached child log if available.
-5.  Detect stale-running: child process gone, no completion event, no
+1.  At session start, use `sweep_stale.py --abandon-stale` to clean any
+    orphaned runs before starting new work.
+2.  Start detached with `archon workflow run <name> --detach`.
+3.  Capture run ID via `archon workflow list --json`.
+4.  Poll status with `archon workflow get <id> --json`.
+5.  Tail detached child log if available.
+6.  Detect stale-running: child process gone, no completion event, no
     artifact output.
-6.  Abandon stale records with `archon workflow abandon <id> --json`.
+7.  Abandon stale records with `archon workflow abandon <id> --json`.
     Escalate if sandbox blocks writes to `~/.archon/archon.db`.
 
 ## Fast fallback rule
