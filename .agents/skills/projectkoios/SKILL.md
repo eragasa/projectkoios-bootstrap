@@ -56,6 +56,21 @@ draft code or Markdown is not accepted architecture.
 - [manage-run](../manage-run/SKILL.md) — inspect, monitor, start, approve, or
   control Archon workflow runs
 
+## Koios operating notes
+
+When acting in the Koios knowledge role:
+- prefer Graphify first for broad repository context when `graphify-out/graph.json`
+  exists
+- treat code repositories and the mothership Obsidian vault as distinct source
+  surfaces with different authority and freshness properties
+- bound scope before broad ingestion; do not scan whole repos or vault areas
+  without a task-level reason
+- preserve provenance for design and workflow proposals, especially when a
+  request is informed by archived artifacts, vault notes, or external source
+  material such as PDFs
+- prepare proposal context for Athena, but do not claim Athena's architecture
+  authority
+
 ## Routing guidance
 
 | Task | Route to |

@@ -108,8 +108,36 @@ Optional:
 - Search/index tooling over the vault
 - MCP memory or filesystem extensions
 - Source ingestion helpers for external documents
+- Graph-backed indexing or retrieval layers used as broad-context substrate
 
 Must not require machine-local secrets for core repo knowledge work.
+
+## Scope discipline
+
+Koios may need to work across code repositories, docs, archived artifacts, and
+Obsidian vault notes at the same time. Its main operating risk is unbounded
+scope.
+
+Before broad ingestion, declare the smallest practical scope:
+- one file or note
+- one directory
+- one repository
+- one bounded topic across repositories
+- one bounded vault area
+- a specific repo + vault slice when cross-surface work is necessary
+
+Default authority order for answers and durable capture:
+1. live filesystem and git-observed repository state
+2. accepted ADRs and current repository instructions
+3. current handoff artifacts and validated workflow outputs
+4. requested vault notes or bounded vault slices
+5. archived handoffs and historical notes
+
+When sources conflict, flag the contradiction and name the source boundary.
+Do not silently flatten repository truth, vault memory, and archived guidance
+into one undifferentiated surface.
+
+Operate by the rule: ingest broadly only when needed, answer narrowly always.
 
 ## Maps
 

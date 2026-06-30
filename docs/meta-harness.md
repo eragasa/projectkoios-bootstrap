@@ -79,9 +79,25 @@ metadata:
 | `provenance-audit` | Koios | goose |
 | `repo-state-summary` | Koios (advisory) | goose |
 | `routing-recommendation` | Koios (advisory) | goose |
+| `directive` | producer-specific | producer runtime |
 | `routing-decision` | Hermes | pi |
 | `revision-request` | Hermes | pi |
 | `completion-decision` | Hermes | pi |
+
+## Cross-surface knowledge discipline
+
+Knowledge work often spans repository state, accepted ADRs, current handoffs,
+archived artifacts, and bounded vault material. These are not interchangeable
+sources.
+
+When a knowledge agent or support flow spans multiple surfaces, it should:
+- declare the bounded scope it is using
+- preserve provenance per claim or summary section
+- distinguish live repo truth from archived or vault memory
+- flag contradictory sources instead of silently normalizing them
+
+Graph-backed indexing systems may be used as broad-context substrate, but they
+do not replace source citation or authority ordering.
 
 ## Anti-patterns
 
