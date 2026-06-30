@@ -186,6 +186,7 @@ __marimo__/
 
 # Project Koios harness runtime data (never commit)
 .archon-runs/
+.archon/mcp/
 pi/agent/
 opencode/sandbox/
 opencode/sessions/
