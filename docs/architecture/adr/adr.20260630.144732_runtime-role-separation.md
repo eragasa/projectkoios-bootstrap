@@ -2,7 +2,7 @@
 
 ## Status
 
-Accepted
+Completed
 
 ## Context
 
@@ -90,9 +90,9 @@ This mapping can be removed in the future if roles become runtime-independent.
 
 - **Immediate:** The `archon_run_watch` skill scripts can import `Role`
   without dragging in runtime-specific fields like `config_dir`.
-- **Short-term:** `init`, `install`, and `validate_harnesses` are refactored
-  to iterate `RUNTIMES` instead of `HARNESSES`. The change is mechanical and
-  tested.
+- **Short-term:** `init`, `install`, and `validate_harnesses` were refactored
+  to iterate `RUNTIMES` instead of `HARNESSES` (commit `ae91f14`). The change was
+  mechanical and tested.
 - **Medium-term:** The handoff parser and evaluator (which currently use
   inline `HERMES_IDS`, `CODEX_IDS` string sets in `guards.py`) can migrate to
   `Role` objects, replacing hardcoded identity checks with declarative data.
