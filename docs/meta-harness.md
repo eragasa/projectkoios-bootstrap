@@ -84,6 +84,25 @@ metadata:
 | `revision-request` | Hermes | pi |
 | `completion-decision` | Hermes | pi |
 
+## Workflow Ownership
+
+Archon workflow names may encode harness authority. Workflows named with the
+prefix `athena_` follow this shape:
+
+```text
+athena_<action-in-this-mode>
+```
+
+The prefix means the workflow is an Athena-owned role transition. Only Athena
+may run it in the harness sense, and any output from that workflow is an Athena
+artifact. Hermes, Codex, or another delegated operator may physically invoke the
+Archon CLI to provide access, but that does not change the artifact owner or
+turn the output into a Hermes routing decision.
+
+An `athena_` workflow must not implement code, validate patches, complete ADRs,
+or perform Koios knowledge capture unless a later accepted ADR explicitly
+changes that workflow's ownership boundary.
+
 ## Cross-surface knowledge discipline
 
 Knowledge work often spans repository state, accepted ADRs, current handoffs,

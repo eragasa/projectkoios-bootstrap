@@ -13,6 +13,10 @@ When producing a plan for Project Koios, assign each step to exactly one harness
 - Route planning and durable design records to `archon/`.
 - Route code and validation work to `opencode/`.
 - Route research and note-creation work to `goose/`.
+- Treat workflows named `athena_<action-in-this-mode>` as Athena-owned
+  workflows. Only Athena runs them in the harness sense; if Hermes, Codex, or
+  another delegated operator invokes the CLI, the output is still an
+  Athena-owned artifact and must preserve delegated-operator provenance.
 - If a step mixes concerns, split it into separate steps.
 - Always call out handoff points explicitly.
 

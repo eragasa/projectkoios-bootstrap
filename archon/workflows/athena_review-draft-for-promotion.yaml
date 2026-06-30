@@ -1,0 +1,152 @@
+name: athena_review-draft-for-promotion
+description: |
+  Use when: Hermes needs Athena to review a Draft ADR and determine whether it
+  is architecturally ready to be promoted toward implementation.
+  Does: Reads one ADR path, checks promotion readiness, and returns a structured
+  recommendation for Hermes.
+  NOT for: code implementation, status changes, file mutation, validation loops,
+  PR creation, or direct routing to Vulcan.
+
+provider: codex
+model: gpt-5.5
+webSearchMode: disabled
+worktree:
+  enabled: false
+
+nodes:
+  - id: fetch-adr
+    bash: |
+      set -eu
+      path="${1:-}"
+      if [ -z "$path" ]; then
+        echo "ERROR: ADR path required. Example: docs/architecture/adr/adr.YYYYMMDD.HHMMSS_slug.md"
+        exit 2
+      fi
+      if [ ! -f "$path" ]; then
+        echo "ERROR: ADR file not found: $path"
+        exit 2
+      fi
+      printf 'ADR_PATH=%s\n\n' "$path"
+      sed -n '1,260p' "$path"
+    timeout: 30000
+
+  - id: fetch-context
+    bash: |
+      set -eu
+      printf '== AGENTS.md ==\n'
+      sed -n '1,260p' AGENTS.md
+      printf '\n== docs/meta-harness.md ==\n'
+      sed -n '1,220p' docs/meta-harness.md
+      printf '\n== accepted lifecycle-related ADRs ==\n'
+      for path in \
+        docs/architecture/adr/adr.20260630.144732_runtime-role-separation.md \
+        docs/architecture/adr/adr.20260630.170000_pending-athena-decisions.md \
+        docs/architecture/adr/adr.20260630.175315_athena-owned-adr-lifecycle.md
+      do
+        if [ -f "$path" ]; then
+          printf '\n-- %s --\n' "$path"
+          sed -n '1,220p' "$path"
+        fi
+      done
+    timeout: 30000
+
+  - id: review-for-promotion
+    depends_on: [fetch-adr, fetch-context]
+    prompt: |
+      You are Athena for projectkoios-bootstrap.
+
+      ## Task
+
+      Review the Draft ADR below and determine whether it is architecturally
+      ready for Hermes to promote toward implementation.
+
+      This workflow is advisory to Hermes. Do not edit files. Do not mark the
+      ADR accepted, rejected, completed, or superseded. Do not route to Vulcan.
+      Do not implement code.
+
+      ## ADR Under Review
+
+      $fetch-adr.output
+
+      ## Repository Context
+
+      $fetch-context.output
+
+      ## Promotion Gate
+
+      A Draft ADR is ready to promote only when all of these are true:
+
+      - scope is bounded to projectkoios-bootstrap or explicitly states its
+        external scope
+      - status is Draft or an equivalent non-authoritative state
+      - architecture decision is clear enough for Athena acceptance review
+      - acceptance criteria are inspectable
+      - implementation brief clearly says either implementation is required or
+        no implementation is required
+      - validation expectations are concrete
+      - non-goals are explicit
+      - resolved and blocking open questions are separated
+      - no blocking open questions remain
+      - routing back to Hermes is stated
+      - provenance is sufficient, including delegated-operator context when
+        Codex relayed the artifact
+      - no conflict with accepted ADRs, live repository instructions, or harness
+        ownership boundaries is unresolved
+      - if implementation is required, the work is appropriate for Vulcan and
+        has bounded target surfaces
+      - if no implementation is required, the ADR states what Hermes should
+        validate before completion
+
+      ## Required Output
+
+      Return a concise Markdown promotion review with these sections exactly:
+
+      # Athena Promotion Review: <ADR title or path>
+
+      ## recommendation
+
+      One of:
+
+      - `ready_for_hermes_acceptance_review`
+      - `needs_athena_revision`
+      - `no_implementation_required`
+      - `not_an_implementation_candidate`
+      - `blocked`
+
+      ## rationale
+
+      Briefly explain the recommendation.
+
+      ## gate-results
+
+      Use a checklist. Each item should be `pass`, `fail`, or `not_applicable`
+      with a short reason.
+
+      ## required-revisions
+
+      List only blocking revisions needed before Hermes should promote. Use
+      `None` if there are none.
+
+      ## implementation-classification
+
+      State one of:
+
+      - `implementation_required`
+      - `no_implementation_required`
+      - `unclear`
+      - `not_applicable`
+
+      If implementation is required, identify the bounded target surfaces for
+      Vulcan. If unclear, state exactly what the ADR must clarify.
+
+      ## hermes-next-action
+
+      Recommend the next Hermes action:
+
+      - route to Athena revision
+      - review for acceptance
+      - defer
+      - record no-implementation validation
+      - block pending named input
+
+      Keep the review factual and implementation-neutral.

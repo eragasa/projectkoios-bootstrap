@@ -54,6 +54,21 @@ two layers that operate as one role:
 
 Athena operates as a single spec agent with a unified handoff boundary.
 
+### Athena workflow naming
+
+Archon workflows named with the prefix `athena_` are Athena-owned role
+transitions. The name shape is:
+
+```text
+athena_<action-in-this-mode>
+```
+
+Only Athena may run these workflows in the harness sense: their outputs are
+Athena artifacts, and they must not be treated as Hermes routing decisions,
+Vulcan implementation, or Koios knowledge capture. A delegated operator such as
+Codex or Hermes may invoke the CLI when relaying access, but the artifact must
+preserve that it was produced by Athena and mediated by the delegated operator.
+
 ## Meta-harness
 
 This repo operates a role-based meta-harness that separates specification, implementation, and knowledge capture into distinct agent roles. See `docs/meta-harness.md` for the full framework detail on skill model, disagreement handling, completion gates, escalation rules, and anti-patterns.
@@ -140,11 +155,14 @@ Use Athena (archon) for:
 - ADRs and durable decisions
 - workflow design
 - resolving ambiguous cross-cutting project choices
+- `athena_<action-in-this-mode>` Archon workflows
 
 Athena should:
 - write implementation-ready plans
 - place downstream work in ADRs under `docs/architecture/adr/`
 - keep architecture out of this config repo unless it is about bootstrap structure
+- treat `athena_` workflow outputs as Athena-owned artifacts even when a
+  delegated operator invokes the Archon CLI
 
 ## Directions for Vulcan (opencode)
 
