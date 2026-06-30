@@ -41,6 +41,6 @@ def test_bootstrap_init_copies_example_files_and_skips_asset_dirs(
     assert (tmp_path / ".pi/AGENTS.md").exists()
     assert (tmp_path / ".archon/config.yaml").exists()
     assert (tmp_path / ".opencode/opencode.json").exists()
-    assert (tmp_path / ".local/share/goose/AGENT.md").exists()
+    assert (tmp_path / ".local/share/goose/AGENTS.md").exists()
     assert not (tmp_path / ".pi/skills").exists()
     assert "done: init complete" in result.stdout

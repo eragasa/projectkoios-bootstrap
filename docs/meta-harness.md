@@ -61,6 +61,28 @@ metadata:
 ## Escalation rule
 ```
 
+## Artifact ownership
+
+| Artifact | Owner | Producing runtime |
+|---|---|---|
+| `user-request` | user | N/A |
+| `architecture-spec` | Athena | archon / Codex |
+| `acceptance-criteria` | Athena | archon / Codex |
+| `implementation-brief` | Athena | archon / Codex |
+| `implementation-plan` | Vulcan | opencode |
+| `patch` | Vulcan | opencode |
+| `test-results` | Vulcan | opencode |
+| `implementation-report` | Vulcan | opencode |
+| `deviation-report` | Vulcan | opencode |
+| `knowledge-note` | Koios | goose |
+| `provenance-index` | Koios | goose |
+| `provenance-audit` | Koios | goose |
+| `repo-state-summary` | Koios (advisory) | goose |
+| `routing-recommendation` | Koios (advisory) | goose |
+| `routing-decision` | Hermes | pi |
+| `revision-request` | Hermes | pi |
+| `completion-decision` | Hermes | pi |
+
 ## Anti-patterns
 
 Avoid these patterns:

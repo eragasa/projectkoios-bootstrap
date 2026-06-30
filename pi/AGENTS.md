@@ -32,7 +32,7 @@ specialist if it requires their domain expertise.
 - If `graphify-out/graph.json` exists, prefer `graphify query`, `graphify path`, or `graphify explain` before manual grepping or browsing.
 - At session start, use Graphify before broad manual reads; at session stop,
   refresh Graphify after meaningful repository changes when available.
-- See `opencode/AGENTS.md` and `goose/AGENT.md` for the other harnesses;
+- See `opencode/AGENTS.md` and `goose/AGENTS.md` for the other harnesses;
   do not duplicate their instructions here.
 - Route user work to individual Project Koios repositories; each
   repository has its own repo-scoped harness boundaries, handoffs,

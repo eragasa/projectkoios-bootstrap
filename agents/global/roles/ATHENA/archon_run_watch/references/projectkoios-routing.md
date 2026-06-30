@@ -11,13 +11,25 @@
 
 ## Artifact ownership
 
-| Artifact | Owner |
-|---|---|
-| user-request | user |
-| architecture-spec, acceptance-criteria, implementation-brief | Athena |
-| implementation-plan, patch, test-results, implementation-report, deviation-report | Vulcan |
-| knowledge-note, provenance-index | Koios |
-| routing-decision, revision-request, completion-decision | Hermes |
+| Artifact | Owner | Notes |
+|---|---|---|
+| user-request | user | Original task or instruction |
+| architecture-spec | Athena | Bounded architecture decision |
+| acceptance-criteria | Athena | Inspectable criteria for completion |
+| implementation-brief | Athena | Concrete instructions for implementation |
+| implementation-plan | Vulcan | Planned file-level changes |
+| patch | Vulcan | Repository modification |
+| test-results | Vulcan | Validation output |
+| implementation-report | Vulcan | Summary of what changed |
+| deviation-report | Vulcan | Mismatch between spec and reality |
+| knowledge-note | Koios | Durable note from validated artifacts |
+| provenance-index | Koios | Mapping from claims to sources |
+| provenance-audit | Koios | Capture-gap detection report |
+| repo-state-summary | Koios (advisory) | Snapshot for Hermes |
+| routing-recommendation | Koios (advisory) | Suggestion for Hermes |
+| routing-decision | Hermes | Where to route next |
+| revision-request | Hermes | Return for revision |
+| completion-decision | Hermes | Gate result |
 
 ## When to bypass specialist routing
 

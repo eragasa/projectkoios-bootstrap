@@ -2,7 +2,11 @@
 
 ## Status
 
-Draft
+Accepted
+
+## Phase
+
+completed (Zeus-directed, Hermes-not-yet-operational)
 
 ## Context
 
@@ -173,7 +177,7 @@ ADR guidance, validation expectations, and return routing are below.
 
 Vulcan's implementation is complete when:
 
-1. `goose/AGENT.md` and `agents/global/goose/AGENT.md.example` define Koios as
+1. `goose/AGENTS.md` and `agents/global/goose/AGENTS.md.example` define Koios as
    the knowledge role with explicit ownership, boundaries, routing triggers,
    and direct-edit limits consistent with this spec.
 
@@ -215,8 +219,8 @@ Vulcan's implementation is complete when:
 Implement only documentation, prompt, and Goose skill updates needed to encode
 the role definition. Recommended file targets:
 
-- `goose/AGENT.md`
-- `agents/global/goose/AGENT.md.example`
+- `goose/AGENTS.md`
+- `agents/global/goose/AGENTS.md.example`
 - `agents/global/goose/skills/knowledge-agent-provenance-note/SKILL.md`
 - optionally a new Goose skill under `agents/global/goose/skills/` if keeping
   provenance-note narrowly scoped is cleaner
@@ -272,3 +276,49 @@ validation results to Hermes. Hermes should then decide whether:
 - Athena needs to create a durable ADR
 - Koios should perform a follow-up knowledge capture pass
 - any missed-capture or provenance-audit work should be routed to Koios
+
+## Implementation Decisions
+
+The following conventions were established during the initial Vulcan
+implementation of this ADR and are recorded here for durability:
+
+### Artifact surface (implemented slice)
+
+| Artifact | Skill | Status |
+|---|---|---|
+| `KnowledgeNote` | knowledge-agent-provenance-note | Implemented |
+| `ProvenanceIndex` | knowledge-agent-provenance-note | Implemented |
+| `ProvenanceAudit` | knowledge-provenance-audit | Implemented (collapses formerly separate `provenance-audit` and `missed-capture-report` into one artifact with two trigger modes) |
+| `RepoStateSummary` | knowledge-agent-provenance-note | Implemented (advisory) |
+| `RoutingRecommendation` | knowledge-agent-provenance-note | Implemented (advisory) |
+| `DocumentationGapReport` | — | Deferred (YAGNI; no consumer yet) |
+| `KnowledgeSyncNote` | — | Deferred (vault operations are optional per ADR) |
+
+### Coding conventions
+
+- Classes use `CamelCase` (e.g., `KnowledgeNote`, `ProvenanceAudit`)
+- Methods and functions use `snake_case`
+- Agent configuration files use `AGENTS.md` (plural, uppercase) as the canonical
+  name per OpenAI agents.md standard and latest Goose behavior
+- `AGENT.md` (singular) retained as a symlink for backward compatibility
+
+### Skill organization
+
+Two-skill structure:
+
+1. **knowledge-agent-provenance-note** — capture, index, and advisory outputs.
+   Single `ActionObject` (transition) producing multiple `DataObject` artifacts
+   (the CPN color types): `KnowledgeNote`, `ProvenanceIndex`,
+   `RepoStateSummary`, `RoutingRecommendation`.
+
+2. **knowledge-provenance-audit** — independent audit transition with its own
+   trigger conditions (scan-mode / flag-mode). Produces `ProvenanceAudit`.
+   Separate because audit can fire independently of capture.
+
+### Referenced files
+
+See `goose/AGENTS.md`, `agents/global/goose/AGENTS.md.example`,
+`agents/global/goose/skills/knowledge-agent-provenance-note/SKILL.md`,
+`agents/global/goose/skills/knowledge-provenance-audit/SKILL.md`,
+`docs/meta-harness.md`, and
+`agents/global/roles/ATHENA/archon_run_watch/references/projectkoios-routing.md`.

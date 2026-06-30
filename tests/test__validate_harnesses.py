@@ -25,7 +25,7 @@ PI_AGENTS = """# Pi
 ## Direct capabilities
 ## Delegation
 ## Scope
-See `opencode/AGENTS.md` and `goose/AGENT.md`.
+See `opencode/AGENTS.md` and `goose/AGENTS.md`.
 ## Reference
 """
 
@@ -47,9 +47,9 @@ Read `../maps/repositories.md` and `../maps/packages.md`.
 ## Conventions
 """
 
-GOOSE_AGENT = """# Goose
+GOOSE_AGENTS = """# Goose
 
-## Domain
+## Role identity
 ## Maps
 See `../maps/vault_paths.md`.
 ## Vault rules
@@ -81,7 +81,7 @@ def make_repo(root: Path) -> None:
     write(root / "AGENTS.md", ROOT_AGENTS)
     write(root / "pi/AGENTS.md", PI_AGENTS)
     write(root / "opencode/AGENTS.md", OPENCODE_AGENTS)
-    write(root / "goose/AGENT.md", GOOSE_AGENT)
+    write(root / "goose/AGENTS.md", GOOSE_AGENTS)
     write(root / "docs/meta-harness.md", META_HARNESS)
     write(root / "archon/prompts/harness-routing.md", HARNESS_ROUTING)
     write(root / "archon/skills/.archon/config.yaml")
@@ -155,8 +155,8 @@ def test__validate_harnesses__broken_relative_reference(tmp_path: Path) -> None:
 
 def test__validate_harnesses__missing_required_heading(tmp_path: Path) -> None:
     make_repo(tmp_path)
-    (tmp_path / "goose/AGENT.md").write_text(
-        GOOSE_AGENT.replace("## Vault rules\n", ""),
+    (tmp_path / "goose/AGENTS.md").write_text(
+        GOOSE_AGENTS.replace("## Vault rules\n", ""),
         encoding="utf-8",
     )
 
@@ -164,17 +164,6 @@ def test__validate_harnesses__missing_required_heading(tmp_path: Path) -> None:
 
     assert "missing required heading '## Vault rules'" in messages(result)
     assert result.exit_code() == 1
-
-
-def test__validate_harnesses__does_not_require_plural_goose_agents(
-    tmp_path: Path,
-) -> None:
-    make_repo(tmp_path)
-
-    result = validate_harnesses(tmp_path)
-
-    assert not (tmp_path / "goose/AGENTS.md").exists()
-    assert result.count(Severity.ERROR) == 0
 
 
 def test__validate_harnesses__missing_opencode_rule_reference(

@@ -60,8 +60,8 @@ CANONICAL_FILES: dict[str, tuple[str, ...]] = {
         "## Common commands",
         "## Conventions",
     ),
-    "goose/AGENT.md": (
-        "## Domain",
+    "goose/AGENTS.md": (
+        "## Role identity",
         "## Maps",
         "## Vault rules",
         "## Handoff support",
@@ -138,16 +138,6 @@ def _check_canonical_files(root: Path, findings: list[Finding]) -> None:
                         rel_path,
                     )
                 )
-
-    if (root / "goose/AGENTS.md").exists():
-        findings.append(
-            Finding(
-                Severity.WARNING,
-                "goose uses goose/AGENT.md as its canonical file; "
-                "goose/AGENTS.md is not part of the manifest",
-                "goose/AGENTS.md",
-            )
-        )
 
 
 def _check_references(root: Path, findings: list[Finding]) -> None:
