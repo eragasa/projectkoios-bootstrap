@@ -2,7 +2,7 @@
 
 ## Status
 
-Draft
+Superseded by adr.20260630.214135_koios-evidence-intake-directive-contract.md
 
 ## Context
 
