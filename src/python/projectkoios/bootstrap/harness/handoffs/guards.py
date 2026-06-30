@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Callable
 
-from projectkoios.bootstrap.harness.data.marking import Marking
+from projectkoios.bootstrap.harness.data.marking import HandoffMarking
 from projectkoios.bootstrap.harness.data.violation import Violation, ViolationCode
 
 
@@ -26,7 +26,7 @@ CODEX_IDS = frozenset({"Codex", "codex"})
 """Variant spellings for Hermes and Codex identity checks."""
 
 
-def check_hermes_forwarded_without_decision(marking: Marking) -> list[Violation]:
+def check_hermes_forwarded_without_decision(marking: HandoffMarking) -> list[Violation]:
     """Hermes must produce a decision artifact, not relay raw inbox state.
 
     Triggers when a token in ``pi_inbox`` has sender or recipient matching
@@ -55,7 +55,7 @@ def check_hermes_forwarded_without_decision(marking: Marking) -> list[Violation]
     return violations
 
 
-def check_wrong_implementation_owner(marking: Marking) -> list[Violation]:
+def check_wrong_implementation_owner(marking: HandoffMarking) -> list[Violation]:
     """Only Vulcan may produce implementation artifacts.
 
     Scans every token in the marking for ``patch``, ``test-results``, or
@@ -87,7 +87,7 @@ def check_wrong_implementation_owner(marking: Marking) -> list[Violation]:
     return violations
 
 
-def check_delegated_operator_missing(marking: Marking) -> list[Violation]:
+def check_delegated_operator_missing(marking: HandoffMarking) -> list[Violation]:
     """Codex-mediated artifacts must carry explicit ``Delegated-Operator`` provenance.
 
     Triggers when any header field (sender, origin, acting_as) references
@@ -119,7 +119,7 @@ def check_delegated_operator_missing(marking: Marking) -> list[Violation]:
     return violations
 
 
-def check_codex_as_pi_identity_collapse(marking: Marking) -> list[Violation]:
+def check_codex_as_pi_identity_collapse(marking: HandoffMarking) -> list[Violation]:
     """Codex must not claim pi/Hermes identity.
 
     Triggers when a token claims pi origin or authority (origin, sender, or
@@ -160,7 +160,7 @@ def check_codex_as_pi_identity_collapse(marking: Marking) -> list[Violation]:
     return violations
 
 
-ALL_GUARDS: list[Callable[[Marking], list[Violation]]] = [
+ALL_GUARDS: list[Callable[[HandoffMarking], list[Violation]]] = [
     check_hermes_forwarded_without_decision,
     check_wrong_implementation_owner,
     check_delegated_operator_missing,

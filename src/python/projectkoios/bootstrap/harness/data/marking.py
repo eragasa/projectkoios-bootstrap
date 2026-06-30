@@ -1,12 +1,15 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from typing import Generic, TypeVar
 
 from projectkoios.bootstrap.harness.data.artifact import HandoffArtifact
 
+T = TypeVar("T")
+
 
 @dataclass(frozen=True)
-class Marking:
+class Marking(Generic[T]):
     """The current distribution of colored tokens across all places.
 
     In Petri net terms, a marking assigns each place (inbox) a set of tokens.
@@ -16,18 +19,26 @@ class Marking:
 
     A marking is built once per ``HandoffEvaluator.evaluate()`` call and
     passed to every guard function. It is never persisted.
+
+    Generic over the token type ``T`` so the same marking structure serves
+    handoff tokens (``Marking[HandoffArtifact]``) and daemon tokens
+    (``Marking[DemonToken]``) without duplicating the type.
     """
 
-    tokens_by_place: dict[str, list[HandoffArtifact]] = field(default_factory=dict)
+    tokens_by_place: dict[str, list[T]] = field(default_factory=dict)
 
-    def tokens_at(self, place: str) -> list[HandoffArtifact]:
+    def tokens_at(self, place: str) -> list[T]:
         """Tokens currently present at *place*, or an empty list."""
         return list(self.tokens_by_place.get(place, []))
 
     @property
-    def all_tokens(self) -> list[HandoffArtifact]:
+    def all_tokens(self) -> list[T]:
         """Every token across every place, flattened."""
-        result: list[HandoffArtifact] = []
+        result: list[T] = []
         for tokens in self.tokens_by_place.values():
             result.extend(tokens)
         return result
+
+
+HandoffMarking = Marking[HandoffArtifact]
+"""Type alias for the handoff-specific marking used by the evaluator."""
