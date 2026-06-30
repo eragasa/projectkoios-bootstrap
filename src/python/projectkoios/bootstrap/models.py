@@ -3,10 +3,8 @@ from pathlib import Path
 
 
 @dataclass(frozen=True)
-class Harness:
+class Runtime:
     name: str
-    display_name: str
-    role: str
     config_dir: Path
 
     @property
@@ -22,12 +20,27 @@ class Harness:
         return self.config_dir / "skills"
 
 
-HARNESSES: list[Harness] = [
-    Harness("pi", "pi", "Agent runtime — executes Archon workflows", Path.home() / ".pi"),
-    Harness("archon", "Athena", "Architecture design, ADRs, planning", Path.home() / ".archon"),
-    Harness("opencode", "Vulcan", "Code writing, tests, validation", Path.home() / ".opencode"),
-    Harness("goose", "Koios", "Knowledge management, vault ops", Path.home() / ".local/share/goose"),
+RUNTIMES: list[Runtime] = [
+    Runtime("pi", Path.home() / ".pi"),
+    Runtime("archon", Path.home() / ".archon"),
+    Runtime("opencode", Path.home() / ".opencode"),
+    Runtime("goose", Path.home() / ".local/share/goose"),
 ]
+
+
+@dataclass(frozen=True)
+class Role:
+    name: str
+    short_name: str
+    responsibilities: str
+
+
+ROLE_TO_RUNTIME: dict[str, str] = {
+    "Hermes": "pi",
+    "Athena": "archon",
+    "Vulcan": "opencode",
+    "Koios": "goose",
+}
 
 
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent.parent.parent

@@ -5,7 +5,7 @@ from enum import Enum
 from pathlib import Path, PurePosixPath
 import re
 
-from projectkoios.bootstrap.models import HARNESSES
+from projectkoios.bootstrap.models import RUNTIMES
 
 
 class Severity(Enum):
@@ -256,31 +256,31 @@ def _check_archon_workflows(root: Path, findings: list[Finding]) -> None:
 
 
 def _check_global_examples(root: Path, findings: list[Finding]) -> None:
-    for harness in HARNESSES:
-        harness_dir = root / "agents" / "global" / harness.name
-        if not harness_dir.exists():
+    for runtime in RUNTIMES:
+        runtime_dir = root / "agents" / "global" / runtime.name
+        if not runtime_dir.exists():
             findings.append(
                 Finding(
                     Severity.ERROR,
-                    f"missing global example directory for harness {harness.name!r}",
-                    str(PurePosixPath("agents/global") / harness.name),
+                    f"missing global example directory for runtime {runtime.name!r}",
+                    str(PurePosixPath("agents/global") / runtime.name),
                 )
             )
             continue
-        if not any(item.name.endswith(".example") for item in harness_dir.iterdir()):
+        if not any(item.name.endswith(".example") for item in runtime_dir.iterdir()):
             findings.append(
                 Finding(
                     Severity.ERROR,
-                    f"missing .example config coverage for harness {harness.name!r}",
-                    str(PurePosixPath("agents/global") / harness.name),
+                    f"missing .example config coverage for runtime {runtime.name!r}",
+                    str(PurePosixPath("agents/global") / runtime.name),
                 )
             )
     _check_skills(root, findings)
 
 
 def _check_skills(root: Path, findings: list[Finding]) -> None:
-    for harness in HARNESSES:
-        skills_dir = root / "agents" / "global" / harness.name / "skills"
+    for runtime in RUNTIMES:
+        skills_dir = root / "agents" / "global" / runtime.name / "skills"
         if not skills_dir.exists():
             continue
         for skill_dir in skills_dir.iterdir():

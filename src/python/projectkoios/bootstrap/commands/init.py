@@ -1,6 +1,6 @@
 import shutil
 
-from projectkoios.bootstrap.models import HARNESSES, GLOBAL_DIR
+from projectkoios.bootstrap.models import RUNTIMES, GLOBAL_DIR
 
 
 def register(subparsers) -> None:
@@ -13,13 +13,13 @@ def run(args) -> None:
         print(f"error: global config directory not found: {GLOBAL_DIR}")
         return
 
-    for harness in HARNESSES:
-        src = GLOBAL_DIR / harness.name
+    for runtime in RUNTIMES:
+        src = GLOBAL_DIR / runtime.name
         if not src.exists():
-            print(f"skip: {harness.name} — no global config at {src}")
+            print(f"skip: {runtime.name} — no global config at {src}")
             continue
 
-        dst = harness.config_dir
+        dst = runtime.config_dir
         dst.mkdir(parents=True, exist_ok=True)
 
         for item in src.iterdir():
