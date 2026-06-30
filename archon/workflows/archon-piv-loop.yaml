@@ -17,7 +17,7 @@ description: |
   Input: A description of what to build, a path to an existing plan, or a GitHub issue number.
 
 provider: codex
-model: gpt-5.2
+model: gpt-5.5
 interactive: true
 
 nodes:
@@ -175,7 +175,7 @@ nodes:
   # ═══════════════════════════════════════════════════════════════
 
   - id: create-plan
-    model: medium
+    model: gpt-5.5
     depends_on: [explore]
     context: fresh
     prompt: |
@@ -412,7 +412,7 @@ nodes:
   - id: implement
     depends_on: [implement-setup]
     idle_timeout: 600000
-    model: large
+    model: gpt-5.5
     loop:
       prompt: |
         # PIV Loop — Implementation Agent
@@ -542,7 +542,7 @@ nodes:
   # ═══════════════════════════════════════════════════════════════
 
   - id: code-review
-    model: medium
+    model: gpt-5.5
     depends_on: [implement]
     context: fresh
     prompt: |
@@ -702,7 +702,7 @@ nodes:
   # ═══════════════════════════════════════════════════════════════
 
   - id: finalize
-    model: medium
+    model: gpt-5.5
     depends_on: [fix-feedback]
     context: fresh
     prompt: |
