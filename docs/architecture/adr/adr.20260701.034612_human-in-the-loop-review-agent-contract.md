@@ -40,9 +40,10 @@ must not mutate source, must not generate ADRs automatically, must not change
 ADR status, must not route work autonomously, must not perform broad rewrites,
 and must not treat unrelated legacy problems as automatic blockers.
 
-Codex must not invoke the opencode harness directly for this contract. Any
-opencode/Vulcan surface requires explicit Hermes routing and remains a future
-implementation decision, not an action authorized by this Draft ADR.
+Codex must not invoke the opencode harness directly for this contract. The
+first selected implementation surface is not an opencode command and not a new
+Archon workflow. If this ADR is accepted, Hermes may route only the bounded
+repo-local review-process surface described in the implementation brief.
 
 The required review evidence is current repository state: Graphify output, git
 diff, tests or validation output, and specific files or lines. Review output
@@ -59,6 +60,22 @@ Adopt a Draft human-in-the-loop review agent contract for
 projectkoios-bootstrap. The review agent produces a fixed Markdown review
 artifact for a human maintainer. The artifact is advisory and has no direct
 mutation, routing, ADR, or architecture authority.
+
+This ADR is implementation-bearing after acceptance. The selected bounded
+implementation surface is a repo-local Goose skill or harness instruction at
+`agents/global/goose/skills/technical-debt-report/SKILL.md` that enables
+Koios/goose to produce a repo-local technical debt report in Markdown. The
+first surface is not an opencode command, new Archon workflow, autonomous
+router, or source-code mutation tool. Technical debt reports use this
+repo-relative path convention:
+
+```text
+docs/reviews/technical-debt/tdr.YYYYMMDD.HHMMSS_<scope>.md
+```
+
+Hermes remains the completion authority. The concrete Hermes gate is the
+existing `hermes.completion_review` flow, with the Koios technical debt report
+as a required input.
 
 The review agent must use this evidence order:
 
@@ -417,16 +434,24 @@ surfaces touched by the change, and directly affected tests or documentation.
 
 ## implementation-brief
 
-Do not implement code from this Draft ADR until Hermes reviews it and the ADR is
+Do not implement from this Draft ADR until Hermes reviews it and the ADR is
 accepted through the normal Athena/Hermes process.
 
-If accepted and routed to Vulcan, implement only the smallest useful review
-surface selected by Hermes and Athena. The implementation surface may be a
-prompt, command, workflow input, repo-local skill, or documented harness
-instruction, but that placement remains an unresolved human decision until
-promotion.
+This ADR is implementation-bearing after acceptance. If accepted and routed,
+implement only the smallest repo-local process surface needed for Koios/goose
+to produce the required technical debt report artifact. The selected surface is
+a Goose skill or harness instruction at
+`agents/global/goose/skills/technical-debt-report/SKILL.md` with a fixed
+Markdown technical debt report path:
 
-Vulcan must preserve:
+```text
+docs/reviews/technical-debt/tdr.YYYYMMDD.HHMMSS_<scope>.md
+```
+
+Do not implement this contract as an opencode command, new Archon workflow,
+autonomous routing mechanism, source mutation tool, or automatic ADR generator.
+
+Any implementation work must preserve:
 
 - advisory-only behavior
 - no source mutation during review
@@ -444,8 +469,12 @@ Vulcan must preserve:
 - no blockers for unrelated legacy issues unless the diff relies on them,
   worsens them, or makes them part of the current change
 
-If the selected implementation surface is executable, Vulcan should add focused
-contract checks or fixtures that verify:
+First-slice validation is template conformance only. It verifies report shape,
+closed vocabularies, required fields, and required evidence slots; it does not
+claim semantic correctness and must not mutate source files.
+
+If the selected implementation surface is executable, focused contract checks
+or fixtures should verify:
 
 - output contains every required section
 - final recommendation is from the closed set
@@ -458,9 +487,10 @@ contract checks or fixtures that verify:
 - baseline/debt-register controls cannot mutate a baseline without human
   decision
 
-Vulcan should return an `implementation-report`, `test-results`, and, if needed,
-a `deviation-report` to Hermes. Vulcan must not mark the ADR complete or route
-the work onward.
+The implementation report, test results, and any deviation report must be
+returned to Hermes. Hermes reviews them through `hermes.completion_review`,
+with the Koios technical debt report as a required input. The implementation
+agent must not mark the ADR complete or route the work onward.
 
 ## resolved-open-questions
 
@@ -493,15 +523,29 @@ the work onward.
   tooling. Prefer `ruff`, `ruff format`, `black`, `mypy`, `pyright`, and
   `pytest` where applicable and configured by the project.
 
+- Which concrete surface should carry this contract if accepted?
+  A repo-local Goose skill or harness instruction at
+  `agents/global/goose/skills/technical-debt-report/SKILL.md` that produces a
+  repo-local Markdown technical debt report under
+  `docs/reviews/technical-debt/tdr.YYYYMMDD.HHMMSS_<scope>.md`. It is not an
+  opencode command or new Archon workflow in the first slice.
+
+- Should the first implementation include executable contract validation?
+  First-slice validation is template conformance only. Executable checks may be
+  added when the selected surface is executable, but semantic correctness and
+  source mutation are out of scope for the first slice.
+
+- Which Hermes review gate decides whether implementation evidence satisfies
+  this ADR?
+  The existing `hermes.completion_review` flow, with the Koios technical debt
+  report as a required input.
+
 ## unresolved human decisions
 
-- Which concrete surface should carry this contract if accepted: opencode
-  command, Archon workflow prompt, repo-local skill, or documentation-only
-  instruction?
-- Should the first implementation include executable contract validation, or is
-  prompt/document validation sufficient for the initial slice?
-- Which Hermes review gate should decide that Vulcan's implementation report and
-  test results satisfy this ADR?
+None remain for promotion. Any later request to change the selected surface,
+expand validation beyond template conformance, or replace the
+`hermes.completion_review` gate requires a new human decision and Athena
+revision.
 
 ## non-goals
 
@@ -538,7 +582,15 @@ Draft validation is document-level:
 - Confirm the contract remains advisory only and forbids source mutation,
   machine-local state mutation, automatic ADR generation, ADR status mutation,
   and autonomous routing.
-- Confirm unresolved human decisions are limited to at most three.
+- Confirm no unresolved human decisions remain for promotion.
+- Confirm the implementation classification is implementation-bearing after
+  acceptance.
+- Confirm the selected first implementation surface is
+  `agents/global/goose/skills/technical-debt-report/SKILL.md`, not an opencode
+  command or new Archon workflow.
+- Confirm first-slice validation is template conformance only.
+- Confirm `hermes.completion_review` is the Hermes gate and the Koios technical
+  debt report is a required input.
 - Confirm architecture baselines are represented as observed state and debt
   register material, not decisions.
 - Confirm code-baseline checks are represented in `docs/policies/code-baseline.md`
@@ -549,6 +601,8 @@ If implemented later, validation should include:
 - Review fixtures or contract tests for each final recommendation.
 - Checks that `blocker`, `major`, and `minor` findings cite evidence.
 - Checks that human decision points never exceed three.
+- Checks that the technical debt report path follows
+  `docs/reviews/technical-debt/tdr.YYYYMMDD.HHMMSS_<scope>.md`.
 - Checks that no source, ADR, workflow, or machine-local state mutation occurs
   during review.
 - Checks that baseline/debt-register and ADR creation controls require human
@@ -559,12 +613,14 @@ If implemented later, validation should include:
 ## routing
 
 Route this Draft ADR to Hermes for review. Hermes may request Athena promotion
-review, keep the ADR as Draft, reject it, or route an accepted implementation
-brief to Vulcan.
+review, keep the ADR as Draft, reject it, or route the accepted
+implementation-bearing brief to the appropriate implementation harness for the
+selected Goose technical debt report skill or harness-instruction surface.
 
-After Vulcan reports, Hermes must review the `implementation-report`,
-`test-results`, and any `deviation-report` against this ADR. Hermes then routes
-back to Athena only if the implementation exposed an unresolved architecture
-decision, a deviation from this contract, or a requested change to the baseline
-target assumption. Otherwise Hermes may record completion according to the
-accepted ADR lifecycle.
+After implementation reports, Hermes must review the `implementation-report`,
+`test-results`, any `deviation-report`, and the required Koios technical debt
+report through `hermes.completion_review`. Hermes then routes back to Athena
+only if the implementation exposed an unresolved architecture decision, a
+deviation from this contract, or a requested change to the baseline target
+assumption. Otherwise Hermes may record completion according to the accepted ADR
+lifecycle.
