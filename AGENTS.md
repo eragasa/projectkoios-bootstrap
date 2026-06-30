@@ -103,7 +103,10 @@ local runtime state to inspect and clean up before relying on their output.
 ### Session protocol for Hermes
 
 At session start:
-- check `docs/archive/handoffs/` for historical active artifacts not yet processed
+- check `docs/archive/handoffs/` only as provenance: archived `Status: active`
+  headers are not authoritative current work by themselves
+- prefer current ADRs, current handoff locations, git state, and filesystem
+  state over deprecated archived handoff instructions
 - check `docs/architecture/adr/` for draft ADRs needing review
 - check git status, branch, and recent commits
 - report what is pending before making changes

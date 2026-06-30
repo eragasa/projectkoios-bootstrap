@@ -6,9 +6,14 @@ This document mirrors the session-start and session-stop rules for the pi meta-h
 
 Before doing other work in a new session:
 
-1. Check `docs/archive/handoffs/` for any active artifacts not yet processed.
-2. Check git branch, status, and the last few commits.
-3. Report pending work before making changes.
+1. Check current ADRs, current handoff locations, git branch, git status, and
+   the last few commits.
+2. Treat `docs/archive/handoffs/` as provenance only. An archived
+   `Status: active` header is historical evidence, not an instruction to run
+   old work.
+3. If an archived handoff conflicts with current filesystem state, current
+   ADRs, or later implementation reports, report it as stale or superseded.
+4. Report pending current work before making changes.
 
 ## Session stop
 

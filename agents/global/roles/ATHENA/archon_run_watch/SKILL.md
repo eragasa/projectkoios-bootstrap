@@ -19,11 +19,15 @@ Project Koios meta-harness operations.
 
 ## Session start protocol
 
-1.  Inspect `docs/archive/handoffs/` for any active artifacts not yet
-    processed.
-2.  Inspect `git status --short --branch` and recent commits.
-3.  Report pending active/draft artifacts before changing files.
-4.  Distinguish stale handoff claims from current git state.
+1.  Inspect current ADRs, current handoff locations, git state, and recent
+    commits.
+2.  Treat `docs/archive/handoffs/` as provenance only. Archived
+    `Status: active` headers are historical claims, not authoritative current
+    work.
+3.  Report stale or superseded archived claims when they explain confusing
+    state, but do not ask the user to resolve questions already answered by
+    later ADRs, implementation reports, or filesystem state.
+4.  Report pending current active/draft artifacts before changing files.
 
 ## Routing decision table
 
