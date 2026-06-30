@@ -17,8 +17,7 @@ archon opencode goose pi
 ## Directions for Hermes (pi)
 ## Directions for Athena (archon)
 ## Directions for Vulcan (opencode)
-## Routing guide
-## Artifact handoff
+## ADR file convention
 """
 
 PI_AGENTS = """# Pi
@@ -59,10 +58,9 @@ See `../maps/vault_paths.md`.
 
 META_HARNESS = """# Meta
 
+## Purpose
 ## Skill model
-## Disagreement handling
-## Completion gates
-## Escalation rules
+## Anti-patterns
 """
 
 HARNESS_ROUTING = """# Routing

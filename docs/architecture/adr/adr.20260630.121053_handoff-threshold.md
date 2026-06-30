@@ -2,7 +2,7 @@
 
 ## Status
 
-Draft
+Superseded by adr.20260630.170000_pending-athena-decisions.md
 
 ## Context
 

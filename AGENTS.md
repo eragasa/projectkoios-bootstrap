@@ -14,8 +14,7 @@ It does not own domain architecture; that belongs in the `projectkoios` mothersh
 - [Directions for Athena (archon)](#directions-for-athena-archon)
 - [Directions for Vulcan (opencode)](#directions-for-vulcan-opencode)
 - [Harness configs](#harness-configs)
-- [Routing guide](#routing-guide)
-- [Artifact handoff](#artifact-handoff)
+- [ADR file convention](#adr-file-convention)
 - [Secrets and safety](#secrets-and-safety)
 - [Bootstrapping](#bootstrapping)
 - [Layout](#layout)
@@ -59,15 +58,6 @@ Athena operates as a single spec agent with a unified handoff boundary.
 
 This repo operates a role-based meta-harness that separates specification, implementation, and knowledge capture into distinct agent roles. See `docs/meta-harness.md` for the full framework detail on skill model, disagreement handling, completion gates, escalation rules, and anti-patterns.
 
-### Role mapping
-
-| Meta-harness role | Concrete harness | Name | Responsibility |
-|---|---|---|---|
-| Spec agent | archon | Athena | Architecture, scope, acceptance criteria |
-| Code agent | opencode | Vulcan | Implementation, tests, validation |
-| Knowledge agent | goose | Koios | Durable notes, provenance, vault ops |
-| Meta-harness | pi | Hermes | Routing, orchestration, completion gating |
-
 ### Artifact model
 
 Agents communicate through typed artifacts. An artifact must be explicit enough that another agent can consume it without hidden context.
@@ -85,51 +75,7 @@ Agents communicate through typed artifacts. An artifact must be explicit enough 
 | `deviation-report` | code agent (Vulcan) | Mismatch between spec and reality |
 | `knowledge-note` | knowledge agent (Koios) | Durable note from validated artifacts |
 | `provenance-index` | knowledge agent (Koios) | Mapping from claims to sources |
-| `routing-decision` | meta-harness (Hermes) | Next agent/action selection |
-| `revision-request` | meta-harness (Hermes) | Required correction to an artifact |
-| `completion-decision` | meta-harness (Hermes) | Final acceptance or rejection |
-
 Artifacts are stored in each harness's `handoffs/` directory (now archived at `docs/archive/handoffs/`).
-
-### Standard workflow
-
-```
-user-request → architecture-spec → implementation → validation → knowledge capture → completion
-```
-
-1. Hermes routes process/completion/disagreement tasks; design ambiguity defaults to Athena first.
-2. Athena produces `architecture-spec` and `acceptance-criteria`.
-3. Vulcan produces `patch`, `test-results`, and `implementation-report`. If the spec cannot be satisfied, produce a `deviation-report` which may trigger a spec revision loop.
-4. Koios produces `knowledge-note` and `provenance-index`.
-5. Hermes checks artifacts against acceptance criteria and issues `completion-decision`.
-
-### Authority rules
-
-When artifacts disagree, resolve using this order:
-
-1. Explicit user instruction
-2. Current repository state
-3. Passing tests and executable validation
-4. Approved architecture specification
-5. Acceptance criteria
-6. Implementation report
-7. Knowledge note
-8. Agent inference
-
-A lower-authority artifact must be revised when it conflicts with a higher-authority artifact.
-
-### Default decision rule
-
-When in doubt:
-- Route design uncertainty to Athena first
-- Route lightweight config changes and direct edits to the meta-harness (Hermes)
-- Route complex implementation, tests, and validation to the code agent (Vulcan)
-- Route durable documentation to the knowledge agent (Koios)
-- Route disagreement or completion checks to the meta-harness (Hermes)
-
-A specialist handoff is justified when it reduces ambiguity, improves
-validation, or preserves durable knowledge; otherwise it is ceremony. See
-`docs/meta-harness.md` for the routing thresholds.
 
 ## Directions for all harnesses
 
@@ -137,9 +83,7 @@ validation, or preserves durable knowledge; otherwise it is ceremony. See
 - For codebase, architecture, file-relationship, and impact questions, use `graphify` first.
 - If `graphify-out/graph.json` exists, prefer `graphify query`, `graphify path`, or `graphify explain` before manual grepping or browsing.
 - Read `graphify-out/GRAPH_REPORT.md` only for broad architecture review.
-- Write handoff artifacts when work must continue in another harness.
 - Keep local secrets out of git.
-- Prefer the harness that matches the work type instead of forcing everything through one tool.
 
 ## Directions for Hermes (pi)
 
@@ -147,23 +91,7 @@ Use Hermes (pi) for orchestration and direct operations:
 - run commands, edit files, inspect repo and filesystem state
 - manage harness configs, bootstrap setup, repo maintenance
 - start, inspect, approve, reject, resume, or cancel Archon workflow runs
-- coordinate handoffs between harnesses
-- read and write handoff artifacts
-- route tasks to the appropriate specialized harness
-
-Hermes is the meta-harness operator. It is not limited to routing — it can
-execute tasks directly when no specialist is required. But to respect the
-separation of concerns:
-- route architecture and planning ambiguity to Athena
-- route complex implementation, tests, and bug fixes to Vulcan
-- route knowledge curation and vault work to Koios
-
-Hermes routes user work to individual Project Koios repositories. Each
-repository may run its own repo-local meta-harness instance with its
-own handoffs, run state, and operational rules. Bootstrap-shared
-guidance in `projectkoios-bootstrap` is distinct from repo-local
-artifacts — this repo owns the conventions; target repos own their
-local harness state.
+- read and write ADRs and handoff artifacts
 
 ### Session protocol for Hermes
 
@@ -202,7 +130,6 @@ Use Vulcan (opencode) for:
 Vulcan should:
 - read the plan or ADR first
 - place observations and recommendations in ADRs under `docs/architecture/adr/`
-- escalate design ambiguity back to Athena instead of inventing policy
 
 ## Harness configs
 
@@ -216,32 +143,7 @@ Vulcan should:
 
 Local configs are NEVER committed to this repo.
 
-## Routing guide
-
-| Task type | Route to |
-|----------|----------|
-| architecture, ADRs, planning | Athena |
-| implementation, tests, validation | Vulcan |
-| research, vault, knowledge tasks | Koios |
-| run control, orchestration, handoff coordination | Hermes |
-| unclear cross-harness decisions | Athena first |
-
-## Artifact handoff (archived)
-
-Historical handoff artifacts are preserved in `docs/archive/handoffs/`.
-The current convention uses ADRs under `docs/architecture/adr/` for durable
-decisions and cross-harness communication. See [ADR file convention](#adr-file-convention).
-
-Historical handoff directories and their roles:
-
-| From | To | Archived path |
-|------|----|---------------|
-| Athena (archon) | Vulcan (opencode) | `docs/archive/handoffs/archon/` |
-| Vulcan (opencode) | Athena (archon) | `docs/archive/handoffs/opencode/` |
-| Koios (goose) | Athena (archon) | `docs/archive/handoffs/goose/` |
-| Hermes (pi) | (self) | `docs/archive/handoffs/pi/` |
-
-### ADR file convention
+## ADR file convention
 
 ADR files use the following convention:
 

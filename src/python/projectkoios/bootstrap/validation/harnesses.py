@@ -44,8 +44,7 @@ CANONICAL_FILES: dict[str, tuple[str, ...]] = {
         "## Directions for Hermes (pi)",
         "## Directions for Athena (archon)",
         "## Directions for Vulcan (opencode)",
-        "## Routing guide",
-        "## Artifact handoff",
+        "## ADR file convention",
     ),
     "pi/AGENTS.md": (
         "## Direct capabilities",
@@ -68,10 +67,9 @@ CANONICAL_FILES: dict[str, tuple[str, ...]] = {
         "## Handoff support",
     ),
     "docs/meta-harness.md": (
+        "## Purpose",
         "## Skill model",
-        "## Disagreement handling",
-        "## Completion gates",
-        "## Escalation rules",
+        "## Anti-patterns",
     ),
     "archon/prompts/harness-routing.md": (
         "## Harness definitions",
