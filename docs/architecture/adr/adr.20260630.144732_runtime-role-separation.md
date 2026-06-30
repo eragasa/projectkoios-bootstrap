@@ -27,7 +27,7 @@ instances):
    integrity per runtime. Infrastructure: needs runtime name and known paths.
 
 The new `archon_run_watch` skill (implemented under
-`agents/global/roles/ATHENA/archon_run_watch/`) and the handoff-ledger projection
+`agents/global/roles/ATHENA/archon_run_watch/`) and the handoff-topics projection
 model both need to reference role identity — which harness is responsible for
 what, which role produced an artifact, which role should receive it.
 

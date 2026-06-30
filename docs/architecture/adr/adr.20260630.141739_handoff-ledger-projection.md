@@ -1,4 +1,4 @@
-# ADR 20260630.141739: Handoff ledger projection
+# ADR 20260630.141739: Handoff topics projection
 
 ## Status
 
@@ -8,7 +8,7 @@ Superseded by adr.20260630.170000_pending-athena-decisions.md
 
 The handoff evaluator produced violation reports but lacked a structured
 projection of the full handoff state. The user reframed this as a
-protocol/provenance problem: build a read-only handoff ledger projection.
+protocol/provenance problem: build a read-only handoff topics projection.
 
 The existing codebase already had:
 - `HandoffParser` — parses handoff markdown into `HandoffArtifact` tokens
@@ -18,7 +18,7 @@ The existing codebase already had:
 
 ## Decision
 
-Extend the existing evaluator surface into a read-only ledger projection
+Extend the existing evaluator surface into a read-only topics projection
 pipeline:
 
 ```
@@ -37,7 +37,7 @@ handoff files → message records → inferred transitions → current marking
 ### First-slice constraints
 
 - Read-only, mutates no handoff files
-- No pub/sub transport, no append-only ledger writer
+- No pub/sub transport, no append-only writer
 - No external dependencies
 - Existing markdown handoffs remain the sole source input
 - Deterministic across repeated runs over the same files
@@ -53,7 +53,7 @@ fields. Each violation references `message_id` and `source_path`.
 ## Consequences
 
 - The projection becomes the portable protocol surface for future consumers.
-- The CLI output shifts from "evaluator report" lexicon to "ledger projection"
+- The CLI output shifts from "evaluator report" lexicon to "topics projection"
   vocabulary.
 - The existing `handoff evaluate` command can be extended or wrapped for
   compatibility.

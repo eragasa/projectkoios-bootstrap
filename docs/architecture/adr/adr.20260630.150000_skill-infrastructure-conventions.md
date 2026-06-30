@@ -15,8 +15,8 @@ issues emerged that affect how future skills are structured:
 2. **Header types** — `projectkoios.bootstrap.harness.headers` exports a regex
    and pure function returning `dict[str, str]`, with no typed header model.
    Callers cannot distinguish optional from required fields at the type level.
-3. **Ledger foundation** — The shared header module is the natural foundation
-   for the handoff-ledger projection, but its design feeds into the ledger
+3. **Topics foundation** — The shared header module is the natural foundation
+   for the handoff-topics projection, but its design feeds into the topics
    model.
 
 ## Decision
@@ -27,13 +27,13 @@ issues emerged that affect how future skills are structured:
    if skill scripts grow complex enough to warrant their own package.
 
 2. **Header types** — Defer adding a typed header model to `headers.py` until
-   the handoff-ledger projection defines its own message schema. The
+   the handoff-topics projection defines its own message schema. The
    `headers.py` function remains the single source of header parsing, but its
-   return type stays `dict[str, str]` for now. When the ledger projection
+   return type stays `dict[str, str]` for now. When the topics projection
    matures, a shared typed model can be introduced alongside the existing
    function.
 
-3. **Ledger projection model placement** — The projection model (message
+3. **Topics projection model placement** — The projection model (message
    records, transitions, marking) lives as DataObjects in `harness/data/`
    alongside `HandoffArtifact`, not in a separate module. This keeps related
    types co-located and avoids premature module proliferation.
@@ -42,10 +42,10 @@ issues emerged that affect how future skills are structured:
 
 - Skill tests consistently use `sys.path.insert` + `# noqa: E402` — every
   skill test needs this boilerplate until the convention changes.
-- `headers.py` stays simple and untyped until the ledger projection provides
-  a concrete schema to type against.
-- New DataObjects for the ledger projection go in `harness/data/` — the
-  existing `artifact.py`, `marking.py`, and `violation.py` are the pattern.
+- `headers.py` stays simple and untyped until the topics projection provides
+   a concrete schema to type against.
+- New DataObjects for the topics projection go in `harness/data/` — the
+   existing `artifact.py`, `marking.py`, and `violation.py` are the pattern.
 
 ## Source
 

@@ -1,11 +1,14 @@
 from __future__ import annotations
 
 from argparse import ArgumentParser, Namespace
+from dataclasses import asdict
 from pathlib import Path
+import json
 import sys
 
 from projectkoios.bootstrap.harness.handoffs.appender import append_violations
 from projectkoios.bootstrap.harness.handoffs.evaluator import HandoffEvaluator
+from projectkoios.bootstrap.harness.handoffs.topics import build_topics_view
 from projectkoios.bootstrap.models import REPO_ROOT
 
 
@@ -33,6 +36,35 @@ def register(subparsers) -> None:
         help="Print violations without modifying files",
     )
     eval_parser.set_defaults(func=run_evaluate)
+
+    topics_parser: ArgumentParser = h_sub.add_parser(
+        "topics",
+        help="Show all handoff topics with their current messages",
+    )
+    topics_parser.add_argument(
+        "--root",
+        type=Path,
+        default=REPO_ROOT,
+        help="Repository root to evaluate (default: current package repo)",
+    )
+    topics_parser.add_argument(
+        "--json",
+        action="store_true",
+        default=True,
+        help="Output as JSON (default: true)",
+    )
+    topics_parser.add_argument(
+        "--with-timestamp",
+        action="store_true",
+        help="Include a generation timestamp (omit for byte-stable output)",
+    )
+    topics_parser.set_defaults(func=run_topics)
+
+
+def run_topics(args: Namespace) -> None:
+    root = args.root.resolve()
+    view = build_topics_view(root, include_timestamp=args.with_timestamp)
+    print(json.dumps(asdict(view), indent=2, default=str, ensure_ascii=False))
 
 
 def run_evaluate(args: Namespace) -> None:

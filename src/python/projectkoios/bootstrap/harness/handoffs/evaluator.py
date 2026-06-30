@@ -12,10 +12,10 @@ from projectkoios.bootstrap.harness.handoffs.parser import HandoffParser
 
 
 PLACE_DIRECTORIES: dict[str, str] = {
-    "archon_inbox": "archon/handoffs",
-    "opencode_inbox": "opencode/handoffs",
-    "pi_inbox": "pi/handoffs",
-    "goose_inbox": "goose/handoffs",
+    "archon_inbox": "docs/archive/handoffs/archon",
+    "opencode_inbox": "docs/archive/handoffs/opencode",
+    "pi_inbox": "docs/archive/handoffs/pi",
+    "goose_inbox": "docs/archive/handoffs/goose",
 }
 """Maps Petri net place names to handoff directory paths relative to repo root."""
 

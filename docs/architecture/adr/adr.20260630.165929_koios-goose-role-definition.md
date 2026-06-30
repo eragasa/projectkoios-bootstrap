@@ -242,7 +242,7 @@ role contract, not a long essay.
 No ADR file is required before Vulcan implements the documentation/prompt/skill
 slice, because this artifact resolves the design questions within the existing
 accepted meta-harness model. If Vulcan finds that implementation requires
-changing artifact parsing, guard rules, runtime/role models, or handoff ledger
+changing artifact parsing, guard rules, runtime/role models, or handoff topics
 semantics, it should return a deviation report to Hermes and request Athena to
 draft an ADR titled "Define Koios knowledge role and artifact ownership."
 
