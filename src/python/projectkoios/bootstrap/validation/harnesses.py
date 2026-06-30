@@ -41,9 +41,9 @@ CANONICAL_FILES: dict[str, tuple[str, ...]] = {
         "## Harnesses",
         "## Meta-harness",
         "## Directions for all harnesses",
-        "## Directions for pi",
-        "## Directions for archon",
-        "## Directions for opencode",
+        "## Directions for Hermes (pi)",
+        "## Directions for Athena (archon)",
+        "## Directions for Vulcan (opencode)",
         "## Routing guide",
         "## Artifact handoff",
     ),
@@ -109,6 +109,7 @@ def validate_harnesses(root: Path, *, strict: bool = False) -> ValidationResult:
     _check_references(root, findings)
     _check_opencode_references(root, findings)
     _check_bootstrap_assumptions(root, findings)
+    _check_archon_workflows(root, findings)
     _check_global_examples(root, findings)
 
     findings.append(
@@ -198,6 +199,9 @@ def _check_opencode_references(root: Path, findings: list[Finding]) -> None:
 def _check_bootstrap_assumptions(root: Path, findings: list[Finding]) -> None:
     required_paths = (
         "agents/global",
+        "archon/workflows",
+        "archon/skills/.archon/config.yaml",
+        "agents/global/archon/config.yaml.example",
         "pi/AGENTS.md",
         "src/python/projectkoios/bootstrap/commands/init.py",
         "src/python/projectkoios/bootstrap/commands/install.py",
@@ -211,6 +215,43 @@ def _check_bootstrap_assumptions(root: Path, findings: list[Finding]) -> None:
                     "missing path assumed by bootstrap CLI code",
                     rel_path,
                 )
+            )
+
+
+def _check_archon_workflows(root: Path, findings: list[Finding]) -> None:
+    rel_dir = "archon/workflows"
+    workflows_dir = root / rel_dir
+    if not workflows_dir.exists():
+        findings.append(
+            Finding(
+                Severity.ERROR,
+                "missing repo-local Archon workflow directory",
+                rel_dir,
+            )
+        )
+        return
+
+    if not any(workflows_dir.glob("*.yaml")):
+        findings.append(
+            Finding(
+                Severity.ERROR,
+                "missing repo-local Archon workflow YAML files",
+                rel_dir,
+            )
+        )
+
+    expected_workflows = (
+        "archon-piv-loop.yaml",
+        "archon-architect.yaml",
+        "create-adr.yaml",
+        "design-review.yaml",
+        "plan-feature.yaml",
+    )
+    for workflow in expected_workflows:
+        rel_path = str(PurePosixPath(rel_dir) / workflow)
+        if not (root / rel_path).exists():
+            findings.append(
+                Finding(Severity.ERROR, "missing repo-local Archon workflow", rel_path)
             )
 
 
