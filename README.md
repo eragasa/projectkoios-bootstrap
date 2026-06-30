@@ -120,5 +120,5 @@ tests unless a future non-secret fixture exists.
 
 ## Architecture
 
-- Bootstrap architecture: `doc/architecture.00.md`
-- ADR archive: `architecture/adr.20260628.md`
+- Bootstrap architecture: `docs/architecture.00.md`
+- ADR archive: `docs/architecture/adr/adr.20260628.md`

@@ -40,7 +40,7 @@ overloading Archon with assistant-specific behavior while still giving Project
 Koios a consistent default execution agent.
 
 **Consistent ADR and planning outputs.** Pi can read the existing
-`architecture/` directory before writing new records, which helps future ADRs
+`docs/architecture/adr/` directory before writing new records, which helps future ADRs
 match the repository's established structure and tone.
 
 **Works within isolated worktrees.** Archon-created worktrees provide a clean
@@ -58,7 +58,7 @@ the repository first, preserve existing conventions, make concrete file
 changes when requested, and report the resulting paths and verification.
 
 Architecture workflows should continue to store durable decisions in
-`architecture/`, while Pi-generated outputs should remain scoped to the
+`docs/architecture/adr/`, while Pi-generated outputs should remain scoped to the
 worktree and task requested by Archon.
 
 If a workflow requires capabilities better served by another harness, such as

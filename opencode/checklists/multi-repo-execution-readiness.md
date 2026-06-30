@@ -6,7 +6,7 @@ Use this checklist after Archon has approved the repo-ownership decision and mig
 
 - [ ] Read `../maps/repositories.md`
 - [ ] Read `../maps/packages.md`
-- [ ] Read `../architecture/harness-boundaries.md`
+- [ ] Read `docs/architecture/harness-boundaries.md`
 - [ ] Confirm an approved Archon handoff exists with:
   - [ ] objective
   - [ ] scope and non-goals

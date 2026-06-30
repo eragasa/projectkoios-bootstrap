@@ -58,4 +58,4 @@ At session stop:
 ## Reference
 
 - Root `AGENTS.md` — full meta-harness framework, artifact model, authority rules
-- `doc/meta-harness.md` — skill model, completion gates, escalation rules
+- `docs/meta-harness.md` — skill model, completion gates, escalation rules

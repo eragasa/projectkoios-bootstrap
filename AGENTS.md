@@ -57,7 +57,7 @@ Athena operates as a single spec agent with a unified handoff boundary.
 
 ## Meta-harness
 
-This repo operates a role-based meta-harness that separates specification, implementation, and knowledge capture into distinct agent roles. See `doc/meta-harness.md` for the full framework detail on skill model, disagreement handling, completion gates, escalation rules, and anti-patterns.
+This repo operates a role-based meta-harness that separates specification, implementation, and knowledge capture into distinct agent roles. See `docs/meta-harness.md` for the full framework detail on skill model, disagreement handling, completion gates, escalation rules, and anti-patterns.
 
 ### Role mapping
 
@@ -129,7 +129,7 @@ When in doubt:
 
 A specialist handoff is justified when it reduces ambiguity, improves
 validation, or preserves durable knowledge; otherwise it is ceremony. See
-`doc/meta-harness.md` for the routing thresholds.
+`docs/meta-harness.md` for the routing thresholds.
 
 ## Directions for all harnesses
 
@@ -297,8 +297,8 @@ Use `init` for first-time setup and `install` when you want the global examples 
 ```
 projectkoios-bootstrap/
 ├── agents/global/       ← example configs per harness (.example suffix)
-├── architecture/        ← ADRs and durable decisions (immutable archive)
-├── doc/                 ← mutable docs (system overview, future ADRs)
+├── docs/                ← documentation, architecture, and ADRs
+│   ├── architecture/adr/ ← ADRs and durable decisions (single source of truth)
 ├── maps/                ← workspace topology (repos, packages, vault)
 ├── src/python/          ← Python CLI package (bootstrap tooling)
 ├── scripts/             ← CLI wrappers

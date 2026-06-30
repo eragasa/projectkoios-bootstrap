@@ -67,7 +67,7 @@ CANONICAL_FILES: dict[str, tuple[str, ...]] = {
         "## Vault rules",
         "## Handoff support",
     ),
-    "doc/meta-harness.md": (
+    "docs/meta-harness.md": (
         "## Skill model",
         "## Disagreement handling",
         "## Completion gates",

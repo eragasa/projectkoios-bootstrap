@@ -84,7 +84,7 @@ def make_repo(root: Path) -> None:
     write(root / "pi/AGENTS.md", PI_AGENTS)
     write(root / "opencode/AGENTS.md", OPENCODE_AGENTS)
     write(root / "goose/AGENT.md", GOOSE_AGENT)
-    write(root / "doc/meta-harness.md", META_HARNESS)
+    write(root / "docs/meta-harness.md", META_HARNESS)
     write(root / "archon/prompts/harness-routing.md", HARNESS_ROUTING)
     write(root / "archon/skills/.archon/config.yaml")
     write(root / "maps/repositories.md")

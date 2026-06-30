@@ -39,7 +39,7 @@ three independent harness directories, plus shared context.
 
 ```
 projectkoios-bootstrap/
-├── architecture/          ← shared design docs and ADRs
+├── docs/architecture/adr/ ← shared design docs and ADRs (single source of truth)
 ├── maps/                  ← shared workspace layout (repos, packages, vault)
 │
 ├── archon/                ← Archon harness: architecture and design
@@ -80,7 +80,7 @@ projectkoios-bootstrap/
 
 ### Shared context
 
-`architecture/` contains durable design documents and ADRs that all three
+`docs/architecture/adr/` contains durable design documents and ADRs that all three
 harnesses reference.
 
 `maps/` contains the authoritative workspace layout:
@@ -129,7 +129,7 @@ structure replaced with the harness layout above.
 The `src/python/projectkoios/bootstrap/` directory becomes unused if no
 Python code is needed. It may be kept for future shared utilities or removed.
 
-Shared `architecture/` and `maps/` must be kept in sync with the actual
+Shared `docs/architecture/` and `maps/` must be kept in sync with the actual
 workspace. Outdated maps defeat their purpose.
 
 Each harness must define its own scope clearly to prevent overlap or

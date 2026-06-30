@@ -19,8 +19,8 @@ That belongs in the `projectkoios` repository and its ADRs.
 
 ```text
 projectkoios-bootstrap/
-├── docs/              ← bootstrap architecture notes
-├── architecture/      ← ADRs and durable decisions
+├── docs/              ← documentation, architecture, and ADRs
+│   ├── architecture/adr/ ← ADRs and durable decisions (single source of truth)
 ├── maps/              ← authoritative workspace layout
 ├── archon/            ← Archon workflows and prompts
 ├── opencode/          ← opencode rules and runtime harness
