@@ -1,11 +1,11 @@
 ---
 name: session-aar
 description: |
-  Use at the end of a Project Koios agent session when the user asks for an
-  AAR, after-action report, retrospective, process review, lessons learned, or
-  session improvement capture. Also use when a session exposed protocol
-  failures, workflow friction, unclear routing, repeated corrections,
-  tool/Graphify/Archon confusion, or improvement ideas that should survive chat.
+  Use at the end of every Project Koios agent session. Also use when the user
+  asks for an AAR, after-action report, retrospective, process review, lessons
+  learned, or session improvement capture. Sessions with protocol failures,
+  workflow friction, unclear routing, repeated corrections, tool/Graphify/Archon
+  confusion, or improvement ideas should capture those lessons explicitly.
   Produces a durable process AAR for any harness role: Hermes, Athena, Vulcan,
   Koios, or delegated Codex operator.
 metadata:
@@ -25,8 +25,8 @@ metadata:
 
 ## When to use this skill
 
-Use this skill at session end when process learning should be captured, not
-only task output. Trigger examples:
+Use this skill at every session end. Sessions with process learning should
+capture it, not only task output. Trigger examples:
 
 - "do an AAR"
 - "after action report"
@@ -35,6 +35,7 @@ only task output. Trigger examples:
 - "lessons learned"
 - "store this retrospective"
 - any repeated user correction of protocol or role behavior
+- every Project Koios session stop or final closeout
 
 Any agent role may use this skill. The AAR is not an ADR, handoff, completion
 decision, or implementation report. It is a process observation artifact that
@@ -45,6 +46,10 @@ may later become an ADR, skill update, workflow change, or implementation task.
 Capture what should improve about the process. Do not merely summarize what was
 built. Focus on friction, protocol misses, ambiguous ownership, tool mismatch,
 handoff gaps, validation gaps, and concrete improvement candidates.
+
+For trivial clean sessions with no durable process issue, still write a brief
+AAR that records the scope, what happened, that no durable process issue was
+observed, and the current status.
 
 Do not change ADR status, route implementation, or claim architecture authority
 from an AAR. If an AAR implies architecture or workflow changes, list them as
@@ -115,8 +120,7 @@ Improvement:
 
 ## Failure modes
 
-- If no durable process issue exists, say so and do not create an AAR by
-  default.
+- If no durable process issue exists, create a brief AAR that says so.
 - If the session is too broad to summarize safely, create a narrow AAR focused
   on the top three process issues and list the rest as follow-up review items.
 - If writing the AAR would mix secrets, local runtime state, or sensitive

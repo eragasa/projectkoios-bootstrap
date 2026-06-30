@@ -93,6 +93,6 @@ instead.
 2.  No generated runtime state committed.
 3. If meaningful repo files changed, run `graphify update .` (AST-only, no LLM
    needed) when available.
-4. If the session exposed durable process lessons, write an AAR under
-   `docs/AAR/` before final reporting.
+4. Write an AAR under `docs/AAR/` before final reporting, even for trivial
+   clean sessions.
 5.  If files changed, report changed files and validation.

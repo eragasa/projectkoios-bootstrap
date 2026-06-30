@@ -138,11 +138,11 @@ Default recommendations:
   `graphify path`, or `graphify explain` before manual grepping or browsing.
 - Read `graphify-out/GRAPH_REPORT.md` only for broad architecture review.
 - Keep local secrets out of git.
-- At session end, write an AAR under `docs/AAR/` when the session exposed
-  durable process lessons: protocol failures, repeated user corrections,
-  unclear routing, workflow/tool friction, validation gaps, or improvement
-  candidates. Do not write an AAR for trivial clean sessions with no reusable
-  process learning.
+- At session end, always write an AAR under `docs/AAR/`. For sessions with
+  durable process lessons, record protocol failures, repeated user corrections,
+  unclear routing, workflow/tool friction, validation gaps, and improvement
+  candidates. For trivial clean sessions, write a brief AAR that states no
+  durable process issue was observed.
 
 ## Directions for Hermes (pi)
 
@@ -175,8 +175,8 @@ At session stop:
 - if meaningful repo files changed, run `graphify update .` (AST-only, no LLM
   needed) before reporting final state unless unavailable or would block urgent
   handoff
-- if the session exposed durable process lessons, write a process AAR under
-  `docs/AAR/` before final reporting
+- write a process AAR under `docs/AAR/` before final reporting, even for
+  trivial clean sessions
 - report files changed and validation results
 - ask before commit/push unless the user already directed it
 
