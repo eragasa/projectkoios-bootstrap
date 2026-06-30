@@ -228,6 +228,11 @@ def _print_result(result: DaemonRunResult) -> None:
         f"trigger={m.trigger_kind} nodes={m.files_processed} "
         f"cards={result.chunk_card_set.card_count if result.chunk_card_set else 0}"
     )
+    if m.indexed_files_count or m.chunk_batch_count or m.skipped_paths_count or m.eligible_files_count:
+        print(
+            f"  summary: eligible={m.eligible_files_count} indexed={m.indexed_files_count} "
+            f"batches={m.chunk_batch_count} skipped={m.skipped_paths_count} source={m.chunk_batch_source or 'n/a'}"
+        )
     if m.warnings:
         for w in m.warnings:
             print(f"  warn: {w}")

@@ -66,6 +66,10 @@ def test__RunMetadata__to_dict__serialises_all_fields() -> None:
     assert d["failures"] == ["bad file"]
     assert d["warnings"] == ["degraded"]
     assert d["ollama_degraded"] is False
+    assert d["eligible_files_count"] == 0
+    assert d["indexed_files_count"] == 0
+    assert d["chunk_batch_count"] == 0
+    assert d["chunk_batch_source"] is None
 
 
 def test__build_token__reflects_context_state() -> None:

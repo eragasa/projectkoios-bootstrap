@@ -118,6 +118,10 @@ class RunMetadata:
     duration_seconds: float = 0.0
     trigger_kind: str = ""
     changed_paths: tuple[str, ...] = ()
+    eligible_files_count: int = 0
+    indexed_files_count: int = 0
+    chunk_batch_count: int = 0
+    chunk_batch_source: str | None = None
     skipped_paths_count: int = 0
     exclusion_reasons: tuple[str, ...] = ()
     files_processed: int = 0
@@ -147,6 +151,10 @@ class RunMetadata:
             "duration_seconds": self.duration_seconds,
             "trigger_kind": self.trigger_kind,
             "changed_paths": list(self.changed_paths),
+            "eligible_files_count": self.eligible_files_count,
+            "indexed_files_count": self.indexed_files_count,
+            "chunk_batch_count": self.chunk_batch_count,
+            "chunk_batch_source": self.chunk_batch_source,
             "skipped_paths_count": self.skipped_paths_count,
             "exclusion_reasons": list(self.exclusion_reasons),
             "files_processed": self.files_processed,
