@@ -9,6 +9,7 @@ It does not own domain architecture; that belongs in the `projectkoios` mothersh
 - [Harnesses](#harnesses)
 - [Athena](#athena)
 - [Meta-harness](#meta-harness)
+- [High-leverage state](#high-leverage-state)
 - [Directions for all harnesses](#directions-for-all-harnesses)
 - [Directions for Hermes (pi)](#directions-for-hermes-pi)
 - [Directions for Athena (archon)](#directions-for-athena-archon)
@@ -95,6 +96,25 @@ Architecture/specification artifacts are stored as ADRs under
 `docs/archive/handoffs/` and should be treated as provenance, not the current
 active artifact surface.
 
+## High-leverage state
+
+At session start, agents should report not only pending work, but the
+highest-leverage next state to move toward. Base this recommendation on live
+filesystem, git, Graphify, ADR, and Archon run state.
+
+Default recommendations:
+- If the tree is dirty, stabilize or explain the working tree before starting
+  new work.
+- If Archon has `running`, `paused`, or orphaned detached runs, inspect and
+  resolve those before relying on new workflow output.
+- If the tree is clean, Archon has no active runs, and Draft ADRs exist, the
+  highest-leverage next state is usually Hermes review or Athena promotion of
+  those Draft ADRs before Vulcan implementation.
+- If accepted ADR intent and code behavior disagree, report the mismatch rather
+  than normalizing it silently.
+- If Graphify warns that its graph is stale or structurally outdated, treat the
+  graph as discovery only and prefer source files for authoritative claims.
+
 ## Directions for all harnesses
 
 - Read only the current artifact and filesystem state; do not rely on chat history.
@@ -139,6 +159,7 @@ At session start:
 - check `docs/architecture/adr/` for draft ADRs needing review
 - check git status, branch, and recent commits
 - report what is pending before making changes
+- recommend the highest-leverage next state before making changes
 
 At session stop:
 - if files changed, run the smallest relevant validation you can justify
