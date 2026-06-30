@@ -29,7 +29,7 @@ OLLAMA_TIMEOUT_SECONDS = 60
 
 
 def _log(message: str) -> None:
-    print(f"[ollama] {message}")
+    print(f"[ollama] {message}", flush=True)
 
 
 def _ollama_generate(

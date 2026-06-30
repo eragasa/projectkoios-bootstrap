@@ -203,6 +203,11 @@ async def run_daemon(
     if max_cycles is not None and cycles >= max_cycles:
         return
 
+    print(
+        f"[daemon] watching repo={repo_root} poll_interval={poll_interval}s",
+        flush=True,
+    )
+
     async def do_update(events: list[WatchEvent]) -> None:
         nonlocal cycles
         cycles += 1
@@ -226,16 +231,18 @@ def _print_result(result: DaemonRunResult) -> None:
     print(
         f"[daemon] run={m.run_id} freshness={m.freshness.value} "
         f"trigger={m.trigger_kind} nodes={m.files_processed} "
-        f"cards={result.chunk_card_set.card_count if result.chunk_card_set else 0}"
+        f"cards={result.chunk_card_set.card_count if result.chunk_card_set else 0}",
+        flush=True,
     )
     if m.indexed_files_count or m.chunk_batch_count or m.skipped_paths_count or m.eligible_files_count:
         print(
             f"  summary: eligible={m.eligible_files_count} indexed={m.indexed_files_count} "
-            f"batches={m.chunk_batch_count} skipped={m.skipped_paths_count} source={m.chunk_batch_source or 'n/a'}"
+            f"batches={m.chunk_batch_count} skipped={m.skipped_paths_count} source={m.chunk_batch_source or 'n/a'}",
+            flush=True,
         )
     if m.warnings:
         for w in m.warnings:
-            print(f"  warn: {w}")
+            print(f"  warn: {w}", flush=True)
     if m.failures:
         for f in m.failures:
-            print(f"  fail: {f}")
+            print(f"  fail: {f}", flush=True)
