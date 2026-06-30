@@ -7,8 +7,8 @@ import sys
 REPO_ROOT = Path(__file__).resolve().parent.parent
 SCRIPTS_DIR = (
     REPO_ROOT
-    / "agents" / "global" / "pi" / "skills"
-    / "koios-handoff-operator" / "scripts"
+    / "agents" / "global" / "roles" / "ATHENA"
+    / "archon_run_watch" / "scripts"
 )
 sys.path.insert(0, str(SCRIPTS_DIR))
 

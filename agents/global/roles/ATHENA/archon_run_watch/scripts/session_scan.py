@@ -10,6 +10,7 @@ import subprocess
 import sys
 
 from projectkoios.bootstrap.harness.headers import extract_handoff_headers
+from _utils import write_json
 
 
 HANDOFF_DIRS: list[tuple[str, Path]] = [
@@ -143,8 +144,7 @@ def main() -> None:
     summary = build_summary(root)
 
     if args.json:
-        json.dump(summary, sys.stdout, indent=2, default=str)
-        sys.stdout.write("\n")
+        write_json(summary, default=str)
     else:
         print(format_text(summary))
 

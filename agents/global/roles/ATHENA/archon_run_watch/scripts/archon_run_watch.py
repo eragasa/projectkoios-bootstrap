@@ -9,6 +9,8 @@ import os
 import subprocess
 import sys
 
+from _utils import write_json
+
 
 @dataclass(frozen=True)
 class RunStatus:
@@ -110,8 +112,7 @@ def main() -> None:
     if isinstance(run, str):
         result = {"run_id": args.run_id, "error": run}
         if args.json:
-            json.dump(result, sys.stdout, indent=2)
-            sys.stdout.write("\n")
+            write_json(result)
         else:
             print(f"error: {run}")
         sys.exit(1)
@@ -137,8 +138,7 @@ def main() -> None:
             result["abandon_error"] = abandon_err
 
     if args.json:
-        json.dump(result, sys.stdout, indent=2)
-        sys.stdout.write("\n")
+        write_json(result)
     else:
         parts = [
             f"run_id: {run.run_id}",

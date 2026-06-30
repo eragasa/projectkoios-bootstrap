@@ -1,5 +1,5 @@
 ---
-name: koios-handoff-operator
+name: archon_run_watch
 description: |
   Use when the user asks to start a Project Koios session, inspect current
   handoffs, route work between harnesses, run or monitor Archon workflows,
@@ -12,7 +12,7 @@ description: |
   NOT for: architecture design or product domain work.
 ---
 
-# koios-handoff-operator
+# archon_run_watch
 
 Session-start, routing, Archon run monitoring, and handoff creation for
 Project Koios meta-harness operations.
