@@ -1,9 +1,9 @@
 name: athena-handoff-spec
 description: |
   Use when: Hermes needs Athena to convert a prepared handoff/interview into an
-  implementation-ready architecture specification and acceptance criteria.
+  implementation-ready architecture decision with acceptance criteria.
   Does: Reads the named handoff artifacts, resolves open architecture questions,
-  writes a finalized Athena handoff under archon/handoffs/.
+  writes a finalized ADR under docs/architecture/adr/.
   NOT for: code implementation, validation loops, PR creation, or product/domain
   architecture outside projectkoios-bootstrap.
 
@@ -29,20 +29,32 @@ nodes:
       - Do not implement code.
       - Do not commit, push, or create a PR.
       - Do not modify machine-local state or secrets.
-      - Write only the requested architecture/spec handoff artifact unless a
+      - Write only the requested ADR artifact unless a
         correction to the input handoff is strictly required.
 
       ## Required Output
 
-      Write one finalized markdown artifact under `archon/handoffs/` using the
-      repo handoff filename/header convention:
+      Write one finalized markdown artifact under `docs/architecture/adr/`
+      using the repo ADR filename/header convention:
 
       ```text
-      Origin: archon
-      Created: <YYYY-MM-DD HH:MM>
-      From: Athena
-      To: Vulcan
-      Status: active
+      # ADR YYYYMMDD.HHMMSS: Title
+
+      ## Status
+
+      Draft
+
+      ## Context
+
+      ...
+
+      ## Decision
+
+      ...
+
+      ## Consequences
+
+      ...
       ```
 
       Include:
@@ -52,6 +64,10 @@ nodes:
       - resolved open questions
       - non-goals
       - validation expectations
-      - handoff routing back to Hermes after Vulcan reports
+      - routing back to Hermes after Vulcan reports
+
+      Preserve provenance in the ADR context when relevant, using fields such
+      as `Origin`, `From`, `Acting-As`, `Scope`, `Repository`, and
+      `Delegated-Operator`.
 
       Print only the path written and a concise summary.

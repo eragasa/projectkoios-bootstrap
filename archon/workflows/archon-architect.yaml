@@ -48,15 +48,12 @@ nodes:
         -type f 2>/dev/null | sort
 
       echo ""
-      echo "=== HANDOFF STATUS HEADERS ==="
-      for dir in archon/handoffs opencode/handoffs pi/handoffs; do
-        [ -d "$dir" ] || continue
-        for f in "$dir"/*.md; do
-          [ -f "$f" ] || continue
-          printf '%s: ' "$f"
-          sed -n '1,5p' "$f" | tr '\n' ' '
-          printf '\n'
-        done
+      echo "=== ADR STATUS HEADERS ==="
+      for f in docs/architecture/adr/*.md; do
+        [ -f "$f" ] || continue
+        printf '%s: ' "$f"
+        awk '/^## Status/{getline; while ($0 == "") getline; print; exit}' "$f" | tr '\n' ' '
+        printf '\n'
       done
     timeout: 60000
 
@@ -94,7 +91,7 @@ nodes:
       ## Instructions
 
       1. Read AGENTS.md and the relevant files surfaced by the metrics.
-      2. Inspect active handoff artifacts enough to understand current process state.
+      2. Inspect draft ADRs and current architecture artifacts enough to understand current process state.
       3. Identify the top architectural/process concerns.
       4. Prefer small, reversible cleanup opportunities over broad rewrites.
       5. Do not propose changes outside this repo.

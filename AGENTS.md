@@ -75,7 +75,10 @@ Agents communicate through typed artifacts. An artifact must be explicit enough 
 | `deviation-report` | code agent (Vulcan) | Mismatch between spec and reality |
 | `knowledge-note` | knowledge agent (Koios) | Durable note from validated artifacts |
 | `provenance-index` | knowledge agent (Koios) | Mapping from claims to sources |
-Artifacts are stored in each harness's `handoffs/` directory (now archived at `docs/archive/handoffs/`).
+Architecture/specification artifacts are stored as ADRs under
+`docs/architecture/adr/`. Historical harness handoffs are archived under
+`docs/archive/handoffs/` and should be treated as provenance, not the current
+active artifact surface.
 
 ## Directions for all harnesses
 
@@ -91,12 +94,16 @@ Use Hermes (pi) for orchestration and direct operations:
 - run commands, edit files, inspect repo and filesystem state
 - manage harness configs, bootstrap setup, repo maintenance
 - start, inspect, approve, reject, resume, or cancel Archon workflow runs
-- read and write ADRs and handoff artifacts
+- read and write ADRs and archived/provenance artifacts
+
+Run Archon workflows in the foreground by default. Use detached/background
+Archon runs only when explicitly needed, and treat orphaned `running` rows as
+local runtime state to inspect and clean up before relying on their output.
 
 ### Session protocol for Hermes
 
 At session start:
-- check `docs/archive/handoffs/` for any active artifacts not yet processed
+- check `docs/archive/handoffs/` for historical active artifacts not yet processed
 - check `docs/architecture/adr/` for draft ADRs needing review
 - check git status, branch, and recent commits
 - report what is pending before making changes

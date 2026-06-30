@@ -37,13 +37,25 @@ From `docs/archive/handoffs/archon/20260630.141739_handoff-ledger-projection-spe
 | `adr.20260630.002151_harness-asset-layering.md` | Global vs local harness asset split | Accept or reject |
 | `adr.20260629.195748_skill-encapsulation-conventions.md` | Skill encapsulation conventions | Accept or reject |
 
+### C. Low-priority operational follow-up
+
+Archon detached/background workflow runs should be made reliable enough for
+normal Hermes operation. Current guidance is to run Archon workflows in the
+foreground by default because detached Codex-provider runs can leave orphaned
+`running` rows without a completed spec, error event, or live worker process.
+
+This is not a blocker for the Koios role definition or the handoff-ledger
+projection decisions, but it should be tracked as an operational hardening
+item for Archon run management.
+
 ## Recommendation
 
 Athena should:
 
 1. Resolve the 5 handoff-ledger-projection questions first (they block Vulcan implementation).
 2. Review and accept/reject the remaining draft ADRs, marking each as `accepted`, `rejected`, or `superseded` as appropriate.
-3. Return a completion decision or produce follow-up implementation briefs as needed.
+3. Keep the Archon detached-run reliability item low priority unless it blocks active work.
+4. Return a completion decision or produce follow-up implementation briefs as needed.
 
 ## Consequences
 
