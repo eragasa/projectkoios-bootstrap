@@ -31,10 +31,10 @@ Manual file reads remain appropriate after Graphify identifies the relevant
 files or lines, or when exact verification, patching, validation, or citation is
 needed.
 
-At session end, after meaningful repository file changes, agents should refresh
-Graphify with the repository-standard update flow when available. If a full
-semantic refresh needs credentials or a backend that is unavailable, agents
-should run the available no-LLM/code update path and report the limitation.
+At session end, after meaningful repository file changes, agents should run
+`graphify update .` (AST-only, no LLM needed). This AST-only rebuild requires
+no LLM credentials and is the canonical session-boundary update command for this
+repository.
 
 This policy is documented in:
 
@@ -55,5 +55,5 @@ This policy is documented in:
   targeted edits.
 - Graphify output remains local generated state unless a future ADR decides to
   commit it.
-- Semantic graph refresh can be limited by available backend credentials; this
-  must be reported rather than silently ignored.
+- Session-boundary rebuild uses AST-only `graphify update .`, which requires no
+   LLM credentials and runs entirely locally.

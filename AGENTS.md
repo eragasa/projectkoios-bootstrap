@@ -89,9 +89,9 @@ active artifact surface.
   reading when `graphify-out/graph.json` exists. Prefer `graphify query`,
   `graphify path`, or `graphify explain` to establish context, then read only
   the specific files or lines needed to verify or patch.
-- At session end, after meaningful repository file changes, refresh the graph
-  with the repo-standard Graphify update flow so the next session starts from
-  current indexed state.
+ - At session end, after meaningful repository file changes, run
+   `graphify update .` (AST-only, no LLM needed) so the next session starts from
+   current indexed state.
 - Treat Graphify as the cheapest broad-context read path. Do not manually scan
   large document/code surfaces before trying Graphify, unless Graphify is
   missing, stale in a way that blocks the task, or lacks the exact detail needed.
@@ -127,8 +127,9 @@ At session start:
 
 At session stop:
 - if files changed, run the smallest relevant validation you can justify
-- if meaningful repo files changed, refresh Graphify before reporting final
-  state unless the refresh is unavailable or would block urgent handoff
+ - if meaningful repo files changed, run `graphify update .` (AST-only, no LLM
+   needed) before reporting final state unless unavailable or would block urgent
+   handoff
 - report files changed and validation results
 - ask before commit/push unless the user already directed it
 

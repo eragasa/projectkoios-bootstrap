@@ -20,8 +20,8 @@ On first invocation, before waiting for input:
 Before signing off, after the implementation work is done:
 
 1. **Run validation gates** — if files were changed, run `pytest`, `ruff check .`, and `mypy src/python`.
-2. **Refresh Graphify** — after meaningful repository changes, refresh Graphify
-   with the repo-standard update flow when available.
+2. **Refresh Graphify** — after meaningful repository changes, run
+   `graphify update .` (AST-only, no LLM needed) when available.
 3. **Report git state and ask to commit** — show `git status` and `git diff --stat`, then ask the user if they want to commit the changes.
 4. **Document decisions in ADRs** — if the session produced durable architectural decisions, update or create an ADR in `docs/architecture/adr/`.
 5. **Summarize** — state what was done and what follow-ups remain.

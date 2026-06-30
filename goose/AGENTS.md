@@ -122,8 +122,8 @@ See `../maps/` for the workspace layout:
 
 - At session start, use Graphify first for broad repository or vault context
   when `graphify-out/graph.json` exists, before manually reading large surfaces.
-- At session end, refresh Graphify after meaningful repository or vault-adjacent
-  file changes when available.
+- At session end, run `graphify update .` (AST-only, no LLM needed) after
+   meaningful repository or vault-adjacent file changes when available.
 - Use manual reads after Graphify identifies the specific files or notes needed
   for verification, editing, or citation.
 

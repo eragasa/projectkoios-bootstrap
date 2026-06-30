@@ -31,7 +31,8 @@ specialist if it requires their domain expertise.
 - For codebase, architecture, file-relationship, and impact questions, use `graphify` first.
 - If `graphify-out/graph.json` exists, prefer `graphify query`, `graphify path`, or `graphify explain` before manual grepping or browsing.
 - At session start, use Graphify before broad manual reads; at session stop,
-  refresh Graphify after meaningful repository changes when available.
+   run `graphify update .` (AST-only, no LLM needed) after meaningful repository
+   changes when available.
 - See `opencode/AGENTS.md` and `goose/AGENTS.md` for the other harnesses;
   do not duplicate their instructions here.
 - Route user work to individual Project Koios repositories; each
@@ -55,7 +56,8 @@ At session start:
   flag it for revision instead of consuming it as authoritative
 
 At session stop:
-- refresh Graphify after meaningful repository changes when available
+- run `graphify update .` (AST-only, no LLM needed) after meaningful repository
+  changes when available
 - preserve repo-local boundaries in any outgoing handoff
 - carry `Delegated-Operator` when mediation occurred
 

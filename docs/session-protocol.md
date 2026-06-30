@@ -23,9 +23,9 @@ Before doing other work in a new session:
 Before ending a session:
 
 1. If files changed, run the smallest relevant validation you can justify.
-2. If meaningful repository files changed, refresh Graphify with the
-   repo-standard update flow before final reporting unless the refresh is
-   unavailable or would block an urgent handoff.
+2. If meaningful repository files changed, run `graphify update .` (AST-only,
+   no LLM needed) before final reporting unless unavailable or would block an
+   urgent handoff.
 3. Report files changed and validation results.
 4. Write or update the relevant handoff if work must continue in another harness.
 5. Ask before commit/push unless the user already directed it.

@@ -91,5 +91,6 @@ instead.
 
 1.  No active Archon runs left unintentionally.
 2.  No generated runtime state committed.
-3.  If meaningful repo files changed, refresh Graphify when available.
+3. If meaningful repo files changed, run `graphify update .` (AST-only, no LLM
+   needed) when available.
 4.  If files changed, report changed files and validation.
