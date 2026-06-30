@@ -17,7 +17,7 @@ nodes:
   - id: fetch-adr
     bash: |
       set -eu
-      path="${1:-}"
+      path="$ARGUMENTS"
       if [ -z "$path" ]; then
         echo "ERROR: ADR path required. Example: docs/architecture/adr/adr.YYYYMMDD.HHMMSS_slug.md"
         exit 2
