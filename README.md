@@ -66,6 +66,7 @@ cd ~/repos/projectkoios-bootstrap
 # After pip install -e .
 projectkoios bootstrap init      # copy agents/global/*.example → ~/.<harness>/
 projectkoios bootstrap install   # symlink global configs into place
+projectkoios bootstrap validate-harnesses --root .
 projectkoios harnesses start     # create tmux koios session
 projectkoios harnesses show      # list session/window state
 projectkoios harnesses connect   # focus a workspace window
@@ -89,6 +90,33 @@ git clean -fdX graphify-out/
 
 You can also delete `graphify-out/` manually. Graphify will regenerate it when
 needed.
+
+`.archon/mcp/` is local Archon MCP runtime config and is ignored by git.
+`.archon/mcp/*.json` files may contain machine-specific notification or server
+settings and must not be committed. Repo-owned Archon assets live in
+`archon/workflows/`, `archon/prompts/`, `archon/skills/`, and
+`agents/global/archon/*.example`.
+
+## Archon Health Checks
+
+```bash
+archon doctor
+archon validate workflows
+archon workflow runs --json --limit 5
+archon isolation list
+```
+
+`archon doctor` should end with `All checks passed.` `archon validate workflows`
+should report zero workflow errors; warnings from bundled marketplace workflows
+are acceptable only when repo-local workflows are `ok`.
+
+Inspect `archon workflow runs --json --limit 5` for unexpected active runs.
+During this PIV loop, the current run may be `running`. Inspect
+`archon isolation list` for unexpected leftover environments. During this PIV
+loop, the current task worktree may appear.
+
+Provider smoke tests are manual operator checks. Do not add them to automated
+tests unless a future non-secret fixture exists.
 
 ## Architecture
 
