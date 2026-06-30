@@ -6,6 +6,8 @@ from pathlib import Path
 
 
 class ViolationCode(StrEnum):
+    """Known meta-harness guard violations."""
+
     HERMES_FORWARDED_WITHOUT_DECISION = "hermes-forwarded-without-decision"
     WRONG_IMPLEMENTATION_OWNER = "wrong-implementation-owner"
     DELEGATED_OPERATOR_MISSING = "delegated-operator-missing"
@@ -14,6 +16,16 @@ class ViolationCode(StrEnum):
 
 @dataclass(frozen=True)
 class Violation:
+    """Output of a failed guard check.
+
+    A violation identifies the artifact (``path``) that triggered it, the
+    guard that failed (``code``), the responsible actor, and contextual
+    guidance for resolution.
+
+    ``to_markdown_block`` serialises the violation as a YAML-like bullet
+    list suitable for appending to handoff files.
+    """
+
     code: ViolationCode
     actor: str
     path: Path
@@ -22,6 +34,7 @@ class Violation:
     suggested_next_action: str | None = None
 
     def to_markdown_block(self) -> str:
+        """Format this violation as a Markdown bullet list."""
         lines = [f"- code: {self.code.value}"]
         lines.append(f"  actor: {self.actor}")
         if self.required_owner:

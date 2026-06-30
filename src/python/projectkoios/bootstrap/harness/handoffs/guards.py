@@ -12,18 +12,27 @@ ACCEPTED_DECISION_KINDS = frozenset({
     "completion-decision",
     "blockage-report",
 })
+"""Artifact kinds that Hermes may legitimately produce when forwarding state."""
 
 IMPLEMENTATION_KINDS = frozenset({
     "patch",
     "test-results",
     "implementation-report",
 })
+"""Artifact kinds that only Vulcan may produce after an implementation brief has been routed."""
 
 HERMES_IDS = frozenset({"pi", "Hermes", "hermes"})
 CODEX_IDS = frozenset({"Codex", "codex"})
+"""Variant spellings for Hermes and Codex identity checks."""
 
 
 def check_hermes_forwarded_without_decision(marking: Marking) -> list[Violation]:
+    """Hermes must produce a decision artifact, not relay raw inbox state.
+
+    Triggers when a token in ``pi_inbox`` has sender or recipient matching
+    Hermes but the token kind is not one of the accepted decision kinds or
+    a user request. The guard detects passive mailbox behaviour.
+    """
     violations: list[Violation] = []
     for place_name in ("pi_inbox",):
         for token in marking.tokens_at(place_name):
@@ -47,6 +56,13 @@ def check_hermes_forwarded_without_decision(marking: Marking) -> list[Violation]
 
 
 def check_wrong_implementation_owner(marking: Marking) -> list[Violation]:
+    """Only Vulcan may produce implementation artifacts.
+
+    Scans every token in the marking for ``patch``, ``test-results``, or
+    ``implementation-report`` kinds. If the sender is neither ``Vulcan``
+    nor ``opencode``, the guard fires. This prevents Hermes from closing
+    out implementation work that belongs to Vulcan.
+    """
     violations: list[Violation] = []
     for token in marking.all_tokens:
         if token.kind not in IMPLEMENTATION_KINDS:
@@ -72,6 +88,12 @@ def check_wrong_implementation_owner(marking: Marking) -> list[Violation]:
 
 
 def check_delegated_operator_missing(marking: Marking) -> list[Violation]:
+    """Codex-mediated artifacts must carry explicit ``Delegated-Operator`` provenance.
+
+    Triggers when any header field (sender, origin, acting_as) references
+    Codex but the ``Delegated-Operator`` field is absent. This ensures
+    mediated access is always visible in the artifact record.
+    """
     violations: list[Violation] = []
     for token in marking.all_tokens:
         is_codex_actor = (
@@ -98,6 +120,15 @@ def check_delegated_operator_missing(marking: Marking) -> list[Violation]:
 
 
 def check_codex_as_pi_identity_collapse(marking: Marking) -> list[Violation]:
+    """Codex must not claim pi/Hermes identity.
+
+    Triggers when a token claims pi origin or authority (origin, sender, or
+    acting_as matches ``HERMES_IDS``) but is Codex-produced (``Delegated-Operator``
+    or provenance references Codex).
+
+    This preserves the separation between the delegated operator layer (Codex)
+    and the accountable meta-harness operator (Hermes/pi).
+    """
     violations: list[Violation] = []
     for token in marking.all_tokens:
         claims_pi_origin = (
@@ -135,3 +166,4 @@ ALL_GUARDS: list[Callable[[Marking], list[Violation]]] = [
     check_delegated_operator_missing,
     check_codex_as_pi_identity_collapse,
 ]
+"""Default guard list used by ``HandoffEvaluator`` when no custom list is provided."""

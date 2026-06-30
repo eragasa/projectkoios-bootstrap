@@ -7,16 +7,32 @@ from projectkoios.bootstrap.harness.data.artifact import HandoffArtifact
 
 
 HEADER_FIELD_PATTERN = re.compile(r"^([A-Za-z][A-Za-z0-9_-]+):\s*(.*)$")
+"""Matches ``Key: value`` lines in handoff file headers."""
 
 
 class HandoffParser:
+    """Tokenizer that converts handoff files into ``HandoffArtifact`` tokens.
+
+    Each ``*.md`` file in a handoff directory is parsed:
+    1. Header fields are extracted from the top of the file
+       (``_extract_frontmatter``).
+    2. An artifact kind is inferred from the title and header combination
+       (``_infer_kind``).
+    3. A frozen ``HandoffArtifact`` is returned.
+
+    Files without recognised headers return ``None`` (skipped).
+    The parser is stateless — it can be reused safely.
+    """
+
     def parse_file(self, path: Path) -> HandoffArtifact | None:
+        """Parse a single handoff file, or return ``None`` if it has no headers."""
         if not path.exists():
             return None
         text = path.read_text(encoding="utf-8")
         return self._parse_text(path, text)
 
     def parse_directory(self, directory: Path) -> list[HandoffArtifact]:
+        """Parse every ``*.md`` file in *directory*, sorted by path."""
         result: list[HandoffArtifact] = []
         if not directory.exists():
             return result
@@ -28,6 +44,7 @@ class HandoffParser:
         return result
 
     def _parse_text(self, path: Path, text: str) -> HandoffArtifact | None:
+        """Internal: build an artifact from header fields and title."""
         frontmatter = self._extract_frontmatter(text)
         if not frontmatter:
             return None
@@ -47,6 +64,11 @@ class HandoffParser:
         )
 
     def _extract_frontmatter(self, text: str) -> dict[str, str]:
+        """Extract header field key-value pairs from the top of *text*.
+
+        Scanning stops at the first non-header line (blank line or prose).
+        Duplicate keys overwrite — the last occurrence wins.
+        """
         fields: dict[str, str] = {}
         for line in text.splitlines():
             m = HEADER_FIELD_PATTERN.match(line)
@@ -57,6 +79,12 @@ class HandoffParser:
         return fields
 
     def _infer_kind(self, frontmatter: dict[str, str], text: str) -> str:
+        """Classify the artifact by its H1 title, then fall back to sender/recipient.
+
+        Title checks use substring matching on lowercase text, ordered from
+        most to least specific to minimise false positives. The final fallback
+        returns ``"user-request"``.
+        """
         title_lower = ""
         for line in text.splitlines():
             if line.startswith("# "):

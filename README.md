@@ -6,7 +6,7 @@ Shared harness config store for building and operating Project Koios.
 
 | Harness | Name | Tool | Domain |
 |---------|------|------|--------|
-| pi | pi | pi | Router/operator interface; routes repo-scoped work and can run Archon workflows |
+| pi | pi | pi | Meta-harness operator; routes, orchestrates, and executes repo-scoped work; runs Archon workflows |
 | archon | **Athena** | [Archon](https://archon.diy) | Architecture decisions, ADRs, planning, design review |
 | opencode | **Vulcan** | opencode | Code implementation, tests, validation, runtime sessions |
 | goose | **Koios** | [Goose](https://goose-docs.ai) | Knowledge curation, vault ops, source ingestion, UI bootstrap |

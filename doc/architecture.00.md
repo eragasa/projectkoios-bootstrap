@@ -32,7 +32,7 @@ projectkoios-bootstrap/
 
 | Harness | Role |
 |---|---|
-| `pi` | router/operator interface; routes repo-scoped work and can run Archon workflows |
+| `pi` | meta-harness operator; routes, orchestrates, and executes repo-scoped work; runs Archon workflows |
 | `goose` | knowledge curation, ingestion, vault/bootstrap tasks |
 | `opencode` | implementation, tests, validation, runtime debugging |
 | `Archon` | orchestration and planning workflows |
