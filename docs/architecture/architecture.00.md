@@ -62,9 +62,10 @@ directs the change.
    │   ├── process/
    │   ├── runbooks/
    │   └── templates/
-   ├── skills/
-   │   ├── specs/
-   │   └── design/
+   ├-- agents/
+   |   └── skills/
+   │       ├── specs/
+   │       └── design/
    ├── governance/
    │   ├── policies/
    │   ├── roles/
