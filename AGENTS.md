@@ -141,6 +141,18 @@ Agents communicate through typed artifacts. Artifacts must be explicit enough th
 
 Architecture/specification artifacts are stored as ADRs under `docs/architecture/adr/`. Historical harness handoffs are archived under `docs/archive/handoffs/` and should be treated as provenance, not the current active artifact surface. Process AARs are stored under `docs/AAR/` and are non-authoritative unless promoted into an ADR, skill update, workflow change, or implementation task.
 
+## Session Start
+Since no agents have persistent memory, the following steps help identify what you are to do next.
+
+1. Check whether the working tree is dirty.
+2. Inspect Archon run state for running, paused, or orphaned runs.
+3. Review draft ADRs and note whether any are the highest-leverage next state.
+4. Check `docs/incubator/` for incubator notes and `docs/spikes/` for spike drafts.
+5. Use Graphify first for codebase, architecture, file-relationship, and impact questions when available.
+6. Read only the specific files or lines needed.
+
+After this, provide the three highest-leverage next actions and recommend one.
+
 ## High-leverage state
 
 At session start, report the highest-leverage next state across the whole workflow, not just ADRs or pending work. Base that recommendation on live filesystem, git, Graphify, ADR, incubator/spike/implementation surfaces, and Archon run state, and keep the startup summary brief.

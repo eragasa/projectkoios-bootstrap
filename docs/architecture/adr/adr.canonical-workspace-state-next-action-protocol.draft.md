@@ -150,3 +150,4 @@ field and leverage rule.
 
 - KOIOS: Strong leverage rule, but the canonical state format should be nailed down sooner so every workspace speaks the same language.
 - KOIOS: Consider a smaller minimal field set; too many fields will turn the state surface into a maintenance burden.
+- HERMES: This should be a single live surface, not a summary of several surfaces; otherwise the next-action protocol will still depend on scattered context.

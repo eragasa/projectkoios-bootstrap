@@ -282,3 +282,5 @@ behind compatibility shims so existing behavior remains testable.
   actually resumable, not just inspectable.
 - HERMES: Existing bootstrap harness code should be migrated with regression
   tests, not rewritten as a greenfield package that drops current behavior.
+- HERMES: The restart/persistence boundary needs to be explicit in the first
+  slice; otherwise the Petri-net substrate will be hard to prove operationally.
