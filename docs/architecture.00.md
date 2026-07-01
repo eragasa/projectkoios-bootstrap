@@ -30,7 +30,7 @@ directs the change.
 - [architecture.workspaces.obsidian](architecture.workspaces.obsidian.md)
 
 ### Repository projection notes
-- [architecture.repos.00](architecture.repos.00.md)
+- [architecture.repositories.00](architecture.repositories.00.md)
 - [architecture.repos.git](architecture.repos.git.md)
 - [architecture.repos.obsidian](architecture.repos.obsidian.md)
 - [architecture.repo-projections](architecture.repo-projections.md)
@@ -48,3 +48,31 @@ directs the change.
 - `docs/agent-charter.md`
 - `docs/workspaces.md`
 - `docs/architecture.repo-projections.md`
+
+
+```text
+   docs/
+   ├── README.md
+   ├── index.md
+   ├── architecture/
+   │   ├── adr/
+   │   ├── specs/
+   │   └── briefs/
+   ├── workflows/
+   │   ├── process/
+   │   ├── runbooks/
+   │   └── templates/
+   ├── skills/
+   │   ├── specs/
+   │   └── design/
+   ├── governance/
+   │   ├── policies/
+   │   ├── roles/
+   │   └── decisions/
+   ├── handoffs/
+   ├── archive/
+   │   ├── handoffs/
+   │   └── superseded/
+   ├── AAR/
+   └── notes/
+ ```

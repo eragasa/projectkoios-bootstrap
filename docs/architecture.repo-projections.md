@@ -45,7 +45,7 @@ See:
 - [architecture.workspaces.00](architecture.workspaces.00.md)
 - [architecture.workspaces.git](architecture.workspaces.git.md)
 - [architecture.workspaces.obsidian](architecture.workspaces.obsidian.md)
-- [architecture.repos.00](architecture.repos.00.md)
+- [architecture.repositories.00](architecture.repositories.00.md)
 - [architecture.repos.git](architecture.repos.git.md)
 - [architecture.repos.obsidian](architecture.repos.obsidian.md)
 

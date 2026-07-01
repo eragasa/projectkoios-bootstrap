@@ -32,6 +32,6 @@ Markdown.
 
 ## Related notes
 
-- [architecture.repos.00](architecture.repos.00.md)
+- [architecture.repositories.00](architecture.repositories.00.md)
 - [architecture.workspaces.obsidian](architecture.workspaces.obsidian.md)
 - [architecture.repo-projections](architecture.repo-projections.md)

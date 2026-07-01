@@ -33,6 +33,6 @@ It should not become a general git automation layer.
 
 ## Related notes
 
-- [architecture.repos.00](architecture.repos.00.md)
+- [architecture.repositories.00](architecture.repositories.00.md)
 - [architecture.workspaces.git](architecture.workspaces.git.md)
 - [architecture.repos.obsidian](architecture.repos.obsidian.md)

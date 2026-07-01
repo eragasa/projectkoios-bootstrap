@@ -37,4 +37,4 @@ This projection belongs in bootstrap, not in the mothership domain packages.
 
 - [architecture.workspaces.00](architecture.workspaces.00.md)
 - [architecture.repos.git](architecture.repos.git.md)
-- [architecture.repos.00](architecture.repos.00.md)
+- [architecture.repositories.00](architecture.repositories.00.md)

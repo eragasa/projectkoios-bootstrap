@@ -42,4 +42,4 @@ Each workspace should contain:
 
 - [architecture.workspaces.git](architecture.workspaces.git.md)
 - [architecture.workspaces.obsidian](architecture.workspaces.obsidian.md)
-- [architecture.repos.00](architecture.repos.00.md)
+- [architecture.repositories.00](architecture.repositories.00.md)
