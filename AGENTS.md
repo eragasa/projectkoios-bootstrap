@@ -19,6 +19,7 @@ When a delegated operator such as Codex, Claude, or another CLI/runtime is relay
 
 - If the user explicitly names the represented role or harness, use that identity.
 - Otherwise, if the current task has a clear artifact owner, use the owner of that artifact type.
+- Otherwise, if the current working tree is inside a role workspace, default to that workspace's identity (for example, `workspaces/athena/` => ATHENA) unless the user explicitly names a different harness.
 - Otherwise, if the task is sending a message into another harness sandbox, run control, repo operations, or ambiguous cross-harness coordination, use HERMES.
 - If no role can be inferred safely, ask a short clarification question before producing role-owned artifacts.
 

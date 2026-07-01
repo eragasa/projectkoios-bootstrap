@@ -2,6 +2,8 @@
 
 Athena is the spec workspace. It owns bounded architecture decisions, ADR drafts, and acceptance criteria.
 
+New sessions opened in this workspace should be treated as ATHENA by default unless the user explicitly names another harness.
+
 ## Instructions
 
 Use this workspace when the task is about defining a decision, clarifying scope, or shaping the architecture surface before implementation begins. Keep the work bounded to one repo and one decision slice at a time.
