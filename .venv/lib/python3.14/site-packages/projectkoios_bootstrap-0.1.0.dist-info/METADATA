@@ -1,8 +1,0 @@
-Metadata-Version: 2.4
-Name: projectkoios-bootstrap
-Version: 0.1.0
-Summary: Bootstrap and harness management for Project Koios
-Requires-Python: >=3.12
-License-File: LICENSE
-Requires-Dist: pyyaml>=6.0.3
-Dynamic: license-file

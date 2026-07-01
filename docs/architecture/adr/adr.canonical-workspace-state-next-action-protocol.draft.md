@@ -150,4 +150,3 @@ field and leverage rule.
 
 - KOIOS: Strong leverage rule, but the canonical state format should be nailed down sooner so every workspace speaks the same language.
 - KOIOS: Consider a smaller minimal field set; too many fields will turn the state surface into a maintenance burden.
-- ATHENA: Keep `next_action` as a one-line unlock note, not a secondary planning log; the state surface should stay readable in one pass.

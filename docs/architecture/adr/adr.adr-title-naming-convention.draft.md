@@ -98,4 +98,3 @@ canonical title rule and draft titles are treated as temporary working labels.
 
 - KOIOS: Good cleanup rule; the examples should be tightened so promoted titles map cleanly to the index.
 - KOIOS: Optional version suffixes are fine only if there is a real semantic reason for multiple decision surfaces.
-- ATHENA: Title examples should include at least one borderline case where the decision name differs from the drafting activity, so reviewers know what gets normalized on promotion.

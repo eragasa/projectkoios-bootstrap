@@ -138,4 +138,3 @@ split and add a short pointer from `docs/agents/agent-charter.md` if needed.
 - KOIOS: Keep the review surface lightweight so it stays useful rather than becoming a second implementation plan.
 - VULCAN: The coding standard still needs to be written for each package, but the ownership split above is the right boundary.
 - HERMES: This is an authority decision, not an implementation plan; mirror it into the policy layer after acceptance.
-- ATHENA: If the baseline expands beyond Python later, keep the same authority split and add language-specific rules under the implementation-plan surface instead of mutating the review model.

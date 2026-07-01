@@ -96,4 +96,3 @@ If accepted, update the ADR template and any workflow guidance so draft ADRs are
 
 - KOIOS: Good direction; the exact draft-to-proposed promotion mechanics still need to be made concrete.
 - KOIOS: Keep a visible backlink from proposed to archived draft so the review trail remains traceable.
-- ATHENA: The promotion note should record what changed at the boundary, not just that promotion happened, so reviewers can distinguish substantive revision from status churn.

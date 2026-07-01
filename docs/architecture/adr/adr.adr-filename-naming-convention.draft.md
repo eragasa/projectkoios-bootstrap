@@ -88,4 +88,3 @@ so new ADR files follow the new filename pattern.
 
 - KOIOS: Clear rule, but the migration path for existing filenames still needs a concrete policy.
 - KOIOS: Decide whether historic/archive names preserve their original filenames or get normalized on promotion.
-- ATHENA: If promotion renames files automatically, the tool should also update backlinks and index entries in the same step; partial renames will create link drift.

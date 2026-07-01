@@ -103,4 +103,3 @@ substantive review.
 - KOIOS: Useful default, but “substantive” needs a short checklist or examples to keep it from becoming subjective.
 - KOIOS: The rule should stay tied to decision value and control boundary, not general commentary volume.
 - VULCAN: Add "implementation impact" to the substantive signal set. A comment that flags build cost, rework risk, or implementability concerns is valuable — VULCAN can assess those only when architecture comments call them out explicitly.
-- ATHENA: A tiny examples list for "substantive" would help keep the rule consistent without turning every review into a judgment call.

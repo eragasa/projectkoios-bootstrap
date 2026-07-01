@@ -118,10 +118,6 @@ templates and existing skill files so each skill binds to its supporting ADR(s).
 - exempt skills are rare and justified
 - skill/ADR mismatches are easy to spot during review
 
-## Comments
-
-- ATHENA: Exemptions should still record an explicit review owner or refresh cadence; otherwise the register will slowly accumulate unowned utility surfaces.
-
 ## routing
 
 - Owner: Athena

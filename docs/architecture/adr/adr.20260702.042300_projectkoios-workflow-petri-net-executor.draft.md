@@ -282,4 +282,3 @@ behind compatibility shims so existing behavior remains testable.
   actually resumable, not just inspectable.
 - HERMES: Existing bootstrap harness code should be migrated with regression
   tests, not rewritten as a greenfield package that drops current behavior.
-- ATHENA: Keep the first runtime slice focused on executable semantics; if analysis history needs richer shape, let the PM4Py adapter own that rather than inflating the executor API.

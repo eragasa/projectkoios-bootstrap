@@ -112,4 +112,3 @@ cluster.
 
 - KOIOS: Keep the controlling ADR narrow so it stays useful as a rendezvous point and does not become another archive.
 - VULCAN: The join protocol should preserve enough local context in each subordinate draft that implementers do not need to chase every comment back to the controller.
-- ATHENA: Choose the controlling ADR by topic fit, not by creation order, so the review hub reflects the decision cluster rather than the draft timeline.

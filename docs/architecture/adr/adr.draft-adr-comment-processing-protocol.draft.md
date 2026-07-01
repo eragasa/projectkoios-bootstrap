@@ -132,4 +132,3 @@ owners follow the collect/classify/respond/revise/resolve/escalate loop.
 
 - KOIOS: Keep the log lightweight; otherwise the comment workflow becomes a second ADR archive.
 - VULCAN: The escalation step should preserve enough context that implementation concerns do not get lost when handed off.
-- ATHENA: If the review log grows, keep the linked note authoritative and leave only a compact summary in the ADR body; otherwise the decision text will get crowded by process history.

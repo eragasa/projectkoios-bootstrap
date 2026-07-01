@@ -102,4 +102,3 @@ If accepted, add lightweight repo guidance for:
 - KOIOS: The lifecycle boundary is sensible, but it overlaps with other workflow notes; reconcile the naming before treating it as settled.
 - KOIOS: Decide whether `docs/spikes/` is a real directory or only a convention so the layout matches the policy.
 - VULCAN: The implementation-brief step needs a `verification_method` field so Vulcan knows how to validate against the architecture intent. Without it, "implementation brief → iterative implementation" has no defined done signal.
-- ATHENA: Keep `docs/incubator/` and `docs/spikes/` as clearly separate surfaces so promotion is visible in the path, not only implied by wording.

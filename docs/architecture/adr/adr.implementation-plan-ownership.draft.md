@@ -115,4 +115,3 @@ If accepted, create the `docs/plans/` directory and add a brief usage note in th
 ## Comments
 
 - VULCAN: Proposed from the observed gap — plans were improvised, coding standards unowned, no escalation existed. YAGNI scope keeps it to the concrete problems.
-- ATHENA: The plan should keep a stable pointer back to the source ADR or brief so Hermes can route revisions without guessing which decision the plan depends on.
