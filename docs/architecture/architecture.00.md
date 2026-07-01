@@ -17,12 +17,23 @@ These notes describe the bootstrap-side workspace, repository-projection, and
 harness-related architecture for `projectkoios-bootstrap`.
 They do not replace `docs/architecture.md` in the mothership repo.
 
+## Documentation system
+
+The canonical architecture document for the documentation system lives at
+`architecture.docs.md`.
+That file is the stable active key for the docs architecture surface.
+Replacement versions are archived under timestamped filenames.
+The docs model is intentionally portable across Python 3, TypeScript, and Rust.
+
 ## Protection
 
 Only Hermes may modify `docs/architecture*.md`, and only when Zeus explicitly
 directs the change.
 
 ## Index
+
+### Documents
+- [architecture.docs](architecture.docs.md)
 
 ### Workspace notes
 - [architecture.workspaces.00](architecture.workspaces.00.md)
@@ -48,32 +59,3 @@ directs the change.
 - `docs/agent-charter.md`
 - `docs/workspaces.md`
 - `docs/architecture.repo-projections.md`
-
-
-```text
-   docs/
-   ├── README.md
-   ├── index.md
-   ├── architecture/
-   │   ├── adr/
-   │   ├── specs/
-   │   └── briefs/
-   ├── workflows/
-   │   ├── process/
-   │   ├── runbooks/
-   │   └── templates/
-   ├-- agents/
-   |   └── skills/
-   │       ├── specs/
-   │       └── design/
-   ├── governance/
-   │   ├── policies/
-   │   ├── roles/
-   │   └── decisions/
-   ├── handoffs/
-   ├── archive/
-   │   ├── handoffs/
-   │   └── superseded/
-   ├── AAR/
-   └── notes/
- ```
