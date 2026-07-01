@@ -38,9 +38,11 @@ directs the change.
 |---|---|
 | [architecture.documents](architecture.documents.md) | None |
 | [architecture.adr.template](architecture.adr.template.md) | None |
-| [architecture.lifecycle.00](architecture.lifecycle.00.md) | [ADR 20260702.000551: Idea → Spike → ADR → Implementation Workflow](adr/adr.20260702.000551_idea-spike-adr-implementation-workflow.md) |
-| [ADR 20260701.131629: ADR template contract](adr/adr.20260701.131629_adr-template-contract.md) | None |
-| [ADR 20260702.000551: Idea → Spike → ADR → Implementation Workflow](adr/adr.20260702.000551_idea-spike-adr-implementation-workflow.md) | None |
+| [architecture.lifecycle.00](architecture.lifecycle.00.md) | [ADR 20260702.000551: Idea → Spike → ADR → Implementation Workflow](adr/adr.idea-spike-adr-implementation-workflow.draft.md) |
+| [ADR 20260701.131629: ADR template contract](adr/adr.adr-template-contract.md) | None |
+| [ADR 20260702.000551: Idea → Spike → ADR → Implementation Workflow](adr/adr.idea-spike-adr-implementation-workflow.draft.md) | None |
+| [ADR 20260702.004118: ADR Title Naming Convention](adr/adr.adr-title-naming-convention.draft.md) | None |
+| [ADR 20260702.004300: ADR Filename Naming Convention](adr/adr.adr-filename-naming-convention.draft.md) | None |
 | [architecture.workspaces.00](architecture.workspaces.00.md) | None |
 | [architecture.workspaces.git](architecture.workspaces.git.md) | None |
 | [architecture.workspaces.obsidian](architecture.workspaces.obsidian.md) | None |
@@ -57,12 +59,14 @@ directs the change.
 - All bootstrap architecture notes use the `architecture.` prefix.
 - Filenames stay unique and grep-friendly.
 - Use Markdown links for navigation so grep, Graphify, and Obsidian all work.
-- The date slug lives under `## Status` and uses `YYYYMMDD.HHMMSSZ`.
+- ADR filenames use `adr.<name>.md` for active notes and `adr.<name>.<status>.md` for non-active notes.
+- The date slug, when present, lives under `## Status` and uses `YYYYMMDD.HHMMSSZ`.
 - Related notes should link back here with `[architecture.00](architecture.00.md)`.
+- Promoted ADRs should use concise decision titles aligned to this index; draft titles may remain provisional.
 
 ## Related bootstrap architecture
 
 - `docs/agent-charter.md`
 - `docs/workspaces.md`
 - `docs/architecture.repo-projections.md`
-- Controlled by: `docs/architecture/adr/adr.20260702.000551_idea-spike-adr-implementation-workflow.md`
+- Controlled by: `docs/architecture/adr/adr.idea-spike-adr-implementation-workflow.draft.md`

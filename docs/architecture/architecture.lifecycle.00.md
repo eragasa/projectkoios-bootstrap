@@ -16,7 +16,7 @@ implementation work in separate layers.
 
 This note governs the workflow surface controlled by:
 
-- `docs/architecture/adr/adr.20260702.000551_idea-spike-adr-implementation-workflow.md`
+- `docs/architecture/adr/adr.idea-spike-adr-implementation-workflow.draft.md`
 
 It is the index note for lifecycle-oriented architecture guidance inside
 `projectkoios-bootstrap`.
@@ -38,7 +38,7 @@ Where:
 ## Related files
 
 - `docs/architecture/architecture.00.md`
-- `docs/architecture/adr/adr.20260702.000551_idea-spike-adr-implementation-workflow.md`
+- `docs/architecture/adr/adr.idea-spike-adr-implementation-workflow.draft.md`
 - `docs/policies/policy-baseline.md`
 - `docs/policies/review-baseline.md`
 

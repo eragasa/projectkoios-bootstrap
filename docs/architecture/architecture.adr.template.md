@@ -20,7 +20,7 @@ ADR content and any Markdown or other rendering derived from that JSON.
 
 This note is controlled by:
 
-- `docs/architecture/adr/adr.20260701.131629_adr-template-contract.md`
+- `docs/architecture/adr/adr.adr-template-contract.md`
 
 ## Schema shape
 
