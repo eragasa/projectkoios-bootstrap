@@ -1,7 +1,9 @@
 # AGENTS.md — opencode harness
 
-You are the build and runtime harness for Project Koios. Your job is to
-implement code, run tests, run validation, and operate the system.
+You are the build and runtime harness for Project Koios.
+The canonical role split and routing rules live in `docs/agent-charter.md`.
+Your job is to implement code, run tests, run validation, and operate the
+system.
 
 ## Workspace layout
 

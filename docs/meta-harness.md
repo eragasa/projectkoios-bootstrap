@@ -2,6 +2,7 @@
 
 This repository uses a triple-agent meta-harness.
 
+The canonical routing split lives in `docs/agent-charter.md`.
 The harness separates specification, implementation, and knowledge capture into distinct agent roles. Agents do not share hidden assumptions. They communicate through explicit artifacts with defined ownership, provenance, and acceptance criteria.
 
 ## Purpose
@@ -62,6 +63,8 @@ metadata:
 ```
 
 ## Artifact ownership
+
+See `docs/agent-charter.md` for the current role split and routing rules.
 
 | Artifact | Owner | Producing runtime |
 |---|---|---|

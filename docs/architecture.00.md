@@ -1,6 +1,10 @@
-# Project Koios bootstrap architecture
+# `projectkoios-bootstrap` architecture
 
-This document is the bootstrap-specific architecture for `projectkoios-bootstrap`.
+This document is the architecturer for the `projectkois-bootstrap` 
+
+## Boundaries
+1. `projectkoios` is the mothership repository
+2. `projectkoios-bootstrap` is a meta-har
 It separates harness concerns from the `projectkoios` mothership repository.
 
 ## Purpose
@@ -11,6 +15,7 @@ It separates harness concerns from the `projectkoios` mothership repository.
 - shared context and maps
 - shared bootstrap guidance for pi, Goose, and opencode
 - repo-local config templates for pi, Goose, and opencode
+- the canonical agent charter in `docs/agent-charter.md`
 
 It does **not** own domain architecture for Project Koios product code.
 That belongs in the `projectkoios` repository and its ADRs.
