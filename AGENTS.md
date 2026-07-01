@@ -90,6 +90,7 @@ Agents communicate through typed artifacts. An artifact must be explicit enough 
 | `test-results` | code agent (Vulcan) | Validation output |
 | `implementation-report` | code agent (Vulcan) | Summary of what changed |
 | `deviation-report` | code agent (Vulcan) | Mismatch between spec and reality |
+| `spec-intake` | interview phase → Athena via Hermes | Durable input packet for Athena specification |
 | `knowledge-note` | knowledge agent (Koios) | Durable note from validated artifacts |
 | `provenance-index` | knowledge agent (Koios) | Mapping from claims to sources |
 | `after-action-report` | any harness | Process observations, protocol misses, and improvement candidates |
@@ -207,6 +208,11 @@ Use Vulcan (opencode) for:
 Vulcan should:
 - read the plan or ADR first
 - place observations and recommendations in ADRs under `docs/architecture/adr/`
+- check whether `archon/workflows/conduct-interview.yaml` exists and is available
+  for the interview phase when Hermes routes an underspecified request
+- not implement from `spec-intake` directly — Vulcan requires Athena's
+  `implementation-brief` unless Hermes explicitly routes a trivial non-architecture
+  task under existing repo policy
 
 ## Harness configs
 
