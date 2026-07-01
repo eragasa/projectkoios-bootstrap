@@ -34,6 +34,7 @@ directs the change.
 
 ### Documents
 - [architecture.documents](architecture.documents.md)
+- [architecture.adr.template](architecture.adr.template.md)
 
 ### Workspace notes
 - [architecture.workspaces.00](architecture.workspaces.00.md)
@@ -45,6 +46,9 @@ directs the change.
 - [architecture.repos.git](architecture.repos.git.md)
 - [architecture.repos.obsidian](architecture.repos.obsidian.md)
 - [architecture.repo-projections](architecture.repo-projections.md)
+
+### Historic ADR archive
+- `docs/archive/architecture/adr/` — all ADRs archived and marked historic
 
 ## Naming convention
 

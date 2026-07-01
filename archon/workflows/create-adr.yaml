@@ -1,5 +1,5 @@
 name: create-adr
-description: Generate a new Architecture Decision Record following the existing ADR format
+description: Generate a new Architecture Decision Record following the canonical ADR format
 provider: pi
 worktree:
   enabled: false
@@ -11,20 +11,28 @@ nodes:
 
       Context from the user: $ARGUMENTS
 
-      Follow the format of existing ADRs in the `architecture/` directory.
+      Follow the canonical ADR format used in this repository.
+      Use exactly one architecture domain per ADR. This is a proposal, not an implementation plan.
 
       Required sections:
-      - Title (# adr.<YYYYMMDD>: <title>)
-      - Status (Accepted / Proposed / Deprecated)
-      - Context (why this decision is needed)
-      - Decision (what was decided)
-      - Rationale (why this option over others)
-      - Consequences (what this means going forward)
-      - Alternatives considered (other options and why they were rejected)
+      - Title (# ADR YYYYMMDD.HHMMSS: <Title>)
+      - Status (draft)
+      - Context
+      - Decision
+      - Consequences
+      - architecture-spec
+      - acceptance-criteria
+      - implementation-brief
+      - resolved-open-questions
+      - non-goals
+      - validation-expectations
+      - routing
 
-      Determine the filename as `adr.<YYYYMMDD>.md` using today's date and a
-      short slug from the title.
+      Use the repository convention for filenames:
+      docs/architecture/adr/adr.YYYYMMDD.HHMMSS_<kebab-slug>.md
 
-      Write the file to the `architecture/` directory.
+      Base the slug on the title, keep it short, and preserve the timestamp format.
+
+      Write the file to docs/architecture/adr/.
 
       Confirm the filename and path once written.
