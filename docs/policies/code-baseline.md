@@ -7,6 +7,18 @@ Koios review flows.
 
 It is a review baseline, not an implementation plan.
 
+## Authority
+
+- **Vulcan** owns the coding standard for package implementation work.
+- **Koios** performs adversarial code review against that standard, the
+  accepted ADR, and obvious review gaps.
+- **Athena** validates architecture alignment against the ADR.
+- **Tooling** handles mechanical formatting and linting where possible.
+
+Koios review is intentionally adversarial and bounded. Koios may flag obvious
+style, documentation, type, test, traceability, and ADR-alignment issues, but
+Koios must not invent implementation standards from scratch.
+
 ## Code Principles
 
 ### CP-005: PEP 8 Style Compliance

@@ -60,6 +60,7 @@ user request
 
 - `architecture-spec` / `acceptance-criteria` / `implementation-brief` → Athena
 - `implementation-plan` / `patch` / `test-results` / `implementation-report` → Vulcan
+- `adversarial code review` against the agreed coding standard → Koios
 - `knowledge-note` / `provenance-index` → Koios
 - `routing-decision` / `revision-request` / `completion-decision` → Hermes
 
