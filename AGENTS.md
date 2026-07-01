@@ -157,13 +157,15 @@ At session start, report the highest-leverage next state across the whole workfl
 
 Read only the current artifact and filesystem state; do not rely on chat history. Use Graphify first for codebase, architecture, file-relationship, and impact questions when the graph is available.
 
-- For codebase, architecture, file-relationship, and impact questions, use `graphify` first.
-- At new session start, all harnesses should use `graphify` before manual file reading when `graphify-out/graph.json` exists.
-- Prefer `graphify query`, `graphify path`, or `graphify explain` to establish context, then read only the specific files or lines needed to verify or patch.
-- At session end, after meaningful repository file changes, run `graphify update .` (AST-only, no LLM needed) so the next session starts from current indexed state.
-- Treat Graphify as the cheapest broad-context read path.
-- Do not manually scan large document/code surfaces before trying Graphify, unless Graphify is missing, stale in a way that blocks the task, or lacks the exact detail needed.
-- If `graphify-out/graph.json` exists, prefer `graphify query`, `graphify path`, or `graphify explain` before manual grepping or browsing.
+- For codebase, architecture, file-relationship, and impact questions, use `graphify` first; treat Graphify as the cheapest broad-context read path.
+- If `graphify-out/graph.json` exists, use `graphify` before manual file reading.
+- If you need a query view of the graph, prefer `graphify query`.
+- If you need a path view of the graph, prefer `graphify path`.
+- If you need an explanation view of the graph, prefer `graphify explain`.
+- Then read only the specific files or lines needed to verify or patch.
+- At session end, run `graphify update /Users/eugene/repos/projectkoios-bootstrap`.
+- If Graphify is available, do not manually scan large document/code surfaces first.
+- Only scan manually when Graphify is missing, stale enough to block the task, or lacks the exact detail needed.
 - Read `graphify-out/GRAPH_REPORT.md` only for broad architecture review.
 - Keep local secrets out of git.
 - At session end, always write an AAR under `docs/AAR/`. For sessions with durable process lessons, record protocol failures, repeated user corrections, unclear sandbox message delivery, workflow/tool friction, validation gaps, and improvement candidates. For trivial clean sessions, write a brief AAR that states no durable process issue was observed.
