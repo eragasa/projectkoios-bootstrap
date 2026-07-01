@@ -76,7 +76,7 @@ When an ADR reaches `proposed`, it must include these machine-relevant sections:
 - Do not treat draft comments as acceptance.
 - Do not mark an ADR complete without Hermes validation.
 - Do not change lifecycle semantics without a new or superseding Athena ADR.
-- Use `graphify update .` for session-boundary rebuilds; do not substitute a semantic refresh.
+- Use `graphify update .` for session-boundary rebuilds; do not substitute a semantic refresh. If you only want the AST/code refresh and want to skip clustering, use `graphify update . --no-cluster`.
 
 ## Notes
 

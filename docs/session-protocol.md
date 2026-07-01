@@ -8,7 +8,8 @@ Before doing other work in a new session:
 
 1. Use Graphify first for broad repository context. If `graphify-out/graph.json`
    exists, prefer `graphify query`, `graphify path`, or `graphify explain`
-   before manually reading ADRs, handoffs, docs, or source files.
+   before manually reading ADRs, handoffs, docs, or source files. For a
+   session-boundary refresh, prefer `graphify update .` over `graphify .`.
 2. Check current ADRs, current handoff locations, git branch, git status, and
    the last few commits.
 3. Treat `docs/archive/handoffs/` as provenance only. An archived
@@ -25,7 +26,8 @@ Before ending a session:
 1. If files changed, run the smallest relevant validation you can justify.
 2. If meaningful repository files changed, run `graphify update .` (AST-only,
    no LLM needed) before final reporting unless unavailable or would block an
-   urgent handoff.
+   urgent handoff. If you only need the AST/code refresh and want to skip
+   clustering, use `graphify update . --no-cluster`.
 3. Always write an AAR under `docs/AAR/`. Use AARs for protocol failures,
    repeated user corrections, unclear sandbox message delivery,
    workflow/tool friction, validation gaps, or improvement candidates. For
