@@ -82,6 +82,17 @@ Important public APIs should include at least one of:
 
 For Project Koios, tests are preferred as executable documentation.
 
+### CP-009: Separate Data Objects From Action Objects
+
+Implementation should preserve the separation between state-bearing data
+objects and state-transforming action objects.
+
+### CP-010: Avoid Dangling Functions
+
+Functions that mutate state or affect control surfaces should have explicit
+ownership, typed inputs, and clear names. Avoid unowned helper functions that
+blur the control surface.
+
 ## Documentation And Style Review Rules
 
 Review agents should check whether Python code is PEP 8 compliant.
@@ -98,6 +109,9 @@ a formatter can fix.
 
 Review agents should flag missing documentation when the code is public,
 architecture-sensitive, mutating, adapter-facing, or nontrivial.
+
+Review agents should also check whether control-surface code preserves the
+boundary between data objects and action objects.
 
 ## Review Template Additions
 

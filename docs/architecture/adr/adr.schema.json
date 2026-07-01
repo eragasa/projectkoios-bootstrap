@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://projectkoios.local/schemas/adr.schema.json",
+  "title": "ArchitectureDecisionRecord",
+  "description": "Canonical JSON source of truth for Project Koios ADRs.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "title",
+    "status",
+    "context",
+    "decision",
+    "consequences",
+    "architecture_spec",
+    "acceptance_criteria",
+    "implementation_brief",
+    "resolved_open_questions",
+    "non_goals",
+    "validation_expectations",
+    "routing"
+  ],
+  "$defs": {
+    "Status": {
+      "type": "string",
+      "enum": ["draft", "accepted", "completed", "superseded", "rejected"]
+    },
+    "ArchitectureDomain": {
+      "type": "string",
+      "enum": ["systems", "hardware", "software"]
+    },
+    "Context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "origin",
+        "from",
+        "acting_as",
+        "scope",
+        "repository",
+        "delegated_operator",
+        "architecture_domain"
+      ],
+      "properties": {
+        "origin": { "type": "string", "minLength": 1 },
+        "from": { "type": "string", "minLength": 1 },
+        "acting_as": { "type": "string", "minLength": 1 },
+        "scope": { "type": "string", "minLength": 1 },
+        "repository": { "type": "string", "minLength": 1 },
+        "delegated_operator": { "type": "string", "minLength": 1 },
+        "architecture_domain": { "$ref": "#/$defs/ArchitectureDomain" }
+      }
+    },
+    "Routing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["owner", "next_phase"],
+      "properties": {
+        "owner": {
+          "type": "string",
+          "enum": ["Hermes", "Athena", "Vulcan", "Koios"]
+        },
+        "next_phase": {
+          "type": "string",
+          "enum": ["proposed", "review", "accepted", "validated", "completed"]
+        },
+        "notes": { "type": "string" }
+      }
+    },
+    "Links": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "back_to": { "type": "string", "minLength": 1 },
+        "supersedes": { "type": ["string", "null"] },
+        "superseded_by": { "type": ["string", "null"] }
+      }
+    }
+  },
+  "properties": {
+    "id": { "type": "string", "minLength": 1 },
+    "slug": { "type": "string", "minLength": 1 },
+    "title": { "type": "string", "minLength": 1 },
+    "status": { "$ref": "#/$defs/Status" },
+    "context": { "$ref": "#/$defs/Context" },
+    "decision": { "type": "string", "minLength": 1 },
+    "consequences": { "type": "string", "minLength": 1 },
+    "architecture_spec": { "type": "string", "minLength": 1 },
+    "acceptance_criteria": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "minItems": 1
+    },
+    "implementation_brief": { "type": "string", "minLength": 1 },
+    "resolved_open_questions": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "non_goals": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "validation_expectations": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "minItems": 1
+    },
+    "routing": { "$ref": "#/$defs/Routing" },
+    "links": { "$ref": "#/$defs/Links" }
+  }
+}

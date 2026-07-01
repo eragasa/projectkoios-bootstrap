@@ -1,5 +1,5 @@
 name: create-adr
-description: Generate a new Architecture Decision Record following the canonical ADR format
+description: Generate a new Architecture Decision Record JSON document following the canonical ADR schema
 provider: pi
 worktree:
   enabled: false
@@ -7,29 +7,31 @@ worktree:
 nodes:
   - id: generate
     prompt: |
-      Generate an Architecture Decision Record (ADR) file and save it.
+      Generate an Architecture Decision Record (ADR) JSON file and save it.
 
       Context from the user: $ARGUMENTS
 
-      Follow the canonical ADR format used in this repository.
+      Follow the canonical ADR JSON schema used in this repository.
       Use exactly one architecture domain per ADR. This is a proposal, not an implementation plan.
 
-      Required sections:
-      - Title (# ADR YYYYMMDD.HHMMSS: <Title>)
-      - Status (draft)
-      - Context
-      - Decision
-      - Consequences
-      - architecture-spec
-      - acceptance-criteria
-      - implementation-brief
-      - resolved-open-questions
-      - non-goals
-      - validation-expectations
+      Required fields:
+      - id
+      - slug
+      - title
+      - status
+      - context
+      - decision
+      - consequences
+      - architecture_spec
+      - acceptance_criteria
+      - implementation_brief
+      - resolved_open_questions
+      - non_goals
+      - validation_expectations
       - routing
 
       Use the repository convention for filenames:
-      docs/architecture/adr/adr.YYYYMMDD.HHMMSS_<kebab-slug>.md
+      docs/architecture/adr/adr.YYYYMMDD.HHMMSS_<kebab-slug>.json
 
       Base the slug on the title, keep it short, and preserve the timestamp format.
 

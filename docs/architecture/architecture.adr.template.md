@@ -4,17 +4,17 @@ date: 20260701.131629Z
 back_to: architecture.00
 ---
 
-# ADR template
+# ADR schema
 
 ## Purpose
 
-This is the active bootstrap architecture note for the canonical ADR proposal
-template.
+This is the active bootstrap architecture note for the canonical ADR JSON
+schema and render contract.
 
 ## Scope
 
-It governs the reusable proposal template in `docs/templates/ADR.proposal.template.md`
-and the `create-adr` workflow that emits new ADR drafts.
+It governs `docs/architecture/adr/adr.schema.json` as the source of truth for
+ADR content and any Markdown or other rendering derived from that JSON.
 
 ## Control
 
@@ -22,25 +22,29 @@ This note is controlled by:
 
 - `docs/architecture/adr/adr.20260701.131629_adr-template-contract.md`
 
-## Template shape
+## Schema shape
 
-The canonical template uses these sections, in order:
+The canonical ADR JSON object includes:
 
-- `# ADR YYYYMMDD.HHMMSS: <Title>`
-- `## Status`
-- `## Context`
-- `## Decision`
-- `## Consequences`
-- `## architecture-spec`
-- `## acceptance-criteria`
-- `## implementation-brief`
-- `## resolved-open-questions`
-- `## non-goals`
-- `## validation-expectations`
-- `## routing`
+- `id`
+- `slug`
+- `title`
+- `status`
+- `context`
+- `decision`
+- `consequences`
+- `architecture_spec`
+- `acceptance_criteria`
+- `implementation_brief`
+- `resolved_open_questions`
+- `non_goals`
+- `validation_expectations`
+- `routing`
+- `links`
 
 ## Related files
 
+- `docs/architecture/adr/adr.schema.json`
 - `docs/templates/ADR.proposal.template.md`
 - `archon/workflows/create-adr.yaml`
-- `docs/architecture.00.md`
+- `docs/architecture/architecture.00.md`

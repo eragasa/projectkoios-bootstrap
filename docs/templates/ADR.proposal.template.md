@@ -1,10 +1,11 @@
----
-status: <ArchitectureDocumentReportStatuses>
-proposed_by: weUnion[Agent.name, System.operator]
-supercedes: None
----
 # ADR YYYYMMDD.HHMMSS: <Title>
 
+> Legacy Markdown render example. Canonical ADRs are JSON in `docs/architecture/adr/adr.schema.json`.
+
+---
+## Status
+
+draft
 
 ## Context
 
@@ -18,6 +19,7 @@ Delegated-Operator: <mediator-if-any>
 <Describe the problem, why it matters, and the current state.>
 
 <Use exactly one architecture domain. This is a proposal, not an implementation plan.>
+---
 
 ## Decision
 

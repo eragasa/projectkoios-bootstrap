@@ -18,6 +18,9 @@ are replaced with evidence-backed entries.
 | area | modules/files | notes |
 |---|---|---|
 | core/schema | replace with evidence-backed paths | template row |
+| policy | replace with evidence-backed paths | vision surfaces / target assumptions |
+| Markdown/control | replace with evidence-backed paths | durable operational guidance |
+| review mechanics | replace with evidence-backed paths | coherence + improvement loops |
 | runtime | replace with evidence-backed paths | template row |
 | UI | replace with evidence-backed paths | template row |
 | Petri-net/backend | replace with evidence-backed paths | template row |
@@ -42,5 +45,8 @@ The working assumption is:
 
 Core schema should remain independent of runtime, UI, Petri-net backends,
 process-mining libraries, and external adapters.
+
+Policy surfaces may change long-term goals by shaping agent motivations and
+process priorities.
 
 This assumption can be changed only by human decision.

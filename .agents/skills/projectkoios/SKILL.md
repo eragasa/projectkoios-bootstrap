@@ -55,6 +55,8 @@ draft code or Markdown is not accepted architecture.
 - [archon](../archon/SKILL.md) — run Archon workflows, create workflows/commands
 - [manage-run](../manage-run/SKILL.md) — inspect, monitor, start, approve, or
   control Archon workflow runs
+- [deep-interview](./deep-interview/SKILL.md) — recursive multi-turn interviews,
+  assessment axes, and question-stack maintenance
 
 ## Koios operating notes
 
