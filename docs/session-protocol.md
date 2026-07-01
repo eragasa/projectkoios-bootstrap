@@ -4,20 +4,21 @@ This document mirrors the session-start and session-stop rules for the pi meta-h
 
 ## Session start
 
-Before doing other work in a new session:
+At the start of a new session, keep the intake lightweight and do this in order:
 
 1. Use Graphify first for broad repository context. If `graphify-out/graph.json`
    exists, prefer `graphify query`, `graphify path`, or `graphify explain`
    before manually reading ADRs, handoffs, docs, or source files. For a
    session-boundary refresh, prefer `graphify update .` over `graphify .`.
-2. Check current ADRs, current handoff locations, git branch, git status, and
-   the last few commits.
-3. Treat `docs/archive/handoffs/` as provenance only. An archived
+2. Check the live repo state: git branch, git status, and the last few commits.
+3. Check active orchestration state: current ADRs, current handoff locations,
+   and any running, paused, or orphaned Archon runs.
+4. Treat `docs/archive/handoffs/` as provenance only. An archived
    `Status: active` header is historical evidence, not an instruction to run
    old work.
-4. If an archived handoff conflicts with current filesystem state, current
+5. If an archived handoff conflicts with current filesystem state, current
    ADRs, or later implementation reports, report it as stale or superseded.
-5. Report pending current work before making changes.
+6. Report the highest-leverage next state to move toward before making changes.
 
 ## Session stop
 

@@ -148,9 +148,10 @@ implementation task.
 
 ## High-leverage state
 
-At session start, agents should report not only pending work, but the
-highest-leverage next state to move toward. Base this recommendation on live
-filesystem, git, Graphify, ADR, and Archon run state.
+At session start, agents should report the highest-leverage next state to
+move toward, not just pending work. Base that recommendation on live
+filesystem, git, Graphify, ADR, and Archon run state, and keep the startup
+summary brief.
 
 Default recommendations:
 - If the tree is dirty, stabilize or explain the working tree before starting
