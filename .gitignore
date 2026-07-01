@@ -192,6 +192,9 @@ opencode/sandbox/
 opencode/sessions/
 goose/sessions/
 
+# Local Obsidian workspace (never commit)
+.obsidian/
+
 # Graphify
 graphify-out/
 
