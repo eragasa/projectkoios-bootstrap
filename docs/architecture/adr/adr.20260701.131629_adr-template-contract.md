@@ -12,6 +12,7 @@ Acting-As: Hermes
 Scope: projectkoios-bootstrap docs-template surface
 Repository: projectkoios-bootstrap
 Delegated-Operator: pi
+Architecture-Domain: software
 
 The repository needs one canonical ADR data model so draft content, review
 workflow, and rendering all agree on the same fields and order.
@@ -101,3 +102,9 @@ No code implementation is required for the schema decision itself.
 - Owner: Athena
 - Next phase: accepted
 - Notes: This ADR governs the JSON ADR source-of-truth surface.
+
+## links
+
+- back_to: architecture.00
+- supersedes: None
+- superseded_by: None

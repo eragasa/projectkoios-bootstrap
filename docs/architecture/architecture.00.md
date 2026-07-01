@@ -9,7 +9,9 @@ date: 20260701.131500Z
 
 This is the namespace index for bootstrap architecture notes.
 Use it as the entry point for `architecture.*` documents and as the anchor
-note for Obsidian-style navigation.
+note for Obsidian-style navigation. It also serves as the top-level index for
+process and lifecycle control surfaces when those are governed by a controlling
+ADR.
 
 ## Scope
 
@@ -32,20 +34,20 @@ directs the change.
 
 ## Index
 
-### Documents
-- [architecture.documents](architecture.documents.md)
-- [architecture.adr.template](architecture.adr.template.md)
-
-### Workspace notes
-- [architecture.workspaces.00](architecture.workspaces.00.md)
-- [architecture.workspaces.git](architecture.workspaces.git.md)
-- [architecture.workspaces.obsidian](architecture.workspaces.obsidian.md)
-
-### Repository projection notes
-- [architecture.repositories.00](architecture.repositories.00.md)
-- [architecture.repos.git](architecture.repos.git.md)
-- [architecture.repos.obsidian](architecture.repos.obsidian.md)
-- [architecture.repo-projections](architecture.repo-projections.md)
+| note | controlling ADR |
+|---|---|
+| [architecture.documents](architecture.documents.md) | None |
+| [architecture.adr.template](architecture.adr.template.md) | None |
+| [architecture.lifecycle.00](architecture.lifecycle.00.md) | [ADR 20260702.000551: Idea → Spike → ADR → Implementation Workflow](adr/adr.20260702.000551_idea-spike-adr-implementation-workflow.md) |
+| [ADR 20260701.131629: ADR template contract](adr/adr.20260701.131629_adr-template-contract.md) | None |
+| [ADR 20260702.000551: Idea → Spike → ADR → Implementation Workflow](adr/adr.20260702.000551_idea-spike-adr-implementation-workflow.md) | None |
+| [architecture.workspaces.00](architecture.workspaces.00.md) | None |
+| [architecture.workspaces.git](architecture.workspaces.git.md) | None |
+| [architecture.workspaces.obsidian](architecture.workspaces.obsidian.md) | None |
+| [architecture.repositories.00](architecture.repositories.00.md) | None |
+| [architecture.repos.git](architecture.repos.git.md) | None |
+| [architecture.repos.obsidian](architecture.repos.obsidian.md) | None |
+| [architecture.repo-projections](architecture.repo-projections.md) | None |
 
 ### Historic ADR archive
 - `docs/archive/architecture/adr/` — all ADRs archived and marked historic
@@ -63,3 +65,4 @@ directs the change.
 - `docs/agent-charter.md`
 - `docs/workspaces.md`
 - `docs/architecture.repo-projections.md`
+- Controlled by: `docs/architecture/adr/adr.20260702.000551_idea-spike-adr-implementation-workflow.md`
