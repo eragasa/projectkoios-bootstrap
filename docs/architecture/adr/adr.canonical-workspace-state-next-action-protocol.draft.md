@@ -145,3 +145,8 @@ field and leverage rule.
 - back_to: architecture.00
 - supersedes: None
 - superseded_by: None
+
+## Comments
+
+- KOIOS: Strong leverage rule, but the canonical state format should be nailed down sooner so every workspace speaks the same language.
+- KOIOS: Consider a smaller minimal field set; too many fields will turn the state surface into a maintenance burden.

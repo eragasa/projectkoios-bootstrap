@@ -96,3 +96,8 @@ If accepted, add lightweight repo guidance for:
 - back_to: architecture.00
 - supersedes: None
 - superseded_by: None
+
+## Comments
+
+- KOIOS: The lifecycle boundary is sensible, but it overlaps with other workflow notes; reconcile the naming before treating it as settled.
+- KOIOS: Decide whether `docs/spikes/` is a real directory or only a convention so the layout matches the policy.

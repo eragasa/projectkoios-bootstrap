@@ -93,3 +93,8 @@ canonical title rule and draft titles are treated as temporary working labels.
 - back_to: architecture.00
 - supersedes: None
 - superseded_by: None
+
+## Comments
+
+- KOIOS: Good cleanup rule; the examples should be tightened so promoted titles map cleanly to the index.
+- KOIOS: Optional version suffixes are fine only if there is a real semantic reason for multiple decision surfaces.

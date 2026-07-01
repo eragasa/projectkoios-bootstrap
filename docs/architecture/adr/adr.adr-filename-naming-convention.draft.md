@@ -83,3 +83,8 @@ so new ADR files follow the new filename pattern.
 - back_to: architecture.00
 - supersedes: None
 - superseded_by: None
+
+## Comments
+
+- KOIOS: Clear rule, but the migration path for existing filenames still needs a concrete policy.
+- KOIOS: Decide whether historic/archive names preserve their original filenames or get normalized on promotion.

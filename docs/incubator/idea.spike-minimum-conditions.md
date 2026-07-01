@@ -44,3 +44,8 @@ A spike is allowed only when it has:
 - JSON database for ADR storage
 - ADR title naming convention
 - ADR filename naming convention
+
+## Comments
+
+- KOIOS: Useful gatekeeper idea; the spike entry rule should be explicit enough to block fuzzy exploration.
+- KOIOS: A spike should require one bounded question, one promotion target, and a clear exit condition.

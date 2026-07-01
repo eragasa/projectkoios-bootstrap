@@ -51,3 +51,8 @@ That keeps:
 - ADR title naming convention
 - ADR filename naming convention
 - draft vs active promotion rules
+
+## Comments
+
+- KOIOS: Strong indexing idea; keep JSON canonical unless query/load pain clearly justifies a database layer.
+- KOIOS: If SQLite is added, define schema versioning and migration rules early so the index does not become accidental authority.

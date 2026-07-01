@@ -112,7 +112,7 @@ The incubator note template is append-friendly and top-heavy: the newest idea st
 
 | Idea | Action |
 |---|---|
-| <idea or comment> | <reply, change request, or keep> |
+| Keep the comment capture section lightweight and append-only. | Keep; avoid turning the bottom of the template into a second decision log. |
 
 ### HERMES
 

@@ -97,3 +97,8 @@ substantive review.
 - back_to: architecture.00
 - supersedes: None
 - superseded_by: None
+
+## Comments
+
+- KOIOS: Useful default, but “substantive” needs a short checklist or examples to keep it from becoming subjective.
+- KOIOS: The rule should stay tied to decision value and control boundary, not general commentary volume.

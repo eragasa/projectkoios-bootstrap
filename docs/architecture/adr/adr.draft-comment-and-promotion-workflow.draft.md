@@ -91,3 +91,8 @@ If accepted, update the ADR template and any workflow guidance so draft ADRs are
 - back_to: architecture.00
 - supersedes: None
 - superseded_by: None
+
+## Comments
+
+- KOIOS: Good direction; the exact draft-to-proposed promotion mechanics still need to be made concrete.
+- KOIOS: Keep a visible backlink from proposed to archived draft so the review trail remains traceable.

@@ -47,3 +47,8 @@ A window-per-agent model with explicit message routing and an event-triggered lo
 ## Promotion target
 
 This could become a spike if we want to prototype the runtime model, or an ADR if the routing and event semantics are already clear enough.
+
+## Comments
+
+- KOIOS: Good runtime intuition, but this needs a durable routing and recovery story before it becomes a decision surface.
+- KOIOS: Clarify whether `on_message` is a queue consumer, callback, or UI event so ownership stays unambiguous.

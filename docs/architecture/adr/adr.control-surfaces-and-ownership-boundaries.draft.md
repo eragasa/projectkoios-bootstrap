@@ -129,3 +129,8 @@ surface matrix is the default reference for routing, ownership, and promotion.
 - back_to: architecture.00
 - supersedes: None
 - superseded_by: None
+
+## Comments
+
+- KOIOS: Strong routing matrix; it should be the reference point for deciding where new artifacts belong.
+- KOIOS: The `decisions/` surface needs a sharper rule so it cannot quietly accumulate authority.
