@@ -1,0 +1,9 @@
+{
+  "ntfy": {
+    "command": "npx",
+    "args": ["-y", "ntfy-me-mcp"],
+    "env": {
+      "NTFY_TOPIC": "archon-yourname-a8f3x"
+    }
+  }
+}

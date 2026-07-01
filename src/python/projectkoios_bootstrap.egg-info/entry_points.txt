@@ -1,0 +1,2 @@
+[console_scripts]
+projectkoios = projectkoios.bootstrap.cli:main

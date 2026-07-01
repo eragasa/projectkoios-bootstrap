@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://projectkoios.local/schemas/docs-node.schema.json",
+  "title": "DocsNode",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["name", "path", "kind", "lifecycle", "authority", "children"],
+  "$defs": {
+    "DocKind": {
+      "type": "string",
+      "enum": [
+        "collection",
+        "architecture",
+        "adr",
+        "spec",
+        "brief",
+        "workflow",
+        "runbook",
+        "policy",
+        "role",
+        "decision",
+        "handoff",
+        "archive",
+        "aar",
+        "note"
+      ]
+    },
+    "Lifecycle": {
+      "type": "string",
+      "enum": ["draft", "active", "paused", "archived", "superseded"]
+    },
+    "Authority": {
+      "type": "string",
+      "enum": ["normative", "advisory", "historical"]
+    },
+    "DocsNode": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "path", "kind", "lifecycle", "authority", "children"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "path": { "type": "string", "minLength": 1 },
+        "kind": { "$ref": "#/$defs/DocKind" },
+        "lifecycle": { "$ref": "#/$defs/Lifecycle" },
+        "authority": { "$ref": "#/$defs/Authority" },
+        "description": { "type": "string" },
+        "metadata": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "children": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/DocsNode" }
+        }
+      }
+    }
+  },
+  "$ref": "#/$defs/DocsNode"
+}

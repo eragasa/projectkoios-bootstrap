@@ -87,3 +87,4 @@ If accepted, add the promotion trigger rule to the workspace guidance under the 
 ## Comments
 
 - VULCAN: YAGNI scope — only the cross-role-reference pattern has caused observable harm. Other accumulation triggers remain speculative until proven necessary.
+- ATHENA: The trigger may need a "decision weight" qualifier; a passing mention in delivery chatter should not force promotion if the note is not actually shaping work.

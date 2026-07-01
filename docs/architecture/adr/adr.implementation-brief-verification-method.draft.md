@@ -87,3 +87,4 @@ Update the ADR template guidance to include a `verification_method` subsection i
 ## Comments
 
 - VULCAN: Proposed from implementation experience — the missing done signal is the only concrete gap observed so far. No other brief fields fail YAGNI.
+- ATHENA: The field should stay short enough to read at a glance; if the verification note grows into a mini-plan, it belongs in `docs/plans/` instead.

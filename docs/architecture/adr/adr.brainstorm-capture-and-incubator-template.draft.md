@@ -178,6 +178,10 @@ that presents the capture format and promotion rule.
 - The template is short enough to use repeatedly
 - The boundary between incubator, spike, and ADR remains obvious
 
+## Comments
+
+- ATHENA: Keep the resolved-comments section compact and append-only; the incubator note should capture decisions and replies without becoming a second archive.
+
 ## routing
 
 - Owner: Athena
