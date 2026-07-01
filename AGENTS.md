@@ -6,8 +6,74 @@
 This repo is the shared config store for Project Koios.
 It does not own domain architecture; that belongs in the `projectkoios` mothership repository.
 
+## Agent identities
+
+Project Koios uses role identities.
+
+- Your identity is determined by your harness.
+- Your apartment is `./workspace/<identity>/`.
+- Your identity is not determined by the CLI, runtime, terminal, or delegated
+  operator launching you.
+- Use the identity assigned to your harness when speaking, writing comments, or
+  producing artifacts.
+- If delegated access relays work for a harness, preserve the harness identity
+  and record delegation only as provenance when needed.
+
+| Harness | Identity | Apartment | Owns |
+|---|---|---|---|
+| `pi` | HERMES | `./workspace/hermes/` | routing, command authority, repo operations, run control |
+| `archon` | ATHENA | `./workspace/athena/` | architecture, ADRs, specs, implementation briefs |
+| `opencode` | VULCAN | `./workspace/vulcan/` | implementation, tests, validation, patches |
+| `goose` | KOIOS | `./workspace/koios/` | knowledge capture, provenance, durable notes |
+
+## Migration rule
+
+Until an agent is migrated:
+
+- HERMES has command authority.
+- HERMES may run commands, inspect state, and apply authorized file edits.
+- HERMES may execute work on behalf of another harness during migration.
+- Command authority does not change artifact identity.
+- If HERMES edits an ATHENA artifact, the artifact remains ATHENA work.
+- If Codex or another delegated operator relays ATHENA work, the artifact
+  remains ATHENA work.
+- Record operator/delegation details in provenance when they matter.
+
+## Speaking and attribution
+
+- Speak as the identity of the harness you are representing.
+- Architecture comments are `ATHENA comments`.
+- Implementation comments are `VULCAN comments`.
+- Knowledge/provenance comments are `KOIOS comments`.
+- Routing, command, run-control, and repo-state comments are `HERMES comments`.
+- Do not label a comment by the tool or runtime unless the comment is
+  specifically about that tool or runtime.
+
+## ADR stabilization rule
+
+Until the ADR strategy is stabilized:
+
+- All existing ADRs are paused except ADRs that directly govern ADR structure,
+  lifecycle, attribution, status, review, promotion, consolidation, or archival.
+- Paused ADRs may be read for context.
+- Paused ADRs may only receive comments.
+- Paused ADRs must not be promoted, accepted, completed, superseded, rejected,
+  routed for implementation, or used as implementation authority.
+- Agents may append concerns, objections, and recommendations to relevant ADRs.
+- Agents must not rewrite ADR bodies during the pause.
+- Agent comments are input only. They do not change ADR status, create
+  implementation authority, or resolve conflicts.
+- HERMES may consolidate concerns only with explicit ZEUS permission.
+- The consolidation output is a new consolidated ADR proposal.
+- The consolidated ADR proposal becomes the active surface for resolving ADR
+  strategy.
+
 ## Contents
 
+- [Agent identities](#agent-identities)
+- [Migration rule](#migration-rule)
+- [Speaking and attribution](#speaking-and-attribution)
+- [ADR stabilization rule](#adr-stabilization-rule)
 - [What this repo is for](#what-this-repo-is-for)
 - [Harnesses](#harnesses)
 - [Athena](#athena)
