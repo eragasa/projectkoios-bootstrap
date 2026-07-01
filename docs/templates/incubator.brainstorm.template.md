@@ -14,6 +14,14 @@
 
 <Best current summary>
 
+## Spike requirements
+
+A spike should only start when the core questions are answered or explicitly deferred. Add more questions as needed, but keep the top of the note focused on the smallest set that blocks the decision.
+
+- <required question 1>
+- <required question 2>
+- <required question 3>
+
 ## Ideas considered
 
 - <option 1>
@@ -29,6 +37,34 @@
 - <question 1>
 - <question 2>
 
+## Comments
+
+Comments are append-only. The idea owner is responsible for replying to each comment and updating the idea when needed. Put new comments here until they are answered, then move the answered material to the bottom sections below.
+
+### ATHENA
+
+| Idea | Action |
+|---|---|
+| <idea or comment> | <reply, change request, or keep> |
+
+### VULCAN
+
+| Idea | Action |
+|---|---|
+| <idea or comment> | <reply, change request, or keep> |
+
+### KOIOS
+
+| Idea | Action |
+|---|---| 
+| <idea or comment> | <reply, change request, or keep> |
+
+### HERMES
+
+| Idea | Action |
+|---|---|
+| <idea or comment> | <reply, change request, or keep> |
+
 ## Preferred direction
 
 <Best current direction>
@@ -36,6 +72,18 @@
 ## Anything to keep out
 
 <Non-goals or exclusions>
+
+## Resolved questions
+
+- <answered question 1>
+- <answered question 2>
+
+## Resolved comments
+
+- [ATHENA] <comment> → <response or change made>
+- [VULCAN] <comment> → <response or change made>
+- [KOIOS] <comment> → <response or change made>
+- [HERMES] <comment> → <response or change made>
 
 ## Promotion target
 

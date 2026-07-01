@@ -28,11 +28,15 @@ The incubator note template should capture:
 - topic
 - goal
 - current thinking
+- spike requirements
 - ideas considered
 - objections or risks
 - open questions
+- comments and replies
 - preferred direction
 - anything to keep out
+- resolved questions
+- resolved comments
 
 Workflow rules:
 
@@ -52,7 +56,7 @@ Workflow rules:
 
 ## architecture-spec
 
-The incubator note template is:
+The incubator note template is append-friendly and top-heavy: the newest idea stays at the top, while answered questions and responded-to comments move to the bottom.
 
 ```md
 # Idea: <topic>
@@ -61,9 +65,19 @@ The incubator note template is:
 
 <what we are trying to figure out>
 
+## Goal
+
+<what outcome we want>
+
 ## Current thinking
 
 <summary of the best current model>
+
+## Spike requirements
+
+- <required question 1>
+- <required question 2>
+- <required question 3>
 
 ## Ideas considered
 
@@ -80,6 +94,32 @@ The incubator note template is:
 - <question 1>
 - <question 2>
 
+## Comments
+
+### ATHENA
+
+| Idea | Action |
+|---|---|
+| <idea or comment> | <reply, change request, or keep> |
+
+### VULCAN
+
+| Idea | Action |
+|---|---|
+| <idea or comment> | <reply, change request, or keep> |
+
+### KOIOS
+
+| Idea | Action |
+|---|---|
+| <idea or comment> | <reply, change request, or keep> |
+
+### HERMES
+
+| Idea | Action |
+|---|---|
+| <idea or comment> | <reply, change request, or keep> |
+
 ## Preferred direction
 
 <best current direction>
@@ -87,6 +127,22 @@ The incubator note template is:
 ## Anything to keep out
 
 <non-goals or exclusions>
+
+## Resolved questions
+
+- <answered question 1>
+- <answered question 2>
+
+## Resolved comments
+
+- [ATHENA] <comment> → <response or change made>
+- [VULCAN] <comment> → <response or change made>
+- [KOIOS] <comment> → <response or change made>
+- [HERMES] <comment> → <response or change made>
+
+## Promotion target
+
+<if this should become a spike or ADR, name the target>
 ```
 
 ## acceptance-criteria
@@ -108,6 +164,7 @@ that presents the capture format and promotion rule.
 - Should external-chat summaries require source attribution?
 - Should the incubator note include a “promotion target” field?
 - Should the template name be standardized with the other template files?
+- Should responded-to comments be tracked in a dedicated bottom section?
 
 ## non_goals
 

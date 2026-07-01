@@ -44,6 +44,7 @@ directs the change.
 | [ADR 20260702.004118: ADR Title Naming Convention](adr/adr.adr-title-naming-convention.draft.md) | None |
 | [ADR 20260702.004300: ADR Filename Naming Convention](adr/adr.adr-filename-naming-convention.draft.md) | None |
 | [ADR 20260702.005615: Brainstorm Capture and Incubator Note Template](adr/adr.brainstorm-capture-and-incubator-template.draft.md) | None |
+| [ADR 20260702.012900: ADR Draft Comment and Promotion Workflow](adr/adr.draft-comment-and-promotion-workflow.draft.md) | None |
 | [architecture.workspaces.00](architecture.workspaces.00.md) | None |
 | [architecture.workspaces.git](architecture.workspaces.git.md) | None |
 | [architecture.workspaces.obsidian](architecture.workspaces.obsidian.md) | None |

@@ -43,6 +43,15 @@ Delegated-Operator: <mediator-if-any>
 
 <Describe downstream follow-up expected, or state that no implementation is requested.>
 
+## Comments
+
+Comments remain open while this ADR is in draft status. When the ADR is promoted to proposed, the proposed ADR becomes the active review surface and the draft is archived or marked superseded.
+
+- ATHENA: <comment or concern>
+- VULCAN: <comment or concern>
+- KOIOS: <comment or concern>
+- HERMES: <comment or concern>
+
 ## resolved-open-questions
 
 - <Question or decision point 1>
@@ -60,5 +69,5 @@ Delegated-Operator: <mediator-if-any>
 ## routing
 
 - Owner: <Hermes | Athena | Vulcan | Koios>
-- Next phase: <proposed | review | accepted | validated | completed>
+- Next phase: <draft | proposed | review | accepted | validated | completed>
 - Notes: <optional routing guidance>
