@@ -9,6 +9,17 @@ description: |
   use athena-handoff-spec; for promotion review use
   athena_review-draft-for-promotion.
 
+  Invocation contract:
+    The single $ARGUMENTS message is split by the fetch-adr node into two
+    parts:
+      line 1   = ADR path (relative to repo root)
+      lines 2+ = revision directive (free text referencing a prior
+                 athena_review-draft-for-promotion run)
+    The caller MUST separate path and directive with a real newline. From a
+    shell, use a literal $'...\n...' or a heredoc; do not pass a single-line
+    "path directive" string, since the whole blob would be treated as the
+    path and the existence guard will fail.
+
 provider: codex
 model: gpt-5.5
 webSearchMode: disabled
@@ -19,17 +30,33 @@ nodes:
   - id: fetch-adr
     bash: |
       set -eu
-      path="$ARGUMENTS"
-      if [ -z "$path" ]; then
-        echo "ERROR: ADR path required. Example: docs/architecture/adr/adr.YYYYMMDD.HHMMSS_slug.md"
+      # $ARGUMENTS is split by lines: line 1 is the ADR path, lines 2+ are the
+      # revision directive. The caller must use a real newline separator.
+      args="$ARGUMENTS"
+      if [ -z "$args" ]; then
+        echo "ERROR: ADR path and revision directive required."
+        echo "Example: athena-revise-adr $'docs/architecture/adr/adr.YYYYMMDD.HHMMSS_slug.md\\nApply required revisions from review run <id>: ...'"
         exit 2
       fi
-      if [ ! -f "$path" ]; then
-        echo "ERROR: ADR file not found: $path"
+      # Extract line 1 as the path; lines 2..end as the directive.
+      adr_path=$(printf '%s\n' "$args" | sed -n '1p')
+      revision_directive=$(printf '%s\n' "$args" | sed -n '2,$p')
+      if [ -z "$adr_path" ]; then
+        echo "ERROR: first line of \$ARGUMENTS is empty; expected ADR path."
         exit 2
       fi
-      printf 'ADR_PATH=%s\n\n' "$path"
-      cat "$path"
+      if [ ! -f "$adr_path" ]; then
+        echo "ERROR: ADR file not found: $adr_path"
+        exit 2
+      fi
+      if [ -z "$revision_directive" ]; then
+        echo "ERROR: revision directive is empty; expected lines 2+ of \$ARGUMENTS to describe the required revisions."
+        exit 2
+      fi
+      printf 'ADR_PATH=%s\n\n' "$adr_path"
+      printf '## Revision Directive\n\n%s\n\n' "$revision_directive"
+      printf '## ADR Content\n\n'
+      sed -n '1,260p' "$adr_path"
     timeout: 30000
 
   - id: revise-adr
@@ -44,11 +71,17 @@ nodes:
       (Hermes or a delegated operator) and references a prior
       athena_review-draft-for-promotion run.
 
-      $ARGUMENTS
-
-      ## ADR Under Revision
+      ## Inputs
 
       $fetch-adr.output
+
+      The input above contains, in order:
+        - ADR_PATH=<path> — the ADR file to revise in place.
+        - ## Revision Directive — the required revisions to apply.
+        - ## ADR Content — the current content of the ADR.
+
+      Use the directive as your sole revision authority. Use the ADR content as
+      the in-place target.
 
       ## Revision Authority
 
