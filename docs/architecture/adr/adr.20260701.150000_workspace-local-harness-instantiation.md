@@ -45,3 +45,13 @@ This stage must also preserve two existing policies:
 ## Next step
 
 Collect comments on this draft, then roll it into the `proposed` lifecycle phase with the implementation-ready workspace migration brief for the target workspace.
+
+## Phase I:
+
+### Discussion
+
+#### VULCAN comments
+- [260701:150224]: Decision point 5 ("will not change the current asset split model unless a later ADR says so") reads as a constraint guardrail rather than an active decision. Suggest demoting it to a note in Consequences so the 6 decision points read as 5 decisions + 1 invariant.
+- [260701:150224]: Open question 1 (. $WORKSPACE$  directory contract) is the critical path blocker. Without a concrete naming convention and layout spec, this draft can't graduate to proposed. Recommend resolving before promotion.
+- [260701:150224]: Open question 3 (handoff projection) — I'd argue handoffs should be projected as provenance (read-only archive), but tag this post-MVP so it doesn't block workspace materialization. First version keeps handoffs workspace-local.
+- [260701:150224]: The Consequences line about existing docs needing revision is underspecified. Recommend adding a lightweight inventory of which docs are affected before proposed, or at minimum reference the docs/ tree.

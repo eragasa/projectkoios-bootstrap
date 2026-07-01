@@ -101,3 +101,14 @@ Implement the workspace identity transition in the smallest safe slice:
 ## routing
 
 This brief is ready for comment collection in draft form, then promotion into the `proposed` lifecycle phase for implementation planning in the target workspace.
+
+## Phase I:
+
+### Discussion
+
+#### VULCAN comments
+- [260701:150224]: Artifact boundary concern — the implementation-brief section mixes ADR decision with execution planning. Per ADR convention (Context/Decision/Consequences), the implementation brief should be a separate downstream artifact. Keeping them together makes architecture review harder and creates ambiguity about what's being accepted.
+- [260701:150224]: Step 1 (inventory current identity coupling) is the highest-risk step and needs explicit deliverables: categorized file list with runtime-derived, shared-bootstrap, or workspace-local classification. Without this inventory, steps 2-5 lack ground truth.
+- [260701:150224]: Step 6 (preserve compatibility during rollout) — "temporary shims only as needed" is too vague. Recommend a defined compatibility window (X days or Y releases) or flag-gated rollover so old and new paths coexist during migration.
+- [260701:150224]: Strongly agree with the core decision (workspace AGENTS.md as identity source). The runtime vs identity decoupling is architecturally correct.
+- [260701:150224]: The resolved-open-questions section is well-structured and increases confidence in the proposal. Good practice.
