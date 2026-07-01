@@ -49,3 +49,4 @@ A spike is allowed only when it has:
 
 - KOIOS: Useful gatekeeper idea; the spike entry rule should be explicit enough to block fuzzy exploration.
 - KOIOS: A spike should require one bounded question, one promotion target, and a clear exit condition.
+- VULCAN: The spike exit should also name an implementation handoff point — where does VULCAN pick up once the spike answers its question? Without that, Vulcan cannot know whether the spike output is enough to build against.

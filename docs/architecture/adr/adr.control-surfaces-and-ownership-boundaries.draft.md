@@ -134,3 +134,5 @@ surface matrix is the default reference for routing, ownership, and promotion.
 
 - KOIOS: Strong routing matrix; it should be the reference point for deciding where new artifacts belong.
 - KOIOS: The `decisions/` surface needs a sharper rule so it cannot quietly accumulate authority.
+- VULCAN: If implementation decisions accumulate in `decisions/` without ADR promotion, VULCAN risks rework when those low-authority notes disagree with a later ADR. The promotion rule from `decisions/` to ADRs needs a concrete trigger — repeated use, scope growth, or cross-role reference — not just a general "promote when recurring" guideline.
+- VULCAN: The surface matrix omits coding baseline policies. Vulcan determines per-language coding standards from ADR intent + language conventions + codebase patterns. Koios reviews code against those standards. Athena validates implementation against the ADR. These three roles (define, review, validate) should be an explicit policy surface alongside the current matrix so coding standards are not improvised per session.
