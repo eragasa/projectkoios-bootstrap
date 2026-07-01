@@ -43,6 +43,7 @@ directs the change.
 | [ADR 20260702.000551: Idea → Spike → ADR → Implementation Workflow](adr/adr.idea-spike-adr-implementation-workflow.draft.md) | None |
 | [ADR 20260702.004118: ADR Title Naming Convention](adr/adr.adr-title-naming-convention.draft.md) | None |
 | [ADR 20260702.004300: ADR Filename Naming Convention](adr/adr.adr-filename-naming-convention.draft.md) | None |
+| [ADR 20260702.005615: Brainstorm Capture and Incubator Note Template](adr/adr.brainstorm-capture-and-incubator-template.draft.md) | None |
 | [architecture.workspaces.00](architecture.workspaces.00.md) | None |
 | [architecture.workspaces.git](architecture.workspaces.git.md) | None |
 | [architecture.workspaces.obsidian](architecture.workspaces.obsidian.md) | None |
@@ -68,5 +69,6 @@ directs the change.
 
 - `docs/agent-charter.md`
 - `docs/workspaces.md`
+- `docs/templates/incubator.brainstorm.template.md`
 - `docs/architecture.repo-projections.md`
 - Controlled by: `docs/architecture/adr/adr.idea-spike-adr-implementation-workflow.draft.md`
