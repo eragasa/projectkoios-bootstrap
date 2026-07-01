@@ -8,6 +8,7 @@ description: |
   confusion, or improvement ideas should capture those lessons explicitly.
   Produces a durable process AAR for any harness role: Hermes, Athena, Vulcan,
   Koios, or delegated Codex operator.
+  Bound to ADRs: adr.skill-register-and-adr-binding-policy.draft.md, adr.control-surfaces-and-ownership-boundaries.draft.md, adr.comment-scope-and-control-boundary-review-rule.draft.md.
 metadata:
   agent: all
   harness_role: process-capture
@@ -20,7 +21,6 @@ metadata:
     - after-action-report
     - improvement-candidates
 ---
-
 # Session AAR
 
 ## When to use this skill

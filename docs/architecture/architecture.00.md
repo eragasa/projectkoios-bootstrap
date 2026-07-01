@@ -45,6 +45,9 @@ directs the change.
 | [ADR 20260702.004300: ADR Filename Naming Convention](adr/adr.adr-filename-naming-convention.draft.md) | None |
 | [ADR 20260702.005615: Brainstorm Capture and Incubator Note Template](adr/adr.brainstorm-capture-and-incubator-template.draft.md) | None |
 | [ADR 20260702.012900: ADR Draft Comment and Promotion Workflow](adr/adr.draft-comment-and-promotion-workflow.draft.md) | None |
+| [ADR 20260702.032100Z: Controlling ADR Join Protocol](adr/adr.controlling-adr-join-protocol.draft.md) | None |
+| [ADR 20260702.032435Z: Draft ADR Comment Processing Protocol](adr/adr.draft-adr-comment-processing-protocol.draft.md) | None |
+| [ADR 20260702.033824Z: Skill Register and ADR Binding Policy](adr/adr.skill-register-and-adr-binding-policy.draft.md) | None |
 | [ADR 20260702.020440Z: Canonical Workspace State and Next-Action Protocol](adr/adr.canonical-workspace-state-next-action-protocol.draft.md) | None |
 | [ADR 20260702.020818: Comment Scope and Control-Boundary Review Rule](adr/adr.comment-scope-and-control-boundary-review-rule.draft.md) | None |
 | [ADR 20260701.181956Z: Control Surfaces and Ownership Boundaries](adr/adr.control-surfaces-and-ownership-boundaries.draft.md) | None |
@@ -76,4 +79,5 @@ directs the change.
 - `docs/workspaces.md`
 - `docs/templates/incubator.brainstorm.template.md`
 - `docs/architecture.repo-projections.md`
+- `docs/skills/skill-register.md`
 - Controlled by: `docs/architecture/adr/adr.idea-spike-adr-implementation-workflow.draft.md`

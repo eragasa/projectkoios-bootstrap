@@ -1,6 +1,8 @@
 ---
 name: code-agent-validation
-description: Run the validation suite and report results against acceptance criteria
+description: |
+  Run the validation suite and report results against acceptance criteria
+  Bound to ADRs: adr.skill-register-and-adr-binding-policy.draft.md, adr.implementation-plan-ownership.draft.md, adr.implementation-brief-verification-method.draft.md.
 metadata:
   agent: code-agent
   harness_role: producer
@@ -10,7 +12,6 @@ metadata:
   produces:
     - test-results
 ---
-
 ## When to use this skill
 
 After producing a patch, when validation must be run against acceptance criteria before knowledge capture or completion gating.

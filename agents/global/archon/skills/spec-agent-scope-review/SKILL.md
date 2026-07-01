@@ -1,6 +1,8 @@
 ---
 name: spec-agent-scope-review
-description: Convert user intent into a bounded architecture specification
+description: |
+  Convert user intent into a bounded architecture specification
+  Bound to ADRs: adr.skill-register-and-adr-binding-policy.draft.md, adr.adr-template-contract.md, adr.idea-spike-adr-implementation-workflow.draft.md.
 metadata:
   agent: spec-agent
   harness_role: producer
@@ -10,7 +12,6 @@ metadata:
     - architecture-spec
     - acceptance-criteria
 ---
-
 ## When to use this skill
 
 When the task asks about package boundaries, repository structure, public API design, feature existence, acceptance criteria definition, or responsibility splitting. The spec agent (archon/Athena) owns this skill.

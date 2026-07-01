@@ -1,6 +1,8 @@
 ---
 name: meta-harness-disagreement-resolution
-description: Resolve conflicts between artifacts using the authority hierarchy
+description: |
+  Resolve conflicts between artifacts using the authority hierarchy
+  Bound to ADRs: adr.skill-register-and-adr-binding-policy.draft.md, adr.control-surfaces-and-ownership-boundaries.draft.md, adr.comment-scope-and-control-boundary-review-rule.draft.md.
 metadata:
   agent: meta-harness
   harness_role: arbiter
@@ -13,7 +15,6 @@ metadata:
   produces:
     - revision-request
 ---
-
 ## When to use this skill
 
 When two artifacts contain conflicting claims and one agent has flagged the conflict via a `deviation-report`, or when the meta-harness detects inconsistency during completion gating.

@@ -2,6 +2,8 @@
 
 This repo stores shared bootstrap configuration for Project Koios. It does not own domain architecture; that belongs in the `projectkoios` mothership repository.
 
+Start with `docs/agents/agent-charter.md` for role boundaries and `docs/meta-harness.md` for the workflow model.
+
 Project Koios uses role identities. The table below names the default workspace, harness, and role for each identity.
 
 ## Agent identities
@@ -107,30 +109,15 @@ Do not use this repo for:
 
 ## Harnesses
 
-Canonical sandbox message delivery and role split live in `docs/agent-charter.md`. That file is the main boundary reference when deciding where a message, artifact, or handoff should go.
-
-- `docs/agent-charter.md` defines the canonical sandbox message delivery split.
-- Treat the file as the first stop when role boundaries are unclear.
+See `docs/agents/agent-charter.md`.
 
 ## Athena
 
-The detailed Athena workspace guidance now lives in `workspaces/athena/AGENT.md`. Use `docs/agent-charter.md` to confirm the current role boundary and workflow ownership rules before treating any architecture note as authoritative.
-
-- See `workspaces/athena/AGENT.md` for Athena-specific workspace instructions.
-- Route architecture work through the architecture surface, not improvised implementation docs.
+See `workspaces/athena/AGENT.md` and `docs/agents/agent-charter.md`.
 
 ## Meta-harness
 
-This repo operates a role-based meta-harness that separates specification, implementation, and knowledge capture into distinct agent roles. See `docs/meta-harness.md` for the full framework detail on skill model, disagreement handling, completion gates, escalation rules, and anti-patterns.
-
-The detailed Vulcan workspace guidance now lives in `workspaces/vulcan/AGENT.md`, where implementation-specific instructions can stay close to the implementation workspace. The detailed Koios workspace guidance now lives in `workspaces/koios/AGENT.md`, where provenance and durable notes can stay close to the knowledge workspace.
-
-- Each agent has a bounded responsibility.
-- Each agent consumes and produces explicit artifacts.
-- Architectural decisions are separated from implementation changes.
-- Implementation facts are separated from knowledge claims.
-- Disagreements are resolved by authority rules, not by compromise.
-- Completion is gated by inspectable artifacts.
+See `docs/meta-harness.md`.
 
 ### Artifact model
 

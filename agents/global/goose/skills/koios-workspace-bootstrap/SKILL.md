@@ -1,6 +1,8 @@
 ---
 name: koios-workspace-bootstrap
-description: Initialize persistent per-agent workspaces, mail folders, and local AGENT.md files
+description: |
+  Initialize persistent per-agent workspaces, mail folders, and local AGENT.md files
+  Bound to ADRs: adr.skill-register-and-adr-binding-policy.draft.md, adr.canonical-workspace-state-next-action-protocol.draft.md, adr.control-surfaces-and-ownership-boundaries.draft.md.
 metadata:
   agent: knowledge-agent
   harness_role: consumer-producer
@@ -12,7 +14,6 @@ metadata:
     - knowledge-note
     - provenance-index
 ---
-
 ## When to use this skill
 
 Use this skill when Koios needs to create or refresh the persistent

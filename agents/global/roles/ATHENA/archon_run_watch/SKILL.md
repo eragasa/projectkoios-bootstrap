@@ -10,8 +10,8 @@ description: |
   "prepare a Vulcan handoff", "check Archon runs",
   "clean stale Archon run", "inspect handoffs".
   NOT for: architecture design or product domain work.
+  Bound to ADRs: adr.skill-register-and-adr-binding-policy.draft.md, adr.canonical-workspace-state-next-action-protocol.draft.md, adr.control-surfaces-and-ownership-boundaries.draft.md.
 ---
-
 # archon_run_watch
 
 Session-start, sandbox message delivery, Archon run monitoring, and handoff creation for

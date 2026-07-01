@@ -1,6 +1,8 @@
 ---
 name: meta-harness-completion-gate
-description: Check that required output artifacts exist and satisfy acceptance criteria
+description: |
+  Check that required output artifacts exist and satisfy acceptance criteria
+  Bound to ADRs: adr.skill-register-and-adr-binding-policy.draft.md, adr.control-surfaces-and-ownership-boundaries.draft.md, adr.adr-template-contract.md.
 metadata:
   agent: meta-harness
   harness_role: arbiter
@@ -13,7 +15,6 @@ metadata:
   produces:
     - completion-decision
 ---
-
 ## When to use this skill
 
 When an agent reports that its work is done and the meta-harness must decide whether the task is complete.

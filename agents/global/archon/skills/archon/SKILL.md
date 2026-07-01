@@ -16,9 +16,9 @@ description: |
   Capability: Runs AI workflows in isolated git worktrees for parallel development.
   Also: Creates and manages workflow YAML files, command files, and configuration.
   NOT for: direct editor work; use the Archon CLI from Codex or Claude instead.
+  Bound to ADRs: adr.skill-register-and-adr-binding-policy.draft.md, adr.idea-spike-adr-implementation-workflow.draft.md.
 argument-hint: "[workflow] [message or issue number]"
 ---
-
 # Archon CLI Skill
 
 Archon is a remote agentic coding platform that runs AI workflows in isolated git worktrees. This skill teaches you how to run workflows, create new workflows and commands, and manage Archon configuration.

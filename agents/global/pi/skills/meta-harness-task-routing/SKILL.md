@@ -1,6 +1,8 @@
 ---
 name: meta-harness-task-routing
-description: Send a user request to the correct agent sandbox based on dominant transformation
+description: |
+  Send a user request to the correct agent sandbox based on dominant transformation
+  Bound to ADRs: adr.skill-register-and-adr-binding-policy.draft.md, adr.control-surfaces-and-ownership-boundaries.draft.md.
 metadata:
   agent: meta-harness
   harness_role: arbiter
@@ -9,7 +11,6 @@ metadata:
   produces:
     - routing-decision
 ---
-
 ## When to use this skill
 
 When the meta-harness (pi) receives a new user request and must decide which agent handles it.

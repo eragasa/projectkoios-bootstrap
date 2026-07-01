@@ -1,6 +1,8 @@
 ---
 name: code-agent-implementation-from-spec
-description: Convert an approved specification into working repository changes
+description: |
+  Convert an approved specification into working repository changes
+  Bound to ADRs: adr.skill-register-and-adr-binding-policy.draft.md, adr.implementation-plan-ownership.draft.md, adr.implementation-brief-verification-method.draft.md.
 metadata:
   agent: code-agent
   harness_role: consumer-producer
@@ -13,7 +15,6 @@ metadata:
     - implementation-report
     - deviation-report
 ---
-
 ## When to use this skill
 
 When the task asks to implement a feature, modify files, add tests, refactor code, run validation, or produce a patch. The code agent (opencode/Vulcan) owns this skill.

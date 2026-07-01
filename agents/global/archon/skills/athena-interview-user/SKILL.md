@@ -11,8 +11,8 @@ description: |
   separation, or future Petri-net compatibility. Do not use for implementation,
   direct code editing, ADR replacement, workflow creation, or automatic sandbox message delivery
   to Vulcan.
+  Bound to ADRs: adr.skill-register-and-adr-binding-policy.draft.md, adr.controlling-adr-join-protocol.draft.md, adr.draft-adr-comment-processing-protocol.draft.md.
 ---
-
 # Athena Interview User
 
 ## Overview

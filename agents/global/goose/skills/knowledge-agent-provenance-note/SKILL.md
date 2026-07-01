@@ -1,6 +1,8 @@
 ---
 name: knowledge-agent-provenance-note
-description: Convert validated artifacts into durable, provenance-backed knowledge
+description: |
+  Convert validated artifacts into durable, provenance-backed knowledge
+  Bound to ADRs: adr.skill-register-and-adr-binding-policy.draft.md, adr.control-surfaces-and-ownership-boundaries.draft.md.
 metadata:
   agent: knowledge-agent
   harness_role: consumer-producer
@@ -17,7 +19,6 @@ metadata:
     - repo-state-summary
     - routing-recommendation
 ---
-
 ## When to use this skill
 
 When the task asks to create or update notes, extract claims, record decisions,

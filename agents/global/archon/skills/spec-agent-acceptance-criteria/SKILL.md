@@ -1,6 +1,8 @@
 ---
 name: spec-agent-acceptance-criteria
-description: Derive inspectable acceptance criteria from an architecture specification
+description: |
+  Derive inspectable acceptance criteria from an architecture specification
+  Bound to ADRs: adr.skill-register-and-adr-binding-policy.draft.md, adr.adr-template-contract.md, adr.implementation-brief-verification-method.draft.md.
 metadata:
   agent: spec-agent
   harness_role: producer
@@ -9,7 +11,6 @@ metadata:
   produces:
     - acceptance-criteria
 ---
-
 ## When to use this skill
 
 After producing an `architecture-spec`, when explicit completion criteria are needed before implementation begins.

@@ -11,9 +11,9 @@ description: |
   Capability: Drives `archon workflow runs/get/status/run --detach/approve/reject/abandon/resume`
             with machine-readable `--json` output, scoped to the current project by cwd.
   NOT for: Authoring workflows/commands, or Archon setup/config — use the broader `archon` skill.
+  Bound to ADRs: adr.skill-register-and-adr-binding-policy.draft.md, adr.canonical-workspace-state-next-action-protocol.draft.md, adr.control-surfaces-and-ownership-boundaries.draft.md.
 argument-hint: "[run-id or workflow] [comment]"
 ---
-
 # Manage Archon Runs
 
 A focused skill for **managing workflow runs** through the `archon` CLI. It assumes

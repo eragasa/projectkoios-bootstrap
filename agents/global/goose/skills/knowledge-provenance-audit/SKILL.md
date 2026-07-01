@@ -1,6 +1,8 @@
 ---
 name: knowledge-provenance-audit
-description: Verify completed work has been captured durably as knowledge
+description: |
+  Verify completed work has been captured durably as knowledge
+  Bound to ADRs: adr.skill-register-and-adr-binding-policy.draft.md, adr.control-surfaces-and-ownership-boundaries.draft.md.
 metadata:
   agent: knowledge-agent
   harness_role: consumer
@@ -12,7 +14,6 @@ metadata:
   produces:
     - provenance-audit
 ---
-
 ## When to use this skill
 
 When asked to audit whether completed work has durable knowledge capture, to
