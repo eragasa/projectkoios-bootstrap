@@ -167,6 +167,7 @@ See `../maps/` for the workspace layout:
 |---|---|---|
 | `knowledge-agent-provenance-note` | `KnowledgeNote`, `ProvenanceIndex` | Validated artifact chain available |
 | `knowledge-provenance-audit` | `ProvenanceAudit` | Periodic scan or flagged orphan |
+| `koios-workspace-bootstrap` | `KnowledgeNote`, `ProvenanceIndex` | Initialize persistent agent workspaces |
 
 ## Handoff support
 

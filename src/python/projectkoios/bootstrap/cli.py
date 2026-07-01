@@ -1,6 +1,14 @@
 import argparse
 
-from projectkoios.bootstrap.commands import handoff, harnesses, ingestion, init, install, validate_harnesses
+from projectkoios.bootstrap.commands import (
+    handoff,
+    harnesses,
+    ingestion,
+    init,
+    install,
+    validate_harnesses,
+    workspaces,
+)
 
 
 def main() -> None:
@@ -16,6 +24,7 @@ def main() -> None:
     init.register(boot_sub)
     install.register(boot_sub)
     validate_harnesses.register(boot_sub)
+    workspaces.register(boot_sub)
     harnesses.register(subparsers)
     ingestion.register(subparsers)
 

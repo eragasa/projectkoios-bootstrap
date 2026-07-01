@@ -2,25 +2,13 @@
 
 Shared harness config store for building and operating Project Koios.
 
-## Harnesses
+## Routing
 
-| Harness | Name | Tool | Domain |
-|---------|------|------|--------|
-| pi | pi | pi | Meta-harness operator; routes, orchestrates, and executes repo-scoped work; runs Archon workflows |
-| archon | **Athena** | [Archon](https://archon.diy) | Architecture decisions, ADRs, planning, design review |
-| opencode | **Vulcan** | opencode | Code implementation, tests, validation, runtime sessions |
-| goose | **Koios** | [Goose](https://goose-docs.ai) | Knowledge curation, vault ops, source ingestion, UI bootstrap |
+Canonical harness routing lives in `docs/agent-charter.md`.
 
-## Current operator path
-
-When direct `pi` ownership of Archon runs is unavailable, use Codex as the
-delegated operator/access layer for Archon workflows. Codex is not a
-replacement identity for `pi`; it mediates start, inspect, approve, reject,
-resume, or cancel actions and relays handoff artifacts on behalf of the
-operator.
-
-Target state: `pi` owns the operator interface directly whenever the runtime
-path supports it.
+This repo stores harness config, bootstrap helpers, and shared instructions.
+The current operator path and tool-specific details belong in the charter and
+repo-local harness docs.
 
 ## Prerequisites
 
@@ -78,6 +66,8 @@ projectkoios harnesses stop      # kill koios session
 Read `maps/repositories.md`, `maps/packages.md`, and `maps/vault_paths.md`
 before touching any code. All component repos are siblings under `~/repos/`.
 
+Persistent per-agent workspace state is proposed in `docs/workspaces.md`.
+
 ## Local Generated State
 
 `graphify-out/` is a generated local database used by Graphify and is ignored by
@@ -121,4 +111,5 @@ tests unless a future non-secret fixture exists.
 ## Architecture
 
 - Bootstrap architecture: `docs/architecture.00.md`
+- Repo projections: `docs/architecture.repo-projections.md`
 - ADR archive: `docs/architecture/adr/adr.20260628.000000_three-harness-meta-harness.md`

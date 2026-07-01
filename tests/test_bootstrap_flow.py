@@ -23,12 +23,15 @@ def run_projectkoios(*args: str, home: Path) -> subprocess.CompletedProcess[str]
     )
 
 
-def test_bootstrap_help_exposes_init_and_install(tmp_path: Path) -> None:
+def test_bootstrap_help_exposes_init_install_and_workspaces(
+    tmp_path: Path,
+) -> None:
     result = run_projectkoios("bootstrap", "--help", home=tmp_path)
 
     assert result.returncode == 0
     assert "init" in result.stdout
     assert "install" in result.stdout
+    assert "workspaces" in result.stdout
 
 
 def test_bootstrap_init_copies_example_files_and_skips_asset_dirs(

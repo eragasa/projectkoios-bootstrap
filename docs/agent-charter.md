@@ -41,6 +41,7 @@ It is a routing and responsibility document, not an architecture decision.
 5. **No knowledge capture inside implementation runs**
 6. **If work spans repos, Hermes decomposes first**
 7. **If the tree is dirty, stabilize before expanding scope**
+8. **Architecture notes are holy**: only Hermes may modify `docs/architecture*.md`, and only when Zeus explicitly directs that change
 
 ## Handoff flow
 
@@ -66,6 +67,7 @@ If a request is ambiguous, multi-repo, or architecture-heavy:
 - Hermes splits it first
 - Athena receives only the bounded slice
 - implementation waits for a brief
+- any change to `docs/architecture*.md` requires explicit Zeus permission and Hermes execution
 
 ## Revision policy
 

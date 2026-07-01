@@ -195,6 +195,9 @@ goose/sessions/
 # Local Obsidian workspace (never commit)
 .obsidian/
 
+# Persistent agent workspaces (never commit)
+workspaces/
+
 # Graphify
 graphify-out/
 

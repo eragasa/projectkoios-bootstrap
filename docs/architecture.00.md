@@ -1,65 +1,50 @@
-# `projectkoios-bootstrap` architecture
+---
+status: draft
+date: 20260701.131500Z
+---
 
-This document is the architecturer for the `projectkois-bootstrap` 
-
-## Boundaries
-1. `projectkoios` is the mothership repository
-2. `projectkoios-bootstrap` is a meta-har
-It separates harness concerns from the `projectkoios` mothership repository.
+# Architecture index
 
 ## Purpose
 
-`projectkoios-bootstrap` owns the shared agent-operation layer for Project Koios:
-- harness boundaries
-- install/sync behavior
-- shared context and maps
-- shared bootstrap guidance for pi, Goose, and opencode
-- repo-local config templates for pi, Goose, and opencode
-- the canonical agent charter in `docs/agent-charter.md`
+This is the namespace index for bootstrap architecture notes.
+Use it as the entry point for `architecture.*` documents and as the anchor
+note for Obsidian-style navigation.
 
-It does **not** own domain architecture for Project Koios product code.
-That belongs in the `projectkoios` repository and its ADRs.
+## Scope
 
-## Repository layout
+These notes describe the bootstrap-side workspace, repository-projection, and
+harness-related architecture for `projectkoios-bootstrap`.
+They do not replace `docs/architecture.md` in the mothership repo.
 
-```text
-projectkoios-bootstrap/
-├── docs/              ← documentation, architecture, and ADRs
-│   ├── architecture/adr/ ← ADRs and durable decisions (single source of truth)
-├── maps/              ← authoritative workspace layout
-├── archon/            ← Archon workflows and prompts
-├── opencode/          ← opencode rules and runtime harness
-├── goose/             ← Goose agent rules and prompts
-└── pi/                ← pi-specific harness config
-```
+## Protection
 
-## Harness split
+Only Hermes may modify `docs/architecture*.md`, and only when Zeus explicitly
+directs the change.
 
-| Harness | Role |
-|---|---|
-| `pi` | meta-harness operator; routes, orchestrates, and executes repo-scoped work; runs Archon workflows |
-| `goose` | knowledge curation, ingestion, vault/bootstrap tasks |
-| `opencode` | implementation, tests, validation, runtime debugging |
-| `Archon` | orchestration and planning workflows |
+## Index
 
-## Shared-source strategy
+### Workspace notes
+- [architecture.workspaces.00](architecture.workspaces.00.md)
+- [architecture.workspaces.git](architecture.workspaces.git.md)
+- [architecture.workspaces.obsidian](architecture.workspaces.obsidian.md)
 
-Keep shared instructions in this repo and sync them outward:
-- `projectkoios-bootstrap/pi/` for pi-specific instructions
-- `projectkoios-bootstrap/goose/` for Goose-specific instructions
-- `projectkoios-bootstrap/opencode/` for opencode-specific instructions
-- `projectkoios-bootstrap/maps/` for workspace truth
+### Repository projection notes
+- [architecture.repos.00](architecture.repos.00.md)
+- [architecture.repos.git](architecture.repos.git.md)
+- [architecture.repos.obsidian](architecture.repos.obsidian.md)
+- [architecture.repo-projections](architecture.repo-projections.md)
 
-Install tooling should materialize the expected consumer locations, such as:
-- `~/.pi/agent/AGENTS.md`
-- `~/.pi/agent/SYSTEM.md`
-- `~/.pi/agent/prompts/`
-- `~/.pi/agent/skills/`
+## Naming convention
 
-## Separation from projectkoios
+- All bootstrap architecture notes use the `architecture.` prefix.
+- Filenames stay unique and grep-friendly.
+- Use Markdown links for navigation so grep, Graphify, and Obsidian all work.
+- The date slug lives under `## Status` and uses `YYYYMMDD.HHMMSSZ`.
+- Related notes should link back here with `[architecture.00](architecture.00.md)`.
 
-Use this repo for meta-harness concerns only.
-Use `projectkoios/` for product architecture, design records, and domain-level decisions.
+## Related bootstrap architecture
 
-If a document answers "how do we run the harnesses?", it belongs here.
-If a document answers "how does the product work?", it belongs in `projectkoios/`.
+- `docs/agent-charter.md`
+- `docs/workspaces.md`
+- `docs/architecture.repo-projections.md`

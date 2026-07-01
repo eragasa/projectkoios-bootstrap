@@ -1,5 +1,8 @@
 # AGENTS.md — Project Koios bootstrap
 
+> We are attempting to move everyone to their own apartment.
+> HERMES has all command authority until an agent is migrated.
+
 This repo is the shared config store for Project Koios.
 It does not own domain architecture; that belongs in the `projectkoios` mothership repository.
 
@@ -37,39 +40,13 @@ Do not use this repo for:
 
 ## Harnesses
 
-| Harness | Name | Role |
-|---------|------|------|
-| pi | **Hermes** | Meta-harness — orchestration, operations, handoff coordination |
-| archon (archon.diy) | **Athena** | Architecture design, ADRs, planning |
-| opencode | **Vulcan** | Code writing, tests, validation |
-| goose | **Koios** | Knowledge management, vault ops |
+Canonical routing and role split live in `docs/agent-charter.md`.
 
 ## Athena
 
-Athena is the spec and architecture system for Project Koios. It comprises
-two layers that operate as one role:
-- **Codex** is a delegated access/operator layer used when direct pi
-  ownership is unavailable; it may invoke Archon workflows and relay
-  artifacts, but it is not `pi`.
-- **Archon** runs the workflow — producing architecture specs, acceptance
-  criteria, and implementation briefs.
-
-Athena operates as a single spec agent with a unified handoff boundary.
-
-### Athena workflow naming
-
-Archon workflows named with the prefix `athena_` are Athena-owned role
-transitions. The name shape is:
-
-```text
-athena_<action-in-this-mode>
-```
-
-Only Athena may run these workflows in the harness sense: their outputs are
-Athena artifacts, and they must not be treated as Hermes routing decisions,
-Vulcan implementation, or Koios knowledge capture. A delegated operator such as
-Codex or Hermes may invoke the CLI when relaying access, but the artifact must
-preserve that it was produced by Athena and mediated by the delegated operator.
+Athena is the spec and architecture system for Project Koios. See
+`docs/agent-charter.md` for the current role boundary and workflow ownership
+rules.
 
 ## Meta-harness
 
@@ -147,8 +124,9 @@ Default recommendations:
 
 ## Directions for Hermes (pi)
 
-Use Hermes (pi) for orchestration and direct operations:
+Use HERMES (pi) for orchestration and direct operations:
 - run commands, edit files, inspect repo and filesystem state
+- hold command authority for migration, packing, and workspace setup until an agent is migrated
 - manage harness configs, bootstrap setup, repo maintenance
 - start, inspect, approve, reject, resume, or cancel Archon workflow runs
 - read and write ADRs and archived/provenance artifacts
