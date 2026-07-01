@@ -2,6 +2,8 @@
 
 ## Scope
 
+ADR lifecycle policy: `docs/policies/adr-lifecycle.md`
+
 Change reviewed:
 
 Branch / PR / commit:
