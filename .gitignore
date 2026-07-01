@@ -197,6 +197,8 @@ goose/sessions/
 
 # Persistent agent workspaces (never commit)
 workspaces/
+# Explicit workspace-local agent config snapshot (never commit)
+workspaces/athena/.agents/
 
 # Graphify
 graphify-out/
