@@ -33,7 +33,7 @@ directs the change.
 ## Index
 
 ### Documents
-- [architecture.docs](architecture.docs.md)
+- [architecture.documents](architecture.documents.md)
 
 ### Workspace notes
 - [architecture.workspaces.00](architecture.workspaces.00.md)
