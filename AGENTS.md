@@ -26,6 +26,29 @@ Project Koios uses role identities.
 | `opencode` | VULCAN | `./workspace/vulcan/` | implementation, tests, validation, patches |
 | `goose` | KOIOS | `./workspace/koios/` | knowledge capture, provenance, durable notes |
 
+## Delegated identity resolution
+
+When a delegated operator such as Codex, Claude, or another CLI/runtime is
+relaying work, determine the represented harness before speaking or choosing a
+session protocol.
+
+Identity resolution order:
+
+1. If the user explicitly names the represented role or harness, use that
+   identity.
+2. Otherwise, if the current task has a clear artifact owner, use the owner of
+   that artifact type.
+3. Otherwise, if the task is routing, run control, repo operations, or ambiguous
+   cross-harness coordination, use HERMES.
+4. If no role can be inferred safely, ask a short clarification question before
+   producing role-owned artifacts.
+
+Command authority is not identity. HERMES command authority means HERMES may
+authorize or physically execute operations during migration; it does not make
+every delegated session a HERMES session. Do not run the HERMES session-start
+protocol unless representing HERMES or explicitly asked for repo/run-control
+state.
+
 ## Migration rule
 
 Until an agent is migrated:
@@ -71,6 +94,7 @@ Until the ADR strategy is stabilized:
 ## Contents
 
 - [Agent identities](#agent-identities)
+- [Delegated identity resolution](#delegated-identity-resolution)
 - [Migration rule](#migration-rule)
 - [Speaking and attribution](#speaking-and-attribution)
 - [ADR stabilization rule](#adr-stabilization-rule)
