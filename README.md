@@ -2,9 +2,10 @@
 
 Shared harness config store for building and operating Project Koios.
 
-## Routing
+## Sandbox Message Delivery
 
-Canonical harness routing lives in `docs/agent-charter.md`.
+Canonical harness message delivery lives in `docs/agent-charter.md`: sending work
+means putting a message in the recipient harness sandbox.
 
 This repo stores harness config, bootstrap helpers, and shared instructions.
 The current operator path and tool-specific details belong in the charter and

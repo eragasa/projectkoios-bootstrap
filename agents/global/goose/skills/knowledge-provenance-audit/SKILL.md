@@ -32,7 +32,7 @@ implementation was completed (per `CompletionDecision`) but no `KnowledgeNote`
 or `ProvenanceIndex` exists.
 
 Do not create knowledge notes during audit — the audit is a detection pass.
-Capture should be routed through `knowledge-agent-provenance-note`.
+Capture should be sent through `knowledge-agent-provenance-note`.
 
 ## Inputs
 
@@ -64,7 +64,7 @@ Capture should be routed through `knowledge-agent-provenance-note`.
    - unresolved (capture status cannot be determined)
 
 7. Do not produce knowledge notes during audit. The audit output is a
-   `ProvenanceAudit` for Hermes to route to the appropriate capture workflow.
+   `ProvenanceAudit` for Hermes to send to the appropriate capture workflow.
 
 ## Output artifact
 
@@ -85,5 +85,5 @@ Capture should be routed through `knowledge-agent-provenance-note`.
 
 If systemic missed capture is detected (multiple completed workflows without
 corresponding knowledge artifacts), escalate to Hermes with the
-`ProvenanceAudit`. Hermes decides whether to route knowledge capture work
-to Koios, or to request a process change from Athena.
+`ProvenanceAudit`. Hermes decides whether to send knowledge capture work into
+the Koios sandbox, or to request a process change from Athena.

@@ -27,9 +27,10 @@ Before ending a session:
    no LLM needed) before final reporting unless unavailable or would block an
    urgent handoff.
 3. Always write an AAR under `docs/AAR/`. Use AARs for protocol failures,
-   repeated user corrections, unclear routing, workflow/tool friction,
-   validation gaps, or improvement candidates. For trivial clean sessions,
-   write a brief AAR that states no durable process issue was observed.
+   repeated user corrections, unclear sandbox message delivery,
+   workflow/tool friction, validation gaps, or improvement candidates. For
+   trivial clean sessions, write a brief AAR that states no durable process
+   issue was observed.
 4. Report files changed and validation results.
 5. Write or update the relevant handoff if work must continue in another harness.
 6. Ask before commit/push unless the user already directed it.

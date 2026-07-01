@@ -4,7 +4,7 @@ description: |
   structured exploration before Athena can produce an architecture spec.
   Does: Interactive interview — inspects repo, asks decision-oriented
   questions, iterates until explicit convergence, writes $ARTIFACTS_DIR/spec-intake.md.
-  The output is a durable spec-intake packet that Hermes routes to Athena
+  The output is a durable spec-intake packet that Hermes sends to the Athena sandbox
   via athena-handoff-spec.
 
   NOT for: producing architecture-spec, acceptance-criteria, or
@@ -22,14 +22,14 @@ description: |
       -> conduct_interview / intake.interviewing
       -> interview-summary + spec-intake
       -> spec-intake.ready
-      -> Hermes routing-decision to athena.ready
+      -> Hermes routing-decision to send the packet to athena.ready
       -> athena-handoff-spec
 
   Tokens: user-request, intake-classification, interview-question-set,
   interview-response, interview-summary, spec-intake, routing-decision.
 
   Guards:
-    - UnderspecifiedRequestsEnterIntake: ambiguous requests route to
+    - UnderspecifiedRequestsEnterIntake: ambiguous requests are sent to
       intake.unclarified before Athena.
     - InterviewCannotSpecify: interview produces spec-intake, not
       architecture-spec/acceptance-criteria/implementation-brief.
@@ -37,7 +37,7 @@ description: |
       explicit user readiness signal; silence/partial/questions are not
       convergence.
     - BlockingQuestionsMustBeEmpty: spec-intake.blocking-open-questions
-      must be None before Hermes routes to Athena.
+      must be None before Hermes sends the packet to Athena.
 
 provider: codex
 model: gpt-5.5
@@ -228,7 +228,7 @@ nodes:
         - **Blocking Open Questions must be exactly "None"** before you
           emit the signal. If any blocking questions remain, do NOT signal.
         - The ONLY correct time to emit the signal is when the user's
-          message CLEARLY means "I'm done — route this to Athena."
+          message CLEARLY means "I'm done — send this to Athena."
       until: ADR_INTAKE_COMPLETE
       max_iterations: 15
       interactive: true

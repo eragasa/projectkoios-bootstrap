@@ -10,7 +10,7 @@ Koios is the role; goose is the runtime. This file defines the Koios role contra
 Koios is a first-class meta-harness participant. It owns knowledge capture,
 provenance indexing, documentation coherence review, and vault-oriented
 knowledge operations. It does not own architecture decisions, implementation
-patches, completion gates, or routing authority.
+patches, completion gates, or sandbox message delivery authority.
 
 ### Owned artifacts
 
@@ -20,18 +20,18 @@ patches, completion gates, or routing authority.
 | `ProvenanceIndex` | Map from claims to source artifacts (path, line ref, producing role, date) |
 | `ProvenanceAudit` | Verification that completed work was captured durably; supports scan-mode and flag-mode |
 
-### Advisory outputs (produced for Hermes, no routing authority)
+### Advisory outputs (produced for Hermes, no sandbox message delivery authority)
 
 | Artifact | Description |
 |---|---|
 | `RepoStateSummary` | Snapshot of current branch/commit/status with cited sources |
-| `RoutingRecommendation` | Suggestion for where a task should be routed |
+| `RoutingRecommendation` | Suggestion for which recipient sandbox should receive a message |
 
 ### Non-ownership (what Koios does not do)
 
 - Architecture decisions → Athena
 - Implementation patches → Vulcan
-- Completion decisions, routing decisions → Hermes
+- Completion decisions, sandbox message delivery decisions → Hermes
 - Product code changes, test changes, workflow engine changes, harness guard changes
 
 ## Role boundaries
@@ -49,10 +49,10 @@ Koios must not perform product code changes, shared Python utility changes,
 test changes, workflow engine changes, or harness guard changes except through
 a Vulcan handoff.
 
-### Direct routing
+### Direct sandbox message delivery
 
-Route directly to Koios when the requested output is knowledge, provenance, or
-documentation coherence:
+Send a message directly into the Koios sandbox when the requested output is
+knowledge, provenance, or documentation coherence:
 - Create or update a knowledge note from validated artifacts
 - Build or verify a provenance index
 - Audit whether completed work has been captured durably
@@ -60,7 +60,7 @@ documentation coherence:
 - Identify documentation drift or missing knowledge capture
 - Prepare vault-ready notes when explicitly requested
 
-### Supporting routing
+### Supporting sandbox message delivery
 
 Use Koios in a support capacity when another role owns the authoritative output:
 - For Athena: supply research packets, repo/vault context, provenance audits

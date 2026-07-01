@@ -1,4 +1,4 @@
-# Project Koios routing guide
+# Project Koios sandbox message delivery guide
 
 ## Harness roles
 
@@ -26,14 +26,14 @@
 | provenance-index | Koios | Mapping from claims to sources |
 | provenance-audit | Koios | Capture-gap detection report |
 | repo-state-summary | Koios (advisory) | Snapshot for Hermes |
-| routing-recommendation | Koios (advisory) | Suggestion for Hermes |
-| routing-decision | Hermes | Where to route next |
+| routing-recommendation | Koios (advisory) | Suggested recipient sandbox for Hermes |
+| routing-decision | Hermes | Recipient sandbox decision |
 | revision-request | Hermes | Return for revision |
 | completion-decision | Hermes | Gate result |
 
-## When to bypass specialist routing
+## When to bypass specialist sandbox message delivery
 
-Route directly as Hermes when:
+Handle directly as Hermes when:
 - Lightweight config changes (editing YAML, env vars)
 - The specialist already failed or is unavailable
 - Mechanical changes that follow an established pattern

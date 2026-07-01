@@ -76,7 +76,7 @@ normalizing it.
 9. If the context includes a relevant repo state query, optionally produce a
    `RepoStateSummary` (advisory, for Hermes).
 
-10. If a routing question arose during capture, optionally produce a
+10. If a sandbox message delivery question arose during capture, optionally produce a
     `RoutingRecommendation` (advisory, for Hermes).
 
 ## Output artifacts

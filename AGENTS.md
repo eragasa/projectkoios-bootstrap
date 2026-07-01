@@ -21,7 +21,7 @@ Project Koios uses role identities.
 
 | Harness | Identity | Apartment | Owns |
 |---|---|---|---|
-| `pi` | HERMES | `./workspace/hermes/` | routing, command authority, repo operations, run control |
+| `pi` | HERMES | `./workspace/hermes/` | sandbox message delivery, command authority, repo operations, run control |
 | `archon` | ATHENA | `./workspace/athena/` | architecture, ADRs, specs, implementation briefs |
 | `opencode` | VULCAN | `./workspace/vulcan/` | implementation, tests, validation, patches |
 | `goose` | KOIOS | `./workspace/koios/` | knowledge capture, provenance, durable notes |
@@ -38,8 +38,9 @@ Identity resolution order:
    identity.
 2. Otherwise, if the current task has a clear artifact owner, use the owner of
    that artifact type.
-3. Otherwise, if the task is routing, run control, repo operations, or ambiguous
-   cross-harness coordination, use HERMES.
+3. Otherwise, if the task is sending a message into another harness sandbox,
+   run control, repo operations, or ambiguous cross-harness coordination, use
+   HERMES.
 4. If no role can be inferred safely, ask a short clarification question before
    producing role-owned artifacts.
 
@@ -68,7 +69,8 @@ Until an agent is migrated:
 - Architecture comments are `ATHENA comments`.
 - Implementation comments are `VULCAN comments`.
 - Knowledge/provenance comments are `KOIOS comments`.
-- Routing, command, run-control, and repo-state comments are `HERMES comments`.
+- Sandbox message delivery, command, run-control, and repo-state comments are
+  `HERMES comments`.
 - Do not label a comment by the tool or runtime unless the comment is
   specifically about that tool or runtime.
 
@@ -81,7 +83,7 @@ Until the ADR strategy is stabilized:
 - Paused ADRs may be read for context.
 - Paused ADRs may only receive comments.
 - Paused ADRs must not be promoted, accepted, completed, superseded, rejected,
-  routed for implementation, or used as implementation authority.
+  sent into an implementation sandbox, or used as implementation authority.
 - Agents may append concerns, objections, and recommendations to relevant ADRs.
 - Agents must not rewrite ADR bodies during the pause.
 - Agent comments are input only. They do not change ADR status, create
@@ -130,7 +132,8 @@ Do not use this repo for:
 
 ## Harnesses
 
-Canonical routing and role split live in `docs/agent-charter.md`.
+Canonical sandbox message delivery and role split live in
+`docs/agent-charter.md`.
 
 ## Athena
 
@@ -208,9 +211,9 @@ Default recommendations:
 - Keep local secrets out of git.
 - At session end, always write an AAR under `docs/AAR/`. For sessions with
   durable process lessons, record protocol failures, repeated user corrections,
-  unclear routing, workflow/tool friction, validation gaps, and improvement
-  candidates. For trivial clean sessions, write a brief AAR that states no
-  durable process issue was observed.
+  unclear sandbox message delivery, workflow/tool friction, validation gaps, and
+  improvement candidates. For trivial clean sessions, write a brief AAR that
+  states no durable process issue was observed.
 
 ## Directions for Hermes (pi)
 
@@ -276,11 +279,12 @@ Use Vulcan (opencode) for:
 Vulcan should:
 - read the plan or ADR first
 - place observations and recommendations in ADRs under `docs/architecture/adr/`
-- check whether `archon/workflows/conduct-interview.yaml` exists and is available
-  for the interview phase when Hermes routes an underspecified request
+- check whether `archon/workflows/conduct-interview.yaml` exists and is
+  available for the interview phase when Hermes sends an underspecified request
+  into the interview sandbox
 - not implement from `spec-intake` directly — Vulcan requires Athena's
-  `implementation-brief` unless Hermes explicitly routes a trivial non-architecture
-  task under existing repo policy
+  `implementation-brief` unless Hermes explicitly sends a trivial
+  non-architecture task into Vulcan's sandbox under existing repo policy
 
 ## Harness configs
 
@@ -372,8 +376,8 @@ Every AAR should include:
 
 Interpretation rule:
 - AARs are process observation artifacts.
-- AARs do not change architecture authority, ADR status, routing, or completion
-  state by themselves.
+- AARs do not change architecture authority, ADR status, sandbox message
+  delivery, or completion state by themselves.
 - Promote AAR findings through the normal lifecycle when they require durable
   architecture, workflow, skill, documentation, or implementation changes.
 

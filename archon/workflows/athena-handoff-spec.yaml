@@ -64,7 +64,7 @@ nodes:
       - resolved open questions
       - non-goals
       - validation expectations
-      - routing back to Hermes after Vulcan reports
+      - sending a message back to Hermes after Vulcan reports
 
       Preserve provenance in the ADR context when relevant, using fields such
       as `Origin`, `From`, `Acting-As`, `Scope`, `Repository`, and

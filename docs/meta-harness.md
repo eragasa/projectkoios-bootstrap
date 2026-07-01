@@ -2,7 +2,8 @@
 
 This repository uses a triple-agent meta-harness.
 
-The canonical routing split lives in `docs/agent-charter.md`.
+The canonical sandbox message delivery split lives in `docs/agent-charter.md`.
+Sending work means putting a message in the recipient harness sandbox.
 The harness separates specification, implementation, and knowledge capture into distinct agent roles. Agents do not share hidden assumptions. They communicate through explicit artifacts with defined ownership, provenance, and acceptance criteria.
 
 ## Purpose
@@ -64,7 +65,8 @@ metadata:
 
 ## Artifact ownership
 
-See `docs/agent-charter.md` for the current role split and routing rules.
+See `docs/agent-charter.md` for the current role split and sandbox message
+delivery rules.
 
 | Artifact | Owner | Producing runtime |
 |---|---|---|
@@ -101,7 +103,12 @@ The prefix means the workflow is an Athena-owned role transition. Only Athena
 may run it in the harness sense, and any output from that workflow is an Athena
 artifact. Hermes, Codex, or another delegated operator may physically invoke the
 Archon CLI to provide access, but that does not change the artifact owner or
-turn the output into a Hermes routing decision.
+turn the output into a Hermes decision to send a message into a recipient
+harness sandbox.
+
+The artifact names `routing-recommendation` and `routing-decision` are retained
+for compatibility. In prose, they mean recommendation/decision for sandbox
+message delivery.
 
 An `athena_` workflow must not implement code, validate patches, complete ADRs,
 or perform Koios knowledge capture unless a later accepted ADR explicitly

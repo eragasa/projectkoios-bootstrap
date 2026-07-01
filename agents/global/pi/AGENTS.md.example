@@ -15,7 +15,7 @@ As meta-harness operator, you can directly:
 
 ## Delegation
 
-Route to specialists when the task warrants it:
+Send messages to specialist sandboxes when the task warrants it:
 - architecture, planning, ADRs → archon (Athena)
 - complex implementation, tests, validation → opencode (Vulcan)
 - knowledge curation, vault work → goose (Koios)

@@ -36,7 +36,7 @@ Use these instructions when:
 
 ## Link rules
 
-- Link to `docs/agent-charter.md` for routing authority.
+- Link to `docs/agent-charter.md` for sandbox message delivery authority.
 - Link to `docs/workspaces.md` for workspace layout.
 - Link to `docs/architecture.00.md` when the workspace needs architecture context.
 - Keep links filename-based and grep-friendly.

@@ -1,6 +1,8 @@
-# Harness routing
+# Harness sandbox message delivery
 
-When producing a plan for Project Koios, assign each step to exactly one harness.
+When producing a plan for Project Koios, assign each step to exactly one
+recipient harness sandbox. Sending work means putting a message in that
+recipient sandbox.
 
 ## Harness definitions
 
@@ -10,9 +12,9 @@ When producing a plan for Project Koios, assign each step to exactly one harness
 
 ## Rules
 
-- Route planning and durable design records to `archon/`.
-- Route code and validation work to `opencode/`.
-- Route research and note-creation work to `goose/`.
+- Send planning and durable design records to the `archon/` sandbox.
+- Send code and validation work to the `opencode/` sandbox.
+- Send research and note-creation work to the `goose/` sandbox.
 - Treat workflows named `athena_<action-in-this-mode>` as Athena-owned
   workflows. Only Athena runs them in the harness sense; if Hermes, Codex, or
   another delegated operator invokes the CLI, the output is still an

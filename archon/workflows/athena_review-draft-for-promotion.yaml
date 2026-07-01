@@ -5,7 +5,7 @@ description: |
   Does: Reads one ADR path, checks promotion readiness, and returns a structured
   recommendation for Hermes.
   NOT for: code implementation, status changes, file mutation, validation loops,
-  PR creation, or direct routing to Vulcan.
+  PR creation, or direct message delivery into the Vulcan sandbox.
 
 provider: codex
 model: gpt-5.5
@@ -95,7 +95,7 @@ nodes:
       ready for Hermes to promote toward implementation.
 
       This workflow is advisory to Hermes. Do not edit files. Do not mark the
-      ADR accepted, rejected, completed, or superseded. Do not route to Vulcan.
+      ADR accepted, rejected, completed, or superseded. Do not send messages into the Vulcan sandbox.
       Do not implement code.
 
       ## ADR Under Review
@@ -129,7 +129,7 @@ nodes:
       - non-goals are explicit
       - resolved and blocking open questions are separated
       - no blocking open questions remain
-      - routing back to Hermes is stated
+      - message delivery back to Hermes is stated
       - provenance is sufficient, including delegated-operator context when
         Codex relayed the artifact
       - no conflict with accepted ADRs, live repository instructions, or harness
@@ -192,7 +192,7 @@ nodes:
 
       Recommend the next Hermes action:
 
-      - route to Athena revision
+      - send to Athena revision
       - review for acceptance
       - defer
       - record no-implementation validation

@@ -2,11 +2,11 @@
 name: projectkoios
 description: |
   Use when: You are in the projectkoios-bootstrap repository and need to understand
-    the project structure, role model, or routing boundaries.
-  Triggers: "what is this repo", "project koios", "projectkoios", "how do I route",
+    the project structure, role model, or sandbox message delivery boundaries.
+  Triggers: "what is this repo", "project koios", "projectkoios", "how do I send this",
     "who owns what", "which harness", "meta-harness".
   Capability: Codex-facing entrypoint for the Project Koios bootstrap repository.
-    Explains scope, roles, routing, and available repo-local skills.
+    Explains scope, roles, sandbox message delivery, and available repo-local skills.
   NOT for: domain architecture decisions (those belong in the mothership vault at
     ~/projectkoios/), or for editing code directly (use Vulcan for that).
 ---
@@ -71,9 +71,11 @@ When acting in the Koios knowledge role:
 - prepare proposal context for Athena, but do not claim Athena's architecture
   authority
 
-## Routing guidance
+## Sandbox message delivery guidance
 
-| Task | Route to |
+Sending work means putting a message in the recipient harness sandbox.
+
+| Task | Send message to |
 |------|----------|
 | Architecture, planning, ADRs | **Athena** (archon) |
 | Implementation, tests, bug fixes | **Vulcan** (opencode) |
@@ -86,4 +88,4 @@ When acting in the Koios knowledge role:
 - Do not commit machine-local secrets, tokens, or credentials.
 - Do not make domain architecture decisions — those go in the mothership vault.
 - Do not edit `Archon` workflow definitions, Python CLI behavior, or bootstrap
-  install commands unless routed through an accepted ADR.
+  install commands unless sent through an accepted ADR-backed recipient sandbox.

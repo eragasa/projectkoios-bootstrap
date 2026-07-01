@@ -32,7 +32,7 @@ inspect with git, grep, and Obsidian. Seed each workspace with its own local
 
 - `user-request` — the request to create or refresh agent workspaces
 - `repo-state-summary` — current repo context when available
-- `routing-recommendation` — the requested or inferred target agent scope
+- `routing-recommendation` — the requested or inferred recipient sandbox scope
 
 ## Procedure
 
@@ -67,14 +67,14 @@ inspect with git, grep, and Obsidian. Seed each workspace with its own local
 
 - Workspace layout is ambiguous — ask Hermes for the canonical scope before
   creating files.
-- Mail system direction is ambiguous — ask Hermes before routing inbox/outbox
+- Mail system direction is ambiguous — ask Hermes before deciding inbox/outbox
   conventions.
 - Existing files contain conflicting state — report the conflict rather than
   overwriting without permission.
 - Request tries to repurpose the workspace layout as product architecture —
-  refuse and route back to Hermes/Athena.
+  refuse and send a message back to Hermes/Athena.
 
 ## Escalation rule
 
 If the request implies a new workspace schema, a new agent role, or a change to
-routing authority, escalate to Hermes before making any file changes.
+sandbox message delivery authority, escalate to Hermes before making any file changes.

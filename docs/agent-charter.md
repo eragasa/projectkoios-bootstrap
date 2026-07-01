@@ -6,13 +6,15 @@ accepted
 
 ## Purpose
 
-This charter defines the canonical routing split for Project Koios.
-It is a routing and responsibility document, not an architecture decision.
+This charter defines the canonical sandbox message delivery split for Project
+Koios. Sending work means putting a message in the recipient harness sandbox.
+It is a message-delivery and responsibility document, not an architecture
+decision.
 
 ## Roles
 
 ### Hermes (`pi`)
-- Owns routing, repo-state inspection, and handoff coordination
+- Owns sandbox message delivery, repo-state inspection, and handoff coordination
 - Chooses the next harness and repo scope
 - Stabilizes dirty or ambiguous work before delegation
 
@@ -47,7 +49,7 @@ It is a routing and responsibility document, not an architecture decision.
 
 ```text
 user request
-  → Hermes routes
+  → Hermes sends a message into the recipient sandbox
   → Athena defines a bounded spec (if needed)
   → Vulcan implements
   → Koios records validated knowledge (if needed)
@@ -60,6 +62,9 @@ user request
 - `implementation-plan` / `patch` / `test-results` / `implementation-report` → Vulcan
 - `knowledge-note` / `provenance-index` → Koios
 - `routing-decision` / `revision-request` / `completion-decision` → Hermes
+
+`routing-decision` is retained as a machine-facing artifact name. In prose, read
+it as a decision to send a message into a recipient harness sandbox.
 
 ## Escalation rule
 

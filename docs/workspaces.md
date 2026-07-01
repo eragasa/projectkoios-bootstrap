@@ -117,7 +117,7 @@ Session notes.
 ### Hermes
 - repo state summary
 - dirty-tree notes
-- routing decisions
+- sandbox message delivery decisions
 - pending handoffs
 - next recommended repo/task
 

@@ -1,6 +1,6 @@
 ---
 name: meta-harness-task-routing
-description: Route a user request to the correct agent based on dominant transformation
+description: Send a user request to the correct agent sandbox based on dominant transformation
 metadata:
   agent: meta-harness
   harness_role: arbiter
@@ -16,7 +16,7 @@ When the meta-harness (pi) receives a new user request and must decide which age
 
 ## Agent responsibility
 
-The meta-harness (pi) owns task routing, artifact validation, disagreement resolution, escalation decisions, and completion gating. Do not perform specialist work unless no specialist role is needed.
+The meta-harness (pi) owns sandbox message delivery, artifact validation, disagreement resolution, escalation decisions, and completion gating. Do not perform specialist work unless no specialist role is needed.
 
 ## Inputs
 
@@ -25,7 +25,7 @@ The meta-harness (pi) owns task routing, artifact validation, disagreement resol
 ## Procedure
 
 1. Read the user request and classify the dominant required transformation.
-2. Apply routing rules:
+2. Apply sandbox message delivery rules:
    - Design/scope uncertainty → spec agent (archon)
    - File changes, implementation, tests → code agent (opencode)
    - Durable documentation, knowledge capture → knowledge agent (goose)
@@ -35,7 +35,7 @@ The meta-harness (pi) owns task routing, artifact validation, disagreement resol
 
 ## Output artifact
 
-- `routing-decision` — next agent and action selection
+- `routing-decision` — recipient sandbox and action selection
 
 ## Failure modes
 
@@ -44,4 +44,5 @@ The meta-harness (pi) owns task routing, artifact validation, disagreement resol
 
 ## Escalation rule
 
-Escalate to user only when user intent is ambiguous and materially affects routing.
+Escalate to user only when user intent is ambiguous and materially affects
+which recipient sandbox should receive the message.

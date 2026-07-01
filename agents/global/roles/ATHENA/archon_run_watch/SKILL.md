@@ -2,10 +2,10 @@
 name: archon_run_watch
 description: |
   Use when the user asks to start a Project Koios session, inspect current
-  handoffs, route work between harnesses, run or monitor Archon workflows,
+  handoffs, send messages between harness sandboxes, run or monitor Archon workflows,
   clean stale Archon runs, create handoff artifacts, or decide what to do
   next.
-  Triggers: "new session", "what next?", "route this", "go archon",
+  Triggers: "new session", "what next?", "send this", "go archon",
   "make a handoff", "turn this interview into a spec",
   "prepare a Vulcan handoff", "check Archon runs",
   "clean stale Archon run", "inspect handoffs".
@@ -14,7 +14,7 @@ description: |
 
 # archon_run_watch
 
-Session-start, routing, Archon run monitoring, and handoff creation for
+Session-start, sandbox message delivery, Archon run monitoring, and handoff creation for
 Project Koios meta-harness operations.
 
 ## Session start protocol
@@ -38,9 +38,9 @@ Project Koios meta-harness operations.
     later ADRs, implementation reports, or filesystem state.
 6.  Report pending current active/draft artifacts before changing files.
 
-## Routing decision table
+## Sandbox message delivery decision table
 
-| Task | Route to |
+| Task | Send message to |
 |---|---|
 | architecture, ADRs, planning | Athena |
 | implementation, tests, validation | Vulcan |

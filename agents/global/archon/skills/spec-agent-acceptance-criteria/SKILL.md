@@ -37,8 +37,8 @@ The spec agent (archon/Athena) ensures that acceptance criteria are observable, 
 ## Failure modes
 
 - Criteria cannot be made testable — mark as unresolved question in the spec
-- Spec lacks sufficient detail to derive criteria — escalate to meta-harness to route back for refinement
+- Spec lacks sufficient detail to derive criteria — escalate to meta-harness to send back for refinement
 
 ## Escalation rule
 
-If the spec does not contain enough detail to derive criteria, escalate to meta-harness (pi) for routing back to the spec agent.
+If the spec does not contain enough detail to derive criteria, escalate to meta-harness (pi) to send it back to the spec agent.

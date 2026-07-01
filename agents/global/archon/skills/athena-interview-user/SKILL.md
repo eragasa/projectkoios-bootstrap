@@ -9,7 +9,7 @@ description: |
   that must evaluate scope discipline, model separation, workflow compatibility,
   repository ownership, ObjectClass/ActionClass/ActionInstance/Policy/Trace
   separation, or future Petri-net compatibility. Do not use for implementation,
-  direct code editing, ADR replacement, workflow creation, or automatic routing
+  direct code editing, ADR replacement, workflow creation, or automatic sandbox message delivery
   to Vulcan.
 ---
 
@@ -25,7 +25,7 @@ implementation proceeds.
 ## Responsibility
 
 You are not implementing code. Do not edit product code, create workflows,
-replace the existing ADR, change ADR status, or route directly to Vulcan.
+replace the existing ADR, change ADR status, or send directly to Vulcan.
 
 You are producing an architecture decision-support document for Archon/Athena.
 Treat existing ADRs, implementation briefs, workflow files, and user prompts as

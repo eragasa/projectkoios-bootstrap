@@ -4,7 +4,7 @@ description: |
   Use at the end of every Project Koios agent session. Also use when the user
   asks for an AAR, after-action report, retrospective, process review, lessons
   learned, or session improvement capture. Sessions with protocol failures,
-  workflow friction, unclear routing, repeated corrections, tool/Graphify/Archon
+  workflow friction, unclear sandbox message delivery, repeated corrections, tool/Graphify/Archon
   confusion, or improvement ideas should capture those lessons explicitly.
   Produces a durable process AAR for any harness role: Hermes, Athena, Vulcan,
   Koios, or delegated Codex operator.
@@ -51,7 +51,7 @@ For trivial clean sessions with no durable process issue, still write a brief
 AAR that records the scope, what happened, that no durable process issue was
 observed, and the current status.
 
-Do not change ADR status, route implementation, or claim architecture authority
+Do not change ADR status, send implementation work into another sandbox, or claim architecture authority
 from an AAR. If an AAR implies architecture or workflow changes, list them as
 candidate follow-ups.
 

@@ -18,7 +18,7 @@ nodes:
         cat architecture/harness-boundaries.md
       else
         cat <<'EOF'
-      # Harness routing
+      # Harness sandbox message delivery
 
       When producing a plan for Project Koios, assign each step to exactly one harness.
 
@@ -30,9 +30,9 @@ nodes:
 
       ## Rules
 
-      - Route planning and durable design records to `archon/`.
-      - Route code and validation work to `opencode/`.
-      - Route research and note-creation work to `goose/`.
+      - Send planning and durable design records to the `archon/` sandbox.
+      - Send code and validation work to the `opencode/` sandbox.
+      - Send research and note-creation work to the `goose/` sandbox.
       - If a step mixes concerns, split it into separate steps.
       - Always call out handoff points explicitly.
 
@@ -54,7 +54,7 @@ nodes:
       Repository context:
       $gather-context.output
 
-      Harness routing guidance:
+      Harness sandbox message delivery guidance:
       $gather-routing.output
 
       Produce a plan with:
