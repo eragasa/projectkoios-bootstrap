@@ -27,6 +27,9 @@ Use a four-surface workflow:
 - `docs/architecture/adr/` for durable decisions
 - implementation briefs and tasks for iterative delivery work
 
+ADRs are encapsulated decision records and must remain independently readable.
+Hierarchy, readiness level, and promotion ordering are represented by `architecture.00`, not by nested ADR body structure.
+
 The intended lifecycle is:
 
 `idea -> spike -> ADR -> implementation brief -> iterative implementation`

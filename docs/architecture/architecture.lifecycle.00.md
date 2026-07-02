@@ -52,3 +52,4 @@ Where:
 - Use `docs/incubator/` for raw ideas and `docs/spikes/` for timeboxed
   experiments once those surfaces exist.
 - Draft ADR comments stay open until promotion to proposed; proposed then becomes the active review surface.
+- ADRs are encapsulated decision records; hierarchy and readiness are represented by `architecture.00`, not by nested ADR body structure.

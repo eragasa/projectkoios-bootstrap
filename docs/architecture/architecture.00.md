@@ -75,6 +75,31 @@ directs the change.
 - Related notes should link back here with `[architecture.00](architecture.00.md)`.
 - Promoted ADRs should use concise decision titles aligned to this index; draft titles may remain provisional.
 
+## ADR encapsulation and hierarchy
+
+ADRs are encapsulated decision records and must be independently readable.
+
+An ADR must contain only its own:
+- context
+- decision
+- consequences
+- acceptance criteria
+- routing / next step
+
+Hierarchy, readiness level, and promotion ordering are not encoded as nested ADR body structure.
+Instead, those relationships are represented in `architecture.00` as the knowledge-organization layer for the repository.
+
+`architecture.00` is authoritative for:
+- parent / child relationships
+- readiness tiers
+- promotion paths
+- package-extractable boundaries
+
+In this model:
+- ADRs remain self-contained
+- `architecture.00` supplies structure
+- the graph links decisions without making any ADR depend on hidden hierarchy
+
 ## Related bootstrap architecture
 
 - `docs/agent-charter.md`
