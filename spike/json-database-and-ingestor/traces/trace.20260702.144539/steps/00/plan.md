@@ -2,7 +2,7 @@
 
 ## Source
 
-- Spike: `spike/20260702/json-database-and-ingestor/spike.md`
+- Spike: `spike/json-database-and-ingestor/spike.md`
 - ADR: `docs/architecture/adr/adr.json-database-for-adr-storage.draft.md`
 - Owner: VULCAN
 - Status: draft
