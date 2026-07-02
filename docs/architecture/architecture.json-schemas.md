@@ -4,11 +4,11 @@ date: 20260702.213000Z
 back_to: architecture.00
 ---
 
-# Shared UI Core Namespace
+# JSON Schemas Namespace
 
 ## Purpose
 
-This is the bootstrap architecture note for the shared UI/core namespace.
+This is the bootstrap architecture note for the JSON schemas namespace.
 
 ## Scope
 
@@ -18,11 +18,10 @@ It defines the navigation surface for the related ADR and points to the controll
 
 This note is controlled by:
 
-- `docs/architecture/adr/adr.ui-core.draft.md`
+- `docs/architecture/adr/adr.json-schemas.draft.md`
 
 ## Related files
 
-- `docs/architecture/adr/adr.ui-core.draft.md`
-- `docs/architecture/architecture.workflow-ui.md`
-- `docs/architecture/architecture.json-schemas.md`
+- `docs/architecture/adr/adr.json-schemas.draft.md`
 - `docs/architecture/architecture.00.md`
+- `docs/architecture/architecture.ui-core.md`

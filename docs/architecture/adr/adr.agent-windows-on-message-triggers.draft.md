@@ -14,9 +14,32 @@ Scope: projectkoios-bootstrap
 Repository: projectkoios-bootstrap
 Architecture-Domain: software
 
-The current agent interaction model is chat-centric and does not give each agent a durable visible runtime surface. Multi-agent work becomes harder to watch, harder to route, and easier to confuse when multiple roles share the same conversational channel.
+#### Current Situation
+- User user currently interacts through a separate terminal for each agent.
+- The user currently switches screens to interact with each agent.
+- Events are currently triggers by session start  
+    1. checking the repository against `master`
+    2. checking 'master' against 'orgin/master`
+    3. validation: clean repository tree
+    4. event triggers are driven ADR.status
+- `end session` typically follows the following sequence
+    1.  write an `AAR`
+    2.  commit all files.
+    3.  identify open issues (although i'm not sure how it learned this behavior, it is probably default AGENTS.md pi behavior)
+    4.  
+- Each agent requires it's own `workspace` defined as folder on a file system.
 
-A window-per-agent model with routed `on_message` handling could make each agent easier to observe and control while preserving role boundaries. A live document pane alongside chat may also be part of the same runtime surface so work can be edited in place during a process.
+##### Shortcomings
+- The user doesn't have a control plane for each agent.
+- Muli-agent work is hard to monitor
+- The repository has grown beyond the capacity of graphify.
+- No orchestration layer exists yet
+- interactivity is by prompt only, no alternate ways to prompt
+
+##### Opportunities
+- All agents have been migrated to the pi skill harness, but have some level of portability due to Anthropic SKILL system
+- Agents appear to be useful in roles. 
+- The intercom system seems to be available but can be accidentally triggered.
 
 ## Decision
 
@@ -46,14 +69,21 @@ The core model is:
 - messages enter the window through an explicit `on_message` route
 - the agent reacts locally within its own boundary
 
-The architecture must preserve independent agent ownership while allowing Hermes or another router to deliver targeted messages.
+The architecture must preserve independent agent ownership.
+
+Agent independence means:
+- each agent has its own workspace/window/state
+- one agent should not silently act as another
+- an agent is an operator and acts on a state
+- \hat{O}_1 \hat{O_2} means that \hat{O}_1 and \hat{O}_2 should only have a small perturbation due to context window length
+- \hat{O}_1 \hat{O}_2  s_0 means \hat{O}_1 acts on the state produced by \hat{O}_1, it is not \hat{O}_1 acting through \hat{O}_2
 
 ## acceptance-criteria
 
 - an agent can receive a routed message without relying on hidden prompt chaining
 - the message ownership boundary is explicit
 - crash/restart behavior is defined at the architecture level
-- the window model remains compatible with Hermes routing and review workflows
+- the window model should make human interaction compatible with modern human-machine interfacing.
 
 ## implementation-brief
 

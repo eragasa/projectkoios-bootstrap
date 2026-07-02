@@ -55,7 +55,6 @@ If accepted, add the promotion trigger rule to the workspace guidance under the 
 
 ## resolved-open-questions
 
-- Should Hermes enforce the trigger at delivery time? That is the natural enforcement point — Hermes sees cross-role references and can gate the delivery.
 - Should the one-session window be a strict deadline or a best-effort guideline? Strict for now; relaxing later is easier than tightening.
 
 ## non-goals

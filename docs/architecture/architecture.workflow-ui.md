@@ -1,14 +1,14 @@
 ---
 status: draft
-date: 20260702.180350Z
+date: 20260702.213000Z
 back_to: architecture.00
 ---
 
-# Hermes Sandbox Message Delivery
+# Workflow UI Surface
 
 ## Purpose
 
-This is the bootstrap architecture note for hermes sandbox message delivery.
+This is the bootstrap architecture note for the workflow UI surface.
 
 ## Scope
 
@@ -18,9 +18,10 @@ It defines the navigation surface for the related ADR and points to the controll
 
 This note is controlled by:
 
-- `docs/architecture/adr/adr.hermes-sandbox-message-delivery.draft.md`
+- `docs/architecture/adr/adr.workflow-ui.draft.md`
 
 ## Related files
 
-- `docs/architecture/adr/adr.hermes-sandbox-message-delivery.draft.md`
+- `docs/architecture/adr/adr.workflow-ui.draft.md`
 - `docs/architecture/architecture.00.md`
+- `docs/architecture/architecture.ui-core.md`

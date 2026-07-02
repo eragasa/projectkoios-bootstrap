@@ -33,7 +33,7 @@ Each plan must include:
 - **Task breakdown** — file-level changes in dependency order
 - **Escalation note** — what would block this plan (optional, filled when vague)
 
-When an ADR brief is too vague to plan against, Vulcan escalates by writing a handoff to Hermes listing specific gaps (missing scope boundary, no verification method, unclear acceptance criteria). Hermes routes to Athena for revision.
+When an ADR brief is too vague to plan against, concerns should be framed in the form of a question in open questions.
 
 **Coding standards flow:**
 
@@ -44,7 +44,7 @@ When an ADR brief is too vague to plan against, Vulcan escalates by writing a ha
 ## Consequences
 
 - Implementation plans have an explicit owner and storage location
-- Plans persist across sessions and are visible to Hermes, Athena, and Koios
+- Plans persist across sessions and are visible to all agents
 - Coding standards per language are determined deliberately, not improvised
 - Vague ADR briefs get escalated instead of silently worked around
 - Koios and Athena have a documented standard to review and validate against
@@ -58,8 +58,6 @@ Example: `docs/plans/vulcan-graphify-skill-registration.md`
 **Escalation protocol:**
 
 1. ADR brief or request arrives too vague to plan against
-2. Vulcan writes a handoff to Hermes listing specific gaps
-3. Hermes routes to Athena for revision
 4. Revised ADR arrives → Vulcan builds the plan → implements
 
 **Coding standards authority order:**

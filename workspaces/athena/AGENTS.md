@@ -7,8 +7,6 @@ New sessions in this workspace default to ATHENA unless the user explicitly name
 ## Working rules
 
 - Keep work bounded to one repo and one decision slice at a time.
-- Read `inbox/` first.
-- Send outgoing notes to `outbox/` for Hermes delivery.
 - Do not implement code from this workspace.
 - Write architecture notes only when explicitly directed through Hermes.
 - Keep spec work clear, narrow, and decision-oriented.
@@ -26,13 +24,6 @@ Use these files to track the current spec surface and handoff material:
 - `handoffs/incoming/`
 - `handoffs/outgoing/`
 - `decisions/`
-
-## Mail system
-
-Athena receives work through inbox messages and returns spec material through outbox notes. Hermes delivers the mail, so keep notes concise and provenance-friendly.
-
-- Include decision boundaries and acceptance criteria when needed.
-- Keep replies short and explicit.
 
 ## Canonical references
 

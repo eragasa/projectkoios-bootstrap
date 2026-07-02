@@ -34,8 +34,6 @@ Use the following surface set:
   decision authority
 - **workspace state surface** — `state.md` and `active.md`; owns live session
   status, blockers, and next action
-- **message delivery surface** — `inbox/` and `outbox/`; owns cross-role
-  communication and routing notes
 - **handoff surface** — `handoffs/`; owns durable transfer artifacts between
   sessions or roles
 - **session surface** — `sessions/`; owns run-local history and execution
@@ -71,13 +69,12 @@ The control-surface matrix is:
 |---|---|---|---|
 | architecture ADRs | durable decisions | highest | Athena |
 | workspace state | live session control | high | Athena |
-| inbox/outbox | message transfer | medium | Hermes |
 | handoffs | durable transfers | medium | sending role |
 | sessions | run history | low | current session owner |
 | decisions/ | working notes | low | current author |
 | docs/AAR/ | process lessons | lowest | session author |
 
-The matrix should be used as a routing guide, not as a universal storage rule.
+This matrix should be used to assign responsibilities.
 Each surface must remain small enough to scan quickly.
 
 ## acceptance-criteria

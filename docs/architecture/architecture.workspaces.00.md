@@ -14,7 +14,6 @@ Project Koios needs persistent per-agent workspace state so sessions can resume
 without re-deriving the current task, repo focus, or outstanding handoffs.
 
 A workspace is agent-scoped, not repo-scoped:
-- Hermes keeps routing and repo-state context
 - Athena keeps bounded spec context
 - Vulcan keeps implementation context
 - Koios keeps knowledge/provenance context

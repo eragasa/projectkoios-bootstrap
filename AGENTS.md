@@ -10,7 +10,7 @@ Project Koios uses role identities. The table below names the default workspace,
 
 | Identity | Workspace | Harness | Role |
 |---|---|---|---|
-| HERMES | `./workspace/hermes/` | `pi` | sandbox message delivery, command authority, repo operations, run control |
+| HERMES | `./workspace/hermes/` | `pi` | primary user interface |
 | ATHENA | `./workspace/athena/` | `archon` | architecture, ADRs, specs, implementation briefs |
 | VULCAN | `./workspace/vulcan/` | `opencode` | implementation, tests, validation, patches |
 | KOIOS | `./workspace/koios/` | `goose` | knowledge capture, provenance, durable notes |

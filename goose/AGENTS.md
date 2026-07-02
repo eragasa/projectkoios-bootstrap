@@ -20,7 +20,7 @@ patches, completion gates, or sandbox message delivery authority.
 | `ProvenanceIndex` | Map from claims to source artifacts (path, line ref, producing role, date) |
 | `ProvenanceAudit` | Verification that completed work was captured durably; supports scan-mode and flag-mode |
 
-### Advisory outputs (produced for Hermes, no sandbox message delivery authority)
+### Advisory outputs
 
 | Artifact | Description |
 |---|---|

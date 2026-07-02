@@ -27,10 +27,6 @@ That file is the stable active key for the docs architecture surface.
 Replacement versions are archived under timestamped filenames.
 The docs model is intentionally portable across Python 3, TypeScript, and Rust.
 
-## Protection
-
-Only Hermes may modify `docs/architecture*.md`, and only when Zeus explicitly
-directs the change.
 
 ## Index
 
@@ -57,6 +53,8 @@ directs the change.
 | [architecture.ownership-ledger-role-alignment](architecture.ownership-ledger-role-alignment.md) | [adr.ownership-ledger-role-alignment](adr/adr.ownership-ledger-role-alignment.draft.md) |
 | [architecture.unified-diff-review-surface](architecture.unified-diff-review-surface.md) | [adr.unified-diff-review-surface](adr/adr.unified-diff-review-surface.draft.md) |
 | [architecture.ui-core](architecture.ui-core.md) | [adr.ui-core](adr/adr.ui-core.draft.md) |
+| [architecture.workflow-ui](architecture.workflow-ui.md) | [adr.workflow-ui](adr/adr.workflow-ui.draft.md) |
+| [architecture.json-schemas](architecture.json-schemas.md) | [adr.json-schemas](adr/adr.json-schemas.draft.md) |
 | [architecture.agent-windows-with-on-message-triggers](architecture.agent-windows-with-on-message-triggers.md) | [adr.agent-windows-on-message-triggers](adr/adr.agent-windows-on-message-triggers.draft.md) |
 | [architecture.json-adr-storage-topology](architecture.json-adr-storage-topology.md) | [adr.json-database-for-adr-storage](adr/adr.json-database-for-adr-storage.draft.md) |
 | [architecture.spike-entry-conditions](architecture.spike-entry-conditions.md) | [adr.spike-entry-conditions](adr/adr.spike-entry-conditions.draft.md) |

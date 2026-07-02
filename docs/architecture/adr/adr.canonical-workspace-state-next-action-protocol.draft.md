@@ -151,3 +151,4 @@ field and leverage rule.
 - KOIOS: Consider a smaller minimal field set; too many fields will turn the state surface into a maintenance burden.
 - HERMES: This should be a single live surface, not a summary of several surfaces; otherwise the next-action protocol will still depend on scattered context.
 - HERMES: Prefer one canonical workspace-state file (for example `state.md`) with any machine-readable form treated as a render or companion, so the next-action surface does not split across multiple authorities.
+- HERMES: If `state.md` exists but workspace guidance does not explicitly reference it, agents may not treat it as canonical yet.

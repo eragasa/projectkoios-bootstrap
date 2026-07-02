@@ -7,8 +7,8 @@ draft
 ## Context
 
 Origin: user request
-From: HERMES
-Acting-As: HERMES
+From: `HERMES`
+Acting-As: user(Eugene)
 Scope: projectkoios-bootstrap
 Repository: projectkoios-bootstrap
 Architecture-Domain: software
