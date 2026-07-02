@@ -11,7 +11,6 @@ From: HERMES
 Acting-As: HERMES
 Scope: projectkoios-bootstrap
 Repository: projectkoios-bootstrap
-Delegated-Operator: pi
 Architecture-Domain: software
 
 The repository now has many reusable skills, but their authority relationship to

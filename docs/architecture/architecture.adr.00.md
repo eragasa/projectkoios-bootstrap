@@ -18,6 +18,7 @@ It groups the architecture notes that describe ADR schema, naming, lifecycle, an
 
 - [architecture.adr.template](architecture.adr.template.md)
 - [architecture.adr.names](architecture.adr.names.md)
+- [architecture.adr.lifecycle](architecture.adr.lifecycle.md)
 - [architecture.lifecycle.00](architecture.lifecycle.00.md)
 - `docs/architecture/adr/`
 - `docs/templates/ADR.proposal.template.md`

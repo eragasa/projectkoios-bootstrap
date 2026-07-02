@@ -11,7 +11,6 @@ From: HERMES
 Acting-As: HERMES
 Scope: projectkoios-bootstrap workflow package architecture
 Repository: projectkoios-bootstrap
-Delegated-Operator: pi
 Architecture-Domain: software
 
 Project Koios needs a workflow substrate that can define, inspect, and execute

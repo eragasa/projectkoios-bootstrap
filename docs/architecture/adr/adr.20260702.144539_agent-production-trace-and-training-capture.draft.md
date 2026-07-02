@@ -11,7 +11,6 @@ From: VULCAN
 Acting-As: VULCAN
 Scope: projectkoios-bootstrap agent-training surface
 Repository: projectkoios-bootstrap
-Delegated-Operator: opencode
 Architecture-Domain: software
 
 The new JSON document database and ingestor under `spike/json-database-and-ingestor/`

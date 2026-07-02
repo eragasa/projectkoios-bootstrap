@@ -1,6 +1,6 @@
 # Idea: <topic>
 
-> Template for converting a freeform brainstorm or temporary chat into a durable incubator note.
+> Template for converting a freeform brainstorm or temporary chat into a durable brainstorm note.
 
 ## Brainstorm
 
@@ -16,7 +16,7 @@
 
 ## Spike requirements
 
-A topic leaves incubator mode only when it becomes a draft ADR or is rejected as out of scope. If the topic needs investigation, treat the spike as a draft ADR packaged with an implementation attachment.
+A topic leaves brainstorm mode only when it becomes a draft ADR or is rejected as out of scope. If the topic needs investigation, treat the spike as a draft ADR packaged with an implementation attachment.
 
 - <required question 1>
 - <required question 2>

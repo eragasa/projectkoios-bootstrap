@@ -12,7 +12,6 @@ From: HERMES
 Acting-As: HERMES
 Scope: projectkoios-bootstrap
 Repository: projectkoios-bootstrap
-Delegated-Operator: pi
 Architecture-Domain: software
 
 The current review flow does not make exact file diffs easy to inspect in a stable way. When the agent summarizes changes in prose, the user cannot reliably see the literal file-level edit that is being proposed.

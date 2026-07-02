@@ -11,16 +11,15 @@ From: HERMES
 Acting-As: HERMES
 Scope: projectkoios-bootstrap
 Repository: projectkoios-bootstrap
-Delegated-Operator: pi
 Architecture-Domain: software
 
 The repository needs a lightweight way to capture freeform brainstorming before it becomes a draft ADR or is rejected as out of scope. Users may brainstorm in a temporary chat session, external chat tool, or a temporary agent, but the result should be summarized into a durable repo note instead of preserved as an unstructured transcript.
 
 ## Decision
 
-Use `docs/incubator/` as the entry surface for brainstorming summaries.
+The legacy incubator surface is deprecated and should not receive new notes.
 
-The incubator note template should capture:
+The brainstorm note template should capture:
 
 - topic
 - goal
@@ -40,10 +39,10 @@ Workflow rules:
 
 - brainstorming may happen anywhere
 - raw chat transcripts are not authoritative artifacts
-- the durable output is a concise incubator note
-- a topic leaves incubator mode only when it becomes a draft ADR or is rejected as out of scope
+- the durable output is a concise brainstorm note
+- a topic leaves brainstorm mode only when it becomes a draft ADR or is rejected as out of scope
 - a spike is a draft ADR packaged with an implementation attachment, not a separate artifact class
-- the incubator note should be promoted once the draft ADR boundary and attachment are clear
+- the brainstorm note should be promoted once the draft ADR boundary and attachment are clear
 
 ## Consequences
 
@@ -55,7 +54,7 @@ Workflow rules:
 
 ## architecture-spec
 
-The incubator note template is append-friendly and top-heavy: the newest idea stays at the top, while answered questions and responded-to comments move to the bottom.
+The brainstorm note template is append-friendly and top-heavy: the newest idea stays at the top, while answered questions and responded-to comments move to the bottom.
 
 ```md
 # Idea: <topic>
@@ -146,10 +145,10 @@ The incubator note template is append-friendly and top-heavy: the newest idea st
 
 ## acceptance-criteria
 
-- A brainstorm can be summarized into a durable incubator note
+- A brainstorm can be summarized into a durable brainstorm note
 - The template makes it clear what to capture from a temporary chat
 - The template distinguishes brainstorming from spike readiness
-- The workflow says when to stay in incubator mode
+- The workflow says when to stay in brainstorm mode
 - The workflow says when to promote into a draft ADR
 
 ## implementation-brief
@@ -158,9 +157,9 @@ If accepted, add a reusable template file under `docs/templates/` that presents 
 
 ## resolved_open_questions
 
-- Should the template live in `docs/templates/` as a reusable file or also be mirrored in `docs/incubator/`?
+- Should the template live in `docs/templates/` as a reusable file or only as a migrated legacy reference?
 - Should external-chat summaries require source attribution?
-- Should the incubator note include a promotion target field?
+- Should the brainstorm note include a promotion target field?
 - Should the template name be standardized with the other template files?
 - Should responded-to comments be tracked in a dedicated bottom section?
 
@@ -174,7 +173,7 @@ If accepted, add a reusable template file under `docs/templates/` that presents 
 
 - A user can chat freely and then condense the result into the template
 - The template is short enough to use repeatedly
-- The boundary between incubator, spike, and ADR remains obvious
+- The boundary between brainstorm, spike, and ADR remains obvious
 
 ## routing
 

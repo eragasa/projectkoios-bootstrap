@@ -12,7 +12,6 @@ From: HERMES
 Acting-As: HERMES
 Scope: projectkoios-bootstrap
 Repository: projectkoios-bootstrap
-Delegated-Operator: pi
 Architecture-Domain: software
 
 The adversarial two-plane gate needs an authoritative way to record who owns PetriNet places and transitions. That ownership must be transferable, and the closest role alignment should determine who owns a place or transition at a given time.

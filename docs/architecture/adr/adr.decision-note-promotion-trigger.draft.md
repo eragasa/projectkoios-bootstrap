@@ -11,7 +11,6 @@ From: VULCAN
 Acting-As: VULCAN
 Scope: projectkoios-bootstrap
 Repository: projectkoios-bootstrap
-Delegated-Operator: opencode
 Architecture-Domain: software
 
 The `decisions/` surface in each workspace holds low-authority working notes. The control-surfaces ADR already defines it as temporary and non-authoritative. However, there is no concrete trigger that forces promotion when a decision note starts influencing work across roles.

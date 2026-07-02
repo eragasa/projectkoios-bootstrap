@@ -506,7 +506,7 @@ a revised or superseding ADR.
 
 - back_to: architecture.00
 - supersedes: None
-- superseded_by: None
+- superseded_by: docs/architecture/adr/adr.adr-lifecycle.draft.md
 
 ---
 

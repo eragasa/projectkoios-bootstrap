@@ -11,7 +11,6 @@ From: HERMES
 Acting-As: HERMES
 Scope: projectkoios-bootstrap review-policy surface
 Repository: projectkoios-bootstrap
-Delegated-Operator: pi
 Architecture-Domain: software
 
 The repository needs a clear authority boundary for code review on Python code

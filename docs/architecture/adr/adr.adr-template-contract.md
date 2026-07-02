@@ -11,7 +11,6 @@ From: Hermes
 Acting-As: Hermes
 Scope: projectkoios-bootstrap docs-template surface
 Repository: projectkoios-bootstrap
-Delegated-Operator: pi
 Architecture-Domain: software
 
 The repository needs one canonical ADR data model so draft content, review

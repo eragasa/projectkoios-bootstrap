@@ -11,7 +11,6 @@ From: HERMES
 Acting-As: HERMES
 Scope: projectkoios-bootstrap
 Repository: projectkoios-bootstrap
-Delegated-Operator: pi
 Architecture-Domain: software
 
 The repository is moving toward semantic JSON structuring of files, so ADR naming must separate the semantic title field from the storage filename. The current naming guidance is split across two ADRs, but the combined naming contract is easier to consume as one umbrella surface.

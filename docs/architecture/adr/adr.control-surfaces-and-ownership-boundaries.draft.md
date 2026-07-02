@@ -11,7 +11,6 @@ From: ATHENA
 Acting-As: ATHENA
 Scope: projectkoios-bootstrap
 Repository: projectkoios-bootstrap
-Delegated-Operator: pi
 Architecture-Domain: software
 
 The bootstrap repo now has multiple live surfaces for control, state, and

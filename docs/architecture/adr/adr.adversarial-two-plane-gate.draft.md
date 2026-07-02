@@ -12,7 +12,6 @@ From: HERMES
 Acting-As: HERMES
 Scope: projectkoios-bootstrap
 Repository: projectkoios-bootstrap
-Delegated-Operator: pi
 Architecture-Domain: software
 
 This ADR defines the gate between architecture work and implementation work. The gate should be concrete, not abstract: it needs named objects, named actions, and explicit entry and exit requirements.

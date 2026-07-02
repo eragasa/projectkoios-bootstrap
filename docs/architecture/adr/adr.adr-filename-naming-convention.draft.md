@@ -11,7 +11,6 @@ From: Hermes
 Acting-As: HERMES
 Scope: projectkoios-bootstrap
 Repository: projectkoios-bootstrap
-Delegated-Operator: pi
 Architecture-Domain: software
 
 Current ADR filenames are harder to scan than they need to be. The repository

@@ -11,7 +11,6 @@ From: ATHENA
 Acting-As: ATHENA
 Scope: projectkoios-bootstrap
 Repository: projectkoios-bootstrap
-Delegated-Operator: pi
 Architecture-Domain: software
 
 The repository needs a simple rule for when Athena should add comments during

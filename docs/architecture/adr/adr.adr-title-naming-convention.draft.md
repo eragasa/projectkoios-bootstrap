@@ -11,7 +11,6 @@ From: Hermes
 Acting-As: HERMES
 Scope: projectkoios-bootstrap
 Repository: projectkoios-bootstrap
-Delegated-Operator: pi
 Architecture-Domain: software
 
 Some ADR titles are too vague, too process-y, or too tied to the drafting phase.

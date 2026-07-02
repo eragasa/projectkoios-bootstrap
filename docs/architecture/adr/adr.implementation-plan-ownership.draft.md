@@ -11,7 +11,6 @@ From: VULCAN
 Acting-As: VULCAN
 Scope: projectkoios-bootstrap
 Repository: projectkoios-bootstrap
-Delegated-Operator: opencode
 Architecture-Domain: software
 
 Implementation plans currently have no home. They are improvised during Vulcan sessions or crammed into ADR `implementation-brief` sections that belong to Athena. This creates three problems:

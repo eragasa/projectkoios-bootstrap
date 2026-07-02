@@ -11,7 +11,6 @@ From: ATHENA
 Acting-As: ATHENA
 Scope: projectkoios-bootstrap
 Repository: projectkoios-bootstrap
-Delegated-Operator: pi
 Architecture-Domain: software
 
 The current workspace state is spread across prose notes, inbox/outbox files,

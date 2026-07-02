@@ -11,7 +11,6 @@ From: HERMES
 Acting-As: ATHENA
 Scope: projectkoios-bootstrap
 Repository: projectkoios-bootstrap
-Delegated-Operator: pi
 
 The bootstrap repo already has explicit `inbox/` and `outbox/` surfaces, and
 workspace guidance says each harness reads inbox first and writes outgoing

@@ -2,7 +2,7 @@
 
 ## Scope
 
-ADR lifecycle policy: `docs/policies/adr-lifecycle.md`
+ADR lifecycle policy: `docs/policies/architecture.adr.lifecycle.md`
 
 Change reviewed:
 

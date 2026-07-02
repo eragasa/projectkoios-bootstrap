@@ -12,7 +12,6 @@ From: HERMES
 Acting-As: HERMES
 Scope: projectkoios-bootstrap
 Repository: projectkoios-bootstrap
-Delegated-Operator: pi
 Architecture-Domain: software
 
 ADR filenames, title lookup, status, routing, and promotion behavior are all easier to query than free text. The repository needs a storage and indexing decision that balances git-friendly inspection with structured lookup.

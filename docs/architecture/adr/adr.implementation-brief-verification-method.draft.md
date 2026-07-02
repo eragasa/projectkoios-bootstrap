@@ -11,7 +11,6 @@ From: VULCAN
 Acting-As: VULCAN
 Scope: projectkoios-bootstrap
 Repository: projectkoios-bootstrap
-Delegated-Operator: opencode
 Architecture-Domain: software
 
 Implementation briefs in the current lifecycle reach Vulcan with no defined done signal. Vulcan builds against intent, but cannot validate whether the result matches the architecture expectation. That forces rework when the implementation brief and the delivery drift apart.

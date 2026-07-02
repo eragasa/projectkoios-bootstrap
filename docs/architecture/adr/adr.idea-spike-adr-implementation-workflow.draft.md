@@ -11,99 +11,87 @@ From: Hermes
 Acting-As: HERMES
 Scope: projectkoios-bootstrap
 Repository: projectkoios-bootstrap
-Delegated-Operator: pi
 Architecture-Domain: software
 
 The current workflow tends to push exploratory work into ADRs too early. That makes the decision log volatile and mixes brainstorming, uncertainty reduction, and durable architecture decisions.
 
-The repository needs a lower-friction place for raw ideas, a timeboxed place for experiments, and a stable place for decisions. Iterative development should happen after the decision is stable enough to build against.
+The legacy staging directories `docs/incubator/` and `docs/spikes/` are deprecated. New work must not be added there; existing material should be migrated out and those directories deleted.
 
 ## Decision
 
 Use a four-surface workflow:
 
-- `docs/incubator/` for raw ideas, brainstorming, and rough notes
-- `docs/spikes/` for timeboxed experiments that reduce uncertainty
-- `docs/architecture/adr/` for durable decisions
-- implementation briefs and tasks for iterative delivery work
+- idea notes are separate documents that point at an ADR by stable fields
+- `reporoot/spike/<spike-id>/` is the only spike location, and each spike gets its own nested directory
+- `reporoot/dev/<proposal-id>/` is the only dev location for ADR proposals that are not active yet, and each proposal gets its own nested directory
+- implementation briefs and tasks are separate delivery work
 
 ADRs are encapsulated decision records and must remain independently readable.
 Hierarchy, readiness level, and promotion ordering are represented by `architecture.00`, not by nested ADR body structure.
 
 The intended lifecycle is:
 
-`idea -> spike -> ADR -> implementation brief -> iterative implementation`
+`idea -> spike -> draft ADR -> proposed ADR -> active ADR -> implementation brief -> iterative implementation`
 
 ## Consequences
 
-- Brainstorming becomes low-friction and non-authoritative
-- Spikes absorb uncertainty without churning ADRs
-- ADRs become calmer, more durable decision records
-- Iterative implementation can proceed without repeatedly reopening architecture decisions
+- brainstorming becomes low-friction without dedicated incubator directories
+- spikes remain bounded and file-local
+- ADRs stay short and durable
+- iterative implementation can proceed without repeatedly reopening architecture decisions
+- legacy staging directories can be removed after migration
 
 ## architecture-spec
 
-This ADR introduces a process boundary, not a new runtime system.
+This ADR introduces the workflow boundary and the deprecation of the old staging directories.
 
 The boundary is:
 
 - ideas are exploratory
-- spikes are investigatory
-- ADRs are authoritative decisions
+- spikes are draft-ADR-plus-implementation-plan bundles in `reporoot/spike/<spike-id>/`
+- draft ADRs are comment-open working records
+- proposed ADRs are the active review surface and move to dev in `reporoot/dev/<proposal-id>/`
+- active ADRs are production records
 - implementation briefs translate decisions into build work
 
-## acceptance-criteria
+Stated negatively:
+- do not add new work to `docs/incubator/`
+- do not add new work to `docs/spikes/`
+- do not keep the legacy staging dirs alive after migration
 
-- Raw ideas can be captured without creating an ADR
-- A spike can be created for a single question or uncertainty
+## acceptance_criteria
+
+- raw ideas can be captured without using `docs/incubator/`
+- spike artifacts live under `reporoot/spike/<spike-id>/`
+- proposed ADR work lives under `reporoot/dev/<proposal-id>/`
 - ADRs are only used for durable decisions
-- Implementation work can proceed from an ADR-derived brief
-- The workflow is understandable without additional hidden rules
+- the legacy staging dirs are clearly deprecated and removable after migration
 
-## implementation-brief
+## implementation_brief
 
-If accepted, add lightweight repo guidance for:
+If accepted, migrate any remaining content out of `docs/incubator/` and `docs/spikes/`, delete those directories, and update related workflow guidance so new work uses the repo-root spike/dev surfaces and ADR-linked separate documents.
 
-- where incubator notes live
-- what makes something a spike
-- when a spike should become an ADR
-- when a decision should become an implementation brief
+## resolved_open_questions
 
-## resolved-open-questions
+- Should `docs/incubator/` and `docs/spikes/` be formal directories, or just conventions? They are deprecated and should be removed after migration.
+- Where do spike packages live? `reporoot/spike/<spike-id>/`.
+- Where do ADR proposals live before activation? `reporoot/dev/<proposal-id>/`.
 
-- Should `docs/incubator/` and `docs/spikes/` be formal directories, or just conventions?
-- Should spikes have an expiry date by default?
-- Should every spike be required to name a promotion target?
-
-## non-goals
+## non_goals
 
 - Replacing ADRs as the durable decision surface
 - Forcing every idea into a formal process
 - Making spikes as heavyweight as ADRs
-- Defining the full implementation planning system
+- Preserving the legacy incubator/spike directories
 
-## validation-expectations
+## validation_expectations
 
 - Review the workflow for clarity and low friction
 - Confirm the proposal reduces ADR volatility rather than adding more ceremony
-- Confirm it still supports iterative development after decisions stabilize
+- Confirm the legacy staging dirs are no longer required
 
 ## routing
 
 - Owner: Hermes
 - Next phase: proposed
-- Notes: Process/workflow control surface; later ADR, policy note, or implementation guidance if stabilized.
-
-## links
-
-- back_to: architecture.00
-- supersedes: None
-- superseded_by: None
-
-## Comments
-
-- KOIOS: The lifecycle boundary is sensible, but it overlaps with other workflow notes; reconcile the naming before treating it as settled.
-- KOIOS: Decide whether `docs/spikes/` is a real directory or only a convention so the layout matches the policy.
-- VULCAN: The implementation-brief step needs a `verification_method` field so Vulcan knows how to validate against the architecture intent. Without it, "implementation brief → iterative implementation" has no defined done signal.
-- HERMES: The adversarial two-plane gate is a key encapsulated ADR spanning this workflow surface and the verification-method surface; the implementation brief is the completion point of that gate.
-- HERMES: That gate has now been extracted into its own ADR and should be linked, not duplicated, from this workflow surface.
+- Notes: Process/workflow control surface.

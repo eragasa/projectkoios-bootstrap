@@ -12,14 +12,13 @@ From: HERMES
 Acting-As: HERMES
 Scope: projectkoios-bootstrap
 Repository: projectkoios-bootstrap
-Delegated-Operator: pi
 Architecture-Domain: software
 
 The repository needs a clear rule for what a spike is. VULCAN's decision is that a spike is not a separate artifact class; it is a draft ADR packaged with an implementation attachment.
 
 Without this rule, spikes drift into a parallel taxonomy and the repo splits decision work from build work. That creates duplicated authority, unclear promotion, and noisy lifecycle state.
 
-This ADR defines the minimum conditions for a spike package and the rule for moving a topic from incubator material into spike form.
+The legacy `docs/spikes/` surface is deprecated and should not receive new content.
 
 ## Decision
 
@@ -54,7 +53,7 @@ A topic may be treated as a spike only if it has:
 - The implementation attachment is subordinate to the ADR.
 - Spike findings may refine the ADR or the attachment, but they do not create a new artifact family.
 - Promotion means the ADR is stabilized and the attachment is either attached, rewritten, or split out as needed.
-- `docs/spikes/` is staging for draft ADR work, not a competing decision surface.
+- `reporoot/spike/<spike-id>/` is the only spike surface, and legacy `docs/spikes/` content should be migrated out and removed.
 
 ## Consequences
 
@@ -87,7 +86,7 @@ Stated negatively:
 - a reviewer can identify the implementation attachment
 - a spike without a draft ADR is rejected
 - a spike without an implementation attachment is rejected
-- the repo no longer treats spikes as a separate artifact class
+- the repo no longer treats `docs/spikes/` as a separate artifact class
 
 ## implementation-brief
 
@@ -99,7 +98,7 @@ If accepted, update spike templates and workflow guidance so:
 ## validation_method
 
 Review a sample topic and confirm it either:
-- remains idea/incubator material, or
+- remains idea material, or
 - becomes a draft ADR with an implementation attachment
 
 ## routing

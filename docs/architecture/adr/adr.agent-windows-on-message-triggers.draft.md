@@ -12,7 +12,6 @@ From: HERMES
 Acting-As: HERMES
 Scope: projectkoios-bootstrap
 Repository: projectkoios-bootstrap
-Delegated-Operator: pi
 Architecture-Domain: software
 
 The current agent interaction model is chat-centric and does not give each agent a durable visible runtime surface. Multi-agent work becomes harder to watch, harder to route, and easier to confuse when multiple roles share the same conversational channel.

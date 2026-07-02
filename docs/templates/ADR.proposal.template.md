@@ -14,7 +14,6 @@ From: <sender>
 Acting-As: <harness-role>
 Scope: <repository-or-scope>
 Repository: <repository-name>
-Delegated-Operator: <mediator-if-any>
 
 <Describe the problem, why it matters, and the current state.>
 
