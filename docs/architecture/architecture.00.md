@@ -33,7 +33,7 @@ The docs model is intentionally portable across Python 3, TypeScript, and Rust.
 | note | controlling ADR |
 |---|---|
 | [architecture.documents](architecture.documents.md) | None |
-| [architecture.adr.00](architecture.adr.00.md) | None |
+| [architecture.adr.00](architecture.adr.00.md) | [adr.adr](adr/adr.adr.md) |
 | [architecture.adr.template](architecture.adr.template.md) | [adr.adr-template-contract](adr/adr.adr-template-contract.md) |
 | [architecture.lifecycle.00](architecture.lifecycle.00.md) | [adr.idea-spike-adr-implementation-workflow](adr/adr.idea-spike-adr-implementation-workflow.draft.md) |
 | [architecture.adr.names](architecture.adr.names.md) | [adr.adr-names](adr/adr.adr-names.draft.md) |

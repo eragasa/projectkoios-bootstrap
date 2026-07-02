@@ -18,6 +18,7 @@ workflow, and rendering all agree on the same fields and order.
 
 The canonical source now lives at `docs/architecture/adr/adr.schema.json`.
 Markdown is a render target, not the source of truth.
+The DOC CONTROL NUMBER standard is defined by `adr.adr.md`.
 
 The data model must stay focused on one architecture domain, keep provenance in
 `context`, and preserve the repository's canonical ADR fields.
@@ -48,6 +49,7 @@ explicit ADR links when present.
 
 The canonical ADR JSON schema contains:
 
+- `dcn`
 - `id`
 - `slug`
 - `title`
@@ -65,6 +67,7 @@ The canonical ADR JSON schema contains:
 - `links`
 - optional `workflow_binding` fields for state, operators, and gate references
 
+The template contract must include a `dcn` field that follows the standard defined by `adr.adr.md`.
 `context` must carry provenance and single-domain metadata:
 
 - `origin`
@@ -78,9 +81,7 @@ The canonical ADR JSON schema contains:
 ## acceptance-criteria
 
 - New ADRs can be represented as JSON without losing any required data.
-- The schema includes provenance, routing, and optional workflow-binding
-  fields.
-- The schema enforces one architecture domain per ADR.
+- The schema includes provenance, routing, the `dcn` field, and optional workflow-binding fields.- The schema enforces one architecture domain per ADR.
 - Workflow-bound ADRs can render optional gate fields without losing schema
   consistency.
 - A renderer can produce Markdown from the JSON object.
