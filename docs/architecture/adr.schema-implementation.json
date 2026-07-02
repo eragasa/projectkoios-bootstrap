@@ -1,0 +1,255 @@
+{
+"$schema": "https://json-schema.org/draft/2020-12/schema",
+"$id": "adr.schema-implementation.json",
+"title": "Implementation Record",
+"type": "object",
+"additionalProperties": false,
+"required": [
+"type",
+"name",
+"status",
+"owner",
+"governing_adr",
+"surface",
+"source_requirements",
+"plan_items",
+"validation"
+],
+"properties": {
+"type": {
+"const": "implementation",
+"description": "Record type."
+},
+"name": {
+"type": "string",
+"pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+"description": "Stable implementation identity name."
+},
+"status": {
+"type": "string",
+"enum": [
+"planned",
+"in-progress",
+"blocked",
+"validated",
+"productionized"
+],
+"description": "Implementation lifecycle state. This is distinct from ADR status."
+},
+"owner": {
+"const": "VULCAN",
+"description": "Implementation records are owned by VULCAN."
+},
+"governing_adr": {
+"type": "string",
+"description": "ADR that authorizes this implementation."
+},
+"surface": {
+"type": "string",
+"description": "Human-readable implementation surface, usually implementation.<name>.md."
+},
+"implementation_dir": {
+"type": "string",
+"description": "Working implementation directory, if any."
+},
+"production_target": {
+"type": "string",
+"description": "Production source target, if productionization is approved."
+},
+"approved_by_user": {
+"type": "boolean",
+"description": "Whether the USER explicitly approved implementation or productionization.",
+"default": false
+},
+"source_requirements": {
+"type": "array",
+"minItems": 1,
+"description": "Requirements that authorize implementation plan items.",
+"items": {
+"$ref": "#/$defs/source_requirement"
+}
+},
+"plan_items": {
+"type": "array",
+"description": "Bounded implementation items. VULCAN may implement only USER-approved items.",
+"items": {
+"$ref": "#/$defs/plan_item"
+}
+},
+"data_objects": {
+"type": "array",
+"description": "Structured state objects. DataObjects must not perform workflow orchestration or filesystem mutation.",
+"items": {
+"$ref": "#/$defs/named_object"
+}
+},
+"action_objects": {
+"type": "array",
+"description": "Operation objects. ActionObjects must declare reads, writes, mutation behavior, and validation.",
+"items": {
+"$ref": "#/$defs/named_object"
+}
+},
+"validation": {
+"type": "array",
+"description": "Validation checks required or performed.",
+"items": {
+"$ref": "#/$defs/validation_item"
+}
+},
+"deviations": {
+"type": "array",
+"description": "Recorded deviations from the approved plan.",
+"items": {
+"$ref": "#/$defs/deviation"
+}
+}
+},
+"$defs": {
+"source_requirement": {
+"type": "object",
+"additionalProperties": false,
+"required": [
+"id",
+"source",
+"requirement"
+],
+"properties": {
+"id": {
+"type": "string",
+"pattern": "^REQ-[0-9]{3}$"
+},
+"source": {
+"type": "string"
+},
+"requirement": {
+"type": "string"
+}
+}
+},
+"plan_item": {
+"type": "object",
+"additionalProperties": false,
+"required": [
+"id",
+"source_requirement",
+"target_files",
+"validation_method",
+"approved_by_user"
+],
+"properties": {
+"id": {
+"type": "string",
+"pattern": "^VULCAN-[0-9]{3}$"
+},
+"source_requirement": {
+"type": "string",
+"pattern": "^REQ-[0-9]{3}$"
+},
+"target_files": {
+"type": "array",
+"items": {
+"type": "string"
+}
+},
+"expected_data_objects": {
+"type": "array",
+"items": {
+"type": "string"
+}
+},
+"expected_action_objects": {
+"type": "array",
+"items": {
+"type": "string"
+}
+},
+"validation_method": {
+"type": "string"
+},
+"approved_by_user": {
+"type": "boolean"
+}
+}
+},
+"named_object": {
+"type": "object",
+"additionalProperties": false,
+"required": [
+"name",
+"purpose"
+],
+"properties": {
+"name": {
+"type": "string"
+},
+"purpose": {
+"type": "string"
+}
+}
+},
+"validation_item": {
+"type": "object",
+"additionalProperties": false,
+"required": [
+"id",
+"method",
+"status"
+],
+"properties": {
+"id": {
+"type": "string",
+"pattern": "^VAL-[0-9]{3}$"
+},
+"method": {
+"type": "string"
+},
+"status": {
+"type": "string",
+"enum": [
+"planned",
+"passed",
+"failed",
+"blocked"
+]
+}
+}
+},
+"deviation": {
+"type": "object",
+"additionalProperties": false,
+"required": [
+"id",
+"problem",
+"minimal_correction",
+"needs_user_approval",
+"status"
+],
+"properties": {
+"id": {
+"type": "string",
+"pattern": "^DEV-[0-9]{3}$"
+},
+"problem": {
+"type": "string"
+},
+"minimal_correction": {
+"type": "string"
+},
+"needs_user_approval": {
+"type": "boolean"
+},
+"status": {
+"type": "string",
+"enum": [
+"open",
+"approved",
+"rejected",
+"deferred",
+"closed"
+]
+}
+}
+}
+}
+}
