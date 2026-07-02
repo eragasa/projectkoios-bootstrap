@@ -18,9 +18,13 @@ Implementation briefs in the current lifecycle reach Vulcan with no defined done
 
 The established workflow is `idea → spike → ADR → implementation brief → iterative implementation`, but the brief-to-implementation boundary has no verification gate.
 
+In the adversarial two-plane gate, the implementation brief is the completion point that returns validated implementation back to architecture.
+
 ## Decision
 
 Add one required field to every implementation brief: `verification_method`.
+
+This field completes the adversarial two-plane gate by forcing the implementation surface to state how it returns a validated result to architecture.
 
 The field must name how Vulcan validates the implementation against the architecture intent. Examples:
 
@@ -40,7 +44,7 @@ No other fields are added. No schema change. The verification method is prose, n
 
 ## architecture-spec
 
-The implementation brief is currently a prose section in the ADR draft. The `verification_method` field is an additional prose subsection, appended at the end of the existing `implementation-brief` section.
+The implementation brief is currently a prose section in the ADR draft. The `verification_method` field is an additional prose subsection, appended at the end of the existing `implementation-brief` section. That subsection is the completion of the adversarial two-plane gate.
 
 No new schema fields, no new files, no validation tooling. The verification method is a human-readable note until actual rework costs justify formal enforcement.
 
@@ -87,3 +91,5 @@ Update the ADR template guidance to include a `verification_method` subsection i
 ## Comments
 
 - VULCAN: Proposed from implementation experience — the missing done signal is the only concrete gap observed so far. No other brief fields fail YAGNI.
+- HERMES: This verification surface participates in the adversarial two-plane gate with the workflow ADR; the gate is intentionally co-owned by architecture and implementation perspectives.
+- HERMES: That gate has now been extracted into its own ADR and should be linked, not duplicated, from this verification surface.

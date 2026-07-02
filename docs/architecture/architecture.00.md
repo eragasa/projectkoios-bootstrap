@@ -54,6 +54,11 @@ directs the change.
 | [ADR 20260702.020244Z: Hermes Sandbox Message Delivery](adr/adr.hermes-sandbox-message-delivery.draft.md) | None |
 | [ADR 20260702.030200: Implementation Plan Ownership](adr/adr.implementation-plan-ownership.draft.md) | None |
 | [ADR 20260702.043600: Koios Adversarial Code Review Authority](adr/adr.20260702.043600_koios-adversarial-code-review-authority.draft.md) | None |
+| [ADR 20260702.121432Z: Adversarial Two-Plane Gate](adr/adr.adversarial-two-plane-gate.draft.md) | None |
+| [ADR 20260702.121432Z: Ownership Ledger and Role Alignment](adr/adr.ownership-ledger-role-alignment.draft.md) | None |
+| [ADR 20260702.121432Z: Agent Windows with `on_message` Triggers](adr/adr.agent-windows-on-message-triggers.draft.md) | None |
+| [ADR 20260702.121432Z: JSON ADR Storage Topology](adr/adr.json-database-for-adr-storage.draft.md) | None |
+| [ADR 20260702.121432Z: Spike Entry Conditions](adr/adr.spike-entry-conditions.draft.md) | None |
 | [architecture.workspaces.00](architecture.workspaces.00.md) | None |
 | [architecture.workspaces.git](architecture.workspaces.git.md) | None |
 | [architecture.workspaces.obsidian](architecture.workspaces.obsidian.md) | None |
@@ -99,6 +104,8 @@ In this model:
 - ADRs remain self-contained
 - `architecture.00` supplies structure
 - the graph links decisions without making any ADR depend on hidden hierarchy
+- gates are workflow-facing control surfaces
+- ownership is treated as a higher-level architectural concern
 
 ## Related bootstrap architecture
 

@@ -105,3 +105,5 @@ If accepted, add lightweight repo guidance for:
 - KOIOS: The lifecycle boundary is sensible, but it overlaps with other workflow notes; reconcile the naming before treating it as settled.
 - KOIOS: Decide whether `docs/spikes/` is a real directory or only a convention so the layout matches the policy.
 - VULCAN: The implementation-brief step needs a `verification_method` field so Vulcan knows how to validate against the architecture intent. Without it, "implementation brief → iterative implementation" has no defined done signal.
+- HERMES: The adversarial two-plane gate is a key encapsulated ADR spanning this workflow surface and the verification-method surface; the implementation brief is the completion point of that gate.
+- HERMES: That gate has now been extracted into its own ADR and should be linked, not duplicated, from this workflow surface.

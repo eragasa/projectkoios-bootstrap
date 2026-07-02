@@ -41,6 +41,7 @@ Where:
 
 - `docs/architecture/architecture.00.md`
 - `docs/architecture/adr/adr.idea-spike-adr-implementation-workflow.draft.md`
+- `docs/architecture/adr/adr.adversarial-two-plane-gate.draft.md`
 - `docs/architecture/adr/adr.draft-comment-and-promotion-workflow.draft.md`
 - `docs/policies/policy-baseline.md`
 - `docs/policies/review-baseline.md`
@@ -53,3 +54,4 @@ Where:
   experiments once those surfaces exist.
 - Draft ADR comments stay open until promotion to proposed; proposed then becomes the active review surface.
 - ADRs are encapsulated decision records; hierarchy and readiness are represented by `architecture.00`, not by nested ADR body structure.
+- Gates are workflow-facing control surfaces; ownership is a higher-level architectural concern.
