@@ -74,6 +74,29 @@
         "supersedes": { "type": ["string", "null"] },
         "superseded_by": { "type": ["string", "null"] }
       }
+    },
+    "WorkflowBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "current_state": { "type": "string", "minLength": 1 },
+        "allowed_operators": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "entrance_gate": { "type": "string", "minLength": 1 },
+        "transition_gate": { "type": "string", "minLength": 1 },
+        "exit_gate": { "type": "string", "minLength": 1 },
+        "gating_adr": { "type": "string", "minLength": 1 },
+        "blocked_by": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "enabled_by": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
     }
   },
   "properties": {
@@ -105,6 +128,7 @@
       "minItems": 1
     },
     "routing": { "$ref": "#/$defs/Routing" },
-    "links": { "$ref": "#/$defs/Links" }
+    "links": { "$ref": "#/$defs/Links" },
+    "workflow_binding": { "$ref": "#/$defs/WorkflowBinding" }
   }
 }

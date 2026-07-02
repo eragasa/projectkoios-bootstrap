@@ -7,6 +7,8 @@ This policy states the canonical ADR lifecycle for Project Koios bootstrap so re
 ## Source of truth
 
 - Canonical architecture decision: `docs/architecture/adr/adr.adr-lifecycle.draft.md`
+- Workflow ontology note: `docs/architecture/adr/adr.workflow.draft.md`
+- ADR binding note: `docs/architecture/adr/adr.adr-workflow.draft.md`
 - This policy is a consumption aid.
 - If this policy conflicts with the ADR, the ADR wins.
 
@@ -62,6 +64,21 @@ When an ADR reaches `proposed`, it must include these machine-relevant sections:
 
 A draft ADR plus `ADR_implementation_plan` is a spike, and the spike lives in `reporoot/spike/<spike-id>/`.
 
+## Workflow-binding note
+
+Workflow-bound ADRs may optionally declare:
+
+- `Current State`
+- `Allowed Operators`
+- `Entrance Gate`
+- `Transition Gate`
+- `Exit Gate`
+- `Gating ADR`
+- `Blocked By`
+- `Enabled By`
+
+When a gate field is present, it must point to an explicit gating ADR by filename link. These fields are lifecycle controls, not routing prose.
+
 ## Canonical transitions
 
 ### Draft-to-production path
@@ -85,9 +102,11 @@ A draft ADR plus `ADR_implementation_plan` is a spike, and the spike lives in `r
 - Do not mark an ADR complete without implementation-plan completion.
 - Do not change lifecycle semantics without a new or superseding Athena ADR.
 - `docs/incubator/` and `docs/spikes/` are deprecated and should be migrated out and deleted.
+- Do not treat routing as the primary control model for workflow-bound ADRs.
 
 ## Notes
 
 - `Draft` / `Proposed` / `Active` / `Historical` / `Rejected` are ADR file statuses.
 - `draft` / `proposed` / `active` / etc. are operational routing states.
 - Draft ADRs are commentable before they move to `proposed`.
+- Workflow-bound ADRs may expose gate state separately from the base lifecycle state.

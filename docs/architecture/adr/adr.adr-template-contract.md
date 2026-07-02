@@ -22,6 +22,10 @@ Markdown is a render target, not the source of truth.
 The data model must stay focused on one architecture domain, keep provenance in
 `context`, and preserve the repository's canonical ADR fields.
 
+Workflow-bound ADRs may also render an optional `workflow_binding` block that
+points to `adr.workflow.draft.md` and `adr.adr-workflow.draft.md`. That block is
+an extension for lifecycle control, not a replacement for the core schema.
+
 ## Decision
 
 Adopt `docs/architecture/adr/adr.schema.json` as the canonical ADR schema for
@@ -29,6 +33,8 @@ this repository and treat Markdown as a derived rendering of that JSON.
 
 The schema should define the ADR content model, required provenance fields,
 status, routing, and the renderable decision sections.
+The `workflow_binding` extension should stay optional and must point at
+explicit ADR links when present.
 
 ## Consequences
 
@@ -57,6 +63,7 @@ The canonical ADR JSON schema contains:
 - `validation_expectations`
 - `routing`
 - `links`
+- optional `workflow_binding` fields for state, operators, and gate references
 
 `context` must carry provenance and single-domain metadata:
 
@@ -71,13 +78,18 @@ The canonical ADR JSON schema contains:
 ## acceptance-criteria
 
 - New ADRs can be represented as JSON without losing any required data.
-- The schema includes provenance and routing fields.
+- The schema includes provenance, routing, and optional workflow-binding
+  fields.
 - The schema enforces one architecture domain per ADR.
+- Workflow-bound ADRs can render optional gate fields without losing schema
+  consistency.
 - A renderer can produce Markdown from the JSON object.
 
 ## implementation-brief
 
 No code implementation is required for the schema decision itself.
+The optional `workflow_binding` block is a documentation and rendering extension
+for workflow-bound ADRs.
 
 ## resolved-open-questions
 

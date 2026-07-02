@@ -23,6 +23,10 @@ The lifecycle contract must stay harness-agnostic and token-light while still ma
 - historical means the ADR was superseded
 - rejected means the ADR was archived and did not proceed
 
+Workflow-bound ADRs may also carry an optional gate block defined by
+`adr.workflow.draft.md` and `adr.adr-workflow.draft.md`. When present, gate
+fields must point to explicit gating ADRs.
+
 When JSON storage becomes authoritative later, the controlling ADR document will be JSON and the Markdown file will be a knowledge projection.
 
 ## Decision
@@ -103,6 +107,7 @@ A draft ADR plus `ADR_implementation_plan` is a spike, and the spike lives in `r
 - Do not treat draft comments as acceptance.
 - Do not mark an ADR complete without implementation-plan completion.
 - Do not change lifecycle semantics without a new or superseding Athena ADR.
+- Do not treat routing as the primary control model for workflow-bound ADRs.
 
 ## Consequences
 
@@ -121,6 +126,7 @@ The ADR lifecycle contract defines:
 - the state ownership mapping
 - the required `proposed` sections
 - the allowed state transitions
+- the optional workflow-binding gate surface for workflow-bound ADRs
 - the rule that lifecycle semantics only change through Athena ADR authority
 
 Stated negatively:
@@ -151,6 +157,7 @@ Review a sample ADR and confirm the file status, operational state, required `pr
 - Should draft ADRs be comment-open until `proposed`?
 - Should a no-implementation ADR skip `active` entirely?
 - Should `historical` be reserved only for superseded ADRs?
+- Should workflow-bound ADRs require explicit gate links or only when a gate is declared?
 
 ## non_goals
 
@@ -164,6 +171,7 @@ Review a sample ADR and confirm the file status, operational state, required `pr
 - a reviewer can distinguish status from state
 - the state ownership table is internally consistent
 - the lifecycle path is understandable from the file alone
+- workflow-bound ADRs can name their gating ADRs without conflicting with the core lifecycle states
 
 ## routing
 
