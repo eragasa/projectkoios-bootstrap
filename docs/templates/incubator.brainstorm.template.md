@@ -16,7 +16,7 @@
 
 ## Spike requirements
 
-A spike should only start when the core questions are answered or explicitly deferred. Add more questions as needed, but keep the top of the note focused on the smallest set that blocks the decision.
+A topic leaves incubator mode only when it becomes a draft ADR or is rejected as out of scope. If the topic needs investigation, treat the spike as a draft ADR packaged with an implementation attachment.
 
 - <required question 1>
 - <required question 2>
@@ -56,7 +56,7 @@ Comments are append-only. The idea owner is responsible for replying to each com
 ### KOIOS
 
 | Idea | Action |
-|---|---| 
+|---|---|
 | <idea or comment> | <reply, change request, or keep> |
 
 ### HERMES
@@ -87,4 +87,4 @@ Comments are append-only. The idea owner is responsible for replying to each com
 
 ## Promotion target
 
-<If this should become a spike or ADR, name the target>
+<If this should become a draft ADR, spike package, or be rejected as out of scope>

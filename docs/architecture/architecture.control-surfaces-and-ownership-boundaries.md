@@ -4,11 +4,11 @@ date: 20260702.180350Z
 back_to: architecture.00
 ---
 
-# ADR Template
+# Control Surfaces and Ownership Boundaries
 
 ## Purpose
 
-This is the bootstrap architecture note for adr template.
+This is the bootstrap architecture note for control surfaces and ownership boundaries.
 
 ## Scope
 
@@ -18,9 +18,9 @@ It defines the navigation surface for the related ADR and points to the controll
 
 This note is controlled by:
 
-- `docs/architecture/adr/adr.adr-template-contract.md`
+- `docs/architecture/adr/adr.control-surfaces-and-ownership-boundaries.draft.md`
 
 ## Related files
 
-- `docs/architecture/adr/adr.adr-template-contract.md`
+- `docs/architecture/adr/adr.control-surfaces-and-ownership-boundaries.draft.md`
 - `docs/architecture/architecture.00.md`

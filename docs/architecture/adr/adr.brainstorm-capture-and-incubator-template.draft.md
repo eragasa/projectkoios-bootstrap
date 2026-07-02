@@ -7,17 +7,14 @@ draft
 ## Context
 
 Origin: user request
-From: Hermes
+From: HERMES
 Acting-As: HERMES
 Scope: projectkoios-bootstrap
 Repository: projectkoios-bootstrap
 Delegated-Operator: pi
 Architecture-Domain: software
 
-The repository needs a lightweight way to capture freeform brainstorming before
-it becomes a spike or ADR. Users may brainstorm in a temporary chat session,
-external chat tool, or a temporary agent, but the result should be summarized
-into a durable repo note instead of preserved as an unstructured transcript.
+The repository needs a lightweight way to capture freeform brainstorming before it becomes a draft ADR or is rejected as out of scope. Users may brainstorm in a temporary chat session, external chat tool, or a temporary agent, but the result should be summarized into a durable repo note instead of preserved as an unstructured transcript.
 
 ## Decision
 
@@ -37,22 +34,24 @@ The incubator note template should capture:
 - anything to keep out
 - resolved questions
 - resolved comments
+- promotion target
 
 Workflow rules:
 
 - brainstorming may happen anywhere
 - raw chat transcripts are not authoritative artifacts
 - the durable output is a concise incubator note
-- a spike is only created once minimum spike conditions are met
-- the incubator note should be promoted to a spike or ADR summary when ready
+- a topic leaves incubator mode only when it becomes a draft ADR or is rejected as out of scope
+- a spike is a draft ADR packaged with an implementation attachment, not a separate artifact class
+- the incubator note should be promoted once the draft ADR boundary and attachment are clear
 
 ## Consequences
 
 - users can think aloud without immediately creating architectural weight
 - temporary chat sessions become reusable repo input
-- the repo gains a consistent handoff from freeform discussion to structured
-  decision work
+- the repo gains a consistent handoff from freeform discussion to structured decision work
 - spike creation stays gated by readiness rather than enthusiasm
+- spike wording stays aligned with the draft ADR + attachment model
 
 ## architecture-spec
 
@@ -142,7 +141,7 @@ The incubator note template is append-friendly and top-heavy: the newest idea st
 
 ## Promotion target
 
-<if this should become a spike or ADR, name the target>
+<if this should become a draft ADR, spike package, or be rejected as out of scope>
 ```
 
 ## acceptance-criteria
@@ -151,18 +150,17 @@ The incubator note template is append-friendly and top-heavy: the newest idea st
 - The template makes it clear what to capture from a temporary chat
 - The template distinguishes brainstorming from spike readiness
 - The workflow says when to stay in incubator mode
-- The workflow says when to promote into a spike
+- The workflow says when to promote into a draft ADR
 
 ## implementation-brief
 
-If accepted, add a reusable template file under `docs/templates/`
-that presents the capture format and promotion rule.
+If accepted, add a reusable template file under `docs/templates/` that presents the capture format and promotion rule.
 
 ## resolved_open_questions
 
 - Should the template live in `docs/templates/` as a reusable file or also be mirrored in `docs/incubator/`?
 - Should external-chat summaries require source attribution?
-- Should the incubator note include a “promotion target” field?
+- Should the incubator note include a promotion target field?
 - Should the template name be standardized with the other template files?
 - Should responded-to comments be tracked in a dedicated bottom section?
 
@@ -172,7 +170,7 @@ that presents the capture format and promotion rule.
 - Replacing spikes or ADRs
 - Banning freeform chat tools
 
-## validation-expectations
+## validation_expectations
 
 - A user can chat freely and then condense the result into the template
 - The template is short enough to use repeatedly

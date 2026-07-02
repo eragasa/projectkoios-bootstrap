@@ -37,29 +37,27 @@ directs the change.
 | note | controlling ADR |
 |---|---|
 | [architecture.documents](architecture.documents.md) | None |
-| [architecture.adr.template](architecture.adr.template.md) | None |
-| [architecture.lifecycle.00](architecture.lifecycle.00.md) | [ADR 20260702.000551: Idea → Spike → ADR → Implementation Workflow](adr/adr.idea-spike-adr-implementation-workflow.draft.md) |
-| [ADR 20260701.131629: ADR template contract](adr/adr.adr-template-contract.md) | None |
-| [ADR 20260702.000551: Idea → Spike → ADR → Implementation Workflow](adr/adr.idea-spike-adr-implementation-workflow.draft.md) | None |
-| [ADR 20260702.004118: ADR Title Naming Convention](adr/adr.adr-title-naming-convention.draft.md) | None |
-| [ADR 20260702.004300: ADR Filename Naming Convention](adr/adr.adr-filename-naming-convention.draft.md) | None |
-| [ADR 20260702.005615: Brainstorm Capture and Incubator Note Template](adr/adr.brainstorm-capture-and-incubator-template.draft.md) | None |
-| [ADR 20260702.012900: ADR Draft Comment and Promotion Workflow](adr/adr.draft-comment-and-promotion-workflow.draft.md) | None |
-| [ADR 20260702.032100Z: Controlling ADR Join Protocol](adr/adr.controlling-adr-join-protocol.draft.md) | None |
-| [ADR 20260702.032435Z: Draft ADR Comment Processing Protocol](adr/adr.draft-adr-comment-processing-protocol.draft.md) | None |
-| [ADR 20260702.033824Z: Skill Register and ADR Binding Policy](adr/adr.skill-register-and-adr-binding-policy.draft.md) | None |
-| [ADR 20260702.020440Z: Canonical Workspace State and Next-Action Protocol](adr/adr.canonical-workspace-state-next-action-protocol.draft.md) | None |
-| [ADR 20260702.020818: Comment Scope and Control-Boundary Review Rule](adr/adr.comment-scope-and-control-boundary-review-rule.draft.md) | None |
-| [ADR 20260701.181956Z: Control Surfaces and Ownership Boundaries](adr/adr.control-surfaces-and-ownership-boundaries.draft.md) | None |
-| [ADR 20260702.020244Z: Hermes Sandbox Message Delivery](adr/adr.hermes-sandbox-message-delivery.draft.md) | None |
-| [ADR 20260702.030200: Implementation Plan Ownership](adr/adr.implementation-plan-ownership.draft.md) | None |
-| [ADR 20260702.043600: Koios Adversarial Code Review Authority](adr/adr.20260702.043600_koios-adversarial-code-review-authority.draft.md) | None |
-| [ADR 20260702.121432Z: Adversarial Two-Plane Gate](adr/adr.adversarial-two-plane-gate.draft.md) | None |
-| [ADR 20260702.121432Z: Ownership Ledger and Role Alignment](adr/adr.ownership-ledger-role-alignment.draft.md) | None |
-| [ADR 20260702.121432Z: Unified Diff Review Surface](adr/adr.unified-diff-review-surface.draft.md) | None |
-| [ADR 20260702.121432Z: Agent Windows with `on_message` Triggers](adr/adr.agent-windows-on-message-triggers.draft.md) | None |
-| [ADR 20260702.121432Z: JSON ADR Storage Topology](adr/adr.json-database-for-adr-storage.draft.md) | None |
-| [ADR 20260702.121432Z: Spike Entry Conditions](adr/adr.spike-entry-conditions.draft.md) | None |
+| [architecture.adr.00](architecture.adr.00.md) | None |
+| [architecture.adr.template](architecture.adr.template.md) | [adr.adr-template-contract](adr/adr.adr-template-contract.md) |
+| [architecture.lifecycle.00](architecture.lifecycle.00.md) | [adr.idea-spike-adr-implementation-workflow](adr/adr.idea-spike-adr-implementation-workflow.draft.md) |
+| [architecture.adr.names](architecture.adr.names.md) | [adr.adr-names](adr/adr.adr-names.draft.md) |
+| [architecture.brainstorm-capture-and-incubator-note-template](architecture.brainstorm-capture-and-incubator-note-template.md) | [adr.brainstorm-capture-and-incubator-template](adr/adr.brainstorm-capture-and-incubator-template.draft.md) |
+| [architecture.draft-comment-and-promotion-workflow](architecture.draft-comment-and-promotion-workflow.md) | [adr.draft-comment-and-promotion-workflow](adr/adr.draft-comment-and-promotion-workflow.draft.md) |
+| [architecture.controlling-adr-join-protocol](architecture.controlling-adr-join-protocol.md) | [adr.controlling-adr-join-protocol](adr/adr.controlling-adr-join-protocol.draft.md) |
+| [architecture.draft-adr-comment-processing-protocol](architecture.draft-adr-comment-processing-protocol.md) | [adr.draft-adr-comment-processing-protocol](adr/adr.draft-adr-comment-processing-protocol.draft.md) |
+| [architecture.skill-register-and-adr-binding-policy](architecture.skill-register-and-adr-binding-policy.md) | [adr.skill-register-and-adr-binding-policy](adr/adr.skill-register-and-adr-binding-policy.draft.md) |
+| [architecture.canonical-workspace-state-and-next-action-protocol](architecture.canonical-workspace-state-and-next-action-protocol.md) | [adr.canonical-workspace-state-and-next-action-protocol](adr/adr.canonical-workspace-state-next-action-protocol.draft.md) |
+| [architecture.comment-scope-and-control-boundary-review-rule](architecture.comment-scope-and-control-boundary-review-rule.md) | [adr.comment-scope-and-control-boundary-review-rule](adr/adr.comment-scope-and-control-boundary-review-rule.draft.md) |
+| [architecture.control-surfaces-and-ownership-boundaries](architecture.control-surfaces-and-ownership-boundaries.md) | [adr.control-surfaces-and-ownership-boundaries](adr/adr.control-surfaces-and-ownership-boundaries.draft.md) |
+| [architecture.hermes-sandbox-message-delivery](architecture.hermes-sandbox-message-delivery.md) | [adr.hermes-sandbox-message-delivery](adr/adr.hermes-sandbox-message-delivery.draft.md) |
+| [architecture.implementation-plan-ownership](architecture.implementation-plan-ownership.md) | [adr.implementation-plan-ownership](adr/adr.implementation-plan-ownership.draft.md) |
+| [architecture.koios-adversarial-code-review-authority](architecture.koios-adversarial-code-review-authority.md) | [adr.koios-adversarial-code-review-authority](adr/adr.20260702.043600_koios-adversarial-code-review-authority.draft.md) |
+| [architecture.adversarial-two-plane-gate](architecture.adversarial-two-plane-gate.md) | [adr.adversarial-two-plane-gate](adr/adr.adversarial-two-plane-gate.draft.md) |
+| [architecture.ownership-ledger-role-alignment](architecture.ownership-ledger-role-alignment.md) | [adr.ownership-ledger-role-alignment](adr/adr.ownership-ledger-role-alignment.draft.md) |
+| [architecture.unified-diff-review-surface](architecture.unified-diff-review-surface.md) | [adr.unified-diff-review-surface](adr/adr.unified-diff-review-surface.draft.md) |
+| [architecture.agent-windows-with-on-message-triggers](architecture.agent-windows-with-on-message-triggers.md) | [adr.agent-windows-on-message-triggers](adr/adr.agent-windows-on-message-triggers.draft.md) |
+| [architecture.json-adr-storage-topology](architecture.json-adr-storage-topology.md) | [adr.json-database-for-adr-storage](adr/adr.json-database-for-adr-storage.draft.md) |
+| [architecture.spike-entry-conditions](architecture.spike-entry-conditions.md) | [adr.spike-entry-conditions](adr/adr.spike-entry-conditions.draft.md) |
 | [architecture.workspaces.00](architecture.workspaces.00.md) | None |
 | [architecture.workspaces.git](architecture.workspaces.git.md) | None |
 | [architecture.workspaces.obsidian](architecture.workspaces.obsidian.md) | None |
