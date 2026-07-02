@@ -51,6 +51,7 @@ directs the change.
 | [ADR 20260702.020440Z: Canonical Workspace State and Next-Action Protocol](adr/adr.canonical-workspace-state-next-action-protocol.draft.md) | None |
 | [ADR 20260702.020818: Comment Scope and Control-Boundary Review Rule](adr/adr.comment-scope-and-control-boundary-review-rule.draft.md) | None |
 | [ADR 20260701.181956Z: Control Surfaces and Ownership Boundaries](adr/adr.control-surfaces-and-ownership-boundaries.draft.md) | None |
+| [ADR 20260702.020244Z: Hermes Sandbox Message Delivery](adr/adr.hermes-sandbox-message-delivery.draft.md) | None |
 | [ADR 20260702.030200: Implementation Plan Ownership](adr/adr.implementation-plan-ownership.draft.md) | None |
 | [ADR 20260702.043600: Koios Adversarial Code Review Authority](adr/adr.20260702.043600_koios-adversarial-code-review-authority.draft.md) | None |
 | [architecture.workspaces.00](architecture.workspaces.00.md) | None |
