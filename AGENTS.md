@@ -181,6 +181,7 @@ Read only the current artifact and filesystem state; do not rely on chat history
 - Read `graphify-out/GRAPH_REPORT.md` only for broad architecture review.
 - Keep local secrets out of git.
 - At session end, always write an AAR under `docs/AAR/`. For sessions with durable process lessons, record protocol failures, repeated user corrections, unclear sandbox message delivery, workflow/tool friction, validation gaps, and improvement candidates. For trivial clean sessions, write a brief AAR that states no durable process issue was observed.
+- Closeout sequence when local changes exist: (1) write the AAR, (2) commit the files, (3) request a push, and (4) treat the session as ended only after the push succeeds.
 
 ## Harness configs
 

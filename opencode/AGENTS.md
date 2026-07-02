@@ -20,7 +20,9 @@ For codebase, architecture, file-relationship, and impact questions, use
 `graphify path`, or `graphify explain` before manual grepping or browsing.
 At session start, use Graphify before broad manual reads. At session end,
 run `graphify update .` (AST-only, no LLM needed) after meaningful repository
-changes when available.
+changes when available. If local changes exist and the user is closing the
+session, follow the repo closeout sequence: write the AAR, commit the files,
+request a push, and treat the session as ended only after the push succeeds.
 
 Rules in `rules/` are incorporated by reference:
 - `rules/build.md` — implementation flow

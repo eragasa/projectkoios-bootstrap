@@ -152,6 +152,9 @@ See `../maps/` for the workspace layout:
   when `graphify-out/graph.json` exists, before manually reading large surfaces.
 - At session end, run `graphify update .` (AST-only, no LLM needed) after
    meaningful repository or vault-adjacent file changes when available.
+- If local changes exist and the user is closing the session, follow the repo
+  closeout sequence: write the AAR, commit the files, request a push, and treat
+  the session as ended only after the push succeeds.
 - Use manual reads after Graphify identifies the specific files or notes needed
   for verification, editing, or citation.
 

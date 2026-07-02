@@ -30,7 +30,9 @@ escalate if it requires specialist domain expertise.
 - If `graphify-out/graph.json` exists, prefer `graphify query`, `graphify path`, or `graphify explain` before manual grepping or browsing.
 - At session start, use Graphify before broad manual reads; at session stop,
    run `graphify update .` (AST-only, no LLM needed) after meaningful repository
-   changes when available.
+   changes when available. If local changes exist and the user is closing the
+   session, follow the repo closeout sequence: write the AAR, commit the files,
+   request a push, and treat the session as ended only after the push succeeds.
 - See `opencode/AGENTS.md` and `goose/AGENTS.md` for the other harnesses;
   do not duplicate their instructions here.
 - Route user work to individual Project Koios repositories; each
@@ -56,6 +58,8 @@ At session start:
 At session stop:
 - run `graphify update .` (AST-only, no LLM needed) after meaningful repository
   changes when available
+- write the AAR, commit the files, request a push, and treat the session as
+  ended only after the push succeeds when local changes exist
 - preserve repo-local boundaries in any outgoing handoff
 - carry `Delegated-Operator` when mediation occurred
 
