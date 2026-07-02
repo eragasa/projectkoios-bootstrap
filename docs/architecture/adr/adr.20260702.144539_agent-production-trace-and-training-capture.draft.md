@@ -32,10 +32,10 @@ is the training signal. This ADR defines how to capture it durably.
 Establish an **agent production trace** that records every turn in the
 agent-human iteration as an incremental step.
 
-The trace is a directory tree under the spike:
+The snapshot set lives under the spike:
 
 ```
-traces/<trace-timestamp>/
+snapshots/<snapshot-timestamp>/
 ├── step-log.md     ← authoritative provenance: who, what, when, where, why
 ├── signals.json    ← style signals extracted after final acceptance
 └── steps/
@@ -77,7 +77,7 @@ turn is recorded in step-log.md, not in the directory name. Deltas are
 not stored — `git diff --no-index steps/NN/ steps/NN+1/` can be computed
 on demand when a diff is needed.
 
-The trace ends with the accepted artifact. step-log.md is the durable
+The snapshot set ends with the accepted artifact. step-log.md is the durable
 record. signals.json is extracted from the full sequence after acceptance.
 
 This is not an automated system. It is a manual capture convention that
@@ -115,14 +115,14 @@ document type is added in Phase P1 alongside ADR and AAR.
 
 The snapshot mechanism is first implemented by this ADR's own procedure:
 
-- **Trace:** `spike/json-database-and-ingestor/traces/trace.20260702.144539/`
+- **Snapshot:** `spike/json-database-and-ingestor/snapshots/snapshot.20260702.144539/`
 - **Step 00 — agent-VULCAN:** `steps/00/plan.md` (initial plan draft)
 - **step-log.md:** provenance for all steps
 - **signals.json:** extracted after final acceptance
 
-This first trace captures coding style and planning conventions from the JSON
-database spike. Each subsequent spike phase creates a new trace under the same
-`traces/` directory with an incremented timestamp identifier.
+This first snapshot set captures coding style and planning conventions from the JSON
+database spike. Each subsequent spike phase creates a new snapshot under the same
+`snapshots/` directory with an incremented timestamp identifier.
 
 ## Resolved open questions
 

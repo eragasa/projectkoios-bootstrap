@@ -35,15 +35,16 @@ the human writes the style-signal list during review.
 
 ## Procedure
 
-1. Before presenting work for review, snapshot all produced files into a
-   `traces/initial/` directory under the spike or phase directory.
-2. After the human reviews and modifies, snapshot the final accepted files
-   into `traces/final/`.
-3. Run `git diff --no-index traces/initial traces/final > traces/diff.delta`.
-4. Create a trace document with fields: trace_id, session_id, agent_identity,
-   artifact_type, produced_at, accepted_at, paths, summary, style_signals.
-5. The human supplies the `style_signals` list and `summary`.
-6. Store the trace document in the spike directory.
+1. Before presenting work for review, snapshot all produced files into a new
+   step directory under `snapshots/<snapshot-timestamp>/steps/NN/`.
+2. Record the turn in `step-log.md`: Who, What, Where, Why.
+3. After the human reviews and produces their version, snapshot into the next
+   step directory and log.
+4. Repeat for each agent-human turn until the artifact is accepted.
+5. After the final step, extract style signals from the full sequence and
+   write `signals.json`.
+6. Deltas are never stored — compute `git diff --no-index steps/NN/ steps/NN+1/`
+   on demand when needed.
 
 ## Output artifact
 
