@@ -24,7 +24,7 @@ When an agent reports that its work is done and the meta-harness must decide whe
 
 ## Agent responsibility
 
-The meta-harness (pi) owns completion gating. A task is complete only when required output artifacts exist and satisfy the relevant acceptance criteria.
+Hermes owns completion gating. A task is complete only when required output artifacts exist and satisfy the relevant acceptance criteria.
 
 ## Inputs
 

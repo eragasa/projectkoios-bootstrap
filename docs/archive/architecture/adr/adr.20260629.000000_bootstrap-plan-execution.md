@@ -19,7 +19,7 @@ See the original ADR text below for the historical decision.
 - New developers run `projectkoios bootstrap init` to bootstrap local harness
   configs from the global templates.
 - `projectkoios bootstrap install` replaces direct `scripts/koios install`
-  usage for pi config sync.
+  usage for Hermes config sync.
 - The `scripts/koios` bash script is now a thin Python wrapper. The old bash
   implementation with inline tmux management has been replaced by the Python
   `harnesses` command.
@@ -37,7 +37,7 @@ secrets (placeholder values only).
 
 | Harness | Files |
 |---------|-------|
-| pi | AGENTS.md.example, settings.json.example, models.json.example, trust.json.example, auth.json.example |
+| Hermes | AGENTS.md.example, settings.json.example, models.json.example, trust.json.example, auth.json.example |
 | archon | config.yaml.example, skills/ |
 | opencode | opencode.json.example, AGENTS.md.example, rules/, checklists/ |
 | goose | AGENT.md.example, prompts/, .mcp.json.example |
@@ -49,7 +49,7 @@ Added `src/python/projectkoios/bootstrap/` with three commands:
 | Command | Function |
 |---------|----------|
 | `bootstrap init` | Copy `agents/global/*.example` → `~/.<harness>/` |
-| `bootstrap install` | Symlink pi config into `~/pi/agent/` → `~/.pi/agent/` |
+| `bootstrap install` | Symlink Hermes config into `~/pi/agent/` → `~/.pi/agent/` |
 | `harnesses {start,show,connect,stop}` | Tmux koios session management |
 
 Entry point: `projectkoios = projectkoios.bootstrap.cli:main`
@@ -95,7 +95,7 @@ secrets (placeholder values only).
 
 | Harness | Files |
 |---------|-------|
-| pi | AGENTS.md.example, settings.json.example, models.json.example, trust.json.example, auth.json.example |
+| Hermes | AGENTS.md.example, settings.json.example, models.json.example, trust.json.example, auth.json.example |
 | archon | config.yaml.example, skills/ |
 | opencode | opencode.json.example, AGENTS.md.example, rules/, checklists/ |
 | goose | AGENT.md.example, prompts/, .mcp.json.example |
@@ -107,7 +107,7 @@ Added `src/python/projectkoios/bootstrap/` with three commands:
 | Command | Function |
 |---------|----------|
 | `bootstrap init` | Copy `agents/global/*.example` → `~/.<harness>/` |
-| `bootstrap install` | Symlink pi config into `~/pi/agent/` → `~/.pi/agent/` |
+| `bootstrap install` | Symlink Hermes config into `~/pi/agent/` → `~/.pi/agent/` |
 | `harnesses {start,show,connect,stop}` | Tmux koios session management |
 
 Entry point: `projectkoios = projectkoios.bootstrap.cli:main`
@@ -189,7 +189,7 @@ secrets (placeholder values only).
 
 | Harness | Files |
 |---------|-------|
-| pi | AGENTS.md.example, settings.json.example, models.json.example, trust.json.example, auth.json.example |
+| Hermes | AGENTS.md.example, settings.json.example, models.json.example, trust.json.example, auth.json.example |
 | archon | config.yaml.example, skills/ |
 | opencode | opencode.json.example, AGENTS.md.example, rules/, checklists/ |
 | goose | AGENT.md.example, prompts/, .mcp.json.example |
@@ -201,7 +201,7 @@ Added `src/python/projectkoios/bootstrap/` with three commands:
 | Command | Function |
 |---------|----------|
 | `bootstrap init` | Copy `agents/global/*.example` → `~/.<harness>/` |
-| `bootstrap install` | Symlink pi config into `~/pi/agent/` → `~/.pi/agent/` |
+| `bootstrap install` | Symlink Hermes config into `~/pi/agent/` → `~/.pi/agent/` |
 | `harnesses {start,show,connect,stop}` | Tmux koios session management |
 
 Entry point: `projectkoios = projectkoios.bootstrap.cli:main`
@@ -251,7 +251,7 @@ filesystem are loaded.
 - New developers run `projectkoios bootstrap init` to bootstrap local harness
   configs from the global templates.
 - `projectkoios bootstrap install` replaces direct `scripts/koios install`
-  usage for pi config sync.
+  usage for Hermes config sync.
 - The `scripts/koios` bash script is now a thin Python wrapper. The old bash
   implementation with inline tmux management has been replaced by the Python
   `harnesses` command.

@@ -10,7 +10,7 @@ Single-task session: implement ADR 20260630.171442 (first-class interview phase)
 - Session-start state check: clean tree, 3 accepted ADRs pending implementation.
 - User selected ADR 1 (interview phase) for implementation.
 - Initial plan was over-scoped — proposed doc updates, artifact table additions,
-  and pi routing updates beyond the core deliverable.
+  and Hermes routing updates beyond the core deliverable.
 - User pushed back: "compare with the existing code base."
 - Codebase audit revealed most proposed changes were already covered:
   - routing-decision already in docs/meta-harness.md artifact table

@@ -45,4 +45,4 @@ The spec agent (archon/Athena) ensures that acceptance criteria are observable, 
 
 ## Escalation rule
 
-If the spec does not contain enough detail to derive criteria, escalate to meta-harness (pi) to send it back to the spec agent.
+If the spec does not contain enough detail to derive criteria, escalate to Hermes to send it back to the spec agent.

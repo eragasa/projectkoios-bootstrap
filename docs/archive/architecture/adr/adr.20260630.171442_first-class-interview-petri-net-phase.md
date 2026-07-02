@@ -102,7 +102,7 @@ All durable tokens must preserve the existing colors from the handoff model:
 `kind`, `origin`, `sender`, `recipient`, `acting_as`, `delegated_operator`,
 `repository`, `scope`, `status`, and source artifact references. Codex-mediated
 artifacts must keep `Delegated-Operator` explicit and must not collapse Codex
-into `pi`, `archon`, `opencode`, or `goose`.
+into `Hermes`, `archon`, `opencode`, or `goose`.
 
 ### Transitions
 
@@ -575,7 +575,7 @@ All durable tokens must preserve the existing colors from the handoff model:
 `kind`, `origin`, `sender`, `recipient`, `acting_as`, `delegated_operator`,
 `repository`, `scope`, `status`, and source artifact references. Codex-mediated
 artifacts must keep `Delegated-Operator` explicit and must not collapse Codex
-into `pi`, `archon`, `opencode`, or `goose`.
+into `Hermes`, `archon`, `opencode`, or `goose`.
 
 ### Transitions
 

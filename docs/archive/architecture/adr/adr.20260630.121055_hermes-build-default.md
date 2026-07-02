@@ -37,7 +37,7 @@ See the original ADR text below for the historical decision.
 
 ## architecture-spec
 
-Hermes (pi) sessions default to build mode. Plan mode is only activated
+Hermes sessions default to build mode. Plan mode is only activated
 when:
 
 1. An explicit `plan` directive is issued by the user or a higher-level
@@ -107,7 +107,7 @@ any design artefact.
 
 ## Proposal
 
-Hermes (pi) sessions default to build mode. Plan mode is only activated
+Hermes sessions default to build mode. Plan mode is only activated
 when:
 
 1. An explicit `plan` directive is issued by the user or a higher-level

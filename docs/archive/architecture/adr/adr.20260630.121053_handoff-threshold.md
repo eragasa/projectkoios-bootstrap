@@ -14,7 +14,7 @@ every session, even same-harness continuation, adds ceremony without
 corresponding value.
 
 Current convention also fans out handoffs to every other harness (e.g.
-a pi→pi session-end note also copied to Athena), multiplying overhead.
+a Hermes→Hermes session-end note also copied to Athena), multiplying overhead.
 
 ## Decision
 
@@ -100,7 +100,7 @@ every session, even same-harness continuation, adds ceremony without
 corresponding value.
 
 Current convention also fans out handoffs to every other harness (e.g.
-a pi→pi session-end note also copied to Athena), multiplying overhead.
+a Hermes→Hermes session-end note also copied to Athena), multiplying overhead.
 
 ## Proposal
 

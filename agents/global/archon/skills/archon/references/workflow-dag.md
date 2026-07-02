@@ -30,7 +30,7 @@ Top-level YAML fields on a workflow object. Per-node overrides (same name under 
 |-------|------|-------------|
 | `name` | string (required) | Workflow identifier (used in `archon workflow run <name>`) |
 | `description` | string (required) | Human-readable summary. Used for routing; see [Workflow Description Best Practices](https://archon.diy/guides/authoring-workflows/#workflow-description-best-practices) |
-| `provider` | string | AI provider (e.g. `claude`, `codex`, `pi`). Default: from `.archon/config.yaml` |
+| `provider` | string | AI provider (e.g. `claude`, `codex`, `Hermes`). Default: from `.archon/config.yaml` |
 | `model` | string | Model override. Claude: `sonnet` \| `opus` \| `haiku` \| `claude-*` \| `inherit`. Codex: any non-Claude model ID |
 | `interactive` | boolean | **Required for web UI** when the workflow has approval gates or `loop.interactive` nodes. Forces foreground execution so gate messages reach the user's chat. Default: `false` (background on web) |
 

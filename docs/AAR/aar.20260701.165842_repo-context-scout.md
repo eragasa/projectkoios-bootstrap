@@ -2,11 +2,11 @@
 
 ## Scope
 
-Scouted repo guidance for AGENTS/AGENT conventions, workspace layout, bootstrap commands, and pi context-discovery notes.
+Scouted repo guidance for AGENTS/AGENT conventions, workspace layout, bootstrap commands, and Hermes context-discovery notes.
 
 ## What happened
 
-Read the root and pi harness guidance, workspace layout docs, bootstrap command implementations, validation code, and tests covering init/install/workspaces and harness validation.
+Read the root and Hermes harness guidance, workspace layout docs, bootstrap command implementations, validation code, and tests covering init/install/workspaces and harness validation.
 
 ## Process issues
 

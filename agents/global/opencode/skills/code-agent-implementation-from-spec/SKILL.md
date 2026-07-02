@@ -57,4 +57,4 @@ Convert approved specifications into working repository changes. Own implementat
 
 ## Escalation rule
 
-Escalate design ambiguity back to spec agent (archon) via meta-harness (pi) instead of inventing policy.
+Escalate design ambiguity back to spec agent (archon) via Hermes instead of inventing policy.

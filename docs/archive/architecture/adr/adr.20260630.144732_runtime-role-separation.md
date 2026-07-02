@@ -11,8 +11,8 @@ distinct concerns in a single frozen dataclass:
 
 | Field | Example values | What it actually represents |
 |---|---|---|
-| `name` | `pi`, `archon`, `opencode`, `goose` | Infrastructure runtime — the tool that executes |
-| `display_name` | `pi`, `Athena`, `Vulcan`, `Koios` | Domain role — the agent identity that acts |
+| `name` | `Hermes`, `archon`, `opencode`, `goose` | Infrastructure runtime — the tool that executes |
+| `display_name` | `Hermes`, `Athena`, `Vulcan`, `Koios` | Domain role — the agent identity that acts |
 | `config_dir` | `~/.pi`, `~/.archon`, etc. | Runtime config path |
 | `role` | `"Agent runtime — executes Archon workflows"` | Blended description |
 
@@ -173,8 +173,8 @@ distinct concerns in a single frozen dataclass:
 
 | Field | Example values | What it actually represents |
 |---|---|---|
-| `name` | `pi`, `archon`, `opencode`, `goose` | Infrastructure runtime — the tool that executes |
-| `display_name` | `pi`, `Athena`, `Vulcan`, `Koios` | Domain role — the agent identity that acts |
+| `name` | `Hermes`, `archon`, `opencode`, `goose` | Infrastructure runtime — the tool that executes |
+| `display_name` | `Hermes`, `Athena`, `Vulcan`, `Koios` | Domain role — the agent identity that acts |
 | `config_dir` | `~/.pi`, `~/.archon`, etc. | Runtime config path |
 | `role` | `"Agent runtime — executes Archon workflows"` | Blended description |
 

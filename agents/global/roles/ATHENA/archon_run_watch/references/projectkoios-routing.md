@@ -4,7 +4,7 @@
 
 | Harness | Name | Role |
 |---|---|---|
-| pi | Hermes | Meta-harness — orchestration, operations, handoff coordination |
+| Hermes | Hermes | Meta-harness — orchestration, operations, handoff coordination |
 | archon (archon.diy) | Athena | Architecture design, ADRs, planning |
 | opencode | Vulcan | Code writing, tests, validation |
 | goose | Koios | Knowledge management, vault ops |

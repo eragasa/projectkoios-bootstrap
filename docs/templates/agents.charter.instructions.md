@@ -35,7 +35,7 @@ accepted
 
 ## Roles
 
-### Hermes (`pi`)
+### Hermes
 ...
 ```
 

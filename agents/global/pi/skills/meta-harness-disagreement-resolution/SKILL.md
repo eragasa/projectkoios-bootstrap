@@ -25,7 +25,7 @@ When two artifacts contain conflicting claims and one agent has flagged the conf
 
 ## Agent responsibility
 
-The meta-harness (pi) resolves disagreements using the authority hierarchy. Do not invent compromise between incompatible claims.
+Hermes resolves disagreements using the authority hierarchy. Do not invent compromise between incompatible claims.
 
 ## Inputs
 

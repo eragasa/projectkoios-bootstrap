@@ -13,7 +13,7 @@ decision.
 
 ## Roles
 
-### Hermes (`pi`)
+### Hermes (`Hermes`)
 - Owns sandbox message delivery, repo-state inspection, and handoff coordination
 - Chooses the next harness and repo scope
 - Stabilizes dirty or ambiguous work before delegation

@@ -45,7 +45,7 @@ Convert user intent into bounded technical specifications. Own requirement norma
 
 ## Failure modes
 
-- Request is too vague to bound — escalate to meta-harness (pi)
+- Request is too vague to bound — escalate to Hermes
 - Architecture choice has multiple valid options with different consequences — escalate to user
 
 ## Escalation rule

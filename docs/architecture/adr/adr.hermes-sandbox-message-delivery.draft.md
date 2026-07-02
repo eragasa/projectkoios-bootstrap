@@ -7,7 +7,7 @@ draft
 ## Context
 
 Origin: user request
-From: HERMES (pi)
+From: HERMES
 Acting-As: ATHENA
 Scope: projectkoios-bootstrap
 Repository: projectkoios-bootstrap

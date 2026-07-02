@@ -42,12 +42,12 @@ Project Koios bootstrap scope, role model, routing boundary, and which
 repo-local role skills to use. It must explicitly preserve the role/runtime
 separation:
 
-- Hermes is the `pi` meta-harness role for orchestration and operations.
+- Hermes is the `Hermes` meta-harness role for orchestration and operations.
 - Athena is the `archon` spec/architecture role.
 - Vulcan is the `opencode` implementation and validation role.
 - Koios is the `goose` knowledge/provenance role.
 - Codex may act as a delegated access/operator layer, but Codex does not
-  become `pi`, `archon`, `opencode`, or `goose`.
+  become `Hermes`, `archon`, `opencode`, or `goose`.
 
 The discovery layer should also expose related role skills when they are useful
 to Codex in this repo:
@@ -297,12 +297,12 @@ Project Koios bootstrap scope, role model, routing boundary, and which
 repo-local role skills to use. It must explicitly preserve the role/runtime
 separation:
 
-- Hermes is the `pi` meta-harness role for orchestration and operations.
+- Hermes is the `Hermes` meta-harness role for orchestration and operations.
 - Athena is the `archon` spec/architecture role.
 - Vulcan is the `opencode` implementation and validation role.
 - Koios is the `goose` knowledge/provenance role.
 - Codex may act as a delegated access/operator layer, but Codex does not
-  become `pi`, `archon`, `opencode`, or `goose`.
+  become `Hermes`, `archon`, `opencode`, or `goose`.
 
 The discovery layer should also expose related role skills when they are useful
 to Codex in this repo:

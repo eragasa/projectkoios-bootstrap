@@ -23,7 +23,7 @@ The human architect selected Option 1 from the architecture interview:
 Criteria Catalog In Lifecycle Schema. This revision updates the existing Draft
 ADR instead of creating a new ADR. Codex is only the delegated operator
 materializing the Athena artifact. Codex is not Hermes, Athena, Archon, Vulcan,
-or pi, and this Draft status must be preserved unless an explicit workflow
+or Hermes, and this Draft status must be preserved unless an explicit workflow
 grants authority to change it.
 
 The current repository already distinguishes durable ADR file status from
@@ -537,7 +537,7 @@ The human architect selected Option 1 from the architecture interview:
 Criteria Catalog In Lifecycle Schema. This revision updates the existing Draft
 ADR instead of creating a new ADR. Codex is only the delegated operator
 materializing the Athena artifact. Codex is not Hermes, Athena, Archon, Vulcan,
-or pi, and this Draft status must be preserved unless an explicit workflow
+or Hermes, and this Draft status must be preserved unless an explicit workflow
 grants authority to change it.
 
 The current repository already distinguishes durable ADR file status from

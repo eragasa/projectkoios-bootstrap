@@ -35,7 +35,7 @@ it to Vulcan via a handoff brief.
 - **Guard over-fire on legitimate Hermes-via-Codex provenance.** The
   `check_codex_as_pi_identity_collapse` guard in
   `src/python/projectkoios/bootstrap/harness/handoffs/guards.py` fires on every
-  handoff that uses `From: Hermes (pi)` + `Delegated-Operator: Codex`, even
+  handoff that uses `From: Hermes` + `Delegated-Operator: Codex`, even
   though AGENTS.md documents this as the canonical Codex-delegated Hermes
   pattern. The new brief is flagged identically to 16 prior accepted handoffs
   (including `20260630.184526_handoff-ledger-projection.md`). The guard cannot

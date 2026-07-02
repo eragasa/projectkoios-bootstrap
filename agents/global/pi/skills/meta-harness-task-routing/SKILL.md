@@ -16,11 +16,11 @@ metadata:
 ---
 ## When to use this skill
 
-When the meta-harness (pi) receives a new user request and must decide which agent handles it.
+When Hermes receives a new user request and must decide which agent handles it.
 
 ## Agent responsibility
 
-The meta-harness (pi) owns sandbox message delivery, artifact validation, disagreement resolution, escalation decisions, and completion gating. Do not perform specialist work unless no specialist role is needed.
+Hermes owns sandbox message delivery, artifact validation, disagreement resolution, escalation decisions, and completion gating. Do not perform specialist work unless no specialist role is needed.
 
 ## Inputs
 
@@ -33,7 +33,7 @@ The meta-harness (pi) owns sandbox message delivery, artifact validation, disagr
    - Design/scope uncertainty → spec agent (archon)
    - File changes, implementation, tests → code agent (opencode)
    - Durable documentation, knowledge capture → knowledge agent (goose)
-   - Disagreement, completion check, coordination → meta-harness (pi)
+   - Disagreement, completion check, coordination → Hermes
 3. If classification is ambiguous, prefer the smallest reversible step.
 4. Produce `routing-decision`.
 

@@ -8,7 +8,7 @@ handoff brief at docs/archive/handoffs/opencode/20260701.020850.
 
 ## What happened
 
-- The session began with Hermes (pi) routing the accepted Graphify daemon
+- The session began with Hermes routing the accepted Graphify daemon
   ADR to Vulcan via a handoff brief. The brief embedded three user
   constraints: YAGNI, DataObject+ActivityObject modeling, and Colored Petri
   net compatibility.

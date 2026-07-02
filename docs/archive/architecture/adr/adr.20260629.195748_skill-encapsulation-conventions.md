@@ -14,7 +14,7 @@ cannot be trivially reused by another without manual path edits.
 The `archon_run_watch` skill also introduced a reusable pattern: named
 module-level functions (`run_archon()`) that can be swapped for testing, which
 is likely to repeat across future skill scripts that interact with CLI tools
-(archon, git, pi, goose).
+(archon, git, Hermes, goose).
 
 ## Decision
 
@@ -29,7 +29,7 @@ by context:
 
 For CLI-command wrappers, formalise the swappable-function pattern into a
 shared utility in `projectkoios.bootstrap.harness` so that future skill
-scripts that shell out to archon, git, pi, or goose can reuse it instead of
+scripts that shell out to archon, git, Hermes, or goose can reuse it instead of
 reinventing mock support.
 
 ## Consequences
@@ -101,7 +101,7 @@ cannot be trivially reused by another without manual path edits.
 The `archon_run_watch` skill also introduced a reusable pattern: named
 module-level functions (`run_archon()`) that can be swapped for testing, which
 is likely to repeat across future skill scripts that interact with CLI tools
-(archon, git, pi, goose).
+(archon, git, Hermes, goose).
 
 ## Decision
 
@@ -116,7 +116,7 @@ by context:
 
 For CLI-command wrappers, formalise the swappable-function pattern into a
 shared utility in `projectkoios.bootstrap.harness` so that future skill
-scripts that shell out to archon, git, pi, or goose can reuse it instead of
+scripts that shell out to archon, git, Hermes, or goose can reuse it instead of
 reinventing mock support.
 
 ## Consequences

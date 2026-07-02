@@ -6,7 +6,7 @@ historic
 
 ## Context
 
-Eight ADRs were in Draft status and five design questions from the handoff-topics-projection spec were unresolved. This ADR consolidated all open decisions. This record documents their resolution by pi (Hermes).
+Eight ADRs were in Draft status and five design questions from the handoff-topics-projection spec were unresolved. This ADR consolidated all open decisions. This record documents their resolution by Hermes (Hermes).
 
 ## Decision
 
@@ -101,7 +101,7 @@ historic
 
 ## Context
 
-Eight ADRs were in Draft status and five design questions from the handoff-topics-projection spec were unresolved. This ADR consolidated all open decisions. This record documents their resolution by pi (Hermes).
+Eight ADRs were in Draft status and five design questions from the handoff-topics-projection spec were unresolved. This ADR consolidated all open decisions. This record documents their resolution by Hermes (Hermes).
 
 ## Resolved decisions
 

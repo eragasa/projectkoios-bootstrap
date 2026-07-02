@@ -177,7 +177,7 @@ Use this matrix to find the right parameter. Use these references for the full e
 | `effort` / `thinking`           | yes           | use `modelReasoningEffort` for reasoning models | via `effort:` (maps to thinking level) |
 | Session resume / `--resume`     | yes           | yes                                     | yes                                  |
 
-Mixing providers in one workflow: set workflow-level `provider: claude`, then override per-node with `provider: codex` or `provider: pi`. Cross-provider `$nodeId.output` substitution works as expected.
+Mixing providers in one workflow: set workflow-level `provider: claude`, then override per-node with `provider: codex` or `provider: Hermes`. Cross-provider `$nodeId.output` substitution works as expected.
 
 ## Ten Principles for Safe Workflow Design
 

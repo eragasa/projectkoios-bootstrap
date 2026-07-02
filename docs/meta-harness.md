@@ -85,9 +85,9 @@ delivery rules.
 | `repo-state-summary` | Koios (advisory) | goose |
 | `routing-recommendation` | Koios (advisory) | goose |
 | `directive` | producer-specific | producer runtime |
-| `routing-decision` | Hermes | pi |
-| `revision-request` | Hermes | pi |
-| `completion-decision` | Hermes | pi |
+| `routing-decision` | Hermes | Hermes |
+| `revision-request` | Hermes | Hermes |
+| `completion-decision` | Hermes | Hermes |
 | `after-action-report` | any harness | any harness |
 
 ## Workflow Ownership

@@ -78,7 +78,7 @@ The four active guards:
 | `check_hermes_forwarded_without_decision` | Hermes forwarding raw inbox state without a routing-decision, revision-request, completion-decision, or blockage-report | Hermes must decide, not relay |
 | `check_wrong_implementation_owner` | Non-Vulcan actors producing `patch`, `test-results`, or `implementation-report` artifacts | Only Vulcan implements after routing |
 | `check_delegated_operator_missing` | Codex-mediated artifacts missing `Delegated-Operator` provenance | Mediation must be explicit |
-| `check_codex_as_pi_identity_collapse` | Codex-produced artifacts claiming pi/Hermes origin without separation | Codex is not pi |
+| `check_codex_as_pi_identity_collapse` | Codex-produced artifacts claiming pi/Hermes origin without separation | Codex is not Hermes |
 
 ### Violation
 

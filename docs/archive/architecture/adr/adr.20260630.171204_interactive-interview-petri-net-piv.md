@@ -208,7 +208,7 @@ Add guard rules to make the new phase explicit and prevent role collapse:
 
 8. `ProvenanceRequired`
    - Any Codex-mediated artifact must include `Delegated-Operator` provenance
-     and must not collapse Codex into `pi`, `archon`, `opencode`, or `goose`.
+     and must not collapse Codex into `Hermes`, `archon`, `opencode`, or `goose`.
 
 ### Workflow Shape
 
@@ -619,7 +619,7 @@ Add guard rules to make the new phase explicit and prevent role collapse:
 
 8. `ProvenanceRequired`
    - Any Codex-mediated artifact must include `Delegated-Operator` provenance
-     and must not collapse Codex into `pi`, `archon`, `opencode`, or `goose`.
+     and must not collapse Codex into `Hermes`, `archon`, `opencode`, or `goose`.
 
 ### Workflow Shape
 

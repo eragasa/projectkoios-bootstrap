@@ -49,4 +49,4 @@ The code agent (opencode/Vulcan) runs the validation gates and reports results t
 
 ## Escalation rule
 
-If validation infrastructure is missing or broken and cannot be fixed in scope, escalate to meta-harness (pi).
+If validation infrastructure is missing or broken and cannot be fixed in scope, escalate to Hermes.

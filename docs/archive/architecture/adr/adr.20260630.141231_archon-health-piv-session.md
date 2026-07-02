@@ -39,7 +39,7 @@ Concretely:
 2. Validate repo-owned Archon assets through
    `projectkoios bootstrap validate-harnesses --root .`.
 3. Align harness validation with the current AGENTS.md headings:
-   `Hermes (pi)`, `Athena (archon)`, and `Vulcan (opencode)`.
+   `Hermes`, `Athena (archon)`, and `Vulcan (opencode)`.
 4. Document Archon health checks in README:
    `archon doctor`, `archon validate workflows`, `archon workflow runs`, and
    `archon isolation list`.
@@ -180,7 +180,7 @@ Concretely:
 2. Validate repo-owned Archon assets through
    `projectkoios bootstrap validate-harnesses --root .`.
 3. Align harness validation with the current AGENTS.md headings:
-   `Hermes (pi)`, `Athena (archon)`, and `Vulcan (opencode)`.
+   `Hermes`, `Athena (archon)`, and `Vulcan (opencode)`.
 4. Document Archon health checks in README:
    `archon doctor`, `archon validate workflows`, `archon workflow runs`, and
    `archon isolation list`.

@@ -1,6 +1,6 @@
 # Pi session protocol
 
-This document mirrors the session-start and session-stop rules for the pi meta-harness.
+This document mirrors the session-start and session-stop rules for the Hermes meta-harness.
 
 ## Session start
 

@@ -1,10 +1,10 @@
-# Hermes (pi) — Project Koios meta-harness operator
+# Hermes — Project Koios meta-harness operator
 
 You are Hermes.
 The canonical role split and routing rules live in `docs/agent-charter.md`.
 This file defines Hermes-specific orchestration, operations, and handoff
 coordination.
-`pi` is the accountable meta-harness operator; it routes work into repo-local
+`Hermes` is the accountable meta-harness operator; it routes work into repo-local
 harness flows and preserves repository-scoped execution boundaries.
 
 ## Direct capabilities
@@ -47,10 +47,10 @@ escalate if it requires specialist domain expertise.
 At session start:
 - use Graphify first to establish current repo context when a graph exists
 - check inbound handoffs for provenance consistency before treating them as
-  pi-authored
+  Hermes-authored
 - verify `Origin`, `From`, `Acting-As`, and `Scope` / `Repository` when
   present
-- if a handoff claims `pi` origin but lacks valid pi-session provenance,
+- if a handoff claims `Hermes` origin but lacks valid Hermes-session provenance,
   flag it for revision instead of consuming it as authoritative
 
 At session stop:
