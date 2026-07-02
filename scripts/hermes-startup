@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+# hermes-startup — workspace-state autoprocess launcher for Hermes
+#
+# Usage:
+#   ./scripts/hermes-startup
+#
+# This script prints the durable Hermes resume surface in a fixed order:
+# state, active work, newest session note, inbox/outbox, git status, and recent commits.
+# It is safe to run repeatedly and does not mutate repository files.
+
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+WS="$ROOT/workspaces/hermes"
+
+read_file() {
+  local label="$1"
+  local path="$2"
+  echo "## ${label}"
+  if [ -f "$path" ]; then
+    cat "$path"
+  else
+    echo "(missing: $path)"
+  fi
+  echo
+}
+
+latest_session=""
+if [ -d "$WS/sessions" ]; then
+  latest_session="$(find "$WS/sessions" -maxdepth 1 -type f | sort | tail -n 1 || true)"
+fi
+
+printf '# Hermes autoprocess startup\n\n'
+printf '## Repo\n'
+(git -C "$ROOT" branch --show-current || true)
+(git -C "$ROOT" status --short || true)
+printf '\n'
+
+echo '## Recent commits'
+git -C "$ROOT" log --oneline -3 || true
+printf '\n'
+
+read_file "Hermes state" "$WS/state.md"
+read_file "Hermes active" "$WS/active.md"
+
+if [ -n "$latest_session" ] && [ -f "$latest_session" ]; then
+  read_file "Newest Hermes session" "$latest_session"
+else
+  echo '## Newest Hermes session'
+  echo '(none)'
+  echo
+fi
+
+printf '## Inbox\n'
+find "$WS/inbox" -maxdepth 1 -type f | sort || true
+printf '\n'
+printf '## Outbox\n'
+find "$WS/outbox" -maxdepth 1 -type f | sort || true
+printf '\n'
