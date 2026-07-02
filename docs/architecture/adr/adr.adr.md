@@ -1,3 +1,13 @@
+---
+status: active
+created_datetime: 20260702.213500Z
+creator: user(Eugene Joseph M. Ragasa)
+submitted by: HERMES
+repository: projectkoios-bootstrap
+"scope:": "[projectkoios-bootstrap.*]"
+architecture-domain:
+---
+
 # ADR 20260702.213500Z: ADR Namespace Authority
 
 ## Status
@@ -12,16 +22,41 @@ From: HERMES
 Acting-As: HERMES on behalf of user(Eugene)
 Scope: projectkoios-bootstrap
 Repository: projectkoios-bootstrap
-Delegated-Operator: pi
 Architecture-Domain: software
 
 The repository needs one top-level authority for the `adr.adr-*` family so naming, lifecycle, binding, and template rules do not drift into separate competing surfaces. Without a single root authority, the ADR namespace splits into overlapping local conventions that are hard to review consistently.
 
+adr.adr
+  ├── defines: ADR syntax
+  ├── defines: ADR lifecycle
+  └── constrains: all other ADRs
+
+
+## Language
+Language in ADRs is governed by [RFC2119](https://www.rfc-editor.org/info/rfc2119/)
 ## Definitions
 
-- ADR namespace authority: the root ADR that governs the `adr.adr-*` family.
-- ADR namespace family: the linked ADRs that define naming, lifecycle, workflow binding, template contract, and related meta-rules for ADRs.
+#### Definition: ADR name space authority
+- the root ADR that governs the a family of ADR documents.
+
+
+#### Definition: ADR namespace family
+the linked ADRs that define naming, lifecycle, workflow binding, template contract, and related meta-rules for ADRs.
 - Root authority: the top-level ADR that other `adr.adr-*` files reference as their shared authority surface.
+
+##### Implementation: .md
+For a family of documents with the name
+- `adr.<topic>-<subtopic>-<subsubtopic>-*.md`
+- The ADR name space authority is `adr.<topic>.md`
+- The
+
+#### Defintion: ADR Status
+enumerated statuses
+
+## Rules
+
+##### Rule
+
 
 ## Decision
 
