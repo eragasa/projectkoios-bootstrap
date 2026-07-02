@@ -15,53 +15,58 @@ Repository: projectkoios-bootstrap
 Delegated-Operator: pi
 Architecture-Domain: software
 
-The workflow and verification surfaces are not the same gate. The workflow surface decides whether a topic is ready to move forward; the verification surface decides whether implementation has returned a validated result back to architecture.
+This ADR defines the gate between architecture work and implementation work. The gate should be concrete, not abstract: it needs named objects, named actions, and explicit entry and exit requirements.
 
-DataObjects and ActionObjects are a high-level separation of concerns: mutable structs and actions on those structs that produce a new DataObject. In workflow terms, the relevant primitives are PetriNet places and deterministic transitions, and ownership of places must be transferable between entities.
+This ADR focuses on object-and-action chaining. Ownership is referenced here only as a control concern; the ownership ledger itself lives in its own ADR.
 
-Those two surfaces control each other's gate. That makes the boundary intentionally adversarial: each side must be able to block progress until the other side is precise enough to continue.
+## Definitions
 
-Ownership is recorded in a ledger that maps places and transitions to agents. The closest role alignment determines current ownership, which allows new specialized agents to take over as the system evolves.
+- DataObject: an inanimate state-bearing object.
+- ActionObject: a grouped action that consumes and/or produces DataObjects.
+- Entry Gate: the point where a topic is checked for readiness to become a spike or ADR.
+- Exit Gate: the point where implementation is checked for validated return to architecture.
+- Transition: a deterministic ActionObject that moves a DataObject through a gate.
+- Entry requirement: the DataObjects and conditions that must exist before a node can enter.
+- Exit requirement: the DataObjects and conditions that must exist before a node can leave.
 
 ## Decision
 
 Adopt the adversarial two-plane gate as a first-class architecture object.
 
-The gate has two places:
-- the workflow place, which governs idea → spike → ADR readiness
-- the verification place, which governs implementation brief completion and return-to-architecture validation
-
-Ownership of each place and transition is tracked in a separate ledger.
+The gate has two gates:
+- the Entry Gate, which governs idea → spike → ADR readiness
+- the Exit Gate, which governs implementation brief completion and return-to-architecture validation
 
 The implementation brief is the completion point of the gate. Its `verification_method` records how implementation returns a validated result back to architecture.
 
-The most obvious candidate for a transition is Hermes interacting with the user, but that is only one implementation of the ownership ledger. Transition ownership must remain transferrable across agents and should follow the closest role alignment.
+The most obvious candidate for a transition is Hermes interacting with the user, but that is only one implementation of the object-to-action chain. Transition ownership must remain transferable across agents and should follow the closest role alignment.
 
 ## Consequences
 
-- workflow and verification remain separate but coupled
-- each plane can reject vague or incomplete work from the other plane
+- entry readiness and exit verification stay separate but coupled
+- each gate can reject vague or incomplete work from the other gate
 - implementation briefs become completion records instead of loose delivery notes
 - the gate can be discussed, reviewed, and refined as its own encapsulated ADR
+- the transition cannot complete unless both sides approve
 
 ## architecture-spec
 
 The adversarial two-plane gate is a knowledge object spanning two control surfaces:
 
-1. Workflow place
+1. Entry Gate
    - decides whether a topic is ready to become a spike or ADR
    - checks boundedness, exit conditions, and downstream ownership
 
-2. Verification place
+2. Exit Gate
    - decides whether implementation has satisfied the architecture intent
    - checks the brief's `verification_method`
 
-The two places are adversarial only in the sense that each may block the other until the requirements are explicit.
+The two gates are adversarial only in the sense that each may block the other until the requirements are explicit. The gate requires approval from both sides before a transition completes.
 
 ## acceptance-criteria
 
-- a reviewer can explain both planes without guessing
-- the gate clearly distinguishes workflow readiness from implementation verification
+- a reviewer can explain both gates without guessing
+- the gate clearly distinguishes readiness from verification
 - the implementation brief is recognized as the completion point of the gate
 - the rule can be linked from both the workflow ADR and the verification ADR
 
@@ -69,7 +74,7 @@ The two places are adversarial only in the sense that each may block the other u
 
 If accepted, update the workflow ADR, the verification-method ADR, and the ownership-ledger ADR so they all reference the adversarial two-plane gate and use consistent completion language.
 
-verification_method: review the workflow ADR and the verification ADR together, then confirm that the brief is the completion point and that neither plane can silently bypass the other.
+verification_method: review the workflow ADR and the verification ADR together, then confirm that the brief is the completion point and that neither gate can silently bypass the other.
 
 ## resolved_open_questions
 
@@ -79,13 +84,13 @@ verification_method: review the workflow ADR and the verification ADR together, 
 
 ## non_goals
 
-- collapsing workflow and verification into one surface
+- collapsing readiness and verification into one surface
 - defining every possible implementation brief field
 - replacing the existing ADR lifecycle
 
 ## validation_expectations
 
-- the gate can be described as two explicit planes with separate duties
+- the gate can be described as two explicit gates with separate duties
 - the brief completion point is visible in the ADR surface
 - workflow and implementation can each reject ambiguity from the other side
 
@@ -93,7 +98,7 @@ verification_method: review the workflow ADR and the verification ADR together, 
 
 - Owner: Athena
 - Next phase: proposed
-- Notes: High-level control object spanning workflow and verification surfaces.
+- Notes: High-level control object spanning readiness and verification surfaces.
 
 ## links
 

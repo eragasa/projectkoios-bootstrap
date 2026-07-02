@@ -56,6 +56,7 @@ directs the change.
 | [ADR 20260702.043600: Koios Adversarial Code Review Authority](adr/adr.20260702.043600_koios-adversarial-code-review-authority.draft.md) | None |
 | [ADR 20260702.121432Z: Adversarial Two-Plane Gate](adr/adr.adversarial-two-plane-gate.draft.md) | None |
 | [ADR 20260702.121432Z: Ownership Ledger and Role Alignment](adr/adr.ownership-ledger-role-alignment.draft.md) | None |
+| [ADR 20260702.121432Z: Unified Diff Review Surface](adr/adr.unified-diff-review-surface.draft.md) | None |
 | [ADR 20260702.121432Z: Agent Windows with `on_message` Triggers](adr/adr.agent-windows-on-message-triggers.draft.md) | None |
 | [ADR 20260702.121432Z: JSON ADR Storage Topology](adr/adr.json-database-for-adr-storage.draft.md) | None |
 | [ADR 20260702.121432Z: Spike Entry Conditions](adr/adr.spike-entry-conditions.draft.md) | None |
