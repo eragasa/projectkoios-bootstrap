@@ -1,5 +1,8 @@
 ---
 name: knowledge-agent-provenance-note
+adr_binding:
+  - docs/architecture/adr/adr.skill-register-and-adr-binding-policy.draft.md
+  - docs/architecture/adr/adr.control-surfaces-and-ownership-boundaries.draft.md
 description: |
   Convert validated artifacts into durable, provenance-backed knowledge
   Bound to ADRs: adr.skill-register-and-adr-binding-policy.draft.md, adr.control-surfaces-and-ownership-boundaries.draft.md.

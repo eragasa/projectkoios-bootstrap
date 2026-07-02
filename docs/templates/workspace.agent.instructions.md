@@ -33,6 +33,7 @@ Use these instructions when:
 - `handoffs/incoming/`
 - `handoffs/outgoing/`
 - `decisions/`
+- `docs/plans/` — cross-session implementation plans owned by Vulcan
 
 ## Link rules
 
@@ -42,6 +43,14 @@ Use these instructions when:
 - Keep links filename-based and grep-friendly.
 - The workspace `AGENT.md` should describe who reads inbox, who writes outbox,
   and that Hermes delivers mail.
+
+## Plan ownership
+
+Vulcan owns implementation plans. Plans live at `docs/plans/` and derive from an accepted ADR or implementation brief. Each plan must include Source, Scope, Verification method, Task breakdown, and an optional Escalation note. When an ADR brief is too vague to plan against, Vulcan escalates via handoff to Hermes.
+
+## Decision note promotion trigger
+
+If a `decisions/` note is referenced in any outbox message, handoff artifact, or ADR comment, the note must be promoted to a draft ADR or explicitly annotated `archived` within one session. This prevents cross-role reference drift without forcing ephemeral notes into the ADR surface.
 
 ## Editing rule
 

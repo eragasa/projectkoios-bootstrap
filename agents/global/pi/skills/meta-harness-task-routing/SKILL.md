@@ -1,5 +1,8 @@
 ---
 name: meta-harness-task-routing
+adr_binding:
+  - docs/architecture/adr/adr.skill-register-and-adr-binding-policy.draft.md
+  - docs/architecture/adr/adr.control-surfaces-and-ownership-boundaries.draft.md
 description: |
   Send a user request to the correct agent sandbox based on dominant transformation
   Bound to ADRs: adr.skill-register-and-adr-binding-policy.draft.md, adr.control-surfaces-and-ownership-boundaries.draft.md.

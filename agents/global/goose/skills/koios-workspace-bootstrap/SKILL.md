@@ -1,5 +1,9 @@
 ---
 name: koios-workspace-bootstrap
+adr_binding:
+  - docs/architecture/adr/adr.skill-register-and-adr-binding-policy.draft.md
+  - docs/architecture/adr/adr.canonical-workspace-state-next-action-protocol.draft.md
+  - docs/architecture/adr/adr.control-surfaces-and-ownership-boundaries.draft.md
 description: |
   Initialize persistent per-agent workspaces, mail folders, and local AGENT.md files
   Bound to ADRs: adr.skill-register-and-adr-binding-policy.draft.md, adr.canonical-workspace-state-next-action-protocol.draft.md, adr.control-surfaces-and-ownership-boundaries.draft.md.

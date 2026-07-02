@@ -1,5 +1,9 @@
 ---
 name: manage-run
+adr_binding:
+  - docs/architecture/adr/adr.skill-register-and-adr-binding-policy.draft.md
+  - docs/architecture/adr/adr.canonical-workspace-state-next-action-protocol.draft.md
+  - docs/architecture/adr/adr.control-surfaces-and-ownership-boundaries.draft.md
 description: |
   Use when: User wants to INSPECT, MONITOR, START, APPROVE, or CONTROL Archon
   workflow RUNS in the current project — driven through the `archon` CLI over bash.

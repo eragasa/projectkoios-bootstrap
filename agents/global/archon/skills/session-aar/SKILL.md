@@ -1,5 +1,9 @@
 ---
 name: session-aar
+adr_binding:
+  - docs/architecture/adr/adr.skill-register-and-adr-binding-policy.draft.md
+  - docs/architecture/adr/adr.control-surfaces-and-ownership-boundaries.draft.md
+  - docs/architecture/adr/adr.comment-scope-and-control-boundary-review-rule.draft.md
 description: |
   Use at the end of every Project Koios agent session. Also use when the user
   asks for an AAR, after-action report, retrospective, process review, lessons

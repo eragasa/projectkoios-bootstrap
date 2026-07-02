@@ -1,5 +1,9 @@
 ---
 name: archon_run_watch
+adr_binding:
+  - docs/architecture/adr/adr.skill-register-and-adr-binding-policy.draft.md
+  - docs/architecture/adr/adr.canonical-workspace-state-next-action-protocol.draft.md
+  - docs/architecture/adr/adr.control-surfaces-and-ownership-boundaries.draft.md
 description: |
   Use when the user asks to start a Project Koios session, inspect current
   handoffs, send messages between harness sandboxes, run or monitor Archon workflows,

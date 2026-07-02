@@ -1,5 +1,8 @@
 ---
 name: archon
+adr_binding:
+  - docs/architecture/adr/adr.skill-register-and-adr-binding-policy.draft.md
+  - docs/architecture/adr/adr.idea-spike-adr-implementation-workflow.draft.md
 description: |
   Use when: User wants to run Archon workflows, CREATE workflows or commands,
   set up Archon, or manage Archon configuration.

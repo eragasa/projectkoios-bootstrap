@@ -43,6 +43,10 @@ Delegated-Operator: <mediator-if-any>
 
 <Describe downstream follow-up expected, or state that no implementation is requested.>
 
+### Verification method
+
+<How Vulcan validates completion — e.g., `pytest tests/foo.py`, AST check, manual inspection, Graphify diff. Required for any implementation-bearing ADR.>
+
 ## Comments
 
 Comments remain open while this ADR is in draft status. When the ADR is promoted to proposed, the proposed ADR becomes the active review surface and the draft is archived or marked superseded.
