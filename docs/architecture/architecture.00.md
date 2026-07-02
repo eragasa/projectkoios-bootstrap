@@ -51,6 +51,7 @@ directs the change.
 | [architecture.control-surfaces-and-ownership-boundaries](architecture.control-surfaces-and-ownership-boundaries.md) | [adr.control-surfaces-and-ownership-boundaries](adr/adr.control-surfaces-and-ownership-boundaries.draft.md) |
 | [architecture.hermes-sandbox-message-delivery](architecture.hermes-sandbox-message-delivery.md) | [adr.hermes-sandbox-message-delivery](adr/adr.hermes-sandbox-message-delivery.draft.md) |
 | [architecture.implementation-plan-ownership](architecture.implementation-plan-ownership.md) | [adr.implementation-plan-ownership](adr/adr.implementation-plan-ownership.draft.md) |
+| [architecture.templates](architecture.templates.md) | [adr.templates](adr/adr.templates.draft.md) |
 | [architecture.koios-adversarial-code-review-authority](architecture.koios-adversarial-code-review-authority.md) | [adr.koios-adversarial-code-review-authority](adr/adr.20260702.043600_koios-adversarial-code-review-authority.draft.md) |
 | [architecture.adversarial-two-plane-gate](architecture.adversarial-two-plane-gate.md) | [adr.adversarial-two-plane-gate](adr/adr.adversarial-two-plane-gate.draft.md) |
 | [architecture.ownership-ledger-role-alignment](architecture.ownership-ledger-role-alignment.md) | [adr.ownership-ledger-role-alignment](adr/adr.ownership-ledger-role-alignment.draft.md) |
@@ -65,6 +66,7 @@ directs the change.
 | [architecture.repos.git](architecture.repos.git.md) | None |
 | [architecture.repos.obsidian](architecture.repos.obsidian.md) | None |
 | [architecture.repo-projections](architecture.repo-projections.md) | None |
+| [implementation.00](../implementation/implementation.00.md) | [adr.implementation](adr/adr.implementation.draft.md) |
 
 ### Historic ADR archive
 - `docs/archive/architecture/adr/` — all ADRs archived and marked historic

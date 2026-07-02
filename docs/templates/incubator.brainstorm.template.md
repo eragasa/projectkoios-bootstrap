@@ -1,6 +1,8 @@
 # Idea: <topic>
 
 > Template for converting a freeform brainstorm or temporary chat into a durable brainstorm note.
+> Controlled by: [adr.templates](../architecture/adr/adr.templates.draft.md).
+> Template index: [templates.00](templates.00.md).
 
 ## Brainstorm
 

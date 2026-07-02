@@ -1,6 +1,8 @@
 # Skill template
 
 Use this template to create new skills. Every committed skill must declare its ADR binding in both machine-readable and human-readable form.
+Controlled by: [adr.templates](../architecture/adr/adr.templates.draft.md).
+Template index: [templates.00](templates.00.md).
 
 ## Template
 

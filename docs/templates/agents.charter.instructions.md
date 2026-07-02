@@ -2,6 +2,8 @@
 
 Use this file for formatting and structure rules that apply when editing or
 creating `docs/agent-charter.md` and related agent message-delivery notes.
+Controlled by: [adr.templates](../architecture/adr/adr.templates.draft.md).
+Template index: [templates.00](templates.00.md).
 
 ## When to use this template
 

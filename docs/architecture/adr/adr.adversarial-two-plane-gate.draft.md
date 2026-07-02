@@ -71,9 +71,9 @@ The two gates are adversarial only in the sense that each may block the other un
 
 ## implementation-brief
 
-If accepted, update the workflow ADR, the verification-method ADR, and the ownership-ledger ADR so they all reference the adversarial two-plane gate and use consistent completion language.
+The implementation block lives in `docs/implementation/implementation.adversarial-two-plane-gate.md`.
 
-verification_method: review the workflow ADR and the verification ADR together, then confirm that the brief is the completion point and that neither gate can silently bypass the other.
+- related: [Implementation Note: Adversarial Two-Plane Gate](../../implementation/implementation.adversarial-two-plane-gate.md)
 
 ## resolved_open_questions
 
