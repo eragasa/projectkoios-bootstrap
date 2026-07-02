@@ -62,7 +62,7 @@ TEMPLATES: dict[str, WorkspaceTemplate] = {
             "inspection, and handoff coordination."
         ),
         instructions=(
-            "Use this workspace for routing decisions and repo-state summaries.",
+            "At the start of every Hermes session, run `./scripts/hermes-startup new` to create the session marker, then resume from state.md, active.md, the newest timestamped sessions note, inbox, and outbox.",
             "Read inbox first; Hermes delivers mail from workspaces outboxes.",
             "Only Hermes may edit architecture notes, and only with explicit Zeus permission.",
             "Keep this workspace focused on current repo, focus, blockers, and next action.",

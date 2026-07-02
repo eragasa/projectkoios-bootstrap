@@ -49,13 +49,14 @@ Compatibility wrapper for `./scripts/koios harnesses start`.
 Hermes autoprocess launcher for restart/resume.
 
 ```bash
-./scripts/hermes-startup
+./scripts/hermes-startup new
 ```
 
 Behavior:
-- prints the repo branch, status, and recent commits
+- `new` writes a durable timestamped session note and prints `new session`
 - reads `workspaces/hermes/state.md`
 - reads `workspaces/hermes/active.md`
-- reads the newest file in `workspaces/hermes/sessions/`
+- reads the newest timestamped file in `workspaces/hermes/sessions/`
 - lists Hermes inbox and outbox files
-- does not mutate files
+- prints the repo branch, status, and recent commits
+- `new` mutates only the session-note surface

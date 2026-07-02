@@ -34,7 +34,7 @@ cd ~/repos/projectkoios-bootstrap
 ./scripts/koios harnesses start
 
 # Hermes workspace-state autoprocess startup
-./scripts/hermes-startup
+./scripts/hermes-startup new
 
 # Show koios workspace state
 ./scripts/koios harnesses show
@@ -72,7 +72,7 @@ before touching any code. All component repos are siblings under `~/repos/`.
 
 Persistent per-agent workspace state is proposed in `docs/workspaces.md`.
 
-Hermes restart helper: `./scripts/hermes-startup`
+Hermes restart helper: `./scripts/hermes-startup new`
 
 ## Local Generated State
 
