@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "adr.schema-adr.json",
+  "title": "ADR Schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "identity",
+    "status",
+    "owner",
+    "surface_file",
+    "governed_scope",
+    "decision",
+    "invariants"
+  ],
+  "properties": {
+    "identity": {
+      "type": "string",
+      "description": "Stable ADR identifier."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "proposed", "active", "superseded", "rejected"]
+    },
+    "owner": {
+      "type": "string",
+      "description": "Owning role or harness."
+    },
+    "surface_file": {
+      "type": "string",
+      "description": "Primary file that represents the ADR."
+    },
+    "governed_scope": {
+      "type": "string",
+      "description": "Boundary this ADR governs."
+    },
+    "decision": {
+      "type": "string",
+      "description": "Normative decision statement."
+    },
+    "invariants": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "transition_rules": {
+      "type": "array",
+      "description": "Optional state transition constraints.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["from", "to", "condition"],
+        "properties": {
+          "from": { "type": "string" },
+          "to": { "type": "string" },
+          "condition": { "type": "string" }
+        }
+      }
+    }
+  }
+}

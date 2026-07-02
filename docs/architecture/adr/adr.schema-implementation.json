@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "adr.schema-implementation.json",
+  "title": "Implementation Schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "identity",
+    "status",
+    "owner",
+    "governing_adr",
+    "human_readable_surface",
+    "source_requirements",
+    "plan_items",
+    "user_approval",
+    "data_objects",
+    "action_objects",
+    "validation",
+    "deviations"
+  ],
+  "properties": {
+    "identity": {
+      "type": "string",
+      "description": "Stable implementation identifier."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "proposed", "active", "rejected", "superseded"]
+    },
+    "owner": {
+      "type": "string",
+      "description": "Owning role or harness."
+    },
+    "governing_adr": {
+      "type": "string",
+      "description": "ADR that authorizes and constrains this implementation."
+    },
+    "human_readable_surface": {
+      "type": "string",
+      "description": "Primary human-facing implementation surface."
+    },
+    "source_requirements": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "plan_items": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "user_approval": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["approved", "approved_by", "approved_at"],
+      "properties": {
+        "approved": { "type": "boolean" },
+        "approved_by": { "type": "string" },
+        "approved_at": { "type": "string" }
+      }
+    },
+    "data_objects": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "type"],
+        "properties": {
+          "name": { "type": "string" },
+          "type": { "type": "string", "const": "DataObject" }
+        }
+      }
+    },
+    "action_objects": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "type"],
+        "properties": {
+          "name": { "type": "string" },
+          "type": { "type": "string", "const": "ActionObject" }
+        }
+      }
+    },
+    "validation": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "deviations": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}
