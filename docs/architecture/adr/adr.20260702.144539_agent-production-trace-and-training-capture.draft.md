@@ -105,6 +105,18 @@ document type is added in Phase P1 alongside ADR and AAR. The trace CLI verb
 is `projectkoios document trace create <session>` with flags for initial and
 final paths. Diff generation is a helper function, not a daemon.
 
+The snapshot mechanism is first implemented by this ADR's own procedure:
+
+- **Trace snapshot location:** `spike/20260702/json-database-and-ingestor/traces/trace.20260702.144539/`
+- **Initial artifact:** `initial/plan.md` — the VULCAN-authored implementation plan
+- **Final artifact:** `final/plan.md` — the human-accepted revision (populated after review)
+- **Diff output:** `diff.delta` (generated after final is written)
+- **Style signals:** captured as a `signals.json` sidecar in the trace directory
+
+This first trace captures coding style and planning conventions from the JSON
+database spike. Each subsequent spike phase creates a new trace under the same
+`traces/` directory with an incremented timestamp identifier.
+
 ## Resolved open questions
 
 - Should the trace include the full file contents or just the diff? — Just the diff;
