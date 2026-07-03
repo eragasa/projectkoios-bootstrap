@@ -195,11 +195,12 @@ goose/sessions/
 # Local Obsidian workspace (never commit)
 .obsidian/
 
-# Persistent agent workspaces (never commit)
-workspaces/
 # Explicit workspace-local agent config snapshot (never commit)
-workspaces/athena/.agents/
-workspaces/koios/.agents/
+workspaces/*/.agents/
+
+# Workspace-local runtime artifacts (never commit)
+workspaces/*/.pi-subagents/
+workspaces/*/graphify-out/
 
 # Graphify
 graphify-out/
