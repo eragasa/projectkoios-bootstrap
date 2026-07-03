@@ -65,6 +65,12 @@ def _start() -> None:
             _tmux("send-keys", "-t", f"{SESSION}:{name}", cmd, "C-m")
         print(f"started: {name}")
 
+    hermes_startup = REPO_ROOT / "scripts" / "hermes-startup"
+    if hermes_startup.exists():
+        subprocess.run([str(hermes_startup), "new"], check=True)
+    else:
+        print("warning: scripts/hermes-startup missing; skipping Hermes session marker")
+
     _tmux("select-window", "-t", f"{SESSION}:{ARCHON_WINDOW}")
 
     if sys.stdout.isatty():

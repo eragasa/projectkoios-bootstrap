@@ -32,6 +32,7 @@ Bootstrap architecture notes: `docs/architecture.00.md`
 ### Behavior
 
 - `start` creates the koios session and missing windows
+- `start` also runs `./scripts/hermes-startup new` to write the Hermes session marker
 - `show` lists the koios session and its windows
 - `connect` focuses one window
 - `stop` kills the koios session
