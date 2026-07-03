@@ -197,6 +197,7 @@ Read only the current artifact and filesystem state; do not rely on chat history
 - At session end, run `graphify update /Users/eugene/repos/projectkoios-bootstrap` from the repo root.
 - If Graphify is available, do not manually scan large document/code surfaces first.
 - Only scan manually when Graphify is missing, stale enough to block the task, or lacks the exact detail needed.
+- To send an intercom message to another agent, use `intercom send <agent>`.
 - Read `graphify-out/GRAPH_REPORT.md` only for broad architecture review.
 - Keep local secrets out of git.
 - At session end, always write an AAR under `docs/AAR/`. For sessions with durable process lessons, record protocol failures, repeated user corrections, unclear sandbox message delivery, workflow/tool friction, validation gaps, and improvement candidates. For trivial clean sessions, write a brief AAR that states no durable process issue was observed.
