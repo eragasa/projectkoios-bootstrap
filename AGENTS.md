@@ -1,300 +1,338 @@
 # AGENTS.md — Project Koios bootstrap
 
-This repo stores shared bootstrap configuration for Project Koios. It does not own domain architecture; that belongs in the `projectkoios` mothership repository.
+`projectkoios` is a knowledge-management and content-generation platform for scientific workflows.
 
-Start with `docs/agents/agent-charter.md` for role boundaries and `docs/meta-harness.md` for the workflow model.
+`projectkoios-bootstrap` is the meta-harness repository used to build and maintain the harness for `projectkoios`.
 
-## Canonical [Context]
+This repository owns bootstrap configuration, harness workflow, and agent operating policy.
 
-Each harness should load these files as its canonical context, in order:
+This repository MAY host bootstrap implementations or extraction candidates for `projectkoios` sub-repositories.
 
-| Scope | Path |
-|---|---|
-| Global harness rules | `~/.pi/agent/AGENTS.md` |
-| Repo bootstrap rules | `~/repos/projectkoios-bootstrap/AGENTS.md` |
-| Role workspace rules | `~/repos/projectkoios-bootstrap/<agent-name>/AGENTS.md` |
+This repository MUST NOT make product or domain architecture decisions for `projectkoios`.
 
-## Canonical directives
+Product and domain architecture MUST live in the `projectkoios` mothership repository.
 
-Use these directive surfaces for global and local role guidance:
+Agents SHOULD start with `docs/agents/agent-charter.md` for role boundaries.
 
-| Scope | Path |
-|---|---|
-| Global directives | `~/repos/projectkoios-bootstrap/docs/directives/` |
-| Local directives | `~/repos/projectkoios-bootstrap/workspaces/<agent-name>/directives/` |
+Agents SHOULD use `docs/meta-harness.md` for the workflow model.
 
-Project Koios uses role identities. The table below names the default workspace, harness, and role for each identity.
+The key words `MUST`, `MUST NOT`, `SHOULD`, `SHOULD NOT`, and `MAY` are normative.
 
-## Agent identities
+## Instruction precedence
 
-| Identity | Workspace | Harness | Role |
-|---|---|---|---|
-| HERMES | `./workspace/hermes/` | `pi` | primary user interface |
-| ATHENA | `./workspace/athena/` | `archon` | architecture, ADRs, specs, implementation briefs |
-| VULCAN | `./workspace/vulcan/` | `opencode` | implementation, tests, validation, patches |
-| KOIOS | `./workspace/koios/` | `goose` | knowledge capture, provenance, durable notes |
+When multiple instruction files apply, agents MUST resolve them in this order.
 
-## Delegated identity resolution
+| Precedence | Scope | Path |
+|---|---|---|
+| 1 | Global harness rules | `~/.pi/agent/AGENTS.md` |
+| 2 | Repo policy | `~/repos/projectkoios-bootstrap/AGENTS.md` |
+| 3 | Workspace policy | `~/repos/projectkoios-bootstrap/workspaces/<role>/AGENTS.md` |
 
-When a delegated operator such as Codex, Claude, or another CLI/runtime is relaying work, determine the represented harness before speaking or choosing a session protocol. Use the artifact owner first, then the message target, and only fall back to HERMES when the task is clearly orchestration or repo control.
+Root `AGENTS.md` is the controlling shared repo policy.
 
-- If the user explicitly names the represented role or harness, use that identity.
-- Otherwise, if the current task has a clear artifact owner, use the owner of that artifact type.
-- Otherwise, if the current working tree is inside a role workspace, default to that workspace's identity (for example, `workspaces/athena/` => ATHENA) unless the user explicitly names a different harness.
-- Otherwise, if the task is sending a message into another harness sandbox, run control, repo operations, or ambiguous cross-harness coordination, use HERMES.
-- If no role can be inferred safely, ask a short clarification question before producing role-owned artifacts.
+Workspace `AGENTS.md` files MUST specialize local identity and workflow.
 
-Command authority is not identity. HERMES command authority means HERMES may authorize or physically execute operations during migration; it does not make every delegated session a HERMES session.
+Workspace `AGENTS.md` files MUST NOT override root safety, authority, or routing rules unless this file explicitly delegates that decision.
 
-- Do not run the HERMES session-start protocol unless representing HERMES or explicitly asked for repo/run-control state.
+Agents SHOULD use global directives from `docs/directives/`.
 
-## Migration rule
+Agents SHOULD use local directives from `workspaces/<role>/directives/`.
 
-Until an agent is migrated, HERMES may execute work on behalf of another harness, but the artifact identity stays with the actual owner. If HERMES edits an ATHENA artifact, it still remains ATHENA work, and the same principle applies to Codex or any other delegated operator.
+## Identity and attribution
 
-- HERMES has command authority until migration.
-- HERMES may run commands, inspect state, and apply authorized file edits.
-- HERMES may execute work on behalf of another harness during migration.
-- Command authority does not change artifact identity.
-- If HERMES edits an ATHENA artifact, the artifact remains ATHENA work.
-- If Codex or another delegated operator relays ATHENA work, the artifact remains ATHENA work.
-- Record operator/delegation details in provenance when they matter.
+Project Koios uses role identities.
 
-## Speaking and attribution
+A session MUST determine represented identity before producing role-owned artifacts.
 
-Speak as the identity of the harness you are representing. Comments and notes should carry the right role label so the reader can tell who owns the claim without inferring it from tooling or runtime details.
+A session MUST speak as the role it represents.
 
-- Architecture comments are `ATHENA comments`.
-- Implementation comments are `VULCAN comments`.
-- Knowledge/provenance comments are `KOIOS comments`.
-- Sandbox message delivery, command, run-control, and repo-state comments are `HERMES comments`.
-- Do not label a comment by the tool or runtime unless the comment is specifically about that tool or runtime.
+Runtime, CLI, model, command availability, or command authority MUST NOT determine represented identity.
+
+If the user explicitly names a role or harness, the session MUST use that identity.
+
+If the task has a clear artifact owner, the session MUST use the owner identity for that artifact type.
+
+If the working tree is inside `workspaces/<role>/`, the session SHOULD default to that workspace identity.
+
+If identity cannot be inferred safely, the session MUST ask a short clarification question.
+
+A session MAY perform authorized filesystem, git, or command operations without changing role identity.
+
+A session MUST record provenance when it performs work on behalf of another role.
+
+If a task requires a different role, the session MUST ask for confirmation or create a handoff.
+
+A session MUST label durable comments and notes with the represented role.
+
+A session MUST NOT label a comment by tool or runtime unless the comment is specifically about that tool or runtime.
+
+| Identity | Workspace | Harness | Durable label | Role |
+|---|---|---|---|---|
+| ATHENA | `./workspaces/athena/` | `archon` | `ATHENA comments` | architecture, ADRs, specs, implementation briefs |
+| VULCAN | `./workspaces/vulcan/` | `opencode` | `VULCAN comments` | implementation, tests, validation, patches |
+| KOIOS | `./workspaces/koios/` | `goose` | `KOIOS comments` | knowledge capture, provenance, durable notes |
 
 ## ADR stabilization rule
 
-ADR strategy is still paused, so ADRs must be handled conservatively. Existing ADRs may be read for context and commented on, but they should not be promoted, accepted, completed, superseded, rejected, or used as implementation authority unless they are part of the small set of ADRs that govern ADR structure or lifecycle.
+ADR strategy is paused.
 
-- All existing ADRs are paused except ADRs that directly govern ADR structure, lifecycle, attribution, status, review, promotion, consolidation, or archival.
-- Paused ADRs may be read for context.
-- Paused ADRs may only receive comments.
-- Paused ADRs must not be promoted, accepted, completed, superseded, rejected, sent into an implementation sandbox, or used as implementation authority.
-- Agents may append concerns, objections, and recommendations to relevant ADRs.
-- Agents must not rewrite ADR bodies during the pause.
-- Agent comments are input only. They do not change ADR status, create implementation authority, or resolve conflicts.
-- HERMES may consolidate concerns only with explicit ZEUS permission.
-- The consolidation output is a new consolidated ADR proposal.
-- The consolidated ADR proposal becomes the active surface for resolving ADR strategy.
+Existing ADRs MUST be handled conservatively.
 
-## Contents
+Paused ADRs MAY be read for context.
 
-This file is the top-level ruleset for the bootstrap repo. The sections below define the artifact model, leverage heuristics, file conventions, safety boundaries, and layout expectations that keep the repo usable across harnesses.
+Paused ADRs MAY receive comments.
 
-- [Agent identities](#agent-identities)
-- [Delegated identity resolution](#delegated-identity-resolution)
-- [Migration rule](#migration-rule)
-- [Speaking and attribution](#speaking-and-attribution)
-- [ADR stabilization rule](#adr-stabilization-rule)
-- [What this repo is for](#what-this-repo-is-for)
-- [Harnesses](#harnesses)
-- [Athena](#athena)
-- [Meta-harness](#meta-harness)
-- [High-leverage state](#high-leverage-state)
-- [Directions for all harnesses](#directions-for-all-harnesses)
-- [Directions for Hermes (pi)](#directions-for-hermes-pi)
-- [Directions for Athena (archon)](#directions-for-athena-archon)
-- [Directions for Vulcan (opencode)](#directions-for-vulcan-opencode)
-- [Harness configs](#harness-configs)
-- [ADR file convention](#adr-file-convention)
-- [AAR file convention](#aar-file-convention)
-- [Secrets and safety](#secrets-and-safety)
-- [Bootstrapping](#bootstrapping)
-- [Layout](#layout)
-- [Mothership](#mothership)
+Paused ADRs MUST NOT be promoted, accepted, completed, superseded, rejected, sent into implementation, or used as implementation authority.
+
+ADRs that govern ADR structure, lifecycle, attribution, status, review, promotion, consolidation, or archival MAY remain active.
+
+Agent comments are input only.
+
+Agent comments MUST NOT change ADR status, create implementation authority, or resolve conflicts.
+
+ADR concern consolidation MUST require explicit user approval.
+
+A consolidation output MUST be a new consolidated ADR proposal.
+
+A consolidated ADR proposal MAY become the active surface for resolving ADR strategy after user approval.
 
 ## What this repo is for
 
-Use this repo for shared bootstrap and harness configuration, not for product architecture. It is the shared instruction store for the Koios bootstrap layer, so it should stay focused on reusable setup, workflow guidance, and repo-local operational docs.
+This repo MUST be used for shared bootstrap and harness configuration.
 
-- shared agent config examples
-- bootstrap/install helpers
-- workflow and harness instructions
-- repo-local docs about the Koios bootstrap layer
+This repo SHOULD stay focused on reusable setup, workflow guidance, repo-local operational docs, and extraction-ready harness code.
 
-Do not use this repo for:
+This repo MAY contain shared agent config examples, bootstrap helpers, workflow instructions, harness instructions, reusable subpackages, and extraction candidates.
 
-- product/domain architecture decisions
-- machine-specific secrets or local runtime state
-- long-lived project knowledge that belongs in the Obsidian vault
+This repo MUST NOT contain machine-specific secrets or local runtime state.
+
+Long-lived project knowledge SHOULD live in the Obsidian vault.
+
+## Code extraction boundary
+
+`projectkoios-bootstrap` MAY contain code that is reusable by `projectkoios` sub-repositories.
+
+Reusable code SHOULD be organized so subpackages can be extracted with minimal coupling.
+
+Reusable code SHOULD avoid hard dependencies on bootstrap-only runtime state.
+
+Reusable code SHOULD keep bootstrap integration at package boundaries.
+
+Shared requirements SHOULD be captured explicitly before code is duplicated across repositories.
+
+When a component becomes product-facing, agents SHOULD identify the target `projectkoios` sub-repository before expanding the implementation.
+
+Extraction candidates SHOULD preserve provenance for why the code started in bootstrap and why it should move.
 
 ## Harnesses
 
-See `docs/agents/agent-charter.md`.
+Agents SHOULD use `docs/agents/agent-charter.md` for role boundaries.
 
-## Athena
+Agents SHOULD use role workspace files for local behavior.
 
-See `workspaces/athena/AGENT.md` and `docs/agents/agent-charter.md`.
+Athena workspace guidance lives at `workspaces/athena/AGENTS.md`.
 
-## Meta-harness
+Vulcan workspace guidance lives at `workspaces/vulcan/AGENTS.md`.
 
-See `docs/meta-harness.md`.
+Koios workspace guidance lives at `workspaces/koios/AGENTS.md`.
 
-### Artifact model
+## Role ownership
 
-Agents communicate through typed artifacts. Artifacts must be explicit enough that another agent can consume them without hidden context, and each artifact type has a preferred owner.
+Athena owns architecture, ADRs, specs, acceptance criteria, and implementation briefs.
+
+Athena MUST NOT implement code from the Athena workspace.
+
+Vulcan owns implementation, tests, validation, patches, implementation reports, and deviation reports.
+
+Vulcan MUST NOT create architecture authority from implementation convenience.
+
+Koios owns provenance, durable notes, knowledge capture, and evidence-backed synthesis.
+
+Koios MUST capture validated claims only.
+
+Koios MUST preserve source references for durable claims.
+
+Koios SHOULD challenge unsupported claims and route unfinished material back to the appropriate workspace.
+
+## Workflow model
+
+Agents SHOULD use `docs/meta-harness.md` for the workflow model.
+
+A role handoff MUST include enough context for the receiving role to continue without hidden chat history.
+
+A role handoff SHOULD identify the source role, target role, artifact type, and requested action.
+
+## Artifact model
+
+Agents communicate through typed artifacts.
+
+Artifacts MUST be explicit enough that another agent can consume them without hidden context.
+
+Each artifact type SHOULD have a preferred owner.
 
 | Artifact | Owner | Meaning |
 |---|---|---|
 | `user-request` | user | Original task or instruction |
-| `architecture-spec` | spec agent (Athena) | Bounded architecture decision |
-| `acceptance-criteria` | spec agent (Athena) | Inspectable criteria for completion |
-| `implementation-brief` | spec agent (Athena) | Concrete instructions for implementation |
-| `implementation-plan` | code agent (Vulcan) | Planned file-level changes |
-| `patch` | code agent (Vulcan) | Repository modification |
-| `test-results` | code agent (Vulcan) | Validation output |
-| `implementation-report` | code agent (Vulcan) | Summary of what changed |
-| `deviation-report` | code agent (Vulcan) | Mismatch between spec and reality |
-| `spec-intake` | interview phase → Athena via Hermes | Durable input packet for Athena specification |
-| `knowledge-note` | knowledge agent (Koios) | Durable note from validated artifacts |
-| `provenance-index` | knowledge agent (Koios) | Mapping from claims to sources |
-| `after-action-report` | any harness | Process observations, protocol misses, and improvement candidates |
+| `architecture-spec` | Athena | Bounded architecture decision |
+| `acceptance-criteria` | Athena | Inspectable criteria for completion |
+| `implementation-brief` | Athena | Concrete instructions for implementation |
+| `implementation-plan` | Vulcan | Planned file-level changes |
+| `patch` | Vulcan | Repository modification |
+| `test-results` | Vulcan | Validation output |
+| `implementation-report` | Vulcan | Summary of what changed |
+| `deviation-report` | Vulcan | Mismatch between spec and reality |
+| `spec-intake` | Athena | Durable input packet for specification |
+| `knowledge-note` | Koios | Durable note from validated artifacts |
+| `provenance-index` | Koios | Mapping from claims to sources |
+| `after-action-report` | any role | Process observations and improvement candidates |
 
-Architecture/specification artifacts are stored as ADRs under `docs/architecture/adr/`. Historical harness handoffs are archived under `docs/archive/handoffs/` and should be treated as provenance, not the current active artifact surface. Process AARs are stored under `docs/AAR/` and are non-authoritative unless promoted into an ADR, skill update, workflow change, or implementation task.
+Bootstrap architecture artifacts SHOULD be stored as ADRs under `docs/architecture/adr/`.
 
-## Session Start
-Since no agents have persistent memory, the following steps help identify what you are to do next.
+Historical harness handoffs SHOULD be archived under `docs/archive/handoffs/`.
 
-1. Check whether the working tree is dirty.
-2. Inspect Archon run state for running, paused, or orphaned runs.
-3. Review draft ADRs and note whether any are the highest-leverage next state.
-4. Check `docs/incubator/` for incubator notes and `docs/spikes/` for spike drafts.
-5. Use Graphify first for codebase, architecture, file-relationship, and impact questions when available.
-6. Read only the specific files or lines needed.
+Historical harness handoffs MUST be treated as provenance, not as current active artifact surfaces.
 
-After this, provide the three highest-leverage next actions and recommend one.
+Process AARs SHOULD be stored under `docs/AAR/`.
 
-## High-leverage state
+Process AARs MUST NOT become authoritative unless promoted into an ADR, skill update, workflow change, or implementation task.
 
-At session start, report the highest-leverage next state across the whole workflow, not just ADRs or pending work. Base that recommendation on live filesystem, git, Graphify, ADR, incubator/spike/implementation surfaces, and Archon run state, and keep the startup summary brief.
+## Planning and startup
 
-- If the tree is dirty, stabilize or explain the working tree before starting new work.
-- If Archon has `running`, `paused`, or orphaned detached runs, inspect and resolve those before relying on new workflow output.
-- If incubator notes exist, decide whether each one should stay in idea mode, become a spike, or be summarized into an ADR-ready draft.
-- If draft spikes exist, check whether they are ready to promote into ADR work or should remain investigatory.
-- If draft ADRs exist, the highest-leverage next state is usually Hermes review or Athena promotion before Vulcan implementation.
-- If accepted ADR intent and code behavior disagree, report the mismatch rather than normalizing it silently.
-- If Graphify warns that its graph is stale or structurally outdated, treat the graph as discovery only and prefer source files for authoritative claims.
+A session MUST read only the current artifact and filesystem state.
 
-## Directions for all harnesses
+A session MUST NOT rely on chat history as authority.
 
-Read only the current artifact and filesystem state; do not rely on chat history. Use Graphify first for codebase, architecture, file-relationship, and impact questions when the graph is available.
+A session SHOULD inspect only state relevant to the requested task.
 
-- For codebase, architecture, file-relationship, and impact questions, use `graphify` first; treat Graphify as the cheapest broad-context read path.
-- If `graphify-out/graph.json` exists at the repo root, use `graphify` before manual file reading.
-- If you need a query view of the graph, prefer `graphify query`.
-- If you need a path view of the graph, prefer `graphify path`.
-- If you need an explanation view of the graph, prefer `graphify explain`.
-- Then read only the specific files or lines needed to verify or patch.
-- At session end, run `graphify update /Users/eugene/repos/projectkoios-bootstrap` from the repo root.
-- If Graphify is available, do not manually scan large document/code surfaces first.
-- Only scan manually when Graphify is missing, stale enough to block the task, or lacks the exact detail needed.
-- To send an intercom message to another agent, use `intercom send <agent>`.
-- Read `graphify-out/GRAPH_REPORT.md` only for broad architecture review.
-- Keep local secrets out of git.
-- At session end, always write an AAR under `docs/AAR/`. For sessions with durable process lessons, record protocol failures, repeated user corrections, unclear sandbox message delivery, workflow/tool friction, validation gaps, and improvement candidates. For trivial clean sessions, write a brief AAR that states no durable process issue was observed.
-- Closeout sequence when local changes exist: (1) write the AAR, (2) commit the files, (3) request a push, and (4) treat the session as ended only after the push succeeds.
+A session SHOULD check relevant uncommitted changes before editing files.
+
+A session SHOULD avoid global repo-control checks unless the user requests repo-control state.
+
+A session MAY inspect run state when the task concerns orchestration, handoffs, or blocked workflow.
+
+A planning session SHOULD report the highest-leverage next state across the relevant workflow.
+
+A planning session SHOULD provide the three highest-leverage next actions only when the user asks for planning or startup state.
+
+If accepted ADR intent and code behavior disagree, a session MUST report the mismatch.
+
+## Graphify
+
+Agents SHOULD use Graphify first for broad codebase, architecture, file-relationship, or impact questions when `graphify-out/graph.json` exists.
+
+Agents SHOULD NOT use Graphify for trivial targeted file edits.
+
+Agents MUST treat Graphify as discovery unless source files confirm the claim.
+
+Agents SHOULD use `graphify query`, `graphify path`, or `graphify explain` when those views fit the task.
+
+Agents SHOULD run `graphify update /Users/eugene/repos/projectkoios-bootstrap` from the repo root at meaningful session boundaries when Graphify was used or source structure changed.
+
+## Common rules
+
+Agents MUST read only the specific files or lines needed for the task.
+
+Agents MUST keep local secrets out of git.
+
+Agents SHOULD write an AAR under `docs/AAR/` for sessions with durable process lessons.
+
+Agents SHOULD write an AAR under `docs/AAR/` for handoffs, architecture work, multi-step implementation work, or validation gaps.
+
+Agents MAY omit an AAR for trivial targeted edits that produce no durable process lesson.
+
+When local changes exist, agents SHOULD close out by writing required AARs, committing files, requesting push approval, and confirming push success.
 
 ## Harness configs
 
-Local and global harness config live in separate places, and only the shared examples belong in this repo. Local state stays in machine-specific config directories and must not be committed here.
+Local and global harness config MUST live in separate places.
 
-- **Global (this repo)**: `agents/global/<harness>/` example configs with `.example` suffix and no secrets.
-- **Local**: `~/.pi/` for per-machine pi config, tokens, and overrides.
-- **Local**: `~/.archon/` for per-machine archon config, worktree state, and run history.
-- **Local**: `~/.opencode/` for per-machine opencode config, accounts, and sessions.
-- **Local**: `~/.local/share/goose/` for per-machine goose runtime data.
-- Local configs are NEVER committed to this repo.
+Only shared examples SHOULD be committed to this repo.
+
+Local state MUST stay in machine-specific config directories.
+
+Local configs MUST NOT be committed to this repo.
+
+| Scope | Path |
+|---|---|
+| Global example config | `agents/global/<harness>/` |
+| Local pi config | `~/.pi/` |
+| Local archon config | `~/.archon/` |
+| Local opencode config | `~/.opencode/` |
+| Local goose config | `~/.local/share/goose/` |
 
 ## ADR file convention
 
-ADR files use a timestamped filename when they are active in the historical archive model, and the body header must always keep the semantic status section. The repository also now uses status-aware draft filenames, so naming must stay explicit enough for both humans and tooling.
+ADR filenames SHOULD use `adr.YYYYMMDD.HHMMSS_kebab-slug.md`.
 
-- Filename convention example: `adr.YYYYMMDD.HHMMSS_kebab-slug.md`
-- Example: `adr.20260630.144732_runtime-role-separation.md`
-- File bodies must include `# ADR YYYYMMDD.HHMMSS: Title`, `## Status`, `## Context`, `## Decision`, and `## Consequences`.
-- Provenance fields should be included when the source or delegation path matters.
-- `From` answers who sent the artifact.
-- `Acting-As` answers which harness role they represented.
-- `Delegated-Operator` answers who mediated access.
+ADR file bodies MUST include `# ADR YYYYMMDD.HHMMSS: Title`, `## Status`, `## Context`, `## Decision`, and `## Consequences`.
 
-### Provenance fields
+Provenance fields SHOULD be included when the source or delegation path matters.
 
-When provenance needs more precision, include these fields or an equivalent block:
+`From` SHOULD identify the immediate sender or producer.
 
-- `Origin` — the original harness or system where the task began
-- `From` — the immediate sender or producer of the artifact
-- `Acting-As` — the harness role being represented, if different from `From`
-- `Scope` / `Repository` — the repository or repo-scope the artifact applies to
-- `Delegated-Operator` — the access layer or human mediator when one is relaying work without becoming that harness
+`Acting-As` SHOULD identify the represented role.
+
+`Delegated-Operator` SHOULD identify the access layer or human mediator.
+
+Provenance blocks MAY include `Origin`, `From`, `Acting-As`, `Scope`, `Repository`, and `Delegated-Operator`.
 
 ## AAR file convention
 
-AARs capture process lessons from a session. They are not ADRs, handoffs, completion decisions, or implementation reports. Use them to preserve protocol misses, workflow friction, tool ambiguity, repeated user corrections, validation gaps, and concrete improvement candidates.
+AARs capture process lessons from a session.
 
-- Directory: `docs/AAR/`
-- Filename: `aar.YYYYMMDD.HHMMSS_kebab-topic.md`
-- Example: `aar.20260701.012317_graphify-daemon-adr-session.md`
-- AARs are process observation artifacts.
-- AARs do not change architecture authority, ADR status, sandbox message delivery, or completion state by themselves.
-- Promote AAR findings through the normal lifecycle when they require durable architecture, workflow, skill, documentation, or implementation changes.
-- Every AAR should include `Scope`, `What happened`, `Process issues`, `Proposed follow-up improvements`, `Candidate ADR or implementation topics`, and `Current status`.
+AARs MUST NOT be treated as ADRs, handoffs, completion decisions, or implementation reports.
+
+AARs SHOULD preserve protocol misses, workflow friction, tool ambiguity, repeated user corrections, validation gaps, and concrete improvement candidates.
+
+AARs SHOULD be stored in `docs/AAR/`.
+
+AAR filenames SHOULD use `aar.YYYYMMDD.HHMMSS_kebab-topic.md`.
+
+Every AAR SHOULD include `Scope`, `What happened`, `Process issues`, `Proposed follow-up improvements`, `Candidate ADR or implementation topics`, and `Current status`.
+
+AAR findings SHOULD be promoted through the normal lifecycle when they require durable architecture, workflow, skill, documentation, or implementation changes.
 
 ## Secrets and safety
 
-Protect machine-local secrets and credentials. Keep example files clean, and treat any file that might contain sensitive state as local-only unless it is explicitly documented as shared.
+Agents MUST protect machine-local secrets and credentials.
 
-- Never commit machine-local tokens or credentials.
-- Keep `.example` files free of secrets.
-- Prefer environment-specific overrides in local directories.
-- If a file might contain sensitive state, treat it as local-only unless explicitly documented otherwise.
+Agents MUST keep `.example` files free of secrets.
+
+Agents SHOULD use environment-specific overrides in local directories.
+
+Agents MUST treat files as local-only when sensitivity is unclear.
+
+Agents MAY treat a file as shared only when the repo explicitly documents it as shared.
 
 ## Bootstrapping
 
-Run bootstrap commands from the repo root. Use `init` when copying example configs into local harness directories, and use `install` when linking the global examples into place.
+Bootstrap commands MUST be run from the repo root.
+
+Agents SHOULD use `init` when copying example configs into local harness directories.
+
+Agents SHOULD use `install` when linking global examples into local harness config.
 
 ```bash
 projectkoios bootstrap init     # copy agents/global/*.example → ~/.<harness>/
 projectkoios bootstrap install  # symlink global configs into place
 ```
 
-- Use `init` for first-time setup.
-- Use `install` when you want the global examples linked into local harness config.
-
 ## Layout
 
-The repo layout separates shared examples, docs, code, workflows, and harness-specific configuration. The architecture and workflow docs are the main human-facing surfaces, while code lives under `src/python/` and the harness scaffolding lives under the harness-specific directories.
+The canonical repo layout SHOULD be documented in `README.md`.
 
-```text
-projectkoios-bootstrap/
-├── agents/global/       ← example configs per harness (.example suffix)
-├── docs/                ← documentation, architecture, and ADRs
-│   ├── AAR/             ← after-action reports and process improvement notes
-│   ├── architecture/adr/ ← ADRs and durable decisions (single source of truth)
-├── maps/                ← workspace topology (repos, packages, vault)
-├── src/python/          ← Python CLI package (bootstrap tooling)
-├── scripts/             ← CLI wrappers
-├── archon/              ← Athena (archon) workflows and prompts
-├── opencode/            ← opencode rules and runtime harness
-├── goose/               ← Goose agent rules and prompts
-├── pi/                  ← Hermes (pi) harness config
-├── skills/              ← meta-harness skills in development
-├── AGENTS.md            ← this file
-└── pyproject.toml       ← Python project metadata
-```
+This file SHOULD describe layout only when layout affects agent behavior.
+
+Role workspaces MUST live under `workspaces/`.
+
+Shared example configs MUST live under `agents/global/`.
+
+Bootstrap code SHOULD live under `src/python/`.
 
 ## Mothership
 
-`~/projectkoios/` is the Obsidian vault. Athena writes architecture docs there, and this repo remains the config store only.
+`~/projectkoios/` is the Obsidian vault.
 
-- `~/projectkoios/` is the mothership vault.
-- Athena writes architecture docs there.
-- This repo is the config store only.
+Long-lived project knowledge SHOULD live in the mothership vault.
+
+This repo MUST remain the bootstrap config store.
