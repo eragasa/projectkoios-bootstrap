@@ -17,11 +17,11 @@ metadata:
 ---
 ## When to use this skill
 
-When the task asks about package boundaries, repository structure, public API design, feature existence, acceptance criteria definition, or responsibility splitting. The spec agent (archon/Athena) owns this skill.
+When the task asks about package boundaries, repository structure, public API design, feature existence, or responsibility splitting. The spec agent (archon/Athena) owns this skill.
 
 ## Agent responsibility
 
-Convert user intent into bounded technical specifications. Own requirement normalization, package and repository scope, architecture boundaries, public API intent, non-goals, acceptance criteria, and unresolved questions. Do not implement code or update durable knowledge notes.
+Convert user intent into bounded technical specifications. Own requirement normalization, package and repository scope, architecture boundaries, public API intent, non-goals, and unresolved questions. Draft preliminary acceptance-criteria notes only when needed, then hand off final criteria derivation to `spec-agent-acceptance-criteria`. Do not implement code or update durable knowledge notes.
 
 ## Inputs
 
@@ -36,17 +36,17 @@ Convert user intent into bounded technical specifications. Own requirement norma
 5. Identify non-goals.
 6. List unresolved questions.
 7. Write downstream instructions for implementation or knowledge capture.
-8. Produce `architecture-spec` and `acceptance-criteria`.
+8. Produce `architecture-spec` and any preliminary criteria notes needed for handoff.
 
 ## Output artifact
 
 - `architecture-spec` — bounded architecture decision with scope, non-goals, API intent, unresolved questions
-- `acceptance-criteria` — inspectable criteria for completion
+- `acceptance-criteria` — preliminary criteria notes for handoff; final inspectable pass/fail conditions are owned by `spec-agent-acceptance-criteria`
 
 ## Failure modes
 
 - Request is too vague to bound — escalate to Hermes
-- Architecture choice has multiple valid options with different consequences — escalate to user
+- Architecture choice has multiple valid options with different consequences — escalate to Hermes/meta-harness
 
 ## Escalation rule
 
