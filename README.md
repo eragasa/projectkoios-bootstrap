@@ -33,9 +33,6 @@ cd ~/repos/projectkoios-bootstrap
 # Start or reuse the koios tmux session and four windows
 ./scripts/koios harnesses start
 
-# Hermes workspace-state autoprocess startup
-./scripts/hermes-startup
-
 # Show koios workspace state
 ./scripts/koios harnesses show
 
@@ -71,8 +68,6 @@ Read `maps/repositories.md`, `maps/packages.md`, and `maps/vault_paths.md`
 before touching any code. All component repos are siblings under `~/repos/`.
 
 Persistent per-agent workspace state is proposed in `docs/workspaces.md`.
-
-Hermes restart helper: `./scripts/hermes-startup`
 
 ## Local Generated State
 

@@ -43,19 +43,3 @@ Bootstrap architecture notes: `docs/architecture.00.md`
 ## `start-harnesses.sh`
 
 Compatibility wrapper for `./scripts/koios harnesses start`.
-
-## `hermes-startup`
-
-Hermes autoprocess launcher for restart/resume.
-
-```bash
-./scripts/hermes-startup
-```
-
-Behavior:
-- prints the repo branch, status, and recent commits
-- reads `workspaces/hermes/state.md`
-- reads `workspaces/hermes/active.md`
-- reads the newest file in `workspaces/hermes/sessions/`
-- lists Hermes inbox and outbox files
-- does not mutate files
