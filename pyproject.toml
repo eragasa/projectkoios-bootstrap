@@ -19,10 +19,12 @@ requires = ["setuptools>=80"]
 build-backend = "setuptools.build_meta"
 
 [project.scripts]
-projectkoios = "projectkoios.bootstrap.cli:main"
+projectkoios = "projectkoios.cli.main:main"
 
 [tool.pytest.ini_options]
 python_files = ["test_*.py", "__*__*__*.py"]
+testpaths = ["tests"]
+pythonpath = ["src/python", "."]
 
 [tool.mypy]
 python_version = "3.12"

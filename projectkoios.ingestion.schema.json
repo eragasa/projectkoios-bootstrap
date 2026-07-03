@@ -1,0 +1,79 @@
+{
+  "$id": "projectkoios.ingestion.schema.json",
+  "title": "projectkoios.ingestion.config",
+  "type": "object",
+  "required": [
+    "version",
+    "project",
+    "pipeline",
+    "validation",
+    "source",
+    "ontology",
+    "extraction",
+    "retrieval",
+    "evaluation",
+    "presets"
+  ],
+  "properties": {
+    "version": {"type": "integer"},
+    "project": {"type": "string"},
+    "pipeline": {
+      "type": "object",
+      "required": ["mode", "answer_format", "retrieval_depth"],
+      "properties": {
+        "mode": {"type": "string", "enum": ["derived-index"]},
+        "answer_format": {"type": "string", "enum": ["cited_summary", "structured_json"]},
+        "retrieval_depth": {"type": "integer"}
+      },
+      "additionalProperties": false
+    },
+    "validation": {
+      "type": "object",
+      "required": ["mode"],
+      "properties": {
+        "mode": {"type": "string", "enum": ["strict", "relaxed"]}
+      },
+      "additionalProperties": false
+    },
+    "source": {
+      "type": "object",
+      "required": ["include", "exclude"],
+      "properties": {
+        "include": {"type": "array", "items": {"type": "string"}},
+        "exclude": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": false
+    },
+    "ontology": {"type": "object"},
+    "extraction": {
+      "type": "object",
+      "required": ["backend"],
+      "properties": {
+        "backend": {
+          "type": "object",
+          "required": ["name", "model", "timeout_seconds", "on_failure"],
+          "properties": {
+            "name": {"type": "string", "enum": ["ollama"]},
+            "endpoint": {"type": "string"},
+            "model": {"type": "string"},
+            "timeout_seconds": {"type": "integer"},
+            "on_failure": {"type": "string", "enum": ["error", "fallback"]}
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "retrieval": {
+      "type": "object",
+      "required": ["max_nodes"],
+      "properties": {
+        "max_nodes": {"type": "integer"}
+      },
+      "additionalProperties": false
+    },
+    "evaluation": {"type": "object"},
+    "presets": {"type": "object"}
+  },
+  "additionalProperties": false
+}

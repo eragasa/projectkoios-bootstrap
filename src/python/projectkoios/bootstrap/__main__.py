@@ -1,3 +1,3 @@
-from projectkoios.bootstrap.cli import main
+from projectkoios.cli.main import main
 
 main()
