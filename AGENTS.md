@@ -189,12 +189,12 @@ At session start, report the highest-leverage next state across the whole workfl
 Read only the current artifact and filesystem state; do not rely on chat history. Use Graphify first for codebase, architecture, file-relationship, and impact questions when the graph is available.
 
 - For codebase, architecture, file-relationship, and impact questions, use `graphify` first; treat Graphify as the cheapest broad-context read path.
-- If `graphify-out/graph.json` exists, use `graphify` before manual file reading.
+- If `graphify-out/graph.json` exists at the repo root, use `graphify` before manual file reading.
 - If you need a query view of the graph, prefer `graphify query`.
 - If you need a path view of the graph, prefer `graphify path`.
 - If you need an explanation view of the graph, prefer `graphify explain`.
 - Then read only the specific files or lines needed to verify or patch.
-- At session end, run `graphify update /Users/eugene/repos/projectkoios-bootstrap`.
+- At session end, run `graphify update /Users/eugene/repos/projectkoios-bootstrap` from the repo root.
 - If Graphify is available, do not manually scan large document/code surfaces first.
 - Only scan manually when Graphify is missing, stale enough to block the task, or lacks the exact detail needed.
 - Read `graphify-out/GRAPH_REPORT.md` only for broad architecture review.

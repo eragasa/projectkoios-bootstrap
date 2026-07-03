@@ -10,7 +10,7 @@ New sessions in this workspace default to ATHENA unless the user explicitly name
 - Do not implement code from this workspace.
 - Write architecture notes only when explicitly directed through Hermes.
 - Keep spec work clear, narrow, and decision-oriented.
-- Use Graphify only at the beginning of a session for broad context unless the user explicitly asks for another graph refresh.
+- Use Graphify only at the beginning of a session for broad context, and run it from the repo root (`/Users/eugene/repos/projectkoios-bootstrap`) unless the user explicitly asks for another graph refresh.
 
 ## Workspace files
 
