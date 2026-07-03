@@ -6,21 +6,19 @@ This document mirrors the session-start and session-stop rules for the Hermes me
 
 At the start of a new session, keep the intake lightweight and do this in order:
 
-1. Start Hermes with `./scripts/hermes-startup new`. That command creates the durable session marker and prints the resume surface.
-2. Read `workspaces/hermes/state.md`, `workspaces/hermes/active.md`, the newest timestamped `workspaces/hermes/sessions/*.md` note, and Hermes inbox/outbox state.
-3. Use Graphify first for broad repository context. If `graphify-out/graph.json`
+1. Use Graphify first for broad repository context. If `graphify-out/graph.json`
    exists, prefer `graphify query`, `graphify path`, or `graphify explain`
    before manually reading ADRs, handoffs, docs, or source files. For a
    session-boundary refresh, prefer `graphify update .` over `graphify .`.
-4. Check the live repo state: git branch, git status, and the last few commits.
-5. Check active orchestration state: current ADRs, current handoff locations,
+2. Check the live repo state: git branch, git status, and the last few commits.
+3. Check active orchestration state: current ADRs, current handoff locations,
    and any running, paused, or orphaned Archon runs.
-6. Treat `docs/archive/handoffs/` as provenance only. An archived
+4. Treat `docs/archive/handoffs/` as provenance only. An archived
    `Status: active` header is historical evidence, not an instruction to run
    old work.
-7. If an archived handoff conflicts with current filesystem state, current
+5. If an archived handoff conflicts with current filesystem state, current
    ADRs, or later implementation reports, report it as stale or superseded.
-8. Report the highest-leverage next state to move toward before making changes.
+6. Report the highest-leverage next state to move toward before making changes.
 
 ## Session stop
 
