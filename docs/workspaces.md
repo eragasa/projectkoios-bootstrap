@@ -89,12 +89,15 @@ Incoming mail for the workspace.
 - Hermes deposits mail here for the target agent
 - keep original provenance headers when the item is a handoff note
 - do not rewrite unless explicitly revising the mail item
+- if live notification is needed, write the inbox file first, then use intercom to notify the target
+- prefer one message per file
 
 ### `outbox/`
 Outgoing mail produced by the workspace.
 - one mail item per task boundary
 - explicit owner, scope, and next step
 - Hermes will deliver mail from outbox to the target workspace inbox
+- prefer the same timestamped markdown filename pattern as inbox mail
 
 ### `handoffs/incoming/`
 Artifacts received from another harness.
@@ -143,6 +146,7 @@ Session notes.
 
 - Use lowercase agent names: `hermes`, `athena`, `vulcan`, `koios`
 - Use timestamped session filenames: `YYYYMMDD.HHMMSS-topic.md`
+- Use timestamped markdown filenames for inbox/outbox messages: `YYYYMMDD.HHMMSS.<topic>.md`
 - Prefer one topic per file
 - Do not store secrets
 - Do not duplicate canonical repo docs inside workspace files

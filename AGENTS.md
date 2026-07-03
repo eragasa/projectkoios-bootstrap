@@ -4,6 +4,25 @@ This repo stores shared bootstrap configuration for Project Koios. It does not o
 
 Start with `docs/agents/agent-charter.md` for role boundaries and `docs/meta-harness.md` for the workflow model.
 
+## Canonical [Context]
+
+Each harness should load these files as its canonical context, in order:
+
+| Scope | Path |
+|---|---|
+| Global harness rules | `~/.pi/agent/AGENTS.md` |
+| Repo bootstrap rules | `~/repos/projectkoios-bootstrap/AGENTS.md` |
+| Role workspace rules | `~/repos/projectkoios-bootstrap/<agent-name>/AGENTS.md` |
+
+## Canonical directives
+
+Use these directive surfaces for global and local role guidance:
+
+| Scope | Path |
+|---|---|
+| Global directives | `~/repos/projectkoios-bootstrap/docs/directives/` |
+| Local directives | `~/repos/projectkoios-bootstrap/workspaces/<agent-name>/directives/` |
+
 Project Koios uses role identities. The table below names the default workspace, harness, and role for each identity.
 
 ## Agent identities
