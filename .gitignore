@@ -207,6 +207,9 @@ graphify-out/
 # Graphify AST cache (regenerated on extract)
 graphify-out/cache/ast/
 
+# macOS metadata
+.DS_Store
+
 # Swap files
 *.swp
 *.swo
