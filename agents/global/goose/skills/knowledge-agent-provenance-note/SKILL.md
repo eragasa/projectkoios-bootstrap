@@ -1,8 +1,8 @@
 ---
 name: knowledge-agent-provenance-note
 adr_binding:
-  - docs/architecture/adr/adr.skill-register-and-adr-binding-policy.draft.md
-  - docs/architecture/adr/adr.control-surfaces-and-ownership-boundaries.draft.md
+  - docs/adr/adr.skill-register-and-adr-binding-policy.draft.md
+  - docs/adr/adr.control-surfaces-and-ownership-boundaries.draft.md
 description: |
   Convert validated artifacts into durable, provenance-backed knowledge
   Bound to ADRs: adr.skill-register-and-adr-binding-policy.draft.md, adr.control-surfaces-and-ownership-boundaries.draft.md.
@@ -20,7 +20,7 @@ metadata:
     - knowledge-note
     - provenance-index
     - repo-state-summary
-    - routing-recommendation
+    - state-observation
 ---
 ## When to use this skill
 
@@ -80,8 +80,8 @@ normalizing it.
 9. If the context includes a relevant repo state query, optionally produce a
    `RepoStateSummary` (advisory, for Hermes).
 
-10. If a sandbox message delivery question arose during capture, optionally produce a
-    `RoutingRecommendation` (advisory, for Hermes).
+10. If a document-domain consistency question arose during capture, optionally produce a
+    `StateObservation` (advisory, for Hermes).
 
 ## Output artifacts
 
@@ -89,7 +89,7 @@ normalizing it.
 - `ProvenanceIndex` — mapping from claims to sources with classification and
   validation status
 - `RepoStateSummary` — advisory, for Hermes (optional)
-- `RoutingRecommendation` — advisory, for Hermes (optional)
+- `StateObservation` — advisory, for Hermes (optional)
 
 ## Failure modes
 

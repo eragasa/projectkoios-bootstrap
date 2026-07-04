@@ -1,8 +1,8 @@
 ---
 name: spec-agent-acceptance-criteria
 adr_binding:
-  - docs/architecture/adr/adr.skill-register-and-adr-binding-policy.draft.md
-  - docs/architecture/adr/adr.implementation-brief-verification-method.draft.md
+  - docs/adr/adr.skill-register-and-adr-binding-policy.draft.md
+  - docs/adr/adr.implementation-brief-verification-method.draft.md
 description: |
   Derive inspectable acceptance criteria from an architecture specification
   Bound to ADRs: adr.skill-register-and-adr-binding-policy.draft.md, adr.implementation-brief-verification-method.draft.md.

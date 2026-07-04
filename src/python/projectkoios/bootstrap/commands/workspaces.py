@@ -10,14 +10,14 @@ from projectkoios.bootstrap.workspaces import CANONICAL_WORKSPACES, ensure_works
 def register(subparsers) -> None:
     parser: ArgumentParser = subparsers.add_parser(
         "workspaces",
-        help="Manage per-agent workspaces and mail folders",
+        help="Manage per-agent workspaces and handoff folders",
     )
     ws_sub = parser.add_subparsers(dest="workspace_action")
     ws_sub.required = True
 
     init = ws_sub.add_parser(
         "init",
-        help="Create local workspaces, mail folders, and seed AGENT.md files",
+        help="Create local workspaces, handoff folders, and seed AGENT.md files",
     )
     init.add_argument(
         "--root",

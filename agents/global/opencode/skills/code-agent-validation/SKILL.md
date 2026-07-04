@@ -1,9 +1,9 @@
 ---
 name: code-agent-validation
 adr_binding:
-  - docs/architecture/adr/adr.skill-register-and-adr-binding-policy.draft.md
-  - docs/architecture/adr/adr.implementation-plan-ownership.draft.md
-  - docs/architecture/adr/adr.implementation-brief-verification-method.draft.md
+  - docs/adr/adr.skill-register-and-adr-binding-policy.draft.md
+  - docs/adr/adr.implementation-plan-ownership.draft.md
+  - docs/adr/adr.implementation-brief-verification-method.draft.md
 description: |
   Run the validation suite and report results against acceptance criteria
   Bound to ADRs: adr.skill-register-and-adr-binding-policy.draft.md, adr.implementation-plan-ownership.draft.md, adr.implementation-brief-verification-method.draft.md.

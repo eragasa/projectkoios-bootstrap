@@ -35,7 +35,7 @@ nodes:
       args="$ARGUMENTS"
       if [ -z "$args" ]; then
         echo "ERROR: ADR path and revision directive required."
-        echo "Example: athena-revise-adr $'docs/architecture/adr/adr.YYYYMMDD.HHMMSS_slug.md\\nApply required revisions from review run <id>: ...'"
+        echo "Example: athena-revise-adr $'docs/adr/adr.YYYYMMDD.HHMMSS_slug.md\\nApply required revisions from review run <id>: ...'"
         exit 2
       fi
       # Extract line 1 as the path; lines 2..end as the directive.

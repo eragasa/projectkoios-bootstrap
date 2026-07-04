@@ -1,7 +1,7 @@
 ---
 name: production-trace-capture
 adr_binding:
-  - docs/architecture/adr/adr.20260702.144539_agent-production-trace-and-training-capture.draft.md
+  - docs/adr/adr.20260702.144539_agent-production-trace-and-training-capture.draft.md
 description: |
   Capture the delta between agent-produced artifacts and human-accepted versions for style training.
   Bound to ADR: adr.20260702.144539_agent-production-trace-and-training-capture.draft.md.

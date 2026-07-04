@@ -27,11 +27,11 @@ CODEX_IDS = frozenset({"Codex", "codex"})
 
 
 def check_hermes_forwarded_without_decision(marking: HandoffMarking) -> list[Violation]:
-    """Hermes must produce a decision artifact, not relay raw inbox state.
+    """Hermes must produce a decision artifact, not relay raw role state.
 
-    Triggers when a token in ``pi_inbox`` has sender or recipient matching
-    Hermes but the token kind is not one of the accepted decision kinds or
-    a user request. The guard detects passive mailbox behaviour.
+    Triggers when a token in the legacy ``pi_inbox`` place has sender or
+    recipient matching Hermes but the token kind is not one of the accepted
+    decision kinds or a user request. The guard detects passive routing.
     """
     violations: list[Violation] = []
     for place_name in ("pi_inbox",):
@@ -50,7 +50,7 @@ def check_hermes_forwarded_without_decision(marking: HandoffMarking) -> list[Vio
                     ),
                     required_owner="Hermes",
                     suggested_next_action="Issue a routing-decision, revision-request, "
-                    "completion-decision, or blockage-report instead of forwarding raw inbox state.",
+                    "completion-decision, or blockage-report instead of forwarding raw role state.",
                 ))
     return violations
 

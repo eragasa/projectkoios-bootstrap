@@ -49,7 +49,7 @@ nodes:
 
       echo ""
       echo "=== ADR STATUS HEADERS ==="
-      for f in docs/architecture/adr/*.md; do
+      for f in docs/adr/*.md; do
         [ -f "$f" ] || continue
         printf '%s: ' "$f"
         awk '/^## Status/{getline; while ($0 == "") getline; print; exit}' "$f" | tr '\n' ' '

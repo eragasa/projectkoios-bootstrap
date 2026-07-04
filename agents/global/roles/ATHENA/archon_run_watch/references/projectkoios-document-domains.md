@@ -1,13 +1,13 @@
-# Project Koios sandbox message delivery guide
+# Project Koios document-domain guide
 
 ## Harness roles
 
-| Harness | Name | Role |
+| Harness | Name | Document domain |
 |---|---|---|
-| Hermes | Hermes | Meta-harness — orchestration, operations, handoff coordination |
-| archon (archon.diy) | Athena | Architecture design, ADRs, planning |
-| opencode | Vulcan | Code writing, tests, validation |
-| goose | Koios | Knowledge management, vault ops |
+| Hermes | Hermes | Cross-domain orchestration, repository state reconciliation, completion decisions |
+| archon (archon.diy) | Athena | Architecture design, ADRs, specifications, acceptance criteria |
+| opencode | Vulcan | Code changes, implementation plans, tests, validation evidence |
+| goose | Koios | Knowledge notes, provenance indexes, vault-oriented capture |
 
 ## Artifact ownership
 
@@ -26,15 +26,15 @@
 | provenance-index | Koios | Mapping from claims to sources |
 | provenance-audit | Koios | Capture-gap detection report |
 | repo-state-summary | Koios (advisory) | Snapshot for Hermes |
-| routing-recommendation | Koios (advisory) | Suggested recipient sandbox for Hermes |
-| routing-decision | Hermes | Recipient sandbox decision |
-| revision-request | Hermes | Return for revision |
+| state-observation | Koios (advisory) | Observation about document-domain consistency |
+| state-reconciliation | Hermes | Cross-domain consistency decision |
+| revision-request | Hermes | Request to revise a document-domain state |
 | completion-decision | Hermes | Gate result |
 
-## When to bypass specialist sandbox message delivery
+## When Hermes handles the state change directly
 
 Handle directly as Hermes when:
-- Lightweight config changes (editing YAML, env vars)
+- Lightweight config or status changes follow an established pattern
 - The specialist already failed or is unavailable
-- Mechanical changes that follow an established pattern
-- Handoff artifacts that the specialist would produce anyway
+- Mechanical changes are required to make document domains consistent
+- The work is a cross-domain inconsistency rather than a domain-owned transformation

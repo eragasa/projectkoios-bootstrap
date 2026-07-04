@@ -1,11 +1,11 @@
 ---
 name: koios-workspace-bootstrap
 adr_binding:
-  - docs/architecture/adr/adr.skill-register-and-adr-binding-policy.draft.md
-  - docs/architecture/adr/adr.canonical-workspace-state-next-action-protocol.draft.md
-  - docs/architecture/adr/adr.control-surfaces-and-ownership-boundaries.draft.md
+  - docs/adr/adr.skill-register-and-adr-binding-policy.draft.md
+  - docs/adr/adr.canonical-workspace-state-next-action-protocol.draft.md
+  - docs/adr/adr.control-surfaces-and-ownership-boundaries.draft.md
 description: |
-  Initialize persistent per-agent workspaces, mail folders, and local AGENT.md files
+  Initialize persistent per-agent workspaces, state folders, and local AGENT.md files
   Bound to ADRs: adr.skill-register-and-adr-binding-policy.draft.md, adr.canonical-workspace-state-next-action-protocol.draft.md, adr.control-surfaces-and-ownership-boundaries.draft.md.
 metadata:
   agent: knowledge-agent
@@ -13,7 +13,7 @@ metadata:
   consumes:
     - user-request
     - repo-state-summary
-    - routing-recommendation
+    - state-observation
   produces:
     - knowledge-note
     - provenance-index
@@ -31,13 +31,13 @@ product architecture.
 Create and maintain the agent-scoped workspace folders and seed files used to
 resume sessions across runs. Keep the layout small, human-readable, and easy to
 inspect with git, grep, and Obsidian. Seed each workspace with its own local
-`AGENT.md` file and mailbox folders (`inbox/`, `outbox/`).
+`AGENT.md` file and state folders. Handoff folders are compatibility surfaces, not transport authority.
 
 ## Inputs
 
 - `user-request` — the request to create or refresh agent workspaces
 - `repo-state-summary` — current repo context when available
-- `routing-recommendation` — the requested or inferred recipient sandbox scope
+- `state-observation` — the requested or inferred document-domain scope
 
 ## Procedure
 
@@ -48,8 +48,6 @@ inspect with git, grep, and Obsidian. Seed each workspace with its own local
    - `AGENT.md`
    - `state.md`
    - `active.md`
-   - `inbox/`
-   - `outbox/`
    - `sessions/`
    - `handoffs/incoming/`
    - `handoffs/outgoing/`
@@ -72,14 +70,14 @@ inspect with git, grep, and Obsidian. Seed each workspace with its own local
 
 - Workspace layout is ambiguous — ask Hermes for the canonical scope before
   creating files.
-- Mail system direction is ambiguous — ask Hermes before deciding inbox/outbox
-  conventions.
+- Document-domain ownership is ambiguous — ask Hermes before deciding which
+  state surface to seed.
 - Existing files contain conflicting state — report the conflict rather than
   overwriting without permission.
 - Request tries to repurpose the workspace layout as product architecture —
-  refuse and send a message back to Hermes/Athena.
+  refuse and record the inconsistency for Hermes/Athena.
 
 ## Escalation rule
 
 If the request implies a new workspace schema, a new agent role, or a change to
-sandbox message delivery authority, escalate to Hermes before making any file changes.
+document-domain ownership authority, escalate to Hermes before making any file changes.

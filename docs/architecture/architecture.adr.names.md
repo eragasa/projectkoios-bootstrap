@@ -18,11 +18,11 @@ It defines the semantic naming surface for ADR titles and filenames and points t
 
 This note is controlled by:
 
-- `docs/architecture/adr/adr.adr-names.draft.md`
+- `docs/adr/adr.adr-names.draft.md`
 
 ## Related files
 
-- `docs/architecture/adr/adr.adr-names.draft.md`
-- `docs/architecture/adr/adr.adr-title-naming-convention.draft.md`
-- `docs/architecture/adr/adr.adr-filename-naming-convention.draft.md`
+- `docs/adr/adr.adr-names.draft.md`
+- `docs/adr/adr.adr-title-naming-convention.draft.md`
+- `docs/adr/adr.adr-filename-naming-convention.draft.md`
 - `docs/architecture/architecture.00.md`

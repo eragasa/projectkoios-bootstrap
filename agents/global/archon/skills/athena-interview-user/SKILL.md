@@ -1,9 +1,9 @@
 ---
 name: athena-interview-user
 adr_binding:
-  - docs/architecture/adr/adr.skill-register-and-adr-binding-policy.draft.md
-  - docs/architecture/adr/adr.controlling-adr-join-protocol.draft.md
-  - docs/architecture/adr/adr.draft-adr-comment-processing-protocol.draft.md
+  - docs/adr/adr.skill-register-and-adr-binding-policy.draft.md
+  - docs/adr/adr.controlling-adr-join-protocol.draft.md
+  - docs/adr/adr.draft-adr-comment-processing-protocol.draft.md
 description: |
   Use when Athena/Archon must question an implementation proposal before code
   begins and produce an architecture interview or decision-support document
@@ -13,8 +13,8 @@ description: |
   that must evaluate scope discipline, model separation, workflow compatibility,
   repository ownership, ObjectClass/ActionClass/ActionInstance/Policy/Trace
   separation, or future Petri-net compatibility. Do not use for implementation,
-  direct code editing, ADR replacement, workflow creation, or automatic sandbox message delivery
-  to Vulcan.
+  direct code editing, ADR replacement, workflow creation, or automatic document-domain
+  state changes owned by Vulcan.
   Bound to ADRs: adr.skill-register-and-adr-binding-policy.draft.md, adr.controlling-adr-join-protocol.draft.md, adr.draft-adr-comment-processing-protocol.draft.md.
 ---
 # Athena Interview User

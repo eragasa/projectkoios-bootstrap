@@ -31,10 +31,10 @@ nodes:
       - routing
 
       Use the repository convention for filenames:
-      docs/architecture/adr/adr.YYYYMMDD.HHMMSS_<kebab-slug>.json
+      docs/adr/adr.YYYYMMDD.HHMMSS_<kebab-slug>.json
 
       Base the slug on the title, keep it short, and preserve the timestamp format.
 
-      Write the file to docs/architecture/adr/.
+      Write the file to docs/adr/.
 
       Confirm the filename and path once written.

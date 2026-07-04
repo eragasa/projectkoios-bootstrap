@@ -1,9 +1,9 @@
 # Project Koios GraphRAG first slice plan
 
 ## Source
-- `workspaces/athena/outbox/20260703_graphrag_consolidated_implementation_brief.md`
-- `workspaces/athena/inbox/20260703_graphrag_config_schema_rfc.md`
-- `workspaces/athena/inbox/20260703_graphrag_implementation_brief.md`
+- `workspaces/athena/handoffs/outgoing/20260703_graphrag_consolidated_implementation_brief.md`
+- `workspaces/athena/handoffs/incoming/20260703_graphrag_config_schema_rfc.md`
+- `workspaces/athena/handoffs/incoming/20260703_graphrag_implementation_brief.md`
 
 ## Scope
 Build the smallest config-driven GraphRAG slice for ADRs only.

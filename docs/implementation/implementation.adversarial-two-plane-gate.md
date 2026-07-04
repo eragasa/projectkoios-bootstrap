@@ -24,12 +24,12 @@ verification_method: review the workflow ADR and the verification ADR together, 
 
 This note is controlled by:
 
-- `docs/architecture/adr/adr.adversarial-two-plane-gate.draft.md`
+- `docs/adr/adr.adversarial-two-plane-gate.draft.md`
 
 ## Related files
 
 - `docs/implementation/implementation.00.md`
-- `docs/architecture/adr/adr.adversarial-two-plane-gate.draft.md`
+- `docs/adr/adr.adversarial-two-plane-gate.draft.md`
 
 ## routing
 

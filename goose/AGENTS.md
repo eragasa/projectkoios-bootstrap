@@ -181,4 +181,4 @@ for planning or implementation handoff.
 
 - Root `AGENTS.md` — full meta-harness framework, artifact model, authority rules
 - `docs/meta-harness.md` — skill model, artifact types, anti-patterns
-- `docs/architecture/adr/adr.20260630.165929` — Koios role definition ADR
+- `docs/adr/adr.20260630.165929` — Koios role definition ADR

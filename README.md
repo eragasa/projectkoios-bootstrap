@@ -2,10 +2,12 @@
 
 Shared harness config store for building and operating Project Koios.
 
-## Sandbox Message Delivery
+## Document-State Orchestration
 
-Canonical harness message delivery lives in `docs/agent-charter.md`: sending work
-means putting a message in the recipient harness sandbox.
+Canonical document-domain ownership lives in `docs/agents/agent-charter.md`.
+The repository documents and their statuses are the durable workflow state:
+agents initialize from that state, run bounded transformations, and write back a
+new state.
 
 This repo stores harness config, bootstrap helpers, and shared instructions.
 The current operator path and tool-specific details belong in the charter and
@@ -111,6 +113,7 @@ tests unless a future non-secret fixture exists.
 
 ## Architecture
 
-- Bootstrap architecture: `docs/architecture.00.md`
-- Repo projections: `docs/architecture.repo-projections.md`
-- ADR archive: `docs/architecture/adr/adr.20260628.000000_three-harness-meta-harness.md`
+- Bootstrap architecture: `docs/architecture/architecture.00.md`
+- Repo projections: `docs/architecture/architecture.repo-projections.md`
+- Active ADRs: `docs/adr/`
+- Historic ADR archive: `docs/archive/architecture/adr/adr.20260628.000000_three-harness-meta-harness.md`

@@ -30,8 +30,8 @@ Before ending a session:
    urgent handoff. If you only need the AST/code refresh and want to skip
    clustering, use `graphify update . --no-cluster`.
 3. Always write an AAR under `docs/AAR/`. Use AARs for protocol failures,
-   repeated user corrections, unclear sandbox message delivery,
-   workflow/tool friction, validation gaps, or improvement candidates. For
+   repeated user corrections, unclear document-domain ownership, workflow/tool
+   friction, validation gaps, or improvement candidates. For
    trivial clean sessions, write a brief AAR that states no durable process
    issue was observed.
 4. Report files changed and validation results.

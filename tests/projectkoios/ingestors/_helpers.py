@@ -99,7 +99,7 @@ def write_config(root: Path) -> Path:
           mode: strict
         source:
           include:
-            - docs/architecture/adr/**/*.md
+            - docs/adr/**/*.md
           exclude: []
         ontology: {}
         extraction:
@@ -116,7 +116,7 @@ def write_config(root: Path) -> Path:
           adr:
             source:
               include:
-                - docs/architecture/adr/**/*.md
+                - docs/adr/**/*.md
               exclude: []
         """
     ).strip()

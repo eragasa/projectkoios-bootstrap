@@ -18,9 +18,9 @@ It defines the navigation surface for the related ADR and points to the controll
 
 This note is controlled by:
 
-- `docs/architecture/adr/adr.skill-register-and-adr-binding-policy.draft.md`
+- `docs/adr/adr.skill-register-and-adr-binding-policy.draft.md`
 
 ## Related files
 
-- `docs/architecture/adr/adr.skill-register-and-adr-binding-policy.draft.md`
+- `docs/adr/adr.skill-register-and-adr-binding-policy.draft.md`
 - `docs/architecture/architecture.00.md`

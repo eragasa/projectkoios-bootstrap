@@ -31,8 +31,8 @@ The umbrella ADR defines the shared naming model:
 
 The detailed rules stay encapsulated in linked child ADRs:
 
-- `docs/architecture/adr/adr.adr-title-naming-convention.draft.md`
-- `docs/architecture/adr/adr.adr-filename-naming-convention.draft.md`
+- `docs/adr/adr.adr-title-naming-convention.draft.md`
+- `docs/adr/adr.adr-filename-naming-convention.draft.md`
 
 ### Naming model
 

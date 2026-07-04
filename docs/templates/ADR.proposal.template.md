@@ -1,7 +1,7 @@
 # ADR YYYYMMDD.HHMMSS: <Title>
 
-> Legacy Markdown render example. Canonical ADRs are JSON in `docs/architecture/adr/adr.schema.json`.
-> Controlled by: [adr.adr-template-contract](../architecture/adr/adr.adr-template-contract.md).
+> Legacy Markdown render example. Canonical ADRs are JSON in `docs/adr/adr.schema.json`.
+> Controlled by: [adr.adr-template-contract](../adr/adr.adr-template-contract.md).
 > Template index: [templates.00](templates.00.md).
 
 ---
@@ -71,8 +71,8 @@ Comments remain open while this ADR is in draft status. When the ADR is promoted
 
 - <How the resulting ADR, workflow, or artifact should be validated>
 
-## routing
+## document-state
 
 - Owner: <Hermes | Athena | Vulcan | Koios>
-- Next phase: <draft | proposed | review | accepted | validated | completed>
-- Notes: <optional routing guidance>
+- Current phase: <draft | proposed | review | accepted | validated | completed>
+- Notes: <optional document-domain consistency guidance>

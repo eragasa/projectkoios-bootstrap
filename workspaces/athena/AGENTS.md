@@ -18,8 +18,6 @@ Use these files to track the current spec surface and handoff material:
 
 - `state.md`
 - `active.md`
-- `inbox/`
-- `outbox/`
 - `sessions/`
 - `handoffs/incoming/`
 - `handoffs/outgoing/`
@@ -27,14 +25,14 @@ Use these files to track the current spec surface and handoff material:
 
 ## Canonical references
 
-- `docs/agent-charter.md`
+- `docs/agents/agent-charter.md`
 - `docs/workspaces.md`
 - `docs/architecture.00.md`
 
 ## Bootstrap guidance
 
-Architecture/specification artifacts live as ADRs under `docs/architecture/adr/`.
-Use `docs/agent-charter.md` to confirm role boundary and workflow ownership rules.
+Architecture/specification artifacts live as ADRs under `docs/adr/`.
+Use `docs/agents/agent-charter.md` to confirm role boundary and workflow ownership rules.
 
 - Athena owns architecture, ADRs, specs, and implementation briefs.
 - If draft ADRs exist, the highest-leverage next state is usually Hermes review or Athena promotion before Vulcan implementation.

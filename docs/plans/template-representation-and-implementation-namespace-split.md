@@ -2,7 +2,7 @@
 
 ## Source
 
-- ADR: `docs/architecture/adr/adr.20260702.213000_template-representation-ingestion-scope.draft.md`
+- ADR: `docs/adr/adr.20260702.213000_template-representation-ingestion-scope.draft.md`
 - Related surfaces: `docs/templates/templates.00.md`, `docs/implementation/implementation.00.md`
 
 ## Scope

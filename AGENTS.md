@@ -32,7 +32,7 @@ Root `AGENTS.md` is the controlling shared repo policy.
 
 Workspace `AGENTS.md` files MUST specialize local identity and workflow.
 
-Workspace `AGENTS.md` files MUST NOT override root safety, authority, or routing rules unless this file explicitly delegates that decision.
+Workspace `AGENTS.md` files MUST NOT override root safety, authority, or document-domain ownership rules unless this file explicitly delegates that decision.
 
 Agents SHOULD use global directives from `docs/directives/`.
 
@@ -60,7 +60,7 @@ A session MAY perform authorized filesystem, git, or command operations without 
 
 A session MUST record provenance when it performs work on behalf of another role.
 
-If a task requires a different role, the session MUST ask for confirmation or create a handoff.
+If a task requires a different document domain, the session MUST ask for confirmation or record the required state reconciliation.
 
 A session MUST label durable comments and notes with the represented role.
 
@@ -72,29 +72,21 @@ A session MUST NOT label a comment by tool or runtime unless the comment is spec
 | VULCAN | `./workspaces/vulcan/` | `opencode` | `VULCAN comments` | implementation, tests, validation, patches |
 | KOIOS | `./workspaces/koios/` | `goose` | `KOIOS comments` | knowledge capture, provenance, durable notes |
 
-## ADR stabilization rule
+## ADR lifecycle authority
 
-ADR strategy is paused.
+ADR strategy is active.
 
-Existing ADRs MUST be handled conservatively.
+Existing ADRs MUST be handled according to their current status and repository authority rules.
 
-Paused ADRs MAY be read for context.
+ADRs MAY be read, edited, promoted, accepted, completed, superseded, rejected, sent into implementation, or used as implementation authority when the action is consistent with the ADR lifecycle, document-domain ownership, and explicit user direction.
 
-Paused ADRs MAY receive comments.
+Agent comments are input only unless explicitly promoted into the appropriate document state.
 
-Paused ADRs MUST NOT be promoted, accepted, completed, superseded, rejected, sent into implementation, or used as implementation authority.
+Agent comments MUST NOT silently change ADR status, create implementation authority, or resolve conflicts.
 
-ADRs that govern ADR structure, lifecycle, attribution, status, review, promotion, consolidation, or archival MAY remain active.
+ADR concern consolidation MUST preserve provenance and document-domain ownership.
 
-Agent comments are input only.
-
-Agent comments MUST NOT change ADR status, create implementation authority, or resolve conflicts.
-
-ADR concern consolidation MUST require explicit user approval.
-
-A consolidation output MUST be a new consolidated ADR proposal.
-
-A consolidated ADR proposal MAY become the active surface for resolving ADR strategy after user approval.
+A consolidation output SHOULD be an explicit consolidated ADR proposal or architecture document when it changes durable authority.
 
 ## What this repo is for
 
@@ -152,23 +144,25 @@ Koios MUST capture validated claims only.
 
 Koios MUST preserve source references for durable claims.
 
-Koios SHOULD challenge unsupported claims and route unfinished material back to the appropriate workspace.
+Koios SHOULD challenge unsupported claims and identify the document domain that must resolve unfinished material.
 
 ## Workflow model
 
 Agents SHOULD use `docs/meta-harness.md` for the workflow model.
 
-A role handoff MUST include enough context for the receiving role to continue without hidden chat history.
+The repository document set and document statuses are the durable workflow state.
 
-A role handoff SHOULD identify the source role, target role, artifact type, and requested action.
+An agent run MUST initialize from the current repository document state and write back an explicit bounded state change.
+
+When document domains disagree, Hermes SHOULD resolve the inconsistency before another domain expands the work.
 
 ## Artifact model
 
-Agents communicate through typed artifacts.
+Agents transform typed document artifacts.
 
-Artifacts MUST be explicit enough that another agent can consume them without hidden context.
+Artifacts MUST be explicit enough that another agent can understand the repository state without hidden chat context.
 
-Each artifact type SHOULD have a preferred owner.
+Each artifact type SHOULD have a preferred document-domain owner.
 
 | Artifact | Owner | Meaning |
 |---|---|---|
@@ -186,7 +180,13 @@ Each artifact type SHOULD have a preferred owner.
 | `provenance-index` | Koios | Mapping from claims to sources |
 | `after-action-report` | any role | Process observations and improvement candidates |
 
-Bootstrap architecture artifacts SHOULD be stored as ADRs under `docs/architecture/adr/`.
+ADRs SHOULD be stored under `docs/adr/`.
+
+Architecture documents SHOULD be stored under `docs/architecture/`.
+
+ADRs MUST record bounded decisions and consequences.
+
+Architecture documents MUST describe controlled architectural surfaces or blueprints.
 
 Historical harness handoffs SHOULD be archived under `docs/archive/handoffs/`.
 
@@ -208,7 +208,7 @@ A session SHOULD check relevant uncommitted changes before editing files.
 
 A session SHOULD avoid global repo-control checks unless the user requests repo-control state.
 
-A session MAY inspect run state when the task concerns orchestration, handoffs, or blocked workflow.
+A session MAY inspect run state when the task concerns orchestration, document-domain inconsistency, or blocked workflow.
 
 A planning session SHOULD report the highest-leverage next state across the relevant workflow.
 

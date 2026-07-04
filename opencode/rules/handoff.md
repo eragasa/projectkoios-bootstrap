@@ -40,5 +40,5 @@ When execution finishes, report:
 ## ADR convention
 
 Durable decisions and cross-harness observations are placed in ADRs
-under `docs/architecture/adr/`. See root `AGENTS.md` for the ADR file
+under `docs/adr/`. See root `AGENTS.md` for the ADR file
 convention.

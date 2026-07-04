@@ -75,7 +75,7 @@ nodes:
         2. Search for related code — existing implementations in the area
         3. Read key files — current state of what the user wants to change
         4. Check recent git history — `git log --oneline -20`
-        5. Check existing ADRs under `docs/architecture/adr/` — are there
+        5. Check existing ADRs under `docs/adr/` — are there
            accepted decisions that cover this request?
 
         ### Step 3: Present Your Understanding

@@ -15,7 +15,7 @@
 
 | Step | Role | Artifact | Links backward to | Expected successor | Status |
 |---|---|---|---|---|---|
-| 1 | ATHENA | `workspaces/athena/outbox/20260703_graphrag_consolidated_implementation_brief.md` | GraphRAG inbox/RFC notes | VULCAN implementation plan/work item | complete |
+| 1 | ATHENA | `workspaces/athena/handoffs/outgoing/20260703_graphrag_consolidated_implementation_brief.md` | GraphRAG handoff/RFC notes | VULCAN implementation plan/work item | complete |
 | 2 | VULCAN | `docs/plans/projectkoios-graphrag-first-slice.md` | ATHENA consolidated brief | VULCAN implementation/report | complete |
 | 3 | VULCAN | commit `6e1d91d` — `Implement GraphRAG first slice` | ATHENA brief and VULCAN plan | implementation report | complete |
 | 4 | VULCAN | `docs/implementation/implementation-report.20260704.001003_graphrag-first-slice.md` | commit `6e1d91d` and validation evidence | ATHENA review | complete |
@@ -24,13 +24,13 @@
 
 ## Architecture document links
 
-- `workspaces/athena/outbox/20260703_graphrag_consolidated_implementation_brief.md`
-- `workspaces/athena/inbox/20260703_graphrag_config_schema.md`
-- `workspaces/athena/inbox/20260703_graphrag_config_schema_rfc.md`
-- `workspaces/athena/inbox/20260703_graphrag_explicit_replacement_rule.md`
-- `workspaces/athena/inbox/20260703_graphrag_base_plus_overlays_schema.md`
-- `workspaces/athena/inbox/20260703_graphrag_citation_fallbacks.md`
-- `workspaces/athena/inbox/20260703_graphrag_pluggable_model_backends.md`
+- `workspaces/athena/handoffs/outgoing/20260703_graphrag_consolidated_implementation_brief.md`
+- `workspaces/athena/handoffs/incoming/20260703_graphrag_config_schema.md`
+- `workspaces/athena/handoffs/incoming/20260703_graphrag_config_schema_rfc.md`
+- `workspaces/athena/handoffs/incoming/20260703_graphrag_explicit_replacement_rule.md`
+- `workspaces/athena/handoffs/incoming/20260703_graphrag_base_plus_overlays_schema.md`
+- `workspaces/athena/handoffs/incoming/20260703_graphrag_citation_fallbacks.md`
+- `workspaces/athena/handoffs/incoming/20260703_graphrag_pluggable_model_backends.md`
 
 ## Implementation document links
 
@@ -96,7 +96,7 @@ ATHENA recommended next focus:
 ## Provenance gaps
 
 - ATHENA review currently exists as an intercom message, not a durable file artifact.
-- There is no dedicated ATHENA review file under `workspaces/athena/outbox/` for this completed slice.
+- There is no dedicated ATHENA review file under `workspaces/athena/handoffs/outgoing/` for this completed slice.
 - The next-slice brief has not yet been created.
 - The process-capture convention itself is new and not yet validated across multiple slices.
 

@@ -18,9 +18,9 @@ It defines the navigation surface for the related ADR and points to the controll
 
 This note is controlled by:
 
-- `docs/architecture/adr/adr.unified-diff-review-surface.draft.md`
+- `docs/adr/adr.unified-diff-review-surface.draft.md`
 
 ## Related files
 
-- `docs/architecture/adr/adr.unified-diff-review-surface.draft.md`
+- `docs/adr/adr.unified-diff-review-surface.draft.md`
 - `docs/architecture/architecture.00.md`

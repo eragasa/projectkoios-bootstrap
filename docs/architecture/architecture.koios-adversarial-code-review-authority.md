@@ -18,9 +18,9 @@ It defines the navigation surface for the related ADR and points to the controll
 
 This note is controlled by:
 
-- `docs/architecture/adr/adr.20260702.043600_koios-adversarial-code-review-authority.draft.md`
+- `docs/adr/adr.20260702.043600_koios-adversarial-code-review-authority.draft.md`
 
 ## Related files
 
-- `docs/architecture/adr/adr.20260702.043600_koios-adversarial-code-review-authority.draft.md`
+- `docs/adr/adr.20260702.043600_koios-adversarial-code-review-authority.draft.md`
 - `docs/architecture/architecture.00.md`

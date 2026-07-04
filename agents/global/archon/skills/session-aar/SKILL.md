@@ -1,15 +1,15 @@
 ---
 name: session-aar
 adr_binding:
-  - docs/architecture/adr/adr.skill-register-and-adr-binding-policy.draft.md
-  - docs/architecture/adr/adr.control-surfaces-and-ownership-boundaries.draft.md
-  - docs/architecture/adr/adr.comment-scope-and-control-boundary-review-rule.draft.md
+  - docs/adr/adr.skill-register-and-adr-binding-policy.draft.md
+  - docs/adr/adr.control-surfaces-and-ownership-boundaries.draft.md
+  - docs/adr/adr.comment-scope-and-control-boundary-review-rule.draft.md
 description: |
   Use at the end of every Project Koios agent session. Also use when the user
   asks for an AAR, after-action report, retrospective, process review, lessons
   learned, or session improvement capture. Sessions with protocol failures,
-  workflow friction, unclear sandbox message delivery, repeated corrections, tool/Graphify/Archon
-  confusion, or improvement ideas should capture those lessons explicitly.
+  workflow friction, unclear document-domain ownership, repeated corrections,
+  tool/Graphify/Archon confusion, or improvement ideas should capture those lessons explicitly.
   Produces a durable process AAR for any harness role: Hermes, Athena, Vulcan,
   Koios, or delegated Codex operator.
   Bound to ADRs: adr.skill-register-and-adr-binding-policy.draft.md, adr.control-surfaces-and-ownership-boundaries.draft.md, adr.comment-scope-and-control-boundary-review-rule.draft.md.

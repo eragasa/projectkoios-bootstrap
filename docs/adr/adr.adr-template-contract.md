@@ -16,7 +16,7 @@ Architecture-Domain: software
 The repository needs one canonical ADR data model so draft content, review
 workflow, and rendering all agree on the same fields and order.
 
-The canonical source now lives at `docs/architecture/adr/adr.schema.json`.
+The canonical source now lives at `docs/adr/adr.schema.json`.
 Markdown is a render target, not the source of truth.
 The DOC CONTROL NUMBER standard is defined by `adr.adr.md`.
 
@@ -29,7 +29,7 @@ an extension for lifecycle control, not a replacement for the core schema.
 
 ## Decision
 
-Adopt `docs/architecture/adr/adr.schema.json` as the canonical ADR schema for
+Adopt `docs/adr/adr.schema.json` as the canonical ADR schema for
 this repository and treat Markdown as a derived rendering of that JSON.
 
 The schema should define the ADR content model, required provenance fields,

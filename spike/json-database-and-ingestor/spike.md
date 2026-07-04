@@ -61,7 +61,7 @@ indexed lookup, validation, and auto-ingestion from markdown sources.
 
 ## Related artifacts
 
-- `docs/architecture/adr/adr.json-database-for-adr-storage.draft.md`
+- `docs/adr/adr.json-database-for-adr-storage.draft.md`
 - `docs/incubator/idea.json-database-sqlite.md`
 - `docs/spikes/spike.aar-json-postgres-storage.md`
 - `docs/spikes/spike.custom-graphrag-ingestion-blueprint.md`

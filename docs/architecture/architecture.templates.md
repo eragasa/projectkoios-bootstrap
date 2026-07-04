@@ -18,9 +18,9 @@ It defines the navigation surface for the related ADR and points to the controll
 
 This note is controlled by:
 
-- `docs/architecture/adr/adr.templates.draft.md`
+- `docs/adr/adr.templates.draft.md`
 
 ## Related files
 
-- `docs/architecture/adr/adr.templates.draft.md`
+- `docs/adr/adr.templates.draft.md`
 - `docs/templates/templates.00.md`

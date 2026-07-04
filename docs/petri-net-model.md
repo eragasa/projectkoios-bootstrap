@@ -29,8 +29,8 @@ violations without mutating any file.
 
 ### Places
 
-A place is a named inbox or state. The evaluator maps four handoff directories
-to fixed places:
+A place is a named role state. The evaluator maps four handoff directories
+to fixed legacy place identifiers:
 
 | Place | Directory (now archived) | Purpose |
 |-------|--------------------------|---------|
@@ -75,7 +75,7 @@ The four active guards:
 
 | Guard | Detects | Why |
 |-------|---------|-----|
-| `check_hermes_forwarded_without_decision` | Hermes forwarding raw inbox state without a routing-decision, revision-request, completion-decision, or blockage-report | Hermes must decide, not relay |
+| `check_hermes_forwarded_without_decision` | Hermes forwarding raw role state without a routing-decision, revision-request, completion-decision, or blockage-report | Hermes must decide, not relay |
 | `check_wrong_implementation_owner` | Non-Vulcan actors producing `patch`, `test-results`, or `implementation-report` artifacts | Only Vulcan implements after routing |
 | `check_delegated_operator_missing` | Codex-mediated artifacts missing `Delegated-Operator` provenance | Mediation must be explicit |
 | `check_codex_as_pi_identity_collapse` | Codex-produced artifacts claiming pi/Hermes origin without separation | Codex is not Hermes |

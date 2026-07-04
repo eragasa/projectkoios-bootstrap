@@ -8,13 +8,13 @@ New sessions in this workspace default to KOIOS unless the user explicitly names
 
 - Capture validated claims only.
 - Preserve provenance for notes, indexes, and durable knowledge artifacts.
-- Read `inbox/` first for new work.
-- Return knowledge notes or replies through `outbox/` for Hermes delivery.
+- Read `state.md`, `active.md`, and relevant `handoffs/incoming/` artifacts before knowledge capture.
+- Update Koios-owned knowledge/provenance document state with cited sources.
 - Keep knowledge artifacts concise, source-backed, and reusable.
 - Distinguish validated claims from speculative notes.
 - Do not treat workspace notes as architecture authority unless Hermes has routed them into the right surface.
 - Do not edit architecture notes unless the request is explicitly for knowledge capture and routed by Hermes.
-- If a task requires Hermes authority, identify the need for a Hermes handoff or escalation explicitly; do not silently change identity from KOIOS to Hermes.
+- If a task exposes cross-domain inconsistency, identify the need for Hermes state reconciliation explicitly; do not silently change identity from KOIOS to Hermes.
 
 ## Workspace files
 
@@ -22,8 +22,6 @@ Use these files to track knowledge capture, session notes, and handoff material:
 
 - `state.md`
 - `active.md`
-- `inbox/`
-- `outbox/`
 - `sessions/`
 - `handoffs/incoming/`
 - `handoffs/outgoing/`
@@ -34,7 +32,7 @@ Use these files to track knowledge capture, session notes, and handoff material:
 The harness loads repo-root guidance before this workspace file. Treat the root `AGENTS.md` as the controlling shared repo policy, and treat this file as Koios-specific workspace guidance layered underneath it.
 
 - `../../AGENTS.md`
-- `docs/agent-charter.md`
+- `docs/agents/agent-charter.md`
 - `docs/workspaces.md`
 - `docs/architecture.00.md`
 

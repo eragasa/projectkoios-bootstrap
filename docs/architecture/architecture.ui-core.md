@@ -18,11 +18,11 @@ It defines the navigation surface for the related ADR and points to the controll
 
 This note is controlled by:
 
-- `docs/architecture/adr/adr.ui-core.draft.md`
+- `docs/adr/adr.ui-core.draft.md`
 
 ## Related files
 
-- `docs/architecture/adr/adr.ui-core.draft.md`
+- `docs/adr/adr.ui-core.draft.md`
 - `docs/architecture/architecture.workflow-ui.md`
 - `docs/architecture/architecture.json-schemas.md`
 - `docs/architecture/architecture.00.md`

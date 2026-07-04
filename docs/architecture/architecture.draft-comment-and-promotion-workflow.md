@@ -18,9 +18,9 @@ It defines the navigation surface for the related ADR and points to the controll
 
 This note is controlled by:
 
-- `docs/architecture/adr/adr.draft-comment-and-promotion-workflow.draft.md`
+- `docs/archive/architecture/adr/adr.20260702.012900_adr-draft-comment-and-promotion-workflow.md`
 
 ## Related files
 
-- `docs/architecture/adr/adr.draft-comment-and-promotion-workflow.draft.md`
+- `docs/archive/architecture/adr/adr.20260702.012900_adr-draft-comment-and-promotion-workflow.md`
 - `docs/architecture/architecture.00.md`

@@ -6,9 +6,9 @@ This policy states the canonical ADR lifecycle for Project Koios bootstrap so re
 
 ## Source of truth
 
-- Canonical architecture decision: `docs/architecture/adr/adr.adr-lifecycle.draft.md`
-- Workflow ontology note: `docs/architecture/adr/adr.workflow.draft.md`
-- ADR binding note: `docs/architecture/adr/adr.adr-workflow.draft.md`
+- Canonical architecture decision: `docs/adr/adr.adr-lifecycle.draft.md`
+- Workflow ontology note: `docs/adr/adr.workflow.draft.md`
+- ADR binding note: `docs/adr/adr.adr-workflow.draft.md`
 - This policy is a consumption aid.
 - If this policy conflicts with the ADR, the ADR wins.
 

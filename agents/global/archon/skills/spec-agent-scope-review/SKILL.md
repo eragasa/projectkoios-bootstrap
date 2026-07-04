@@ -1,8 +1,8 @@
 ---
 name: spec-agent-scope-review
 adr_binding:
-  - docs/architecture/adr/adr.skill-register-and-adr-binding-policy.draft.md
-  - docs/architecture/adr/adr.idea-spike-adr-implementation-workflow.draft.md
+  - docs/adr/adr.skill-register-and-adr-binding-policy.draft.md
+  - docs/adr/adr.idea-spike-adr-implementation-workflow.draft.md
 description: |
   Convert user intent into a bounded architecture specification
   Bound to ADRs: adr.skill-register-and-adr-binding-policy.draft.md, adr.idea-spike-adr-implementation-workflow.draft.md.

@@ -26,7 +26,7 @@ The implementation namespace has three rules:
 - `docs/implementation/implementation.00.md` is the namespace index
 - each implementation document links back to its controlling ADR, while the controlling ADR links forward to the implementation document when one exists
 
-Implementation documents are execution surfaces, not architecture decisions. Architecture decisions stay under `docs/architecture/adr/`.
+Implementation documents are execution surfaces, not architecture decisions. Architecture decisions stay under `docs/adr/`.
 
 ## Consequences
 

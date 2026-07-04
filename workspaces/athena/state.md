@@ -5,8 +5,8 @@
 - Current focus: canonical workspace-state protocol and next-action surface
 - Blockers: none
 - Last validated decision: ADR-skill boundary sweep was clean; ownership split matches the register
-- Inbox status: persistent testing-plan request captured; no active blocker
-- Outbox status: testing-plan response drafted and ready for delivery
+- Handoff status: persistent testing-plan request captured; response handed to Hermes on 2026-07-04
+- Next action owner: ATHENA
 - Open decisions:
   - canonical state format: Markdown-only vs render/companion form
   - field set size: minimal vs extended

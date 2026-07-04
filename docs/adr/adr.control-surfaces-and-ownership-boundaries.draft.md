@@ -82,8 +82,8 @@ Each surface must remain small enough to scan quickly.
 - a reviewer can tell which surface owns a given artifact by path alone
 - authority conflicts resolve toward the higher surface
 - recurring control rules are promoted to ADRs instead of duplicating across notes
-- the workspace state surface stays separate from message delivery and
-  handoff records
+- the workspace state surface stays separate from transport mechanics and
+  transitional artifacts
 - process lessons remain non-authoritative
 
 ## implementation-brief

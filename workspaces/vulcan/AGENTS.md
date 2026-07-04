@@ -28,7 +28,7 @@ Vulcan keeps the working surface for implementation and validation here. Use the
 
 ## Architecture and ADR workflow
 
-- `docs/architecture/adr/` — durable architecture decisions. Read before implementing.
+- `docs/adr/` — durable architecture decisions. Read before implementing.
 - `docs/architecture/` — broader architecture surface (charter, workspace model, indexes).
 - `docs/incubator/` — brainstorming and ideas before they become spikes or ADRs.
 - `docs/plans/` — implementation plans. Vulcan owns these.
@@ -41,7 +41,7 @@ Vulcan keeps the working surface for implementation and validation here. Use the
 
 These shared references define the repo boundary and the architecture surface Vulcan should respect.
 
-- `docs/agent-charter.md`
+- `docs/agents/agent-charter.md`
 - `docs/workspaces.md`
 - `docs/architecture.00.md`
 

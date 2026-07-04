@@ -51,7 +51,7 @@ The architecture must define:
 - how messages are routed to the agent window
 - what state the window owns
 - whether the handler is synchronous or asynchronous
-- how recovery works if a window closes, pauses, or crashes
+- how recovery works if a window closes, stalls, or crashes
 
 ## Consequences
 
@@ -96,7 +96,7 @@ verification_method: review the routing contract, then confirm a prototype can r
 - Should `on_message` be synchronous or asynchronous?
 - Should the agent window own local state or share a backing store?
 - Should Hermes route directly into the window or through a central router?
-- Should window closure trigger archival, pause, or restart semantics?
+- Should window closure trigger archival, recovery, or restart semantics?
 
 ## non_goals
 

@@ -2,7 +2,7 @@
 
 ## Source
 
-- ADR: `docs/architecture/adr/adr.20260702.042300_projectkoios-workflow-petri-net-executor.draft.md`
+- ADR: `docs/adr/adr.20260702.042300_projectkoios-workflow-petri-net-executor.draft.md`
 - Related context: `docs/petri-net-model.md`, `docs/archive/architecture/adr/adr.20260630.042202_colored-petri-net-meta-harness.md`
 
 ## Scope

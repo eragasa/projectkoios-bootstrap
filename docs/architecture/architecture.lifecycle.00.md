@@ -16,9 +16,9 @@ implementation work in separate layers.
 
 This note governs the workflow surface controlled by:
 
-- `docs/architecture/adr/adr.idea-spike-adr-implementation-workflow.draft.md`
-- `docs/architecture/adr/adr.adr-lifecycle.draft.md`
-- `docs/architecture/adr/adr.adr-lifecycle-promotion-mechanics.md`
+- `docs/adr/adr.idea-spike-adr-implementation-workflow.draft.md`
+- `docs/adr/adr.adr-lifecycle.draft.md`
+- `docs/adr/adr.adr-lifecycle-promotion-mechanics.md`
 
 It is the index note for lifecycle-oriented architecture guidance inside
 `projectkoios-bootstrap`.
@@ -42,10 +42,10 @@ Where:
 ## Related files
 
 - `docs/architecture/architecture.00.md`
-- `docs/architecture/adr/adr.idea-spike-adr-implementation-workflow.draft.md`
-- `docs/architecture/adr/adr.adr-lifecycle.draft.md`
-- `docs/architecture/adr/adr.adr-lifecycle-promotion-mechanics.md`
-- `docs/architecture/adr/adr.adversarial-two-plane-gate.draft.md`
+- `docs/adr/adr.idea-spike-adr-implementation-workflow.draft.md`
+- `docs/adr/adr.adr-lifecycle.draft.md`
+- `docs/adr/adr.adr-lifecycle-promotion-mechanics.md`
+- `docs/adr/adr.adversarial-two-plane-gate.draft.md`
 - `docs/policies/architecture.adr.lifecycle.md`
 
 ## Notes

@@ -1,8 +1,8 @@
 ---
 name: meta-harness-completion-gate
 adr_binding:
-  - docs/architecture/adr/adr.skill-register-and-adr-binding-policy.draft.md
-  - docs/architecture/adr/adr.control-surfaces-and-ownership-boundaries.draft.md
+  - docs/adr/adr.skill-register-and-adr-binding-policy.draft.md
+  - docs/adr/adr.control-surfaces-and-ownership-boundaries.draft.md
 description: |
   Check that required output artifacts exist and satisfy acceptance criteria
   Bound to ADRs: adr.skill-register-and-adr-binding-policy.draft.md, adr.control-surfaces-and-ownership-boundaries.draft.md.

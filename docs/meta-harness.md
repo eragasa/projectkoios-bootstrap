@@ -2,9 +2,12 @@
 
 This repository uses a triple-agent meta-harness.
 
-The canonical sandbox message delivery split lives in `docs/agent-charter.md`.
-Sending work means putting a message in the recipient harness sandbox.
-The harness separates specification, implementation, and knowledge capture into distinct agent roles. Agents do not share hidden assumptions. They communicate through explicit artifacts with defined ownership, provenance, and acceptance criteria.
+The canonical document-domain ownership split lives in `docs/agents/agent-charter.md`.
+The durable system state is the repository document set and each document's status.
+Agents are initialized from that state, run a bounded transformation, and write
+back a new state. The harness separates specification, implementation, and
+knowledge capture into distinct document domains with defined ownership,
+provenance, and acceptance criteria.
 
 ## Purpose
 
@@ -13,10 +16,10 @@ The purpose of the meta-harness is to coordinate agentic work without allowing t
 The harness enforces the following principles:
 
 * each agent has a bounded responsibility;
-* each agent consumes and produces explicit artifacts;
+* each agent consumes repository document state and produces a bounded state change;
 * architectural decisions are separated from implementation changes;
 * implementation facts are separated from knowledge claims;
-* disagreements are resolved by authority rules, not by compromise;
+* disagreements between document domains are reconciled by authority rules, not by compromise;
 * completion is gated by inspectable artifacts.
 
 ## Skill model
@@ -65,8 +68,8 @@ metadata:
 
 ## Artifact ownership
 
-See `docs/agent-charter.md` for the current role split and sandbox message
-delivery rules.
+See `docs/agents/agent-charter.md` for the current document-domain ownership
+rules.
 
 | Artifact | Owner | Producing runtime |
 |---|---|---|
@@ -83,9 +86,9 @@ delivery rules.
 | `provenance-index` | Koios | goose |
 | `provenance-audit` | Koios | goose |
 | `repo-state-summary` | Koios (advisory) | goose |
-| `routing-recommendation` | Koios (advisory) | goose |
+| `state-observation` | Koios (advisory) | goose |
 | `directive` | producer-specific | producer runtime |
-| `routing-decision` | Hermes | Hermes |
+| `state-reconciliation` | Hermes | Hermes |
 | `revision-request` | Hermes | Hermes |
 | `completion-decision` | Hermes | Hermes |
 | `after-action-report` | any harness | any harness |
@@ -103,12 +106,11 @@ The prefix means the workflow is an Athena-owned role transition. Only Athena
 may run it in the harness sense, and any output from that workflow is an Athena
 artifact. Hermes, Codex, or another delegated operator may physically invoke the
 Archon CLI to provide access, but that does not change the artifact owner or
-turn the output into a Hermes decision to send a message into a recipient
-harness sandbox.
+turn the output into a Hermes state-reconciliation decision.
 
-The artifact names `routing-recommendation` and `routing-decision` are retained
-for compatibility. In prose, they mean recommendation/decision for sandbox
-message delivery.
+The legacy artifact names `routing-recommendation` and `routing-decision` are retained
+for compatibility. In prose, they mean observation/decision about document-domain
+ownership, status inconsistency, and the next repository state.
 
 An `athena_` workflow must not implement code, validate patches, complete ADRs,
 or perform Koios knowledge capture unless a later accepted ADR explicitly
@@ -116,9 +118,9 @@ changes that workflow's ownership boundary.
 
 ## Cross-surface knowledge discipline
 
-Knowledge work often spans repository state, accepted ADRs, current handoffs,
-archived artifacts, and bounded vault material. These are not interchangeable
-sources.
+Knowledge work often spans repository state, accepted ADRs, implementation
+reports, archived artifacts, and bounded vault material. These are not
+interchangeable sources.
 
 When a knowledge agent or support flow spans multiple surfaces, it should:
 - declare the bounded scope it is using
@@ -135,8 +137,9 @@ Avoid these patterns:
 
 * one agent doing specification, implementation, and knowledge capture in the same step;
 * skills that describe personality rather than procedure;
-* hidden handoffs;
+* treating transport artifacts as durable state;
 * undocumented assumptions;
+* transport mechanics treated as architecture authority;
 * implementation without acceptance criteria;
 * notes without provenance;
 * architecture changes hidden inside patches;

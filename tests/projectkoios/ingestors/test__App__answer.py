@@ -72,7 +72,7 @@ def test__App__validate_config__rejects_non_adr_sources(tmp_path):
     app = App()
     config_path = write_config(tmp_path)
     text = config_path.read_text(encoding="utf-8")
-    config_path.write_text(text.replace("docs/architecture/adr/**/*.md", "docs/**/*.md", 1), encoding="utf-8")
+    config_path.write_text(text.replace("docs/adr/**/*.md", "docs/**/*.md", 1), encoding="utf-8")
     report = app.validate_config(config_path, schema_path=write_schema(tmp_path))
     assert report.schema_valid is True
     assert report.runtime_valid is False

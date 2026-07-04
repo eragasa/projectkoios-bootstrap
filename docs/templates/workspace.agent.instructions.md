@@ -2,7 +2,7 @@
 
 Use this file for formatting and structure rules that apply to local
 `workspaces/<agent_name>/AGENT.md` files.
-Controlled by: [adr.templates](../architecture/adr/adr.templates.draft.md).
+Controlled by: [adr.templates](../adr/adr.templates.draft.md).
 Template index: [templates.00](templates.00.md).
 
 ## When to use this template
@@ -20,8 +20,7 @@ Use these instructions when:
 - State the role and responsibility of the workspace.
 - Include short instruction bullets.
 - List the local workspace files the agent should expect.
-- Include mailbox instructions (`inbox/`, `outbox/`) and state that Hermes
-  delivers mail.
+- State that durable workflow state is the repository document set and each document's status.
 - Link to canonical references using Markdown links.
 
 ## Required workspace files
@@ -29,8 +28,6 @@ Use these instructions when:
 - `AGENT.md`
 - `state.md`
 - `active.md`
-- `inbox/`
-- `outbox/`
 - `sessions/`
 - `handoffs/incoming/`
 - `handoffs/outgoing/`
@@ -39,20 +36,19 @@ Use these instructions when:
 
 ## Link rules
 
-- Link to `docs/agent-charter.md` for sandbox message delivery authority.
+- Link to `docs/agents/agent-charter.md` for document-domain ownership authority.
 - Link to `docs/workspaces.md` for workspace layout.
 - Link to `docs/architecture.00.md` when the workspace needs architecture context.
 - Keep links filename-based and grep-friendly.
-- The workspace `AGENT.md` should describe who reads inbox, who writes outbox,
-  and that Hermes delivers mail.
+- The workspace `AGENT.md` should describe which repository document domain the role owns.
 
 ## Plan ownership
 
-Vulcan owns implementation plans. Plans live at `docs/plans/` and derive from an accepted ADR or implementation brief. Each plan must include Source, Scope, Verification method, Task breakdown, and an optional Escalation note. When an ADR brief is too vague to plan against, Vulcan escalates via handoff to Hermes.
+Vulcan owns implementation plans. Plans live at `docs/plans/` and derive from an accepted ADR or implementation brief. Each plan must include Source, Scope, Verification method, Task breakdown, and an optional Escalation note. When an ADR brief is too vague to plan against, Vulcan records the inconsistency for Hermes reconciliation.
 
 ## Decision note promotion trigger
 
-If a `decisions/` note is referenced in any outbox message, handoff artifact, or ADR comment, the note must be promoted to a draft ADR or explicitly annotated `archived` within one session. This prevents cross-role reference drift without forcing ephemeral notes into the ADR surface.
+If a `decisions/` note is referenced by any authoritative repository document or ADR comment, the note must be promoted to the appropriate document domain or explicitly annotated `archived` within one session. This prevents cross-role reference drift without forcing ephemeral notes into the ADR surface.
 
 ## Editing rule
 

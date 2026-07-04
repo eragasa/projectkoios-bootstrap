@@ -173,7 +173,7 @@ class RuntimeConfigValidator:
 
     def _is_adr_markdown_pattern(self, pattern: str) -> bool:
         normalized = pattern.replace("\\", "/")
-        return normalized.startswith("docs/architecture/adr/") and normalized.endswith(".md")
+        return normalized.startswith("docs/adr/") and normalized.endswith(".md")
 
 
 class ConfigLoader:

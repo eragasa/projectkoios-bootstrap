@@ -31,21 +31,19 @@ class WorkspaceTemplate:
                 "## Local workspace files",
                 "- state.md",
                 "- active.md",
-                "- inbox/",
-                "- outbox/",
                 "- sessions/",
                 "- handoffs/incoming/",
                 "- handoffs/outgoing/",
                 "- decisions/",
                 "",
-                "## Mail system",
-                "- Read `inbox/` first for new work and replies.",
-                "- Write outgoing notes to `outbox/`.",
-                "- Hermes delivers mail by moving or copying items from outboxes to the next workspace inbox.",
-                "- Keep mail notes short, explicit, and provenance-friendly.",
+                "## Document-state coordination",
+                "- Treat repository documents and statuses as durable workflow state.",
+                "- Use handoff folders only for transitional compatibility artifacts.",
+                "- Hermes owns cross-domain consistency decisions; directory placement is not authority.",
+                "- Prefer updating the owned repository document when the next state is clear.",
                 "",
                 "## Canonical references",
-                "- docs/agent-charter.md",
+                "- docs/agents/agent-charter.md",
                 "- docs/workspaces.md",
                 "- docs/architecture.00.md",
             ]
@@ -58,14 +56,14 @@ TEMPLATES: dict[str, WorkspaceTemplate] = {
         agent="hermes",
         title="Hermes workspace",
         role_summary=(
-            "Hermes is the router/operator workspace. It owns routing, repo-state\n"
-            "inspection, and handoff coordination."
+            "Hermes is the orchestration workspace. It owns repo-state inspection,\n"
+            "document-domain consistency, and cross-domain conflict resolution."
         ),
         instructions=(
-            "Use this workspace for routing decisions and repo-state summaries.",
-            "Read inbox first; Hermes delivers mail from workspaces outboxes.",
+            "Use this workspace for state reconciliation and repo-state summaries.",
+            "Read state, active work, and relevant repository documents before reconciling domains.",
             "Only Hermes may edit architecture notes, and only with explicit Zeus permission.",
-            "Keep this workspace focused on current repo, focus, blockers, and next action.",
+            "Keep this workspace focused on current repo, focus, blockers, and next coherent state.",
         ),
     ),
     "athena": WorkspaceTemplate(
@@ -77,7 +75,7 @@ TEMPLATES: dict[str, WorkspaceTemplate] = {
         ),
         instructions=(
             "Keep scope bounded to one repo or one decision slice at a time.",
-            "Read inbox first; send outgoing notes to outbox for Hermes delivery.",
+            "Update Athena-owned document state when architecture/specification authority is missing.",
             "Do not implement code from this workspace.",
             "Write architecture notes only when explicitly directed through Hermes.",
         ),
@@ -91,7 +89,7 @@ TEMPLATES: dict[str, WorkspaceTemplate] = {
         ),
         instructions=(
             "Read the plan or ADR before making changes.",
-            "Read inbox first; put implementation replies in outbox.",
+            "Update Vulcan-owned implementation and validation state with evidence.",
             "Keep implementation and validation artifacts together.",
             "Do not edit architecture notes from this workspace.",
         ),
@@ -105,9 +103,9 @@ TEMPLATES: dict[str, WorkspaceTemplate] = {
         ),
         instructions=(
             "Capture validated claims only.",
-            "Read inbox first; put knowledge notes or replies in outbox for Hermes delivery.",
+            "Update Koios-owned knowledge and provenance state with cited sources.",
             "Preserve provenance for notes and indexes.",
-            "Do not edit architecture notes unless the request is explicitly for knowledge capture and routed by Hermes.",
+            "Do not edit architecture notes unless the request is explicitly for knowledge capture and authorized by Hermes.",
         ),
     ),
 }
@@ -123,8 +121,6 @@ def ensure_workspace(root: Path, agent: str, *, force: bool = False) -> list[Pat
     created: list[Path] = []
 
     for rel in (
-        "inbox",
-        "outbox",
         "sessions",
         "handoffs/incoming",
         "handoffs/outgoing",
@@ -145,8 +141,8 @@ def ensure_workspace(root: Path, agent: str, *, force: bool = False) -> list[Pat
             "- Current focus:\n"
             "- Blockers:\n"
             "- Last validated decision:\n"
-            "- Inbox status:\n"
-            "- Outbox status:\n",
+            "- Handoff status:\n"
+            "- Next action owner:\n",
             encoding="utf-8",
         )
         created.append(state)
@@ -156,8 +152,8 @@ def ensure_workspace(root: Path, agent: str, *, force: bool = False) -> list[Pat
             f"# {agent.capitalize()} active work\n\n"
             "- Top priority:\n"
             "- Waiting on:\n"
-            "- Inbox items to process:\n"
-            "- Outbox items to deliver:\n"
+            "- Handoff items to process:\n"
+            "- Handoff items to deliver:\n"
             "- Ignore for now:\n",
             encoding="utf-8",
         )

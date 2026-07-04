@@ -7,7 +7,7 @@
    - Needed to confirm the ownership split is still clean and not duplicated.
 3. `docs/skills/skill-register.md`
    - Needed to confirm the register matches the skill contract and no stale path/status text remains.
-4. `docs/architecture/adr/adr.adr-template-contract.md` and the two binding ADRs named by the skills
+4. `docs/adr/adr.adr-template-contract.md` and the two binding ADRs named by the skills
    - Needed only as reference checks for path/name consistency, not full semantic review.
 
 ## 2) Pass/fail criteria
@@ -54,7 +54,7 @@
 - A short note confirming the ownership split:
   - scope-review = intake/bounding
   - acceptance-criteria = final criteria
-- Confirmation that the template contract file exists at `docs/architecture/adr/adr.adr-template-contract.md`.
+- Confirmation that the template contract file exists at `docs/adr/adr.adr-template-contract.md`.
 
 ## Recommendation
 Do the bounded grep sweep first. If it comes back clean, that is enough proof to roll out the ADR-skill boundary change without a broader semantic review.

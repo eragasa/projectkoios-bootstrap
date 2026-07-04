@@ -3,7 +3,7 @@ description: |
   Use when: Hermes needs Athena to convert a prepared handoff/interview into an
   implementation-ready architecture decision with acceptance criteria.
   Does: Reads the named handoff artifacts, resolves open architecture questions,
-  writes a finalized ADR under docs/architecture/adr/.
+  writes a finalized ADR under docs/adr/.
   NOT for: code implementation, validation loops, PR creation, or product/domain
   architecture outside projectkoios-bootstrap.
 
@@ -34,7 +34,7 @@ nodes:
 
       ## Required Output
 
-      Write one finalized markdown artifact under `docs/architecture/adr/`
+      Write one finalized markdown artifact under `docs/adr/`
       using the repo ADR filename/header convention:
 
       ```text

@@ -19,7 +19,7 @@ nodes:
       set -eu
       path="$ARGUMENTS"
       if [ -z "$path" ]; then
-        echo "ERROR: ADR path required. Example: docs/architecture/adr/adr.YYYYMMDD.HHMMSS_slug.md"
+        echo "ERROR: ADR path required. Example: docs/adr/adr.YYYYMMDD.HHMMSS_slug.md"
         exit 2
       fi
       if [ ! -f "$path" ]; then
@@ -39,9 +39,9 @@ nodes:
       sed -n '1,220p' docs/meta-harness.md
       printf '\n== accepted lifecycle-related ADRs ==\n'
       for path in \
-        docs/architecture/adr/adr.20260630.144732_runtime-role-separation.md \
-        docs/architecture/adr/adr.20260630.170000_pending-athena-decisions.md \
-        docs/architecture/adr/adr.20260630.175315_athena-owned-adr-lifecycle.md
+        docs/adr/adr.20260630.144732_runtime-role-separation.md \
+        docs/adr/adr.20260630.170000_pending-athena-decisions.md \
+        docs/adr/adr.20260630.175315_athena-owned-adr-lifecycle.md
       do
         if [ -f "$path" ]; then
           printf '\n-- %s --\n' "$path"
@@ -70,7 +70,7 @@ nodes:
       printf 'Referenced paths in implementation-brief:\n'
       found_any=0
       # Extract bare paths with extensions (also catches paths inside backticks)
-      all_paths=$(printf '%s\n' "$section" | grep -oE '[a-zA-Z0-9_/.-]+/[a-zA-Z0-9_/.-]+\.(md|yaml|yml|py|ts|js|json|sh|toml)' | grep -v '^docs/architecture/adr/' | sort -u || true)
+      all_paths=$(printf '%s\n' "$section" | grep -oE '[a-zA-Z0-9_/.-]+/[a-zA-Z0-9_/.-]+\.(md|yaml|yml|py|ts|js|json|sh|toml)' | grep -v '^docs/adr/' | sort -u || true)
       for path in $all_paths; do
         found_any=1
         if [ -e "$path" ]; then

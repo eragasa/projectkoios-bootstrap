@@ -27,7 +27,7 @@ Examples:
 | File | Function |
 |------|----------|
 | `__HandoffParser__parse_header__parses_yaml_frontmatter.py` | `test__HandoffParser__parse_header__parses_yaml_frontmatter()` |
-| `__Guards__hermes_forwarded_without_decision__detects_passive_mailbox.py` | `test__Guards__hermes_forwarded_without_decision__detects_passive_mailbox()` |
+| `__Guards__hermes_forwarded_without_decision__checks_raw_role_state.py` | `test__Guards__hermes_forwarded_without_decision__unknown_kind_in_pi_place_is_violation()` |
 | `__ViolationAppender__append_to_file__appends_violation_block.py` | `test__ViolationAppender__append_to_file__appends_violation_block()` |
 
 ## Fixtures

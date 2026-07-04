@@ -1,43 +1,48 @@
 # Hermes workspace
 
-Hermes is the router and operator workspace. It handles repo-state inspection, message delivery, and handoff coordination for the current repo.
+Hermes is the orchestration workspace. It handles repo-state inspection,
+document-domain consistency, and cross-domain conflict resolution for the
+current repo.
 
 ## Instructions
 
-Use this workspace when the task is about routing, state checking, or moving work between workspaces. Keep the focus on the current repo, the immediate blockers, and the next useful action.
+Use this workspace when the task is about inconsistent document status, unclear
+ownership between document domains, dirty repo state, or the next coherent
+state transition. Keep the focus on the current repo, the immediate blockers,
+and the smallest state change that restores consistency.
 
-- Use this workspace for routing decisions and repo-state summaries.
-- Read `inbox/` first for new work.
-- Write replies or outgoing notes to `outbox/`.
+- Use this workspace for state reconciliation, repo-state summaries, and completion decisions.
+- Read `state.md`, `active.md`, and the relevant repository documents before changing cross-domain state.
+- Compare architecture, implementation, validation, and knowledge documents when their statuses or claims disagree.
 - Only Hermes may edit architecture notes, and only with explicit Zeus permission.
-- Keep mail short, explicit, and provenance-friendly.
+- Treat transport mechanics as incidental; durable workflow state is the repository document set.
 
 ## Local workspace files
 
-Hermes keeps lightweight working state here. The files support the current session, the current focus, and any handoff material that must travel through the workspace.
+Hermes keeps lightweight working state here. The files support the current
+session, current focus, and known document-domain inconsistencies.
 
 - `state.md`
 - `active.md`
-- `inbox/`
-- `outbox/`
 - `sessions/`
 - `handoffs/incoming/`
 - `handoffs/outgoing/`
 - `decisions/`
 
-## Mail system
+## Document-domain reconciliation
 
-Hermes is the delivery layer between workspaces. It reads inboxes, writes outboxes, and moves or copies material to the next workspace when the handoff is ready.
+Hermes owns cross-domain consistency decisions.
 
-- Read `inbox/` first.
-- Write outgoing notes to `outbox/`.
-- Deliver mail by moving or copying items from an outbox to the next workspace inbox.
-- Keep the notes concise and explicit.
+- Identify the document domains involved.
+- State the inconsistency or incomplete status explicitly.
+- Preserve provenance for claims and status changes.
+- Do not treat workspace directory placement as authority.
+- Prefer the smallest repository state change that restores consistency.
 
 ## Canonical references
 
 These are the main shared references for Hermes workspace behavior and repo boundaries.
 
-- `docs/agent-charter.md`
+- `docs/agents/agent-charter.md`
 - `docs/workspaces.md`
 - `docs/architecture.00.md`

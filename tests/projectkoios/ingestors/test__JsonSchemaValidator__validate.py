@@ -15,7 +15,7 @@ def test__JsonSchemaValidator__validate(tmp_path):
         "project": "projectkoios",
         "pipeline": {"mode": "derived-index", "answer_format": "cited_summary", "retrieval_depth": 1},
         "validation": {"mode": "strict"},
-        "source": {"include": ["docs/architecture/adr/**/*.md"], "exclude": []},
+        "source": {"include": ["docs/adr/**/*.md"], "exclude": []},
         "ontology": {},
         "extraction": {"backend": {"name": "ollama", "model": "llama3.2", "timeout_seconds": 60, "on_failure": "error"}}, 
         "retrieval": {"max_nodes": 1},

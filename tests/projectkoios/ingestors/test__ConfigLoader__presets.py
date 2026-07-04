@@ -10,15 +10,15 @@ def test__ConfigLoader__load__applies_preset_by_explicit_section_replacement(tmp
     text = config_path.read_text(encoding="utf-8")
     config_path.write_text(
         text.replace(
-            "source:\n  include:\n    - docs/architecture/adr/**/*.md\n  exclude: []",
-            "source:\n  include:\n    - docs/architecture/adr/*.missing.md\n  exclude: []",
+            "source:\n  include:\n    - docs/adr/**/*.md\n  exclude: []",
+            "source:\n  include:\n    - docs/adr/*.missing.md\n  exclude: []",
             1,
         ),
         encoding="utf-8",
     )
     loader = ConfigLoader(JsonSchemaValidator(JsonSchemaLoader().load(write_schema(tmp_path))))
     config = loader.load(config_path, preset="adr")
-    assert config.source_includes() == ("docs/architecture/adr/**/*.md",)
+    assert config.source_includes() == ("docs/adr/**/*.md",)
 
 
 def test__ConfigLoader__load__rejects_unknown_preset(tmp_path):

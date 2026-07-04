@@ -3,13 +3,13 @@
 ## Existing ADR Context
 
 This interview refines
-`docs/architecture/adr/adr.20260701.004713_graphify-ingestion-daemon-bootstrap.md`.
+`docs/archive/architecture/adr/adr.20260701.004713_graphify-ingestion-daemon-bootstrap.md`.
 
 The current Draft ADR extracted the daemon-specific pieces from the superseded
 Koios proposal
-`docs/architecture/adr/adr.20260630.212900_graphify-backed-knowledge-daemon-proposal.md`
+`docs/archive/architecture/adr/adr.20260630.212900_graphify-backed-knowledge-daemon-proposal.md`
 and the accepted consolidation ADR
-`docs/architecture/adr/adr.20260630.214135_koios-evidence-intake-directive-contract.md`.
+`docs/archive/architecture/adr/adr.20260630.214135_koios-evidence-intake-directive-contract.md`.
 
 The accepted consolidation ADR remains authoritative for the broader boundary:
 Graphify is a temporary evidence substrate; Koios does not own architecture;

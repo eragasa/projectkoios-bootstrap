@@ -6,8 +6,12 @@ draft
 
 ## Purpose
 
-Provide persistent, per-agent state across sessions without mixing role memory.
-The bootstrap CLI now materializes these workspaces and their local mail folders.
+Provide persistent, per-agent working context across sessions without mixing
+role memory. The durable workflow state is the repository document set and each
+document's status. Workspace files are local control surfaces for resuming an
+agent run; they are not the authoritative project state.
+
+The bootstrap CLI materializes each workspace and its local state folders.
 
 ## Proposed directory tree
 
@@ -17,8 +21,6 @@ workspaces/
 │   ├── AGENT.md
 │   ├── state.md
 │   ├── active.md
-│   ├── inbox/
-│   ├── outbox/
 │   ├── decisions/
 │   ├── handoffs/
 │   │   ├── incoming/
@@ -28,8 +30,6 @@ workspaces/
 │   ├── AGENT.md
 │   ├── state.md
 │   ├── active.md
-│   ├── inbox/
-│   ├── outbox/
 │   ├── decisions/
 │   ├── handoffs/
 │   │   ├── incoming/
@@ -39,8 +39,6 @@ workspaces/
 │   ├── AGENT.md
 │   ├── state.md
 │   ├── active.md
-│   ├── inbox/
-│   ├── outbox/
 │   ├── decisions/
 │   ├── handoffs/
 │   │   ├── incoming/
@@ -50,8 +48,6 @@ workspaces/
     ├── AGENT.md
     ├── state.md
     ├── active.md
-    ├── inbox/
-    ├── outbox/
     ├── decisions/
     ├── handoffs/
     │   ├── incoming/
@@ -62,52 +58,35 @@ workspaces/
 ## File conventions
 
 ### `state.md`
-Short-lived current context.
+Short-lived current context for an agent run.
 - current branch / repo focus
+- current document domain
 - current objective
 - blockers
-- last validated decision
-- inbox summary
-- outbox summary
+- last validated document-state change
+- known cross-domain inconsistencies
+- next state owner
 
 ### `active.md`
 Current priorities.
-- top 1-3 tasks
+- top 1-3 state transitions
 - what to ignore for now
-- next recommended action
-- pending inbox items
-- pending outbox items
+- next recommended document-state change
+- pending domain inconsistencies
+- items intentionally ignored for now
 
 ### `decisions/`
-Durable agent-local decisions.
+Agent-local decision notes.
 - one file per decision
 - timestamped filename
 - brief rationale
+- not authoritative until promoted into the appropriate repository document domain
 
-### `inbox/`
-Incoming mail for the workspace.
-- Hermes deposits mail here for the target agent
-- keep original provenance headers when the item is a handoff note
-- do not rewrite unless explicitly revising the mail item
-- if live notification is needed, write the inbox file first, then use intercom to notify the target
-- prefer one message per file
-
-### `outbox/`
-Outgoing mail produced by the workspace.
-- one mail item per task boundary
-- explicit owner, scope, and next step
-- Hermes will deliver mail from outbox to the target workspace inbox
-- prefer the same timestamped markdown filename pattern as inbox mail
-
-### `handoffs/incoming/`
-Artifacts received from another harness.
-- keep original provenance headers
-- do not rewrite unless explicitly revising the handoff
-
-### `handoffs/outgoing/`
-Artifacts produced for another harness.
-- one handoff per task boundary
-- explicit owner, scope, and next step
+### `handoffs/incoming/` and `handoffs/outgoing/`
+Compatibility folders for transitional artifacts from older workflows.
+- preserve provenance when they exist
+- do not treat folder placement as authority
+- prefer updating the owned repository document directly when the next state is clear
 
 ### `sessions/`
 Session notes.
@@ -115,19 +94,19 @@ Session notes.
 - one file per session
 - useful for resuming after interruption
 
-## Role-specific content
+## Role-specific document domains
 
 ### Hermes
-- repo state summary
+- cross-domain state reconciliation
 - dirty-tree notes
-- sandbox message delivery decisions
-- pending handoffs
-- next recommended repo/task
+- completion decisions
+- document-status consistency checks
+- next coherent repo state
 
 ### Athena
 - bounded spec notes
 - ADR draft links
-- open questions
+- open architecture questions
 - acceptance criteria
 
 ### Vulcan
@@ -146,7 +125,7 @@ Session notes.
 
 - Use lowercase agent names: `hermes`, `athena`, `vulcan`, `koios`
 - Use timestamped session filenames: `YYYYMMDD.HHMMSS-topic.md`
-- Use timestamped markdown filenames for inbox/outbox messages: `YYYYMMDD.HHMMSS.<topic>.md`
+- Use timestamped markdown filenames for transitional artifacts: `YYYYMMDD.HHMMSS.<topic>.md`
 - Prefer one topic per file
 - Do not store secrets
 - Do not duplicate canonical repo docs inside workspace files
@@ -154,8 +133,9 @@ Session notes.
 ## Non-goals
 
 - Not a replacement for `maps/`
-- Not a replacement for `docs/agent-charter.md`
+- Not a replacement for `docs/agents/agent-charter.md`
 - Not a place for product architecture
+- Not a transport system
 - Not a place for machine-local secrets
 
 ## Validation expectation
@@ -164,7 +144,7 @@ If adopted, add lightweight startup/stop checks that verify:
 - the workspace directories exist
 - each agent has an `AGENT.md`
 - each agent has a `state.md`
-- handoffs are placed in the correct incoming/outgoing folder
+- the agent can identify its current document domain and next state transition
 
 Use `projectkoios bootstrap workspaces init` to materialize or refresh the
 layout.

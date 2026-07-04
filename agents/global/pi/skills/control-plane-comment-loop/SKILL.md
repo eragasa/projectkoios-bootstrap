@@ -1,9 +1,9 @@
 ---
 name: control-plane-comment-loop
 adr_binding:
-  - docs/architecture/adr/adr.skill-register-and-adr-binding-policy.draft.md
-  - docs/architecture/adr/adr.controlling-adr-join-protocol.draft.md
-  - docs/architecture/adr/adr.draft-adr-comment-processing-protocol.draft.md
+  - docs/adr/adr.skill-register-and-adr-binding-policy.draft.md
+  - docs/adr/adr.controlling-adr-join-protocol.draft.md
+  - docs/adr/adr.draft-adr-comment-processing-protocol.draft.md
 description: |
   Use when the owner of a draft ADR needs to sit with the user, work through comment threads as a control-plane problem, and decide how the review matrix should behave.
   Bound to ADRs: adr.skill-register-and-adr-binding-policy.draft.md, adr.controlling-adr-join-protocol.draft.md, adr.draft-adr-comment-processing-protocol.draft.md.
@@ -12,9 +12,9 @@ description: |
   NOT for: implementation, silent ADR rewriting, or one-shot questionnaires.
 metadata:
   binds_to:
-    - docs/architecture/adr/adr.controlling-adr-join-protocol.draft.md
-    - docs/architecture/adr/adr.draft-adr-comment-processing-protocol.draft.md
-    - docs/architecture/adr/adr.skill-register-and-adr-binding-policy.draft.md
+    - docs/adr/adr.controlling-adr-join-protocol.draft.md
+    - docs/adr/adr.draft-adr-comment-processing-protocol.draft.md
+    - docs/adr/adr.skill-register-and-adr-binding-policy.draft.md
 ---
 # Control Plane Comment Loop
 

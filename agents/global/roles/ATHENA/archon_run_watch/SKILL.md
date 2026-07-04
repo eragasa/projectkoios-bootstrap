@@ -1,25 +1,25 @@
 ---
 name: archon_run_watch
 adr_binding:
-  - docs/architecture/adr/adr.skill-register-and-adr-binding-policy.draft.md
-  - docs/architecture/adr/adr.canonical-workspace-state-next-action-protocol.draft.md
-  - docs/architecture/adr/adr.control-surfaces-and-ownership-boundaries.draft.md
+  - docs/adr/adr.skill-register-and-adr-binding-policy.draft.md
+  - docs/adr/adr.canonical-workspace-state-next-action-protocol.draft.md
+  - docs/adr/adr.control-surfaces-and-ownership-boundaries.draft.md
 description: |
   Use when the user asks to start a Project Koios session, inspect current
-  handoffs, send messages between harness sandboxes, run or monitor Archon workflows,
-  clean stale Archon runs, create handoff artifacts, or decide what to do
+  document-domain state, reconcile inconsistent repository documents, run or monitor Archon workflows,
+  clean stale Archon runs, preserve transitional artifacts, or decide what to do
   next.
   Triggers: "new session", "what next?", "send this", "go archon",
-  "make a handoff", "turn this interview into a spec",
-  "prepare a Vulcan handoff", "check Archon runs",
+  "reconcile state", "turn this interview into a spec",
+  "prepare implementation state", "check Archon runs",
   "clean stale Archon run", "inspect handoffs".
   NOT for: architecture design or product domain work.
   Bound to ADRs: adr.skill-register-and-adr-binding-policy.draft.md, adr.canonical-workspace-state-next-action-protocol.draft.md, adr.control-surfaces-and-ownership-boundaries.draft.md.
 ---
 # archon_run_watch
 
-Session-start, sandbox message delivery, Archon run monitoring, and handoff creation for
-Project Koios meta-harness operations.
+Session-start, document-domain reconciliation, Archon run monitoring, and
+state-artifact preservation for Project Koios meta-harness operations.
 
 ## Session start protocol
 
@@ -32,8 +32,8 @@ Project Koios meta-harness operations.
     ```
     This checks all `running` runs for orphaned child processes and
     abandons them with a handoff artifact under `docs/archive/handoffs/hermes/`.
-3.  Inspect current ADRs, current handoff locations, git state, and recent
-    commits.
+3.  Inspect current ADRs, architecture documents, implementation/validation
+    documents, git state, and recent commits.
 4.  Treat `docs/archive/handoffs/` as provenance only. Archived
     `Status: active` headers are historical claims, not authoritative current
     work.
@@ -42,14 +42,14 @@ Project Koios meta-harness operations.
     later ADRs, implementation reports, or filesystem state.
 6.  Report pending current active/draft artifacts before changing files.
 
-## Sandbox message delivery decision table
+## Document-domain ownership table
 
-| Task | Send message to |
+| State concern | Owning domain |
 |---|---|
 | architecture, ADRs, planning | Athena |
 | implementation, tests, validation | Vulcan |
 | knowledge notes, provenance, vault | Koios |
-| run control, handoff coordination, operations | Hermes (self) |
+| run control, dirty-state reconciliation, cross-domain inconsistency | Hermes (self) |
 | lightweight direct edits | Hermes (self, no specialist) |
 
 ## Archon preflight
@@ -77,9 +77,9 @@ Project Koios meta-harness operations.
 ## Fast fallback rule
 
 After two AI-node Archon attempts exit stale in the same way, stop
-retrying. Write a handoff or deviation note. Proceed as Hermes with a
-direct artifact. Report what Archon failed to do and what was done
-instead.
+retrying. Write a deviation note or state-reconciliation note. Proceed as Hermes
+with a direct document-state update when authorized. Report what Archon failed
+to do and what was done instead.
 
 ## Handoff creation discipline
 

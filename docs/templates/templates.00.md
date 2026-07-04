@@ -19,7 +19,7 @@ They live under `docs/templates/`.
 
 This note is controlled by:
 
-- `docs/architecture/adr/adr.templates.draft.md`
+- `docs/adr/adr.templates.draft.md`
 
 ## Contract
 

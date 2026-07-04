@@ -25,9 +25,9 @@ def _token(
     )
 
 
-def test__Guards__hermes_forwarded_without_decision__detects_passive_mailbox() -> None:
+def test__Guards__hermes_forwarded_without_decision__allows_user_request() -> None:
     token = _token(
-        "inbox-state",
+        "role-state",
         kind="user-request",
         sender="user",
         recipient="pi",
@@ -61,7 +61,7 @@ def test__Guards__hermes_forwarded_without_decision__routing_decision_is_not_vio
     assert len(violations) == 0
 
 
-def test__Guards__hermes_forwarded_without_decision__unknown_kind_in_pi_inbox_is_violation() -> None:
+def test__Guards__hermes_forwarded_without_decision__unknown_kind_in_pi_place_is_violation() -> None:
     token = _token(
         "unknown-artifact",
         kind="random-note",

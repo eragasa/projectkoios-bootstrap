@@ -3,7 +3,7 @@
 Use this file for formatting and structure rules that should apply when editing
 or creating `architecture.*` notes.
 For the template namespace itself, see `docs/templates/templates.00.md` and
-`docs/architecture/adr/adr.templates.draft.md`.
+`docs/adr/adr.templates.draft.md`.
 
 ## When to use this template
 

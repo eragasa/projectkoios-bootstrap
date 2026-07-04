@@ -12,7 +12,7 @@ T = TypeVar("T")
 class Marking(Generic[T]):
     """The current distribution of colored tokens across all places.
 
-    In Petri net terms, a marking assigns each place (inbox) a set of tokens.
+    In Petri net terms, a marking assigns each place a set of tokens.
     This class provides read-only access: ``tokens_at(place_name)`` returns the
     tokens currently at that place, and ``all_tokens`` flattens every place for
     guards that scan across the entire net (e.g. ``check_wrong_implementation_owner``).

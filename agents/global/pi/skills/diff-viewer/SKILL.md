@@ -1,8 +1,8 @@
 ---
 name: diff-viewer
 adr_binding:
-  - docs/architecture/adr/adr.unified-diff-review-surface.draft.md
-  - docs/architecture/adr/adr.adversarial-two-plane-gate.draft.md
+  - docs/adr/adr.unified-diff-review-surface.draft.md
+  - docs/adr/adr.adversarial-two-plane-gate.draft.md
 description: |
   Show literal unified diffs for file review before commit or approval.
   Bound to ADRs: adr.unified-diff-review-surface.draft.md, adr.adversarial-two-plane-gate.draft.md.

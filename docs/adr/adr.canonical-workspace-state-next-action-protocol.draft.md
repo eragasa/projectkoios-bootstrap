@@ -13,7 +13,7 @@ Scope: projectkoios-bootstrap
 Repository: projectkoios-bootstrap
 Architecture-Domain: software
 
-The current workspace state is spread across prose notes, inbox/outbox files,
+The current workspace state is spread across prose notes, handoff artifacts,
 and ad hoc session inference. That makes it hard to determine the highest-
 leverage next task quickly and consistently.
 
@@ -40,8 +40,8 @@ The canonical workspace state should include at minimum:
 - current focus
 - blockers
 - last validated decision
-- inbox status
-- outbox status
+- handoff status
+- next action owner
 - open decisions
 - next action
 - next owner
@@ -76,8 +76,8 @@ current_focus: "..."
 blockers:
   - "..."
 last_validated_decision: "..."
-inbox_status: empty
-outbox_status: pending_delivery
+handoff_status: no pending handoff
+next_action_owner: HERMES
 open_decisions:
   - "..."
 next_action:
@@ -92,7 +92,7 @@ status_summary: "..."
 The protocol should also define a startup check order:
 
 - read the canonical workspace state first
-- check inbox/outbox items second
+- check relevant handoff artifacts second
 - verify the active decision surface third
 - then choose the highest-leverage unblocked action
 
@@ -121,7 +121,7 @@ field and leverage rule.
 ## non_goals
 
 - Replacing ADRs or architectural decisions
-- Replacing inbox/outbox delivery
+- Defining transport mechanics for role coordination
 - Defining implementation work beyond the state protocol itself
 - Forcing every note into a rigid database model
 

@@ -15,7 +15,7 @@ Implemented the first config-driven GraphRAG slice for ADR-only ingestion. The s
 
 ## Source artifacts
 
-- `workspaces/athena/outbox/20260703_graphrag_consolidated_implementation_brief.md`
+- `workspaces/athena/handoffs/outgoing/20260703_graphrag_consolidated_implementation_brief.md`
 - `docs/plans/projectkoios-graphrag-first-slice.md`
 - `spike/graphrag-ingestion/spike.md`
 

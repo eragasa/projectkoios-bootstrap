@@ -19,11 +19,11 @@ They live under `docs/implementation/`.
 
 This note is controlled by:
 
-- `docs/architecture/adr/adr.implementation.draft.md`
+- `docs/adr/adr.implementation.draft.md`
 
 ## Related files
 
 - `docs/implementation/implementation.adversarial-two-plane-gate.md`
-- `docs/architecture/adr/adr.implementation-plan-ownership.draft.md`
-- `docs/architecture/adr/adr.implementation-brief-verification-method.draft.md`
-- `docs/architecture/adr/adr.adversarial-two-plane-gate.draft.md`
+- `docs/adr/adr.implementation-plan-ownership.draft.md`
+- `docs/adr/adr.implementation-brief-verification-method.draft.md`
+- `docs/adr/adr.adversarial-two-plane-gate.draft.md`
