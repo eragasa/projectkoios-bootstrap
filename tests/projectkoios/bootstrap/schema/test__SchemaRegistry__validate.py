@@ -4,12 +4,16 @@ import copy
 
 import pytest
 from jsonschema.exceptions import ValidationError
+from referencing import Registry, Resource
 
 from projectkoios.bootstrap.schema import SchemaPaths, SchemaRegistry
+from projectkoios.bootstrap.schema.models import JsonObject
 
 
-def valid_draft_adr_record() -> dict:
-    section_names = {
+def valid_draft_adr_record() -> JsonObject:
+    """Return a reusable valid draft ADR schema-record fixture."""
+    # Section names drive generated content for every required draft ADR section.
+    section_names: dict[str, str] = {
         "context": "Context",
         "decision": "Decision",
         "consequences": "Consequences",
@@ -58,43 +62,56 @@ def valid_draft_adr_record() -> dict:
     }
 
 
-def test__SchemaRegistry__validate__accepts_draft_adr_record():
+def test__SchemaRegistry__validate__accepts_draft_adr_record() -> None:
+    """Validate that the registry accepts a complete draft ADR record."""
     SchemaRegistry().validate("adr-draft.schema.json", valid_draft_adr_record())
 
 
-def test__SchemaRegistry__validate__rejects_extra_top_level_field():
-    record = valid_draft_adr_record()
+def test__SchemaRegistry__validate__rejects_extra_top_level_field() -> None:
+    """Validate that the registry rejects unexpected top-level fields."""
+    # Record is mutated to include one schema-forbidden field.
+    record: JsonObject = valid_draft_adr_record()
     record["extra"] = "not allowed"
     with pytest.raises(ValidationError):
         SchemaRegistry().validate("adr-draft.schema.json", record)
 
 
-def test__SchemaRegistry__validate__requires_base_metadata_fields_after_allof_narrowing():
-    record = valid_draft_adr_record()
+def test__SchemaRegistry__validate__requires_base_metadata_fields_after_allof_narrowing() -> None:
+    """Validate that narrowed draft schemas still require base metadata fields."""
+    # Record is mutated to remove a field required by the base schema.
+    record: JsonObject = valid_draft_adr_record()
     del record["metadata"]["origin"]
     with pytest.raises(ValidationError):
         SchemaRegistry().validate("adr-draft.schema.json", record)
 
 
-def test__SchemaRegistry__validate__narrows_schema_id_and_status():
-    record = valid_draft_adr_record()
+def test__SchemaRegistry__validate__narrows_schema_id_and_status() -> None:
+    """Validate that draft ADR schemas narrow schema ID and status values."""
+    # Record checks that another schema ID is rejected by the draft schema.
+    record: JsonObject = valid_draft_adr_record()
     record["metadata"] = copy.deepcopy(record["metadata"])
     record["metadata"]["schema_id"] = "https://projectkoios.local/schemas/schema.record-base.json"
     with pytest.raises(ValidationError):
         SchemaRegistry().validate("adr-draft.schema.json", record)
 
-    record = valid_draft_adr_record()
-    record["metadata"]["status"] = "accepted"
+    # Accepted status is intentionally invalid for draft ADR records.
+    draft_status_record: JsonObject = valid_draft_adr_record()
+    draft_status_record["metadata"]["status"] = "accepted"
     with pytest.raises(ValidationError):
-        SchemaRegistry().validate("adr-draft.schema.json", record)
+        SchemaRegistry().validate("adr-draft.schema.json", draft_status_record)
 
 
-def test__SchemaRegistry__local_registry__resolves_project_schema_id_offline():
-    registry = SchemaRegistry().local_registry()
-    resolved = registry.get("https://projectkoios.local/schemas/schema.record-base.json")
+def test__SchemaRegistry__local_registry__resolves_project_schema_id_offline() -> None:
+    """Validate that project-local schema IDs resolve without network access."""
+    # Registry contains project schemas addressed by local schema IDs.
+    registry: Registry = SchemaRegistry().local_registry()
+    # Resolved schema verifies offline local registry lookup behavior.
+    resolved: Resource | None = registry.get("https://projectkoios.local/schemas/schema.record-base.json")
+    assert resolved is not None
     assert resolved.contents["title"] == "SchemaRecordBase"
 
 
-def test__SchemaPaths__canonical_schema_path__rejects_legacy_schema_files():
+def test__SchemaPaths__canonical_schema_path__rejects_legacy_schema_files() -> None:
+    """Validate that canonical schema resolution rejects legacy schema names."""
     with pytest.raises(ValueError):
         SchemaPaths().canonical_schema_path("legacy-architecture.adr.schema-adr.json")
