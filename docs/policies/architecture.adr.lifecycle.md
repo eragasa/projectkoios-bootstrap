@@ -2,111 +2,94 @@
 
 ## Purpose
 
-This policy states the canonical ADR lifecycle for Project Koios bootstrap so reviewers and agents stop inventing lifecycle rules.
+This policy is a consumption aid for the accepted Project Koios bootstrap ADR lifecycle decision.
+
+## Normative language
+
+The key words **MUST**, **MUST NOT**, **SHOULD**, **SHOULD NOT**, and **MAY** in this policy are to be interpreted as described in RFC 2119 and RFC 8174 when, and only when, they appear in all capitals.
 
 ## Source of truth
 
-- Canonical architecture decision: `docs/adr/adr.adr-lifecycle.draft.md`
-- Workflow ontology note: `docs/adr/adr.workflow.draft.md`
-- ADR binding note: `docs/adr/adr.adr-workflow.draft.md`
+- Canonical architecture decision: `docs/adr/adr.adr-lifecycle.20260705.011836Z.md`
+- Review/proposal surface: `dev/adr-lifecycle-and-naming-consolidation/adr.adr-lifecycle-and-naming-consolidation.proposed.md`
+- Prior lifecycle draft: `docs/adr/adr.adr-lifecycle.draft.md`
+- Prior promotion-mechanics draft: `docs/adr/adr.adr-lifecycle-promotion-mechanics.md`
 - This policy is a consumption aid.
-- If this policy conflicts with the ADR, the ADR wins.
+- If this policy conflicts with the accepted ADR, the accepted ADR wins.
 
-## File status values
+## Canonical ADR record statuses
 
-ADR files keep these human-facing statuses:
-
-- `Draft`
-- `Proposed`
-- `Active`
-- `Historical`
-- `Rejected`
-
-## Operational lifecycle states
-
-These are the canonical operational states for ADR work:
+ADR records governed by the accepted lifecycle ADR MUST use these statuses:
 
 1. `draft`
 2. `proposed`
-3. `active`
-4. `historical`
-5. `rejected`
+3. `accepted`
+4. `completed`
+5. `superseded`
+6. `rejected`
 
-## Canonical state meanings
+## Canonical status meanings
 
-- `draft` — comment-open working record
-- `proposed` — active review surface and moving to dev
-- `active` — implementation plan complete and ADR in production
-- `historical` — superseded record after replacement
-- `rejected` — archived record that did not proceed
-
-## Canonical state ownership
-
-- `draft` — Hermes
-- `proposed` — Athena
-- `active` — Vulcan
-- `historical` — Athena
-- `rejected` — Athena
-
-## Required ADR sections at `proposed`
-
-When an ADR reaches `proposed`, it must include these machine-relevant sections:
-
-- `architecture-spec`
-- `acceptance-criteria`
-- `implementation-brief`
-- `resolved-open-questions`
-- `non-goals`
-- `validation-expectations`
-- `routing`
-
-## Spike packaging rule
-
-A draft ADR plus `ADR_implementation_plan` is a spike, and the spike lives in `reporoot/spike/<spike-id>/`.
-
-## Workflow-binding note
-
-Workflow-bound ADRs may optionally declare:
-
-- `Current State`
-- `Allowed Operators`
-- `Entrance Gate`
-- `Transition Gate`
-- `Exit Gate`
-- `Gating ADR`
-- `Blocked By`
-- `Enabled By`
-
-When a gate field is present, it must point to an explicit gating ADR by filename link. These fields are lifecycle controls, not routing prose.
+- `draft` — working record not yet adopted as a review surface.
+- `proposed` — review surface pending acceptance or rejection.
+- `accepted` — adopted ADR authority.
+- `completed` — accepted decision with applicable implementation, rollout, or documentation reconciliation complete.
+- `superseded` — no longer current because another accepted record replaced it.
+- `rejected` — record that did not proceed.
 
 ## Canonical transitions
 
-### Draft-to-production path
+Allowed lifecycle transitions are:
 
-`draft -> proposed -> active`
+- `draft -> proposed -> accepted`
+- `proposed -> rejected`
+- `accepted -> completed`
+- `accepted -> superseded`
+- `completed -> superseded`
+- `draft -> rejected`
 
-### Replacement path
+## Compatibility mapping
 
-`active -> historical`
+Older lifecycle language MUST be read through this compatibility map unless a later accepted ADR changes it:
 
-### Terminal rejection path
+| Older term | Canonical status or meaning |
+|---|---|
+| `active` | `accepted` when the decision is adopted as authority; `completed` only after applicable rollout is complete. |
+| `historical` | Usually `superseded`; sometimes `completed` for finished non-current work. |
+| active review | `proposed` or workspace-local `active.md`, not ADR status `active`. |
 
-`draft -> rejected`
+ADR status `active` MUST NOT be introduced as a canonical record status by this policy.
 
-## Rules
+## Spike and proposal surfaces
 
-- Do not invent new lifecycle states.
-- Do not invent new allowed-next transitions.
-- Do not use `active` as a synonym for `proposed`.
-- Do not treat draft comments as acceptance.
-- Do not mark an ADR complete without implementation-plan completion.
-- Do not change lifecycle semantics without a new or superseding Athena ADR.
-- `docs/incubator/` and `docs/spikes/` are deprecated and should be migrated out and deleted.
-- Do not treat routing as the primary control model for workflow-bound ADRs.
+- A spike MUST be represented as a draft ADR plus `ADR_implementation_plan` under `spike/<spike-id>/`.
+- A proposed ADR SHOULD be located under `dev/<proposal-id>/` when it is a review surface outside `docs/adr/`.
+- An accepted ADR SHOULD be located under `docs/adr/`.
 
-## Notes
+## Traceability
 
-- `Draft` / `Proposed` / `Active` / `Historical` / `Rejected` are ADR file statuses.
-- `draft` / `proposed` / `active` / etc. are operational routing states.
-- Draft ADRs are commentable before they move to `proposed`.
-- Workflow-bound ADRs may expose gate state separately from the base lifecycle state.
+Promotion and disposition SHOULD preserve traceability with structured links such as:
+
+- `proposal_surface`
+- `candidate_canonical_location`
+- `canonical_location`
+- `supersedes`
+- `superseded_by`
+- `derived_from`
+- `source_artifacts`
+- `back_to`
+- `implementation_plan`
+
+If lifecycle tooling is introduced, the `status` field MUST be the lifecycle source of truth. Path location, `artifact_type`, and structured links MAY provide context. Tooling MUST report disagreement between these surfaces and MUST NOT silently infer lifecycle state from path or link context.
+
+## Deferred surfaces
+
+The accepted ADR intentionally does not settle these older draft elements:
+
+- lifecycle state ownership by role
+- required `proposed` sections
+- optional workflow gate fields
+- deprecated `docs/incubator/` and `docs/spikes/` migration
+- broader legacy-source index flow from idea through iterative implementation
+
+Those elements MUST NOT become changed authority without separate acceptance or documentation handoff.

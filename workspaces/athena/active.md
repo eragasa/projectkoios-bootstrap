@@ -3,11 +3,11 @@
   "title": "Athena active work",
   "artifact_type": "workspace-active-priorities",
   "status": "active",
-  "datetime": "20260704.212913",
+  "datetime": "20260705.010958",
   "acting_as": "ATHENA",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/athena/",
-  "priority_count": 5,
+  "priority_count": 3,
   "working_directory": "working/",
   "active_working_items": [],
   "scratch_directory": "scratch/",
@@ -20,20 +20,20 @@
 
 ## Current priority stack
 
-1. Schema immutability gap-closure review was committed as `23f9802 Add schema immutability gap closure review`; remediation code/tests/report were already committed in `82740ea`.
-2. Workspace-state policy/bootstrap reconciliation was committed as `02b8748 Reconcile workspace state protocol bootstrap`; HERMES include set was staged separately.
-3. Advance an Athena-owned portfolio only if it does not touch implementation/bootstrap surfaces currently owned by VULCAN.
-4. Consolidate ADR lifecycle and naming drafts into the next accepted lifecycle slice, preserving provenance and avoiding architecture-index edits unless Hermes/Zeus directs them.
-5. Prepare the next implementation-ready brief from an accepted or near-ready plan after checking document authority, with candidates including template representation namespace split or workflow Petri-net executor.
+1. ADR lifecycle/naming consolidation accepted at `docs/adr/adr.adr-lifecycle.20260705.011836Z.md`; follow-on policy/index/source-draft pointer updates completed after user `next`; no schema/tooling/migration/implementation work authorized.
+2. Advance an Athena-owned portfolio only if it does not touch implementation/bootstrap surfaces currently owned by VULCAN.
+3. Prepare the next implementation-ready brief from an accepted or near-ready plan after checking document authority, with candidates including template representation namespace split or workflow Petri-net executor.
 
 ## Waiting on
 
-- Branch is ahead `origin/master` by 2 commits: `02b8748` and `23f9802`; user/HERMES push or packaging closeout decision may be needed.
-- Remaining dirty/untracked files are held-out VULCAN/KOIOS work plus Athena `AGENTS.md` control-plane update.
+- Push/closeout item resolved as of startup check: `git status --short --branch` reported `## master...origin/master` with no ahead/behind or dirty files.
+- No remaining dirty/untracked files were present at startup check.
+- Optional user direction for any further ADR lifecycle/naming work beyond completed policy/index/source-draft pointer reconciliation.
 - Hermes/user direction before editing `docs/architecture/architecture.workspaces.00.md` or `docs/architecture/architecture.00.md`.
 - Authority check before turning any draft ADR or plan into implementation authority.
 - Any needed action by another role/agent should be sent as an explicit intercom handoff/request, then recorded here as waiting-on.
 - Schema-base conformance review output exists at `docs/reviews/architecture-conformance.20260704.212913_schema-record-base-slice.md` with outcome `conforms-with-gaps`.
+- ADR lifecycle/naming consolidation proposal: `dev/adr-lifecycle-and-naming-consolidation/adr.adr-lifecycle-and-naming-consolidation.proposed.md`.
 
 ## Working material
 

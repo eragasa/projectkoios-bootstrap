@@ -4,6 +4,12 @@
 
 draft
 
+## Accepted control
+
+This draft is retained as non-canonical detailed guidance and source/provenance for accepted ADR `docs/adr/adr.adr-lifecycle.20260705.011836Z.md`.
+
+The accepted ADR is canonical only for the umbrella distinction between ADR title and filename; detailed naming rules require separate acceptance.
+
 ## Context
 
 Origin: user request

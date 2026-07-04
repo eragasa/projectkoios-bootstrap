@@ -4,6 +4,12 @@
 
 draft
 
+## Accepted control
+
+This draft is retained as source/provenance for accepted ADR `docs/adr/adr.adr-lifecycle.20260705.011836Z.md`.
+
+This draft is not canonical where it conflicts with the accepted ADR.
+
 ## Context
 
 Origin: user request

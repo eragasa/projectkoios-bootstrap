@@ -4,6 +4,12 @@
 
 draft
 
+## Accepted control
+
+This draft is retained as non-canonical detailed guidance and source/provenance for accepted ADR `docs/adr/adr.adr-lifecycle.20260705.011836Z.md`.
+
+Detailed title rules require separate acceptance before becoming canonical.
+
 ## Context
 
 Origin: user request
