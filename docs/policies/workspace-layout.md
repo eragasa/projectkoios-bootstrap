@@ -1,8 +1,8 @@
 ```json
 {
-  "title": "Workspace layout proposal",
+  "title": "Workspace layout policy",
   "artifact_type": "workspace-control-surface",
-  "status": "draft",
+  "status": "accepted-adr-aligned",
   "repository": "projectkoios-bootstrap",
   "scope": "workspaces/",
   "acting_as": "ATHENA",
@@ -13,18 +13,22 @@
 }
 ```
 
-# Workspace layout proposal
+# Workspace layout policy
 
 ## Purpose
 
 Provide persistent, per-agent working context across sessions without mixing
-role memory. The durable workflow state is the repository document set and each
-document's status. Workspace files are local control surfaces for resuming an
-agent run; they are not the authoritative project state.
+role memory. The controlling decision is
+`docs/adr/adr.20260704.162218_canonical-workspace-state-next-action-protocol.md`.
+The durable workflow state is the repository document set and each document's
+status. Workspace files are local control surfaces for resuming an agent run;
+they are not the authoritative project state and do not replace ADRs,
+architecture documents, implementation reports, validation results, knowledge
+notes, provenance indexes, or completion decisions.
 
-The bootstrap CLI materializes each workspace and its local state folders.
+The bootstrap CLI materializes each workspace and its local control folders.
 
-## Proposed directory tree
+## Canonical directory tree
 
 ```text
 workspaces/
@@ -65,8 +69,8 @@ workspaces/
 ## File conventions
 
 ### `state.md`
-Short-lived current context for an agent run.
-- top JSON metadata section
+Durable resume snapshot for an agent run.
+- stable top JSON metadata section
 - current branch / repo focus
 - current document domain
 - current objective
@@ -76,8 +80,8 @@ Short-lived current context for an agent run.
 - next state owner
 
 ### `active.md`
-Current priorities.
-- top JSON metadata section
+Current priority filter and next-action surface.
+- stable top JSON metadata section
 - top 1-3 state transitions
 - what to ignore for now
 - next recommended document-state change
@@ -161,7 +165,7 @@ Session notes.
 
 ## Validation expectation
 
-If adopted, add lightweight startup/stop checks that verify:
+Lightweight startup/stop checks SHOULD verify:
 - the workspace directories exist
 - each agent has an `AGENTS.md`
 - each agent has a `state.md`

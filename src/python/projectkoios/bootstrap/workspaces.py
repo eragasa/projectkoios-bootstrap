@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import json
 from pathlib import Path
 from typing import Iterable
 
@@ -56,7 +57,7 @@ class WorkspaceTemplate:
                 "## Canonical references",
                 "- docs/agents/agent-charter.md",
                 "- docs/policies/workspace-layout.md",
-                "- docs/architecture.00.md",
+                "- docs/architecture/architecture.00.md",
             ]
         )
         return "\n".join(lines).rstrip() + "\n"
@@ -127,6 +128,147 @@ def workspace_root(root: Path | None = None) -> Path:
     return REPO_ROOT if root is None else root
 
 
+def role_name(agent: str) -> str:
+    """Return the durable display name for a workspace role.
+
+    Args:
+        agent: Workspace agent key.
+
+    Returns:
+        Uppercase role identity label.
+    """
+    return agent.upper()
+
+
+def workspace_document_domain(agent: str) -> str:
+    """Return the default document domain summary for a workspace role.
+
+    Args:
+        agent: Workspace agent key.
+
+    Returns:
+        Human-readable document-domain summary.
+    """
+    # Domains summarize the owned document surface for generated state files.
+    domains: dict[str, str] = {
+        "hermes": "orchestration, repo-state reconciliation, cross-domain consistency",
+        "athena": "architecture, ADRs, specs, acceptance criteria, implementation briefs",
+        "vulcan": "implementation, tests, validation, implementation reports, deviation reports",
+        "koios": "knowledge capture, provenance, durable notes, evidence-backed synthesis",
+    }
+    return domains[agent]
+
+
+def metadata_block(*, agent: str, title: str, artifact_type: str, status: str, next_owner: str) -> str:
+    """Render stable top JSON metadata for workspace control files.
+
+    Args:
+        agent: Workspace agent key.
+        title: Metadata title.
+        artifact_type: Metadata artifact type.
+        status: Initial control-surface status.
+        next_owner: Initial next-owner value.
+
+    Returns:
+        Markdown fenced JSON metadata block.
+    """
+    # Metadata fields follow the accepted workspace-state ADR minimum set.
+    metadata: dict[str, object] = {
+        "title": title,
+        "artifact_type": artifact_type,
+        "status": status,
+        "datetime": "seed",
+        "acting_as": role_name(agent),
+        "repository": "projectkoios-bootstrap",
+        "workspace": f"workspaces/{agent}/",
+        "document_domain": workspace_document_domain(agent),
+        "control_files": ["state.md", "active.md"],
+        "next_owner": next_owner,
+        "blockers": [],
+    }
+    return "```json\n" + json.dumps(metadata, indent=2) + "\n```\n\n"
+
+
+def render_state(agent: str) -> str:
+    """Render initial workspace state.md content.
+
+    Args:
+        agent: Workspace agent key.
+
+    Returns:
+        Markdown workspace state seed content.
+    """
+    # Title is reused by metadata and the human-readable heading.
+    title: str = f"{agent.capitalize()} workspace state"
+    # Lines provide the minimum human-readable sections required by the ADR.
+    lines: list[str] = [
+        metadata_block(agent=agent, title=title, artifact_type="workspace-state", status="seed", next_owner=role_name(agent)),
+        f"# {title}",
+        "",
+        "## Current focus",
+        "- Current repo: projectkoios-bootstrap",
+        "- Current focus: initialize workspace control surface",
+        f"- Document domain: {workspace_document_domain(agent)}",
+        "",
+        "## Blockers",
+        "- None recorded in seed state.",
+        "",
+        "## Validated state",
+        "- Workspace control files have been materialized by the bootstrap initializer.",
+        "",
+        "## Handoff status",
+        "- No active handoff recorded in seed state.",
+        "",
+        "## Open questions",
+        "- None recorded in seed state.",
+        "",
+        "## Next transition",
+        f"- Next owner: {role_name(agent)}",
+        "- Next action: replace seed state with current role-owned workspace state when work begins.",
+        "",
+    ]
+    return "\n".join(lines)
+
+
+def render_active(agent: str) -> str:
+    """Render initial workspace active.md content.
+
+    Args:
+        agent: Workspace agent key.
+
+    Returns:
+        Markdown active-work seed content.
+    """
+    # Title is reused by metadata and the human-readable heading.
+    title: str = f"{agent.capitalize()} active work"
+    # Lines provide the minimum next-action sections required by the ADR.
+    lines: list[str] = [
+        metadata_block(agent=agent, title=title, artifact_type="workspace-active-priorities", status="seed", next_owner=role_name(agent)),
+        f"# {title}",
+        "",
+        "## Current priority stack",
+        "1. Replace seed active-work content with the current role-owned priority stack when work begins.",
+        "",
+        "## Waiting on",
+        "- Nothing recorded in seed active work.",
+        "",
+        "## Working material",
+        "- No active working material is recorded in seed active work.",
+        "- Files under `working/` are active only when named here.",
+        "",
+        "## Ignore for now",
+        "- Nothing recorded in seed active work.",
+        "",
+        "## Exit criteria",
+        "- Seed state has been replaced with current workspace priorities when active work begins.",
+        "",
+        "## Next expected artifact",
+        "- Updated `state.md` and `active.md` for the current role-owned task.",
+        "",
+    ]
+    return "\n".join(lines)
+
+
 def ensure_workspace(root: Path, agent: str, *, force: bool = False) -> list[Path]:
     """Ensure one workspace directory and seed files exist.
 
@@ -167,28 +309,11 @@ def ensure_workspace(root: Path, agent: str, *, force: bool = False) -> list[Pat
     agent_md: Path = workspace / "AGENTS.md"
 
     if force or not state.exists():
-        state.write_text(
-            f"# {agent.capitalize()} workspace state\n\n"
-            "- Current repo:\n"
-            "- Current focus:\n"
-            "- Blockers:\n"
-            "- Last validated decision:\n"
-            "- Working material status:\n"
-            "- Next action owner:\n",
-            encoding="utf-8",
-        )
+        state.write_text(render_state(agent), encoding="utf-8")
         created.append(state)
 
     if force or not active.exists():
-        active.write_text(
-            f"# {agent.capitalize()} active work\n\n"
-            "- Top priority:\n"
-            "- Waiting on:\n"
-            "- Working items to process:\n"
-            "- Working items to deliver:\n"
-            "- Ignore for now:\n",
-            encoding="utf-8",
-        )
+        active.write_text(render_active(agent), encoding="utf-8")
         created.append(active)
 
     # Template provides the role-specific local instruction content.

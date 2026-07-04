@@ -21,7 +21,7 @@ def register(subparsers: SubparserCollection) -> None:
     # Parser owns the top-level workspace command group.
     parser: ArgumentParser = subparsers.add_parser(
         "workspaces",
-        help="Manage per-agent workspaces and handoff folders",
+        help="Manage per-agent workspace control folders",
     )
     # Workspace subparsers dispatch concrete workspace actions.
     workspace_subparsers: SubparserCollection = parser.add_subparsers(dest="workspace_action")
@@ -30,7 +30,7 @@ def register(subparsers: SubparserCollection) -> None:
     # Init parser creates the canonical workspace layout.
     init_parser: ArgumentParser = workspace_subparsers.add_parser(
         "init",
-        help="Create local workspaces, handoff folders, and seed AGENT.md files",
+        help="Create local workspaces, control folders, and seed AGENTS.md files",
     )
     init_parser.add_argument(
         "--root",

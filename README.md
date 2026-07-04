@@ -69,7 +69,7 @@ projectkoios harnesses stop      # kill koios session
 Read `maps/repositories.md`, `maps/packages.md`, and `maps/vault_paths.md`
 before touching any code. All component repos are siblings under `~/repos/`.
 
-Persistent per-agent workspace state is proposed in `docs/policies/workspace-layout.md`.
+Persistent per-agent workspace state is governed by the accepted ADR `docs/adr/adr.20260704.162218_canonical-workspace-state-next-action-protocol.md` and summarized in `docs/policies/workspace-layout.md`. Workspace `state.md` and `active.md` files are control surfaces, not replacements for authoritative repository documents.
 
 ## Local Generated State
 

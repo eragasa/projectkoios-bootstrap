@@ -2,7 +2,7 @@
 
 ## Status
 
-draft
+draft-superseded-by-accepted-adr
 
 ## Context
 
@@ -165,14 +165,15 @@ and leverage-priority fields.
 ## routing
 
 - Owner: Athena
-- Next phase: proposed
-- Notes: Workflow/state surface for leverage-based session planning.
+- Next phase: accepted ADR exists at `docs/adr/adr.20260704.162218_canonical-workspace-state-next-action-protocol.md`
+- Notes: Workflow/state surface for leverage-based session planning. Historical draft retained as context; do not use as the active authority surface.
 
 ## links
 
 - back_to: architecture.00
 - supersedes: None
-- superseded_by: None
+- superseded_by: `docs/adr/adr.20260704.162218_canonical-workspace-state-next-action-protocol.md`
+- proposal_surface: `dev/canonical-workspace-state-next-action-protocol/adr.canonical-workspace-state-next-action-protocol.proposed.md`
 
 ## Comments
 

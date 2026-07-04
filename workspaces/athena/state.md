@@ -44,30 +44,32 @@
 - No active working items are pending; files under `working/` are current working material only when explicitly marked active.
 - `scratch/` exists for temporary notes and should not be treated as durable state.
 - Process correction recorded: the next best step is always an incremental edit to the relevant control surface before expanding work.
+- Control-plane correction recorded: if Athena needs another role/agent to do something, Athena should send an explicit intercom handoff/request rather than only recording the need in local state.
 - Reconciliation recorded on 20260704.151218: the untracked GraphRAG persisted-index plan files are VULCAN-owned implementation-domain artifacts and have been handed off to the idle Vulcan session via intercom.
 - Portfolio correction recorded on 20260704.151749: Athena should keep multiple larger spec/ADR tracks moving while Vulcan owns implementation work, as long as Athena avoids implementation files and preserves document-domain authority.
 - No Athena implementation/code work is active.
+- Canonical workspace-state / next-action protocol accepted ADR exists at `docs/adr/adr.20260704.162218_canonical-workspace-state-next-action-protocol.md`; proposal remains review provenance at `dev/canonical-workspace-state-next-action-protocol/adr.canonical-workspace-state-next-action-protocol.proposed.md`; historical draft now links to the accepted ADR.
 - Schema-record base pre-Vulcan slice reconciled KOIOS/HERMES/VULCAN review on 20260704.173652.
 - HERMES guidance received: slice conformance review is a bounded comparison between implemented slice and controlling artifacts, not a general design review or validation run; ATHENA owns final architecture-conformance decision after VULCAN reports evidence.
 - VULCAN implementation report exists at `docs/implementation/implementation-report.20260704.174859_schema-record-base.md`.
 - Athena architecture-conformance review exists at `docs/reviews/architecture-conformance.20260704.212913_schema-record-base-slice.md` with outcome `conforms-with-gaps`.
-- Conformance gap: implementation's metadata/generic mapping immutability is shallow; Vulcan should remediate or explicitly document and test the accepted limitation before the immutable-record guarantee is treated as satisfied.
+- Schema-record shallow immutability gap was remediated by VULCAN and reviewed by ATHENA; gap-closure review exists at `docs/reviews/architecture-conformance.20260704.164710_schema-immutability-gap-closure.md` with outcome `gap-closed`.
 - Projection/source-of-truth semantics were corrected: the ADR Markdown is an editable projection until a separate schema-backed JSON source record exists.
 - AAR recorded at `docs/AAR/aar.20260704.173652_schema-record-brief-handoff.md`.
 
 ## Open questions
 
-- Whether Hermes should promote the workspace-state pattern into shared repo policy for all role workspaces.
+- User execution approval for VULCAN to stage/commit the HERMES-approved workspace-state policy/bootstrap reconciliation package; VULCAN confirmed it is waiting and will stage only the HERMES include set.
 - Whether a future validator should parse the top JSON metadata sections directly or require a structured companion.
 - Whether historical/transitional working files should be archived or removed from the active workspace surface.
-- Whether Vulcan should remediate the schema-record shallow immutability gap immediately or accept/document it as a first-slice limitation.
+- Explicit user execution direction on whether to package only the remaining schema immutability gap-closure review artifact, because remediation code/tests/report are already committed in `82740ea`.
 - Which larger Athena track should be advanced first after conformance review: workspace-state protocol promotion, ADR lifecycle/naming consolidation, template representation brief, or workflow Petri-net executor readiness.
 
 ## Next transition
 
-- Owner: VULCAN/user for deciding whether to remediate or explicitly document the schema-record shallow immutability gap.
-- Highest-leverage next action: route `docs/reviews/architecture-conformance.20260704.212913_schema-record-base-slice.md` to Vulcan/Hermes and request bounded remediation or accepted-limitation documentation.
-- Secondary action: Athena may advance independent spec/ADR portfolio items after routing.
+- Owner: user/VULCAN for execution decision on remaining schema immutability gap-closure review artifact and workspace-state package.
+- Highest-leverage next action: await user/VULCAN execution status for remaining package candidates, or choose another Athena-owned spec/ADR portfolio item that does not touch implementation files.
+- Secondary action: await user/VULCAN staging/commit execution for HERMES-approved workspace-state reconciliation package, then Athena may advance independent spec/ADR portfolio items after routing.
 - Blockers: none currently known; preserve Athena boundary by reviewing/specifying, not implementing code.
 
 ## Startup checklist
@@ -77,3 +79,4 @@
 3. Confirm whether any `working/` files are active before treating them as current work.
 4. Check focused repo status before editing.
 5. Preserve Athena boundary: draft specs/ADRs/criteria only; do not implement code.
+6. When another role/agent needs to act, send an explicit intercom handoff/request and then record the handoff in state.
