@@ -3,7 +3,7 @@
 ```json
 {
   "title": "Architecture document control surface",
-  "date": "20260704",
+  "datetime": "20260704T000000Z",
   "status": "incubating",
   "origin": "user request",
   "from": "ATHENA",
