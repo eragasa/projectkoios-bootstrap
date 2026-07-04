@@ -4,8 +4,8 @@ from pathlib import Path
 
 from projectkoios.bootstrap.harness.data.artifact import HandoffArtifact
 from projectkoios.bootstrap.harness.handoffs.topics import (
-    _artifact_to_message,
-    _message_id,
+    artifact_to_message,
+    message_id,
 )
 
 
@@ -17,7 +17,7 @@ def test__Message__construction__builds_message_with_path_derived_id() -> None:
         sender="Athena",
         recipient="Vulcan",
     )
-    msg = _artifact_to_message(
+    msg = artifact_to_message(
         "docs/archive/handoffs/archon/spec.md", artifact,
     )
     assert msg.message_id == "archon/spec.md"
@@ -26,9 +26,9 @@ def test__Message__construction__builds_message_with_path_derived_id() -> None:
 
 
 def test__Message__construction__strips_handoffs_prefix() -> None:
-    assert _message_id("docs/archive/handoffs/pi/foo.md") == "pi/foo.md"
-    assert _message_id("docs/archive/handoffs/opencode/bar.md") == "opencode/bar.md"
-    assert _message_id("docs/archive/handoffs/goose/baz.md") == "goose/baz.md"
+    assert message_id("docs/archive/handoffs/pi/foo.md") == "pi/foo.md"
+    assert message_id("docs/archive/handoffs/opencode/bar.md") == "opencode/bar.md"
+    assert message_id("docs/archive/handoffs/goose/baz.md") == "goose/baz.md"
 
 
 def test__Message__construction__copies_artifact_fields() -> None:
@@ -42,7 +42,7 @@ def test__Message__construction__copies_artifact_fields() -> None:
         delegated_operator="Codex",
         provenance=["origin: pi", "from: Hermes"],
     )
-    msg = _artifact_to_message("docs/archive/handoffs/pi/out.md", artifact)
+    msg = artifact_to_message("docs/archive/handoffs/pi/out.md", artifact)
     assert msg.kind == "routing-decision"
     assert msg.origin == "pi"
     assert msg.sender == "Hermes"
@@ -60,7 +60,7 @@ def test__Message__construction__preserves_optional_fields_when_absent() -> None
         sender="Koios",
         recipient="Hermes",
     )
-    msg = _artifact_to_message("docs/archive/handoffs/goose/k.md", artifact)
+    msg = artifact_to_message("docs/archive/handoffs/goose/k.md", artifact)
     assert msg.acting_as is None
     assert msg.delegated_operator is None
     assert msg.provenance is None
@@ -82,5 +82,5 @@ def test__Message__construction__maps_place_from_source_path() -> None:
             sender="user",
             recipient="Hermes",
         )
-        msg = _artifact_to_message(path, artifact)
+        msg = artifact_to_message(path, artifact)
         assert msg.place == expected_place, f"{path} → {msg.place}"

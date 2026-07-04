@@ -27,22 +27,24 @@ class SourceSet:
 
 class SourceResolver:
     def resolve(self, config: Config) -> SourceSet:
-        root = config.root
-        includes = config.source_includes()
+        root: Path = config.root
+        includes: tuple[str, ...] = config.source_includes()
         if not includes:
             raise ValueError("no source include patterns defined")
 
         documents: list[SourceDocument] = []
+        pattern: str
         for pattern in includes:
-            matches = sorted(root.glob(pattern))
+            matches: list[Path] = sorted(root.glob(pattern))
             if not matches:
                 raise FileNotFoundError(f"no files matched include pattern: {pattern}")
+            match: Path
             for match in matches:
                 if not match.is_file():
                     continue
-                if self._is_excluded(match, root, config.source_excludes()):
+                if self.is_excluded(match, root, config.source_excludes()):
                     continue
-                text = match.read_text(encoding="utf-8")
+                text: str = match.read_text(encoding="utf-8")
                 documents.append(
                     SourceDocument(
                         path=match.resolve(),
@@ -52,11 +54,11 @@ class SourceResolver:
                     )
                 )
         unique: dict[Path, SourceDocument] = {document.path: document for document in documents}
-        ordered = tuple(sorted(unique.values(), key=lambda item: item.relative_path))
+        ordered: tuple[SourceDocument, ...] = tuple(sorted(unique.values(), key=lambda item: item.relative_path))
         if not ordered:
             raise FileNotFoundError("no source files resolved after exclusions")
         return SourceSet(root=root, documents=ordered)
 
-    def _is_excluded(self, path: Path, root: Path, patterns: tuple[str, ...]) -> bool:
-        rel = str(path.relative_to(root)).replace("\\", "/")
+    def is_excluded(self, path: Path, root: Path, patterns: tuple[str, ...]) -> bool:
+        rel: str = str(path.relative_to(root)).replace("\\", "/")
         return any(fnmatch(rel, pattern) for pattern in patterns)

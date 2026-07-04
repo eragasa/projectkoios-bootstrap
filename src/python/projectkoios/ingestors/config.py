@@ -47,31 +47,31 @@ class Config:
 
     @property
     def source(self) -> Mapping[str, Any]:
-        return self._section("source")
+        return self.section("source")
 
     @property
     def pipeline(self) -> Mapping[str, Any]:
-        return self._section("pipeline")
+        return self.section("pipeline")
 
     @property
     def validation(self) -> Mapping[str, Any]:
-        return self._section("validation")
+        return self.section("validation")
 
     @property
     def retrieval(self) -> Mapping[str, Any]:
-        return self._section("retrieval")
+        return self.section("retrieval")
 
     @property
     def extraction(self) -> Mapping[str, Any]:
-        return self._section("extraction")
+        return self.section("extraction")
 
     @property
     def evaluation(self) -> Mapping[str, Any]:
-        return self._section("evaluation")
+        return self.section("evaluation")
 
     @property
     def presets(self) -> Mapping[str, Any]:
-        return self._section("presets")
+        return self.section("presets")
 
     @property
     def answer_format(self) -> str:
@@ -91,7 +91,7 @@ class Config:
 
     @property
     def backend(self) -> Mapping[str, Any]:
-        value = self.extraction.get("backend", {})
+        value: object = self.extraction.get("backend", {})
         if isinstance(value, Mapping):
             return value
         raise TypeError("extraction.backend must be a mapping")
@@ -102,12 +102,12 @@ class Config:
 
     @property
     def backend_endpoint(self) -> str | None:
-        value = self.backend.get("endpoint")
+        value: object = self.backend.get("endpoint")
         return str(value) if value is not None else None
 
     @property
     def backend_model(self) -> str | None:
-        value = self.backend.get("model")
+        value: object = self.backend.get("model")
         return str(value) if value is not None else None
 
     @property
@@ -119,90 +119,92 @@ class Config:
         return BackendFailureMode(str(self.backend.get("on_failure", BackendFailureMode.ERROR.value)))
 
     def source_includes(self) -> tuple[str, ...]:
-        include = self.source.get("include", [])
-        return tuple(str(item) for item in include)
+        include: object = self.source.get("include", [])
+        return tuple(str(item) for item in include) if isinstance(include, list | tuple) else ()
 
     def source_excludes(self) -> tuple[str, ...]:
-        exclude = self.source.get("exclude", [])
-        return tuple(str(item) for item in exclude)
+        exclude: object = self.source.get("exclude", [])
+        return tuple(str(item) for item in exclude) if isinstance(exclude, list | tuple) else ()
 
     def preset(self, name: str) -> Mapping[str, Any]:
-        value = self.presets.get(name, {})
+        value: object = self.presets.get(name, {})
         if not isinstance(value, Mapping):
             raise TypeError(f"preset '{name}' must be a mapping")
         return value
 
-    def _section(self, name: str) -> Mapping[str, Any]:
-        value = self.document.get(name, {})
+    def section(self, name: str) -> Mapping[str, Any]:
+        value: object = self.document.get(name, {})
         if not isinstance(value, Mapping):
             raise TypeError(f"section '{name}' must be a mapping")
         return value
 
 
 class RuntimeConfigValidator:
-    _ANSWER_FORMATS = {"cited_summary", "structured_json"}
-    _BACKENDS = {item.value for item in BackendName}
-    _PIPELINE_MODES = {item.value for item in PipelineMode}
-    _VALIDATION_MODES = {item.value for item in ValidationMode}
-    _BACKEND_FAILURE_MODES = {item.value for item in BackendFailureMode}
+    ANSWER_FORMATS: set[str] = {"cited_summary", "structured_json"}
+    BACKENDS: set[str] = {item.value for item in BackendName}
+    PIPELINE_MODES: set[str] = {item.value for item in PipelineMode}
+    VALIDATION_MODES: set[str] = {item.value for item in ValidationMode}
+    BACKEND_FAILURE_MODES: set[str] = {item.value for item in BackendFailureMode}
 
     def validate(self, config: Config) -> None:
-        issues = self.issues(config)
+        issues: tuple[str, ...] = self.issues(config)
         if issues:
             raise ValueError("invalid runtime config: " + "; ".join(issues))
 
     def issues(self, config: Config) -> tuple[str, ...]:
         issues: list[str] = []
-        self._validate_enum("validation.mode", config.validation_mode.value, self._VALIDATION_MODES, issues)
-        self._validate_enum("pipeline.mode", config.pipeline_mode.value, self._PIPELINE_MODES, issues)
-        self._validate_enum("pipeline.answer_format", config.answer_format, self._ANSWER_FORMATS, issues)
-        self._validate_enum("extraction.backend.name", config.backend_name.value, self._BACKENDS, issues)
-        self._validate_enum("extraction.backend.on_failure", config.backend_on_failure.value, self._BACKEND_FAILURE_MODES, issues)
+        self.validate_enum("validation.mode", config.validation_mode.value, self.VALIDATION_MODES, issues)
+        self.validate_enum("pipeline.mode", config.pipeline_mode.value, self.PIPELINE_MODES, issues)
+        self.validate_enum("pipeline.answer_format", config.answer_format, self.ANSWER_FORMATS, issues)
+        self.validate_enum("extraction.backend.name", config.backend_name.value, self.BACKENDS, issues)
+        self.validate_enum("extraction.backend.on_failure", config.backend_on_failure.value, self.BACKEND_FAILURE_MODES, issues)
         if config.retrieval_depth < 1:
             issues.append("pipeline.retrieval_depth must be >= 1")
         if config.backend_timeout_seconds < 1:
             issues.append("extraction.backend.timeout_seconds must be >= 1")
+        pattern: str
         for pattern in config.source_includes():
-            if not self._is_adr_markdown_pattern(pattern):
+            if not self.is_adr_markdown_pattern(pattern):
                 issues.append(f"source include must be ADR-only markdown for v1: {pattern}")
         return tuple(issues)
 
-    def _validate_enum(self, field: str, value: str, allowed: set[str], issues: list[str]) -> None:
+    def validate_enum(self, field: str, value: str, allowed: set[str], issues: list[str]) -> None:
         if value not in allowed:
             issues.append(f"{field} must be one of {sorted(allowed)!r}: {value}")
 
-    def _is_adr_markdown_pattern(self, pattern: str) -> bool:
-        normalized = pattern.replace("\\", "/")
+    def is_adr_markdown_pattern(self, pattern: str) -> bool:
+        normalized: str = pattern.replace("\\", "/")
         return normalized.startswith("docs/adr/") and normalized.endswith(".md")
 
 
 class ConfigLoader:
     def __init__(self, schema_validator: JsonSchemaValidator | None = None) -> None:
-        self._schema_validator = schema_validator
+        self.schema_validator: JsonSchemaValidator | None = schema_validator
 
     def load(self, path: Path, *, preset: str | None = None) -> Config:
-        resolved = path.resolve()
-        document = yaml.safe_load(resolved.read_text(encoding="utf-8"))
-        if document is None:
-            document = {}
-        if not isinstance(document, dict):
+        resolved: Path = path.resolve()
+        loaded_document: Any = yaml.safe_load(resolved.read_text(encoding="utf-8"))
+        raw_document: Any = {} if loaded_document is None else loaded_document
+        if not isinstance(raw_document, dict):
             raise TypeError(f"Config must be a mapping: {resolved}")
-        if preset is not None:
-            document = self._apply_preset(document, preset)
-        if self._schema_validator is not None:
-            self._schema_validator.validate(document)
-        return Config(path=resolved, document=document)
+        base_document: dict[str, Any] = raw_document
+        config_document: dict[str, Any] = self.apply_preset(base_document, preset) if preset is not None else base_document
+        if self.schema_validator is not None:
+            self.schema_validator.validate(config_document)
+        return Config(path=resolved, document=config_document)
 
-    def _apply_preset(self, document: dict[str, Any], preset: str) -> dict[str, Any]:
-        presets = document.get("presets", {})
+    def apply_preset(self, document: dict[str, Any], preset: str) -> dict[str, Any]:
+        presets: object = document.get("presets", {})
         if not isinstance(presets, Mapping):
             raise TypeError("presets must be a mapping")
-        overlay = presets.get(preset)
+        overlay: object = presets.get(preset)
         if overlay is None:
             raise KeyError(f"unknown preset: {preset}")
         if not isinstance(overlay, Mapping):
             raise TypeError(f"preset '{preset}' must be a mapping")
-        merged = dict(document)
+        merged: dict[str, Any] = dict(document)
+        section_name: object
+        replacement: object
         for section_name, replacement in overlay.items():
             if section_name == "presets":
                 raise ValueError("presets may not replace the presets section")

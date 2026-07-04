@@ -78,6 +78,10 @@ already says.
 
 Public functions and methods should have explicit type annotations.
 
+All variables in touched Python code should have explicit types when the type is
+not already declared by a typed assignment, dataclass field, function signature,
+or typed constant.
+
 Schema objects, workflow objects, action objects, and adapter boundaries should
 be typed.
 
@@ -99,11 +103,15 @@ For Project Koios, tests are preferred as executable documentation.
 Implementation should preserve the separation between state-bearing data
 objects and state-transforming action objects.
 
-### CP-010: Avoid Dangling Functions
+### CP-010: Avoid Dangling Functions And Private Helpers
 
 Functions that mutate state or affect control surfaces should have explicit
 ownership, typed inputs, and clear names. Avoid unowned helper functions that
 blur the control surface.
+
+Do not introduce private functions or private variables in touched code. Prefer
+clear public names scoped by module, class, or data object ownership instead of
+leading-underscore helpers.
 
 ## Documentation And Style Review Rules
 
@@ -122,8 +130,9 @@ a formatter can fix.
 Review agents should flag missing documentation when the code is public,
 architecture-sensitive, mutating, adapter-facing, or nontrivial.
 
-Review agents should also check whether control-surface code preserves the
-boundary between data objects and action objects.
+Review agents should also check whether touched code avoids private functions or
+private variables and preserves the boundary between data objects and action
+objects.
 
 ## Review Template Additions
 
@@ -162,6 +171,8 @@ Result: pass / concern / fail / unknown
 Evidence:
 
 Missing or weak annotations:
+
+Untyped variables in touched code:
 
 Required change:
 

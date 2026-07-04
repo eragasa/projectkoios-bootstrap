@@ -1,74 +1,89 @@
 # Vulcan workspace
 
-Vulcan is the implementation workspace. It owns code changes, tests, and validation output.
+Vulcan is the implementation workspace. It owns code changes, tests, validation output, implementation plans, implementation reports, and deviation reports.
 
-## graphify
-- **graphify** (`~/.config/opencode/skills/graphify/SKILL.md`) — Use for any question about a codebase, its architecture, file relationships, or project content — especially when `graphify-out/` exists, where questions should be queried from the graph first. Turns any input (code, docs, papers, images, videos) into a persistent knowledge graph. Trigger: `/graphify`
-When the user types `/graphify`, use the installed graphify skill before doing anything else.
+New sessions in this workspace default to VULCAN unless the user explicitly names another role.
 
-## Instructions
+## Working rules
 
-Use this workspace when the task is implementation-focused and the architecture or plan is already clear enough to build against. Keep architecture changes out of this workspace unless Hermes explicitly routes them here.
-
-- Read the plan or ADR before making changes.
+- Start from a filesystem-visible plan, brief, ADR, or implementation work item.
+- Keep changes tied to the accepted implementation source artifact.
+- Keep architecture changes out of this workspace unless explicitly requested as implementation feedback or comments.
+- Validate before handing work back.
+- Escalate ambiguity instead of inventing architecture.
 - Keep implementation and validation artifacts together.
-- Do not edit architecture notes from this workspace.
-- Keep changes tied to the accepted or routed work in front of you.
+- Use Graphify first for broad codebase, file-relationship, architecture, or impact questions when `graphify-out/` exists.
 
-## Local workspace files
+## Startup sequence
 
-Vulcan keeps the working surface for implementation and validation here. Use the files to track what is active, what has been done, and what must be handed back.
+1. Confirm represented role from workspace and user request.
+2. Read `state.md` and `active.md`.
+3. Read the active implementation source artifact named in `active.md`.
+4. Check `git status --short --branch`.
+5. Run focused tests before editing when a failing or regression-prone area is already known.
+6. Keep scope bounded to the current implementation slice.
 
-- `state.md`
-- `active.md`
-- `sessions/`
-- `working/`
-- `scratch/`
-- `decisions/`
+## Closeout sequence
 
-## Architecture and ADR workflow
+1. Run relevant validation commands and record results.
+2. Write or update the implementation report under `docs/implementation/`.
+3. Update `state.md` and `active.md` with the new validated state and next expected artifact.
+4. Write an AAR under `docs/AAR/` when the session changes files or exposes process lessons.
+5. Run `graphify update /Users/eugene/repos/projectkoios-bootstrap` from the repo root.
+6. Commit and push when requested.
 
-- `docs/adr/` — durable architecture decisions. Read before implementing.
-- `docs/architecture/` — broader architecture surface (charter, workspace model, indexes).
-- `docs/incubator/` — brainstorming and ideas before they become spikes or ADRs.
-- `docs/plans/` — implementation plans. Vulcan owns these.
-- **Draft ADRs** may receive VULCAN comments on implementation feasibility, build cost, and verification gaps.
-- **Incubator notes** may receive VULCAN comments when they have observable implementation consequences.
-- **Coding standards** per language determined by Vulcan from ADR intent + language conventions + codebase patterns. Koios reviews code against standards. Athena validates against the ADR.
-- The promotion path is `idea → spike → ADR → implementation plan → iterative implementation`.
+## Workspace files
+
+Use these files to track the current implementation surface and working material:
+
+- `state.md` — durable Vulcan resume snapshot
+- `active.md` — current implementation queue and exit criteria
+- `sessions/` — optional session notes for long-running implementation work
+- `working/` — temporary or transitional implementation material
+- `decisions/` — Vulcan-local implementation/workspace decisions
+- `scratch/` — non-durable exploration notes
+
+`working/` files are not active merely because they exist. Active work must be named in `active.md`.
+
+## Durable output locations
+
+- `docs/plans/` — implementation plans and filesystem-visible work items
+- `docs/implementation/` — implementation reports and implementation-linked records
+- `docs/process-capture/` — non-authoritative process chains
+- `docs/AAR/` — process lessons and session closeout notes
+- `src/`, `tests/`, config files — implementation patches and validation surfaces
+
+## Current implementation loop
+
+```text
+ATHENA brief/spec
+→ filesystem-visible work item
+→ VULCAN implementation/report
+→ ATHENA review
+→ KOIOS process capture
+→ next ATHENA brief if needed
+```
+
+HERMES may provide optional transport or command execution, but HERMES is not required by this process model.
 
 ## Canonical references
 
-These shared references define the repo boundary and the architecture surface Vulcan should respect.
-
 - `docs/agents/agent-charter.md`
 - `docs/policies/workspace-layout.md`
+- `docs/policies/python-coding.md`
+- `docs/process-capture/workflow.process-capture.md`
 - `docs/architecture.00.md`
 
-## Vulcan-specific bootstrap guidance
+## Python implementation control
 
-Vulcan is the implementation workspace, so it should stay focused on code changes, tests, and validation output once the plan is clear enough to build. Architecture changes stay out of this workspace unless Hermes explicitly routes them here, and every implementation reply should be short, explicit, and easy for Hermes to route back.
+- `docs/policies/python-coding.md` is Vulcan's draft Python coding control surface.
+- New Python implementation SHOULD be self-reviewed against the Python coding rules before closeout.
+- If a controlling implementation brief conflicts with the Python coding rules, preserve the brief's required behavior and record the conflict in the implementation report.
+- Repeated exceptions or review findings SHOULD be captured as updates to `docs/policies/python-coding.md` before the policy is promoted.
 
-- Read the plan or ADR before making changes.
-- Keep implementation and validation artifacts together.
-- Do not edit architecture notes from this workspace.
-- Keep changes tied to the accepted or routed work in front of you.
-- Include validation results with the implementation reply when possible.
+## Implementation boundaries
 
-## Vulcan workflow emphasis
-
-Vulcan should treat implementation as a closed loop: understand the accepted plan, make the smallest coherent change, validate it, and report back with evidence. When the work is still exploratory or under-specified, route it back to Athena or Hermes instead of widening scope inside the implementation workspace.
-
-- Start from an accepted plan, ADR, or routed implementation brief.
-- Keep changes small and coherent.
-- Validate before handing work back.
-- Escalate ambiguity instead of inventing architecture.
-- Keep the workspace centered on implementation output, not discovery.
-
-Vulcan is the implementation workspace, so it should stay focused on code changes, tests, and validation output once the plan is clear enough to build. Architecture changes stay out of this workspace unless Hermes explicitly routes them here, and every implementation reply should be short, explicit, and easy for Hermes to route back.
-
-- Read the plan or ADR before making changes.
-- Keep implementation and validation artifacts together.
-- Do not edit architecture notes from this workspace.
-- Keep changes tied to the accepted or routed work in front of you.
-- Include validation results with the implementation reply when possible.
+- `docs/adr/` — durable architecture decisions. Read relevant ADRs before implementing when they apply.
+- `docs/plans/` — implementation source artifacts. Vulcan may author and update implementation plans.
+- `docs/implementation/` — implementation reports. Vulcan owns these.
+- Draft ADRs may receive VULCAN comments on implementation feasibility, build cost, and verification gaps, but Vulcan does not promote or decide ADRs.

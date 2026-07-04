@@ -5,36 +5,36 @@ from pathlib import Path
 from unittest.mock import patch
 
 from projectkoios.bootstrap.harness.daemon.daemon import (
-    _check_source_tree_safety,
-    _git_status_short,
+    check_source_tree_safety,
+    git_status_short,
     run_once,
 )
 from projectkoios.bootstrap.harness.daemon.data import FreshnessState
 
 
-def test__git_status_short__returns_output(tmp_path: Path) -> None:
+def test_git_status_short__returns_output(tmp_path: Path) -> None:
     repo = tmp_path / "repo"
     repo.mkdir()
     (repo / ".git").mkdir()
-    result = _git_status_short(repo)
+    result = git_status_short(repo)
     assert isinstance(result, str)
 
 
-def test__check_source_tree_safety__no_change_returns_empty() -> None:
-    assert _check_source_tree_safety(Path("/tmp"), "", "") == []
+def test_check_source_tree_safety__no_change_returns_empty() -> None:
+    assert check_source_tree_safety(Path("/tmp"), "", "") == []
 
 
-def test__check_source_tree_safety__graphify_out_ignored() -> None:
+def test_check_source_tree_safety__graphify_out_ignored() -> None:
     before = ""
     after = "?? graphify-out/graph.json\n"
-    result = _check_source_tree_safety(Path("/tmp"), before, after)
+    result = check_source_tree_safety(Path("/tmp"), before, after)
     assert result == []
 
 
-def test__check_source_tree_safety__unexpected_change_flagged() -> None:
+def test_check_source_tree_safety__unexpected_change_flagged() -> None:
     before = ""
     after = "?? src/unexpected.py\n"
-    result = _check_source_tree_safety(Path("/tmp"), before, after)
+    result = check_source_tree_safety(Path("/tmp"), before, after)
     assert len(result) == 1
     assert "unexpected" in result[0]
 
@@ -86,11 +86,11 @@ def test__run_once__publishes_to_runtime_not_repo(tmp_path: Path, monkeypatch) -
     with patch("shutil.which", return_value="/usr/local/bin/graphify"), \
          patch("subprocess.run", side_effect=mock_subprocess), \
          patch(
-             "projectkoios.bootstrap.harness.daemon.graphify_runner._read_graph_stats",
+             "projectkoios.bootstrap.harness.daemon.graphify_runner.read_graph_stats",
              return_value=(5, 3, 1),
          ), \
          patch(
-             "projectkoios.bootstrap.harness.daemon.graphify_runner._graphify_version",
+             "projectkoios.bootstrap.harness.daemon.graphify_runner.graphify_version",
              return_value="graphify 1.0",
          ):
         result = run_once(repo, trigger_kind="test")
@@ -132,11 +132,11 @@ def test__run_once__source_tree_safety_gate(tmp_path: Path, monkeypatch) -> None
     with patch("shutil.which", return_value="/usr/local/bin/graphify"), \
          patch("subprocess.run", side_effect=mock_subprocess), \
          patch(
-             "projectkoios.bootstrap.harness.daemon.graphify_runner._read_graph_stats",
+             "projectkoios.bootstrap.harness.daemon.graphify_runner.read_graph_stats",
              return_value=(0, 0, 0),
          ), \
          patch(
-             "projectkoios.bootstrap.harness.daemon.graphify_runner._graphify_version",
+             "projectkoios.bootstrap.harness.daemon.graphify_runner.graphify_version",
              return_value="1.0",
          ):
         result = run_once(repo, trigger_kind="test")

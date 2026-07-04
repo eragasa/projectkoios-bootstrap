@@ -1,56 +1,47 @@
-"""Sweep stale Archon runs and optionally clean them up.
-
-Detects orphaned ``running`` rows whose child process has exited without
-updating the run status.  Runs at session start or on demand.
-
-Usage
------
-    python sweep_stale.py [--abandon-stale] [--json] [--max-age-minutes 60]
-"""
+"""Sweep stale Archon runs and optionally clean them up."""
 
 from __future__ import annotations
 
-from argparse import ArgumentParser
+from argparse import ArgumentParser, Namespace
 from datetime import datetime
 from pathlib import Path
+from typing import Any
 import sys
 
 from _run import ArchonClient, RunStatus
 from _utils import write_json
 
 
-DEFAULT_HANDOFF_DIR = "docs/archive/handoffs/hermes"
+DEFAULT_HANDOFF_DIR: str = "docs/archive/handoffs/hermes"
 
 
-def list_running_runs(client: ArchonClient) -> list[dict] | str:
-    """Return all runs currently in ``running`` status.
-
-    Returns a list of run stubs on success, or an error string.
-    """
+def list_running_runs(client: ArchonClient) -> list[dict[str, Any]] | str:
+    """Return all runs currently in ``running`` status."""
     return client.list_runs(status="running")
 
 
-def _handoff_artifact_path(root: Path, handoff_dir: str) -> Path:
-    now = datetime.now()
-    timestamp = now.strftime("%Y%m%d.%H%M%S")
+def handoff_artifact_path(root: Path, handoff_dir: str) -> Path:
+    now: datetime = datetime.now()
+    timestamp: str = now.strftime("%Y%m%d.%H%M%S")
     return root / handoff_dir / f"{timestamp}_stale-run-sweep.md"
 
 
-def _write_handoff(
+def write_handoff(
     path: Path,
-    results: list[dict],
+    results: list[dict[str, Any]],
 ) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    now = datetime.now().strftime("%Y-%m-%d %H:%M")
+    now: str = datetime.now().strftime("%Y-%m-%d %H:%M")
 
     rows: list[str] = []
-    for r in results:
-        abandoned = "yes" if r.get("abandoned") else "no"
-        stale = r.get("stale_reason", "")
-        wf = r.get("workflow_name", "?")
-        rows.append(f"| {r['run_id']} | {wf} | {stale} | {abandoned} |")
+    result: dict[str, Any]
+    for result in results:
+        abandoned: str = "yes" if result.get("abandoned") else "no"
+        stale: object = result.get("stale_reason", "")
+        workflow: object = result.get("workflow_name", "?")
+        rows.append(f"| {result['run_id']} | {workflow} | {stale} | {abandoned} |")
 
-    body = f"""Origin: projectkoios-bootstrap
+    body: str = f"""Origin: projectkoios-bootstrap
 Created: {now}
 From: archon-run-sweeper
 Status: completed
@@ -66,89 +57,69 @@ Kind: stale-run-sweep
     path.write_text(body, encoding="utf-8")
 
 
+def stale_entry_for_run(client: ArchonClient, stub: dict[str, Any], max_age_minutes: int, abandon: bool) -> dict[str, Any]:
+    run_id: str = str(stub.get("id", "?"))
+    workflow: str = str(stub.get("workflow_name", "?"))
+
+    run: RunStatus | str = client.fetch_run(run_id)
+    if isinstance(run, str):
+        return {
+            "run_id": run_id,
+            "workflow_name": workflow,
+            "error": run,
+            "stale": False,
+        }
+
+    reason: str | None = run.is_stale(max_age_minutes=max_age_minutes)
+    entry: dict[str, Any] = {
+        "run_id": run.run_id,
+        "workflow_name": run.workflow_name or workflow,
+        "status": run.status,
+        "stale": reason is not None,
+        "stale_reason": reason,
+    }
+
+    if reason and abandon:
+        err: str | None = client.abandon_run(run.run_id)
+        entry["abandoned"] = err is None
+        if err is not None:
+            entry["error"] = err
+    else:
+        entry["abandoned"] = False
+    return entry
+
+
 def sweep_stale(
     client: ArchonClient,
     max_age_minutes: int = 60,
     abandon: bool = False,
     handoff_path: Path | None = None,
-) -> list[dict]:
-    """Check all running runs for staleness.
-
-    Parameters
-    ----------
-    client:
-        ArchonCLI client.
-    max_age_minutes:
-        Maximum age in minutes before a PID-less run is considered stale.
-    abandon:
-        Whether to abandon stale runs automatically.
-    handoff_path:
-        If set, write a handoff artifact for abandoned runs.
-
-    Returns
-    -------
-    list[dict]
-        One dict per run checked, each with keys:
-        ``run_id``, ``status``, ``workflow_name``, ``stale``, ``stale_reason``,
-        ``abandoned``, ``error``.
-    """
-    stubs = list_running_runs(client)
+) -> list[dict[str, Any]]:
+    """Check all running runs for staleness."""
+    stubs: list[dict[str, Any]] | str = list_running_runs(client)
     if isinstance(stubs, str):
         return [{"error": stubs}]
 
-    results: list[dict] = []
-    needs_handoff = False
+    results: list[dict[str, Any]] = [
+        stale_entry_for_run(client, stub, max_age_minutes, abandon)
+        for stub in stubs
+    ]
 
-    for stub in stubs:
-        run_id = stub.get("id", "?")
-        workflow = stub.get("workflow_name", "?")
-
-        run = client.fetch_run(run_id)
-        if isinstance(run, str):
-            results.append({
-                "run_id": run_id,
-                "workflow_name": workflow,
-                "error": run,
-                "stale": False,
-            })
-            continue
-
-        reason = run.is_stale(max_age_minutes=max_age_minutes)
-        entry: dict = {
-            "run_id": run.run_id,
-            "workflow_name": run.workflow_name or workflow,
-            "status": run.status,
-            "stale": reason is not None,
-            "stale_reason": reason,
-        }
-
-        if reason and abandon:
-            err = client.abandon_run(run.run_id)
-            entry["abandoned"] = err is None
-            if err is None:
-                needs_handoff = True
-            else:
-                entry["error"] = err
-        else:
-            entry["abandoned"] = False
-
-        results.append(entry)
-
-    if needs_handoff and handoff_path:
-        abandoned = [r for r in results if r.get("abandoned")]
-        if abandoned:
-            _write_handoff(handoff_path, abandoned)
+    if handoff_path:
+        abandoned_results: list[dict[str, Any]] = [result for result in results if result.get("abandoned")]
+        if abandoned_results:
+            write_handoff(handoff_path, abandoned_results)
 
     return results
 
 
-def format_text(results: list[dict]) -> str:
+def format_text(results: list[dict[str, Any]]) -> str:
     """Render sweep results as human-readable text."""
     lines: list[str] = []
-    total = len(results)
-    stale = sum(1 for r in results if r.get("stale"))
-    abandoned = sum(1 for r in results if r.get("abandoned"))
-    errors = [r for r in results if r.get("error")]
+    total: int = len(results)
+    stale: int = sum(1 for result in results if result.get("stale"))
+    abandoned: int = sum(1 for result in results if result.get("abandoned"))
+    errors: list[dict[str, Any]] = [result for result in results if result.get("error")]
 
     lines.append(f"Runs checked: {total}")
     lines.append(f"Stale: {stale}")
@@ -157,70 +128,49 @@ def format_text(results: list[dict]) -> str:
         lines.append(f"Errors: {len(errors)}")
     lines.append("")
 
-    for r in results:
-        if r.get("error"):
-            lines.append(f"  ! {r['run_id']}: error — {r['error']}")
-        elif r.get("stale"):
-            lines.append(f"  ✗ {r['run_id']} ({r.get('workflow_name', '?')}): {r['stale_reason']}")
-            if r.get("abandoned"):
-                lines.append(f"    → abandoned")
+    result: dict[str, Any]
+    for result in results:
+        if result.get("error"):
+            lines.append(f"  ! {result['run_id']}: error — {result['error']}")
+        elif result.get("stale"):
+            lines.append(f"  ✗ {result['run_id']} ({result.get('workflow_name', '?')}): {result['stale_reason']}")
+            if result.get("abandoned"):
+                lines.append("    → abandoned")
         else:
-            lines.append(f"  ✓ {r['run_id']} ({r.get('workflow_name', '?')}): alive")
+            lines.append(f"  ✓ {result['run_id']} ({result.get('workflow_name', '?')}): alive")
 
     return "\n".join(lines)
 
 
 def build_parser() -> ArgumentParser:
-    p = ArgumentParser(description="Sweep stale Archon runs and optionally abandon them")
-    p.add_argument("--abandon-stale", action="store_true", help="Automatically abandon stale runs")
-    p.add_argument("--json", action="store_true", help="Output JSON")
-    p.add_argument(
+    parser: ArgumentParser = ArgumentParser(description="Sweep stale Archon runs and optionally abandon them")
+    parser.add_argument("--abandon-stale", action="store_true", help="Automatically abandon stale runs")
+    parser.add_argument("--json", action="store_true", help="Output JSON")
+    parser.add_argument(
         "--max-age-minutes",
         type=int,
         default=60,
         help="Max age in minutes for PID-less runs before considered stale (default: 60)",
     )
-    p.add_argument(
+    parser.add_argument(
         "--handoff-dir",
         default=DEFAULT_HANDOFF_DIR,
         help=f"Handoff artifact directory relative to repo root (default: {DEFAULT_HANDOFF_DIR})",
     )
-    p.add_argument(
+    parser.add_argument(
         "--root",
         type=Path,
         default=Path.cwd(),
         help="Repository root (default: cwd)",
     )
-    return p
+    return parser
 
 
-def main() -> None:
-    args = build_parser().parse_args()
-    root = args.root.resolve()
-
-    handoff_path = _handoff_artifact_path(root, args.handoff_dir)
-
-    client = ArchonClient()
-    results = sweep_stale(
-        client,
-        max_age_minutes=args.max_age_minutes,
-        abandon=args.abandon_stale,
-        handoff_path=handoff_path,
-    )
-
-    if not results:
-        output = {"checked": 0, "stale": 0, "abandoned": 0, "results": []}
-        if args.json:
-            write_json(output)
-        else:
-            print(format_text([]))
-        sys.exit(0)
-
-    stale = sum(1 for r in results if r.get("stale"))
-    abandoned = sum(1 for r in results if r.get("abandoned"))
-    errors = [r for r in results if r.get("error")]
-
-    output = {
+def summary_output(results: list[dict[str, Any]]) -> dict[str, Any]:
+    stale: int = sum(1 for result in results if result.get("stale"))
+    abandoned: int = sum(1 for result in results if result.get("abandoned"))
+    errors: list[dict[str, Any]] = [result for result in results if result.get("error")]
+    return {
         "checked": len(results),
         "stale": stale,
         "abandoned": abandoned,
@@ -228,12 +178,28 @@ def main() -> None:
         "results": results,
     }
 
+
+def main() -> None:
+    args: Namespace = build_parser().parse_args()
+    root: Path = args.root.resolve()
+
+    handoff_path: Path = handoff_artifact_path(root, args.handoff_dir)
+
+    client: ArchonClient = ArchonClient()
+    results: list[dict[str, Any]] = sweep_stale(
+        client,
+        max_age_minutes=args.max_age_minutes,
+        abandon=args.abandon_stale,
+        handoff_path=handoff_path,
+    )
+
+    output: dict[str, Any] = summary_output(results)
     if args.json:
         write_json(output)
     else:
         print(format_text(results))
 
-    sys.exit(1 if stale else 0)
+    sys.exit(1 if output["stale"] else 0)
 
 
 if __name__ == "__main__":

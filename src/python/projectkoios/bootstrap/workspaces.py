@@ -17,7 +17,7 @@ class WorkspaceTemplate:
     instructions: tuple[str, ...]
 
     def render(self) -> str:
-        lines = [
+        lines: list[str] = [
             f"# {self.title}",
             "",
             self.role_summary,
@@ -116,23 +116,24 @@ def workspace_root(root: Path | None = None) -> Path:
 
 
 def ensure_workspace(root: Path, agent: str, *, force: bool = False) -> list[Path]:
-    workspace = root / "workspaces" / agent
+    workspace: Path = root / "workspaces" / agent
     workspace.mkdir(parents=True, exist_ok=True)
     created: list[Path] = []
 
-    for rel in (
+    workspace_dirs: tuple[str, ...] = (
         "sessions",
         "working",
         "scratch",
         "decisions",
-    ):
-        path = workspace / rel
+    )
+    for rel in workspace_dirs:
+        path: Path = workspace / rel
         path.mkdir(parents=True, exist_ok=True)
         created.append(path)
 
-    state = workspace / "state.md"
-    active = workspace / "active.md"
-    agent_md = workspace / "AGENTS.md"
+    state: Path = workspace / "state.md"
+    active: Path = workspace / "active.md"
+    agent_md: Path = workspace / "AGENTS.md"
 
     if force or not state.exists():
         state.write_text(
@@ -159,7 +160,7 @@ def ensure_workspace(root: Path, agent: str, *, force: bool = False) -> list[Pat
         )
         created.append(active)
 
-    template = TEMPLATES[agent]
+    template: WorkspaceTemplate = TEMPLATES[agent]
     if force or not agent_md.exists():
         agent_md.write_text(template.render(), encoding="utf-8")
         created.append(agent_md)
@@ -173,8 +174,8 @@ def ensure_workspaces(
     agents: Iterable[str] = (),
     force: bool = False,
 ) -> list[Path]:
-    base = workspace_root(root)
-    selected = tuple(agents) if agents else CANONICAL_WORKSPACES
+    base: Path = workspace_root(root)
+    selected: tuple[str, ...] = tuple(agents) if agents else CANONICAL_WORKSPACES
     created: list[Path] = []
     for agent in selected:
         created.extend(ensure_workspace(base, agent, force=force))

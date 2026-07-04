@@ -4,6 +4,7 @@ from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
 
+from projectkoios.bootstrap.harness.data.artifact import HandoffArtifact
 from projectkoios.bootstrap.harness.data.violation import Violation
 from projectkoios.bootstrap.harness.handoffs.evaluator import (
     HandoffEvaluator,
@@ -12,7 +13,7 @@ from projectkoios.bootstrap.harness.handoffs.evaluator import (
 from projectkoios.bootstrap.harness.handoffs.parser import HandoffParser
 
 
-_HANDOFFS_PREFIX = "docs/archive/handoffs/"
+HANDOFFS_PREFIX: str = "docs/archive/handoffs/"
 
 
 @dataclass(frozen=True)
@@ -68,24 +69,26 @@ class TopicsView:
     skipped: list[SkippedFile] = field(default_factory=list)
 
 
-def _message_id(source_path: str) -> str:
-    if source_path.startswith(_HANDOFFS_PREFIX):
-        return source_path[len(_HANDOFFS_PREFIX):]
+def message_id(source_path: str) -> str:
+    if source_path.startswith(HANDOFFS_PREFIX):
+        return source_path[len(HANDOFFS_PREFIX):]
     return source_path
 
 
-def _infer_place(source_path: str) -> str:
+def infer_place(source_path: str) -> str:
+    place_name: str
+    rel_dir: str
     for place_name, rel_dir in PLACE_DIRECTORIES.items():
         if source_path.startswith(rel_dir):
             return place_name
     return "unknown"
 
 
-def _artifact_to_message(source_path: str, artifact) -> Message:
+def artifact_to_message(source_path: str, artifact: HandoffArtifact) -> Message:
     return Message(
-        message_id=_message_id(source_path),
+        message_id=message_id(source_path),
         source_path=source_path,
-        place=_infer_place(source_path),
+        place=infer_place(source_path),
         kind=artifact.kind,
         origin=artifact.origin,
         sender=artifact.sender,
@@ -96,9 +99,9 @@ def _artifact_to_message(source_path: str, artifact) -> Message:
     )
 
 
-def _artifact_to_transition(message_id: str, source_path: str) -> Transition:
+def artifact_to_transition(message_id_value: str, source_path: str) -> Transition:
     return Transition(
-        message_id=message_id,
+        message_id=message_id_value,
         evidence={
             "source_path": source_path,
             "inferred_from": "file_existence_and_headers",
@@ -106,11 +109,11 @@ def _artifact_to_transition(message_id: str, source_path: str) -> Transition:
     )
 
 
-def _violation_to_guard_violation(
+def violation_to_guard_violation(
     violation: Violation,
     path_to_message_id: dict[str, str],
 ) -> GuardViolation:
-    source_path = str(violation.path.as_posix())
+    source_path: str = str(violation.path.as_posix())
     return GuardViolation(
         code=violation.code.value,
         reason=violation.reason,
@@ -119,62 +122,76 @@ def _violation_to_guard_violation(
     )
 
 
-def build_topics_view(
-    repo_root: Path,
-    include_timestamp: bool = False,
-) -> TopicsView:
-    root = repo_root.resolve()
-    parser = HandoffParser()
+def build_topics_places(messages: list[Message]) -> Topics:
+    places: dict[str, list[str]] = {}
+    msg: Message
+    for msg in messages:
+        places.setdefault(msg.place, []).append(msg.message_id)
+    return Topics(places=places)
 
+
+def collect_messages(root: Path, parser: HandoffParser) -> tuple[list[Message], list[Transition], list[SkippedFile], dict[str, str]]:
     messages: list[Message] = []
     transitions: list[Transition] = []
     skipped: list[SkippedFile] = []
     path_to_message_id: dict[str, str] = {}
 
+    place_name: str
+    rel_dir: str
     for place_name, rel_dir in PLACE_DIRECTORIES.items():
-        dir_path = root / rel_dir
+        dir_path: Path = root / rel_dir
         if not dir_path.exists():
             continue
-        for f in sorted(dir_path.iterdir()):
-            if not f.is_file() or f.suffix != ".md":
+        file_path: Path
+        for file_path in sorted(dir_path.iterdir()):
+            if not file_path.is_file() or file_path.suffix != ".md":
                 continue
-            source_path = str(f.relative_to(root).as_posix())
-            artifact = parser.parse_file(f)
+            source_path: str = str(file_path.relative_to(root).as_posix())
+            artifact: HandoffArtifact | None = parser.parse_file(file_path)
             if artifact is None:
                 skipped.append(SkippedFile(
                     source_path=source_path,
                     reason="no parseable handoff headers",
                 ))
                 continue
-            msg = _artifact_to_message(source_path, artifact)
+            msg: Message = artifact_to_message(source_path, artifact)
             messages.append(msg)
-            transitions.append(_artifact_to_transition(msg.message_id, source_path))
+            transitions.append(artifact_to_transition(msg.message_id, source_path))
             path_to_message_id[source_path] = msg.message_id
+    return messages, transitions, skipped, path_to_message_id
 
-    messages.sort(key=lambda m: m.message_id)
-    transitions.sort(key=lambda t: t.message_id)
 
-    places: dict[str, list[str]] = {}
-    for msg in messages:
-        places.setdefault(msg.place, []).append(msg.message_id)
-    topics = Topics(places=places)
+def build_topics_view(
+    repo_root: Path,
+    include_timestamp: bool = False,
+) -> TopicsView:
+    root: Path = repo_root.resolve()
+    parser: HandoffParser = HandoffParser()
 
-    evaluator = HandoffEvaluator(repo_root=root)
-    violations = evaluator.evaluate()
-    guard_violations = [
-        _violation_to_guard_violation(v, path_to_message_id)
-        for v in violations
+    collected: tuple[list[Message], list[Transition], list[SkippedFile], dict[str, str]] = collect_messages(root, parser)
+    messages: list[Message] = collected[0]
+    transitions: list[Transition] = collected[1]
+    skipped: list[SkippedFile] = collected[2]
+    path_to_message_id: dict[str, str] = collected[3]
+
+    messages.sort(key=lambda msg: msg.message_id)
+    transitions.sort(key=lambda transition: transition.message_id)
+
+    evaluator: HandoffEvaluator = HandoffEvaluator(repo_root=root)
+    violations: list[Violation] = evaluator.evaluate()
+    guard_violations: list[GuardViolation] = [
+        violation_to_guard_violation(violation, path_to_message_id)
+        for violation in violations
     ]
-    guard_violations.sort(key=lambda g: g.code)
+    guard_violations.sort(key=lambda guard_violation: guard_violation.code)
 
+    generated_at: str | None = datetime.now(timezone.utc).isoformat() if include_timestamp else None
     return TopicsView(
         repo_root=str(root),
-        generated_at=(
-            datetime.now(timezone.utc).isoformat() if include_timestamp else None
-        ),
+        generated_at=generated_at,
         messages=messages,
         transitions=transitions,
-        topics=topics,
+        topics=build_topics_places(messages),
         guard_violations=guard_violations,
         skipped=skipped,
     )

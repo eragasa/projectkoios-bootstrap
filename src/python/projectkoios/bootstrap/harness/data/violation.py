@@ -35,7 +35,7 @@ class Violation:
 
     def to_markdown_block(self) -> str:
         """Format this violation as a Markdown bullet list."""
-        lines = [f"- code: {self.code.value}"]
+        lines: list[str] = [f"- code: {self.code.value}"]
         lines.append(f"  actor: {self.actor}")
         if self.required_owner:
             lines.append(f"  required_owner: {self.required_owner}")

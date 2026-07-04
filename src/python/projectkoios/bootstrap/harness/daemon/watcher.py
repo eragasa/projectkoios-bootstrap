@@ -1,17 +1,11 @@
-"""Filesystem watcher using stdlib asyncio polling.
-
-Polls ``os.scandir`` / ``os.stat`` mtimes on a debounce interval. No native
-FS event dependency (e.g. ``watchdog``) — stdlib only, cross-platform.
-
-The watcher compares the current scan against the last scan and emits changed
-paths. The scheduler (``scheduler.py``) debounces and coalesces these events.
-"""
+"""Filesystem watcher using stdlib asyncio polling."""
 
 from __future__ import annotations
 
 import asyncio
-import os
+from collections.abc import Awaitable, Callable
 from dataclasses import dataclass, field
+import os
 from pathlib import Path
 
 from projectkoios.bootstrap.harness.daemon.exclusions import ExclusionPolicy
@@ -33,16 +27,14 @@ class WatchEvent:
 
 
 def scan_mtimes(repo_root: Path, policy: ExclusionPolicy) -> FileSnapshot:
-    """Walk *repo_root* and record mtimes for eligible files.
-
-    Excluded paths are skipped entirely (no stat call). Symbolic links are
-    followed only for the final path; directories are not descended into when
-    their name matches a built-in exclude.
-    """
+    """Walk *repo_root* and record mtimes for eligible files."""
     mtimes: dict[str, float] = {}
-    root = repo_root.resolve()
+    root: Path = repo_root.resolve()
+    dirpath: str
+    dirnames: list[str]
+    filenames: list[str]
     for dirpath, dirnames, filenames in os.walk(root, topdown=True):
-        dir_path = Path(dirpath)
+        dir_path: Path = Path(dirpath)
         try:
             dir_path.relative_to(root)
         except ValueError:
@@ -50,22 +42,21 @@ def scan_mtimes(repo_root: Path, policy: ExclusionPolicy) -> FileSnapshot:
         if policy.is_excluded(dir_path) and dir_path != root:
             dirnames[:] = []
             continue
-        pruned: list[str] = []
-        for d in dirnames:
-            if policy.is_excluded(dir_path / d):
-                pruned.append(d)
-        for d in pruned:
-            dirnames.remove(d)
-        for fname in filenames:
-            fpath = dir_path / fname
-            if policy.is_excluded(fpath):
+        pruned: list[str] = [dirname for dirname in dirnames if policy.is_excluded(dir_path / dirname)]
+        dirname: str
+        for dirname in pruned:
+            dirnames.remove(dirname)
+        filename: str
+        for filename in filenames:
+            file_path: Path = dir_path / filename
+            if policy.is_excluded(file_path):
                 continue
             try:
-                st = fpath.stat()
+                stat_result: os.stat_result = file_path.stat()
             except OSError:
                 continue
-            rel_posix = fpath.relative_to(root).as_posix()
-            mtimes[rel_posix] = st.st_mtime
+            rel_posix: str = file_path.relative_to(root).as_posix()
+            mtimes[rel_posix] = stat_result.st_mtime
     return FileSnapshot(mtimes=mtimes)
 
 
@@ -74,43 +65,37 @@ def diff_snapshots(
     curr: FileSnapshot,
     repo_root: Path,
 ) -> list[WatchEvent]:
-    """Return the set of changed paths between two snapshots.
-
-    A change is a new file, a removed file, or a file whose mtime changed.
-    """
+    """Return the set of changed paths between two snapshots."""
     events: list[WatchEvent] = []
-    prev_m = prev.mtimes
-    curr_m = curr.mtimes
-    for rel, mtime in curr_m.items():
-        if rel not in prev_m:
-            events.append(WatchEvent(path=repo_root / rel, kind="added"))
-        elif prev_m[rel] != mtime:
-            events.append(WatchEvent(path=repo_root / rel, kind="modified"))
-    for rel in prev_m:
-        if rel not in curr_m:
-            events.append(WatchEvent(path=repo_root / rel, kind="removed"))
+    prev_mtimes: dict[str, float] = prev.mtimes
+    curr_mtimes: dict[str, float] = curr.mtimes
+    rel_path: str
+    mtime: float
+    for rel_path, mtime in curr_mtimes.items():
+        if rel_path not in prev_mtimes:
+            events.append(WatchEvent(path=repo_root / rel_path, kind="added"))
+        elif prev_mtimes[rel_path] != mtime:
+            events.append(WatchEvent(path=repo_root / rel_path, kind="modified"))
+    for rel_path in prev_mtimes:
+        if rel_path not in curr_mtimes:
+            events.append(WatchEvent(path=repo_root / rel_path, kind="removed"))
     return events
 
 
 async def watch(
     repo_root: Path,
     policy: ExclusionPolicy,
-    on_events,
+    on_events: Callable[[list[WatchEvent]], Awaitable[None]],
     *,
     poll_interval: float = 2.0,
     stop_event: asyncio.Event | None = None,
 ) -> None:
-    """Poll *repo_root* and call *on_events* with detected changes.
-
-    Runs until *stop_event* is set. Each poll cycle scans mtimes, diffs
-    against the previous snapshot, and invokes *on_events* with the list of
-    ``WatchEvent`` objects (which may be empty).
-    """
-    prev = scan_mtimes(repo_root, policy)
+    """Poll *repo_root* and call *on_events* with detected changes."""
+    previous_snapshots: list[FileSnapshot] = [scan_mtimes(repo_root, policy)]
     while stop_event is None or not stop_event.is_set():
         await asyncio.sleep(poll_interval)
-        curr = scan_mtimes(repo_root, policy)
-        events = diff_snapshots(prev, curr, repo_root)
+        curr_snapshot: FileSnapshot = scan_mtimes(repo_root, policy)
+        events: list[WatchEvent] = diff_snapshots(previous_snapshots[0], curr_snapshot, repo_root)
         if events:
             await on_events(events)
-        prev = curr
+        previous_snapshots[0] = curr_snapshot

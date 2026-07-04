@@ -78,7 +78,7 @@ CANONICAL_FILES: dict[str, tuple[str, ...]] = {
     ),
 }
 
-REFERENCE_ROOTS = (
+REFERENCE_ROOTS: tuple[str, ...] = (
     "architecture",
     "doc",
     "maps",
@@ -91,24 +91,27 @@ REFERENCE_ROOTS = (
     "src/python",
 )
 
-LOCAL_LINK_PATTERN = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
-INLINE_CODE_PATTERN = re.compile(r"`([^`\n]+)`")
-_PATH_ROOT_PATTERN = "|".join(re.escape(r) for r in REFERENCE_ROOTS)
-PATH_TOKEN_PATTERN = re.compile(
-    r"(?:\.\./|\.\/)?(?:" + _PATH_ROOT_PATTERN + r")/[A-Za-z0-9._<>{}/~*-]+"
+LOCAL_LINK_PATTERN: re.Pattern[str] = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
+INLINE_CODE_PATTERN: re.Pattern[str] = re.compile(r"`([^`\n]+)`")
+PATH_ROOT_PATTERN: str = "|".join(re.escape(reference_root) for reference_root in REFERENCE_ROOTS)
+PATH_TOKEN_PATTERN: re.Pattern[str] = re.compile(
+    r"(?:\.\./|\.\/)?(?:" + PATH_ROOT_PATTERN + r")/[A-Za-z0-9._<>{}/~*-]+"
 )
+EXCLUDED_FILES: frozenset[str] = frozenset({
+    "opencode/checklists/multi-repo-execution-readiness.md",
+})
 
 
 def validate_harnesses(root: Path, *, strict: bool = False) -> ValidationResult:
-    root = root.resolve()
+    resolved_root: Path = root.resolve()
     findings: list[Finding] = []
 
-    _check_canonical_files(root, findings)
-    _check_references(root, findings)
-    _check_opencode_references(root, findings)
-    _check_bootstrap_assumptions(root, findings)
-    _check_archon_workflows(root, findings)
-    _check_global_examples(root, findings)
+    check_canonical_files(resolved_root, findings)
+    check_references(resolved_root, findings)
+    check_opencode_references(resolved_root, findings)
+    check_bootstrap_assumptions(resolved_root, findings)
+    check_archon_workflows(resolved_root, findings)
+    check_global_examples(resolved_root, findings)
 
     findings.append(
         Finding(
@@ -119,16 +122,19 @@ def validate_harnesses(root: Path, *, strict: bool = False) -> ValidationResult:
     return ValidationResult(tuple(findings))
 
 
-def _check_canonical_files(root: Path, findings: list[Finding]) -> None:
+def check_canonical_files(root: Path, findings: list[Finding]) -> None:
+    rel_path: str
+    required_headings: tuple[str, ...]
     for rel_path, required_headings in CANONICAL_FILES.items():
-        path = root / rel_path
+        path: Path = root / rel_path
         if not path.exists():
             findings.append(
                 Finding(Severity.ERROR, "missing canonical harness file", rel_path)
             )
             continue
 
-        text = path.read_text(encoding="utf-8")
+        text: str = path.read_text(encoding="utf-8")
+        heading: str
         for heading in required_headings:
             if heading not in text:
                 findings.append(
@@ -140,17 +146,20 @@ def _check_canonical_files(root: Path, findings: list[Finding]) -> None:
                 )
 
 
-def _check_references(root: Path, findings: list[Finding]) -> None:
-    for rel_path in _in_scope_markdown_files(root):
-        path = root / rel_path
+def check_references(root: Path, findings: list[Finding]) -> None:
+    rel_path: str
+    for rel_path in in_scope_markdown_files(root):
+        path: Path = root / rel_path
         if not path.exists():
             continue
-        text = path.read_text(encoding="utf-8")
-        for raw_ref in sorted(_extract_repo_refs(text)):
-            resolved = _resolve_reference(root, rel_path, raw_ref)
+        text: str = path.read_text(encoding="utf-8")
+        raw_ref: str
+        for raw_ref in sorted(extract_repo_refs(text)):
+            resolved: tuple[str, Path] | None = resolve_reference(root, rel_path, raw_ref)
             if resolved is None:
                 continue
-            display, target = resolved
+            display: str = resolved[0]
+            target: Path = resolved[1]
             if not target.exists():
                 findings.append(
                     Finding(
@@ -161,31 +170,33 @@ def _check_references(root: Path, findings: list[Finding]) -> None:
                 )
 
 
-def _check_opencode_references(root: Path, findings: list[Finding]) -> None:
-    rel_path = "opencode/AGENTS.md"
-    path = root / rel_path
+def check_opencode_references(root: Path, findings: list[Finding]) -> None:
+    rel_path: str = "opencode/AGENTS.md"
+    path: Path = root / rel_path
     if not path.exists():
         return
 
-    text = path.read_text(encoding="utf-8")
-    for ref in sorted(set(re.findall(r"`(rules/[^`]+\.md)`", text))):
-        if not (root / "opencode" / ref).exists():
+    text: str = path.read_text(encoding="utf-8")
+    rule_ref: str
+    for rule_ref in sorted(set(re.findall(r"`(rules/[^`]+\.md)`", text))):
+        if not (root / "opencode" / rule_ref).exists():
             findings.append(
-                Finding(Severity.ERROR, f"missing opencode rule reference {ref!r}", rel_path)
+                Finding(Severity.ERROR, f"missing opencode rule reference {rule_ref!r}", rel_path)
             )
-    for ref in sorted(set(re.findall(r"`(checklists/[^`]+\.md)`", text))):
-        if not (root / "opencode" / ref).exists():
+    checklist_ref: str
+    for checklist_ref in sorted(set(re.findall(r"`(checklists/[^`]+\.md)`", text))):
+        if not (root / "opencode" / checklist_ref).exists():
             findings.append(
                 Finding(
                     Severity.ERROR,
-                    f"missing opencode checklist reference {ref!r}",
+                    f"missing opencode checklist reference {checklist_ref!r}",
                     rel_path,
                 )
             )
 
 
-def _check_bootstrap_assumptions(root: Path, findings: list[Finding]) -> None:
-    required_paths = (
+def check_bootstrap_assumptions(root: Path, findings: list[Finding]) -> None:
+    required_paths: tuple[str, ...] = (
         "agents/global",
         "archon/workflows",
         "archon/skills/.archon/config.yaml",
@@ -195,6 +206,7 @@ def _check_bootstrap_assumptions(root: Path, findings: list[Finding]) -> None:
         "src/python/projectkoios/bootstrap/commands/install.py",
         "src/python/projectkoios/bootstrap/models.py",
     )
+    rel_path: str
     for rel_path in required_paths:
         if not (root / rel_path).exists():
             findings.append(
@@ -206,9 +218,9 @@ def _check_bootstrap_assumptions(root: Path, findings: list[Finding]) -> None:
             )
 
 
-def _check_archon_workflows(root: Path, findings: list[Finding]) -> None:
-    rel_dir = "archon/workflows"
-    workflows_dir = root / rel_dir
+def check_archon_workflows(root: Path, findings: list[Finding]) -> None:
+    rel_dir: str = "archon/workflows"
+    workflows_dir: Path = root / rel_dir
     if not workflows_dir.exists():
         findings.append(
             Finding(
@@ -228,24 +240,25 @@ def _check_archon_workflows(root: Path, findings: list[Finding]) -> None:
             )
         )
 
-    expected_workflows = (
+    expected_workflows: tuple[str, ...] = (
         "archon-piv-loop.yaml",
         "archon-architect.yaml",
         "create-adr.yaml",
         "design-review.yaml",
         "plan-feature.yaml",
     )
+    workflow: str
     for workflow in expected_workflows:
-        rel_path = str(PurePosixPath(rel_dir) / workflow)
+        rel_path: str = str(PurePosixPath(rel_dir) / workflow)
         if not (root / rel_path).exists():
             findings.append(
                 Finding(Severity.ERROR, "missing repo-local Archon workflow", rel_path)
             )
 
 
-def _check_global_examples(root: Path, findings: list[Finding]) -> None:
+def check_global_examples(root: Path, findings: list[Finding]) -> None:
     for runtime in RUNTIMES:
-        runtime_dir = root / "agents" / "global" / runtime.name
+        runtime_dir: Path = root / "agents" / "global" / runtime.name
         if not runtime_dir.exists():
             findings.append(
                 Finding(
@@ -263,18 +276,19 @@ def _check_global_examples(root: Path, findings: list[Finding]) -> None:
                     str(PurePosixPath("agents/global") / runtime.name),
                 )
             )
-    _check_skills(root, findings)
+    check_skills(root, findings)
 
 
-def _check_skills(root: Path, findings: list[Finding]) -> None:
+def check_skills(root: Path, findings: list[Finding]) -> None:
     for runtime in RUNTIMES:
-        skills_dir = root / "agents" / "global" / runtime.name / "skills"
+        skills_dir: Path = root / "agents" / "global" / runtime.name / "skills"
         if not skills_dir.exists():
             continue
+        skill_dir: Path
         for skill_dir in skills_dir.iterdir():
             if not skill_dir.is_dir():
                 continue
-            skill_md = skill_dir / "SKILL.md"
+            skill_md: Path = skill_dir / "SKILL.md"
             if not skill_md.exists():
                 findings.append(
                     Finding(
@@ -285,38 +299,39 @@ def _check_skills(root: Path, findings: list[Finding]) -> None:
                 )
 
 
-_EXCLUDED_FILES: frozenset[str] = frozenset({
-    "opencode/checklists/multi-repo-execution-readiness.md",
-})
-
-
-def _in_scope_markdown_files(root: Path) -> tuple[str, ...]:
+def in_scope_markdown_files(root: Path) -> tuple[str, ...]:
     files: set[str] = set(CANONICAL_FILES)
-    for pattern in (
+    patterns: tuple[str, ...] = (
         "opencode/rules/*.md",
         "opencode/checklists/*.md",
-    ):
+    )
+    pattern: str
+    for pattern in patterns:
+        path: Path
         for path in root.glob(pattern):
-            rel = path.relative_to(root).as_posix()
-            if path.is_file() and rel not in _EXCLUDED_FILES:
+            rel: str = path.relative_to(root).as_posix()
+            if path.is_file() and rel not in EXCLUDED_FILES:
                 files.add(rel)
     return tuple(sorted(files))
 
 
-def _extract_repo_refs(text: str) -> set[str]:
+def extract_repo_refs(text: str) -> set[str]:
     refs: set[str] = set()
-    for match in LOCAL_LINK_PATTERN.finditer(text):
-        refs.add(_strip_fragment(match.group(1).strip()))
-    for match in INLINE_CODE_PATTERN.finditer(text):
-        token = match.group(1).strip()
-        if _looks_like_path(token):
-            refs.add(_strip_fragment(token))
+    local_match: re.Match[str]
+    for local_match in LOCAL_LINK_PATTERN.finditer(text):
+        refs.add(strip_fragment(local_match.group(1).strip()))
+    inline_match: re.Match[str]
+    for inline_match in INLINE_CODE_PATTERN.finditer(text):
+        token: str = inline_match.group(1).strip()
+        if looks_like_path(token):
+            refs.add(strip_fragment(token))
+        path_match: re.Match[str]
         for path_match in PATH_TOKEN_PATTERN.finditer(token):
-            refs.add(_strip_fragment(path_match.group(0)))
-    return {ref for ref in refs if _should_validate_reference(ref)}
+            refs.add(strip_fragment(path_match.group(0)))
+    return {ref for ref in refs if should_validate_reference(ref)}
 
 
-def _looks_like_path(token: str) -> bool:
+def looks_like_path(token: str) -> bool:
     return (
         "/" in token
         and not any(part.isspace() for part in token.split("/"))
@@ -324,7 +339,7 @@ def _looks_like_path(token: str) -> bool:
     )
 
 
-def _should_validate_reference(ref: str) -> bool:
+def should_validate_reference(ref: str) -> bool:
     if not ref:
         return False
     if ref.startswith(("http://", "https://", "mailto:", "#", "~", "$", "<")):
@@ -342,32 +357,33 @@ def _should_validate_reference(ref: str) -> bool:
     return "/" in ref or ref.endswith(".md")
 
 
-def _strip_fragment(ref: str) -> str:
+def strip_fragment(ref: str) -> str:
     return ref.split("#", 1)[0].strip()
 
 
-def _resolve_reference(
+def try_resolve_reference_base(root: Path, ref_path: PurePosixPath, base: Path) -> Path | None:
+    try:
+        target: Path = (base / ref_path).resolve()
+        target.relative_to(root)
+        return target
+    except (ValueError, OSError):
+        return None
+
+
+def resolve_reference(
     root: Path, source_rel_path: str, ref: str
 ) -> tuple[str, Path] | None:
-    ref_path = PurePosixPath(ref)
+    ref_path: PurePosixPath = PurePosixPath(ref)
     if ref.startswith("/"):
         return None
-    source_dir = (root / source_rel_path).parent
+    source_dir: Path = (root / source_rel_path).parent
 
-    def _try_resolve(base: Path) -> Path | None:
-        try:
-            target = (base / ref_path).resolve()
-            target.relative_to(root)
-            return target
-        except (ValueError, OSError):
-            return None
+    source_target: Path | None = try_resolve_reference_base(root, ref_path, source_dir)
+    if source_target is not None and source_target.exists():
+        return ref, source_target
 
-    target = _try_resolve(source_dir)
-    if target is not None and target.exists():
-        return ref, target
-
-    target = _try_resolve(root)
-    if target is not None and target.exists():
-        return ref, target
+    root_target: Path | None = try_resolve_reference_base(root, ref_path, root)
+    if root_target is not None and root_target.exists():
+        return ref, root_target
 
     return ref, root / ref_path

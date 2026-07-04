@@ -5,7 +5,7 @@ from pathlib import Path
 import sys
 
 from projectkoios.bootstrap.models import REPO_ROOT
-from projectkoios.bootstrap.validation.harnesses import Severity, validate_harnesses
+from projectkoios.bootstrap.validation.harnesses import Severity, ValidationResult, validate_harnesses
 
 
 def register(subparsers) -> None:
@@ -28,10 +28,10 @@ def register(subparsers) -> None:
 
 
 def run(args: Namespace) -> None:
-    result = validate_harnesses(args.root, strict=args.strict)
+    result: ValidationResult = validate_harnesses(args.root, strict=args.strict)
 
     for finding in result.findings:
-        location = f"{finding.path}: " if finding.path else ""
+        location: str = f"{finding.path}: " if finding.path else ""
         print(f"{finding.severity.value}: {location}{finding.message}")
 
     print(

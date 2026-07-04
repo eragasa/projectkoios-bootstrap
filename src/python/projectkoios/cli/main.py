@@ -1,28 +1,29 @@
 from __future__ import annotations
 
 import argparse
+from argparse import Namespace
 
 from projectkoios.bootstrap.commands import handoff, harnesses, ingestion, init, install, validate_harnesses, workspaces
 from projectkoios.cli import koios
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(prog="projectkoios", description="Project Koios bootstrap CLI")
-    subparsers = parser.add_subparsers(dest="command")
+    parser: argparse.ArgumentParser = argparse.ArgumentParser(prog="projectkoios", description="Project Koios bootstrap CLI")
+    subparsers: argparse._SubParsersAction[argparse.ArgumentParser] = parser.add_subparsers(dest="command")
     subparsers.required = True
 
-    boot = subparsers.add_parser("bootstrap", help="Bootstrap commands")
-    boot_sub = boot.add_subparsers(dest="action")
-    boot_sub.required = True
+    bootstrap_parser: argparse.ArgumentParser = subparsers.add_parser("bootstrap", help="Bootstrap commands")
+    bootstrap_subparsers: argparse._SubParsersAction[argparse.ArgumentParser] = bootstrap_parser.add_subparsers(dest="action")
+    bootstrap_subparsers.required = True
 
-    handoff.register(boot_sub)
-    init.register(boot_sub)
-    install.register(boot_sub)
-    validate_harnesses.register(boot_sub)
-    workspaces.register(boot_sub)
+    handoff.register(bootstrap_subparsers)
+    init.register(bootstrap_subparsers)
+    install.register(bootstrap_subparsers)
+    validate_harnesses.register(bootstrap_subparsers)
+    workspaces.register(bootstrap_subparsers)
     harnesses.register(subparsers)
     ingestion.register(subparsers)
     koios.register(subparsers)
 
-    args = parser.parse_args()
+    args: Namespace = parser.parse_args()
     args.func(args)

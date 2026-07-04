@@ -1,4 +1,4 @@
-from projectkoios.ingestors.answering import AnswerComposer, AnswerFormat, Answer
+from projectkoios.ingestors.answers import AnswerComposer, AnswerFormat, Answer
 from projectkoios.ingestors.app import App, ValidationReport
 from projectkoios.ingestors.backends import (
     BackendAdapter,

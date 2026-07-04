@@ -1,24 +1,21 @@
-"""Daemon orchestrator — runs the activity sequence and the watch loop.
-
-Ties together the CPN ActivityObjects (InitialFullBuild, GenerateChunkCards,
-PublishSnapshot) for a single run cycle, then drives the watch loop
-(WatchFilesystem, ScheduleUpdate, RunGraphifyRefresh, ...) when running as
-a background service.
-
-Also implements the safety gate: detects unexpected source-tree changes
-caused by its own run by checking ``git status --short`` before and after.
-"""
+"""Daemon orchestrator — runs the activity sequence and the watch loop."""
 
 from __future__ import annotations
 
 import asyncio
-import subprocess
-import uuid
+from collections.abc import Sequence
+from dataclasses import replace
 from datetime import datetime, timezone
 from pathlib import Path
+import subprocess
+import uuid
 
 from projectkoios.bootstrap.harness.daemon.activities import (
     DaemonContext,
+    GenerateChunkCards,
+    InitialFullBuild,
+    PublishDegradedSnapshot,
+    PublishSnapshot,
     build_token,
 )
 from projectkoios.bootstrap.harness.daemon.data import (
@@ -37,47 +34,50 @@ from projectkoios.bootstrap.harness.daemon.watcher import (
 )
 
 
-def _now_iso() -> str:
+GIT_STATUS_TIMEOUT_SECONDS: int = 15
+DAEMON_VERSION: str = "0.1.0"
+
+
+def now_iso() -> str:
+    """Return the current UTC timestamp as an ISO string."""
     return datetime.now(timezone.utc).isoformat()
 
 
-def _new_run_id() -> str:
-    return datetime.now(timezone.utc).strftime("%Y%m%d%H%M%S") + "-" + uuid.uuid4().hex[:8]
+def new_run_id() -> str:
+    """Create a daemon run identifier."""
+    timestamp: str = datetime.now(timezone.utc).strftime("%Y%m%d%H%M%S")
+    suffix: str = uuid.uuid4().hex[:8]
+    return timestamp + "-" + suffix
 
 
-def _git_status_short(repo_root: Path) -> str:
+def git_status_short(repo_root: Path) -> str:
     """Return ``git status --short`` output, or empty string if git fails."""
     try:
-        r = subprocess.run(
+        result: subprocess.CompletedProcess[str] = subprocess.run(
             ["git", "status", "--short"],
             capture_output=True,
             text=True,
             cwd=str(repo_root),
-            timeout=15,
+            timeout=GIT_STATUS_TIMEOUT_SECONDS,
         )
-        if r.returncode == 0:
-            return r.stdout
+        if result.returncode == 0:
+            return result.stdout
     except (subprocess.SubprocessError, OSError):
-        pass
+        return ""
     return ""
 
 
-def _check_source_tree_safety(repo_root: Path, before: str, after: str) -> list[str]:
-    """Detect unexpected source-tree changes caused by the daemon's own run.
-
-    Returns a list of warning strings. The daemon is expected to only read
-    the source tree and write to Hermes-local runtime state outside the repo.
-    Any new untracked or modified files that appeared during the run are
-    flagged unless they match known daemon-output patterns.
-    """
+def check_source_tree_safety(repo_root: Path, before: str, after: str) -> list[str]:
+    """Detect unexpected source-tree changes caused by the daemon's own run."""
     if before == after:
         return []
-    before_lines = set(before.splitlines())
-    after_lines = set(after.splitlines())
-    new_lines = after_lines - before_lines
-    unexpected = []
+    before_lines: set[str] = set(before.splitlines())
+    after_lines: set[str] = set(after.splitlines())
+    new_lines: set[str] = after_lines - before_lines
+    unexpected: list[str] = []
+    line: str
     for line in new_lines:
-        path = line[3:].strip()
+        path: str = line[3:].strip()
         if not path:
             continue
         if path.startswith("graphify-out/"):
@@ -86,92 +86,84 @@ def _check_source_tree_safety(repo_root: Path, before: str, after: str) -> list[
     return unexpected
 
 
+def fallback_metadata(ctx: DaemonContext) -> RunMetadata:
+    """Build metadata when a daemon run exits before publishing metadata."""
+    return RunMetadata(
+        run_id=ctx.run_id,
+        repo_path=ctx.repo_root,
+        repo_identity=Path(ctx.repo_root).name,
+        daemon_version=DAEMON_VERSION,
+        graphify_version=None,
+        freshness=ctx.freshness,
+        started_at=ctx.started_at,
+        finished_at=now_iso(),
+        trigger_kind=ctx.trigger_kind,
+        failures=ctx.failures,
+        warnings=ctx.warnings,
+    )
+
+
+def add_safety_warnings(ctx: DaemonContext, safety: Sequence[str]) -> DaemonContext:
+    """Return context with source-tree safety warnings added."""
+    if not safety:
+        return ctx
+    warning_tuple: tuple[str, ...] = tuple(safety)
+    updated_context: DaemonContext = replace(ctx, warnings=ctx.warnings + warning_tuple)
+    if updated_context.metadata is None:
+        return updated_context
+    return replace(
+        updated_context,
+        metadata=replace(
+            updated_context.metadata,
+            warnings=updated_context.metadata.warnings + warning_tuple,
+        ),
+    )
+
+
+def publish_after_build(ctx: DaemonContext) -> DaemonContext:
+    """Generate cards and publish the appropriate daemon snapshot."""
+    if ctx.failures:
+        return PublishDegradedSnapshot().apply(ctx)
+    card_context: DaemonContext = GenerateChunkCards().apply(ctx)
+    if card_context.failures:
+        return PublishDegradedSnapshot().apply(card_context)
+    return PublishSnapshot().apply(card_context)
+
+
 def run_once(
     repo_root: Path,
     trigger_kind: str = "manual",
 ) -> DaemonRunResult:
-    """Run one full daemon cycle: build → cards → publish.
+    """Run one full daemon cycle: build → cards → publish."""
+    resolved_repo_root: Path = repo_root.resolve()
+    run_id: str = new_run_id()
+    started_at: str = now_iso()
 
-    Performs the initial full Graphify build (or a refresh), generates chunk
-    cards via local Ollama, and publishes the result to Hermes-local runtime
-    state. Includes the source-tree safety gate.
-    """
-    from dataclasses import replace
+    git_before: str = git_status_short(resolved_repo_root)
 
-    from projectkoios.bootstrap.harness.daemon.activities import (
-        GenerateChunkCards,
-        InitialFullBuild,
-        PublishDegradedSnapshot,
-        PublishSnapshot,
-    )
-
-    repo_root = repo_root.resolve()
-    run_id = _new_run_id()
-    started_at = _now_iso()
-
-    git_before = _git_status_short(repo_root)
-
-    ctx = DaemonContext(
+    ctx: DaemonContext = DaemonContext(
         run_id=run_id,
-        repo_root=str(repo_root),
+        repo_root=str(resolved_repo_root),
         started_at=started_at,
         trigger_kind=trigger_kind,
         freshness=FreshnessState.UPDATING,
     )
 
-    build = InitialFullBuild()
-    ctx = build.apply(ctx)
+    build: InitialFullBuild = InitialFullBuild()
+    built_context: DaemonContext = build.apply(ctx)
+    published_context: DaemonContext = publish_after_build(built_context)
 
-    if ctx.failures:
-        git_after = _git_status_short(repo_root)
-        safety = _check_source_tree_safety(repo_root, git_before, git_after)
-        ctx = replace(ctx, warnings=ctx.warnings + tuple(safety))
-        ctx = PublishDegradedSnapshot().apply(ctx)
-    else:
-        ctx = GenerateChunkCards().apply(ctx)
+    git_after: str = git_status_short(resolved_repo_root)
+    safety: list[str] = check_source_tree_safety(resolved_repo_root, git_before, git_after)
+    final_context: DaemonContext = add_safety_warnings(published_context, safety)
 
-        if ctx.failures:
-            ctx = PublishDegradedSnapshot().apply(ctx)
-        else:
-            ctx = PublishSnapshot().apply(ctx)
-
-    git_after = _git_status_short(repo_root)
-    safety = _check_source_tree_safety(repo_root, git_before, git_after)
-    if safety:
-        ctx = replace(ctx, warnings=ctx.warnings + tuple(safety))
-        if ctx.metadata is not None:
-            ctx = replace(
-                ctx,
-                metadata=replace(
-                    ctx.metadata,
-                    warnings=ctx.metadata.warnings + tuple(safety),
-                ),
-            )
-
-    token = build_token(ctx)
-    result = DaemonRunResult(
-        metadata=ctx.metadata or _fallback_metadata(ctx),
-        graph_snapshot=ctx.graph_snapshot,
-        chunk_card_set=ctx.chunk_card_set,
-        token=token,
+    result: DaemonRunResult = DaemonRunResult(
+        metadata=final_context.metadata or fallback_metadata(final_context),
+        graph_snapshot=final_context.graph_snapshot,
+        chunk_card_set=final_context.chunk_card_set,
+        token=build_token(final_context),
     )
     return result
-
-
-def _fallback_metadata(ctx: DaemonContext) -> RunMetadata:
-    return RunMetadata(
-        run_id=ctx.run_id,
-        repo_path=ctx.repo_root,
-        repo_identity=Path(ctx.repo_root).name,
-        daemon_version="0.1.0",
-        graphify_version=None,
-        freshness=ctx.freshness,
-        started_at=ctx.started_at,
-        finished_at=_now_iso(),
-        trigger_kind=ctx.trigger_kind,
-        failures=ctx.failures,
-        warnings=ctx.warnings,
-    )
 
 
 async def run_daemon(
@@ -181,44 +173,33 @@ async def run_daemon(
     stop_event: asyncio.Event | None = None,
     max_cycles: int | None = None,
 ) -> None:
-    """Run the daemon as a background watcher.
+    """Run the daemon as a background watcher."""
+    resolved_repo_root: Path = repo_root.resolve()
+    policy: ExclusionPolicy = ExclusionPolicy.for_repo(resolved_repo_root)
+    state: SchedulerState = SchedulerState()
+    cycles: int = 0
 
-    Performs an initial full build, then watches the repository filesystem
-    for eligible changes. When changes are detected, debounces and coalesces
-    them into a single update request, runs a refresh, generates chunk cards,
-    and publishes. Schedules exactly one follow-up update when changes arrive
-    during an active update.
-
-    ``max_cycles`` is for testing; when set, the daemon stops after that many
-    update cycles (0 means only the initial build).
-    """
-    repo_root = repo_root.resolve()
-    policy = ExclusionPolicy.for_repo(repo_root)
-    state = SchedulerState()
-    cycles = 0
-
-    initial = run_once(repo_root, trigger_kind="initial")
-    _print_result(initial)
+    initial: DaemonRunResult = run_once(resolved_repo_root, trigger_kind="initial")
+    print_result(initial)
 
     if max_cycles is not None and cycles >= max_cycles:
         return
 
     print(
-        f"[daemon] watching repo={repo_root} poll_interval={poll_interval}s",
+        f"[daemon] watching repo={resolved_repo_root} poll_interval={poll_interval}s",
         flush=True,
     )
 
     async def do_update(events: list[WatchEvent]) -> None:
         nonlocal cycles
         cycles += 1
-        result = run_once(repo_root, trigger_kind="filesystem")
-        _print_result(result)
-        if max_cycles is not None and cycles >= max_cycles:
-            if stop_event is not None:
-                stop_event.set()
+        result: DaemonRunResult = run_once(resolved_repo_root, trigger_kind="filesystem")
+        print_result(result)
+        if max_cycles is not None and cycles >= max_cycles and stop_event is not None:
+            stop_event.set()
 
     await watch(
-        repo_root,
+        resolved_repo_root,
         policy,
         lambda events: run_with_coalesce(events, state, do_update),
         poll_interval=poll_interval,
@@ -226,23 +207,31 @@ async def run_daemon(
     )
 
 
-def _print_result(result: DaemonRunResult) -> None:
-    m = result.metadata
+def print_result(result: DaemonRunResult) -> None:
+    """Print a concise daemon result summary."""
+    metadata: RunMetadata = result.metadata
+    card_count: int = result.chunk_card_set.card_count if result.chunk_card_set else 0
     print(
-        f"[daemon] run={m.run_id} freshness={m.freshness.value} "
-        f"trigger={m.trigger_kind} nodes={m.files_processed} "
-        f"cards={result.chunk_card_set.card_count if result.chunk_card_set else 0}",
+        f"[daemon] run={metadata.run_id} freshness={metadata.freshness.value} "
+        f"trigger={metadata.trigger_kind} nodes={metadata.files_processed} "
+        f"cards={card_count}",
         flush=True,
     )
-    if m.indexed_files_count or m.chunk_batch_count or m.skipped_paths_count or m.eligible_files_count:
+    if (
+        metadata.indexed_files_count
+        or metadata.chunk_batch_count
+        or metadata.skipped_paths_count
+        or metadata.eligible_files_count
+    ):
         print(
-            f"  summary: eligible={m.eligible_files_count} indexed={m.indexed_files_count} "
-            f"batches={m.chunk_batch_count} skipped={m.skipped_paths_count} source={m.chunk_batch_source or 'n/a'}",
+            f"  summary: eligible={metadata.eligible_files_count} indexed={metadata.indexed_files_count} "
+            f"batches={metadata.chunk_batch_count} skipped={metadata.skipped_paths_count} "
+            f"source={metadata.chunk_batch_source or 'n/a'}",
             flush=True,
         )
-    if m.warnings:
-        for w in m.warnings:
-            print(f"  warn: {w}", flush=True)
-    if m.failures:
-        for f in m.failures:
-            print(f"  fail: {f}", flush=True)
+    warning: str
+    for warning in metadata.warnings:
+        print(f"  warn: {warning}", flush=True)
+    failure: str
+    for failure in metadata.failures:
+        print(f"  fail: {failure}", flush=True)

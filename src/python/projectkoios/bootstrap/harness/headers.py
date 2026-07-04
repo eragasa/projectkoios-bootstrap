@@ -15,9 +15,9 @@ def extract_handoff_headers(text: str) -> dict[str, str]:
     """
     fields: dict[str, str] = {}
     for line in text.splitlines():
-        m = HEADER_FIELD_PATTERN.match(line)
-        if m:
-            fields[m.group(1)] = m.group(2).strip()
+        match: re.Match[str] | None = HEADER_FIELD_PATTERN.match(line)
+        if match:
+            fields[match.group(1)] = match.group(2).strip()
         elif fields:
             break
     return fields

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Generic, TypeVar
+from typing import Generic, TypeAlias, TypeVar
 
 from projectkoios.bootstrap.harness.data.artifact import HandoffArtifact
 
@@ -40,5 +40,5 @@ class Marking(Generic[T]):
         return result
 
 
-HandoffMarking = Marking[HandoffArtifact]
+HandoffMarking: TypeAlias = Marking[HandoffArtifact]
 """Type alias for the handoff-specific marking used by the evaluator."""

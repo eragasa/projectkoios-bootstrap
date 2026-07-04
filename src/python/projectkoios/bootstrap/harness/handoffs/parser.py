@@ -7,76 +7,57 @@ from projectkoios.bootstrap.harness.headers import extract_handoff_headers
 
 
 class HandoffParser:
-    """Tokenizer that converts handoff files into ``HandoffArtifact`` tokens.
-
-    Each ``*.md`` file in a handoff directory is parsed:
-    1. Header fields are extracted from the top of the file
-       (``_extract_frontmatter``).
-    2. An artifact kind is inferred from the title and header combination
-       (``_infer_kind``).
-    3. A frozen ``HandoffArtifact`` is returned.
-
-    Files without recognised headers return ``None`` (skipped).
-    The parser is stateless — it can be reused safely.
-    """
+    """Tokenizer that converts handoff files into ``HandoffArtifact`` tokens."""
 
     def parse_file(self, path: Path) -> HandoffArtifact | None:
         """Parse a single handoff file, or return ``None`` if it has no headers."""
         if not path.exists():
             return None
-        text = path.read_text(encoding="utf-8")
-        return self._parse_text(path, text)
+        text: str = path.read_text(encoding="utf-8")
+        return self.parse_text(path, text)
 
     def parse_directory(self, directory: Path) -> list[HandoffArtifact]:
         """Parse every ``*.md`` file in *directory*, sorted by path."""
         result: list[HandoffArtifact] = []
         if not directory.exists():
             return result
+        path: Path
         for path in sorted(directory.iterdir()):
             if path.is_file() and path.suffix == ".md":
-                token = self.parse_file(path)
+                token: HandoffArtifact | None = self.parse_file(path)
                 if token is not None:
                     result.append(token)
         return result
 
-    def _parse_text(self, path: Path, text: str) -> HandoffArtifact | None:
-        """Internal: build an artifact from header fields and title."""
-        frontmatter = self._extract_frontmatter(text)
+    def parse_text(self, path: Path, text: str) -> HandoffArtifact | None:
+        """Build an artifact from header fields and title."""
+        frontmatter: dict[str, str] = self.extract_frontmatter(text)
         if not frontmatter:
             return None
 
         return HandoffArtifact(
             path=path,
-            kind=self._infer_kind(frontmatter, text),
+            kind=self.infer_kind(frontmatter, text),
             origin=frontmatter.get("Origin", ""),
             sender=frontmatter.get("From", ""),
             recipient=frontmatter.get("To", ""),
             acting_as=frontmatter.get("Acting-As"),
             delegated_operator=frontmatter.get("Delegated-Operator"),
             provenance=[
-                v for k, v in frontmatter.items()
-                if k.lower() in ("origin", "from", "scope", "repository")
+                value for key, value in frontmatter.items()
+                if key.lower() in ("origin", "from", "scope", "repository")
             ],
         )
 
-    def _extract_frontmatter(self, text: str) -> dict[str, str]:
+    def extract_frontmatter(self, text: str) -> dict[str, str]:
         return extract_handoff_headers(text)
 
-    def _infer_kind(self, frontmatter: dict[str, str], text: str) -> str:
-        """Classify the artifact by its H1 title, then fall back to sender/recipient.
+    def infer_kind(self, frontmatter: dict[str, str], text: str) -> str:
+        """Classify the artifact by its H1 title, then fall back to sender/recipient."""
+        title_lower: str = next((line.lower() for line in text.splitlines() if line.startswith("# ")), "")
 
-        Title checks use substring matching on lowercase text, ordered from
-        most to least specific to minimise false positives. The final fallback
-        returns ``"user-request"``.
-        """
-        title_lower = ""
-        for line in text.splitlines():
-            if line.startswith("# "):
-                title_lower = line.lower()
-                break
-
-        from_hdr = frontmatter.get("From", "").lower()
-        to_hdr = frontmatter.get("To", "").lower()
+        from_hdr: str = frontmatter.get("From", "").lower()
+        to_hdr: str = frontmatter.get("To", "").lower()
 
         if "architecture" in title_lower or "spec" in title_lower:
             return "architecture-spec"

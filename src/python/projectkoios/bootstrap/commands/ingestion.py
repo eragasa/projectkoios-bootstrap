@@ -1,18 +1,14 @@
-"""``projectkoios ingestion daemon`` CLI subcommand.
-
-Exposes the Hermes-owned Graphify ingestion daemon as a top-level CLI verb.
-``ingestion`` appears only as a CLI verb — there is no ``projectkoios.ingestion``
-Python package (ADR non-goal). The daemon implementation lives under
-``projectkoios.bootstrap.harness.daemon``.
-"""
+"""``projectkoios ingestion daemon`` CLI subcommand."""
 
 from __future__ import annotations
 
 import asyncio
 from argparse import ArgumentParser, Namespace
+from typing import Any
 from pathlib import Path
 
-from projectkoios.bootstrap.harness.daemon.daemon import run_daemon, run_once
+from projectkoios.bootstrap.harness.daemon.daemon import print_result, run_daemon, run_once
+from projectkoios.bootstrap.harness.daemon.data import DaemonRunResult
 from projectkoios.bootstrap.models import REPO_ROOT
 
 
@@ -21,10 +17,10 @@ def register(subparsers) -> None:
         "ingestion",
         help="Graphify ingestion daemon commands",
     )
-    ing_sub = parser.add_subparsers(dest="action")
-    ing_sub.required = True
+    ingestion_subparsers: Any = parser.add_subparsers(dest="action")
+    ingestion_subparsers.required = True
 
-    daemon_parser: ArgumentParser = ing_sub.add_parser(
+    daemon_parser: ArgumentParser = ingestion_subparsers.add_parser(
         "daemon",
         help="Run the Graphify ingestion daemon for this repository",
     )
@@ -49,18 +45,16 @@ def register(subparsers) -> None:
 
 
 def run(args: Namespace) -> None:
-    repo_root = args.root.resolve()
+    repo_root: Path = args.root.resolve()
     if args.once:
-        from projectkoios.bootstrap.harness.daemon.daemon import _print_result
-
-        result = run_once(repo_root, trigger_kind="manual")
-        _print_result(result)
+        result: DaemonRunResult = run_once(repo_root, trigger_kind="manual")
+        print_result(result)
         return
-    asyncio.run(_run_watch(repo_root, args.poll_interval))
+    asyncio.run(run_watch(repo_root, args.poll_interval))
 
 
-async def _run_watch(repo_root: Path, poll_interval: float) -> None:
-    stop = asyncio.Event()
+async def run_watch(repo_root: Path, poll_interval: float) -> None:
+    stop: asyncio.Event = asyncio.Event()
     try:
         await run_daemon(repo_root, poll_interval=poll_interval, stop_event=stop)
     except KeyboardInterrupt:

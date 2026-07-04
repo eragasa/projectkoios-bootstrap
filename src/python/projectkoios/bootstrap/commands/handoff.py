@@ -2,13 +2,15 @@ from __future__ import annotations
 
 from argparse import ArgumentParser, Namespace
 from dataclasses import asdict
-from pathlib import Path
 import json
+from pathlib import Path
 import sys
+from typing import Any
 
+from projectkoios.bootstrap.harness.data.violation import Violation
 from projectkoios.bootstrap.harness.handoffs.appender import append_violations
 from projectkoios.bootstrap.harness.handoffs.evaluator import HandoffEvaluator
-from projectkoios.bootstrap.harness.handoffs.topics import build_topics_view
+from projectkoios.bootstrap.harness.handoffs.topics import TopicsView, build_topics_view
 from projectkoios.bootstrap.models import REPO_ROOT
 
 
@@ -17,10 +19,10 @@ def register(subparsers) -> None:
         "handoff",
         help="Handoff evaluation and management commands",
     )
-    h_sub = parser.add_subparsers(dest="action")
-    h_sub.required = True
+    handoff_subparsers: Any = parser.add_subparsers(dest="action")
+    handoff_subparsers.required = True
 
-    eval_parser: ArgumentParser = h_sub.add_parser(
+    eval_parser: ArgumentParser = handoff_subparsers.add_parser(
         "evaluate",
         help="Evaluate handoff artifacts for guard violations",
     )
@@ -37,7 +39,7 @@ def register(subparsers) -> None:
     )
     eval_parser.set_defaults(func=run_evaluate)
 
-    topics_parser: ArgumentParser = h_sub.add_parser(
+    topics_parser: ArgumentParser = handoff_subparsers.add_parser(
         "topics",
         help="Show all handoff topics with their current messages",
     )
@@ -62,27 +64,30 @@ def register(subparsers) -> None:
 
 
 def run_topics(args: Namespace) -> None:
-    root = args.root.resolve()
-    view = build_topics_view(root, include_timestamp=args.with_timestamp)
+    root: Path = args.root.resolve()
+    view: TopicsView = build_topics_view(root, include_timestamp=args.with_timestamp)
     print(json.dumps(asdict(view), indent=2, default=str, ensure_ascii=False))
 
 
 def run_evaluate(args: Namespace) -> None:
-    root = args.root.resolve()
-    evaluator = HandoffEvaluator(repo_root=root)
-    violations = evaluator.evaluate()
+    root: Path = args.root.resolve()
+    evaluator: HandoffEvaluator = HandoffEvaluator(repo_root=root)
+    violations: list[Violation] = evaluator.evaluate()
 
     if not violations:
         print("handoff evaluate: no violations found")
         sys.exit(0)
 
-    by_file = evaluator.violations_by_file(violations)
+    by_file: dict[Path, list[Violation]] = evaluator.violations_by_file(violations)
 
+    path: Path
+    file_violations: list[Violation]
     if args.dry_run:
         for path, file_violations in sorted(by_file.items()):
             print(f"\n{path}:")
-            for v in file_violations:
-                print(f"  [{v.code.value}] {v.reason}")
+            violation: Violation
+            for violation in file_violations:
+                print(f"  [{violation.code.value}] {violation.reason}")
     else:
         for path, file_violations in sorted(by_file.items()):
             if path.exists():

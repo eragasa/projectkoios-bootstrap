@@ -67,8 +67,8 @@ def check_wrong_implementation_owner(marking: HandoffMarking) -> list[Violation]
     for token in marking.all_tokens:
         if token.kind not in IMPLEMENTATION_KINDS:
             continue
-        owner = token.sender
-        expected = "Vulcan"
+        owner: str = token.sender
+        expected: str = "Vulcan"
         if owner and owner.lower() != expected.lower() and owner != "opencode":
             violations.append(Violation(
                 code=ViolationCode.WRONG_IMPLEMENTATION_OWNER,
@@ -96,7 +96,7 @@ def check_delegated_operator_missing(marking: HandoffMarking) -> list[Violation]
     """
     violations: list[Violation] = []
     for token in marking.all_tokens:
-        is_codex_actor = (
+        is_codex_actor: bool = bool(
             token.sender in CODEX_IDS
             or token.origin in CODEX_IDS
             or (token.acting_as and token.acting_as in CODEX_IDS)
@@ -131,12 +131,12 @@ def check_codex_as_pi_identity_collapse(marking: HandoffMarking) -> list[Violati
     """
     violations: list[Violation] = []
     for token in marking.all_tokens:
-        claims_pi_origin = (
+        claims_pi_origin: bool = bool(
             token.origin in HERMES_IDS
             or token.sender in HERMES_IDS
             or (token.acting_as and token.acting_as in HERMES_IDS)
         )
-        is_codex_produced = (
+        is_codex_produced: bool = (
             token.delegated_operator in CODEX_IDS
             or token.provenance_has_codex()
         )

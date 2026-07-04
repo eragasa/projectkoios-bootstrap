@@ -1,14 +1,8 @@
-"""ActivityObjects (transitions) for the daemon Petri net.
-
-Each ActivityObject has ``enabled()`` and ``apply()`` shape, mirroring the
-guard/transition pattern in ``harness/handoffs/guards.py``. A transition fires
-only when ``enabled()`` returns True, consuming input DataObjects and producing
-output DataObjects, updating the daemon marking.
-"""
+"""ActivityObjects (transitions) for the daemon Petri net."""
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from datetime import datetime, timezone
 from typing import Protocol
 
@@ -23,19 +17,13 @@ from projectkoios.bootstrap.harness.daemon.data import (
 )
 
 
-def _now_iso() -> str:
+def now_iso() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
 @dataclass(frozen=True)
 class DaemonContext:
-    """Mutable working state carried through a daemon run cycle.
-
-    The context bundles the marking-level state (current freshness, run id,
-    produced DataObjects) so each ActivityObject can inspect and update it
-    without touching the filesystem directly. Side effects are performed by
-    the orchestrator in ``daemon.py`` using the result DataObjects.
-    """
+    """Mutable working state carried through a daemon run cycle."""
 
     run_id: str
     repo_root: str
@@ -67,7 +55,7 @@ class Activity(Protocol):
 class InitialFullBuild:
     """Performs the first full Graphify build over the repository root."""
 
-    name = "InitialFullBuild"
+    name: str = "InitialFullBuild"
 
     def enabled(self, ctx: DaemonContext) -> bool:
         return ctx.metadata is None
@@ -75,18 +63,14 @@ class InitialFullBuild:
     def apply(self, ctx: DaemonContext) -> DaemonContext:
         from projectkoios.bootstrap.harness.daemon.graphify_runner import run_graphify
 
-        result = run_graphify(ctx)
+        result: DaemonContext = run_graphify(ctx)
         return result
 
 
 class WatchFilesystem:
-    """Long-running watcher observing the source root for eligible changes.
+    """Long-running watcher observing the source root for eligible changes."""
 
-    This transition is always enabled while the daemon is running; the
-    orchestrator drives the actual polling loop in ``daemon.py``.
-    """
-
-    name = "WatchFilesystem"
+    name: str = "WatchFilesystem"
 
     def enabled(self, ctx: DaemonContext) -> bool:
         return True
@@ -96,14 +80,9 @@ class WatchFilesystem:
 
 
 class ScheduleUpdate:
-    """Debounce and coalesce layer.
+    """Debounce and coalesce layer."""
 
-    Turns a burst of file events into a single update request. When an update
-    is already in flight, schedules exactly one follow-up update rather than
-    running overlapping refreshes.
-    """
-
-    name = "ScheduleUpdate"
+    name: str = "ScheduleUpdate"
 
     def enabled(self, ctx: DaemonContext) -> bool:
         return True
@@ -115,7 +94,7 @@ class ScheduleUpdate:
 class RunGraphifyRefresh:
     """Incremental or refresh Graphify run using defaults."""
 
-    name = "RunGraphifyRefresh"
+    name: str = "RunGraphifyRefresh"
 
     def enabled(self, ctx: DaemonContext) -> bool:
         return ctx.metadata is not None
@@ -127,13 +106,9 @@ class RunGraphifyRefresh:
 
 
 class GenerateChunkCards:
-    """Local Ollama universal chunk-card generation.
+    """Local Ollama universal chunk-card generation."""
 
-    Degrades gracefully (warns, skips cards, keeps graph fresh) when Ollama
-    is absent or unreachable.
-    """
-
-    name = "GenerateChunkCards"
+    name: str = "GenerateChunkCards"
 
     def enabled(self, ctx: DaemonContext) -> bool:
         return ctx.graph_snapshot is not None
@@ -147,7 +122,7 @@ class GenerateChunkCards:
 class PublishSnapshot:
     """Write fresh snapshot, chunk cards, metadata, and freshness marker."""
 
-    name = "PublishSnapshot"
+    name: str = "PublishSnapshot"
 
     def enabled(self, ctx: DaemonContext) -> bool:
         return ctx.graph_snapshot is not None
@@ -161,7 +136,7 @@ class PublishSnapshot:
 class PublishDegradedSnapshot:
     """Write partial snapshot with warnings and file-level failure metadata."""
 
-    name = "PublishDegradedSnapshot"
+    name: str = "PublishDegradedSnapshot"
 
     def enabled(self, ctx: DaemonContext) -> bool:
         return bool(ctx.failures) and ctx.graph_snapshot is not None
@@ -169,19 +144,13 @@ class PublishDegradedSnapshot:
     def apply(self, ctx: DaemonContext) -> DaemonContext:
         from projectkoios.bootstrap.harness.daemon.publisher import publish_run
 
-        ctx = _with_degraded_state(ctx)
-        return publish_run(ctx)
+        degraded_context: DaemonContext = with_degraded_state(ctx)
+        return publish_run(degraded_context)
 
 
-def _with_degraded_state(ctx: DaemonContext) -> DaemonContext:
-    """Mark the context as degraded before publishing.
-
-    Preserves ``FAILED`` freshness (a build failure is worse than degraded)
-    and only sets ``DEGRADED`` when the current state is not already failed.
-    """
-    from dataclasses import replace
-
-    new_freshness = FreshnessState.FAILED if ctx.freshness == FreshnessState.FAILED else FreshnessState.DEGRADED
+def with_degraded_state(ctx: DaemonContext) -> DaemonContext:
+    """Mark the context as degraded before publishing."""
+    new_freshness: FreshnessState = FreshnessState.FAILED if ctx.freshness == FreshnessState.FAILED else FreshnessState.DEGRADED
     return replace(
         ctx,
         freshness=new_freshness,
@@ -197,7 +166,7 @@ def build_token(ctx: DaemonContext) -> DaemonToken:
         kind=DaemonTokenKind.DAEMON_RUN,
         place=ctx.freshness,
         run_id=ctx.run_id,
-        created_at=_now_iso(),
+        created_at=now_iso(),
         snapshot_path=ctx.graph_snapshot.path if ctx.graph_snapshot else None,
         card_set_path=ctx.chunk_card_set.path if ctx.chunk_card_set else None,
         failures=ctx.failures,

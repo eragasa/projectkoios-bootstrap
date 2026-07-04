@@ -1,56 +1,48 @@
-"""Debounce and coalesce scheduler for daemon update requests.
-
-Turns bursts of filesystem events into a single update request and schedules
-exactly one follow-up update when changes arrive while an update is already
-running. No overlapping refreshes.
-"""
+"""Debounce and coalesce scheduler for daemon update requests."""
 
 from __future__ import annotations
 
 import asyncio
+from collections.abc import Awaitable, Callable
 from dataclasses import dataclass, field
-from typing import Awaitable, Callable, TypeVar
+from typing import Generic, TypeVar
 
 E = TypeVar("E")
 
 
 @dataclass
-class SchedulerState:
+class SchedulerState(Generic[E]):
     """Mutable scheduler state tracking in-flight and pending updates."""
 
     update_in_flight: bool = False
     follow_up_scheduled: bool = False
-    pending_events: list = field(default_factory=list)
-    _lock: asyncio.Lock = field(default_factory=asyncio.Lock)
+    pending_events: list[E] = field(default_factory=list)
+    lock: asyncio.Lock = field(default_factory=asyncio.Lock)
 
 
 async def run_with_coalesce(
     events: list[E],
-    state: SchedulerState,
+    state: SchedulerState[E],
     do_update: Callable[[list[E]], Awaitable[None]],
 ) -> None:
-    """Coalesce *events* into a single update, scheduling one follow-up.
-
-    If no update is in flight, fires ``do_update`` immediately with the
-    accumulated events. If an update is already running, accumulates events
-    into exactly one follow-up (further events merge into the same follow-up).
-    The follow-up fires after the current update completes.
-    """
-    async with state._lock:
+    """Coalesce *events* into a single update, scheduling one follow-up."""
+    async with state.lock:
         state.pending_events.extend(events)
         if state.update_in_flight:
             state.follow_up_scheduled = True
             return
         state.update_in_flight = True
-        batch, state.pending_events = state.pending_events, []
+        batch: list[E] = list(state.pending_events)
+        state.pending_events.clear()
 
     try:
         await do_update(batch)
     finally:
-        async with state._lock:
+        async with state.lock:
             state.update_in_flight = False
-            needs_follow_up = state.follow_up_scheduled
-            follow_up_batch, state.pending_events = state.pending_events, []
+            needs_follow_up: bool = state.follow_up_scheduled
+            follow_up_batch: list[E] = list(state.pending_events)
+            state.pending_events.clear()
             state.follow_up_scheduled = False
 
     if needs_follow_up:

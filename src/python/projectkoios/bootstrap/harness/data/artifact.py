@@ -14,7 +14,7 @@ class HandoffArtifact:
 
     Fields map directly to handoff file headers:
     - ``kind`` is inferred from the title and header combination
-      (see ``HandoffParser._infer_kind``).
+      (see ``HandoffParser.infer_kind``).
     - ``origin``, ``sender``, ``recipient`` come from ``Origin``, ``From``,
       ``To`` headers.
     - ``acting_as`` and ``delegated_operator`` come from their eponymous headers.

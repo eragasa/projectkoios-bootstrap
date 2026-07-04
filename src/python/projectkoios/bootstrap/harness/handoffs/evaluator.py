@@ -3,6 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Callable
 
+from projectkoios.bootstrap.harness.data.artifact import HandoffArtifact
 from projectkoios.bootstrap.harness.data.marking import HandoffMarking, Marking
 from projectkoios.bootstrap.harness.data.violation import Violation
 from projectkoios.bootstrap.harness.handoffs.guards import (
@@ -42,7 +43,7 @@ class HandoffEvaluator:
     ) -> None:
         self.repo_root = repo_root.resolve()
         self.parser = parser or HandoffParser()
-        self._guards = guards or list(ALL_GUARDS)
+        self.guards = guards or list(ALL_GUARDS)
 
     def build_marking(self) -> HandoffMarking:
         """Parse all handoff directories and return the current marking.
@@ -54,8 +55,8 @@ class HandoffEvaluator:
         """
         tokens_by_place: dict[str, list] = {}
         for place_name, rel_path in PLACE_DIRECTORIES.items():
-            dir_path = self.repo_root / rel_path
-            tokens = self.parser.parse_directory(dir_path)
+            dir_path: Path = self.repo_root / rel_path
+            tokens: list[HandoffArtifact] = self.parser.parse_directory(dir_path)
             if tokens:
                 tokens_by_place[place_name] = tokens
 
@@ -73,7 +74,7 @@ class HandoffEvaluator:
         """
         marking: HandoffMarking = self.build_marking()
         violations: list[Violation] = []
-        for guard_fn in self._guards:
+        for guard_fn in self.guards:
             violations.extend(guard_fn(marking))
         return violations
 

@@ -1,36 +1,39 @@
+from __future__ import annotations
+
+from argparse import ArgumentParser, Namespace
+from pathlib import Path
 import shutil
 
-from projectkoios.bootstrap.models import RUNTIMES, GLOBAL_DIR
+from projectkoios.bootstrap.models import GLOBAL_DIR, RUNTIMES, Runtime
 
 
 def register(subparsers) -> None:
-    parser = subparsers.add_parser("init", help="Copy agents/global/*.example → ~/.<harness>/")
+    parser: ArgumentParser = subparsers.add_parser("init", help="Copy agents/global/*.example → ~/.<harness>/")
     parser.set_defaults(func=run)
 
 
-def run(args) -> None:
+def run(args: Namespace) -> None:
     if not GLOBAL_DIR.exists():
         print(f"error: global config directory not found: {GLOBAL_DIR}")
         return
 
+    runtime: Runtime
     for runtime in RUNTIMES:
-        src = GLOBAL_DIR / runtime.name
-        if not src.exists():
-            print(f"skip: {runtime.name} — no global config at {src}")
+        source_dir: Path = GLOBAL_DIR / runtime.name
+        if not source_dir.exists():
+            print(f"skip: {runtime.name} — no global config at {source_dir}")
             continue
 
-        dst = runtime.config_dir
-        dst.mkdir(parents=True, exist_ok=True)
+        destination_dir: Path = runtime.config_dir
+        destination_dir.mkdir(parents=True, exist_ok=True)
 
-        for item in src.iterdir():
+        item: Path
+        for item in source_dir.iterdir():
             if item.is_dir():
                 continue
-            name = item.name
-            if name.endswith(".example"):
-                target_name = name.removesuffix(".example")
-            else:
-                target_name = name
-            target = dst / target_name
+            name: str = item.name
+            target_name: str = name.removesuffix(".example") if name.endswith(".example") else name
+            target: Path = destination_dir / target_name
             if target.exists():
                 print(f"  exist: {target}")
             else:

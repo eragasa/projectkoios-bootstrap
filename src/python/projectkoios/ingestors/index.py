@@ -35,21 +35,23 @@ class GraphIndex:
 
 class GraphIndexBuilder:
     def build(self, source_set: SourceSet) -> GraphIndex:
-        documents = tuple(
-            DocumentIndex(document=document, sections=self._sections_for(document))
+        documents: tuple[DocumentIndex, ...] = tuple(
+            DocumentIndex(document=document, sections=self.sections_for(document))
             for document in source_set.documents
         )
         return GraphIndex(root=source_set.root, documents=documents)
 
-    def _sections_for(self, document: SourceDocument) -> tuple[Section, ...]:
-        lines = document.text.splitlines()
+    def sections_for(self, document: SourceDocument) -> tuple[Section, ...]:
+        lines: list[str] = document.text.splitlines()
         headings: list[tuple[int, int, str]] = []
+        index: int
+        line: str
         for index, line in enumerate(lines, start=1):
-            stripped = line.lstrip()
+            stripped: str = line.lstrip()
             if not stripped.startswith("#"):
                 continue
-            level = len(stripped) - len(stripped.lstrip("#"))
-            title = stripped[level:].strip()
+            level: int = len(stripped) - len(stripped.lstrip("#"))
+            title: str = stripped[level:].strip()
             if title:
                 headings.append((index, level, title))
         if not headings:
@@ -66,15 +68,20 @@ class GraphIndexBuilder:
             )
 
         sections: list[Section] = []
-        for position, (line_start, level, title) in enumerate(headings):
-            next_start = headings[position + 1][0] if position + 1 < len(headings) else len(lines) + 1
-            section_lines = lines[line_start - 1 : next_start - 1]
+        position: int
+        heading: tuple[int, int, str]
+        for position, heading in enumerate(headings):
+            line_start: int = heading[0]
+            heading_level: int = heading[1]
+            heading_title: str = heading[2]
+            next_start: int = headings[position + 1][0] if position + 1 < len(headings) else len(lines) + 1
+            section_lines: list[str] = lines[line_start - 1 : next_start - 1]
             sections.append(
                 Section(
                     path=document.path,
                     relative_path=document.relative_path,
-                    title=title,
-                    heading_level=level,
+                    title=heading_title,
+                    heading_level=heading_level,
                     line_start=line_start,
                     line_end=max(next_start - 1, line_start),
                     text="\n".join(section_lines).strip(),
