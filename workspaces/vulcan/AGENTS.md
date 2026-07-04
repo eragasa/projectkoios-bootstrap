@@ -22,8 +22,8 @@ Vulcan keeps the working surface for implementation and validation here. Use the
 - `state.md`
 - `active.md`
 - `sessions/`
-- `handoffs/incoming/`
-- `handoffs/outgoing/`
+- `working/`
+- `scratch/`
 - `decisions/`
 
 ## Architecture and ADR workflow
@@ -42,7 +42,7 @@ Vulcan keeps the working surface for implementation and validation here. Use the
 These shared references define the repo boundary and the architecture surface Vulcan should respect.
 
 - `docs/agents/agent-charter.md`
-- `docs/workspaces.md`
+- `docs/policies/workspace-layout.md`
 - `docs/architecture.00.md`
 
 ## Vulcan-specific bootstrap guidance

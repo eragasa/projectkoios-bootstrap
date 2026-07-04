@@ -69,7 +69,7 @@ projectkoios harnesses stop      # kill koios session
 Read `maps/repositories.md`, `maps/packages.md`, and `maps/vault_paths.md`
 before touching any code. All component repos are siblings under `~/repos/`.
 
-Persistent per-agent workspace state is proposed in `docs/workspaces.md`.
+Persistent per-agent workspace state is proposed in `docs/policies/workspace-layout.md`.
 
 ## Local Generated State
 

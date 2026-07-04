@@ -81,7 +81,7 @@ def write_schema(root: Path) -> Path:
 
 
 def write_config(root: Path) -> Path:
-    adr = root / "docs" / "architecture" / "adr"
+    adr = root / "docs" / "adr"
     adr.mkdir(parents=True, exist_ok=True)
     (adr / "adr.example.md").write_text(
         "# ADR Example\n\n## Status\n\ndraft\n\n## Context\n\nExample context.\n",

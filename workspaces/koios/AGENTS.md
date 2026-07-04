@@ -8,7 +8,7 @@ New sessions in this workspace default to KOIOS unless the user explicitly names
 
 - Capture validated claims only.
 - Preserve provenance for notes, indexes, and durable knowledge artifacts.
-- Read `state.md`, `active.md`, and relevant `handoffs/incoming/` artifacts before knowledge capture.
+- Read `state.md`, `active.md`, and relevant active `working/` material before knowledge capture.
 - Update Koios-owned knowledge/provenance document state with cited sources.
 - Keep knowledge artifacts concise, source-backed, and reusable.
 - Distinguish validated claims from speculative notes.
@@ -18,13 +18,13 @@ New sessions in this workspace default to KOIOS unless the user explicitly names
 
 ## Workspace files
 
-Use these files to track knowledge capture, session notes, and handoff material:
+Use these files to track knowledge capture, session notes, and working material:
 
 - `state.md`
 - `active.md`
 - `sessions/`
-- `handoffs/incoming/`
-- `handoffs/outgoing/`
+- `working/`
+- `scratch/`
 - `decisions/`
 
 ## Canonical references
@@ -33,7 +33,7 @@ The harness loads repo-root guidance before this workspace file. Treat the root 
 
 - `../../AGENTS.md`
 - `docs/agents/agent-charter.md`
-- `docs/workspaces.md`
+- `docs/policies/workspace-layout.md`
 - `docs/architecture.00.md`
 
 ## Bootstrap guidance

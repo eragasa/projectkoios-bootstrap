@@ -25,8 +25,8 @@ session, current focus, and known document-domain inconsistencies.
 - `state.md`
 - `active.md`
 - `sessions/`
-- `handoffs/incoming/`
-- `handoffs/outgoing/`
+- `working/`
+- `scratch/`
 - `decisions/`
 
 ## Document-domain reconciliation
@@ -44,5 +44,5 @@ Hermes owns cross-domain consistency decisions.
 These are the main shared references for Hermes workspace behavior and repo boundaries.
 
 - `docs/agents/agent-charter.md`
-- `docs/workspaces.md`
+- `docs/policies/workspace-layout.md`
 - `docs/architecture.00.md`

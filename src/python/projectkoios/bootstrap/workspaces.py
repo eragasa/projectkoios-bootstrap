@@ -32,19 +32,19 @@ class WorkspaceTemplate:
                 "- state.md",
                 "- active.md",
                 "- sessions/",
-                "- handoffs/incoming/",
-                "- handoffs/outgoing/",
+                "- working/",
+                "- scratch/",
                 "- decisions/",
                 "",
                 "## Document-state coordination",
                 "- Treat repository documents and statuses as durable workflow state.",
-                "- Use handoff folders only for transitional compatibility artifacts.",
+                "- Use working folders only for current or transitional workspace material.",
                 "- Hermes owns cross-domain consistency decisions; directory placement is not authority.",
                 "- Prefer updating the owned repository document when the next state is clear.",
                 "",
                 "## Canonical references",
                 "- docs/agents/agent-charter.md",
-                "- docs/workspaces.md",
+                "- docs/policies/workspace-layout.md",
                 "- docs/architecture.00.md",
             ]
         )
@@ -122,8 +122,8 @@ def ensure_workspace(root: Path, agent: str, *, force: bool = False) -> list[Pat
 
     for rel in (
         "sessions",
-        "handoffs/incoming",
-        "handoffs/outgoing",
+        "working",
+        "scratch",
         "decisions",
     ):
         path = workspace / rel
@@ -132,7 +132,7 @@ def ensure_workspace(root: Path, agent: str, *, force: bool = False) -> list[Pat
 
     state = workspace / "state.md"
     active = workspace / "active.md"
-    agent_md = workspace / "AGENT.md"
+    agent_md = workspace / "AGENTS.md"
 
     if force or not state.exists():
         state.write_text(
@@ -141,7 +141,7 @@ def ensure_workspace(root: Path, agent: str, *, force: bool = False) -> list[Pat
             "- Current focus:\n"
             "- Blockers:\n"
             "- Last validated decision:\n"
-            "- Handoff status:\n"
+            "- Working material status:\n"
             "- Next action owner:\n",
             encoding="utf-8",
         )
@@ -152,8 +152,8 @@ def ensure_workspace(root: Path, agent: str, *, force: bool = False) -> list[Pat
             f"# {agent.capitalize()} active work\n\n"
             "- Top priority:\n"
             "- Waiting on:\n"
-            "- Handoff items to process:\n"
-            "- Handoff items to deliver:\n"
+            "- Working items to process:\n"
+            "- Working items to deliver:\n"
             "- Ignore for now:\n",
             encoding="utf-8",
         )

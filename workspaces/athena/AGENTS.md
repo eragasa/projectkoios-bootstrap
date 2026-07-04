@@ -14,19 +14,19 @@ New sessions in this workspace default to ATHENA unless the user explicitly name
 
 ## Workspace files
 
-Use these files to track the current spec surface and handoff material:
+Use these files to track the current spec surface and working material:
 
 - `state.md`
 - `active.md`
 - `sessions/`
-- `handoffs/incoming/`
-- `handoffs/outgoing/`
+- `working/`
 - `decisions/`
+- `scratch/`
 
 ## Canonical references
 
 - `docs/agents/agent-charter.md`
-- `docs/workspaces.md`
+- `docs/policies/workspace-layout.md`
 - `docs/architecture.00.md`
 
 ## Bootstrap guidance

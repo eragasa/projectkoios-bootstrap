@@ -43,13 +43,14 @@ def test__workspaces_init_creates_agent_workspaces(tmp_path: Path) -> None:
     assert result.returncode == 0, result.stderr
     for agent in ("hermes", "athena", "vulcan", "koios"):
         workspace = tmp_path / "workspaces" / agent
-        assert (workspace / "AGENT.md").exists()
+        assert (workspace / "AGENTS.md").exists()
         assert (workspace / "state.md").exists()
         assert (workspace / "active.md").exists()
         assert not (workspace / "inbox").exists()
         assert not (workspace / "outbox").exists()
+        assert not (workspace / "handoffs").exists()
         assert (workspace / "sessions").is_dir()
-        assert (workspace / "handoffs" / "incoming").is_dir()
-        assert (workspace / "handoffs" / "outgoing").is_dir()
+        assert (workspace / "working").is_dir()
+        assert (workspace / "scratch").is_dir()
         assert (workspace / "decisions").is_dir()
     assert "done: workspaces initialized" in result.stdout

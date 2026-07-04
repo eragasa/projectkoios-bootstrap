@@ -1,7 +1,7 @@
 # Workspace agent instructions
 
 Use this file for formatting and structure rules that apply to local
-`workspaces/<agent_name>/AGENT.md` files.
+`workspaces/<agent_name>/AGENTS.md` files.
 Controlled by: [adr.templates](../adr/adr.templates.draft.md).
 Template index: [templates.00](templates.00.md).
 
@@ -15,7 +15,7 @@ Use these instructions when:
 
 ## Required workspace format
 
-- Keep the file local to `workspaces/<agent_name>/AGENT.md`.
+- Keep the file local to `workspaces/<agent_name>/AGENTS.md`.
 - Use a human-readable title.
 - State the role and responsibility of the workspace.
 - Include short instruction bullets.
@@ -25,22 +25,22 @@ Use these instructions when:
 
 ## Required workspace files
 
-- `AGENT.md`
+- `AGENTS.md`
 - `state.md`
 - `active.md`
 - `sessions/`
-- `handoffs/incoming/`
-- `handoffs/outgoing/`
+- `working/`
+- `scratch/`
 - `decisions/`
 - `docs/plans/` — cross-session implementation plans owned by Vulcan
 
 ## Link rules
 
 - Link to `docs/agents/agent-charter.md` for document-domain ownership authority.
-- Link to `docs/workspaces.md` for workspace layout.
+- Link to `docs/policies/workspace-layout.md` for workspace layout.
 - Link to `docs/architecture.00.md` when the workspace needs architecture context.
 - Keep links filename-based and grep-friendly.
-- The workspace `AGENT.md` should describe which repository document domain the role owns.
+- The workspace `AGENTS.md` should describe which repository document domain the role owns.
 
 ## Plan ownership
 
