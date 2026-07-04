@@ -62,6 +62,8 @@ These rules do not create architecture authority. Architecture and specification
 - Structured data SHOULD use `@dataclass(frozen=True, slots=True)` when mutation is not required.
 - Runtime enums SHOULD use `StrEnum` when values cross config, CLI, JSON, YAML, or other text boundaries.
 - Code MUST NOT use untyped dictionaries as durable domain objects when a dataclass or explicit schema would make the contract clearer.
+- Local variables inside functions and methods MUST have explicit type annotations when introduced.
+- Local variable annotations inside functions and methods MUST NOT use `Any`.
 - Code MUST NOT use private functions, private methods, private attributes, private variables, or private constants with leading underscores, excluding Python dunder names.
 - Optional values MUST be represented explicitly with `T | None`.
 - Action objects SHOULD consume and produce the relevant data objects for their operation rather than bypassing the data model with parallel primitive arguments.
