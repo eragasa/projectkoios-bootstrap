@@ -58,19 +58,21 @@
 - AAR recorded at `docs/AAR/aar.20260704.173652_schema-record-brief-handoff.md`.
 - ADR lifecycle/naming consolidation proposal created at `dev/adr-lifecycle-and-naming-consolidation/adr.adr-lifecycle-and-naming-consolidation.proposed.md`; HERMES and VULCAN review requested revision for lifecycle vocabulary compatibility, KOIOS requested claim-level provenance and tighter non-authority boundaries, and ATHENA revised the proposal accordingly. HERMES re-review found no blockers, VULCAN confirmed no remaining implementation/validation blockers, and user direction `go` accepted the proposal. Accepted ADR exists at user-corrected filename `docs/adr/adr.adr-lifecycle.20260705.011836Z.md`. User direction `next` authorized the bounded documentation/control-surface follow-on: lifecycle policy, lifecycle/naming architecture indexes, and source-draft pointer notes now reference the accepted ADR. Commit `f0143c6` was pushed to `origin/master`.
 - New portfolio item started: template representation and namespace split proposal exists at `dev/template-representation-namespace-split/adr.template-representation.20260705.014135Z.proposed.md`. It bounds template JSON↔Markdown transformation, separates `docs/templates/` from `docs/implementation/`, and targets future implementation under `src/python/projectkoios/bootstrap/` rather than broad ingestion.
+- User correction recorded on 20260705: Athena should use the existing ADR schema/model path where possible. Schema-backed draft record created at `dev/template-representation-namespace-split/adr.template-representation.20260705.014135Z.record.json` and rendered with `DraftAdrMarkdownRenderer` to `dev/template-representation-namespace-split/adr.template-representation.20260705.014135Z.schema-backed.md`. Validation: `PYTHONPATH=src/python python -m pytest tests/projectkoios/bootstrap/schema/test__DraftAdrRecord__markdown.py -q` passed with 13 tests. AAR recorded at `docs/AAR/aar.20260705.020850_schema-backed-template-adr.md`.
 
 ## Open questions
 
 - Push/closeout state reconciled on 20260705.010834: `git status --short --branch` reported `## master...origin/master` with no ahead/behind or dirty files.
+- Closeout note 20260705: unrelated dirty VULCAN/KOIOS/test changes exist in the shared tree; Athena closeout should commit only Athena-owned schema-backed ADR artifacts, Athena state, and the related AAR.
 - Whether a future validator should parse the top JSON metadata sections directly or require a structured companion.
 - Whether historical/transitional working files should be archived or removed from the active workspace surface.
 - No remaining dirty/untracked files were present at the 20260705.010834 startup reconciliation check.
-- Whether HERMES/user should accept, revise, or reject the template representation and namespace split proposal.
+- Whether HERMES/user should accept, revise, or reject the template representation and namespace split proposal or its schema-backed draft projection.
 
 ## Next transition
 
 - Owner: user/HERMES for any separate follow-on documentation/control-surface reconciliation, unless ATHENA is redirected to another portfolio item.
-- Highest-leverage next action: review `dev/template-representation-namespace-split/adr.template-representation.20260705.014135Z.proposed.md` for acceptance, revision, rejection, or routing to Vulcan after acceptance.
+- Highest-leverage next action: review `dev/template-representation-namespace-split/adr.template-representation.20260705.014135Z.record.json` and rendered projection `dev/template-representation-namespace-split/adr.template-representation.20260705.014135Z.schema-backed.md` for acceptance, revision, rejection, or routing to Vulcan after acceptance.
 - Secondary action: Athena may advance independent spec/ADR portfolio items after routing, while avoiding held-out implementation files.
 - Blockers: none currently known; preserve Athena boundary by reviewing/specifying, not implementing code.
 

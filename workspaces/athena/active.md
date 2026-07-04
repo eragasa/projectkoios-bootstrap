@@ -20,7 +20,7 @@
 
 ## Current priority stack
 
-1. Template representation and namespace split proposal started at `dev/template-representation-namespace-split/adr.template-representation.20260705.014135Z.proposed.md`; await HERMES/user review before acceptance or Vulcan handoff.
+1. Template representation and namespace split proposal now has a schema-backed draft record at `dev/template-representation-namespace-split/adr.template-representation.20260705.014135Z.record.json` and generated projection at `dev/template-representation-namespace-split/adr.template-representation.20260705.014135Z.schema-backed.md`; await HERMES/user review before acceptance or Vulcan handoff.
 2. ADR lifecycle/naming consolidation accepted at `docs/adr/adr.adr-lifecycle.20260705.011836Z.md`; follow-on policy/index/source-draft pointer updates completed and pushed.
 3. Keep Athena work bounded to architecture/spec surfaces while VULCAN-owned dirty implementation/test work remains present.
 
@@ -34,6 +34,7 @@
 - Any needed action by another role/agent should be sent as an explicit intercom handoff/request, then recorded here as waiting-on.
 - Schema-base conformance review output exists at `docs/reviews/architecture-conformance.20260704.212913_schema-record-base-slice.md` with outcome `conforms-with-gaps`.
 - Template representation proposal: `dev/template-representation-namespace-split/adr.template-representation.20260705.014135Z.proposed.md`.
+- Template representation schema-backed draft: `dev/template-representation-namespace-split/adr.template-representation.20260705.014135Z.record.json`; generated projection: `dev/template-representation-namespace-split/adr.template-representation.20260705.014135Z.schema-backed.md`.
 - ADR lifecycle/naming consolidation proposal provenance: `dev/adr-lifecycle-and-naming-consolidation/adr.adr-lifecycle-and-naming-consolidation.proposed.md`.
 
 ## Working material
