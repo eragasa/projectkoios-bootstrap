@@ -26,7 +26,7 @@ Architecture documents describe controlled architectural surfaces or blueprints.
 
 - [architecture.adr.template](architecture.adr.template.md)
 - [architecture.adr.names](architecture.adr.names.md)
-- [architecture.adr.lifecycle](architecture.adr.lifecycle.md)
+- [architecture.adr.lifecycle](../policies/architecture.adr.lifecycle.md)
 - [architecture.lifecycle.00](architecture.lifecycle.00.md)
 - [adr.adr](../adr/adr.adr.md)
 - `docs/adr/`

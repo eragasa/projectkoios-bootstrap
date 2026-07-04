@@ -29,7 +29,7 @@ Use these files to track the current spec surface and working material:
 
 - `docs/agents/agent-charter.md`
 - `docs/policies/workspace-layout.md`
-- `docs/architecture.00.md`
+- `docs/architecture/architecture.00.md`
 
 ## Bootstrap guidance
 

@@ -45,4 +45,4 @@ These are the main shared references for Hermes workspace behavior and repo boun
 
 - `docs/agents/agent-charter.md`
 - `docs/policies/workspace-layout.md`
-- `docs/architecture.00.md`
+- `docs/architecture/architecture.00.md`

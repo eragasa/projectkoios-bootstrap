@@ -72,7 +72,7 @@ HERMES may provide optional transport or command execution, but HERMES is not re
 - `docs/policies/workspace-layout.md`
 - `docs/policies/python-coding.md`
 - `docs/process-capture/workflow.process-capture.md`
-- `docs/architecture.00.md`
+- `docs/architecture/architecture.00.md`
 
 ## Python implementation control
 

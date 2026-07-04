@@ -38,7 +38,7 @@ Use these instructions when:
 
 - Link to `docs/agents/agent-charter.md` for document-domain ownership authority.
 - Link to `docs/policies/workspace-layout.md` for workspace layout.
-- Link to `docs/architecture.00.md` when the workspace needs architecture context.
+- Link to `docs/architecture/architecture.00.md` when the workspace needs architecture context.
 - Keep links filename-based and grep-friendly.
 - The workspace `AGENTS.md` should describe which repository document domain the role owns.
 

@@ -73,7 +73,7 @@ The two gates are adversarial only in the sense that each may block the other un
 
 The implementation block lives in `docs/implementation/implementation.adversarial-two-plane-gate.md`.
 
-- related: [Implementation Note: Adversarial Two-Plane Gate](../../implementation/implementation.adversarial-two-plane-gate.md)
+- related: [Implementation Note: Adversarial Two-Plane Gate](../implementation/implementation.adversarial-two-plane-gate.md)
 
 ## resolved_open_questions
 
