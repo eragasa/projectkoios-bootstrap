@@ -2,8 +2,8 @@
 {
   "title": "Vulcan workspace state",
   "artifact_type": "workspace-state",
-  "status": "workspace-protocol-reconciliation-complete",
-  "datetime": "20260705.003351",
+  "status": "root-bootstrap-test-policy-remediation-complete",
+  "datetime": "20260705.010450",
   "acting_as": "VULCAN",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/vulcan/",
@@ -23,10 +23,9 @@
 
 ## Current scope
 
-- Focus: accepted workspace-state protocol bootstrap reconciliation, source-code Python policy remediation closeout, validator CLI integration, and bounded test-code remediation.
+- Focus: bounded test-code Python policy remediation after accepted source/CLI/test package reviews.
 - Current branch: `master`.
-- Latest known commit before this work series: `7e997c3 Add schema-record conformance review`.
-- Current uncommitted VULCAN slices: workspace-state protocol reconciliation, source-policy closeout package, Python policy validator CLI integration, schema test policy remediation, ingestors test policy remediation, Python policy test remediation, AARs, and Vulcan workspace state updates.
+- Latest active VULCAN slice: root bootstrap/workspace command test policy remediation.
 - Authority boundary: Vulcan packaged implementation and validation evidence; Vulcan did not promote draft ADRs or create architecture authority.
 
 ## Validated state
@@ -34,64 +33,57 @@
 ### Workspace-state protocol bootstrap reconciliation
 
 - Implementation report: `docs/implementation/implementation-report.20260705.003351_workspace-state-protocol-bootstrap-reconciliation.md`.
-- Controlling ADR: `docs/adr/adr.20260704.162218_canonical-workspace-state-next-action-protocol.md`.
-- Reconciled policy/guidance surfaces:
-  - `docs/policies/workspace-layout.md`.
-  - `docs/architecture/architecture.00.md`.
-  - `docs/architecture/architecture.canonical-workspace-state-and-next-action-protocol.md`.
-  - `docs/architecture/architecture.workspaces.00.md`.
-  - `README.md`.
-- Reconciled bootstrap surfaces:
-  - `src/python/projectkoios/bootstrap/commands/workspaces.py`.
-  - `src/python/projectkoios/bootstrap/workspaces.py`.
-  - `tests/test__workspaces_command.py`.
-- Bootstrap workspace initialization now seeds `state.md` and `active.md` with stable top JSON metadata and no deprecated mailbox directory convention.
+- HERMES accepted the package from cross-domain/repo-state perspective.
+- Bootstrap workspace initialization seeds `state.md` and `active.md` with stable top JSON metadata and no deprecated mailbox directory convention.
 
-### Source-code Python policy remediation closeout
+### Source-code Python policy remediation and CLI integration
 
 - Closeout package: `docs/implementation/implementation-report.20260704.235450_source-python-policy-remediation-closeout.md`.
+- CLI integration report: `docs/implementation/implementation-report.20260704.235829_python-policy-validator-cli.md`.
+- HERMES accepted the source/CLI/test package set as scoped implementation/validation work.
 - Source-code policy baseline: `findings 0`.
-
-### Python policy validator CLI integration
-
-- Implementation report: `docs/implementation/implementation-report.20260704.235829_python-policy-validator-cli.md`.
-- New command module: `src/python/projectkoios/bootstrap/commands/validate_python_policy.py`.
-- CLI registration: `src/python/projectkoios/cli/main.py`.
-- Command surface: `projectkoios bootstrap validate-python-policy`.
+- CLI command surface: `projectkoios bootstrap validate-python-policy`.
 
 ### Test policy remediation
 
-- Schema test report: `docs/implementation/implementation-report.20260705.000755_schema-test-policy-remediation.md`.
-- Ingestors test report: `docs/implementation/implementation-report.20260705.001733_ingestors-test-policy-remediation.md`.
-- Python policy test report: `docs/implementation/implementation-report.20260705.002345_python-policy-test-remediation.md`.
-- Remediated test packages:
-  - `tests/projectkoios/bootstrap/schema/` => `findings 0`.
-  - `tests/projectkoios/ingestors/` => `findings 0`.
-  - `tests/projectkoios/bootstrap/python_policy/` => `findings 0`.
-- Remaining all-target policy baseline after Python policy test slice: `578 finding(s), 107 file(s)`.
+Completed reports:
+
+- Schema tests: `docs/implementation/implementation-report.20260705.000755_schema-test-policy-remediation.md`.
+- Ingestors tests: `docs/implementation/implementation-report.20260705.001733_ingestors-test-policy-remediation.md`.
+- Python policy tests: `docs/implementation/implementation-report.20260705.002345_python-policy-test-remediation.md`.
+- Root bootstrap/workspace command tests: `docs/implementation/implementation-report.20260705.010450_root-bootstrap-test-policy-remediation.md`.
+
+Remediated test packages/file groups now at zero findings:
+
+- `tests/projectkoios/bootstrap/schema/`.
+- `tests/projectkoios/ingestors/`.
+- `tests/projectkoios/bootstrap/python_policy/`.
+- `tests/test__workspaces_command.py` and `tests/test_bootstrap_flow.py`.
+
+Remaining all-target policy baseline after the root bootstrap/workspace command test slice: `564 finding(s), 107 file(s)`.
 
 ### Latest validation evidence
 
-Commands run from `/Users/eugene/repos/projectkoios-bootstrap` after workspace-state protocol reconciliation:
+Commands run from `/Users/eugene/repos/projectkoios-bootstrap` after the root bootstrap/workspace command test slice:
 
-- `uv run pytest tests/test__workspaces_command.py -q` => `4 passed in 0.43s`.
-- `uv run mypy src/python/projectkoios/bootstrap/workspaces.py src/python/projectkoios/bootstrap/commands/workspaces.py tests/test__workspaces_command.py` => `Success: no issues found in 3 source files`.
-- `uv run projectkoios bootstrap validate-python-policy src/python/projectkoios/bootstrap/workspaces.py src/python/projectkoios/bootstrap/commands/workspaces.py` => `summary: 0 finding(s), 2 file(s)`.
-- `uv run pytest tests/test_bootstrap_flow.py tests/test__workspaces_command.py -q` => `6 passed in 0.58s`.
-- `uv run pytest -q` => `215 passed in 1.13s`.
+- `uv run projectkoios bootstrap validate-python-policy tests/test__workspaces_command.py tests/test_bootstrap_flow.py` => `summary: 0 finding(s), 2 file(s)`.
+- `uv run mypy tests/test__workspaces_command.py tests/test_bootstrap_flow.py` => `Success: no issues found in 2 source files`.
+- `uv run pytest tests/test__workspaces_command.py tests/test_bootstrap_flow.py -q` => `6 passed in 0.51s`.
+- `uv run pytest -q` => `215 passed in 1.15s`.
+- `uv run projectkoios bootstrap validate-python-policy --all` => `summary: 564 finding(s), 107 file(s)`.
 
 ## Open questions
 
-- Should existing live Hermes workspace `state.md`/`active.md` be minimally reseeded by Hermes, or left to role-owned updates when Hermes next starts work?
 - Which remaining root/bootstrap/harness test file group should be remediated next?
+- Should current accepted implementation packages be committed and pushed, or held for more packaging?
 - ATHENA should review architecture-owned GraphRAG and schema-record implementation reports for conformance where applicable.
 
 ## Next transition
 
-- Owner: HERMES or user for workspace-state protocol reconciliation review.
-- Owner: VULCAN if continuing test-code policy remediation.
-- Highest-leverage next action: HERMES/user review of `docs/implementation/implementation-report.20260705.003351_workspace-state-protocol-bootstrap-reconciliation.md`.
-- Expected successor artifact: review response, next test-code remediation report, or another bounded VULCAN implementation item.
+- Owner: HERMES or user for review/acceptance of `docs/implementation/implementation-report.20260705.010450_root-bootstrap-test-policy-remediation.md`.
+- Owner: VULCAN if continuing remaining test-code policy remediation.
+- Highest-leverage next action: request HERMES/user review of the root bootstrap/workspace command test remediation package or continue with the next bounded unremediated test group.
+- Expected successor artifact: review response, next test-code remediation report, or commit/push instruction.
 - Blockers: none currently.
 
 ## Startup checklist
@@ -99,5 +91,5 @@ Commands run from `/Users/eugene/repos/projectkoios-bootstrap` after workspace-s
 1. Confirm represented role from workspace and user request.
 2. Read `state.md` and `active.md`.
 3. Check `git status --short --branch`.
-4. For workspace protocol follow-up, read `docs/implementation/implementation-report.20260705.003351_workspace-state-protocol-bootstrap-reconciliation.md` first.
+4. For root bootstrap/workspace command test follow-up, read `docs/implementation/implementation-report.20260705.010450_root-bootstrap-test-policy-remediation.md` first.
 5. Preserve Vulcan boundary: implement, test, validate, report; do not invent architecture.

@@ -10,7 +10,9 @@ ROOT = Path(__file__).resolve().parent.parent
 
 
 def run_projectkoios(*args: str, home: Path) -> subprocess.CompletedProcess[str]:
-    env = os.environ.copy()
+    """Run the bootstrap module with an isolated home directory."""
+    # Environment isolates command effects under the test-provided home path.
+    env: dict[str, str] = os.environ.copy()
     env["HOME"] = str(home)
     env["PYTHONPATH"] = str(ROOT / "src/python")
     return subprocess.run(
@@ -26,7 +28,9 @@ def run_projectkoios(*args: str, home: Path) -> subprocess.CompletedProcess[str]
 def test_bootstrap_help_exposes_init_install_and_workspaces(
     tmp_path: Path,
 ) -> None:
-    result = run_projectkoios("bootstrap", "--help", home=tmp_path)
+    """Validate that bootstrap help exposes core subcommands."""
+    # Result captures the command help output for assertion.
+    result: subprocess.CompletedProcess[str] = run_projectkoios("bootstrap", "--help", home=tmp_path)
 
     assert result.returncode == 0
     assert "init" in result.stdout
@@ -37,7 +41,9 @@ def test_bootstrap_help_exposes_init_install_and_workspaces(
 def test_bootstrap_init_copies_example_files_and_skips_asset_dirs(
     tmp_path: Path,
 ) -> None:
-    result = run_projectkoios("bootstrap", "init", home=tmp_path)
+    """Validate that bootstrap init copies configs without asset directories."""
+    # Result captures the initialization command output and return code.
+    result: subprocess.CompletedProcess[str] = run_projectkoios("bootstrap", "init", home=tmp_path)
 
     assert result.returncode == 0, result.stderr
     assert (tmp_path / ".pi/settings.json").exists()
