@@ -56,7 +56,8 @@
 - Schema-record shallow immutability gap was remediated by VULCAN and reviewed by ATHENA; gap-closure review exists at `docs/reviews/architecture-conformance.20260704.164710_schema-immutability-gap-closure.md` with outcome `gap-closed`.
 - Projection/source-of-truth semantics were corrected: the ADR Markdown is an editable projection until a separate schema-backed JSON source record exists.
 - AAR recorded at `docs/AAR/aar.20260704.173652_schema-record-brief-handoff.md`.
-- ADR lifecycle/naming consolidation proposal created at `dev/adr-lifecycle-and-naming-consolidation/adr.adr-lifecycle-and-naming-consolidation.proposed.md`; HERMES and VULCAN review requested revision for lifecycle vocabulary compatibility, KOIOS requested claim-level provenance and tighter non-authority boundaries, and ATHENA revised the proposal accordingly. HERMES re-review found no blockers, VULCAN confirmed no remaining implementation/validation blockers, and user direction `go` accepted the proposal. Accepted ADR exists at user-corrected filename `docs/adr/adr.adr-lifecycle.20260705.011836Z.md`. User direction `next` authorized the bounded documentation/control-surface follow-on: lifecycle policy, lifecycle/naming architecture indexes, and source-draft pointer notes now reference the accepted ADR.
+- ADR lifecycle/naming consolidation proposal created at `dev/adr-lifecycle-and-naming-consolidation/adr.adr-lifecycle-and-naming-consolidation.proposed.md`; HERMES and VULCAN review requested revision for lifecycle vocabulary compatibility, KOIOS requested claim-level provenance and tighter non-authority boundaries, and ATHENA revised the proposal accordingly. HERMES re-review found no blockers, VULCAN confirmed no remaining implementation/validation blockers, and user direction `go` accepted the proposal. Accepted ADR exists at user-corrected filename `docs/adr/adr.adr-lifecycle.20260705.011836Z.md`. User direction `next` authorized the bounded documentation/control-surface follow-on: lifecycle policy, lifecycle/naming architecture indexes, and source-draft pointer notes now reference the accepted ADR. Commit `f0143c6` was pushed to `origin/master`.
+- New portfolio item started: template representation and namespace split proposal exists at `dev/template-representation-namespace-split/adr.template-representation.20260705.014135Z.proposed.md`. It bounds template JSON↔Markdown transformation, separates `docs/templates/` from `docs/implementation/`, and targets future implementation under `src/python/projectkoios/bootstrap/` rather than broad ingestion.
 
 ## Open questions
 
@@ -64,12 +65,12 @@
 - Whether a future validator should parse the top JSON metadata sections directly or require a structured companion.
 - Whether historical/transitional working files should be archived or removed from the active workspace surface.
 - No remaining dirty/untracked files were present at the 20260705.010834 startup reconciliation check.
-- Whether the user wants any further ADR lifecycle/naming work beyond completed policy/index/source-draft pointer reconciliation.
+- Whether HERMES/user should accept, revise, or reject the template representation and namespace split proposal.
 
 ## Next transition
 
 - Owner: user/HERMES for any separate follow-on documentation/control-surface reconciliation, unless ATHENA is redirected to another portfolio item.
-- Highest-leverage next action: choose another Athena-owned spec/ADR portfolio item, or request additional lifecycle/naming reconciliation beyond the accepted ADR pointer slice.
+- Highest-leverage next action: review `dev/template-representation-namespace-split/adr.template-representation.20260705.014135Z.proposed.md` for acceptance, revision, rejection, or routing to Vulcan after acceptance.
 - Secondary action: Athena may advance independent spec/ADR portfolio items after routing, while avoiding held-out implementation files.
 - Blockers: none currently known; preserve Athena boundary by reviewing/specifying, not implementing code.
 
