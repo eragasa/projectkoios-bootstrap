@@ -18,6 +18,12 @@ from projectkoios.bootstrap.harness.daemon.data import (
 
 
 def now_iso() -> str:
+    """Return the current UTC timestamp as an ISO string.
+
+    Returns:
+        Current UTC timestamp formatted with timezone information.
+    """
+
     return datetime.now(timezone.utc).isoformat()
 
 
@@ -58,11 +64,14 @@ class InitialFullBuild:
     name: str = "InitialFullBuild"
 
     def enabled(self, ctx: DaemonContext) -> bool:
+        """Return whether no metadata exists and an initial build is needed."""
         return ctx.metadata is None
 
     def apply(self, ctx: DaemonContext) -> DaemonContext:
+        """Run Graphify for the initial daemon build."""
         from projectkoios.bootstrap.harness.daemon.graphify_runner import run_graphify
 
+        # Result is the updated context returned by the Graphify runner.
         result: DaemonContext = run_graphify(ctx)
         return result
 
@@ -73,9 +82,11 @@ class WatchFilesystem:
     name: str = "WatchFilesystem"
 
     def enabled(self, ctx: DaemonContext) -> bool:
+        """Return whether the filesystem watcher transition may run."""
         return True
 
     def apply(self, ctx: DaemonContext) -> DaemonContext:
+        """Return the context unchanged for the watcher placeholder transition."""
         return ctx
 
 
@@ -85,9 +96,11 @@ class ScheduleUpdate:
     name: str = "ScheduleUpdate"
 
     def enabled(self, ctx: DaemonContext) -> bool:
+        """Return whether update scheduling may run."""
         return True
 
     def apply(self, ctx: DaemonContext) -> DaemonContext:
+        """Return the context unchanged for the scheduling placeholder transition."""
         return ctx
 
 
@@ -97,9 +110,11 @@ class RunGraphifyRefresh:
     name: str = "RunGraphifyRefresh"
 
     def enabled(self, ctx: DaemonContext) -> bool:
+        """Return whether existing metadata allows a refresh build."""
         return ctx.metadata is not None
 
     def apply(self, ctx: DaemonContext) -> DaemonContext:
+        """Run Graphify for a refresh build."""
         from projectkoios.bootstrap.harness.daemon.graphify_runner import run_graphify
 
         return run_graphify(ctx)
@@ -111,9 +126,11 @@ class GenerateChunkCards:
     name: str = "GenerateChunkCards"
 
     def enabled(self, ctx: DaemonContext) -> bool:
+        """Return whether a graph snapshot exists for chunk-card generation."""
         return ctx.graph_snapshot is not None
 
     def apply(self, ctx: DaemonContext) -> DaemonContext:
+        """Generate chunk cards for the current graph snapshot."""
         from projectkoios.bootstrap.harness.daemon.ollama import generate_chunk_cards
 
         return generate_chunk_cards(ctx)
@@ -125,9 +142,11 @@ class PublishSnapshot:
     name: str = "PublishSnapshot"
 
     def enabled(self, ctx: DaemonContext) -> bool:
+        """Return whether a graph snapshot exists for publishing."""
         return ctx.graph_snapshot is not None
 
     def apply(self, ctx: DaemonContext) -> DaemonContext:
+        """Publish a normal run snapshot for the current context."""
         from projectkoios.bootstrap.harness.daemon.publisher import publish_run
 
         return publish_run(ctx)
@@ -139,17 +158,21 @@ class PublishDegradedSnapshot:
     name: str = "PublishDegradedSnapshot"
 
     def enabled(self, ctx: DaemonContext) -> bool:
+        """Return whether failures and a snapshot require degraded publishing."""
         return bool(ctx.failures) and ctx.graph_snapshot is not None
 
     def apply(self, ctx: DaemonContext) -> DaemonContext:
+        """Mark context degraded and publish the degraded snapshot."""
         from projectkoios.bootstrap.harness.daemon.publisher import publish_run
 
+        # Degraded context carries the freshness state and warning expected by publisher.
         degraded_context: DaemonContext = with_degraded_state(ctx)
         return publish_run(degraded_context)
 
 
 def with_degraded_state(ctx: DaemonContext) -> DaemonContext:
     """Mark the context as degraded before publishing."""
+    # New freshness preserves hard failure state and otherwise marks the run degraded.
     new_freshness: FreshnessState = FreshnessState.FAILED if ctx.freshness == FreshnessState.FAILED else FreshnessState.DEGRADED
     return replace(
         ctx,

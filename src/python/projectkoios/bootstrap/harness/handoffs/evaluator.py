@@ -1,7 +1,7 @@
 from __future__ import annotations
 
+from collections.abc import Callable
 from pathlib import Path
-from typing import Callable
 
 from projectkoios.bootstrap.harness.data.artifact import HandoffArtifact
 from projectkoios.bootstrap.harness.data.marking import HandoffMarking, Marking
@@ -53,9 +53,14 @@ class HandoffEvaluator:
         Directories that don't exist or contain no parseable files are
         omitted from the marking.
         """
-        tokens_by_place: dict[str, list] = {}
+        # Tokens by place collects parsed handoff artifacts for each Petri-net place.
+        tokens_by_place: dict[str, list[HandoffArtifact]] = {}
+        place_name: str
+        rel_path: str
         for place_name, rel_path in PLACE_DIRECTORIES.items():
+            # Directory path is the concrete filesystem location for this place.
             dir_path: Path = self.repo_root / rel_path
+            # Tokens are parseable handoff artifacts found under the place directory.
             tokens: list[HandoffArtifact] = self.parser.parse_directory(dir_path)
             if tokens:
                 tokens_by_place[place_name] = tokens
@@ -72,8 +77,11 @@ class HandoffEvaluator:
         its own list; the evaluator concatenates them in guard registration
         order.
         """
+        # Marking is rebuilt for each evaluation so guard input reflects current files.
         marking: HandoffMarking = self.build_marking()
+        # Violations accumulates guard outputs in registration order.
         violations: list[Violation] = []
+        guard_fn: Callable[[HandoffMarking], list[Violation]]
         for guard_fn in self.guards:
             violations.extend(guard_fn(marking))
         return violations
@@ -84,9 +92,11 @@ class HandoffEvaluator:
         Useful for writing violations back to their source files via
         ``append_violations``.
         """
+        # By-file grouping supports appending violations back to affected artifacts.
         by_file: dict[Path, list[Violation]] = {}
-        for v in violations:
-            if v.path not in by_file:
-                by_file[v.path] = []
-            by_file[v.path].append(v)
+        violation: Violation
+        for violation in violations:
+            if violation.path not in by_file:
+                by_file[violation.path] = []
+            by_file[violation.path].append(violation)
         return by_file

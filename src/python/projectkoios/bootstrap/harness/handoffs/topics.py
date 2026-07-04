@@ -18,6 +18,8 @@ HANDOFFS_PREFIX: str = "docs/archive/handoffs/"
 
 @dataclass(frozen=True)
 class Message:
+    """Serializable topic message derived from one handoff artifact."""
+
     message_id: str
     source_path: str
     place: str
@@ -32,6 +34,8 @@ class Message:
 
 @dataclass(frozen=True)
 class Transition:
+    """Serializable transition inferred from handoff file existence."""
+
     message_id: str
     kind: str = "created"
     source: str = "inferred"
@@ -40,17 +44,23 @@ class Transition:
 
 @dataclass(frozen=True)
 class SkippedFile:
+    """Record a handoff file skipped during topic extraction."""
+
     source_path: str
     reason: str
 
 
 @dataclass(frozen=True)
 class Topics:
+    """Mapping of topic places to message identifiers."""
+
     places: dict[str, list[str]]
 
 
 @dataclass(frozen=True)
 class GuardViolation:
+    """Serializable guard violation linked to a topic message when possible."""
+
     code: str
     reason: str
     message_id: str | None = None
@@ -59,6 +69,8 @@ class GuardViolation:
 
 @dataclass(frozen=True)
 class TopicsView:
+    """Complete JSON-serializable handoff topics view."""
+
     schema_version: str = "1.0"
     repo_root: str = ""
     generated_at: str | None = None
@@ -70,12 +82,30 @@ class TopicsView:
 
 
 def message_id(source_path: str) -> str:
+    """Return the stable message identifier for a handoff source path.
+
+    Args:
+        source_path: Repository-relative handoff path.
+
+    Returns:
+        Source path with the archive handoff prefix removed when present.
+    """
+
     if source_path.startswith(HANDOFFS_PREFIX):
         return source_path[len(HANDOFFS_PREFIX):]
     return source_path
 
 
 def infer_place(source_path: str) -> str:
+    """Infer the Petri-net place name for a handoff source path.
+
+    Args:
+        source_path: Repository-relative handoff path.
+
+    Returns:
+        Matching place name, or ``unknown`` when no configured directory matches.
+    """
+
     place_name: str
     rel_dir: str
     for place_name, rel_dir in PLACE_DIRECTORIES.items():
@@ -85,6 +115,16 @@ def infer_place(source_path: str) -> str:
 
 
 def artifact_to_message(source_path: str, artifact: HandoffArtifact) -> Message:
+    """Convert a parsed handoff artifact into a topic message.
+
+    Args:
+        source_path: Repository-relative source path for the artifact.
+        artifact: Parsed handoff artifact.
+
+    Returns:
+        Serializable topic message.
+    """
+
     return Message(
         message_id=message_id(source_path),
         source_path=source_path,
@@ -100,6 +140,16 @@ def artifact_to_message(source_path: str, artifact: HandoffArtifact) -> Message:
 
 
 def artifact_to_transition(message_id_value: str, source_path: str) -> Transition:
+    """Create an inferred transition for a handoff artifact.
+
+    Args:
+        message_id_value: Stable message identifier for the artifact.
+        source_path: Repository-relative source path for the artifact.
+
+    Returns:
+        Serializable inferred transition.
+    """
+
     return Transition(
         message_id=message_id_value,
         evidence={
@@ -113,6 +163,17 @@ def violation_to_guard_violation(
     violation: Violation,
     path_to_message_id: dict[str, str],
 ) -> GuardViolation:
+    """Convert a guard violation into the topics-view representation.
+
+    Args:
+        violation: Guard violation emitted by the evaluator.
+        path_to_message_id: Lookup from source path to stable message identifier.
+
+    Returns:
+        Serializable guard violation for the topics view.
+    """
+
+    # Source path is stored in POSIX form to match message source paths.
     source_path: str = str(violation.path.as_posix())
     return GuardViolation(
         code=violation.code.value,
@@ -123,6 +184,16 @@ def violation_to_guard_violation(
 
 
 def build_topics_places(messages: list[Message]) -> Topics:
+    """Group message identifiers by topic place.
+
+    Args:
+        messages: Messages to group.
+
+    Returns:
+        Topics object containing place-to-message-id lists.
+    """
+
+    # Places maps each inferred place to ordered message identifiers.
     places: dict[str, list[str]] = {}
     msg: Message
     for msg in messages:
@@ -131,14 +202,29 @@ def build_topics_places(messages: list[Message]) -> Topics:
 
 
 def collect_messages(root: Path, parser: HandoffParser) -> tuple[list[Message], list[Transition], list[SkippedFile], dict[str, str]]:
+    """Collect topic messages, transitions, skipped files, and ID lookup data.
+
+    Args:
+        root: Repository root containing handoff directories.
+        parser: Parser used to convert handoff files into artifacts.
+
+    Returns:
+        Tuple of messages, transitions, skipped files, and source-path-to-message-ID mapping.
+    """
+
+    # Messages accumulates parsed handoff artifacts in topic-message form.
     messages: list[Message] = []
+    # Transitions accumulates inferred creation transitions for parsed handoffs.
     transitions: list[Transition] = []
+    # Skipped records Markdown files that lacked parseable handoff headers.
     skipped: list[SkippedFile] = []
+    # Path-to-message-ID connects evaluator paths back to topic message identifiers.
     path_to_message_id: dict[str, str] = {}
 
     place_name: str
     rel_dir: str
     for place_name, rel_dir in PLACE_DIRECTORIES.items():
+        # Directory path is the concrete filesystem location for a configured place.
         dir_path: Path = root / rel_dir
         if not dir_path.exists():
             continue
@@ -146,7 +232,9 @@ def collect_messages(root: Path, parser: HandoffParser) -> tuple[list[Message], 
         for file_path in sorted(dir_path.iterdir()):
             if not file_path.is_file() or file_path.suffix != ".md":
                 continue
+            # Source path is repository-relative and stable for JSON output.
             source_path: str = str(file_path.relative_to(root).as_posix())
+            # Artifact is absent when the file has no parseable handoff headers.
             artifact: HandoffArtifact | None = parser.parse_file(file_path)
             if artifact is None:
                 skipped.append(SkippedFile(
@@ -154,6 +242,7 @@ def collect_messages(root: Path, parser: HandoffParser) -> tuple[list[Message], 
                     reason="no parseable handoff headers",
                 ))
                 continue
+            # Message is the JSON-facing representation of the parsed artifact.
             msg: Message = artifact_to_message(source_path, artifact)
             messages.append(msg)
             transitions.append(artifact_to_transition(msg.message_id, source_path))
@@ -165,26 +254,47 @@ def build_topics_view(
     repo_root: Path,
     include_timestamp: bool = False,
 ) -> TopicsView:
+    """Build a complete handoff topics view for a repository.
+
+    Args:
+        repo_root: Repository root containing archived handoff directories.
+        include_timestamp: Include generation timestamp when true.
+
+    Returns:
+        Complete JSON-serializable topics view.
+    """
+
+    # Root is normalized before all parser and evaluator operations.
     root: Path = repo_root.resolve()
+    # Parser converts handoff Markdown files into structured artifacts.
     parser: HandoffParser = HandoffParser()
 
+    # Collected holds messages, transitions, skipped files, and message lookup data.
     collected: tuple[list[Message], list[Transition], list[SkippedFile], dict[str, str]] = collect_messages(root, parser)
+    # Messages are the parsed handoff artifacts for JSON output.
     messages: list[Message] = collected[0]
+    # Transitions are inferred from file existence and headers.
     transitions: list[Transition] = collected[1]
+    # Skipped records files that could not become messages.
     skipped: list[SkippedFile] = collected[2]
+    # Path-to-message-ID links guard violations to messages where possible.
     path_to_message_id: dict[str, str] = collected[3]
 
     messages.sort(key=lambda msg: msg.message_id)
     transitions.sort(key=lambda transition: transition.message_id)
 
+    # Evaluator runs current guard checks over the same repository root.
     evaluator: HandoffEvaluator = HandoffEvaluator(repo_root=root)
+    # Violations are converted into a JSON-facing guard-violation shape.
     violations: list[Violation] = evaluator.evaluate()
+    # Guard violations are sorted by code for deterministic output.
     guard_violations: list[GuardViolation] = [
         violation_to_guard_violation(violation, path_to_message_id)
         for violation in violations
     ]
     guard_violations.sort(key=lambda guard_violation: guard_violation.code)
 
+    # Generated timestamp is optional so default output remains byte-stable.
     generated_at: str | None = datetime.now(timezone.utc).isoformat() if include_timestamp else None
     return TopicsView(
         repo_root=str(root),

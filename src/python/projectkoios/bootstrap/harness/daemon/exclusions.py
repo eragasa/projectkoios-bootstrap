@@ -39,17 +39,21 @@ class ExclusionPolicy:
     @classmethod
     def for_repo(cls, repo_root: Path) -> ExclusionPolicy:
         """Build an exclusion policy for *repo_root*, loading ``.gitignore``."""
+        # Root is normalized before matching repository-relative paths.
         root: Path = repo_root.resolve()
+        # Patterns are loaded once so every policy check uses the same gitignore view.
         patterns: tuple[str, ...] = load_gitignore(root)
         return cls(repo_root=root, gitignore_patterns=patterns)
 
     def is_excluded(self, path: Path) -> bool:
         """True if *path* should be excluded from ingestion."""
         try:
+            # Relative path rejects inputs outside the repository root.
             rel: Path = path.resolve().relative_to(self.repo_root)
         except ValueError:
             return True
 
+        # Parts allow built-in patterns to match any path component.
         parts: tuple[str, ...] = rel.parts
         part: str
         pattern: str
@@ -58,6 +62,7 @@ class ExclusionPolicy:
                 if fnmatch(part, pattern):
                     return True
 
+        # Rel-posix is the normalized string used for gitignore-style matching.
         rel_posix: str = rel.as_posix()
         for pattern in self.gitignore_patterns:
             if gitignore_match(pattern, rel_posix):
@@ -72,12 +77,15 @@ class ExclusionPolicy:
 
 def load_gitignore(repo_root: Path) -> tuple[str, ...]:
     """Load patterns from ``.gitignore`` at *repo_root*."""
+    # Gitignore is the repository-local ignore file read by the daemon policy.
     gitignore: Path = repo_root / ".gitignore"
     if not gitignore.exists():
         return ()
+    # Patterns accumulates supported non-negated ignore lines.
     patterns: list[str] = []
     line: str
     for line in gitignore.read_text(encoding="utf-8").splitlines():
+        # Stripped line removes comments and blank-line noise before matching.
         stripped: str = line.strip()
         if not stripped or stripped.startswith("#"):
             continue
@@ -89,6 +97,7 @@ def load_gitignore(repo_root: Path) -> tuple[str, ...]:
 
 def gitignore_match(pattern: str, rel_path: str) -> bool:
     """Match a .gitignore-style pattern against a repo-relative posix path."""
+    # Clean pattern ignores a trailing slash while preserving the path prefix.
     clean: str = pattern.rstrip("/")
     if fnmatch(rel_path, clean):
         return True

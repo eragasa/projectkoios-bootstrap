@@ -32,6 +32,7 @@ async def run_with_coalesce(
             state.follow_up_scheduled = True
             return
         state.update_in_flight = True
+        # Batch snapshots pending events for the update that will run now.
         batch: list[E] = list(state.pending_events)
         state.pending_events.clear()
 
@@ -40,7 +41,9 @@ async def run_with_coalesce(
     finally:
         async with state.lock:
             state.update_in_flight = False
+            # Needs-follow-up records whether events arrived during the active update.
             needs_follow_up: bool = state.follow_up_scheduled
+            # Follow-up batch snapshots queued events before releasing the scheduler lock.
             follow_up_batch: list[E] = list(state.pending_events)
             state.pending_events.clear()
             state.follow_up_scheduled = False

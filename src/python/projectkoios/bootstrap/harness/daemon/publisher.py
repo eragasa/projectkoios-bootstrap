@@ -7,7 +7,7 @@ from datetime import datetime, timezone
 import json
 from pathlib import Path
 import shutil
-from typing import Any
+from typing import TypeAlias
 
 from projectkoios.bootstrap.harness.daemon.activities import DaemonContext
 from projectkoios.bootstrap.harness.daemon.data import (
@@ -15,6 +15,9 @@ from projectkoios.bootstrap.harness.daemon.data import (
     RunMetadata,
 )
 
+
+JsonScalar: TypeAlias = str | int | float | bool | None
+JsonObject: TypeAlias = dict[str, JsonScalar | list[dict[str, str]] | list[str]]
 
 DEFAULT_RUNTIME_ROOT: Path = Path.home() / ".pi" / "koios-ingestion"
 """Default Hermes-local runtime root for all ingestion daemon output."""
@@ -47,9 +50,12 @@ def write_chunk_cards(ctx: DaemonContext, run_dir: Path) -> str:
     """Write chunk cards when present and return the written path or empty string."""
     if ctx.chunk_card_set is None or not ctx.chunk_cards:
         return ""
+    # Card-set path is the runtime artifact written for generated chunk cards.
     card_set_path: Path = run_dir / "chunk_cards.json"
+    # Cards payload is the JSON-compatible list of chunk card records.
     cards_payload: list[dict[str, str]] = chunk_cards_payload(ctx)
-    payload: dict[str, Any] = {
+    # Payload is the deterministic JSON object persisted for the card set.
+    payload: JsonObject = {
         "run_id": ctx.run_id,
         "model": ctx.chunk_card_set.model,
         "degraded": ctx.chunk_card_set.degraded,
@@ -74,7 +80,8 @@ def write_degraded_report(ctx: DaemonContext, metadata: RunMetadata, run_dir: Pa
     """Write degraded-state report when the run is degraded."""
     if freshness != FreshnessState.DEGRADED:
         return
-    degraded_report: dict[str, Any] = {
+    # Degraded report is the reviewable JSON summary for partial or warning runs.
+    degraded_report: JsonObject = {
         "run_id": ctx.run_id,
         "freshness": freshness.value,
         "failures": list(ctx.failures),
@@ -89,6 +96,7 @@ def write_degraded_report(ctx: DaemonContext, metadata: RunMetadata, run_dir: Pa
 
 def update_latest_symlink(repo_identity: str, run_dir: Path) -> None:
     """Update the latest symlink for a repository runtime directory."""
+    # Latest symlink points consumers at the newest run directory.
     latest: Path = runtime_dir_for(repo_identity) / "latest"
     if latest.exists() or latest.is_symlink():
         latest.unlink()
@@ -100,17 +108,23 @@ def publish_run(ctx: DaemonContext) -> DaemonContext:
     if ctx.graph_snapshot is None or ctx.metadata is None:
         return ctx
 
+    # Repository identity selects the runtime output namespace.
     repo_identity: str = ctx.metadata.repo_identity
+    # Run directory contains all artifacts produced by this daemon cycle.
     run_dir: Path = runtime_dir_for(repo_identity) / ctx.run_id
     run_dir.mkdir(parents=True, exist_ok=True)
 
+    # Graph snapshot path is copied into the runtime run directory when present.
     graph_snapshot_path: Path = Path(ctx.graph_snapshot.path)
     if graph_snapshot_path.exists():
         shutil.copy2(graph_snapshot_path, run_dir / "graph.json")
 
+    # Card-set path is non-empty only when chunk cards were generated.
     card_set_path: str = write_chunk_cards(ctx, run_dir)
+    # Freshness records the final published state for marker and metadata files.
     freshness: FreshnessState = final_freshness(ctx)
 
+    # Metadata is updated with artifact paths, freshness, and final timing details.
     metadata: RunMetadata = replace(
         ctx.metadata,
         graph_snapshot_path=str(run_dir / "graph.json"),

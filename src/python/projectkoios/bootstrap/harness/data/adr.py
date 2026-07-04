@@ -6,6 +6,8 @@ from pathlib import Path
 
 
 class AdrStatus(StrEnum):
+    """Lifecycle status values for architecture decision records."""
+
     DRAFT = "draft"
     ACCEPTED = "accepted"
     COMPLETED = "completed"

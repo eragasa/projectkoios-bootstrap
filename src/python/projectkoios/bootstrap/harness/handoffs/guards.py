@@ -1,7 +1,8 @@
 from __future__ import annotations
 
-from typing import Callable
+from collections.abc import Callable
 
+from projectkoios.bootstrap.harness.data.artifact import HandoffArtifact
 from projectkoios.bootstrap.harness.data.marking import HandoffMarking
 from projectkoios.bootstrap.harness.data.violation import Violation, ViolationCode
 
@@ -33,8 +34,11 @@ def check_hermes_forwarded_without_decision(marking: HandoffMarking) -> list[Vio
     recipient matching Hermes but the token kind is not one of the accepted
     decision kinds or a user request. The guard detects passive routing.
     """
+    # Violations accumulates passive Hermes routing findings.
     violations: list[Violation] = []
+    place_name: str
     for place_name in ("pi_inbox",):
+        token: HandoffArtifact
         for token in marking.tokens_at(place_name):
             if token.sender not in HERMES_IDS and token.recipient not in HERMES_IDS:
                 continue
@@ -63,11 +67,15 @@ def check_wrong_implementation_owner(marking: HandoffMarking) -> list[Violation]
     nor ``opencode``, the guard fires. This prevents Hermes from closing
     out implementation work that belongs to Vulcan.
     """
+    # Violations accumulates implementation artifacts emitted by non-Vulcan owners.
     violations: list[Violation] = []
+    token: HandoffArtifact
     for token in marking.all_tokens:
         if token.kind not in IMPLEMENTATION_KINDS:
             continue
+        # Owner is the artifact sender claimed by the handoff headers.
         owner: str = token.sender
+        # Expected is the durable role owner for implementation artifacts.
         expected: str = "Vulcan"
         if owner and owner.lower() != expected.lower() and owner != "opencode":
             violations.append(Violation(
@@ -94,8 +102,11 @@ def check_delegated_operator_missing(marking: HandoffMarking) -> list[Violation]
     Codex but the ``Delegated-Operator`` field is absent. This ensures
     mediated access is always visible in the artifact record.
     """
+    # Violations accumulates Codex-mediated artifacts missing operator provenance.
     violations: list[Violation] = []
+    token: HandoffArtifact
     for token in marking.all_tokens:
+        # Boolean records whether any identity-bearing field claims Codex mediation.
         is_codex_actor: bool = bool(
             token.sender in CODEX_IDS
             or token.origin in CODEX_IDS
@@ -129,13 +140,17 @@ def check_codex_as_pi_identity_collapse(marking: HandoffMarking) -> list[Violati
     This preserves the separation between the delegated operator layer (Codex)
     and the accountable meta-harness operator (Hermes/pi).
     """
+    # Violations accumulates artifacts that collapse delegated and accountable identities.
     violations: list[Violation] = []
+    token: HandoffArtifact
     for token in marking.all_tokens:
+        # Claims-pi-origin records whether identity fields assert Hermes or pi authority.
         claims_pi_origin: bool = bool(
             token.origin in HERMES_IDS
             or token.sender in HERMES_IDS
             or (token.acting_as and token.acting_as in HERMES_IDS)
         )
+        # Codex-produced records explicit or inferred Codex mediation provenance.
         is_codex_produced: bool = (
             token.delegated_operator in CODEX_IDS
             or token.provenance_has_codex()

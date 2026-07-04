@@ -13,17 +13,20 @@ class HandoffParser:
         """Parse a single handoff file, or return ``None`` if it has no headers."""
         if not path.exists():
             return None
+        # Text is the complete Markdown content scanned for handoff headers.
         text: str = path.read_text(encoding="utf-8")
         return self.parse_text(path, text)
 
     def parse_directory(self, directory: Path) -> list[HandoffArtifact]:
         """Parse every ``*.md`` file in *directory*, sorted by path."""
+        # Result accumulates parseable handoff artifacts in deterministic path order.
         result: list[HandoffArtifact] = []
         if not directory.exists():
             return result
         path: Path
         for path in sorted(directory.iterdir()):
             if path.is_file() and path.suffix == ".md":
+                # Token is absent when a Markdown file lacks handoff headers.
                 token: HandoffArtifact | None = self.parse_file(path)
                 if token is not None:
                     result.append(token)
@@ -31,6 +34,7 @@ class HandoffParser:
 
     def parse_text(self, path: Path, text: str) -> HandoffArtifact | None:
         """Build an artifact from header fields and title."""
+        # Frontmatter stores normalized handoff headers extracted from Markdown text.
         frontmatter: dict[str, str] = self.extract_frontmatter(text)
         if not frontmatter:
             return None
@@ -50,13 +54,25 @@ class HandoffParser:
         )
 
     def extract_frontmatter(self, text: str) -> dict[str, str]:
+        """Extract handoff header fields from Markdown text.
+
+        Args:
+            text: Markdown text to scan.
+
+        Returns:
+            Mapping of handoff header names to values.
+        """
+
         return extract_handoff_headers(text)
 
     def infer_kind(self, frontmatter: dict[str, str], text: str) -> str:
         """Classify the artifact by its H1 title, then fall back to sender/recipient."""
+        # Title-lower is the first Markdown H1 normalized for keyword classification.
         title_lower: str = next((line.lower() for line in text.splitlines() if line.startswith("# ")), "")
 
+        # From header is lower-cased for sender-based fallback classification.
         from_hdr: str = frontmatter.get("From", "").lower()
+        # To header is lower-cased for recipient-based fallback classification.
         to_hdr: str = frontmatter.get("To", "").lower()
 
         if "architecture" in title_lower or "spec" in title_lower:

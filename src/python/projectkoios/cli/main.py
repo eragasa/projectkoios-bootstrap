@@ -8,11 +8,16 @@ from projectkoios.cli import koios
 
 
 def main() -> None:
+    """Run the Project Koios command-line interface."""
+    # Parser owns the top-level projectkoios CLI command surface.
     parser: argparse.ArgumentParser = argparse.ArgumentParser(prog="projectkoios", description="Project Koios bootstrap CLI")
+    # Subparsers dispatch top-level command groups.
     subparsers: argparse._SubParsersAction[argparse.ArgumentParser] = parser.add_subparsers(dest="command")
     subparsers.required = True
 
+    # Bootstrap parser groups bootstrap repository operations.
     bootstrap_parser: argparse.ArgumentParser = subparsers.add_parser("bootstrap", help="Bootstrap commands")
+    # Bootstrap subparsers dispatch individual bootstrap commands.
     bootstrap_subparsers: argparse._SubParsersAction[argparse.ArgumentParser] = bootstrap_parser.add_subparsers(dest="action")
     bootstrap_subparsers.required = True
 
@@ -25,5 +30,6 @@ def main() -> None:
     ingestion.register(subparsers)
     koios.register(subparsers)
 
+    # Args contains the parsed command namespace and selected handler.
     args: Namespace = parser.parse_args()
     args.func(args)

@@ -35,6 +35,7 @@ class Violation:
 
     def to_markdown_block(self) -> str:
         """Format this violation as a Markdown bullet list."""
+        # Lines stores the YAML-like fields emitted for this violation.
         lines: list[str] = [f"- code: {self.code.value}"]
         lines.append(f"  actor: {self.actor}")
         if self.required_owner:

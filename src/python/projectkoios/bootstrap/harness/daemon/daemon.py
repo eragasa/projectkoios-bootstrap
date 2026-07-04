@@ -45,7 +45,9 @@ def now_iso() -> str:
 
 def new_run_id() -> str:
     """Create a daemon run identifier."""
+    # Timestamp gives each run ID a sortable UTC prefix.
     timestamp: str = datetime.now(timezone.utc).strftime("%Y%m%d%H%M%S")
+    # Suffix prevents collisions when multiple runs start within one second.
     suffix: str = uuid.uuid4().hex[:8]
     return timestamp + "-" + suffix
 
@@ -53,6 +55,7 @@ def new_run_id() -> str:
 def git_status_short(repo_root: Path) -> str:
     """Return ``git status --short`` output, or empty string if git fails."""
     try:
+        # Result captures git status output without mutating the repository.
         result: subprocess.CompletedProcess[str] = subprocess.run(
             ["git", "status", "--short"],
             capture_output=True,
@@ -71,12 +74,17 @@ def check_source_tree_safety(repo_root: Path, before: str, after: str) -> list[s
     """Detect unexpected source-tree changes caused by the daemon's own run."""
     if before == after:
         return []
+    # Before lines are the git status entries present before the daemon run.
     before_lines: set[str] = set(before.splitlines())
+    # After lines are the git status entries present after the daemon run.
     after_lines: set[str] = set(after.splitlines())
+    # New lines isolate status entries introduced during daemon execution.
     new_lines: set[str] = after_lines - before_lines
+    # Unexpected records non-runtime source-tree changes for warning metadata.
     unexpected: list[str] = []
     line: str
     for line in new_lines:
+        # Path is parsed from the porcelain status entry after the two-character code.
         path: str = line[3:].strip()
         if not path:
             continue
@@ -107,7 +115,9 @@ def add_safety_warnings(ctx: DaemonContext, safety: Sequence[str]) -> DaemonCont
     """Return context with source-tree safety warnings added."""
     if not safety:
         return ctx
+    # Warning tuple appends source-tree safety messages to immutable context fields.
     warning_tuple: tuple[str, ...] = tuple(safety)
+    # Updated context carries the warnings even when metadata is absent.
     updated_context: DaemonContext = replace(ctx, warnings=ctx.warnings + warning_tuple)
     if updated_context.metadata is None:
         return updated_context
@@ -124,6 +134,7 @@ def publish_after_build(ctx: DaemonContext) -> DaemonContext:
     """Generate cards and publish the appropriate daemon snapshot."""
     if ctx.failures:
         return PublishDegradedSnapshot().apply(ctx)
+    # Card context contains chunk-card generation output before final publishing.
     card_context: DaemonContext = GenerateChunkCards().apply(ctx)
     if card_context.failures:
         return PublishDegradedSnapshot().apply(card_context)
@@ -135,12 +146,17 @@ def run_once(
     trigger_kind: str = "manual",
 ) -> DaemonRunResult:
     """Run one full daemon cycle: build → cards → publish."""
+    # Resolved repository root is the canonical path used by all daemon components.
     resolved_repo_root: Path = repo_root.resolve()
+    # Run ID uniquely names runtime artifacts from this cycle.
     run_id: str = new_run_id()
+    # Started timestamp is recorded before any daemon activity fires.
     started_at: str = now_iso()
 
+    # Git status before the run is used to detect unexpected source mutations.
     git_before: str = git_status_short(resolved_repo_root)
 
+    # Context carries run state through the activity sequence.
     ctx: DaemonContext = DaemonContext(
         run_id=run_id,
         repo_root=str(resolved_repo_root),
@@ -149,14 +165,21 @@ def run_once(
         freshness=FreshnessState.UPDATING,
     )
 
+    # Build transition runs Graphify for the repository.
     build: InitialFullBuild = InitialFullBuild()
+    # Built context contains graph snapshot or failure information from Graphify.
     built_context: DaemonContext = build.apply(ctx)
+    # Published context contains persisted metadata and optional chunk-card state.
     published_context: DaemonContext = publish_after_build(built_context)
 
+    # Git status after the run is compared against the pre-run status.
     git_after: str = git_status_short(resolved_repo_root)
+    # Safety warnings identify unexpected source changes introduced by the daemon.
     safety: list[str] = check_source_tree_safety(resolved_repo_root, git_before, git_after)
+    # Final context includes any source-tree safety warnings.
     final_context: DaemonContext = add_safety_warnings(published_context, safety)
 
+    # Result is the complete public outcome object returned to CLI callers.
     result: DaemonRunResult = DaemonRunResult(
         metadata=final_context.metadata or fallback_metadata(final_context),
         graph_snapshot=final_context.graph_snapshot,
@@ -174,15 +197,20 @@ async def run_daemon(
     max_cycles: int | None = None,
 ) -> None:
     """Run the daemon as a background watcher."""
+    # Resolved repository root is shared by initial and filesystem-triggered runs.
     resolved_repo_root: Path = repo_root.resolve()
+    # Policy filters filesystem watcher events to eligible repository paths.
     policy: ExclusionPolicy = ExclusionPolicy.for_repo(resolved_repo_root)
-    state: SchedulerState = SchedulerState()
-    cycles: int = 0
+    # State tracks debounce and coalescing behavior for watcher updates.
+    state: SchedulerState[WatchEvent] = SchedulerState()
+    # Cycles stores completed filesystem-triggered update count in a mutable cell.
+    cycles: list[int] = [0]
 
+    # Initial result performs the startup build before watcher mode begins.
     initial: DaemonRunResult = run_once(resolved_repo_root, trigger_kind="initial")
     print_result(initial)
 
-    if max_cycles is not None and cycles >= max_cycles:
+    if max_cycles is not None and cycles[0] >= max_cycles:
         return
 
     print(
@@ -191,11 +219,17 @@ async def run_daemon(
     )
 
     async def do_update(events: list[WatchEvent]) -> None:
-        nonlocal cycles
-        cycles += 1
+        """Run one filesystem-triggered daemon update.
+
+        Args:
+            events: Coalesced filesystem events that triggered this update.
+        """
+
+        cycles[0] += 1
+        # Result is printed after each filesystem-triggered daemon cycle.
         result: DaemonRunResult = run_once(resolved_repo_root, trigger_kind="filesystem")
         print_result(result)
-        if max_cycles is not None and cycles >= max_cycles and stop_event is not None:
+        if max_cycles is not None and cycles[0] >= max_cycles and stop_event is not None:
             stop_event.set()
 
     await watch(
@@ -209,7 +243,9 @@ async def run_daemon(
 
 def print_result(result: DaemonRunResult) -> None:
     """Print a concise daemon result summary."""
+    # Metadata supplies summary counters and run identity for CLI output.
     metadata: RunMetadata = result.metadata
+    # Card count is zero when chunk-card generation did not produce a set.
     card_count: int = result.chunk_card_set.card_count if result.chunk_card_set else 0
     print(
         f"[daemon] run={metadata.run_id} freshness={metadata.freshness.value} "

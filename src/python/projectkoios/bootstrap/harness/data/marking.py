@@ -34,7 +34,9 @@ class Marking(Generic[T]):
     @property
     def all_tokens(self) -> list[T]:
         """Every token across every place, flattened."""
+        # Result accumulates a stable flattened copy without exposing internal lists.
         result: list[T] = []
+        tokens: list[T]
         for tokens in self.tokens_by_place.values():
             result.extend(tokens)
         return result

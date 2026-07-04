@@ -11,12 +11,23 @@ CANONICAL_WORKSPACES: tuple[str, ...] = ("hermes", "athena", "vulcan", "koios")
 
 @dataclass(frozen=True, slots=True)
 class WorkspaceTemplate:
+    """Seed content for one role workspace instruction file.
+
+    Args:
+        agent: Workspace agent key.
+        title: Human-readable workspace title.
+        role_summary: Short role boundary summary.
+        instructions: Bullet instructions rendered into the workspace file.
+    """
+
     agent: str
     title: str
     role_summary: str
     instructions: tuple[str, ...]
 
     def render(self) -> str:
+        """Render this template as Markdown text."""
+        # Lines accumulates the deterministic Markdown template body.
         lines: list[str] = [
             f"# {self.title}",
             "",
@@ -112,27 +123,47 @@ TEMPLATES: dict[str, WorkspaceTemplate] = {
 
 
 def workspace_root(root: Path | None = None) -> Path:
+    """Return the repository root used for workspace materialization."""
     return REPO_ROOT if root is None else root
 
 
 def ensure_workspace(root: Path, agent: str, *, force: bool = False) -> list[Path]:
+    """Ensure one workspace directory and seed files exist.
+
+    Args:
+        root: Repository root containing the workspaces directory.
+        agent: Workspace agent key to materialize.
+        force: Overwrite seed files when true.
+
+    Returns:
+        Paths created or overwritten during materialization.
+    """
+
+    # Workspace is the role-specific directory under the repository workspace root.
     workspace: Path = root / "workspaces" / agent
     workspace.mkdir(parents=True, exist_ok=True)
+    # Created records all directories and files materialized by this call.
     created: list[Path] = []
 
+    # Workspace dirs are the canonical local subdirectories for each role workspace.
     workspace_dirs: tuple[str, ...] = (
         "sessions",
         "working",
         "scratch",
         "decisions",
     )
+    rel: str
     for rel in workspace_dirs:
+        # Path is the concrete workspace subdirectory being ensured.
         path: Path = workspace / rel
         path.mkdir(parents=True, exist_ok=True)
         created.append(path)
 
+    # State is the durable workspace resume snapshot file.
     state: Path = workspace / "state.md"
+    # Active is the current priority and work queue file.
     active: Path = workspace / "active.md"
+    # Agent file contains local role instructions for the workspace.
     agent_md: Path = workspace / "AGENTS.md"
 
     if force or not state.exists():
@@ -160,6 +191,7 @@ def ensure_workspace(root: Path, agent: str, *, force: bool = False) -> list[Pat
         )
         created.append(active)
 
+    # Template provides the role-specific local instruction content.
     template: WorkspaceTemplate = TEMPLATES[agent]
     if force or not agent_md.exists():
         agent_md.write_text(template.render(), encoding="utf-8")
@@ -174,9 +206,24 @@ def ensure_workspaces(
     agents: Iterable[str] = (),
     force: bool = False,
 ) -> list[Path]:
+    """Ensure canonical workspaces or a selected subset exist.
+
+    Args:
+        root: Repository root containing the workspaces directory.
+        agents: Optional subset of workspace agent keys.
+        force: Overwrite seed files when true.
+
+    Returns:
+        Paths created or overwritten across all selected workspaces.
+    """
+
+    # Base is the repository root used for materialization.
     base: Path = workspace_root(root)
+    # Selected is either the requested agent subset or every canonical workspace.
     selected: tuple[str, ...] = tuple(agents) if agents else CANONICAL_WORKSPACES
+    # Created accumulates materialized paths across selected workspaces.
     created: list[Path] = []
+    agent: str
     for agent in selected:
         created.extend(ensure_workspace(base, agent, force=force))
     return created

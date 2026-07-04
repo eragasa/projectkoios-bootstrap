@@ -13,8 +13,11 @@ def extract_handoff_headers(text: str) -> dict[str, str]:
     Scanning stops at the first non-header line (blank line or prose).
     Duplicate keys overwrite — the last occurrence wins.
     """
+    # Fields accumulates parsed handoff header keys and values.
     fields: dict[str, str] = {}
+    line: str
     for line in text.splitlines():
+        # Match identifies header-shaped lines at the top of the file.
         match: re.Match[str] | None = HEADER_FIELD_PATTERN.match(line)
         if match:
             fields[match.group(1)] = match.group(2).strip()
