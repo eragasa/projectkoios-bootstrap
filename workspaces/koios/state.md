@@ -4,7 +4,7 @@
 
 - Type: workspace-state
 - Status: active
-- Updated: 20260704T162432Z
+- Updated: 20260704T172009Z
 - Updated by: KOIOS
 - Repository: projectkoios-bootstrap
 - Workspace: `workspaces/koios/`
@@ -17,7 +17,9 @@ KOIOS does not create architecture authority, implementation authority, or workf
 
 ## Current knowledge state
 
-The current active Koios thread concerns the distinction between ADRs, architecture documents, policies, templates, implementation briefs, and process-capture notes.
+The current active Koios thread concerns ADR control-surface provenance, including the distinction between ADRs, architecture documents, policies, templates, implementation briefs, and process-capture notes.
+
+ATHENA accepted `docs/adr/adr.20260705.011836_adr-lifecycle-and-naming-consolidation.md` after HERMES, VULCAN, and KOIOS review clearance and user direction `go`.
 
 Captured/advisory artifacts in this workspace:
 
@@ -32,6 +34,10 @@ KOIOS has captured that an ATHENA incubating note described architecture documen
 KOIOS has advised that the active `docs/adr/` directory appears to conflate decision records, architecture blueprints, policies, templates, and implementation briefs.
 
 KOIOS has advised that ATHENA should define a target directory/surface map before files are moved.
+
+KOIOS verified the accepted ADR exists and preserves claim/source traceability for lifecycle/status reconciliation, spike packaging, proposed review surfaces, title/filename separation, child naming guidance disposition, and non-silent supersession.
+
+The accepted ADR records that no file renames, archive migrations, schema changes, tooling changes, policy/index updates, or source-draft supersessions are authorized without separate handoff.
 
 ## Authority boundary
 
