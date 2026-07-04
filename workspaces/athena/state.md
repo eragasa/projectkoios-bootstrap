@@ -59,17 +59,17 @@
 
 ## Open questions
 
-- User execution approval for VULCAN to stage/commit the HERMES-approved workspace-state policy/bootstrap reconciliation package; VULCAN confirmed it is waiting and will stage only the HERMES include set.
+- Whether HERMES/user should push or otherwise close out the two new commits: `02b8748` workspace-state reconciliation and `23f9802` schema immutability gap-closure review.
 - Whether a future validator should parse the top JSON metadata sections directly or require a structured companion.
 - Whether historical/transitional working files should be archived or removed from the active workspace surface.
-- Explicit user execution direction on whether to package only the remaining schema immutability gap-closure review artifact, because remediation code/tests/report are already committed in `82740ea`.
+- Remaining dirty/untracked files are held-out VULCAN/KOIOS work plus Athena `AGENTS.md` control-plane update; committed workspace-state and schema gap-closure slices are no longer pending.
 - Which larger Athena track should be advanced first after conformance review: workspace-state protocol promotion, ADR lifecycle/naming consolidation, template representation brief, or workflow Petri-net executor readiness.
 
 ## Next transition
 
-- Owner: user/VULCAN for execution decision on remaining schema immutability gap-closure review artifact and workspace-state package.
-- Highest-leverage next action: await user/VULCAN execution status for remaining package candidates, or choose another Athena-owned spec/ADR portfolio item that does not touch implementation files.
-- Secondary action: await user/VULCAN staging/commit execution for HERMES-approved workspace-state reconciliation package, then Athena may advance independent spec/ADR portfolio items after routing.
+- Owner: HERMES/user for push or closeout decision on the two new commits and held-out dirty work.
+- Highest-leverage next action: request push/closeout guidance or choose another Athena-owned spec/ADR portfolio item that does not touch held-out implementation files.
+- Secondary action: Athena may advance independent spec/ADR portfolio items after routing, while avoiding held-out implementation files.
 - Blockers: none currently known; preserve Athena boundary by reviewing/specifying, not implementing code.
 
 ## Startup checklist

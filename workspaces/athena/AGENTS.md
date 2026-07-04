@@ -12,6 +12,7 @@ New sessions in this workspace default to ATHENA unless the user explicitly name
 - Keep spec work clear, narrow, and decision-oriented.
 - Treat the next best step as an incremental edit to the relevant control surface before expanding work.
 - If work becomes implementation/code cleanup, stop and route to Vulcan or ask for an explicit role switch before editing code.
+- If Athena needs another role/agent to do something, send an explicit intercom handoff/request to that role instead of only recording the need in local state.
 - Use Graphify only at the beginning of a session for broad context, and run it from the repo root (`/Users/eugene/repos/projectkoios-bootstrap`) unless the user explicitly asks for another graph refresh.
 
 ## Workspace files

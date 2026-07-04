@@ -20,16 +20,16 @@
 
 ## Current priority stack
 
-1. Schema immutability remediation code/tests/report are already committed in `82740ea`; remaining clean follow-up candidate is only `docs/reviews/architecture-conformance.20260704.164710_schema-immutability-gap-closure.md`, pending explicit user execution direction.
-2. HERMES made commit-packaging decision for workspace-state policy/bootstrap reconciliation as its own slice; VULCAN is waiting on explicit user execution approval before staging/committing only the HERMES include set.
+1. Schema immutability gap-closure review was committed as `23f9802 Add schema immutability gap closure review`; remediation code/tests/report were already committed in `82740ea`.
+2. Workspace-state policy/bootstrap reconciliation was committed as `02b8748 Reconcile workspace state protocol bootstrap`; HERMES include set was staged separately.
 3. Advance an Athena-owned portfolio only if it does not touch implementation/bootstrap surfaces currently owned by VULCAN.
 4. Consolidate ADR lifecycle and naming drafts into the next accepted lifecycle slice, preserving provenance and avoiding architecture-index edits unless Hermes/Zeus directs them.
 5. Prepare the next implementation-ready brief from an accepted or near-ready plan after checking document authority, with candidates including template representation namespace split or workflow Petri-net executor.
 
 ## Waiting on
 
-- Explicit user execution direction on whether VULCAN should stage/commit only `docs/reviews/architecture-conformance.20260704.164710_schema-immutability-gap-closure.md` as the remaining schema immutability follow-up artifact.
-- User execution approval for VULCAN to stage/commit the workspace-state policy/bootstrap reconciliation package.
+- Branch is ahead `origin/master` by 2 commits: `02b8748` and `23f9802`; user/HERMES push or packaging closeout decision may be needed.
+- Remaining dirty/untracked files are held-out VULCAN/KOIOS work plus Athena `AGENTS.md` control-plane update.
 - Hermes/user direction before editing `docs/architecture/architecture.workspaces.00.md` or `docs/architecture/architecture.00.md`.
 - Authority check before turning any draft ADR or plan into implementation authority.
 - Any needed action by another role/agent should be sent as an explicit intercom handoff/request, then recorded here as waiting-on.
