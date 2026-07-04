@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 import json
 
-from projectkoios.bootstrap.schemas.models import (
+from projectkoios.bootstrap.schema.models import (
     CONCERN_LEVEL_ORDER,
     DRAFT_ADR_SECTION_FIELDS,
     DRAFT_ADR_SECTION_HEADINGS,

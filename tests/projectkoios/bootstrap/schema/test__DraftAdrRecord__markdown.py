@@ -4,13 +4,13 @@ from dataclasses import FrozenInstanceError
 
 import pytest
 
-from projectkoios.bootstrap.schemas import (
+from projectkoios.bootstrap.schema import (
     DraftAdrMarkdownIngester,
     DraftAdrMarkdownRenderer,
     DraftAdrRecord,
     MarkdownIngestError,
 )
-from tests.projectkoios.bootstrap.schemas.test__SchemaRegistry__validate import valid_draft_adr_record
+from tests.projectkoios.bootstrap.schema.test__SchemaRegistry__validate import valid_draft_adr_record
 
 
 def test__DraftAdrRecord__from_dict__is_immutable_and_preserves_metadata():

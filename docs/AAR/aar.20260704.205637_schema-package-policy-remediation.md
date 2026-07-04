@@ -2,7 +2,7 @@
 
 ## Scope
 
-VULCAN remediated `src/python/projectkoios/bootstrap/schemas/` against the new Python policy validator rules.
+VULCAN remediated `src/python/projectkoios/bootstrap/schema/` against the new Python policy validator rules.
 
 ## What happened
 
@@ -33,4 +33,4 @@ VULCAN remediated `src/python/projectkoios/bootstrap/schemas/` against the new P
 
 ## Current status
 
-`src/python/projectkoios/bootstrap/schemas/` now has zero Python policy validator findings. The remaining `src/python` baseline is 694 findings.
+`src/python/projectkoios/bootstrap/schema/` now has zero Python policy validator findings. The remaining `src/python` baseline is 694 findings.

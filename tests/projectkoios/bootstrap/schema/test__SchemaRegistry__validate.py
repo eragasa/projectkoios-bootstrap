@@ -5,7 +5,7 @@ import copy
 import pytest
 from jsonschema.exceptions import ValidationError
 
-from projectkoios.bootstrap.schemas import SchemaPaths, SchemaRegistry
+from projectkoios.bootstrap.schema import SchemaPaths, SchemaRegistry
 
 
 def valid_draft_adr_record() -> dict:

@@ -46,8 +46,8 @@
 - Python policy validator plan: `docs/plans/implementation-plan.20260704.192620_python-policy-validator.md`.
 - Python policy validator implementation report: `docs/implementation/implementation-report.20260704.193035_python-policy-validator.md`.
 - Schema package policy remediation report: `docs/implementation/implementation-report.20260704.205637_schema-package-policy-remediation.md`.
-- Implementation package: `src/python/projectkoios/bootstrap/schemas/`.
-- Tests: `tests/projectkoios/bootstrap/schemas/`.
+- Implementation package: `src/python/projectkoios/bootstrap/schema/`.
+- Tests: `tests/projectkoios/bootstrap/schema/`.
 - Python coding control surface: `docs/policies/python-coding.md`.
 - Active working items: no files under `working/` are active right now.
 - Scratch: `scratch/` is available for temporary notes and non-durable exploration.
@@ -68,7 +68,7 @@
 The schema-record base slice is ready for review handoff when:
 
 - worktree isolation avoids dirty-tree mixing — complete
-- schemas package is outside `projectkoios.ingestors` — complete
+- schema package is outside `projectkoios.ingestors` — complete
 - canonical schemas load from `docs/schemas/` — complete
 - project-local `$id` values resolve offline — complete
 - base envelope and required metadata are validated — complete

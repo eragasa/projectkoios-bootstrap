@@ -5,7 +5,7 @@ from enum import StrEnum
 from types import MappingProxyType
 from typing import Any, Mapping
 
-from projectkoios.bootstrap.schemas.schemas import SchemaRegistry
+from projectkoios.bootstrap.schema.schemas import SchemaRegistry
 
 JsonObject = dict[str, Any]
 JsonMapping = Mapping[str, Any]

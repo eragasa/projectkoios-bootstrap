@@ -1,11 +1,11 @@
-from projectkoios.bootstrap.schemas.adr_markdown import (
+from projectkoios.bootstrap.schema.adr_markdown import (
     DraftAdrMarkdownIngester,
     DraftAdrMarkdownRenderer,
     MarkdownIngestError,
 )
-from projectkoios.bootstrap.schemas.models import DraftAdrRecord, SchemaRecordBase
-from projectkoios.bootstrap.schemas.paths import SchemaPaths
-from projectkoios.bootstrap.schemas.schemas import SchemaRegistry
+from projectkoios.bootstrap.schema.models import DraftAdrRecord, SchemaRecordBase
+from projectkoios.bootstrap.schema.paths import SchemaPaths
+from projectkoios.bootstrap.schema.schemas import SchemaRegistry
 
 __all__ = [
     "DraftAdrMarkdownIngester",

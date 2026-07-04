@@ -7,7 +7,7 @@ VULCAN implemented the schema-record base and draft ADR record slice from `docs/
 ## What happened
 
 - Created worktree `/Users/eugene/repos/projectkoios-bootstrap-schema-record-base` on branch `vulcan/schema-record-base` to avoid mixing with concurrent dirty GraphRAG/schema-record changes in the original checkout.
-- Implemented the schemas package under `src/python/projectkoios/bootstrap/schemas/`.
+- Implemented the schema package under `src/python/projectkoios/bootstrap/schema/`.
 - Added schema registry, immutable models, deterministic draft ADR renderer, strict Markdown ingester, and focused tests.
 - Added `jsonschema>=4.25.1` to support JSON Schema draft 2020-12 validation and local `$id` resolution.
 - Wrote `docs/implementation/implementation-report.20260704.174859_schema-record-base.md` and updated Vulcan workspace state files in the worktree.

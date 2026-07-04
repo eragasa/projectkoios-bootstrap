@@ -37,7 +37,7 @@
 ## Validated state
 
 - Worktree separation is in place for the schema-record base slice, avoiding the concurrent dirty GraphRAG/schema-record state in the original checkout.
-- Schema-record implementation lives outside `projectkoios.ingestors` under `src/python/projectkoios/bootstrap/schemas/`.
+- Schema-record implementation lives outside `projectkoios.ingestors` under `src/python/projectkoios/bootstrap/schema/`.
 - Canonical schemas load from `docs/schemas/`.
 - Legacy `legacy-*` schema files are rejected as non-canonical by the schema path helper.
 - Project-local schema IDs resolve offline through `referencing.Registry`.
@@ -49,7 +49,7 @@
 - Validation evidence from the schema-record worktree:
   - `uv run python -m json.tool docs/schemas/schema.record-base.json >/dev/null` => passed
   - `uv run python -m json.tool docs/schemas/adr-draft.schema.json >/dev/null` => passed
-  - `uv run pytest tests/projectkoios/bootstrap/schemas -q` => `17 passed in 0.11s`
+  - `uv run pytest tests/projectkoios/bootstrap/schema -q` => `17 passed in 0.11s`
   - `uv run pytest -q` => `192 passed in 1.28s`
 - Python policy validator first slice is implemented under `src/python/projectkoios/bootstrap/python_policy/`.
 - Python policy validator validation evidence:
@@ -57,11 +57,11 @@
   - `uv run mypy src/python/projectkoios/bootstrap/python_policy` => `Success: no issues found in 5 source files`
   - self-check with `PythonPolicyValidator` against `src/python/projectkoios/bootstrap/python_policy` => `findings=0`
   - `uv run pytest -q` => `209 passed in 0.94s`
-- Schema package policy remediation is complete for `src/python/projectkoios/bootstrap/schemas/`.
+- Schema package policy remediation is complete for `src/python/projectkoios/bootstrap/schema/`.
 - Schema package remediation validation evidence:
-  - Python policy validator against `src/python/projectkoios/bootstrap/schemas` => `findings 0`
-  - `uv run pytest tests/projectkoios/bootstrap/schemas -q` => `17 passed in 0.11s`
-  - `uv run mypy src/python/projectkoios/bootstrap/schemas` => `Success: no issues found in 5 source files`
+  - Python policy validator against `src/python/projectkoios/bootstrap/schema` => `findings 0`
+  - `uv run pytest tests/projectkoios/bootstrap/schema -q` => `17 passed in 0.11s`
+  - `uv run mypy src/python/projectkoios/bootstrap/schema` => `Success: no issues found in 5 source files`
   - `uv run pytest -q` => `209 passed in 1.00s`
 - Remaining `src/python` policy baseline after schema package remediation: `694` findings.
 

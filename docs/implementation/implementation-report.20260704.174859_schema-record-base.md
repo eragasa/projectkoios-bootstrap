@@ -25,25 +25,25 @@ Changed files:
 
 - `pyproject.toml`
   - Added `jsonschema>=4.25.1` as the JSON Schema draft 2020-12 validation dependency.
-- `src/python/projectkoios/bootstrap/schemas/__init__.py`
-  - Exposes the schemas package API.
-- `src/python/projectkoios/bootstrap/schemas/paths.py`
+- `src/python/projectkoios/bootstrap/schema/__init__.py`
+  - Exposes the schema package API.
+- `src/python/projectkoios/bootstrap/schema/paths.py`
   - Defines repository/schema paths and rejects legacy schema files as non-canonical.
-- `src/python/projectkoios/bootstrap/schemas/schemas.py`
+- `src/python/projectkoios/bootstrap/schema/schemas.py`
   - Loads canonical schemas from `docs/schemas/`.
   - Builds an offline local registry for `https://projectkoios.local/schemas/<filename>`.
   - Validates with `jsonschema.Draft202012Validator` and `referencing.Registry`.
-- `src/python/projectkoios/bootstrap/schemas/models.py`
+- `src/python/projectkoios/bootstrap/schema/models.py`
   - Adds immutable dataclass models for schema records, draft ADR records, sections, concerns, rejected Markdown, and metadata.
   - Validates `SchemaRecordBase` and `DraftAdrRecord` construction against the local JSON Schema registry.
-- `src/python/projectkoios/bootstrap/schemas/adr_markdown.py`
+- `src/python/projectkoios/bootstrap/schema/adr_markdown.py`
   - Adds deterministic draft ADR JSON-to-Markdown rendering.
   - Adds strict controlled Markdown-to-JSON ingest.
   - Fails fatally for missing metadata, missing/out-of-order sections, malformed concern keywords, ambiguous heading depth, and over-600-character required section descriptions.
   - Captures deterministic extra top-level sections under `content.rejected`.
-- `tests/projectkoios/bootstrap/schemas/test__SchemaRegistry__validate.py`
+- `tests/projectkoios/bootstrap/schema/test__SchemaRegistry__validate.py`
   - Covers schema loading, local registry resolution, top-level envelope validation, metadata requirements through `allOf`, draft ADR schema narrowing, and non-canonical legacy schema rejection.
-- `tests/projectkoios/bootstrap/schemas/test__DraftAdrRecord__markdown.py`
+- `tests/projectkoios/bootstrap/schema/test__DraftAdrRecord__markdown.py`
   - Covers immutable model construction, renderer ordering, JSON -> Markdown -> JSON round trip, fatal ingest failures, rejected extra-section capture, and 600-character description enforcement.
 
 ## Validation evidence
@@ -53,7 +53,7 @@ Commands run from `/Users/eugene/repos/projectkoios-bootstrap-schema-record-base
 ```bash
 uv run python -m json.tool docs/schemas/schema.record-base.json >/dev/null
 uv run python -m json.tool docs/schemas/adr-draft.schema.json >/dev/null
-uv run pytest tests/projectkoios/bootstrap/schemas -q
+uv run pytest tests/projectkoios/bootstrap/schema -q
 ```
 
 Result:
@@ -87,7 +87,7 @@ The implementation uses:
 
 ## Deviations
 
-- Package boundary was renamed from the brief's recommended `src/python/projectkoios/bootstrap/schema_records/` to `src/python/projectkoios/bootstrap/schemas/` after user correction. The implementation remains outside `projectkoios.ingestors` and retains the same bounded behavior.
+- Package boundary was renamed from the brief's recommended `src/python/projectkoios/bootstrap/schema_records/` to `src/python/projectkoios/bootstrap/schema/` after user correction. The implementation remains outside `projectkoios.ingestors` and retains the same bounded behavior.
 - No CLI integration was added; this matches the brief's non-goals.
 - No active/completed/superseded/rejected ADR states were implemented; only `DraftAdrRecord` was added.
 - No historical ADR migration was attempted.

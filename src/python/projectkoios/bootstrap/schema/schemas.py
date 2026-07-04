@@ -9,7 +9,7 @@ from jsonschema import Draft202012Validator
 from jsonschema.exceptions import ValidationError
 from referencing import Registry, Resource
 
-from projectkoios.bootstrap.schemas.paths import PROJECT_SCHEMA_URI_PREFIX, SchemaPaths
+from projectkoios.bootstrap.schema.paths import PROJECT_SCHEMA_URI_PREFIX, SchemaPaths
 
 JsonObject = dict[str, Any]
 

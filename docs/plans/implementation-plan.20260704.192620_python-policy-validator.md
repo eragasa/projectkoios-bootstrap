@@ -179,7 +179,7 @@ Proposed command:
 
 ```bash
 projectkoios bootstrap validate-python-policy --changed
-projectkoios bootstrap validate-python-policy --paths src/python/projectkoios/bootstrap/schemas tests/projectkoios/bootstrap/schemas
+projectkoios bootstrap validate-python-policy --paths src/python/projectkoios/bootstrap/schema tests/projectkoios/bootstrap/schema
 projectkoios bootstrap validate-python-policy --all
 ```
 
