@@ -2,8 +2,8 @@
 {
   "title": "Vulcan workspace state",
   "artifact_type": "workspace-state",
-  "status": "daemon-activities-test-policy-remediation-complete",
-  "datetime": "20260705.013729",
+  "status": "watcher-test-policy-and-layout-remediation-complete",
+  "datetime": "20260705.022028",
   "acting_as": "VULCAN",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/vulcan/",
@@ -23,70 +23,44 @@
 
 ## Current scope
 
-- Focus: bounded test-code Python policy remediation after accepted source/CLI/test package reviews.
-- Current branch: `master`.
-- Latest active VULCAN slice: daemon activities test policy remediation.
+- Focus: bounded test-code Python policy remediation and package-mirroring test layout for touched files.
+- Latest active VULCAN slice: watcher daemon test policy and layout remediation.
 - Authority boundary: Vulcan packaged implementation and validation evidence; Vulcan did not promote draft ADRs or create architecture authority.
 
-## Validated state
+## Current-session completed remediation reports
 
-### Accepted prior implementation packages
+- Archon run watch tests: `docs/implementation/implementation-report.20260705.015600_archon-run-watch-test-policy-remediation.md`.
+- Publisher daemon tests: `docs/implementation/implementation-report.20260705.020437_publisher-test-policy-and-layout-remediation.md`.
+- Ollama daemon tests: `docs/implementation/implementation-report.20260705.021059_ollama-test-policy-and-layout-remediation.md`.
+- Daemon run-once tests: `docs/implementation/implementation-report.20260705.021601_daemon-run-once-test-policy-and-layout-remediation.md`.
+- Watcher daemon tests: `docs/implementation/implementation-report.20260705.022028_watcher-test-policy-and-layout-remediation.md`.
 
-- Workspace-state protocol bootstrap reconciliation: `docs/implementation/implementation-report.20260705.003351_workspace-state-protocol-bootstrap-reconciliation.md`.
-- Source-code Python policy remediation closeout: `docs/implementation/implementation-report.20260704.235450_source-python-policy-remediation-closeout.md`.
-- Python policy validator CLI integration: `docs/implementation/implementation-report.20260704.235829_python-policy-validator-cli.md`.
-- HERMES accepted these packages from cross-domain/repo-state perspective.
+## Latest layout changes
 
-### Test policy remediation
+- Removed `tests/harness/daemon/__Publisher__publish_run__tests.py`; added `tests/projectkoios/bootstrap/harness/daemon/test__Publisher__publish_run.py`.
+- Removed `tests/harness/daemon/__Ollama__generate_cards__tests.py`; added `tests/projectkoios/bootstrap/harness/daemon/test__Ollama__generate_cards.py`.
+- Removed `tests/harness/daemon/__Daemon__run_once__tests.py`; added `tests/projectkoios/bootstrap/harness/daemon/test__Daemon__run_once.py`.
+- Removed `tests/harness/daemon/__Watcher__scan_mtimes__tests.py`; added `tests/projectkoios/bootstrap/harness/daemon/test__Watcher__scan_mtimes.py`.
 
-Completed reports:
+## Latest validation evidence
 
-- Schema tests: `docs/implementation/implementation-report.20260705.000755_schema-test-policy-remediation.md`.
-- Ingestors tests: `docs/implementation/implementation-report.20260705.001733_ingestors-test-policy-remediation.md`.
-- Python policy tests: `docs/implementation/implementation-report.20260705.002345_python-policy-test-remediation.md`.
-- Root bootstrap/workspace command tests: `docs/implementation/implementation-report.20260705.010450_root-bootstrap-test-policy-remediation.md`.
-- Harness validation tests: `docs/implementation/implementation-report.20260705.013339_harness-validation-test-policy-remediation.md`.
-- Daemon activities tests: `docs/implementation/implementation-report.20260705.013729_daemon-activities-test-policy-remediation.md`.
-
-Remediated test packages/file groups now at zero findings:
-
-- `tests/projectkoios/bootstrap/schema/`.
-- `tests/projectkoios/ingestors/`.
-- `tests/projectkoios/bootstrap/python_policy/`.
-- `tests/test__workspaces_command.py` and `tests/test_bootstrap_flow.py`.
-- `tests/test__validate_harnesses.py`.
-- `tests/harness/daemon/__Activities__enabled_apply__tests.py`.
-
-Remaining all-target policy baseline after the daemon activities test slice: `519 finding(s), 107 file(s)`.
-
-### Latest validation evidence
-
-Commands run from `/Users/eugene/repos/projectkoios-bootstrap` after the daemon activities test slice:
-
-- `uv run projectkoios bootstrap validate-python-policy tests/harness/daemon/__Activities__enabled_apply__tests.py` => `summary: 0 finding(s), 1 file(s)`.
-- `uv run mypy tests/harness/daemon/__Activities__enabled_apply__tests.py` => `Success: no issues found in 1 source file`.
-- `uv run pytest tests/harness/daemon/__Activities__enabled_apply__tests.py -q` => `9 passed in 0.02s`.
-- `uv run pytest -q` => `215 passed in 1.18s`.
-- `uv run projectkoios bootstrap validate-python-policy --all` => `summary: 519 finding(s), 107 file(s)`.
+- `uv run projectkoios bootstrap validate-python-policy tests/projectkoios/bootstrap/harness/daemon/test__Watcher__scan_mtimes.py` => `summary: 0 finding(s), 1 file(s)`.
+- `uv run mypy tests/projectkoios/bootstrap/harness/daemon/test__Watcher__scan_mtimes.py` => `Success: no issues found in 1 source file`.
+- `uv run pytest tests/projectkoios/bootstrap/harness/daemon/test__Watcher__scan_mtimes.py -q` => `7 passed in 0.24s`.
+- `uv run pytest -q` => `215 passed in 1.13s`.
+- `uv run projectkoios bootstrap validate-python-policy --all` => `summary: 264 finding(s), 107 file(s)`.
+- `graphify update /Users/eugene/repos/projectkoios-bootstrap` => rebuilt graph with `9248 nodes, 9997 edges, 816 communities`.
 
 ## Open questions
 
-- Which remaining daemon/root/bootstrap/harness test file group should be remediated next?
-- Should current accepted implementation packages be committed and pushed, or held for more packaging?
-- ATHENA/KOIOS may have concurrent dirty workspace/document changes outside VULCAN scope.
+- Which remaining daemon/harness/root/bootstrap test file group should be remediated next?
+- Should current implementation packages be committed and pushed, or held for more packaging?
+- KOIOS may have concurrent dirty workspace/document changes outside VULCAN scope.
 
 ## Next transition
 
-- Owner: HERMES or user for review/acceptance of `docs/implementation/implementation-report.20260705.013729_daemon-activities-test-policy-remediation.md`.
+- Owner: HERMES or user for review/acceptance of `docs/implementation/implementation-report.20260705.022028_watcher-test-policy-and-layout-remediation.md`.
 - Owner: VULCAN if continuing remaining test-code policy remediation.
-- Highest-leverage next action: request HERMES/user review of the daemon activities test remediation package or continue with the next bounded unremediated test group.
+- Highest-leverage next action: continue with the next bounded unremediated test file.
 - Expected successor artifact: review response, next test-code remediation report, or commit/push instruction.
 - Blockers: none currently.
-
-## Startup checklist
-
-1. Confirm represented role from workspace and user request.
-2. Read `state.md` and `active.md`.
-3. Check `git status --short --branch`.
-4. For daemon activities test follow-up, read `docs/implementation/implementation-report.20260705.013729_daemon-activities-test-policy-remediation.md` first.
-5. Preserve Vulcan boundary: implement, test, validate, report; do not invent architecture.
