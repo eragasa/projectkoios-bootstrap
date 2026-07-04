@@ -52,10 +52,10 @@
   - `uv run pytest -q` => `192 passed in 1.28s`
 - Python policy validator first slice is implemented under `src/python/projectkoios/bootstrap/python_policy/`.
 - Python policy validator validation evidence:
-  - `uv run pytest tests/projectkoios/bootstrap/python_policy -q` => `14 passed in 0.07s`
+  - `uv run pytest tests/projectkoios/bootstrap/python_policy -q` => `17 passed in 0.07s`
   - `uv run mypy src/python/projectkoios/bootstrap/python_policy` => `Success: no issues found in 5 source files`
   - self-check with `PythonPolicyValidator` against `src/python/projectkoios/bootstrap/python_policy` => `findings=0`
-  - `uv run pytest -q` => `206 passed in 0.93s`
+  - `uv run pytest -q` => `209 passed in 0.94s`
 
 ## Open questions
 

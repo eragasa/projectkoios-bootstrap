@@ -10,124 +10,235 @@ def findings_for(source: str) -> tuple[str, ...]:
     return tuple(finding.rule_id for finding in findings)
 
 
-def test__PythonPolicyAstValidator__validate_source__accepts_annotated_locals_and_return():
-    source = """
+def test__PythonPolicyAstValidator__validate_source__accepts_documented_annotated_locals_and_return():
+    source = '''
 def valid() -> int:
+    """Return a documented value.
+
+    Returns:
+        Integer value.
+    """
+    # Value returned by the function.
     value: int = 1
     value = 2
     return value
-"""
+'''
     assert findings_for(source) == ()
 
 
 def test__PythonPolicyAstValidator__validate_source__rejects_missing_return_annotation():
-    source = """
+    source = '''
 def invalid():
+    """Return a value."""
+    # Value returned by the function.
     value: int = 1
     return value
-"""
-    assert findings_for(source) == ("PY-POLICY-001",)
+'''
+    assert "PY-POLICY-001" in findings_for(source)
 
 
 def test__PythonPolicyAstValidator__validate_source__rejects_plain_local_assignment_without_prior_annotation():
-    source = """
+    source = '''
 def invalid() -> int:
+    """Return a value.
+
+    Returns:
+        Integer value.
+    """
     value = 1
     return value
-"""
-    assert findings_for(source) == ("PY-POLICY-002",)
+'''
+    assert "PY-POLICY-002" in findings_for(source)
+
+
+def test__PythonPolicyAstValidator__validate_source__rejects_annotated_local_without_comment():
+    source = '''
+def invalid() -> int:
+    """Return a value.
+
+    Returns:
+        Integer value.
+    """
+    value: int = 1
+    return value
+'''
+    assert "PY-POLICY-005" in findings_for(source)
 
 
 def test__PythonPolicyAstValidator__validate_source__rejects_loop_target_without_prior_annotation():
-    source = """
+    source = '''
 def invalid(values: tuple[int, ...]) -> int:
+    """Sum values.
+
+    Args:
+        values: Values to sum.
+
+    Returns:
+        Sum of values.
+    """
+    # Running total.
     total: int = 0
     for value in values:
         total += value
     return total
-"""
+'''
     assert "PY-POLICY-002" in findings_for(source)
 
 
 def test__PythonPolicyAstValidator__validate_source__accepts_loop_target_with_prior_annotation():
-    source = """
+    source = '''
 def valid(values: tuple[int, ...]) -> int:
+    """Sum values.
+
+    Args:
+        values: Values to sum.
+
+    Returns:
+        Sum of values.
+    """
+    # Running total.
     total: int = 0
+    # Current loop value.
     value: int
     for value in values:
         total += value
     return total
-"""
+'''
     assert findings_for(source) == ()
 
 
 def test__PythonPolicyAstValidator__validate_source__rejects_with_target_without_prior_annotation():
-    source = """
+    source = '''
 def invalid(path: str) -> str:
+    """Read a file.
+
+    Args:
+        path: File path.
+
+    Returns:
+        File content.
+    """
     with open(path) as handle:
         return handle.read()
-"""
+'''
     assert "PY-POLICY-002" in findings_for(source)
 
 
 def test__PythonPolicyAstValidator__validate_source__rejects_exception_alias_without_prior_annotation():
-    source = """
+    source = '''
 def invalid() -> str:
+    """Return an error string.
+
+    Returns:
+        Error text.
+    """
     try:
         raise ValueError('bad')
     except ValueError as error:
         return str(error)
-"""
+'''
     assert "PY-POLICY-002" in findings_for(source)
 
 
 def test__PythonPolicyAstValidator__validate_source__rejects_assignment_expression_without_prior_annotation():
-    source = """
+    source = '''
 def invalid(values: tuple[int, ...]) -> int:
+    """Return count.
+
+    Args:
+        values: Values to count.
+
+    Returns:
+        Count of values.
+    """
     if (count := len(values)) > 0:
         return count
     return 0
-"""
+'''
     assert "PY-POLICY-002" in findings_for(source)
 
 
 def test__PythonPolicyAstValidator__validate_source__rejects_direct_any_annotation():
-    source = """
+    source = '''
 from typing import Any
 
 def invalid() -> None:
+    """Set a value."""
+    # Value under test.
     value: Any = None
-"""
-    assert findings_for(source) == ("PY-POLICY-003",)
+'''
+    assert "PY-POLICY-003" in findings_for(source)
 
 
 def test__PythonPolicyAstValidator__validate_source__rejects_typing_any_annotation():
-    source = """
+    source = '''
 import typing
 
 def invalid() -> None:
+    """Set a value."""
+    # Value under test.
     value: typing.Any = None
-"""
-    assert findings_for(source) == ("PY-POLICY-003",)
+'''
+    assert "PY-POLICY-003" in findings_for(source)
 
 
 def test__PythonPolicyAstValidator__validate_source__rejects_nested_any_annotation():
-    source = """
+    source = '''
 from typing import Any
 
 def invalid() -> None:
+    """Set a value."""
+    # Value under test.
     value: dict[str, Any] = {}
-"""
-    assert findings_for(source) == ("PY-POLICY-003",)
+'''
+    assert "PY-POLICY-003" in findings_for(source)
 
 
 def test__PythonPolicyAstValidator__validate_source__validates_nested_function_independently():
-    source = """
+    source = '''
 def valid() -> int:
+    """Return a value.
+
+    Returns:
+        Integer value.
+    """
+    # Outer value.
     value: int = 1
     def nested() -> int:
+        """Return nested value.
+
+        Returns:
+            Integer value.
+        """
         nested_value = 2
         return nested_value
     return value
-"""
-    assert findings_for(source) == ("PY-POLICY-002",)
+'''
+    assert "PY-POLICY-002" in findings_for(source)
+
+
+def test__PythonPolicyAstValidator__validate_source__rejects_missing_public_docstring():
+    source = '''
+def invalid() -> None:
+    # Local value.
+    value: int = 1
+'''
+    assert "PY-POLICY-006" in findings_for(source)
+
+
+def test__PythonPolicyAstValidator__validate_source__rejects_except_return_none():
+    source = '''
+def invalid() -> int | None:
+    """Return a value or fail badly.
+
+    Returns:
+        Integer value or None.
+    """
+    try:
+        # Value under test.
+        value: int = 1
+        return value
+    except ValueError:
+        return None
+'''
+    assert "PY-POLICY-007" in findings_for(source)

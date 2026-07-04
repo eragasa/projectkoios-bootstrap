@@ -6,7 +6,7 @@ VULCAN implemented the easy first slice of a Python policy validator from `docs/
 
 ## What happened
 
-- Added AST rules for missing return annotations, unannotated local variable introductions, and local variable annotations using `Any`.
+- Added AST rules for missing return annotations, unannotated local variable introductions, local variable annotations using `Any`, local variables missing purpose comments, missing public docstrings, and exception handlers returning generic sentinel values.
 - Added target selection helpers for explicit, changed, and all Python file modes.
 - Added a small mypy runner but did not wire it into CLI or combined validation yet.
 - Added focused tests and wrote `docs/implementation/implementation-report.20260704.193035_python-policy-validator.md`.
@@ -15,6 +15,7 @@ VULCAN implemented the easy first slice of a Python policy validator from `docs/
 
 - The new local-variable annotation policy is stricter than common Python style, so whole-repo enforcement would likely be noisy.
 - Python syntax does not allow inline annotations for loop targets, `with/as` aliases, or exception aliases, so the validator requires a prior annotation for those names.
+- The local-variable comment rule needs practical exemptions for simple predeclared loop variables; the validator currently skips comment findings for annotation-only declarations.
 - The first implementation should stay path-targeted until legacy exceptions/remediation are defined.
 
 ## Proposed follow-up improvements

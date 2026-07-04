@@ -17,14 +17,14 @@ Implementation complete for the easy first slice; ready for review.
 
 ## Summary
 
-Implemented the easy core of the Python policy validator without CLI integration.
+Implemented the easy core of the Python policy validator without CLI integration. A follow-up update added checks for local-variable purpose comments, generated-docs-compatible docstrings on public classes/functions/methods, and broad exception handlers that return generic sentinel values.
 
 Changed files:
 
 - `src/python/projectkoios/bootstrap/python_policy/__init__.py`
   - Exposes the Python policy validator API.
 - `src/python/projectkoios/bootstrap/python_policy/ast_rules.py`
-  - Adds AST-based findings for missing return annotations, unannotated local variable introductions, and local annotations that use `Any`.
+  - Adds AST-based findings for missing return annotations, unannotated local variable introductions, local annotations that use `Any`, annotated locals without nearby purpose comments, missing public docstrings, and exception handlers returning generic sentinel values.
 - `src/python/projectkoios/bootstrap/python_policy/targets.py`
   - Adds explicit, all, and changed target selection helpers for Python files.
 - `src/python/projectkoios/bootstrap/python_policy/mypy_runner.py`
@@ -32,7 +32,7 @@ Changed files:
 - `src/python/projectkoios/bootstrap/python_policy/validator.py`
   - Adds a coordinator that validates selected targets with AST rules.
 - `tests/projectkoios/bootstrap/python_policy/test__PythonPolicyAstValidator__validate_source.py`
-  - Covers accepted annotated locals/returns and rejected missing returns, unannotated assignments, loop targets, `with/as`, exception aliases, assignment expressions, direct/nested `Any` annotations, and nested function isolation.
+  - Covers accepted annotated locals/returns and rejected missing returns, unannotated assignments, loop targets, `with/as`, exception aliases, assignment expressions, direct/nested `Any` annotations, nested function isolation, missing purpose comments, missing public docstrings, and generic exception-handler returns.
 - `tests/projectkoios/bootstrap/python_policy/test__TargetSelector__targets.py`
   - Covers explicit file/directory target selection and cache/venv exclusion.
 
@@ -47,7 +47,7 @@ uv run pytest tests/projectkoios/bootstrap/python_policy -q
 Result:
 
 ```text
-14 passed in 0.07s
+17 passed in 0.07s
 ```
 
 Static type checking for the new validator package:
@@ -93,7 +93,7 @@ uv run pytest -q
 Result:
 
 ```text
-206 passed in 0.93s
+209 passed in 0.94s
 ```
 
 Validation note: `uv run` continued to warn that the parent shell's `VIRTUAL_ENV=/Users/eugene/repos/projectkoios-bootstrap/.venv` did not match the worktree-local `.venv`. The warning did not affect validation results.
