@@ -3,7 +3,7 @@
   "title": "Athena workspace state",
   "artifact_type": "workspace-state",
   "status": "active",
-  "datetime": "20260704.041431",
+  "datetime": "20260704.151749",
   "acting_as": "ATHENA",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/athena/",
@@ -19,7 +19,7 @@
   },
   "local_decision_record": "decisions/workspace.state.canonical.athena.20260704.041431.md",
   "next_owner": "ATHENA",
-  "blockers": ["implementation work occurred from Athena context and needs routing/reconciliation"]
+  "blockers": []
 }
 ```
 
@@ -44,22 +44,24 @@
 - No active working items are pending; files under `working/` are current working material only when explicitly marked active.
 - `scratch/` exists for temporary notes and should not be treated as durable state.
 - Process correction recorded: the next best step is always an incremental edit to the relevant control surface before expanding work.
-- Protocol miss recorded: implementation/code changes were made from Athena context; next action is reconciliation/routing, not more implementation.
-- Session close recorded: end state has uncommitted changes and untracked plan files; next session must inspect status before editing.
+- Reconciliation recorded on 20260704.151218: the untracked GraphRAG persisted-index plan files are VULCAN-owned implementation-domain artifacts and have been handed off to the idle Vulcan session via intercom.
+- Portfolio correction recorded on 20260704.151749: Athena should keep multiple larger spec/ADR tracks moving while Vulcan owns implementation work, as long as Athena avoids implementation files and preserves document-domain authority.
+- No Athena implementation/code work is active.
 
 ## Open questions
 
 - Whether Hermes should promote the workspace-state pattern into shared repo policy for all role workspaces.
 - Whether a future validator should parse the top JSON metadata sections directly or require a structured companion.
 - Whether historical/transitional working files should be archived or removed from the active workspace surface.
-- Whether the implementation sweep changes should be reverted, accepted with explicit VULCAN provenance, or handed to Vulcan/Hermes for review.
+- Whether Athena should create a conformance review artifact after Vulcan completes the GraphRAG persisted-index implementation report.
+- Which larger Athena track should be advanced first: workspace-state protocol promotion, ADR lifecycle/naming consolidation, template representation brief, or workflow Petri-net executor readiness.
 
 ## Next transition
 
 - Owner: ATHENA
-- Highest-leverage next action: start with dirty-tree reconciliation and ownership routing.
-- Secondary action: decide whether implementation changes are reverted, accepted as VULCAN-owned, or handed to Hermes/Vulcan for review.
-- Blockers: implementation work occurred from Athena context and needs routing/reconciliation before more code changes.
+- Highest-leverage next action: advance Athena's independent spec/ADR portfolio while Vulcan owns the GraphRAG persisted-index implementation.
+- Secondary action: perform a bounded Athena conformance review after Vulcan produces the implementation report.
+- Blockers: none for Athena; avoid implementation files while shared-tree implementation work is active.
 
 ## Startup checklist
 

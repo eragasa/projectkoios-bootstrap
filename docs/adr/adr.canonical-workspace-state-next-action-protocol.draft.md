@@ -26,34 +26,62 @@ agent can answer, in order:
 
 ## Decision
 
-Define a canonical workspace state record and next-action protocol for each
-workspace.
+Each role workspace MUST maintain a canonical live state surface.
 
-The live workspace state should be treated as the primary session control
-surface. It should be short, explicit, and machine-readable enough that the
-highest-leverage next action can be inferred without scanning the whole repo.
+The canonical live state surface MUST consist of exactly two files at the
+workspace root:
 
-The canonical workspace state should include at minimum:
+   - `state.md`
+   - `active.md`
 
-- current role
-- current repository or scope
-- current focus
-- blockers
-- last validated decision
-- handoff status
-- next action owner
-- open decisions
-- next action
-- next owner
-- leverage ranking or priority note
-- current status summary
+The two files MUST be treated as one bounded control surface. Agents MUST NOT
+infer current workflow authority from scattered workspace notes, directory
+placement, chat history, or transport mechanics when `state.md` and `active.md`
+are present.
 
-The next-action protocol should use a simple leverage rule:
+`state.md` MUST be the durable resume snapshot for the workspace. It MUST record,
+at minimum:
 
-1. prefer actions that unblock multiple downstream tasks
-2. prefer actions that close the nearest decision boundary
-3. prefer actions that reduce ambiguity or rework
-4. prefer actions that restore workflow health over starting new work
+   - represented role
+   - repository or scope
+   - current focus
+   - blockers
+   - validated current state or last validated document-state change
+   - handoff status when relevant
+   - next owner
+   - open questions or open decisions
+   - current status summary
+
+`active.md` MUST be the current priority and next-action surface. It MUST record,
+at minimum:
+
+   - current priority stack
+   - next action or next state transition
+   - waiting-on list
+   - explicitly active working material
+   - ignored scope
+   - exit criteria
+
+Both `state.md` and `active.md` MUST include a stable top JSON metadata section.
+
+Workspace-local notes MAY exist in `decisions/`, `working/`, `scratch/`, and
+`sessions/`. Such notes MUST NOT become authoritative merely because of their
+location. Working material MUST be treated as active only when named by
+`active.md`.
+
+Agents starting a session in a role workspace MUST read `state.md` first and
+`active.md` second. Agents SHOULD inspect only the handoff, working, or decision
+artifacts named by those files before selecting the next action.
+
+The next action SHOULD be selected using this priority order:
+
+   1. prefer actions that unblock multiple downstream tasks
+   2. prefer actions that close the nearest decision boundary
+   3. prefer actions that reduce ambiguity or rework
+   4. prefer actions that restore workflow health before starting new work
+
+The state pair MUST NOT replace ADRs, implementation reports, validation results,
+knowledge notes, or other repository document-state artifacts.
 
 ## Consequences
 
@@ -91,31 +119,32 @@ status_summary: "..."
 
 The protocol should also define a startup check order:
 
-- read the canonical workspace state first
-- check relevant handoff artifacts second
-- verify the active decision surface third
+- read `state.md` first
+- read `active.md` second
+- check only relevant handoff or working artifacts named by those files third
+- verify the active decision surface fourth
 - then choose the highest-leverage unblocked action
 
 ## acceptance-criteria
 
-- a workspace can name its current role, blockers, and next action in one read
+- a workspace can name its current role, blockers, next owner, and next action from `state.md` + `active.md`
+- `state.md` and `active.md` have stable top JSON metadata sections
 - the next owner is explicit when the current actor cannot complete the step
-- the highest-leverage action is derivable from the state without inference
-- the state surface is small enough to maintain regularly
+- the highest-leverage action is derivable from the state pair without inference
+- the state pair is small enough to maintain regularly
 - the protocol works for both quiet sessions and active review sessions
 
 ## implementation-brief
 
-If accepted, update the workspace state files and related guidance so each
-workspace keeps a canonical live state record with an explicit next-action
-field and leverage rule.
+If accepted, update workspace guidance so each workspace keeps the canonical
+`state.md` + `active.md` pair with explicit next-owner, next-action, ignored-scope,
+and leverage-priority fields.
 
 ## resolved_open_questions
 
-- Should the canonical state be Markdown-only, or should YAML/JSON be the
-  authoritative form with Markdown as a render?
-- Should every workspace have the same field set, or may roles add optional
-  fields?
+- Resolved on 20260704.151957: the canonical live state surface is the pair `state.md` + `active.md`, not a single file and not scattered workspace notes.
+- Resolved on 20260704.151957: Markdown files with stable top JSON metadata sections are sufficient; no separate machine-readable companion is required unless future automation proves the need.
+- Should every workspace have the same field set, or may roles add optional fields?
 - Should the leverage ranking be manual or computed from the open queue?
 
 ## non_goals
@@ -152,3 +181,4 @@ field and leverage rule.
 - HERMES: This should be a single live surface, not a summary of several surfaces; otherwise the next-action protocol will still depend on scattered context.
 - HERMES: Prefer one canonical workspace-state file (for example `state.md`) with any machine-readable form treated as a render or companion, so the next-action surface does not split across multiple authorities.
 - HERMES: If `state.md` exists but workspace guidance does not explicitly reference it, agents may not treat it as canonical yet.
+- ATHENA: Review decision on 20260704.151957 selects Option B: the canonical live state surface is the controlled pair `state.md` + `active.md`. This preserves Hermes's single-surface concern by treating the pair as one bounded control surface, not as scattered workspace context.
