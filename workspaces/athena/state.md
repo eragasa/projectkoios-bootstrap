@@ -3,7 +3,7 @@
   "title": "Athena workspace state",
   "artifact_type": "workspace-state",
   "status": "active",
-  "datetime": "20260704.151749",
+  "datetime": "20260704.173652",
   "acting_as": "ATHENA",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/athena/",
@@ -18,8 +18,8 @@
     "sessions": "sessions/"
   },
   "local_decision_record": "decisions/workspace.state.canonical.athena.20260704.041431.md",
-  "next_owner": "ATHENA",
-  "blockers": []
+  "next_owner": "VULCAN",
+  "blockers": ["worktree_or_commit_separation_needed_for_schema_record_slice"]
 }
 ```
 
@@ -47,6 +47,10 @@
 - Reconciliation recorded on 20260704.151218: the untracked GraphRAG persisted-index plan files are VULCAN-owned implementation-domain artifacts and have been handed off to the idle Vulcan session via intercom.
 - Portfolio correction recorded on 20260704.151749: Athena should keep multiple larger spec/ADR tracks moving while Vulcan owns implementation work, as long as Athena avoids implementation files and preserves document-domain authority.
 - No Athena implementation/code work is active.
+- Schema-record base pre-Vulcan slice reconciled KOIOS/HERMES/VULCAN review on 20260704.173652.
+- `docs/plans/implementation-brief.20260704.172632_schema-record-base.md` is an implementation-ready draft for VULCAN, pending worktree/commit separation.
+- Projection/source-of-truth semantics were corrected: the ADR Markdown is an editable projection until a separate schema-backed JSON source record exists.
+- AAR recorded at `docs/AAR/aar.20260704.173652_schema-record-brief-handoff.md`.
 
 ## Open questions
 
@@ -54,14 +58,15 @@
 - Whether a future validator should parse the top JSON metadata sections directly or require a structured companion.
 - Whether historical/transitional working files should be archived or removed from the active workspace surface.
 - Whether Athena should create a conformance review artifact after Vulcan completes the GraphRAG persisted-index implementation report.
-- Which larger Athena track should be advanced first: workspace-state protocol promotion, ADR lifecycle/naming consolidation, template representation brief, or workflow Petri-net executor readiness.
+- Whether Athena should create a conformance review artifact after Vulcan completes the schema-record base implementation report.
+- Which larger Athena track should be advanced first after handoff: workspace-state protocol promotion, ADR lifecycle/naming consolidation, template representation brief, or workflow Petri-net executor readiness.
 
 ## Next transition
 
-- Owner: ATHENA
-- Highest-leverage next action: advance Athena's independent spec/ADR portfolio while Vulcan owns the GraphRAG persisted-index implementation.
-- Secondary action: perform a bounded Athena conformance review after Vulcan produces the implementation report.
-- Blockers: none for Athena; avoid implementation files while shared-tree implementation work is active.
+- Owner: VULCAN for schema-record implementation; ATHENA for any architecture-conformance review after implementation report.
+- Highest-leverage next action: coordinate worktree/commit separation, then hand off `docs/plans/implementation-brief.20260704.172632_schema-record-base.md` to VULCAN.
+- Secondary action: ATHENA may advance independent spec/ADR portfolio items while Vulcan owns implementation work.
+- Blockers: worktree/commit separation for concurrent dirty GraphRAG and schema-record changes; avoid implementation files from Athena.
 
 ## Startup checklist
 

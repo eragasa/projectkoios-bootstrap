@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://projectkoios.local/schemas/adr-draft.schema.json",
+  "title": "DraftAdrRecord",
+  "description": "Draft ADR record schema. Extends the Project Koios schema record base by constraining ADR draft content.",
+  "allOf": [
+    { "$ref": "https://projectkoios.local/schemas/schema.record-base.json" },
+    {
+      "type": "object",
+      "properties": {
+        "metadata": {
+          "type": "object",
+          "properties": {
+            "schema_id": { "const": "https://projectkoios.local/schemas/adr-draft.schema.json" },
+            "status": { "const": "draft" }
+          }
+        },
+        "content": { "$ref": "#/$defs/DraftAdrContent" }
+      }
+    }
+  ],
+  "$defs": {
+    "ConcernLevel": {
+      "type": "string",
+      "enum": ["MUST", "MUST NOT", "SHOULD", "SHOULD NOT", "MAY"]
+    },
+    "Concern": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["level", "text"],
+      "properties": {
+        "level": { "$ref": "#/$defs/ConcernLevel" },
+        "text": { "type": "string", "minLength": 1 }
+      }
+    },
+    "Section": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["heading", "description", "concerns"],
+      "properties": {
+        "heading": { "type": "string", "minLength": 1 },
+        "description": {
+          "type": "string",
+          "maxLength": 600,
+          "description": "Non-normative section description."
+        },
+        "concerns": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/Concern" }
+        },
+        "subsections": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/Section" }
+        }
+      }
+    },
+    "RejectedMarkdown": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["heading", "reason", "body"],
+      "properties": {
+        "heading": { "type": "string", "minLength": 1 },
+        "reason": { "type": "string", "minLength": 1 },
+        "body": { "type": "string" }
+      }
+    },
+    "DraftAdrContent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "context",
+        "decision",
+        "consequences",
+        "acceptance_criteria",
+        "implementation_brief",
+        "non_goals",
+        "validation_expectations",
+        "rejected"
+      ],
+      "properties": {
+        "context": { "$ref": "#/$defs/Section" },
+        "decision": { "$ref": "#/$defs/Section" },
+        "consequences": { "$ref": "#/$defs/Section" },
+        "acceptance_criteria": { "$ref": "#/$defs/Section" },
+        "implementation_brief": { "$ref": "#/$defs/Section" },
+        "non_goals": { "$ref": "#/$defs/Section" },
+        "validation_expectations": { "$ref": "#/$defs/Section" },
+        "rejected": {
+          "type": "array",
+          "description": "Otherwise valid Markdown content captured by the ingester because it is deterministically mappable but out of contract for the controlling schema. Unmappable or lossy content is a fatal ingest error, not rejected content.",
+          "items": { "$ref": "#/$defs/RejectedMarkdown" }
+        }
+      }
+    }
+  }
+}

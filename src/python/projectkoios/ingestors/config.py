@@ -78,6 +78,12 @@ class Config:
         return str(self.pipeline.get("answer_format", "cited_summary"))
 
     @property
+    def index_path(self) -> Path:
+        value: object = self.pipeline.get("index_path", "graph/index.json")
+        path: Path = Path(str(value))
+        return path if path.is_absolute() else self.root / path
+
+    @property
     def retrieval_depth(self) -> int:
         return int(self.pipeline.get("retrieval_depth", self.retrieval.get("max_nodes", 1)))
 
@@ -162,6 +168,8 @@ class RuntimeConfigValidator:
             issues.append("pipeline.retrieval_depth must be >= 1")
         if config.backend_timeout_seconds < 1:
             issues.append("extraction.backend.timeout_seconds must be >= 1")
+        if str(config.pipeline.get("index_path", "graph/index.json")).strip() == "":
+            issues.append("pipeline.index_path must not be empty")
         pattern: str
         for pattern in config.source_includes():
             if not self.is_adr_markdown_pattern(pattern):

@@ -2,16 +2,18 @@
 {
   "title": "Vulcan active work",
   "artifact_type": "workspace-active-priorities",
-  "status": "active",
-  "datetime": "20260704.123845",
+  "status": "review-handoff",
+  "datetime": "20260704.151640",
   "acting_as": "VULCAN",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/vulcan/",
-  "priority_count": 3,
+  "priority_count": 2,
   "working_directory": "working/",
-  "active_working_items": ["docs/plans/projectkoios-graphrag-next-slice.md"],
+  "active_working_items": [
+    "docs/implementation/implementation-report.20260704.151640_graphrag-persisted-index.md",
+    "graph/index.json"
+  ],
   "scratch_directory": "scratch/",
-  "local_decision_record": "decisions/workspace.state.canonical.vulcan.20260704.123845.md",
   "controlling_workspace_policy": "docs/policies/workspace-layout.md"
 }
 ```
@@ -20,21 +22,22 @@
 
 ## Current priority stack
 
-1. Implement `docs/plans/projectkoios-graphrag-next-slice.md`.
-2. Preserve ADR-only, config-driven behavior while adding deterministic persisted index output.
-3. Apply `docs/policies/python-coding.md` during Python implementation and closeout review.
+1. Hand off GraphRAG persisted-index implementation for ATHENA conformance review.
+2. Await review feedback or user instruction for the next implementation slice.
 
 ## Waiting on
 
-- No current blocker.
-- Rebrief from ATHENA is required only if persisted index shape or citation metadata forces a broader retrieval redesign.
+- ATHENA review of `docs/implementation/implementation-report.20260704.151640_graphrag-persisted-index.md` and the associated patch.
+- No implementation blocker currently.
 
 ## Working material
 
-- Active implementation source: `docs/plans/projectkoios-graphrag-next-slice.md`.
+- Controlling implementation source: `docs/plans/projectkoios-graphrag-next-slice.md`.
+- Implementation plan: `docs/plans/implementation-plan.20260704.150233_graphrag-persisted-index.md`.
+- Execution brief: `docs/plans/implementation-brief.20260704.150233_graphrag-persisted-index.md`.
+- Implementation report: `docs/implementation/implementation-report.20260704.151640_graphrag-persisted-index.md`.
+- Generated artifact: `graph/index.json`.
 - Python coding control surface: `docs/policies/python-coding.md`.
-- Prior implementation report: `docs/implementation/implementation-report.20260704.001003_graphrag-first-slice.md`.
-- Prior process chain: `docs/process-capture/20260704_graphrag-first-slice-athena-vulcan-process-chain.md`.
 - Active working items: no files under `working/` are active right now.
 - Scratch: `scratch/` is available for temporary notes and non-durable exploration.
 
@@ -50,15 +53,19 @@
 
 ## Exit criteria
 
-The persisted-index slice is ready for handoff when:
+The persisted-index slice is ready for review handoff when:
 
-- the index artifact is written deterministically
-- repeated runs produce stable output for unchanged inputs
-- CLI can build the index from config
-- retrieval remains traceable to persisted index evidence
-- citation fallback behavior still works
-- existing query/answer behavior is preserved
-- relevant tests pass
-- Python changes have been self-reviewed against `docs/policies/python-coding.md`
-- implementation report is written under `docs/implementation/`
-- `state.md` and `active.md` are updated with the new validated state and next expected artifact
+- the index artifact is written deterministically — complete
+- repeated runs produce stable output for unchanged inputs — complete
+- CLI can build the index from config — complete
+- retrieval remains traceable to persisted index evidence — complete
+- citation fallback behavior still works — complete
+- existing query/answer behavior is preserved — complete
+- relevant tests pass — complete
+- Python changes have been self-reviewed against `docs/policies/python-coding.md` — complete
+- implementation report is written under `docs/implementation/` — complete
+- `state.md` and `active.md` are updated with the new validated state and next expected artifact — complete
+
+## Next expected artifact
+
+- ATHENA conformance review linked to `docs/implementation/implementation-report.20260704.151640_graphrag-persisted-index.md`.

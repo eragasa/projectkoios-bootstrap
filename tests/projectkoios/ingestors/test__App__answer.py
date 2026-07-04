@@ -39,6 +39,18 @@ def test__App__validate_config(tmp_path):
     assert report.sources == 1
 
 
+def test__App__persist_index(tmp_path):
+    app = App()
+    config_path = write_config(tmp_path)
+    report = app.persist_index(config_path, schema_path=write_schema(tmp_path))
+
+    assert report.sources == 1
+    assert report.sections > 0
+    assert report.output_path == tmp_path / "graph" / "index.json"
+    assert report.output_path.exists()
+    assert "docs/adr/adr.example.md" in report.output_path.read_text(encoding="utf-8")
+
+
 def test__App__answer(tmp_path):
     factory = FakeBackendFactory()
     app = App(backend_factory=factory)

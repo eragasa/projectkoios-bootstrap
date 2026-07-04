@@ -19,11 +19,12 @@
     "project": {"type": "string"},
     "pipeline": {
       "type": "object",
-      "required": ["mode", "answer_format", "retrieval_depth"],
+      "required": ["mode", "answer_format", "retrieval_depth", "index_path"],
       "properties": {
         "mode": {"type": "string", "enum": ["derived-index"]},
         "answer_format": {"type": "string", "enum": ["cited_summary", "structured_json"]},
-        "retrieval_depth": {"type": "integer"}
+        "retrieval_depth": {"type": "integer"},
+        "index_path": {"type": "string"}
       },
       "additionalProperties": false
     },

@@ -11,6 +11,7 @@ def test__ConfigLoader__load(tmp_path):
     config = loader.load(write_config(tmp_path))
     assert config.project == "projectkoios"
     assert config.retrieval_depth == 1
+    assert config.index_path == config.root / "graph" / "index.json"
     assert config.pipeline_mode is PipelineMode.DERIVED_INDEX
     assert config.validation_mode is ValidationMode.STRICT
     assert config.backend_name is BackendName.OLLAMA

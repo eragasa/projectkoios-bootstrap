@@ -20,9 +20,15 @@ class Evidence:
     line_end: int
     excerpt: str
     score: int
+    page: int | None = None
+    bibtex_key: str | None = None
 
     @property
     def citation(self) -> str:
+        if self.bibtex_key is not None and self.page is not None:
+            return f"{self.bibtex_key}, p. {self.page}"
+        if self.bibtex_key is not None:
+            return self.bibtex_key
         return f"{self.relative_path}:{self.line_start}-{self.line_end}"
 
 
@@ -62,6 +68,8 @@ class Retriever:
                         line_end=neighbour.line_end,
                         excerpt=self.excerpt(neighbour.text),
                         score=score,
+                        page=neighbour.page,
+                        bibtex_key=neighbour.bibtex_key,
                     )
                 )
                 if len(evidence) >= limit:

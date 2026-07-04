@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+import json
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Any
 
 from projectkoios.ingestors.sources import SourceDocument, SourceSet
 
@@ -15,6 +17,12 @@ class Section:
     line_start: int
     line_end: int
     text: str
+    page: int | None = None
+    bibtex_key: str | None = None
+
+    @property
+    def citation(self) -> str:
+        return f"{self.relative_path}:{self.line_start}-{self.line_end}"
 
 
 @dataclass(frozen=True, slots=True)
@@ -31,6 +39,43 @@ class GraphIndex:
     @property
     def sections(self) -> tuple[Section, ...]:
         return tuple(section for document in self.documents for section in document.sections)
+
+
+class GraphIndexJsonSerializer:
+    def document(self, document_index: DocumentIndex) -> dict[str, Any]:
+        return {
+            "path": str(document_index.document.path),
+            "relative_path": document_index.document.relative_path,
+            "sections": [self.section(section) for section in document_index.sections],
+        }
+
+    def section(self, section: Section) -> dict[str, Any]:
+        return {
+            "bibtex_key": section.bibtex_key,
+            "citation": section.citation,
+            "evidence": section.text,
+            "heading_level": section.heading_level,
+            "line_end": section.line_end,
+            "line_start": section.line_start,
+            "page": section.page,
+            "path": str(section.path),
+            "relative_path": section.relative_path,
+            "title": section.title,
+        }
+
+    def to_dict(self, index: GraphIndex) -> dict[str, Any]:
+        return {
+            "documents": [self.document(document) for document in index.documents],
+            "root": str(index.root),
+            "version": 1,
+        }
+
+    def to_json(self, index: GraphIndex) -> str:
+        return json.dumps(self.to_dict(index), ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+
+    def write(self, index: GraphIndex, path: Path) -> None:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(self.to_json(index), encoding="utf-8")
 
 
 class GraphIndexBuilder:

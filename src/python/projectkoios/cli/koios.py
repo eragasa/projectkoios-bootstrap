@@ -4,7 +4,7 @@ from argparse import ArgumentParser, Namespace
 from pathlib import Path
 from typing import Any
 
-from projectkoios.ingestors import Answer, AnswerFormat, App, ValidationReport
+from projectkoios.ingestors import Answer, AnswerFormat, App, PersistedIndexReport, ValidationReport
 
 
 class Command:
@@ -24,6 +24,15 @@ class Command:
         validate_parser.add_argument("--schema", type=Path, default=None)
         validate_parser.add_argument("--preset", default=None)
         validate_parser.set_defaults(func=self.run_validate)
+
+        index_parser: ArgumentParser = koios_subparsers.add_parser("index", help="Build or inspect Koios GraphRAG indexes")
+        index_subparsers: Any = index_parser.add_subparsers(dest="index_action")
+        index_subparsers.required = True
+        build_parser: ArgumentParser = index_subparsers.add_parser("build", help="Build the persisted Koios GraphRAG index")
+        build_parser.add_argument("--config", type=Path, default=Path("projectkoios.ingestion.config"))
+        build_parser.add_argument("--schema", type=Path, default=None)
+        build_parser.add_argument("--preset", default=None)
+        build_parser.set_defaults(func=self.run_index_build)
 
         query_parser: ArgumentParser = koios_subparsers.add_parser("query", help="Answer a query from Koios GraphRAG")
         query_parser.add_argument("--config", type=Path, default=Path("projectkoios.ingestion.config"))
@@ -46,6 +55,13 @@ class Command:
         for issue in report.issues:
             print(f"  issue: {issue}")
         raise SystemExit(0 if report.schema_valid and report.runtime_valid else 1)
+
+    def run_index_build(self, args: Namespace) -> None:
+        report: PersistedIndexReport = self.app.persist_index(args.config, schema_path=args.schema, preset=args.preset)
+        print(
+            "koios index build: "
+            f"output={report.output_path} sources={report.sources} sections={report.sections}"
+        )
 
     def run_query(self, args: Namespace) -> None:
         answer: Answer = self.app.answer(

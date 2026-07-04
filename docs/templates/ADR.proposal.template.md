@@ -1,6 +1,6 @@
 # ADR YYYYMMDD.HHMMSS: <Title>
 
-> Legacy Markdown render example. Canonical ADRs are JSON in `docs/adr/adr.schema.json`.
+> Legacy Markdown render example. Canonical ADRs are JSON in `docs/schemas/adr.schema.json`.
 > Controlled by: [adr.adr-template-contract](../adr/adr.adr-template-contract.md).
 > Template index: [templates.00](templates.00.md).
 

@@ -13,7 +13,7 @@ def test__JsonSchemaValidator__validate(tmp_path):
     validator.validate({
         "version": 1,
         "project": "projectkoios",
-        "pipeline": {"mode": "derived-index", "answer_format": "cited_summary", "retrieval_depth": 1},
+        "pipeline": {"mode": "derived-index", "answer_format": "cited_summary", "retrieval_depth": 1, "index_path": "graph/index.json"},
         "validation": {"mode": "strict"},
         "source": {"include": ["docs/adr/**/*.md"], "exclude": []},
         "ontology": {},

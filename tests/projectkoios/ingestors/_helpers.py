@@ -26,11 +26,12 @@ def write_schema(root: Path) -> Path:
             "project": {"type": "string"},
             "pipeline": {
                 "type": "object",
-                "required": ["mode", "answer_format", "retrieval_depth"],
+                "required": ["mode", "answer_format", "retrieval_depth", "index_path"],
                 "properties": {
                     "mode": {"type": "string", "enum": ["derived-index"]},
                     "answer_format": {"type": "string", "enum": ["cited_summary", "structured_json"]},
                     "retrieval_depth": {"type": "integer"},
+                    "index_path": {"type": "string"},
                 },
                 "additionalProperties": False,
             },
@@ -95,6 +96,7 @@ def write_config(root: Path) -> Path:
           mode: derived-index
           answer_format: cited_summary
           retrieval_depth: 1
+          index_path: graph/index.json
         validation:
           mode: strict
         source:

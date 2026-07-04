@@ -6,7 +6,7 @@ from pathlib import Path
 from projectkoios.ingestors.answers import Answer, AnswerComposer, AnswerFormat
 from projectkoios.ingestors.backends import BackendAdapter, BackendFactory, BackendSelection
 from projectkoios.ingestors.config import Config, ConfigLoader, RuntimeConfigValidator
-from projectkoios.ingestors.index import GraphIndex, GraphIndexBuilder
+from projectkoios.ingestors.index import GraphIndex, GraphIndexBuilder, GraphIndexJsonSerializer
 from projectkoios.ingestors.retrieval import RetrievalResult, Retriever
 from projectkoios.ingestors.schemas import JsonSchema, JsonSchemaLoader, JsonSchemaValidator
 from projectkoios.ingestors.sources import SourceResolver, SourceSet
@@ -21,12 +21,20 @@ class ValidationReport:
     issues: tuple[str, ...]
 
 
+@dataclass(frozen=True, slots=True)
+class PersistedIndexReport:
+    output_path: Path
+    sources: int
+    sections: int
+
+
 class App:
     def __init__(self, *, backend_factory: BackendFactory | None = None) -> None:
         self.schema_loader: JsonSchemaLoader = JsonSchemaLoader()
         self.runtime_validator: RuntimeConfigValidator = RuntimeConfigValidator()
         self.source_resolver: SourceResolver = SourceResolver()
         self.index_builder: GraphIndexBuilder = GraphIndexBuilder()
+        self.index_serializer: GraphIndexJsonSerializer = GraphIndexJsonSerializer()
         self.retriever: Retriever = Retriever()
         self.answer_composer: AnswerComposer = AnswerComposer()
         self.backend_factory: BackendFactory = backend_factory or BackendFactory()
@@ -80,6 +88,22 @@ class App:
         source_set: SourceSet = self.source_resolver.resolve(config)
         index: GraphIndex = self.index_builder.build(source_set)
         return config, source_set, index
+
+    def persist_index(self, config_path: Path, *, schema_path: Path | None = None, preset: str | None = None) -> PersistedIndexReport:
+        build_result: tuple[Config, SourceSet, GraphIndex] = self.build_index(
+            config_path,
+            schema_path=schema_path,
+            preset=preset,
+        )
+        config: Config = build_result[0]
+        source_set: SourceSet = build_result[1]
+        index: GraphIndex = build_result[2]
+        self.index_serializer.write(index, config.index_path)
+        return PersistedIndexReport(
+            output_path=config.index_path,
+            sources=len(source_set.documents),
+            sections=len(index.sections),
+        )
 
     def retrieve(self, config_path: Path, query: str, *, schema_path: Path | None = None, preset: str | None = None) -> RetrievalResult:
         build_result: tuple[Config, SourceSet, GraphIndex] = self.build_index(
