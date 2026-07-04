@@ -65,6 +65,7 @@ These rules do not create architecture authority. Architecture and specification
 - Runtime enums SHOULD use `StrEnum` when values cross config, CLI, JSON, YAML, or other text boundaries.
 - Code MUST NOT use untyped dictionaries as durable domain objects when a dataclass or explicit schema would make the contract clearer.
 - Local variables inside functions and methods MUST have explicit type annotations when introduced.
+- Local variables inside functions and methods MUST have nearby comments explaining their purpose unless the variable is a simple loop/index variable or an immediately returned value whose purpose is obvious from the expression.
 - Local variable annotations inside functions and methods MUST NOT use `Any`.
 - Function and method return values MUST be statically checked against their declared return types during validation.
 - Code MUST NOT use private functions, private methods, private attributes, private variables, or private constants with leading underscores, excluding Python dunder names.
@@ -101,6 +102,10 @@ These rules do not create architecture authority. Architecture and specification
 
 - Code MUST fail explicitly for unsupported modes, unsupported backends, invalid paths, and malformed config.
 - Code MUST NOT silently swallow backend, parsing, validation, or persistence failures unless fallback behavior is explicitly configured and tested.
+- Code MUST NOT use broad `try` / `except` blocks that convert errors into generic return values such as `None`, `False`, or empty collections.
+- Expected recoverable errors SHOULD be represented with explicit result objects, typed domain exceptions, or narrow exception handling at the boundary that can add context and choose a documented fallback.
+- Unexpected programmer errors SHOULD be allowed to fail fast after context is attached, rather than being hidden by catch-all handlers.
+- Boundary layers such as CLI commands MAY catch typed domain exceptions and convert them into concise user-facing messages and non-zero exit status.
 - Exceptions SHOULD include enough context for a reviewer to identify the failing field, file, backend, or path.
 - User-facing CLI errors SHOULD be concise and actionable.
 
@@ -134,7 +139,10 @@ These rules do not create architecture authority. Architecture and specification
 ## Documentation
 
 - Public classes and functions SHOULD be self-explanatory through names and type signatures.
-- Docstrings and documentation strings MUST be PEP 8 compliant.
+- Public classes and methods SHOULD have docstrings when they are part of a reusable package surface or are constrained by a source artifact.
+- Public class and method docstrings SHOULD be compatible with generated documentation tooling such as Sphinx autodoc or pydoc.
+- Docstrings SHOULD use a consistent structured style with sections for arguments, return values, raised exceptions, and important side effects when those apply.
+- Docstrings and documentation strings MUST be PEP 257 compliant.
 - Documentation comments SHOULD be complete sentences when they explain behavior, constraints, or rationale.
 - Docstrings MAY be added when behavior is non-obvious, externally consumed, or constrained by a source artifact.
 - Implementation reports MUST list meaningful changed files and validation evidence after a slice lands.
