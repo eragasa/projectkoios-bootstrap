@@ -3,15 +3,15 @@
   "title": "Vulcan active work",
   "artifact_type": "workspace-active-priorities",
   "status": "review-handoff",
-  "datetime": "20260704.174859",
+  "datetime": "20260704.212209",
   "acting_as": "VULCAN",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/vulcan/",
-  "worktree": "/Users/eugene/repos/projectkoios-bootstrap-schema-record-base",
-  "branch": "vulcan/schema-record-base",
-  "priority_count": 3,
+  "branch": "master",
+  "priority_count": 4,
   "working_directory": "working/",
   "active_working_items": [
+    "docs/implementation/implementation-report.20260704.151640_graphrag-persisted-index.md",
     "docs/implementation/implementation-report.20260704.174859_schema-record-base.md",
     "docs/implementation/implementation-report.20260704.193035_python-policy-validator.md",
     "docs/implementation/implementation-report.20260704.205637_schema-package-policy-remediation.md"
@@ -25,62 +25,63 @@
 
 ## Current priority stack
 
-1. Hand off schema-record base implementation for ATHENA conformance review.
-2. Hand off Python policy validator first slice for review.
-3. Hand off schema package policy remediation for review.
+1. Hand off GraphRAG persisted-index implementation for ATHENA conformance review.
+2. Hand off schema-record base implementation for ATHENA conformance review.
+3. Hand off Python policy validator first slice for review.
+4. Hand off schema package policy remediation for review.
 
 ## Waiting on
 
-- ATHENA review of `docs/implementation/implementation-report.20260704.174859_schema-record-base.md` and the associated patch in worktree `/Users/eugene/repos/projectkoios-bootstrap-schema-record-base`.
+- ATHENA review of `docs/implementation/implementation-report.20260704.151640_graphrag-persisted-index.md`.
+- ATHENA review of `docs/implementation/implementation-report.20260704.174859_schema-record-base.md`.
 - Review or user direction for `docs/implementation/implementation-report.20260704.193035_python-policy-validator.md`.
 - Review or user direction for `docs/implementation/implementation-report.20260704.205637_schema-package-policy-remediation.md`.
-- User/Hermes decision on commit/merge timing relative to the original checkout's dirty GraphRAG/schema-record state.
 
 ## Working material
 
-- Controlling implementation source: `docs/plans/implementation-brief.20260704.172632_schema-record-base.md`.
-- Source ADR: `docs/adr/adr.schema-base.md`.
-- Source workplan: `docs/plans/schema-base-adr-records-workplan.md`.
-- Source schemas: `docs/schemas/schema.record-base.json`, `docs/schemas/adr-draft.schema.json`.
+- GraphRAG controlling implementation source: `docs/plans/projectkoios-graphrag-next-slice.md`.
+- GraphRAG implementation report: `docs/implementation/implementation-report.20260704.151640_graphrag-persisted-index.md`.
+- Schema-record controlling implementation source: `docs/plans/implementation-brief.20260704.172632_schema-record-base.md`.
 - Schema-record implementation report: `docs/implementation/implementation-report.20260704.174859_schema-record-base.md`.
 - Python policy validator plan: `docs/plans/implementation-plan.20260704.192620_python-policy-validator.md`.
 - Python policy validator implementation report: `docs/implementation/implementation-report.20260704.193035_python-policy-validator.md`.
 - Schema package policy remediation report: `docs/implementation/implementation-report.20260704.205637_schema-package-policy-remediation.md`.
-- Implementation package: `src/python/projectkoios/bootstrap/schema/`.
-- Tests: `tests/projectkoios/bootstrap/schema/`.
+- Schema implementation package: `src/python/projectkoios/bootstrap/schema/`.
+- Python policy validator package: `src/python/projectkoios/bootstrap/python_policy/`.
+- Schema tests: `tests/projectkoios/bootstrap/schema/`.
+- Python policy tests: `tests/projectkoios/bootstrap/python_policy/`.
 - Python coding control surface: `docs/policies/python-coding.md`.
+- Python testing control surface: `docs/policies/python-testing.md`.
 - Active working items: no files under `working/` are active right now.
 - Scratch: `scratch/` is available for temporary notes and non-durable exploration.
 
+## Completed integration state
+
+- Branch `vulcan/schema-record-base` was merged into `master` with merge commit `65b2fa4`.
+- `master` was pushed to `origin/master`.
+- The temporary worktree `/Users/eugene/repos/projectkoios-bootstrap-schema-record-base` was removed.
+- Local branch `vulcan/schema-record-base` was deleted after merge.
+
 ## Ignore for now
 
-- GraphRAG behavior changes
-- projectkoios ingestor refactors
-- CLI integration for schema records
-- active/completed/superseded/rejected ADR lifecycle states
-- implementation-report or workspace-state schema families
-- historical ADR migration
-- legacy schema reconciliation beyond non-canonical path detection
-- product architecture decisions
+- second backend adapter
+- embeddings or vector store integration
+- graph database persistence
+- UI/productization work
+- AAR or workflow-log sources
+- source-authority changes
+- broad architecture refactors outside an active plan
+- whole-repo Python policy remediation in one patch
 
 ## Exit criteria
 
-The schema-record base slice is ready for review handoff when:
+The current handoff state is complete when:
 
-- worktree isolation avoids dirty-tree mixing — complete
-- schema package is outside `projectkoios.ingestors` — complete
-- canonical schemas load from `docs/schemas/` — complete
-- project-local `$id` values resolve offline — complete
-- base envelope and required metadata are validated — complete
-- draft ADR schema narrows `schema_id` and `status` while preserving base metadata — complete
-- immutable model construction is implemented and tested — complete
-- deterministic draft ADR Markdown rendering is implemented and tested — complete
-- strict Markdown ingest is implemented and tested — complete
-- rejected extra-section capture is implemented and tested — complete
-- relevant tests pass — complete
-- implementation report is written under `docs/implementation/` — complete
-- `state.md` and `active.md` are updated with validated state and next expected artifact — complete
+- GraphRAG persisted-index implementation has ATHENA conformance review — pending
+- schema-record base implementation has ATHENA conformance review — pending
+- Python policy validator has review or next-slice direction — pending
+- schema package policy remediation has review or next-slice direction — pending
 
 ## Next expected artifact
 
-- ATHENA conformance review linked to `docs/implementation/implementation-report.20260704.174859_schema-record-base.md`.
+- ATHENA conformance review linked to the implementation reports, or user direction for the next VULCAN implementation/remediation slice.
