@@ -3,7 +3,7 @@ from __future__ import annotations
 import argparse
 from argparse import Namespace
 
-from projectkoios.bootstrap.commands import handoff, harnesses, ingestion, init, install, validate_harnesses, workspaces
+from projectkoios.bootstrap.commands import handoff, harnesses, ingestion, init, install, validate_harnesses, validate_python_policy, workspaces
 from projectkoios.cli import koios
 
 
@@ -25,6 +25,7 @@ def main() -> None:
     init.register(bootstrap_subparsers)
     install.register(bootstrap_subparsers)
     validate_harnesses.register(bootstrap_subparsers)
+    validate_python_policy.register(bootstrap_subparsers)
     workspaces.register(bootstrap_subparsers)
     harnesses.register(subparsers)
     ingestion.register(subparsers)
