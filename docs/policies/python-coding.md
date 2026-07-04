@@ -24,6 +24,8 @@ Draft implementation policy.
 
 This document defines Python coding rules for Vulcan-owned implementation work in `projectkoios-bootstrap`.
 
+Python test and validation rules live in `docs/policies/python-testing.md`.
+
 The key words `MUST`, `MUST NOT`, `SHOULD`, `SHOULD NOT`, and `MAY` are normative.
 
 ## Scope
@@ -119,6 +121,7 @@ These rules do not create architecture authority. Architecture and specification
 - Tests SHOULD use fake adapters for backend behavior.
 - Regression tests SHOULD be added when fixing a validation, path, serialization, or CLI behavior bug.
 - Full validation SHOULD use the repository virtualenv interpreter: `.venv/bin/python3`.
+- Python test and validation behavior SHOULD follow `docs/policies/python-testing.md`.
 
 ## Formatting and lint posture
 
