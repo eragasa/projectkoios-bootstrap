@@ -23,7 +23,7 @@
 
 ## Current scope
 
-- Focus: schema-record base handoff and Python policy validator first-slice handoff.
+- Focus: schema-record base handoff, Python policy validator handoff, and schema package policy remediation handoff.
 - Worktree: `/Users/eugene/repos/projectkoios-bootstrap-schema-record-base`.
 - Branch: `vulcan/schema-record-base`.
 - Controlling source: `docs/plans/implementation-brief.20260704.172632_schema-record-base.md`.
@@ -31,6 +31,7 @@
 - Source workplan: `docs/plans/schema-base-adr-records-workplan.md`.
 - Schema-record implementation report: `docs/implementation/implementation-report.20260704.174859_schema-record-base.md`.
 - Python policy validator implementation report: `docs/implementation/implementation-report.20260704.193035_python-policy-validator.md`.
+- Schema package policy remediation report: `docs/implementation/implementation-report.20260704.205637_schema-package-policy-remediation.md`.
 - Authority boundary: Vulcan implemented the brief in an isolated worktree and recorded validation evidence; Vulcan did not promote the draft ADR or create architecture authority.
 
 ## Validated state
@@ -56,11 +57,19 @@
   - `uv run mypy src/python/projectkoios/bootstrap/python_policy` => `Success: no issues found in 5 source files`
   - self-check with `PythonPolicyValidator` against `src/python/projectkoios/bootstrap/python_policy` => `findings=0`
   - `uv run pytest -q` => `209 passed in 0.94s`
+- Schema package policy remediation is complete for `src/python/projectkoios/bootstrap/schemas/`.
+- Schema package remediation validation evidence:
+  - Python policy validator against `src/python/projectkoios/bootstrap/schemas` => `findings 0`
+  - `uv run pytest tests/projectkoios/bootstrap/schemas -q` => `17 passed in 0.11s`
+  - `uv run mypy src/python/projectkoios/bootstrap/schemas` => `Success: no issues found in 5 source files`
+  - `uv run pytest -q` => `209 passed in 1.00s`
+- Remaining `src/python` policy baseline after schema package remediation: `694` findings.
 
 ## Open questions
 
 - ATHENA should review conformance of the schema-record implementation against `docs/plans/implementation-brief.20260704.172632_schema-record-base.md`.
 - User or reviewer should decide whether to add CLI integration for the Python policy validator next.
+- User or reviewer should choose the next package for policy remediation if continuing existing-code cleanup.
 - User/Hermes should decide whether to commit, merge, or further review branch `vulcan/schema-record-base`.
 - Required-section `###` subsections are rejected in this first slice rather than mapped; later schema-controlled slices can add subsection support.
 

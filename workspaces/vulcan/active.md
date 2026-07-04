@@ -9,11 +9,12 @@
   "workspace": "workspaces/vulcan/",
   "worktree": "/Users/eugene/repos/projectkoios-bootstrap-schema-record-base",
   "branch": "vulcan/schema-record-base",
-  "priority_count": 2,
+  "priority_count": 3,
   "working_directory": "working/",
   "active_working_items": [
     "docs/implementation/implementation-report.20260704.174859_schema-record-base.md",
-    "docs/implementation/implementation-report.20260704.193035_python-policy-validator.md"
+    "docs/implementation/implementation-report.20260704.193035_python-policy-validator.md",
+    "docs/implementation/implementation-report.20260704.205637_schema-package-policy-remediation.md"
   ],
   "scratch_directory": "scratch/",
   "controlling_workspace_policy": "docs/policies/workspace-layout.md"
@@ -26,11 +27,13 @@
 
 1. Hand off schema-record base implementation for ATHENA conformance review.
 2. Hand off Python policy validator first slice for review.
+3. Hand off schema package policy remediation for review.
 
 ## Waiting on
 
 - ATHENA review of `docs/implementation/implementation-report.20260704.174859_schema-record-base.md` and the associated patch in worktree `/Users/eugene/repos/projectkoios-bootstrap-schema-record-base`.
 - Review or user direction for `docs/implementation/implementation-report.20260704.193035_python-policy-validator.md`.
+- Review or user direction for `docs/implementation/implementation-report.20260704.205637_schema-package-policy-remediation.md`.
 - User/Hermes decision on commit/merge timing relative to the original checkout's dirty GraphRAG/schema-record state.
 
 ## Working material
@@ -42,6 +45,7 @@
 - Schema-record implementation report: `docs/implementation/implementation-report.20260704.174859_schema-record-base.md`.
 - Python policy validator plan: `docs/plans/implementation-plan.20260704.192620_python-policy-validator.md`.
 - Python policy validator implementation report: `docs/implementation/implementation-report.20260704.193035_python-policy-validator.md`.
+- Schema package policy remediation report: `docs/implementation/implementation-report.20260704.205637_schema-package-policy-remediation.md`.
 - Implementation package: `src/python/projectkoios/bootstrap/schemas/`.
 - Tests: `tests/projectkoios/bootstrap/schemas/`.
 - Python coding control surface: `docs/policies/python-coding.md`.
