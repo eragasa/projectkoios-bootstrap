@@ -1,14 +1,20 @@
 from __future__ import annotations
 
-from projectkoios.ingestors import BackendFailureMode, BackendName, ConfigLoader, JsonSchemaLoader, JsonSchemaValidator, PipelineMode, ValidationMode
+from pathlib import Path
+
+from projectkoios.ingestors import BackendFailureMode, BackendName, Config, ConfigLoader, JsonSchema, JsonSchemaLoader, JsonSchemaValidator, PipelineMode, ValidationMode
 
 from tests.projectkoios.ingestors._helpers import write_config, write_schema
 
 
-def test__ConfigLoader__load(tmp_path):
-    schema = JsonSchemaLoader().load(write_schema(tmp_path))
-    loader = ConfigLoader(JsonSchemaValidator(schema))
-    config = loader.load(write_config(tmp_path))
+def test__ConfigLoader__load(tmp_path: Path) -> None:
+    """Validate that ConfigLoader maps fixture YAML into typed config fields."""
+    # Schema fixture validates the generated YAML config.
+    schema: JsonSchema = JsonSchemaLoader().load(write_schema(tmp_path))
+    # Loader produces the typed ingestion config under test.
+    loader: ConfigLoader = ConfigLoader(JsonSchemaValidator(schema))
+    # Config is loaded from the generated fixture file.
+    config: Config = loader.load(write_config(tmp_path))
     assert config.project == "projectkoios"
     assert config.retrieval_depth == 1
     assert config.index_path == config.root / "graph" / "index.json"
