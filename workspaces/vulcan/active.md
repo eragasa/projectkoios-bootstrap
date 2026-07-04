@@ -3,18 +3,19 @@
   "title": "Vulcan active work",
   "artifact_type": "workspace-active-priorities",
   "status": "review-handoff",
-  "datetime": "20260704.212209",
+  "datetime": "20260704.213428",
   "acting_as": "VULCAN",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/vulcan/",
   "branch": "master",
-  "priority_count": 4,
+  "priority_count": 5,
   "working_directory": "working/",
   "active_working_items": [
     "docs/implementation/implementation-report.20260704.151640_graphrag-persisted-index.md",
     "docs/implementation/implementation-report.20260704.174859_schema-record-base.md",
     "docs/implementation/implementation-report.20260704.193035_python-policy-validator.md",
-    "docs/implementation/implementation-report.20260704.205637_schema-package-policy-remediation.md"
+    "docs/implementation/implementation-report.20260704.205637_schema-package-policy-remediation.md",
+    "docs/implementation/implementation-report.20260704.213428_schema-immutability-remediation.md"
   ],
   "scratch_directory": "scratch/",
   "controlling_workspace_policy": "docs/policies/workspace-layout.md"
@@ -29,6 +30,7 @@
 2. Hand off schema-record base implementation for ATHENA conformance review.
 3. Hand off Python policy validator first slice for review.
 4. Hand off schema package policy remediation for review.
+5. Hand off schema immutability gap remediation for ATHENA gap-closure review.
 
 ## Waiting on
 
@@ -36,6 +38,7 @@
 - ATHENA review of `docs/implementation/implementation-report.20260704.174859_schema-record-base.md`.
 - Review or user direction for `docs/implementation/implementation-report.20260704.193035_python-policy-validator.md`.
 - Review or user direction for `docs/implementation/implementation-report.20260704.205637_schema-package-policy-remediation.md`.
+- ATHENA gap-closure review for `docs/implementation/implementation-report.20260704.213428_schema-immutability-remediation.md`.
 
 ## Working material
 
@@ -46,6 +49,7 @@
 - Python policy validator plan: `docs/plans/implementation-plan.20260704.192620_python-policy-validator.md`.
 - Python policy validator implementation report: `docs/implementation/implementation-report.20260704.193035_python-policy-validator.md`.
 - Schema package policy remediation report: `docs/implementation/implementation-report.20260704.205637_schema-package-policy-remediation.md`.
+- Schema immutability remediation report: `docs/implementation/implementation-report.20260704.213428_schema-immutability-remediation.md`.
 - Schema implementation package: `src/python/projectkoios/bootstrap/schema/`.
 - Python policy validator package: `src/python/projectkoios/bootstrap/python_policy/`.
 - Schema tests: `tests/projectkoios/bootstrap/schema/`.
@@ -81,6 +85,7 @@ The current handoff state is complete when:
 - schema-record base implementation has ATHENA conformance review — pending
 - Python policy validator has review or next-slice direction — pending
 - schema package policy remediation has review or next-slice direction — pending
+- schema immutability gap remediation has ATHENA gap-closure review — pending
 
 ## Next expected artifact
 

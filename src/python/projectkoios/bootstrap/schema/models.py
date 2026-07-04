@@ -1,9 +1,10 @@
 from __future__ import annotations
 
+from collections.abc import Mapping
 from dataclasses import dataclass
 from enum import StrEnum
 from types import MappingProxyType
-from typing import Any, Mapping
+from typing import Any
 
 from projectkoios.bootstrap.schema.schemas import SchemaRegistry
 
@@ -50,16 +51,78 @@ DRAFT_ADR_SECTION_HEADINGS: dict[str, str] = {
 }
 
 
+def freeze_json_value(value: object) -> object:
+    """Deep-freeze a JSON-like value.
+
+    Args:
+        value: JSON-like value to freeze.
+
+    Returns:
+        Immutable representation of mapping and sequence values.
+    """
+    if isinstance(value, Mapping):
+        # Frozen mapping preserves keys while freezing nested values.
+        frozen_items: dict[str, object] = {str(key): freeze_json_value(item) for key, item in value.items()}
+        return MappingProxyType(frozen_items)
+    if isinstance(value, list | tuple):
+        return tuple(freeze_json_value(item) for item in value)
+    return value
+
+
+def thaw_json_value(value: object) -> object:
+    """Return a mutable JSON-compatible copy of a frozen value.
+
+    Args:
+        value: Frozen JSON-like value.
+
+    Returns:
+        Mutable JSON-compatible value.
+    """
+    if isinstance(value, Mapping):
+        # Mutable mapping copy restores JSON object shape.
+        thawed_items: JsonObject = {str(key): thaw_json_value(item) for key, item in value.items()}
+        return thawed_items
+    if isinstance(value, tuple):
+        return [thaw_json_value(item) for item in value]
+    return value
+
+
 def frozen_mapping(value: JsonMapping) -> JsonMapping:
-    """Return an immutable shallow copy of a JSON mapping.
+    """Return an immutable deep copy of a JSON mapping.
 
     Args:
         value: Mapping to freeze.
 
     Returns:
-        Read-only mapping proxy.
+        Deeply read-only mapping proxy.
+
+    Raises:
+        TypeError: If deep-freezing does not produce a mapping.
     """
-    return MappingProxyType(dict(value))
+    # Frozen value must remain object-shaped for schema record metadata/content.
+    frozen_value: object = freeze_json_value(value)
+    if not isinstance(frozen_value, Mapping):
+        raise TypeError("Frozen JSON mapping must remain a mapping")
+    return frozen_value
+
+
+def mutable_json_object(value: JsonMapping) -> JsonObject:
+    """Return a mutable JSON object copy of a frozen mapping.
+
+    Args:
+        value: Frozen JSON-like mapping.
+
+    Returns:
+        Mutable JSON-compatible object.
+
+    Raises:
+        TypeError: If thawing does not produce an object.
+    """
+    # Thawed value must be object-shaped for record serialization.
+    thawed_value: object = thaw_json_value(value)
+    if not isinstance(thawed_value, dict):
+        raise TypeError("Thawed JSON mapping must become a dictionary")
+    return thawed_value
 
 
 @dataclass(frozen=True, slots=True)
@@ -219,7 +282,7 @@ class RecordMetadata:
         Returns:
             JSON-compatible metadata mapping.
         """
-        return dict(self.fields)
+        return mutable_json_object(self.fields)
 
 
 @dataclass(frozen=True, slots=True)
@@ -307,7 +370,7 @@ class SchemaRecordBase:
         Returns:
             JSON-compatible base record mapping.
         """
-        return {"metadata": self.metadata.to_dict(), "content": dict(self.content)}
+        return {"metadata": self.metadata.to_dict(), "content": mutable_json_object(self.content)}
 
 
 @dataclass(frozen=True, slots=True)

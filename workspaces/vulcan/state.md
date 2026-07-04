@@ -3,7 +3,7 @@
   "title": "Vulcan workspace state",
   "artifact_type": "workspace-state",
   "status": "review-handoff",
-  "datetime": "20260704.212209",
+  "datetime": "20260704.213428",
   "acting_as": "VULCAN",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/vulcan/",
@@ -23,9 +23,10 @@
 
 ## Current scope
 
-- Focus: review handoff for completed GraphRAG persisted-index, schema-record base, Python policy validator, and schema package policy remediation work.
+- Focus: review handoff for completed GraphRAG persisted-index, schema-record base, Python policy validator, schema package policy remediation, and schema immutability remediation work.
 - Current branch: `master`.
 - Latest integration commit: `65b2fa4 Merge schema-record base and Python policy work`.
+- Latest VULCAN implementation commit: `e81102a Remediate schema record immutability`.
 - Remote state: `master` pushed to `origin/master`.
 - Authority boundary: Vulcan implemented accepted filesystem-visible work items and recorded validation evidence; Vulcan did not promote draft ADRs or create architecture authority.
 
@@ -70,6 +71,14 @@
 - Schema package policy baseline: `findings 0`.
 - Remaining `src/python` policy baseline after schema package remediation: `694` findings.
 
+### Schema immutability remediation slice
+
+- Source review: `docs/reviews/architecture-conformance.20260704.212913_schema-record-base-slice.md`.
+- Implementation report: `docs/implementation/implementation-report.20260704.213428_schema-immutability-remediation.md`.
+- Shallow immutability gap in metadata/generic mappings is remediated.
+- `RecordMetadata.fields` and generic schema-record mappings now recursively freeze nested mappings and lists/tuples.
+- `to_dict()` returns deep mutable JSON-compatible copies.
+
 ### Post-merge validation evidence
 
 Commands run from `/Users/eugene/repos/projectkoios-bootstrap` after merge to `master`:
@@ -82,10 +91,19 @@ Commands run from `/Users/eugene/repos/projectkoios-bootstrap` after merge to `m
 - `graphify update /Users/eugene/repos/projectkoios-bootstrap` => `8128 nodes, 8889 edges, 731 communities`; HTML skipped because graph exceeds 5000 nodes
 - `git push origin master` => `60cc468..65b2fa4 master -> master`
 
+### Immutability remediation validation evidence
+
+Commands run from `/Users/eugene/repos/projectkoios-bootstrap` after the immutability remediation:
+
+- `uv run pytest tests/projectkoios/bootstrap/schema -q` => `19 passed in 0.13s`
+- `uv run mypy src/python/projectkoios/bootstrap/schema` => `Success: no issues found in 5 source files`
+- Python policy validator against `src/python/projectkoios/bootstrap/schema` => `findings 0`
+- `uv run pytest -q` => `211 passed in 1.01s`
+
 ## Open questions
 
 - ATHENA should review conformance of the GraphRAG persisted-index implementation against `docs/plans/projectkoios-graphrag-next-slice.md`.
-- ATHENA should review conformance of the schema-record implementation against `docs/plans/implementation-brief.20260704.172632_schema-record-base.md`.
+- ATHENA should review gap closure for the schema immutability remediation in `docs/implementation/implementation-report.20260704.213428_schema-immutability-remediation.md`.
 - User or reviewer should decide whether to add CLI integration for the Python policy validator next.
 - User or reviewer should choose the next package for policy remediation if continuing existing-code cleanup.
 - Required-section `###` subsections are rejected in the first schema-record slice rather than mapped; later schema-controlled slices can add subsection support.
@@ -93,7 +111,7 @@ Commands run from `/Users/eugene/repos/projectkoios-bootstrap` after merge to `m
 ## Next transition
 
 - Owner: ATHENA or user.
-- Highest-leverage next action: review the completed implementation reports, especially `docs/implementation/implementation-report.20260704.174859_schema-record-base.md`, now that the branch is merged and pushed.
+- Highest-leverage next action: review `docs/implementation/implementation-report.20260704.213428_schema-immutability-remediation.md` for closure of the ATHENA-identified shallow immutability gap.
 - Expected successor artifact after review: ATHENA conformance review linked to the relevant implementation report(s), or a new VULCAN implementation brief for the next slice.
 - Blockers: none currently.
 

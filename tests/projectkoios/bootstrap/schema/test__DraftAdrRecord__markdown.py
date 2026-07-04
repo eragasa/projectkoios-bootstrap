@@ -20,6 +20,24 @@ def test__DraftAdrRecord__from_dict__is_immutable_and_preserves_metadata():
         record.content = record.content
 
 
+def test__DraftAdrRecord__from_dict__deep_freezes_metadata_from_source_mutation():
+    source = valid_draft_adr_record()
+    record = DraftAdrRecord.from_dict(source)
+    source["metadata"]["origin"]["actor"] = "user"
+    assert record.metadata.to_dict()["origin"]["actor"] == "ATHENA"
+    with pytest.raises(TypeError):
+        record.metadata.fields["origin"]["actor"] = "user"
+
+
+def test__DraftAdrRecord__to_dict__returns_deep_mutable_copy():
+    record = DraftAdrRecord.from_dict(valid_draft_adr_record())
+    serialized = record.to_dict()
+    serialized["metadata"]["origin"]["actor"] = "user"
+    serialized["content"]["context"]["concerns"].append({"level": "MAY", "text": "Mutate copy only."})
+    assert record.metadata.to_dict()["origin"]["actor"] == "ATHENA"
+    assert len(record.to_dict()["content"]["context"]["concerns"]) == 1
+
+
 def test__DraftAdrRecord__from_dict__fails_before_render_for_missing_metadata():
     source = valid_draft_adr_record()
     del source["metadata"]
