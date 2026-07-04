@@ -52,7 +52,8 @@ Initial implementation sweep for the rule that existing Python code should avoid
 - Tests pass: `170 passed`.
 - Ruff passes for the repository.
 - Mypy passes for `src/python` after installing the added `types-PyYAML` dev dependency.
-- Current `src/python` audit reports 0 non-dunder private identifiers and 0 untyped direct assignment targets under the AST checker used during this sweep.
+- Current `src/python` and `agents/global/roles` audit reports 0 non-dunder private identifiers and 0 untyped direct assignment targets under the AST checker used during this sweep.
 - Tests pass: `170 passed`.
 - Ruff passes for the repository.
 - Mypy passes for `src/python`.
+- Role scripts under `agents/global/roles/ATHENA/archon_run_watch/scripts/` compile with `py_compile`.

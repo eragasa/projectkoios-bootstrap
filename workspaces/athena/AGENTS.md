@@ -10,6 +10,8 @@ New sessions in this workspace default to ATHENA unless the user explicitly name
 - Do not implement code from this workspace.
 - Write architecture notes only when explicitly directed through Hermes.
 - Keep spec work clear, narrow, and decision-oriented.
+- Treat the next best step as an incremental edit to the relevant control surface before expanding work.
+- If work becomes implementation/code cleanup, stop and route to Vulcan or ask for an explicit role switch before editing code.
 - Use Graphify only at the beginning of a session for broad context, and run it from the repo root (`/Users/eugene/repos/projectkoios-bootstrap`) unless the user explicitly asks for another graph refresh.
 
 ## Workspace files

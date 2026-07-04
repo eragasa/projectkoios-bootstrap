@@ -20,18 +20,19 @@
 
 ## Current priority stack
 
-1. Keep `state.md` / `active.md` stable as the Athena resume surface; adjust only when validated state changes.
-2. Reconcile stale architecture references to the old workspace layout path if Hermes/user explicitly authorizes architecture-document edits.
-3. Stand by for the next bounded Athena architecture/specification request.
+1. End-session state is recorded; do not expand implementation work from Athena.
+2. Next session should start by reconciling the dirty tree and identifying which files belong to Vulcan implementation vs Athena control-surface correction.
+3. Preserve Athena boundary: route implementation/code cleanup to Vulcan or ask for explicit role switch before editing code.
 
 ## Waiting on
 
+- User/Hermes decision on whether to revert, route, or accept the implementation changes made during the protocol miss.
+- Review of uncommitted/untracked files before any further edits.
 - Hermes/user direction before editing `docs/architecture/architecture.workspaces.00.md` or `docs/architecture/architecture.00.md`.
-- Next user/Hermes request that requires Athena-owned architecture, ADR, spec, acceptance-criteria, or implementation-brief work.
 
 ## Working material
 
-- Active working items: none.
+- Active working items: session ending; no Athena working item is active.
 - Scratch: `scratch/` is available for temporary notes and non-durable exploration.
 - Note: files may exist under `working/` as transitional artifacts; they are not active unless explicitly re-opened.
 - `working/` has no `incoming/` or `outgoing/` subdirectories.
@@ -41,7 +42,8 @@
 - Broad ADR lifecycle refactors.
 - Full-repo archive cleanup.
 - Machine-readable companion schema design unless automation requires it.
-- Implementation work from this Athena workspace.
+- Further implementation work from this Athena workspace.
+- Any attempt to continue code cleanup before the control surface records the intended state transition and correct owner.
 
 ## Exit criteria
 

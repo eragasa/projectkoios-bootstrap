@@ -20,8 +20,8 @@ User-directed implementation sweep: existing Python code should not use private 
 ## Summary
 
 - Updated Python coding policy and review baseline to make the rule explicit.
-- Removed non-dunder private identifiers under `src/python`.
-- Added explicit direct-assignment annotations or equivalent typed structure under `src/python`.
+- Removed non-dunder private identifiers under `src/python` and `agents/global/roles` Python scripts.
+- Added explicit direct-assignment annotations or equivalent typed structure under `src/python` and `agents/global/roles` Python scripts.
 - Renamed helper functions/methods and updated call sites/tests.
 - Renamed the Message test file to `tests/harness/handoffs/test_Message.py`.
 - Added `types-PyYAML` as a dev dependency so mypy can validate YAML config code.
@@ -49,10 +49,10 @@ User-directed implementation sweep: existing Python code should not use private 
 - `python3 -m pytest -q`: 170 passed
 - `python3 -m ruff check .`: passed
 - `python3 -m mypy src/python`: passed
-- AST audit under `src/python`: 0 non-dunder private identifiers, 0 untyped direct assignment targets
+- `python3 -m py_compile agents/global/roles/ATHENA/archon_run_watch/scripts/*.py`: passed
+- AST audit under `src/python` and `agents/global/roles`: 0 non-dunder private identifiers, 0 untyped direct assignment targets
 
 ## Notes
 
-- The AST audit covers direct assignment targets and non-dunder private identifiers under `src/python`.
-- Some non-`src/python` role scripts still use older helper style; they are outside the `src/python` implementation policy surface unless promoted into the same enforcement scope.
+- The AST audit covers direct assignment targets and non-dunder private identifiers under `src/python` plus role scripts under `agents/global/roles`.
 - The dirty tree includes prior Vulcan workspace/control-surface changes and the `answering.py` → `answers.py` rename from the parallel ingestion work.

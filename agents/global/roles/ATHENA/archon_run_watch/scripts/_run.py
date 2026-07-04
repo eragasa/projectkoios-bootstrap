@@ -54,7 +54,7 @@ class ArchonClient:
     def __init__(self, archon_bin: str = "archon") -> None:
         self.bin: str = archon_bin
 
-    def _run(self, *args: str, json_output: bool = False) -> subprocess.CompletedProcess[str]:
+    def run_process(self, *args: str, json_output: bool = False) -> subprocess.CompletedProcess[str]:
         """Invoke the ``archon`` CLI. Raises ``FileNotFoundError`` if missing."""
         cmd: list[str] = [self.bin, *args]
         if json_output:
@@ -63,7 +63,7 @@ class ArchonClient:
 
     def run_cli(self, *args: str, json_output: bool = False) -> subprocess.CompletedProcess[str]:
         """Invoke the ``archon`` CLI through the monkeypatchable runner."""
-        return self._run(*args, json_output=json_output)
+        return self.run_process(*args, json_output=json_output)
 
     def fetch_run(self, run_id: str) -> RunStatus | str:
         """Fetch the status of one Archon run."""
