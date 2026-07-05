@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 
 from projectkoios.workflow.events import Event, ExecutionTrace
-from projectkoios.workflow.model import Arc, Binding, ExecutionState, Marking, Token, Transition, WorkflowNet
+from projectkoios.workflow.petrinet import Arc, Binding, ExecutionState, Marking, Token, Transition, PetriNet
 from projectkoios.workflow.validation import WorkflowValidator
 
 
@@ -114,7 +114,7 @@ class WorkflowRuntime:
 
     def consume_input_tokens(
         self,
-        net: WorkflowNet,
+        net: PetriNet,
         binding: Binding,
         next_tokens: dict[str, list[Token]],
     ) -> None:
@@ -133,7 +133,7 @@ class WorkflowRuntime:
 
     def produce_output_tokens(
         self,
-        net: WorkflowNet,
+        net: PetriNet,
         binding: Binding,
         next_tokens: dict[str, list[Token]],
     ) -> None:

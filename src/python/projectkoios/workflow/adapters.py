@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from importlib import import_module
 from types import ModuleType
 
-from projectkoios.workflow.model import Arc, Place, Transition, WorkflowNet
+from projectkoios.workflow.petrinet import Arc, Place, Transition, PetriNet
 
 
 class AdapterUnavailableError(RuntimeError):
@@ -12,7 +12,7 @@ class AdapterUnavailableError(RuntimeError):
 
 
 @dataclass(frozen=True, slots=True)
-class WorkflowPlacePayload:
+class PetriNetPlacePayload:
     """Data object for a place in an adapter-neutral workflow payload."""
 
     place_id: str
@@ -25,7 +25,7 @@ class WorkflowPlacePayload:
 
 
 @dataclass(frozen=True, slots=True)
-class WorkflowTransitionPayload:
+class PetriNetTransitionPayload:
     """Data object for a transition in an adapter-neutral workflow payload."""
 
     transition_id: str
@@ -38,7 +38,7 @@ class WorkflowTransitionPayload:
 
 
 @dataclass(frozen=True, slots=True)
-class WorkflowArcPayload:
+class PetriNetArcPayload:
     """Data object for an arc in an adapter-neutral workflow payload."""
 
     place_id: str
@@ -58,12 +58,12 @@ class WorkflowArcPayload:
 
 
 @dataclass(frozen=True, slots=True)
-class WorkflowNetPayload:
+class PetriNetPayload:
     """Data object for a deterministic library-neutral workflow net payload."""
 
-    places: tuple[WorkflowPlacePayload, ...]
-    transitions: tuple[WorkflowTransitionPayload, ...]
-    arcs: tuple[WorkflowArcPayload, ...]
+    places: tuple[PetriNetPlacePayload, ...]
+    transitions: tuple[PetriNetTransitionPayload, ...]
+    arcs: tuple[PetriNetArcPayload, ...]
 
     def to_dict(self) -> dict[str, object]:
         """Return a deterministic dictionary representation of the workflow payload."""
@@ -86,15 +86,15 @@ class AdapterExport:
     """
 
     adapter_name: str
-    net: WorkflowNet
-    payload: WorkflowNetPayload
+    net: PetriNet
+    payload: PetriNetPayload
 
 
 @dataclass(frozen=True, slots=True)
-class WorkflowNetPayloadBuilder:
+class PetriNetPayloadBuilder:
     """Action object that builds adapter-neutral payload data objects."""
 
-    def build(self, net: WorkflowNet) -> WorkflowNetPayload:
+    def build(self, net: PetriNet) -> PetriNetPayload:
         """Build a deterministic library-neutral payload for a workflow net.
 
         Args:
@@ -105,25 +105,25 @@ class WorkflowNetPayloadBuilder:
         """
 
         # Places preserve declaration order for deterministic adapter exports.
-        places: list[WorkflowPlacePayload] = []
+        places: list[PetriNetPlacePayload] = []
         place: Place
         for place in net.places:
-            places.append(WorkflowPlacePayload(place_id=place.place_id, label=place.label))
+            places.append(PetriNetPlacePayload(place_id=place.place_id, label=place.label))
 
         # Transitions preserve declaration order and omit non-serializable guard callables.
-        transitions: list[WorkflowTransitionPayload] = []
+        transitions: list[PetriNetTransitionPayload] = []
         transition: Transition
         for transition in net.transitions:
             transitions.append(
-                WorkflowTransitionPayload(transition_id=transition.transition_id, label=transition.label)
+                PetriNetTransitionPayload(transition_id=transition.transition_id, label=transition.label)
             )
 
         # Arcs preserve declaration order and expose explicit direction and weight.
-        arcs: list[WorkflowArcPayload] = []
+        arcs: list[PetriNetArcPayload] = []
         arc: Arc
         for arc in net.arcs:
             arcs.append(
-                WorkflowArcPayload(
+                PetriNetArcPayload(
                     place_id=arc.place_id,
                     transition_id=arc.transition_id,
                     kind=arc.kind.value,
@@ -131,22 +131,22 @@ class WorkflowNetPayloadBuilder:
                 )
             )
 
-        return WorkflowNetPayload(places=tuple(places), transitions=tuple(transitions), arcs=tuple(arcs))
+        return PetriNetPayload(places=tuple(places), transitions=tuple(transitions), arcs=tuple(arcs))
 
 
 @dataclass(frozen=True, slots=True)
 class SnakesColoredNetAdapter:
     """Adapter boundary for future SNAKES colored-net integration.
 
-    The core workflow package uses canonical `WorkflowNet` objects. This adapter
+    The core workflow package uses canonical `PetriNet` objects. This adapter
     owns the optional SNAKES dependency boundary and loads it lazily only when a
     caller explicitly requests backend access.
     """
 
     module_name: str = "snakes"
-    payload_builder: WorkflowNetPayloadBuilder = WorkflowNetPayloadBuilder()
+    payload_builder: PetriNetPayloadBuilder = PetriNetPayloadBuilder()
 
-    def export(self, net: WorkflowNet) -> AdapterExport:
+    def export(self, net: PetriNet) -> AdapterExport:
         """Return a typed adapter export payload.
 
         Args:
@@ -180,15 +180,15 @@ class SnakesColoredNetAdapter:
 class Pm4pyProcessMiningAdapter:
     """Adapter boundary for future PM4Py process-mining integration.
 
-    The core workflow package uses canonical `WorkflowNet` objects. This adapter
+    The core workflow package uses canonical `PetriNet` objects. This adapter
     owns the optional PM4Py dependency boundary and loads it lazily only when a
     caller explicitly requests backend access.
     """
 
     module_name: str = "pm4py"
-    payload_builder: WorkflowNetPayloadBuilder = WorkflowNetPayloadBuilder()
+    payload_builder: PetriNetPayloadBuilder = PetriNetPayloadBuilder()
 
-    def export(self, net: WorkflowNet) -> AdapterExport:
+    def export(self, net: PetriNet) -> AdapterExport:
         """Return a typed adapter export payload.
 
         Args:

@@ -9,7 +9,7 @@ from projectkoios.workflow import (
     Place,
     Token,
     Transition,
-    WorkflowNet,
+    PetriNet,
     WorkflowRuntime,
 )
 
@@ -17,7 +17,7 @@ from projectkoios.workflow import (
 def test__WorkflowRuntime__fire__moves_token_and_records_event() -> None:
     """Validate firing an enabled transition moves a token and records trace."""
     # Workflow net fixture moves one token from draft to review.
-    net: WorkflowNet = WorkflowNet(
+    net: PetriNet = PetriNet(
         places=(Place("draft"), Place("review")),
         transitions=(Transition("submit"),),
         arcs=(
@@ -51,7 +51,7 @@ def test__WorkflowRuntime__enabled_bindings__uses_guard() -> None:
         return first_token.color["kind"] == "implementation-brief"
 
     # Workflow net fixture applies a guard to the submit transition.
-    net: WorkflowNet = WorkflowNet(
+    net: PetriNet = PetriNet(
         places=(Place("draft"), Place("review")),
         transitions=(Transition("submit", guard=guard),),
         arcs=(

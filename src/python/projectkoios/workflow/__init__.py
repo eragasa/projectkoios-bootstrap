@@ -3,14 +3,14 @@ from projectkoios.workflow.adapters import (
     AdapterUnavailableError,
     Pm4pyProcessMiningAdapter,
     SnakesColoredNetAdapter,
-    WorkflowArcPayload,
-    WorkflowNetPayload,
-    WorkflowNetPayloadBuilder,
-    WorkflowPlacePayload,
-    WorkflowTransitionPayload,
+    PetriNetArcPayload,
+    PetriNetPayload,
+    PetriNetPayloadBuilder,
+    PetriNetPlacePayload,
+    PetriNetTransitionPayload,
 )
 from projectkoios.workflow.events import Event, EventLog, ExecutionTrace
-from projectkoios.workflow.model import (
+from projectkoios.workflow.petrinet import (
     ActivityObject,
     AgentObject,
     Arc,
@@ -27,7 +27,7 @@ from projectkoios.workflow.model import (
     Place,
     Token,
     Transition,
-    WorkflowNet,
+    PetriNet,
     WorkspaceObject,
 )
 from projectkoios.workflow.runtime import FiredTransition, WorkflowRuntime
@@ -60,14 +60,14 @@ __all__ = [
     "Transition",
     "ValidationIssue",
     "ValidationResult",
-    "WorkflowArcPayload",
-    "WorkflowNet",
-    "WorkflowNetPayload",
-    "WorkflowNetPayloadBuilder",
-    "WorkflowPlacePayload",
+    "PetriNetArcPayload",
+    "PetriNet",
+    "PetriNetPayload",
+    "PetriNetPayloadBuilder",
+    "PetriNetPlacePayload",
     "WorkflowRuntime",
     "WorkflowValidationError",
-    "WorkflowTransitionPayload",
+    "PetriNetTransitionPayload",
     "WorkflowValidator",
     "WorkspaceObject",
 ]

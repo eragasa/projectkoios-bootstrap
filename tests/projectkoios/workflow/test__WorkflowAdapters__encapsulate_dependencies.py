@@ -13,15 +13,15 @@ from projectkoios.workflow import (
     Pm4pyProcessMiningAdapter,
     SnakesColoredNetAdapter,
     Transition,
-    WorkflowNet,
-    WorkflowNetPayload,
-    WorkflowNetPayloadBuilder,
+    PetriNet,
+    PetriNetPayload,
+    PetriNetPayloadBuilder,
 )
 
 
-def workflow_fixture() -> WorkflowNet:
+def workflow_fixture() -> PetriNet:
     """Create a minimal workflow net fixture for adapter tests."""
-    return WorkflowNet(
+    return PetriNet(
         places=(Place("draft", "Draft"), Place("review", "Review")),
         transitions=(Transition("submit", "Submit"),),
         arcs=(
@@ -31,13 +31,13 @@ def workflow_fixture() -> WorkflowNet:
     )
 
 
-def test__WorkflowNetPayloadBuilder__build__returns_payload_data_object() -> None:
+def test__PetriNetPayloadBuilder__build__returns_payload_data_object() -> None:
     """Validate the payload builder creates a workflow payload data object."""
     # Net fixture is the canonical source being adapted.
-    net: WorkflowNet = workflow_fixture()
+    net: PetriNet = workflow_fixture()
 
     # Payload builder is the action object that converts nets to payload data.
-    payload: WorkflowNetPayload = WorkflowNetPayloadBuilder().build(net)
+    payload: PetriNetPayload = PetriNetPayloadBuilder().build(net)
 
     assert payload.to_dict()["places"] == [
         {"place_id": "draft", "label": "Draft"},
@@ -52,13 +52,13 @@ def test__WorkflowNetPayloadBuilder__build__returns_payload_data_object() -> Non
 def test__SnakesColoredNetAdapter__export__returns_library_neutral_payload() -> None:
     """Validate SNAKES adapter export uses canonical payload data only."""
     # Net fixture is the canonical source being exported.
-    net: WorkflowNet = workflow_fixture()
+    net: PetriNet = workflow_fixture()
 
     # Export payload is library-neutral and does not require SNAKES installation.
     exported: AdapterExport = SnakesColoredNetAdapter().export(net)
 
     assert exported.adapter_name == "snakes"
-    assert isinstance(exported.payload, WorkflowNetPayload)
+    assert isinstance(exported.payload, PetriNetPayload)
 
 
 def test__Pm4pyProcessMiningAdapter__backend_module__raises_clear_unavailable_error(

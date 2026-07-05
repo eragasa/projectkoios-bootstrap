@@ -27,7 +27,8 @@
 - Source plan: follow-up to `docs/plans/projectkoios-workflow-petri-net-executor.md` and user approval.
 - Source ADR: `docs/adr/adr.20260702.042300_projectkoios-workflow-petri-net-executor.draft.md` remains draft.
 - Current implementation status: adapter dependency encapsulation is validated but uncommitted.
-- Review correction: adapter-neutral net representation now uses payload DataObjects plus a `WorkflowNetPayloadBuilder` ActionObject.
+- Review correction: adapter-neutral net representation now uses payload DataObjects plus a `PetriNetPayloadBuilder` ActionObject.
+- Naming correction: canonical module/class are now `petrinet.py` and `PetriNet`.
 - Authority boundary: VULCAN did not promote the ADR or create architecture authority.
 
 ## Latest validated state
@@ -47,7 +48,7 @@ Latest validation evidence:
 - `uv run pytest tests/projectkoios/workflow -q` => `8 passed in 0.02s`.
 - `uv run pytest -q` => `223 passed in 1.20s`.
 - `uv run projectkoios bootstrap validate-python-policy --all` => `summary: 0 finding(s), 116 file(s)`.
-- `graphify update /Users/eugene/repos/projectkoios-bootstrap` => rebuilt graph with `9720 nodes, 10563 edges, 858 communities`.
+- `graphify update /Users/eugene/repos/projectkoios-bootstrap` => rebuilt graph with `9720 nodes, 10563 edges, 860 communities`.
 
 ## Dirty tree caution
 

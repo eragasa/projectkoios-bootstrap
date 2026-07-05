@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from projectkoios.workflow.model import Arc, WorkflowNet
+from projectkoios.workflow.petrinet import Arc, PetriNet
 
 
 @dataclass(frozen=True, slots=True)
@@ -33,7 +33,7 @@ class WorkflowValidationError(ValueError):
 class WorkflowValidator:
     """Validate canonical workflow net definitions before execution."""
 
-    def validate(self, net: WorkflowNet) -> ValidationResult:
+    def validate(self, net: PetriNet) -> ValidationResult:
         """Validate a workflow net.
 
         Args:
@@ -65,7 +65,7 @@ class WorkflowValidator:
 
         return ValidationResult(issues=tuple(issues))
 
-    def validate_or_raise(self, net: WorkflowNet) -> None:
+    def validate_or_raise(self, net: PetriNet) -> None:
         """Raise a validation error when a workflow net is invalid.
 
         Args:

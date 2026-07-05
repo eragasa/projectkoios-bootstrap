@@ -25,8 +25,8 @@ This slice creates the canonical `projectkoios.workflow` package boundary and va
 
 - `src/python/projectkoios/workflow/__init__.py`
   - Exports the canonical workflow API.
-- `src/python/projectkoios/workflow/model.py`
-  - Adds `Place`, `Transition`, `Token`, `Arc`, `Marking`, `WorkflowNet`, `Binding`, `FiringRule`, `NetSchema`, `ExecutionState`, and semantic wrapper types.
+- `src/python/projectkoios/workflow/petrinet.py`
+  - Adds `Place`, `Transition`, `Token`, `Arc`, `Marking`, `PetriNet`, `Binding`, `FiringRule`, `NetSchema`, `ExecutionState`, and semantic wrapper types.
 - `src/python/projectkoios/workflow/runtime.py`
   - Adds `WorkflowRuntime` enabled-binding and transition-firing behavior.
 - `src/python/projectkoios/workflow/validation.py`

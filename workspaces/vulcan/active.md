@@ -32,7 +32,8 @@
 - Latest report: `docs/implementation/implementation-report.20260705.105604_workflow-adapter-dependency-encapsulation.md`.
 - Latest AAR: `docs/AAR/aar.20260705.105604_workflow-adapter-dependency-encapsulation.md`.
 - Latest all-target policy baseline: `0 finding(s), 116 file(s)`.
-- Review correction: adapter-neutral net representation now uses payload DataObjects plus a `WorkflowNetPayloadBuilder` ActionObject.
+- Review correction: adapter-neutral net representation now uses payload DataObjects plus a `PetriNetPayloadBuilder` ActionObject.
+- Naming correction: canonical module/class are now `petrinet.py` and `PetriNet`.
 
 ## Latest validation evidence
 
@@ -41,7 +42,7 @@
 - `uv run pytest tests/projectkoios/workflow -q` => `8 passed in 0.02s`.
 - `uv run pytest -q` => `223 passed in 1.20s`.
 - `uv run projectkoios bootstrap validate-python-policy --all` => `summary: 0 finding(s), 116 file(s)`.
-- `graphify update /Users/eugene/repos/projectkoios-bootstrap` => rebuilt graph with `9720 nodes, 10563 edges, 858 communities`.
+- `graphify update /Users/eugene/repos/projectkoios-bootstrap` => rebuilt graph with `9720 nodes, 10563 edges, 860 communities`.
 
 ## Ignore for now
 

@@ -125,7 +125,7 @@ class Marking:
 
 
 @dataclass(frozen=True, slots=True)
-class WorkflowNet:
+class PetriNet:
     """Canonical Petri-net workflow definition."""
 
     places: tuple[Place, ...]
@@ -195,7 +195,7 @@ class NetSchema:
 class ExecutionState:
     """Runtime state for a workflow net and marking."""
 
-    net: WorkflowNet
+    net: PetriNet
     marking: Marking
 
 
