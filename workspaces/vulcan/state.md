@@ -2,8 +2,8 @@
 {
   "title": "Vulcan workspace state",
   "artifact_type": "workspace-state",
-  "status": "watcher-test-policy-and-layout-remediation-complete",
-  "datetime": "20260705.022028",
+  "status": "remaining-test-policy-remediation-complete",
+  "datetime": "20260705.101124",
   "acting_as": "VULCAN",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/vulcan/",
@@ -14,7 +14,7 @@
   "python_coding_policy": "docs/policies/python-coding.md",
   "python_testing_policy": "docs/policies/python-testing.md",
   "control_files": ["state.md", "active.md"],
-  "next_owner": "HERMES-or-user",
+  "next_owner": "user-or-VULCAN",
   "blockers": []
 }
 ```
@@ -23,44 +23,43 @@
 
 ## Current scope
 
-- Focus: bounded test-code Python policy remediation and package-mirroring test layout for touched files.
-- Latest active VULCAN slice: watcher daemon test policy and layout remediation.
+- Focus: remaining test-code Python policy remediation.
+- Latest completed slice: Violation markdown formatting test policy/layout remediation.
+- Current remediation status: all-target Python policy validation passes with zero findings.
 - Authority boundary: Vulcan packaged implementation and validation evidence; Vulcan did not promote draft ADRs or create architecture authority.
 
-## Current-session completed remediation reports
+## Latest validated state
 
-- Archon run watch tests: `docs/implementation/implementation-report.20260705.015600_archon-run-watch-test-policy-remediation.md`.
-- Publisher daemon tests: `docs/implementation/implementation-report.20260705.020437_publisher-test-policy-and-layout-remediation.md`.
-- Ollama daemon tests: `docs/implementation/implementation-report.20260705.021059_ollama-test-policy-and-layout-remediation.md`.
-- Daemon run-once tests: `docs/implementation/implementation-report.20260705.021601_daemon-run-once-test-policy-and-layout-remediation.md`.
-- Watcher daemon tests: `docs/implementation/implementation-report.20260705.022028_watcher-test-policy-and-layout-remediation.md`.
+Latest completed report:
 
-## Latest layout changes
+- `docs/implementation/implementation-report.20260705.101124_violation-formatting-test-policy-and-layout-remediation.md`.
 
-- Removed `tests/harness/daemon/__Publisher__publish_run__tests.py`; added `tests/projectkoios/bootstrap/harness/daemon/test__Publisher__publish_run.py`.
-- Removed `tests/harness/daemon/__Ollama__generate_cards__tests.py`; added `tests/projectkoios/bootstrap/harness/daemon/test__Ollama__generate_cards.py`.
-- Removed `tests/harness/daemon/__Daemon__run_once__tests.py`; added `tests/projectkoios/bootstrap/harness/daemon/test__Daemon__run_once.py`.
-- Removed `tests/harness/daemon/__Watcher__scan_mtimes__tests.py`; added `tests/projectkoios/bootstrap/harness/daemon/test__Watcher__scan_mtimes.py`.
+Session AAR:
 
-## Latest validation evidence
+- `docs/AAR/aar.20260705.101124_violation-formatting-test-policy-remediation.md`.
 
-- `uv run projectkoios bootstrap validate-python-policy tests/projectkoios/bootstrap/harness/daemon/test__Watcher__scan_mtimes.py` => `summary: 0 finding(s), 1 file(s)`.
-- `uv run mypy tests/projectkoios/bootstrap/harness/daemon/test__Watcher__scan_mtimes.py` => `Success: no issues found in 1 source file`.
-- `uv run pytest tests/projectkoios/bootstrap/harness/daemon/test__Watcher__scan_mtimes.py -q` => `7 passed in 0.24s`.
-- `uv run pytest -q` => `215 passed in 1.13s`.
-- `uv run projectkoios bootstrap validate-python-policy --all` => `summary: 264 finding(s), 107 file(s)`.
-- `graphify update /Users/eugene/repos/projectkoios-bootstrap` => rebuilt graph with `9248 nodes, 9997 edges, 816 communities`.
+Latest validation evidence:
 
-## Open questions
+- `uv run projectkoios bootstrap validate-python-policy tests/projectkoios/bootstrap/harness/data/test__Violation__to_markdown_block__formats_correctly.py` => `summary: 0 finding(s), 1 file(s)`.
+- `uv run mypy tests/projectkoios/bootstrap/harness/data/test__Violation__to_markdown_block__formats_correctly.py` => `Success: no issues found in 1 source file`.
+- `uv run pytest tests/projectkoios/bootstrap/harness/data/test__Violation__to_markdown_block__formats_correctly.py -q` => `2 passed in 0.01s`.
+- `uv run pytest -q` => `215 passed in 1.16s`.
+- `uv run projectkoios bootstrap validate-python-policy --all` => `summary: 0 finding(s), 107 file(s)`.
+- `graphify update /Users/eugene/repos/projectkoios-bootstrap` => rebuilt graph with `9538 nodes, 10257 edges, 846 communities`.
 
-- Which remaining daemon/harness/root/bootstrap test file group should be remediated next?
-- Should current implementation packages be committed and pushed, or held for more packaging?
-- KOIOS may have concurrent dirty workspace/document changes outside VULCAN scope.
+## Dirty tree caution
+
+- VULCAN has a large uncommitted remediation batch after pushed commit `1a47ad9`.
+- KOIOS workspace files are also dirty/untracked and remain outside VULCAN scope:
+  - `workspaces/koios/active.md`.
+  - `workspaces/koios/state.md`.
+  - `workspaces/koios/working/provenance-index.20260704T175525Z_adr-control-surfaces.md`.
+- Any commit should deliberately stage VULCAN-owned files only unless the user explicitly directs otherwise.
 
 ## Next transition
 
-- Owner: HERMES or user for review/acceptance of `docs/implementation/implementation-report.20260705.022028_watcher-test-policy-and-layout-remediation.md`.
-- Owner: VULCAN if continuing remaining test-code policy remediation.
-- Highest-leverage next action: continue with the next bounded unremediated test file.
-- Expected successor artifact: review response, next test-code remediation report, or commit/push instruction.
+- Owner: user if packaging/push is desired.
+- Highest-leverage next action: stage, review, commit, and push VULCAN-owned remediation files only.
+- Owner: VULCAN if additional implementation work is requested.
+- Expected successor artifact: VULCAN-only commit/push or a new implementation work item.
 - Blockers: none currently.

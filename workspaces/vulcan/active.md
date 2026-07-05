@@ -2,8 +2,8 @@
 {
   "title": "Vulcan active work",
   "artifact_type": "workspace-active-priorities",
-  "status": "watcher-test-policy-and-layout-remediation-complete",
-  "datetime": "20260705.022028",
+  "status": "remaining-test-policy-remediation-complete",
+  "datetime": "20260705.101124",
   "acting_as": "VULCAN",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/vulcan/",
@@ -11,9 +11,8 @@
   "priority_count": 3,
   "working_directory": "working/",
   "active_working_items": [
-    "docs/implementation/implementation-report.20260705.022028_watcher-test-policy-and-layout-remediation.md",
-    "docs/implementation/implementation-report.20260705.021601_daemon-run-once-test-policy-and-layout-remediation.md",
-    "docs/implementation/implementation-report.20260705.021059_ollama-test-policy-and-layout-remediation.md"
+    "docs/implementation/implementation-report.20260705.101124_violation-formatting-test-policy-and-layout-remediation.md",
+    "docs/AAR/aar.20260705.101124_violation-formatting-test-policy-remediation.md"
   ],
   "scratch_directory": "scratch/",
   "controlling_workspace_policy": "docs/policies/workspace-layout.md"
@@ -24,26 +23,24 @@
 
 ## Current priority stack
 
-1. Request HERMES/user review of `docs/implementation/implementation-report.20260705.022028_watcher-test-policy-and-layout-remediation.md`.
-2. Continue remaining test-code Python policy remediation by bounded test file group if directed.
-3. Package current implementation slices for commit/push if directed, avoiding concurrent non-VULCAN dirty files.
+1. Package current VULCAN implementation slices for commit/push if directed.
+2. Avoid staging concurrent KOIOS workspace files unless explicitly instructed.
+3. Start a new implementation work item only if directed.
 
-## Working material
+## Latest working material
 
-- Watcher test remediation report: `docs/implementation/implementation-report.20260705.022028_watcher-test-policy-and-layout-remediation.md`.
-- Current VULCAN AAR: `docs/AAR/aar.20260705.022028_watcher-test-policy-and-layout-remediation.md`.
-- Latest moved/remediated file:
-  - deleted `tests/harness/daemon/__Watcher__scan_mtimes__tests.py`.
-  - added `tests/projectkoios/bootstrap/harness/daemon/test__Watcher__scan_mtimes.py`.
-- Latest remaining all-target policy baseline: `264 finding(s), 107 file(s)` from `uv run projectkoios bootstrap validate-python-policy --all`.
+- Latest report: `docs/implementation/implementation-report.20260705.101124_violation-formatting-test-policy-and-layout-remediation.md`.
+- Latest AAR: `docs/AAR/aar.20260705.101124_violation-formatting-test-policy-remediation.md`.
+- Latest all-target policy baseline: `0 finding(s), 107 file(s)`.
 
 ## Latest validation evidence
 
-- `uv run projectkoios bootstrap validate-python-policy tests/projectkoios/bootstrap/harness/daemon/test__Watcher__scan_mtimes.py` => `summary: 0 finding(s), 1 file(s)`.
-- `uv run mypy tests/projectkoios/bootstrap/harness/daemon/test__Watcher__scan_mtimes.py` => `Success: no issues found in 1 source file`.
-- `uv run pytest tests/projectkoios/bootstrap/harness/daemon/test__Watcher__scan_mtimes.py -q` => `7 passed in 0.24s`.
-- `uv run pytest -q` => `215 passed in 1.13s`.
-- `uv run projectkoios bootstrap validate-python-policy --all` => `summary: 264 finding(s), 107 file(s)`.
+- `uv run projectkoios bootstrap validate-python-policy tests/projectkoios/bootstrap/harness/data/test__Violation__to_markdown_block__formats_correctly.py` => `summary: 0 finding(s), 1 file(s)`.
+- `uv run mypy tests/projectkoios/bootstrap/harness/data/test__Violation__to_markdown_block__formats_correctly.py` => `Success: no issues found in 1 source file`.
+- `uv run pytest tests/projectkoios/bootstrap/harness/data/test__Violation__to_markdown_block__formats_correctly.py -q` => `2 passed in 0.01s`.
+- `uv run pytest -q` => `215 passed in 1.16s`.
+- `uv run projectkoios bootstrap validate-python-policy --all` => `summary: 0 finding(s), 107 file(s)`.
+- `graphify update /Users/eugene/repos/projectkoios-bootstrap` => rebuilt graph with `9538 nodes, 10257 edges, 846 communities`.
 
 ## Ignore for now
 
@@ -51,9 +48,8 @@
 - Broad workflow refactors outside active handoff scope.
 - ATHENA/HERMES/KOIOS-owned workspace files unless explicitly directed.
 - Source-authority changes.
-- Claims that whole-repo or all-test policy remediation is complete.
 - Concurrent KOIOS dirty files unrelated to this VULCAN slice.
 
 ## Next expected artifact
 
-- HERMES/user review response, next bounded test-code remediation report, or commit/push instruction.
+- VULCAN-only commit/push instruction or a new implementation work item.

@@ -6,7 +6,9 @@ from projectkoios.bootstrap.harness.data.violation import Violation, ViolationCo
 
 
 def test__Violation__to_markdown_block__formats_with_all_fields() -> None:
-    v = Violation(
+    """Validate to_markdown_block formats required and optional fields."""
+    # Violation fixture includes every optional markdown output field.
+    violation: Violation = Violation(
         code=ViolationCode.WRONG_IMPLEMENTATION_OWNER,
         actor="Hermes",
         path=Path("/fake/handoff.md"),
@@ -14,7 +16,9 @@ def test__Violation__to_markdown_block__formats_with_all_fields() -> None:
         required_owner="Vulcan",
         suggested_next_action="Route implementation completion to Vulcan.",
     )
-    block = v.to_markdown_block()
+
+    # Markdown block is the serialized violation output under assertion.
+    block: str = violation.to_markdown_block()
     assert "code: wrong-implementation-owner" in block
     assert "actor: Hermes" in block
     assert "required_owner: Vulcan" in block
@@ -23,13 +27,17 @@ def test__Violation__to_markdown_block__formats_with_all_fields() -> None:
 
 
 def test__Violation__to_markdown_block__omits_optional_fields_when_none() -> None:
-    v = Violation(
+    """Validate to_markdown_block omits unset optional fields."""
+    # Violation fixture includes only required markdown output fields.
+    violation: Violation = Violation(
         code=ViolationCode.HERMES_FORWARDED_WITHOUT_DECISION,
         actor="Hermes",
         path=Path("/fake/handoff.md"),
         reason="No routing decision produced.",
     )
-    block = v.to_markdown_block()
+
+    # Markdown block is the serialized violation output under assertion.
+    block: str = violation.to_markdown_block()
     assert "code: hermes-forwarded-without-decision" in block
     assert "required_owner:" not in block
     assert "suggested_next_action:" not in block
