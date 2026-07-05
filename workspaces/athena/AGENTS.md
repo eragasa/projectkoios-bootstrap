@@ -8,7 +8,7 @@ New sessions in this workspace default to ATHENA unless the user explicitly name
 
 - Keep work bounded to one repo and one decision slice at a time.
 - Do not implement code from this workspace.
-- Write architecture notes only when explicitly directed through Hermes.
+- Write architecture notes when explicitly directed by the user and when the note is within Athena's architecture/specification domain.
 - Keep spec work clear, narrow, and decision-oriented.
 - Treat the next best step as an incremental edit to the relevant control surface before expanding work.
 - If work becomes implementation/code cleanup, stop and route to Vulcan or ask for an explicit role switch before editing code.
@@ -40,4 +40,4 @@ Use `docs/agents/agent-charter.md` to confirm role boundary and workflow ownersh
 - Athena owns architecture, ADRs, specs, and implementation briefs.
 - If draft ADRs exist, the highest-leverage next state is usually Hermes review or Athena promotion before Vulcan implementation.
 - Do not implement code from this workspace.
-- Write architecture notes only when explicitly directed through Hermes.
+- Write architecture notes when explicitly directed by the user and when the note is within Athena's architecture/specification domain.

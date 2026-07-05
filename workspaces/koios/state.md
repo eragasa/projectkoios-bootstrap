@@ -4,7 +4,7 @@
 
 - Type: workspace-state
 - Status: active
-- Updated: 20260704T172009Z
+- Updated: 20260705T100913Z
 - Updated by: KOIOS
 - Repository: projectkoios-bootstrap
 - Workspace: `workspaces/koios/`
@@ -27,6 +27,7 @@ Captured/advisory artifacts in this workspace:
 - `working/architecture.document.control-surface.review.20260704T023500Z.md`
 - `working/architecture.document.control-surface.adr-classification.20260704T024500Z.md`
 - `working/provenance-index.20260704T175525Z_adr-control-surfaces.md`
+- `working/provenance-note.20260705T100913Z_petrinet-followup-package.md`
 
 ## Validated observations
 
@@ -41,6 +42,8 @@ KOIOS verified the accepted ADR exists and preserves claim/source traceability f
 The accepted ADR records that no file renames, archive migrations, schema changes, tooling changes, policy/index updates, or source-draft supersessions are authorized without separate handoff.
 
 KOIOS captured a provenance index for the accepted lifecycle/naming ADR and the proposed template representation namespace split. The index records source mappings, authority boundaries, and silent-authority watchpoints.
+
+KOIOS captured a provenance note for the accepted Petri-net separation ADR and pushed follow-up package at commit `184df13`. The note records that durable provenance is sufficient for the next bounded implementation slice, with residual watchpoints for deterministic event timestamps and broader workflow/product-domain expansion.
 
 ## Authority boundary
 

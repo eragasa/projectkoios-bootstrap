@@ -53,5 +53,6 @@ If a request is about agent document-domain ownership, role split, or charter
 formatting, update this file first or alongside the charter change so the
 convention stays durable.
 
-Only Hermes may edit `docs/agents/agent-charter.md`, and only when Zeus explicitly
-requests the change.
+Agents may edit `docs/agents/agent-charter.md` when the user explicitly requests
+a charter/control-surface change and the edit stays within the agent's document-domain authority.
+Hermes remains responsible for cross-domain reconciliation.

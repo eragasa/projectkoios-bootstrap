@@ -4,7 +4,7 @@
 
 - Type: workspace-active-state
 - Status: active
-- Updated: 20260704T172009Z
+- Updated: 20260705T100913Z
 - Updated by: KOIOS
 - Repository: projectkoios-bootstrap
 - Workspace: `workspaces/koios/`
@@ -21,6 +21,7 @@ ATHENA has accepted `docs/adr/adr.20260705.011836_adr-lifecycle-and-naming-conso
 - `working/architecture.document.control-surface.review.20260704T023500Z.md`
 - `working/architecture.document.control-surface.adr-classification.20260704T024500Z.md`
 - `working/provenance-index.20260704T175525Z_adr-control-surfaces.md`
+- `working/provenance-note.20260705T100913Z_petrinet-followup-package.md`
 
 ## Next expected artifact
 
@@ -32,7 +33,7 @@ ATHENA should still produce a target document-surface map before any broader ADR
 
 1. Re-audit any follow-on policy/index/source-draft disposition for claim traceability and silent-supersession risk, if requested.
 2. Re-audit any future architecture-document proposal against the captured control-surface criteria.
-3. Update the provenance index when accepted/proposed ADR surfaces change materially.
+3. Update or create provenance notes when accepted/proposed ADR surfaces change materially.
 
 ## Blockers and cautions
 

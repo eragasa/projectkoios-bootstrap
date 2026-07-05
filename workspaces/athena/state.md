@@ -2,8 +2,8 @@
 {
   "title": "Athena workspace state",
   "artifact_type": "workspace-state",
-  "status": "active",
-  "datetime": "20260705.010958",
+  "status": "active-petrinet-architecture-elaboration",
+  "datetime": "20260705.182457",
   "acting_as": "ATHENA",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/athena/",
@@ -27,14 +27,23 @@
 
 ## Current scope
 
-- Focus: canonical Athena workspace-state protocol
-- Authority boundary: workspace files are resume/control surfaces, not authoritative project architecture or product decisions
+- Acting as: ATHENA
+- Focus: Petri-net architecture elaboration in `docs/architecture/architecture.petrinet.00.md`
+- Authority boundary: Athena may edit architecture/spec/control surfaces when explicitly directed by the user and within Athena's document-domain authority; Hermes reconciles cross-domain conflicts
 - Controlling workspace layout policy: `docs/policies/workspace-layout.md`
 - Compatibility pointer retained at `docs/workspaces.md`
 
+## Resume summary
+
+- `state.md` is Athena's durable cold-start resume surface, not project authority or a chronological session log.
+- Current Petri-net synthesis should be updated in `docs/architecture/architecture.petrinet.00.md` until a section decomposes into a bounded ADR/spec/brief.
+- Petri-net separation ADR is accepted at `docs/adr/adr.petrinet.20260705.132740Z.md`; implementation/remediation and follow-up conformance reviews have been completed and pushed.
+- Template representation/namespace split remains the secondary unresolved ADR proposal surface.
+- Detailed review/implementation history should be followed through the linked ADR, review, implementation, and source artifacts rather than expanded here.
+
 ## Validated state
 
-- Working tree was clean at session start on 2026-07-04.
+- Session state has been re-baselined on 20260705.182457 for Petri-net architecture elaboration.
 - Canonical workspace-state format is now a Markdown pair with top JSON metadata sections:
   - `state.md` = durable resume snapshot for Athena sessions
   - `active.md` = current priority filter and exit criteria
@@ -45,6 +54,7 @@
 - `scratch/` exists for temporary notes and should not be treated as durable state.
 - Process correction recorded: the next best step is always an incremental edit to the relevant control surface before expanding work.
 - Control-plane correction recorded: if Athena needs another role/agent to do something, Athena should send an explicit intercom handoff/request rather than only recording the need in local state.
+- Control-surface policy correction recorded on 20260705: architecture notes are no longer Hermes-only edit surfaces. Agents may edit `docs/architecture*.md` when explicitly directed by the user and within their document-domain authority; Hermes remains responsible for cross-domain reconciliation.
 - Reconciliation recorded on 20260704.151218: the untracked GraphRAG persisted-index plan files are VULCAN-owned implementation-domain artifacts and have been handed off to the idle Vulcan session via intercom.
 - Portfolio correction recorded on 20260704.151749: Athena should keep multiple larger spec/ADR tracks moving while Vulcan owns implementation work, as long as Athena avoids implementation files and preserves document-domain authority.
 - No Athena implementation/code work is active.
@@ -62,23 +72,21 @@
 - User-proposed Petri-net separation ADR drafted in schema-backed format at `dev/petrinet-definition-marking-runtime/adr.20260705.132740_petrinet-definition-marking-runtime.record.json` with generated projection `dev/petrinet-definition-marking-runtime/adr.20260705.132740_petrinet-definition-marking-runtime.schema-backed.md`. It separates static PetriNet definition, runtime Marking/TransitionBinding/FiringRequest/PetriNetState, and PetriNetExecutor/event runtime. Validation: `PYTHONPATH=src/python python -m pytest tests/projectkoios/bootstrap/schema/test__DraftAdrRecord__markdown.py -q` passed with 13 tests. User accepted the ADR after HERMES final re-review; accepted artifact exists at `docs/adr/adr.petrinet.20260705.132740Z.md`.
 - HERMES review on 20260705 returned `revise-before-acceptance`: add relationship to existing artifacts, naming compatibility, dirty-state boundary, lifecycle acceptance boundary, and schema validation evidence. Athena revised the schema-backed Petri-net draft accordingly and validated the JSON with `SchemaRegistry().validate('adr-draft.schema.json', data)` plus renderer tests (`13 passed`).
 - KOIOS review on 20260705 requested durable preservation of the user proposal, exact current-symbol evidence, explicit prior-vocabulary tension/supersession handling, a vocabulary mapping, stronger source distinction for colored-token and event claims, bootstrap/extraction boundary, and review-location clarity. Athena added durable source artifact `dev/petrinet-definition-marking-runtime/user-proposal.20260705.132740_petrinet-definition-marking-runtime.md`, revised the schema-backed draft, and revalidated schema plus renderer tests (`13 passed`).
-- VULCAN naming review on 20260705 recommended prefixed implementation names: conceptual `Place`/`Token`/`Transition`/`Marking` map to `PetriNetPlace`/`PetriNetToken`/`PetriNetTransition`/`PetriNetMarking`; `PetriNetFiringRule` should become `PetriNetFiringRequest`; `PetriNetExecutionState` should become `PetriNetState`; `PetriNetBinding` should become `PetriNetTransitionBinding`; keep `PetriNetArc + PetriNetArcKind` for the first slice; use prefixed event DataObjects. Athena incorporated this into the schema-backed draft and revalidated schema plus renderer tests (`13 passed`). User resolved arc-model open question: follow Vulcan/YAGNI and keep `PetriNetArc + PetriNetArcKind` for first slice, deferring `PetriNetInputArc`/`PetriNetOutputArc`. User resolved WorkflowNet role question: `PetriNet` should remain a reusable generic substrate likely repurposed for other applications; workflow-specific semantics should live in `WorkflowNet` or an equivalent domain wrapper. User resolved event-scope question: an event emitter is necessary for debugging, so the first runtime slice should include bounded in-process event emission and prefixed event DataObjects, while excluding external event-bus/broad observability integration. User resolved naming-authority question: prefixed implementation names are mandatory for this implementation slice, while shorter names remain conceptual architecture vocabulary. User resolved older-docs question: after acceptance, update older workflow executor ADR/plan surfaces promptly because most related ADRs are drafts and process-oriented surfaces are expected to become Petri-net defined. KOIOS re-review on 20260705 found no major provenance blocker but requested durable preservation of later user decisions/Vulcan review, clearer conceptual-vs-prefixed wording, stale-source cleanup, exact prior-vocabulary disposition, bounded follow-on authority for older-doc updates, and softer prospective-benefit wording. Athena added `dev/petrinet-definition-marking-runtime/decision-source-addendum.20260705.md`, revised the schema-backed draft, and revalidated schema plus renderer tests (`13 passed`).
+- Petri-net naming/review decisions are preserved in `docs/adr/adr.petrinet.20260705.132740Z.md`, `dev/petrinet-definition-marking-runtime/decision-source-addendum.20260705.md`, and related review artifacts. Effective current rule: use mandatory prefixed implementation names for the accepted slice; keep `PetriNetArc + PetriNetArcKind` under YAGNI; keep `PetriNet` reusable and `WorkflowNet` workflow-specific; include bounded in-process event emission; collect further Petri-net architecture elaboration in `docs/architecture/architecture.petrinet.00.md` until decomposition.
 
 ## Open questions
 
-- Push/closeout state reconciled on 20260705.010834: `git status --short --branch` reported `## master...origin/master` with no ahead/behind or dirty files.
-- Closeout note 20260705: unrelated dirty VULCAN/KOIOS/test changes exist in the shared tree; Athena closeout should commit only Athena-owned schema-backed ADR artifacts, Athena state, and the related AAR.
+- Current working tree has uncommitted control-surface updates, including the new `docs/architecture/architecture.petrinet.00.md` and policy/template updates removing the Hermes-only architecture-note edit restriction.
 - Whether a future validator should parse the top JSON metadata sections directly or require a structured companion.
 - Whether historical/transitional working files should be archived or removed from the active workspace surface.
-- No remaining dirty/untracked files were present at the 20260705.010834 startup reconciliation check.
 - Whether HERMES/user should accept, revise, or reject the template representation and namespace split proposal or its schema-backed draft projection.
-- Petri-net definition/marking/runtime separation ADR is accepted; VULCAN implementation/remediation report exists at `docs/implementation/implementation-report.20260705.142149_petrinet-separation-adr-remediation.md`; ATHENA conformance review exists at `docs/reviews/architecture-conformance.20260705.144506_petrinet-separation-adr-remediation.md` with outcome `conforms-with-followups`. Remaining question is packaging of bounded follow-on documentation/control-surface updates and final commit packaging.
+- Petri-net architecture elaboration now has a canonical working surface at `docs/architecture/architecture.petrinet.00.md`; the next question is which section, if any, is ready to decompose into a bounded ADR/spec/brief.
 
 ## Next transition
 
-- Owner: user/HERMES for any separate follow-on documentation/control-surface reconciliation, unless ATHENA is redirected to another portfolio item.
-- Highest-leverage next action: package/commit accepted Petri-net ADR, VULCAN remediation, ATHENA conformance review, and related reports while preserving unrelated workspace boundaries; then create bounded documentation/control-surface follow-on for older workflow ADR/plan updates.
-- Secondary action: Athena may advance independent spec/ADR portfolio items after routing, while avoiding held-out implementation files.
+- Owner: ATHENA for Petri-net architecture elaboration unless the user redirects to another document domain.
+- Highest-leverage next action: continue Petri-net bounded-slice elaboration in `docs/architecture/architecture.petrinet.00.md` until a section is ready to decompose into a bounded ADR/spec/brief.
+- Secondary action: review the template representation schema-backed draft for acceptance/revision/routing when user/HERMES requests it.
 - Blockers: none currently known; preserve Athena boundary by reviewing/specifying, not implementing code.
 
 ## Startup checklist

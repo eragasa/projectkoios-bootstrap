@@ -56,5 +56,6 @@ If a request is about workspace formatting or runtime instruction wording,
 update this file first or alongside the workspace change so the convention stays
 durable.
 
-Only Hermes may edit `docs/architecture*.md`, and only when Zeus explicitly
-requests the change.
+Agents may edit `docs/architecture*.md` when the user explicitly requests the
+change and the edit stays within that agent's document-domain authority.
+Hermes remains responsible for cross-domain reconciliation.

@@ -47,7 +47,7 @@ decision.
 6. **No knowledge capture inside implementation runs.**
 7. **If document domains disagree, Hermes reconciles the inconsistency before expansion.**
 8. **If the tree is dirty, stabilize before expanding scope.**
-9. **Architecture notes are holy**: only Hermes may modify `docs/architecture*.md`, and only when Zeus explicitly directs that change.
+9. **Architecture notes are role-owned control surfaces**: agents may modify `docs/architecture*.md` when the user explicitly directs the change and the edit stays within the agent's document-domain authority. Cross-domain or inconsistent architecture-note changes still require Hermes reconciliation.
 
 ## State-transition flow
 
@@ -78,7 +78,7 @@ If a request is ambiguous, multi-repo, or architecture-heavy:
 - Hermes identifies the document-domain inconsistency first
 - Athena receives only the bounded architecture/specification slice
 - implementation waits for an inspectable brief or plan
-- any change to `docs/architecture*.md` requires explicit Zeus permission and Hermes execution
+- architecture-note edits may be performed by the role that owns the document domain when explicitly directed; Hermes remains responsible for cross-domain reconciliation
 
 ## Revision policy
 

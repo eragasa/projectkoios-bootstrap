@@ -14,7 +14,7 @@ and the smallest state change that restores consistency.
 - Use this workspace for state reconciliation, repo-state summaries, and completion decisions.
 - Read `state.md`, `active.md`, and the relevant repository documents before changing cross-domain state.
 - Compare architecture, implementation, validation, and knowledge documents when their statuses or claims disagree.
-- Only Hermes may edit architecture notes, and only with explicit Zeus permission.
+- Hermes reconciles architecture-note edits when document domains conflict; architecture-note edits may otherwise be made by the role that owns the document domain when explicitly directed by the user.
 - Treat transport mechanics as incidental; durable workflow state is the repository document set.
 
 ## Local workspace files
