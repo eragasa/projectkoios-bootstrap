@@ -262,9 +262,11 @@ Local configs MUST NOT be committed to this repo.
 
 ## ADR file convention
 
-ADR filenames SHOULD use `adr.YYYYMMDD.HHMMSS_kebab-slug.md`.
+ADR filenames SHOULD use `adr.<topic>.<YYYYMMDD.HHMMSSZ>.md`.
 
-ADR file bodies MUST include `# ADR YYYYMMDD.HHMMSS: Title`, `## Status`, `## Context`, `## Decision`, and `## Consequences`.
+`<topic>` SHOULD be a short kebab-case domain/topic slug. The timestamp SHOULD be the acceptance or creation timestamp in UTC compact form.
+
+ADR file bodies MUST include `# ADR YYYYMMDD.HHMMSSZ: Title`, `## Status`, `## Context`, `## Decision`, and `## Consequences`.
 
 Provenance fields SHOULD be included when the source or delegation path matters.
 

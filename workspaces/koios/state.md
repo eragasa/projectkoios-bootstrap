@@ -26,6 +26,7 @@ Captured/advisory artifacts in this workspace:
 - `working/20260704_architecture-document-control-surface-provenance.md`
 - `working/architecture.document.control-surface.review.20260704T023500Z.md`
 - `working/architecture.document.control-surface.adr-classification.20260704T024500Z.md`
+- `working/provenance-index.20260704T175525Z_adr-control-surfaces.md`
 
 ## Validated observations
 
@@ -38,6 +39,8 @@ KOIOS has advised that ATHENA should define a target directory/surface map befor
 KOIOS verified the accepted ADR exists and preserves claim/source traceability for lifecycle/status reconciliation, spike packaging, proposed review surfaces, title/filename separation, child naming guidance disposition, and non-silent supersession.
 
 The accepted ADR records that no file renames, archive migrations, schema changes, tooling changes, policy/index updates, or source-draft supersessions are authorized without separate handoff.
+
+KOIOS captured a provenance index for the accepted lifecycle/naming ADR and the proposed template representation namespace split. The index records source mappings, authority boundaries, and silent-authority watchpoints.
 
 ## Authority boundary
 

@@ -20,14 +20,15 @@
 
 ## Current priority stack
 
-1. Template representation and namespace split proposal now has a schema-backed draft record at `dev/template-representation-namespace-split/adr.template-representation.20260705.014135Z.record.json` and generated projection at `dev/template-representation-namespace-split/adr.template-representation.20260705.014135Z.schema-backed.md`; await HERMES/user review before acceptance or Vulcan handoff.
-2. ADR lifecycle/naming consolidation accepted at `docs/adr/adr.adr-lifecycle.20260705.011836Z.md`; follow-on policy/index/source-draft pointer updates completed and pushed.
+1. Petri-net definition/marking/binding/runtime separation ADR accepted at `docs/adr/adr.petrinet.20260705.132740Z.md`; VULCAN remediation report exists at `docs/implementation/implementation-report.20260705.142149_petrinet-separation-adr-remediation.md`; ATHENA conformance review exists at `docs/reviews/architecture-conformance.20260705.144506_petrinet-separation-adr-remediation.md` with outcome `conforms-with-followups`; next bounded follow-on is older workflow ADR/plan documentation reconciliation plus packaging/commit.
+2. Template representation and namespace split proposal now has a schema-backed draft record at `dev/template-representation-namespace-split/adr.template-representation.20260705.014135Z.record.json` and generated projection at `dev/template-representation-namespace-split/adr.template-representation.20260705.014135Z.schema-backed.md`; await HERMES/user review before acceptance or Vulcan handoff.
 3. Keep Athena work bounded to architecture/spec surfaces while VULCAN-owned dirty implementation/test work remains present.
 
 ## Waiting on
 
 - Push/closeout item resolved as of startup check: `git status --short --branch` reported `## master...origin/master` with no ahead/behind or dirty files.
 - No remaining dirty/untracked files were present at startup check.
+- Petri-net separation accepted ADR: `docs/adr/adr.petrinet.20260705.132740Z.md`; VULCAN implementation routing returned validated remediation; ATHENA conformance review completed at `docs/reviews/architecture-conformance.20260705.144506_petrinet-separation-adr-remediation.md`; older workflow ADR/plan documentation-control follow-on remains separate.
 - HERMES/user review decision for `dev/template-representation-namespace-split/adr.template-representation.20260705.014135Z.proposed.md`.
 - Hermes/user direction before editing `docs/architecture/architecture.workspaces.00.md` or `docs/architecture/architecture.00.md`.
 - Authority check before turning any draft ADR or plan into implementation authority.
@@ -35,6 +36,7 @@
 - Schema-base conformance review output exists at `docs/reviews/architecture-conformance.20260704.212913_schema-record-base-slice.md` with outcome `conforms-with-gaps`.
 - Template representation proposal: `dev/template-representation-namespace-split/adr.template-representation.20260705.014135Z.proposed.md`.
 - Template representation schema-backed draft: `dev/template-representation-namespace-split/adr.template-representation.20260705.014135Z.record.json`; generated projection: `dev/template-representation-namespace-split/adr.template-representation.20260705.014135Z.schema-backed.md`.
+- Petri-net separation accepted ADR: `docs/adr/adr.petrinet.20260705.132740Z.md`; source record: `dev/petrinet-definition-marking-runtime/adr.20260705.132740_petrinet-definition-marking-runtime.record.json`; generated projection: `dev/petrinet-definition-marking-runtime/adr.20260705.132740_petrinet-definition-marking-runtime.schema-backed.md`; durable sources: `dev/petrinet-definition-marking-runtime/user-proposal.20260705.132740_petrinet-definition-marking-runtime.md`, `dev/petrinet-definition-marking-runtime/decision-source-addendum.20260705.md`.
 - ADR lifecycle/naming consolidation proposal provenance: `dev/adr-lifecycle-and-naming-consolidation/adr.adr-lifecycle-and-naming-consolidation.proposed.md`.
 
 ## Working material
