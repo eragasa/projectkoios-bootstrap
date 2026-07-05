@@ -1,4 +1,14 @@
-from projectkoios.workflow.adapters import AdapterExport, Pm4pyProcessMiningAdapter, SnakesColoredNetAdapter
+from projectkoios.workflow.adapters import (
+    AdapterExport,
+    AdapterUnavailableError,
+    Pm4pyProcessMiningAdapter,
+    SnakesColoredNetAdapter,
+    WorkflowArcPayload,
+    WorkflowNetPayload,
+    WorkflowNetPayloadBuilder,
+    WorkflowPlacePayload,
+    WorkflowTransitionPayload,
+)
 from projectkoios.workflow.events import Event, EventLog, ExecutionTrace
 from projectkoios.workflow.model import (
     ActivityObject,
@@ -26,6 +36,7 @@ from projectkoios.workflow.validation import ValidationIssue, ValidationResult, 
 __all__ = [
     "ActivityObject",
     "AdapterExport",
+    "AdapterUnavailableError",
     "AgentObject",
     "Arc",
     "ArcKind",
@@ -49,9 +60,14 @@ __all__ = [
     "Transition",
     "ValidationIssue",
     "ValidationResult",
+    "WorkflowArcPayload",
     "WorkflowNet",
+    "WorkflowNetPayload",
+    "WorkflowNetPayloadBuilder",
+    "WorkflowPlacePayload",
     "WorkflowRuntime",
     "WorkflowValidationError",
+    "WorkflowTransitionPayload",
     "WorkflowValidator",
     "WorkspaceObject",
 ]
