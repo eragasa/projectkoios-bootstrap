@@ -39,9 +39,9 @@ This implementation preserves prefixed generic Petri-net names, keeps `PetriNetA
   - Updated public exports for the accepted vocabulary.
 - `tests/projectkoios/workflow/test__PetriNetExecutor__fire.py`
   - Updated runtime tests for `PetriNetExecutor`, `PetriNetState`, and prefixed event DataObjects.
-- `docs/implementation/implementation-report.20260705.102506_workflow-petri-net-executor-first-slice.md`
+- `docs/implementation/workflow-petri-net-executor-first-slice.20260705.102506.md`
   - Updated prior implementation vocabulary references to current accepted names.
-- `docs/implementation/implementation-report.20260705.105604_workflow-adapter-dependency-encapsulation.md`
+- `docs/implementation/workflow-adapter-dependency-encapsulation.20260705.105604.md`
   - Updated current remediation summary and validation evidence.
 - `docs/AAR/aar.20260705.105604_workflow-adapter-dependency-encapsulation.md`
   - Updated process capture with accepted ADR remediation notes.

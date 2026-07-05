@@ -601,13 +601,13 @@
       },
       {
         "note": "Current implementation report; evidence/context only, not acceptance authority for this draft.",
-        "path": "docs/implementation/implementation-report.20260705.102506_workflow-petri-net-executor-first-slice.md",
+        "path": "docs/implementation/workflow-petri-net-executor-first-slice.20260705.102506.md",
         "relationship": "reference",
         "role": "VULCAN"
       },
       {
         "note": "Current implementation report; evidence/context only, not acceptance authority for this draft.",
-        "path": "docs/implementation/implementation-report.20260705.105604_workflow-adapter-dependency-encapsulation.md",
+        "path": "docs/implementation/workflow-adapter-dependency-encapsulation.20260705.105604.md",
         "relationship": "reference",
         "role": "VULCAN"
       },

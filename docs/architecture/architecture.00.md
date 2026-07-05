@@ -46,13 +46,14 @@ The docs model is intentionally portable across Python 3, TypeScript, and Rust.
 | [architecture.comment-scope-and-control-boundary-review-rule](architecture.comment-scope-and-control-boundary-review-rule.md) | [adr.comment-scope-and-control-boundary-review-rule](../adr/adr.comment-scope-and-control-boundary-review-rule.draft.md) |
 | [architecture.control-surfaces-and-ownership-boundaries](architecture.control-surfaces-and-ownership-boundaries.md) | [adr.control-surfaces-and-ownership-boundaries](../adr/adr.control-surfaces-and-ownership-boundaries.draft.md) |
 | [architecture.implementation-plan-ownership](architecture.implementation-plan-ownership.md) | [adr.implementation-plan-ownership](../adr/adr.implementation-plan-ownership.draft.md) |
-| [architecture.templates](architecture.templates.md) | [adr.templates](../adr/adr.templates.draft.md) |
+| [architecture.templates](architecture.templates.md) | [adr.templates](../adr/adr.templates.md) |
 | [architecture.koios-adversarial-code-review-authority](architecture.koios-adversarial-code-review-authority.md) | [adr.koios-adversarial-code-review-authority](../adr/adr.20260702.043600_koios-adversarial-code-review-authority.draft.md) |
 | [architecture.adversarial-two-plane-gate](architecture.adversarial-two-plane-gate.md) | [adr.adversarial-two-plane-gate](../adr/adr.adversarial-two-plane-gate.draft.md) |
 | [architecture.ownership-ledger-role-alignment](architecture.ownership-ledger-role-alignment.md) | [adr.ownership-ledger-role-alignment](../adr/adr.ownership-ledger-role-alignment.draft.md) |
 | [architecture.unified-diff-review-surface](architecture.unified-diff-review-surface.md) | [adr.unified-diff-review-surface](../adr/adr.unified-diff-review-surface.draft.md) |
 | [architecture.ui-core](architecture.ui-core.md) | [adr.ui-core](../adr/adr.ui-core.draft.md) |
 | [architecture.workflow-ui](architecture.workflow-ui.md) | [adr.workflow-ui](../adr/adr.workflow-ui.draft.md) |
+| [architecture.workflows.00](architecture.workflows.00.md) | None |
 | [architecture.petrinet.00](architecture.petrinet.00.md) | [adr.petrinet](../adr/adr.petrinet.20260705.132740Z.md) |
 | [architecture.json-schemas](architecture.json-schemas.md) | [adr.json-schemas](../adr/adr.json-schemas.draft.md) |
 | [architecture.agent-windows-with-on-message-triggers](architecture.agent-windows-with-on-message-triggers.md) | [adr.agent-windows-on-message-triggers](../adr/adr.agent-windows-on-message-triggers.draft.md) |

@@ -2,7 +2,7 @@
 
 Use this file for formatting and structure rules that apply when editing or
 creating `docs/agents/agent-charter.md` and related document-domain ownership notes.
-Controlled by: [adr.templates](../adr/adr.templates.draft.md).
+Controlled by: [adr.templates](../adr/adr.templates.md).
 Template index: [templates.00](templates.00.md).
 
 ## When to use this template

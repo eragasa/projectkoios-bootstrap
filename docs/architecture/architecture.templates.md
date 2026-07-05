@@ -12,15 +12,16 @@ This is the bootstrap architecture note for the template surface and its represe
 
 ## Scope
 
-It defines the navigation surface for the related ADR and points to the controlling ADR that owns the decision.
+It defines the navigation surface for the related ADR and points to the active ADR that controls the decision.
 
 ## Control
 
 This note is controlled by:
 
-- `docs/adr/adr.templates.draft.md`
+- `docs/adr/adr.templates.md`
 
 ## Related files
 
-- `docs/adr/adr.templates.draft.md`
+- `docs/adr/adr.templates.md`
+- `docs/adr/adr.templates-adr.md`
 - `docs/templates/templates.00.md`

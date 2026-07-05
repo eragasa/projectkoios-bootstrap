@@ -22,7 +22,7 @@ It does not create architecture authority, implementation authority, completion 
 - `dev/petrinet-definition-marking-runtime/`
 - `docs/reviews/architecture-conformance.20260705.144506_petrinet-separation-adr-remediation.md`
 - `docs/reviews/architecture-conformance.20260705.174118_petrinet-followups.md`
-- `docs/implementation/implementation-report.20260705.173808_petrinet-followups.md`
+- `docs/implementation/petrinet-followups.20260705.173808.md`
 - `docs/AAR/aar.20260705.173808_petrinet-followups.md`
 - commit `184df13`
 

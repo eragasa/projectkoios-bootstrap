@@ -8,7 +8,7 @@
   "repository": "projectkoios-bootstrap",
   "source_adr": "docs/adr/adr.petrinet.20260705.132740Z.md",
   "source_review": "docs/reviews/architecture-conformance.20260705.144506_petrinet-separation-adr-remediation.md",
-  "implementation_report": "docs/implementation/implementation-report.20260705.173808_petrinet-followups.md",
+  "implementation_report": "docs/implementation/petrinet-followups.20260705.173808.md",
   "scope": "bounded Petri-net follow-up slice"
 }
 ```
@@ -27,7 +27,7 @@ The bounded follow-up slice conforms to accepted ADR `docs/adr/adr.petrinet.2026
 - `tests/projectkoios/workflow/test__PetriNetExecutor__fire.py`
 - `docs/adr/adr.20260702.042300_projectkoios-workflow-petri-net-executor.draft.md`
 - `docs/plans/projectkoios-workflow-petri-net-executor.md`
-- `docs/implementation/implementation-report.20260705.173808_petrinet-followups.md`
+- `docs/implementation/petrinet-followups.20260705.173808.md`
 - Controlling ADR: `docs/adr/adr.petrinet.20260705.132740Z.md`
 
 ## Findings
@@ -49,7 +49,7 @@ The bounded follow-up slice conforms to accepted ADR `docs/adr/adr.petrinet.2026
   - `rg -n "\.fire\(state, \"|runtime\.fire\(state, \"|PetriNetExecutor\(\)\.fire\(.*\"" src/python tests -S || true`
   - result: no matches
 
-VULCAN also reported broader validation in `docs/implementation/implementation-report.20260705.173808_petrinet-followups.md`, including full pytest, full policy, full mypy, and Graphify update.
+VULCAN also reported broader validation in `docs/implementation/petrinet-followups.20260705.173808.md`, including full pytest, full policy, full mypy, and Graphify update.
 
 ## Residual risks
 

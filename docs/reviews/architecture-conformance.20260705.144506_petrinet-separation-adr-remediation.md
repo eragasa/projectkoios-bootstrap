@@ -7,7 +7,7 @@
   "acting_as": "ATHENA",
   "repository": "projectkoios-bootstrap",
   "source_adr": "docs/adr/adr.petrinet.20260705.132740Z.md",
-  "implementation_report": "docs/implementation/implementation-report.20260705.142149_petrinet-separation-adr-remediation.md",
+  "implementation_report": "docs/implementation/petrinet-separation-adr-remediation.20260705.142149.md",
   "scope": "bootstrap-held workflow Petri-net implementation naming and runtime separation"
 }
 ```
@@ -25,7 +25,7 @@ This review does not mark broader workflow/product architecture complete and doe
 ## Reviewed artifacts
 
 - Accepted ADR: `docs/adr/adr.petrinet.20260705.132740Z.md`
-- Implementation report: `docs/implementation/implementation-report.20260705.142149_petrinet-separation-adr-remediation.md`
+- Implementation report: `docs/implementation/petrinet-separation-adr-remediation.20260705.142149.md`
 - Source implementation surfaces:
   - `src/python/projectkoios/workflow/petrinet.py`
   - `src/python/projectkoios/workflow/runtime.py`

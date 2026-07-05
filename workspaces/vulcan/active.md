@@ -31,7 +31,7 @@ Petri-net follow-up implementation is reviewed, committed, and pushed.
 - Commit: `184df13 Implement Petri-net follow-up cleanup`.
 - Controlling ADR: `docs/adr/adr.petrinet.20260705.132740Z.md`.
 - Final ATHENA review: `docs/reviews/architecture-conformance.20260705.174118_petrinet-followups.md`.
-- Implementation report: `docs/implementation/implementation-report.20260705.173808_petrinet-followups.md`.
+- Implementation report: `docs/implementation/petrinet-followups.20260705.173808.md`.
 - AAR: `docs/AAR/aar.20260705.173808_petrinet-followups.md`.
 
 ## Remaining dirty tree outside VULCAN scope

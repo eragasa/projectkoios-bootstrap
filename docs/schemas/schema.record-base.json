@@ -5,7 +5,10 @@
   "description": "Base envelope for schema-backed Project Koios records. Family schemas constrain content.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["metadata", "content"],
+  "required": [
+    "metadata",
+    "content"
+  ],
   "$defs": {
     "Timestamp": {
       "type": "string",
@@ -14,39 +17,88 @@
     },
     "RecordStatus": {
       "type": "string",
-      "enum": ["draft", "proposed", "accepted", "completed", "superseded", "rejected"]
+      "enum": [
+        "proposal",
+        "draft",
+        "accepted",
+        "active",
+        "superseded"
+      ]
     },
     "Origin": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["type", "method", "actor", "authority"],
+      "required": [
+        "type",
+        "method",
+        "actor",
+        "authority"
+      ],
       "properties": {
         "type": {
           "type": "string",
-          "enum": ["user_request", "role_output", "migration", "import", "derived"]
+          "enum": [
+            "user_request",
+            "role_output",
+            "migration",
+            "import",
+            "derived"
+          ]
         },
         "method": {
           "type": "string",
-          "enum": ["manual", "intercom", "filesystem", "renderer", "ingester", "script"]
+          "enum": [
+            "manual",
+            "intercom",
+            "filesystem",
+            "renderer",
+            "ingester",
+            "script"
+          ]
         },
         "actor": {
           "type": "string",
-          "enum": ["ATHENA", "VULCAN", "KOIOS", "HERMES", "user", "tool"]
+          "enum": [
+            "ATHENA",
+            "VULCAN",
+            "KOIOS",
+            "HERMES",
+            "user",
+            "tool"
+          ]
         },
         "authority": {
           "type": "string",
-          "enum": ["user", "role", "policy", "adr", "none"]
+          "enum": [
+            "user",
+            "role",
+            "policy",
+            "adr",
+            "none"
+          ]
         }
       }
     },
     "Domain": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["domain_type", "domain_subtype", "domain_scope"],
+      "required": [
+        "domain_type",
+        "domain_subtype",
+        "domain_scope"
+      ],
       "properties": {
         "domain_type": {
           "type": "string",
-          "enum": ["architecture", "implementation", "validation", "knowledge", "workflow", "schema", "process"]
+          "enum": [
+            "architecture",
+            "implementation",
+            "validation",
+            "knowledge",
+            "workflow",
+            "schema",
+            "process"
+          ]
         },
         "domain_subtype": {
           "type": "string",
@@ -61,28 +113,65 @@
     "SourceArtifact": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["path", "relationship"],
+      "required": [
+        "path",
+        "relationship"
+      ],
       "properties": {
-        "path": { "type": "string", "minLength": 1 },
-        "role": { "type": "string", "minLength": 1 },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "role": {
+          "type": "string",
+          "minLength": 1
+        },
         "relationship": {
           "type": "string",
-          "enum": ["prompt", "review", "supersedes", "derived_from", "migration_source", "reference", "controls", "supports"]
+          "enum": [
+            "prompt",
+            "review",
+            "supersedes",
+            "derived_from",
+            "migration_source",
+            "reference",
+            "controls",
+            "supports"
+          ]
         },
-        "note": { "type": "string" }
+        "note": {
+          "type": "string"
+        }
       }
     },
     "Evidence": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["kind", "ref", "claim"],
+      "required": [
+        "kind",
+        "ref",
+        "claim"
+      ],
       "properties": {
         "kind": {
           "type": "string",
-          "enum": ["commit", "file", "validation", "review", "message", "artifact"]
+          "enum": [
+            "commit",
+            "file",
+            "validation",
+            "review",
+            "message",
+            "artifact"
+          ]
         },
-        "ref": { "type": "string", "minLength": 1 },
-        "claim": { "type": "string", "minLength": 1 }
+        "ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "claim": {
+          "type": "string",
+          "minLength": 1
+        }
       }
     },
     "Projection": {
@@ -100,24 +189,57 @@
         "source_of_truth"
       ],
       "properties": {
-        "path": { "type": "string", "minLength": 1 },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
         "projection_type": {
           "type": "string",
-          "enum": ["generated_markdown", "editable_markdown", "json", "index"]
+          "enum": [
+            "generated_markdown",
+            "editable_markdown",
+            "json",
+            "index"
+          ]
         },
-        "source_record_id": { "type": "string", "minLength": 1 },
-        "source_schema_id": { "type": "string", "minLength": 1 },
-        "source_schema_version": { "type": "string", "minLength": 1 },
+        "source_record_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_schema_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_schema_version": {
+          "type": "string",
+          "minLength": 1
+        },
         "projection_method": {
           "type": "string",
-          "enum": ["manual", "renderer", "ingester", "script"]
+          "enum": [
+            "manual",
+            "renderer",
+            "ingester",
+            "script"
+          ]
         },
-        "generated_by": { "type": "string", "minLength": 1 },
-        "generated_on": { "$ref": "#/$defs/Timestamp" },
-        "editable": { "type": "boolean" },
+        "generated_by": {
+          "type": "string",
+          "minLength": 1
+        },
+        "generated_on": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "editable": {
+          "type": "boolean"
+        },
         "source_of_truth": {
           "type": "string",
-          "enum": ["schema_record", "projection", "unknown"]
+          "enum": [
+            "schema_record",
+            "projection",
+            "unknown"
+          ]
         }
       }
     },
@@ -143,44 +265,87 @@
         "projections"
       ],
       "properties": {
-        "record_id": { "type": "string", "minLength": 1 },
-        "schema_id": { "type": "string", "minLength": 1 },
-        "schema_version": { "type": "string", "minLength": 1 },
-        "record_version": { "type": "string", "minLength": 1 },
-        "title": { "type": "string", "minLength": 1 },
-        "status": { "$ref": "#/$defs/RecordStatus" },
-        "created_on": { "$ref": "#/$defs/Timestamp" },
+        "record_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "$ref": "#/$defs/RecordStatus"
+        },
+        "created_on": {
+          "$ref": "#/$defs/Timestamp"
+        },
         "updated_on": {
           "anyOf": [
-            { "$ref": "#/$defs/Timestamp" },
-            { "type": "null" }
+            {
+              "$ref": "#/$defs/Timestamp"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
-        "origin": { "$ref": "#/$defs/Origin" },
-        "scope": { "type": "string", "minLength": 1 },
-        "repository": { "type": "string", "minLength": 1 },
-        "domain": { "$ref": "#/$defs/Domain" },
+        "origin": {
+          "$ref": "#/$defs/Origin"
+        },
+        "scope": {
+          "type": "string",
+          "minLength": 1
+        },
+        "repository": {
+          "type": "string",
+          "minLength": 1
+        },
+        "domain": {
+          "$ref": "#/$defs/Domain"
+        },
         "source_artifacts": {
           "type": "array",
-          "items": { "$ref": "#/$defs/SourceArtifact" }
+          "items": {
+            "$ref": "#/$defs/SourceArtifact"
+          }
         },
         "derived_from": {
           "type": "array",
-          "items": { "$ref": "#/$defs/SourceArtifact" }
+          "items": {
+            "$ref": "#/$defs/SourceArtifact"
+          }
         },
         "evidence": {
           "type": "array",
-          "items": { "$ref": "#/$defs/Evidence" }
+          "items": {
+            "$ref": "#/$defs/Evidence"
+          }
         },
         "projections": {
           "type": "array",
-          "items": { "$ref": "#/$defs/Projection" }
+          "items": {
+            "$ref": "#/$defs/Projection"
+          }
         }
       }
     }
   },
   "properties": {
-    "metadata": { "$ref": "#/$defs/RecordMetadata" },
+    "metadata": {
+      "$ref": "#/$defs/RecordMetadata"
+    },
     "content": {
       "type": "object",
       "description": "Family-specific record content. The base schema intentionally does not constrain internal content fields."

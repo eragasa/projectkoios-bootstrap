@@ -78,7 +78,7 @@ ADR strategy is active.
 
 Existing ADRs MUST be handled according to their current status and repository authority rules.
 
-ADRs MAY be read, edited, promoted, accepted, completed, superseded, rejected, sent into implementation, or used as implementation authority when the action is consistent with the ADR lifecycle, document-domain ownership, and explicit user direction.
+ADRs MAY be read, edited, promoted, accepted, activated, superseded, sent into implementation, or used as implementation authority when the action is consistent with the ADR lifecycle, document-domain ownership, and explicit user direction.
 
 Agent comments are input only unless explicitly promoted into the appropriate document state.
 

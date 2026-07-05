@@ -15,7 +15,7 @@
     "docs/templates/templates.00.md",
     "docs/implementation/implementation.00.md",
     "docs/architecture/architecture.templates.md",
-    "docs/adr/adr.templates.draft.md",
+    "docs/adr/adr.templates.md",
     "docs/adr/adr.implementation.draft.md"
   ],
   "next_phase": "HERMES/user review for acceptance, revision, or rejection"
@@ -50,7 +50,7 @@ Source artifacts:
 - `docs/templates/templates.00.md`
 - `docs/implementation/implementation.00.md`
 - `docs/architecture/architecture.templates.md`
-- `docs/adr/adr.templates.draft.md`
+- `docs/adr/adr.templates.md`
 - `docs/adr/adr.implementation.draft.md`
 
 ## Context
@@ -61,7 +61,7 @@ The term `ingestion` is overloaded in this repository. There is existing bootstr
 
 The repository currently has `src/python/projectkoios/bootstrap/` and does not have `src/python/ingestion/`. Any implementation brief for this slice MUST target the existing bootstrap package boundary unless a separate accepted architecture decision changes the package layout.
 
-`docs/templates/templates.00.md` and `docs/architecture/architecture.templates.md` identify `docs/adr/adr.templates.draft.md` as their controlling draft. `docs/implementation/implementation.00.md` identifies `docs/adr/adr.implementation.draft.md` as its controlling draft. This proposal uses those predecessor surfaces as source context for namespace meaning; it does not accept those drafts wholesale or change their status.
+`docs/templates/templates.00.md` and `docs/architecture/architecture.templates.md` identify `docs/adr/adr.templates.md` as their controlling draft. `docs/implementation/implementation.00.md` identifies `docs/adr/adr.implementation.draft.md` as its controlling draft. This proposal uses those predecessor surfaces as source context for namespace meaning; it does not accept those drafts wholesale or change their status.
 
 ## Decision
 
@@ -94,7 +94,7 @@ Acceptance records a bootstrap architecture/control-surface boundary only. It do
 |---|---|
 | JSON↔Markdown representation contract is the intended narrow slice | `docs/adr/adr.20260702.213000_template-representation-ingestion-scope.draft.md`; `docs/plans/template-representation-and-implementation-namespace-split.md`; `docs/architecture/architecture.templates.md` |
 | Presentation-only Markdown variance may normalize when semantic meaning is preserved | `docs/adr/adr.20260702.213000_template-representation-ingestion-scope.draft.md`; `docs/plans/template-representation-and-implementation-namespace-split.md` |
-| `docs/templates/` is the reusable template namespace | `docs/templates/templates.00.md`; `docs/architecture/architecture.templates.md`; `docs/adr/adr.templates.draft.md` |
+| `docs/templates/` is the reusable template namespace | `docs/templates/templates.00.md`; `docs/architecture/architecture.templates.md`; `docs/adr/adr.templates.md` |
 | `docs/implementation/` is the implementation-linked records namespace | `docs/implementation/implementation.00.md`; `docs/adr/adr.implementation.draft.md` |
 | Existing bootstrap package is the future implementation target | repository source layout under `src/python/projectkoios/bootstrap/`; `docs/plans/template-representation-and-implementation-namespace-split.md` |
 | Broad ingestion, Graphify, vault/PDF/evidence ingestion, and product-domain semantics are excluded | `docs/adr/adr.20260702.213000_template-representation-ingestion-scope.draft.md`; `docs/plans/template-representation-and-implementation-namespace-split.md` |
@@ -200,5 +200,5 @@ A follow-on implementation SHOULD be validated with:
 - `docs/templates/templates.00.md`
 - `docs/implementation/implementation.00.md`
 - `docs/architecture/architecture.templates.md`
-- `docs/adr/adr.templates.draft.md`
+- `docs/adr/adr.templates.md`
 - `docs/adr/adr.implementation.draft.md`

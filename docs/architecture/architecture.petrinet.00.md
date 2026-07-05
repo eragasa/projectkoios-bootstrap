@@ -70,10 +70,10 @@ Current Petri-net development documents collected for synthesis:
 
 ### Implementation evidence and reviews
 
-- `docs/implementation/implementation-report.20260705.102506_workflow-petri-net-executor-first-slice.md`
-- `docs/implementation/implementation-report.20260705.105604_workflow-adapter-dependency-encapsulation.md`
-- `docs/implementation/implementation-report.20260705.142149_petrinet-separation-adr-remediation.md`
-- `docs/implementation/implementation-report.20260705.173808_petrinet-followups.md`
+- `docs/implementation/workflow-petri-net-executor-first-slice.20260705.102506.md`
+- `docs/implementation/workflow-adapter-dependency-encapsulation.20260705.105604.md`
+- `docs/implementation/petrinet-separation-adr-remediation.20260705.142149.md`
+- `docs/implementation/petrinet-followups.20260705.173808.md`
 - `docs/reviews/architecture-conformance.20260705.144506_petrinet-separation-adr-remediation.md`
 - `docs/reviews/architecture-conformance.20260705.174118_petrinet-followups.md`
 
@@ -94,6 +94,15 @@ Current Petri-net development documents collected for synthesis:
 - `docs/archive/architecture/adr/adr.20260630.171442_first-class-interview-petri-net-phase.md`
 - `docs/archive/handoffs/archon/20260630.042202_colored-petri-net-meta-harness.md`
 - `docs/archive/handoffs/archon/20260630.044545_colored-petri-net-meta-harness-draft.md`
+
+## Implementation
+
+### Phase I
+
+#### Implementation and Conformance Reports
+
+- `docs/implementation/petrinet-separation-adr-remediation.20260705.142149.md`
+- `docs/implementation/petrinet-followups.20260705.173808.md`
 
 ## Decomposition map
 

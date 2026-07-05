@@ -40,3 +40,5 @@ This note is controlled by:
 ## Comments
 
 - HERMES: Linked from the controlling ADR so the implementation block lives on the implementation surface, not in the architecture note.
+kkk
+![[Pasted image 20260705224209.png]]

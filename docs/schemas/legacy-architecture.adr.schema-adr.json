@@ -1,88 +1,88 @@
 {
-"$schema": "https://json-schema.org/draft/2020-12/schema",
-"$id": "adr.schema-adr.json",
-"title": "ADR Record",
-"type": "object",
-"additionalProperties": false,
-"required": [
-"type",
-"name",
-"status",
-"owner",
-"surface",
-"governs",
-"decision",
-"invariants"
-],
-"properties": {
-"type": {
-"const": "adr",
-"description": "Record type."
-},
-"name": {
-"type": "string",
-"pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
-"description": "Stable ADR identity name."
-},
-"status": {
-"type": "string",
-"enum": [
-"draft",
-"proposed",
-"active",
-"deprecated",
-"archived"
-],
-"description": "ADR lifecycle state."
-},
-"owner": {
-"type": "string",
-"enum": [
-"USER",
-"ATHENA",
-"VULCAN",
-"KOIOS",
-"HERMES"
-],
-"description": "Role responsible for the ADR surface."
-},
-"surface": {
-"type": "string",
-"description": "Markdown ADR file represented by this JSON record."
-},
-"governs": {
-"type": "array",
-"description": "Systems, files, schemas, or workflows governed by this ADR.",
-"items": {
-"type": "string"
-}
-},
-"decision": {
-"type": "string",
-"minLength": 1,
-"description": "The decision made by this ADR."
-},
-"invariants": {
-"type": "array",
-"minItems": 1,
-"description": "Machine-checkable or agent-enforceable rules.",
-"items": {
-"type": "string"
-}
-},
-"transition_rules": {
-"type": "array",
-"description": "Allowed lifecycle or workflow transitions defined by this ADR.",
-"items": {
-"type": "string"
-}
-},
-"notes": {
-"type": "array",
-"description": "Non-authoritative notes.",
-"items": {
-"type": "string"
-}
-}
-}
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "adr.schema-adr.json",
+  "title": "ADR Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "type",
+    "name",
+    "status",
+    "owner",
+    "surface",
+    "governs",
+    "decision",
+    "invariants"
+  ],
+  "properties": {
+    "type": {
+      "const": "adr",
+      "description": "Record type."
+    },
+    "name": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "description": "Stable ADR identity name."
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "proposal",
+        "draft",
+        "accepted",
+        "active",
+        "superseded"
+      ],
+      "description": "ADR lifecycle state."
+    },
+    "owner": {
+      "type": "string",
+      "enum": [
+        "USER",
+        "ATHENA",
+        "VULCAN",
+        "KOIOS",
+        "HERMES"
+      ],
+      "description": "Role responsible for the ADR surface."
+    },
+    "surface": {
+      "type": "string",
+      "description": "Markdown ADR file represented by this JSON record."
+    },
+    "governs": {
+      "type": "array",
+      "description": "Systems, files, schemas, or workflows governed by this ADR.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "decision": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The decision made by this ADR."
+    },
+    "invariants": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Machine-checkable or agent-enforceable rules.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "transition_rules": {
+      "type": "array",
+      "description": "Allowed lifecycle or workflow transitions defined by this ADR.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "notes": {
+      "type": "array",
+      "description": "Non-authoritative notes.",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
 }

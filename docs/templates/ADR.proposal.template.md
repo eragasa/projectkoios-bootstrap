@@ -1,46 +1,82 @@
-# ADR YYYYMMDD.HHMMSS: <Title>
+```json
+{
+  "record_id": "adr.<topic>",
+  "schema_id": "https://projectkoios.local/schemas/schema.record-base.json",
+  "schema_version": "0.1.0-draft",
+  "record_version": "0.1.0-draft",
+  "title": "<Title>",
+  "status": "draft",
+  "created_on": "<YYYYMMDD.HHMMSSZ>",
+  "updated_on": "<YYYYMMDD.HHMMSSZ>",
+  "origin": {
+    "type": "<user_request|agent_proposal|migration>",
+    "method": "manual",
+    "actor": "<ATHENA|VULCAN|KOIOS|HERMES>",
+    "authority": "<user|accepted_adr|draft>"
+  },
+  "scope": "<repository-or-scope>",
+  "repository": "<repository-name>",
+  "domain": {
+    "domain_type": "architecture",
+    "domain_subtype": "<domain-subtype>",
+    "domain_scope": "<bounded-scope>"
+  },
+  "source_artifacts": [],
+  "derived_from": [],
+  "evidence": [],
+  "projections": [
+    {
+      "path": "docs/adr/adr.<topic>.md",
+      "projection_type": "editable_markdown",
+      "source_record_id": "adr.<topic>",
+      "source_schema_id": "https://projectkoios.local/schemas/schema.record-base.json",
+      "source_schema_version": "0.1.0-draft",
+      "projection_method": "manual",
+      "generated_by": "<ATHENA|VULCAN|KOIOS|HERMES>",
+      "editable": true,
+      "source_of_truth": "projection"
+    }
+  ]
+}
+```
 
-> Legacy Markdown render example. Canonical ADRs are JSON in `docs/schemas/adr.schema.json`.
+# ADR: <Title>
+
+> Legacy Markdown render example. Canonical ADR metadata and provenance live in the leading JSON block.
 > Controlled by: [adr.adr-template-contract](../adr/adr.adr-template-contract.md).
 > Template index: [templates.00](templates.00.md).
 
----
 ## Status
 
-draft
+<proposal | draft | accepted | active | superseded>
+
+## Normative language
+
+The key words **MUST**, **MUST NOT**, **SHOULD**, **SHOULD NOT**, and **MAY** in this ADR are to be interpreted as described in RFC 2119 and RFC 8174 when, and only when, they appear in all capitals.
 
 ## Context
 
-Origin: <origin>
-From: <sender>
-Acting-As: <harness-role>
-Scope: <repository-or-scope>
-Repository: <repository-name>
-
-<Describe the problem, why it matters, and the current state.>
-
-<Use exactly one architecture domain. This is a proposal, not an implementation plan.>
----
+<Describe the problem, why it matters, and the current state. Do not duplicate metadata/provenance that belongs in the leading JSON block.>
 
 ## Decision
 
-<State the proposal being made to the relevant architecture owner.>
+<State the proposal or active decision. Use descriptive prose first, then normative bullets if the section contains requirements.>
 
 ## Consequences
 
-<Describe the trade-offs, follow-on work, and validation impact if accepted.>
+<Describe trade-offs, follow-on work, and validation impact. Use normative bullets when listing requirements.>
 
-## architecture-spec
+## Architecture spec
 
 <Bounded architecture decision for one domain.>
 
-## acceptance-criteria
+## Acceptance criteria
 
-- <Criterion 1>
-- <Criterion 2>
-- <Criterion 3>
+- MUST <Criterion 1>
+- SHOULD <Criterion 2>
+- MAY <Criterion 3>
 
-## implementation-brief
+## Implementation brief
 
 <Describe downstream follow-up expected, or state that no implementation is requested.>
 
@@ -50,29 +86,29 @@ Repository: <repository-name>
 
 ## Comments
 
-Comments remain open while this ADR is in draft status. When the ADR is promoted to proposed, the proposed ADR becomes the active review surface and the draft is archived or marked superseded.
+Comments remain open while this ADR is in draft status. When the ADR is promoted, comments are resolved, preserved as provenance, or moved to follow-up artifacts.
 
 - ATHENA: <comment or concern>
 - VULCAN: <comment or concern>
 - KOIOS: <comment or concern>
 - HERMES: <comment or concern>
 
-## resolved-open-questions
+## Resolved open questions
 
-- <Question or decision point 1>
-- <Question or decision point 2>
+- MUST <Question or decision point 1>
+- SHOULD <Question or decision point 2>
 
-## non-goals
+## Non-goals
 
-- <Non-goal 1>
-- <Non-goal 2>
+- MUST NOT <Non-goal 1>
+- SHOULD NOT <Non-goal 2>
 
-## validation-expectations
+## Validation expectations
 
-- <How the resulting ADR, workflow, or artifact should be validated>
+- MUST <How the resulting ADR, workflow, or artifact should be validated>
 
-## document-state
+## Document state
 
-- Owner: <Hermes | Athena | Vulcan | Koios>
-- Current phase: <draft | proposed | review | accepted | validated | completed>
-- Notes: <optional document-domain consistency guidance>
+- MUST treat Owner as <Hermes | Athena | Vulcan | Koios>.
+- MUST treat Current phase as <proposal | draft | accepted | active | superseded>.
+- MAY include additional document-domain consistency guidance.

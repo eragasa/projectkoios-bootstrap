@@ -25,7 +25,7 @@
 - Latest completed scope: bounded follow-ups from ATHENA's Petri-net conformance review.
 - Controlling ADR: `docs/adr/adr.petrinet.20260705.132740Z.md`.
 - Follow-up conformance review: `docs/reviews/architecture-conformance.20260705.174118_petrinet-followups.md`.
-- Implementation report: `docs/implementation/implementation-report.20260705.173808_petrinet-followups.md`.
+- Implementation report: `docs/implementation/petrinet-followups.20260705.173808.md`.
 - Commit pushed: `184df13 Implement Petri-net follow-up cleanup`.
 - Current implementation status: complete, reviewed, committed, and pushed.
 

@@ -80,7 +80,7 @@
       "role": "ATHENA"
     },
     {
-      "path": "docs/adr/adr.templates.draft.md",
+      "path": "docs/adr/adr.templates.md",
       "relationship": "reference",
       "role": "ATHENA"
     },

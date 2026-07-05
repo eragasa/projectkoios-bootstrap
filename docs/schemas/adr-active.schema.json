@@ -20,7 +20,13 @@
     },
     "status": {
       "type": "string",
-      "enum": ["draft", "proposed", "active", "superseded", "rejected"]
+      "enum": [
+        "proposal",
+        "draft",
+        "accepted",
+        "active",
+        "superseded"
+      ]
     },
     "owner": {
       "type": "string",
@@ -50,11 +56,21 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["from", "to", "condition"],
+        "required": [
+          "from",
+          "to",
+          "condition"
+        ],
         "properties": {
-          "from": { "type": "string" },
-          "to": { "type": "string" },
-          "condition": { "type": "string" }
+          "from": {
+            "type": "string"
+          },
+          "to": {
+            "type": "string"
+          },
+          "condition": {
+            "type": "string"
+          }
         }
       }
     }

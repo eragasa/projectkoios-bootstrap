@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This policy is a consumption aid for the accepted Project Koios bootstrap ADR lifecycle decision.
+This policy is a consumption aid for the active Project Koios bootstrap ADR lifecycle decision.
 
 ## Normative language
 
@@ -15,38 +15,35 @@ The key words **MUST**, **MUST NOT**, **SHOULD**, **SHOULD NOT**, and **MAY** in
 - Prior lifecycle draft: `docs/adr/adr.adr-lifecycle.draft.md`
 - Prior promotion-mechanics draft: `docs/adr/adr.adr-lifecycle-promotion-mechanics.md`
 - This policy is a consumption aid.
-- If this policy conflicts with the accepted ADR, the accepted ADR wins.
+- If this policy conflicts with the active ADR, the active ADR wins.
 
 ## Canonical ADR record statuses
 
-ADR records governed by the accepted lifecycle ADR MUST use these statuses:
+ADR records governed by the active lifecycle ADR MUST use these statuses:
 
-1. `draft`
-2. `proposed`
+1. `proposal`
+2. `draft`
 3. `accepted`
-4. `completed`
+4. `active`
 5. `superseded`
-6. `rejected`
 
 ## Canonical status meanings
 
-- `draft` — working record not yet adopted as a review surface.
-- `proposed` — review surface pending acceptance or rejection.
-- `accepted` — adopted ADR authority.
-- `completed` — accepted decision with applicable implementation, rollout, or documentation reconciliation complete.
-- `superseded` — no longer current because another accepted record replaced it.
-- `rejected` — record that did not proceed.
+- `proposal` — candidate idea or review packet that is not yet shaped as a complete ADR.
+- `draft` — complete enough to review as an ADR, but not accepted authority.
+- `accepted` — approved document authority, but not necessarily enforced, implemented, or current as the active controlling surface.
+- `active` — accepted and current controlling authority for work, enforcement, routing, or document interpretation.
+- `superseded` — no longer current because another accepted or active record replaced or narrowed it.
 
 ## Canonical transitions
 
 Allowed lifecycle transitions are:
 
-- `draft -> proposed -> accepted`
-- `proposed -> rejected`
-- `accepted -> completed`
+- `proposal -> draft -> accepted -> active`
 - `accepted -> superseded`
-- `completed -> superseded`
-- `draft -> rejected`
+- `active -> superseded`
+- `draft -> superseded`
+- `proposal -> superseded`
 
 ## Compatibility mapping
 
@@ -54,17 +51,19 @@ Older lifecycle language MUST be read through this compatibility map unless a la
 
 | Older term | Canonical status or meaning |
 |---|---|
-| `active` | `accepted` when the decision is adopted as authority; `completed` only after applicable rollout is complete. |
-| `historical` | Usually `superseded`; sometimes `completed` for finished non-current work. |
-| active review | `proposed` or workspace-local `active.md`, not ADR status `active`. |
+| `proposed` | `proposal` for candidate/review packets; `draft` when the document is complete enough for ADR review. |
+| `completed` | `active` when the decision remains controlling after rollout; `superseded` when the completed work is no longer current. |
+| `rejected` | no longer a canonical ADR status; preserve as review outcome/provenance or mark the candidate `superseded` when a durable record must remain. |
+| `historical` | Usually `superseded`; otherwise an archive/provenance label, not ADR status. |
+| active review | `proposal`, `draft`, or workspace-local `active.md`, depending on whether the review packet is an ADR record. |
 
-ADR status `active` MUST NOT be introduced as a canonical record status by this policy.
+ADR status `active` is canonical only for accepted records that are current controlling authority. Workspace-local `active.md` remains a separate live-work control surface and MUST NOT be confused with ADR status `active`.
 
 ## Spike and proposal surfaces
 
-- A spike MUST be represented as a draft ADR plus `ADR_implementation_plan` under `spike/<spike-id>/`.
-- A proposed ADR SHOULD be located under `dev/<proposal-id>/` when it is a review surface outside `docs/adr/`.
-- An accepted ADR SHOULD be located under `docs/adr/`.
+- A spike SHOULD be represented as a `proposal` or `draft` ADR plus `ADR_implementation_plan` under `spike/<spike-id>/` until the spike workflow is separately reconciled.
+- A `proposal` ADR SHOULD be located under `dev/<proposal-id>/` when it is a candidate/review packet outside `docs/adr/`.
+- An `accepted` or `active` ADR SHOULD be located under `docs/adr/`.
 
 ## Traceability
 
@@ -84,12 +83,12 @@ If lifecycle tooling is introduced, the `status` field MUST be the lifecycle sou
 
 ## Deferred surfaces
 
-The accepted ADR intentionally does not settle these older draft elements:
+The active ADR intentionally does not settle these older draft elements:
 
 - lifecycle state ownership by role
-- required `proposed` sections
+- required `proposal` or `draft` sections
 - optional workflow gate fields
 - deprecated `docs/incubator/` and `docs/spikes/` migration
 - broader legacy-source index flow from idea through iterative implementation
 
-Those elements MUST NOT become changed authority without separate acceptance or documentation handoff.
+Those elements MUST NOT become changed authority without separate acceptance, activation, or documentation handoff.

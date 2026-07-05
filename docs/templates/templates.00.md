@@ -19,16 +19,20 @@ They live under `docs/templates/`.
 
 This note is controlled by:
 
-- `docs/adr/adr.templates.draft.md`
+- `docs/adr/adr.templates.md`
+
+Related ADR-facing active control surface:
+
+- `docs/adr/adr.templates-adr.md`
 
 ## Contract
 
-This namespace is governed by `adr.templates`.
+This namespace is governed by `adr.templates`. Template enforcement may remain inactive until implementation and migration are complete.
 
 ## Related files
 
 - `docs/templates/ADR.proposal.template.md`
-- `docs/templates/architecture.template.instructions.md`
+- `docs/templates/architecture.template.md`
 - `docs/templates/incubator.brainstorm.template.md`
 - `docs/templates/agents.charter.instructions.md`
 - `docs/templates/workspace.agent.instructions.md`
