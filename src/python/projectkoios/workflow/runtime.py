@@ -10,6 +10,7 @@ from projectkoios.workflow.events import (
 from projectkoios.workflow.petrinet import (
     PetriNet,
     PetriNetArc,
+    PetriNetFiringRequest,
     PetriNetMarking,
     PetriNetState,
     PetriNetToken,
@@ -90,24 +91,26 @@ class PetriNetExecutor:
     def fire(
         self,
         state: PetriNetState,
-        transition_id: str,
+        request: PetriNetFiringRequest,
         events: PetriNetEventCollection | None = None,
     ) -> PetriNetFiringResult:
-        """Fire an enabled transition and return the next state.
+        """Fire an enabled transition request and return the next state.
 
         Args:
             state: Current Petri-net state.
-            transition_id: PetriNetTransition identifier to fire.
+            request: Explicit PetriNetFiringRequest to execute.
             events: Optional existing in-process event collection.
 
         Returns:
             Firing result with new state and emitted events.
 
         Raises:
-            ValueError: When the transition is not enabled.
+            ValueError: When the requested transition is not enabled.
         """
 
-        # PetriNetTransitionBinding proves the transition is enabled and selects consumed tokens.
+        # PetriNetFiringRequest carries the imperative transition-fire request.
+        transition_id: str = request.transition_id
+        # PetriNetTransitionBinding proves the requested transition is enabled and selects consumed tokens.
         binding: PetriNetTransitionBinding | None = self.binding_for_transition(state, transition_id)
         if binding is None:
             raise ValueError(f"transition is not enabled: {transition_id}")

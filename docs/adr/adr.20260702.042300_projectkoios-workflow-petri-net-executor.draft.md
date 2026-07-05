@@ -4,6 +4,30 @@
 
 draft
 
+## Current control note
+
+This draft is preserved as provenance. The accepted Petri-net separation ADR at
+`docs/adr/adr.petrinet.20260705.132740Z.md` narrows and supersedes this draft's
+conflicting first-slice vocabulary for the bootstrap-held workflow implementation
+surface.
+
+Current implementation-facing vocabulary for that slice is:
+
+- `PetriNetPlace`, `PetriNetTransition`, `PetriNetToken`, `PetriNetArc`,
+  `PetriNetArcKind`, `PetriNetMarking`, `PetriNet`, and `WorkflowNet` for the
+  static definition and workflow wrapper surfaces.
+- `PetriNetTransitionBinding`, `PetriNetFiringRequest`, and `PetriNetState` for
+  runtime binding, request, and net-plus-marking state surfaces.
+- `PetriNetExecutor`, `PetriNetTransitionFiredEvent`,
+  `PetriNetMarkingChangedEvent`, and `PetriNetEventCollection` for bounded
+  in-process execution and debugging events.
+
+The older terms `FiringRule`, broad `ExecutionState` for net-plus-marking only,
+mutable `place.tokens`, object-level `on_update`, and
+`transition.fire_mutating_state()` are not controlling vocabulary for the current
+first implementation slice. Broader workflow substrate decisions in this draft
+remain draft material until separately accepted or revised.
+
 ## Context
 
 Origin: user request

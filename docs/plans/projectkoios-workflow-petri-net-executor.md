@@ -3,7 +3,32 @@
 ## Source
 
 - ADR: `docs/adr/adr.20260702.042300_projectkoios-workflow-petri-net-executor.draft.md`
+- Current vocabulary control: `docs/adr/adr.petrinet.20260705.132740Z.md`
 - Related context: `docs/petri-net-model.md`, `docs/archive/architecture/adr/adr.20260630.042202_colored-petri-net-meta-harness.md`
+
+## Current control note
+
+This plan is preserved as the original workflow executor implementation guide,
+but current first-slice Petri-net vocabulary is controlled by the accepted
+Petri-net separation ADR at `docs/adr/adr.petrinet.20260705.132740Z.md`.
+
+Implementation work under `src/python/projectkoios/workflow` should use the
+accepted prefixed names and ownership boundaries:
+
+- static definition and workflow wrapper: `PetriNetPlace`,
+  `PetriNetTransition`, `PetriNetToken`, `PetriNetArc`, `PetriNetArcKind`,
+  `PetriNetMarking`, `PetriNet`, and `WorkflowNet`;
+- runtime request/state/binding: `PetriNetFiringRequest`, `PetriNetState`, and
+  `PetriNetTransitionBinding`;
+- execution and debugging events: `PetriNetExecutor`,
+  `PetriNetTransitionFiredEvent`, `PetriNetMarkingChangedEvent`, and
+  `PetriNetEventCollection`.
+
+Do not use `FiringRule`, broad `ExecutionState` for net-plus-marking only,
+mutable `place.tokens`, object-level `on_update`, or
+`transition.fire_mutating_state()` as current implementation targets. Broader
+adapter, restart, and product workflow surfaces remain subject to separate
+accepted architecture authority.
 
 ## Scope
 

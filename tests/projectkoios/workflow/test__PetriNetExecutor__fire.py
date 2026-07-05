@@ -3,6 +3,7 @@ from __future__ import annotations
 from projectkoios.workflow import (
     PetriNetArc,
     PetriNetArcKind,
+    PetriNetFiringRequest,
     PetriNetState,
     PetriNetFiringResult,
     PetriNetMarking,
@@ -35,8 +36,10 @@ def test__PetriNetExecutor__fire__moves_token_and_records_event() -> None:
     # Runtime owns enabledness checks and firing semantics.
     runtime: PetriNetExecutor = PetriNetExecutor()
 
+    # Firing request identifies the transition to execute.
+    request: PetriNetFiringRequest = PetriNetFiringRequest(transition_id="submit")
     # Fired result contains the next marking and emitted debug events.
-    result: PetriNetFiringResult = runtime.fire(state, "submit")
+    result: PetriNetFiringResult = runtime.fire(state, request)
 
     assert result.state.marking.tokens_at("draft") == ()
     assert result.state.marking.tokens_at("review") == (token,)
