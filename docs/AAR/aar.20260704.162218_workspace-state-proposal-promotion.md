@@ -9,7 +9,7 @@ Athena session in `projectkoios-bootstrap` advancing the canonical workspace-sta
 - Read Athena workspace state and active priority surfaces.
 - User selected priority 3: promote or reconcile the canonical workspace-state / next-action protocol draft.
 - Created proposed review surface at `dev/canonical-workspace-state-next-action-protocol/adr.canonical-workspace-state-next-action-protocol.proposed.md`.
-- Marked the historical draft `docs/adr/adr.canonical-workspace-state-next-action-protocol.draft.md` as superseded by the proposal without rewriting it in place.
+- Marked the historical draft `docs/archive/architecture/adr/adr.canonical-workspace-state-next-action-protocol.draft.md` as superseded by the proposal without rewriting it in place.
 - Updated Athena `state.md` and `active.md` to record the proposal and next review owner.
 
 ## Process issues

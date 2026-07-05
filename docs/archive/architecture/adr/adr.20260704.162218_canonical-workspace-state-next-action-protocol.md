@@ -2,18 +2,19 @@
 {
   "title": "Canonical Workspace State and Next-Action Protocol",
   "artifact_type": "adr",
-  "status": "accepted",
+  "status": "superseded",
   "datetime": "20260704.162218Z",
   "accepted_datetime": "20260704.162554Z",
   "dcn": "ADR-CANONICAL-WORKSPACE-STATE-NEXT-ACTION-PROTOCOL-20260704.162218Z",
   "acting_as": "ATHENA",
   "repository": "projectkoios-bootstrap",
   "scope": "workspaces/",
-  "canonical_location": "docs/adr/adr.20260704.162218_canonical-workspace-state-next-action-protocol.md",
+  "canonical_location": "docs/archive/architecture/adr/adr.20260704.162218_canonical-workspace-state-next-action-protocol.md",
   "proposal_surface": "dev/canonical-workspace-state-next-action-protocol/adr.canonical-workspace-state-next-action-protocol.proposed.md",
-  "supersedes": "docs/adr/adr.canonical-workspace-state-next-action-protocol.draft.md",
+  "supersedes": "docs/archive/architecture/adr/adr.canonical-workspace-state-next-action-protocol.draft.md",
   "back_to": "docs/architecture/architecture.canonical-workspace-state-and-next-action-protocol.md",
-  "next_phase": "separate policy/bootstrap handoff if implementation updates are desired"
+  "next_phase": "superseded by docs/adr/adr.workspaces.20260705.105021Z.md",
+  "superseded_by": "docs/adr/adr.workspaces.20260705.105021Z.md"
 }
 ```
 
@@ -21,7 +22,9 @@
 
 ## Status
 
-accepted
+superseded
+
+Superseded by `docs/adr/adr.workspaces.20260705.105021Z.md`.
 
 ## Provenance
 
@@ -32,8 +35,8 @@ Scope: projectkoios-bootstrap workspace control surfaces
 Repository: projectkoios-bootstrap
 Architecture-Domain: workflow/control-surface
 Proposal-Review-Surface: `dev/canonical-workspace-state-next-action-protocol/adr.canonical-workspace-state-next-action-protocol.proposed.md`
-Historical-Draft: `docs/adr/adr.canonical-workspace-state-next-action-protocol.draft.md`
-Canonical-Accepted-ADR: `docs/adr/adr.20260704.162218_canonical-workspace-state-next-action-protocol.md`
+Historical-Draft: `docs/archive/architecture/adr/adr.canonical-workspace-state-next-action-protocol.draft.md`
+Canonical-Accepted-ADR: `docs/archive/architecture/adr/adr.20260704.162218_canonical-workspace-state-next-action-protocol.md`
 Acceptance-Path: HERMES reported user selection of option 1, accepting the proposal in principle, and requested ATHENA produce the accepted ADR artifact.
 
 ## Context
@@ -72,8 +75,13 @@ results, knowledge notes, provenance indexes, or completion decisions.
 
 ### `state.md`
 
-`state.md` is the durable resume snapshot for the workspace. It MUST record, at
-minimum:
+Each role workspace MUST maintain `state.md` as its local resume/control surface.
+
+`state.md` is the effective cold-start state for that workspace. Its purpose is
+to preserve the minimum durable context needed for a new session to resume
+correctly without chat history.
+
+`state.md` MUST record, at minimum:
 
 - represented role
 - repository or scope
@@ -81,11 +89,31 @@ minimum:
 - document domain
 - current focus
 - blockers
-- validated current state or last validated document-state change
+- validated durable facts relevant to resumption, each with a provenance pointer when available
+- active control surfaces
 - handoff status when relevant
 - next owner
-- open questions or decisions
+- unresolved questions or decisions
 - current status summary
+
+When `state.md` records a claim, it SHOULD identify whether the claim is a
+validated fact, a working assumption, or an unresolved question, and SHOULD link
+to the source artifact when one exists.
+
+`state.md` MUST NOT be treated as project architecture authority,
+implementation authority, acceptance authority, validation evidence, or
+completion evidence. When `state.md` conflicts with ADRs, implementation
+reports, reviews, schemas, policies, or other authoritative repository
+artifacts, the authoritative artifact wins and `state.md` MUST be corrected.
+
+`state.md` MUST NOT duplicate full review, implementation, or chat history when
+durable artifacts already preserve that provenance. It MUST summarize current
+actionable state and link to ADRs, reviews, implementation reports, AARs,
+knowledge notes, or provenance indexes for detail.
+
+When correcting stale state, agents SHOULD update only the state summary and
+preserve the authoritative source artifact unchanged unless separately
+authorized.
 
 ### `active.md`
 
@@ -161,7 +189,7 @@ proposal review surface and provenance record only.
 
 The accepted authority surface is this ADR in `docs/adr/`:
 
-- `docs/adr/adr.20260704.162218_canonical-workspace-state-next-action-protocol.md`
+- `docs/archive/architecture/adr/adr.20260704.162218_canonical-workspace-state-next-action-protocol.md`
 
 The historical draft remains historical context and is superseded by this
 accepted ADR.
@@ -251,7 +279,7 @@ guidance and bootstrap validation so:
 ## Links
 
 - back_to: `docs/architecture/architecture.canonical-workspace-state-and-next-action-protocol.md`
-- supersedes: `docs/adr/adr.canonical-workspace-state-next-action-protocol.draft.md`
+- supersedes: `docs/archive/architecture/adr/adr.canonical-workspace-state-next-action-protocol.draft.md`
 - proposal_surface: `dev/canonical-workspace-state-next-action-protocol/adr.canonical-workspace-state-next-action-protocol.proposed.md`
 - superseded_by: None
 - related_policy: `docs/policies/workspace-layout.md`

@@ -9,7 +9,7 @@
   "document_domain": "workspace layout and resume-control convention",
   "workspace_roles": ["hermes", "athena", "vulcan", "koios"],
   "material_directories": ["decisions/", "working/", "scratch/", "sessions/"],
-  "updated": "20260704"
+  "updated": "20260705.105021Z"
 }
 ```
 
@@ -19,7 +19,7 @@
 
 Provide persistent, per-agent working context across sessions without mixing
 role memory. The controlling decision is
-`docs/adr/adr.20260704.162218_canonical-workspace-state-next-action-protocol.md`.
+`docs/adr/adr.workspaces.20260705.105021Z.md`.
 The durable workflow state is the repository document set and each document's
 status. Workspace files are local control surfaces for resuming an agent run;
 they are not the authoritative project state and do not replace ADRs,
@@ -69,15 +69,29 @@ workspaces/
 ## File conventions
 
 ### `state.md`
-Durable resume snapshot for an agent run.
+Each role workspace MUST maintain `state.md` as its local resume/control surface.
+
+`state.md` is the effective cold-start state for that workspace. Its purpose is to preserve the minimum durable context needed for a new session to resume correctly without chat history.
+
+`state.md` MUST include:
 - stable top JSON metadata section
+- represented role
+- current scope
 - current branch / repo focus
 - current document domain
-- current objective
-- blockers
-- last validated document-state change
+- validated durable facts relevant to resumption, each with a provenance pointer when available
+- active control surfaces
+- blockers and unresolved questions
 - known cross-domain inconsistencies
-- next state owner
+- next coherent transition / next state owner
+
+When `state.md` records a claim, it SHOULD identify whether the claim is a validated fact, a working assumption, or an unresolved question, and SHOULD link to the source artifact when one exists.
+
+`state.md` MUST NOT be treated as project architecture authority, implementation authority, acceptance authority, validation evidence, or completion evidence. When `state.md` conflicts with ADRs, implementation reports, reviews, schemas, policies, or other authoritative repository artifacts, the authoritative artifact wins and `state.md` MUST be corrected.
+
+`state.md` MUST NOT duplicate full review, implementation, or chat history when durable artifacts already preserve that provenance. It MUST summarize current actionable state and link to ADRs, reviews, implementation reports, AARs, knowledge notes, or provenance indexes for detail.
+
+When correcting stale state, agents SHOULD update only the state summary and preserve the authoritative source artifact unchanged unless separately authorized.
 
 ### `active.md`
 Current priority filter and next-action surface.
@@ -154,6 +168,7 @@ Session notes.
 - Prefer one topic per file
 - Do not store secrets
 - Do not duplicate canonical repo docs inside workspace files
+- Do not duplicate full review, implementation, or chat history inside `state.md` when durable artifacts preserve that provenance
 
 ## Non-goals
 

@@ -12,8 +12,8 @@ See `[architecture.00](architecture.00.md)`.
 
 Project Koios needs persistent per-agent workspace state so sessions can resume
 without re-deriving the current task, repo focus, blockers, or next action.
-The controlling protocol is the accepted ADR
-`docs/adr/adr.20260704.162218_canonical-workspace-state-next-action-protocol.md`.
+The controlling protocol is the accepted workspace ADR
+`docs/adr/adr.workspaces.20260705.105021Z.md`.
 
 A workspace is agent-scoped, not repo-scoped:
 - Athena keeps bounded spec context
@@ -25,7 +25,7 @@ A workspace is agent-scoped, not repo-scoped:
 
 Use `workspaces/<agent_name>/` as the persistent workspace surface.
 Each workspace should contain:
-- `state.md` with stable top JSON metadata and durable resume state
+- `state.md` with stable top JSON metadata and effective cold-start resume state
 - `active.md` with stable top JSON metadata, priority stack, waiting-on items, active working material, ignored scope, and exit criteria
 - `sessions/`
 - `working/`

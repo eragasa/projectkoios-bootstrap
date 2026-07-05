@@ -42,7 +42,7 @@
 ## Working material
 
 - Active working items: `docs/adr/adr.schema-base.md`, `docs/plans/schema-base-adr-records-workplan.md`, `docs/plans/implementation-brief.20260704.172632_schema-record-base.md`, `docs/schemas/README.md`, `docs/schemas/schema.record-base.json`, `docs/schemas/adr-draft.schema.json`, `docs/implementation/implementation-report.20260704.174859_schema-record-base.md`.
-- Workspace-state accepted ADR: `docs/adr/adr.20260704.162218_canonical-workspace-state-next-action-protocol.md`; proposal retained as review provenance at `dev/canonical-workspace-state-next-action-protocol/adr.canonical-workspace-state-next-action-protocol.proposed.md`; historical draft `docs/adr/adr.canonical-workspace-state-next-action-protocol.draft.md` points to the accepted ADR.
+- Workspace-state accepted ADR: `docs/adr/adr.workspaces.20260705.105021Z.md`; previous accepted ADR `docs/archive/architecture/adr/adr.20260704.162218_canonical-workspace-state-next-action-protocol.md`, historical draft `docs/archive/architecture/adr/adr.canonical-workspace-state-next-action-protocol.draft.md`, and proposal `dev/canonical-workspace-state-next-action-protocol/adr.canonical-workspace-state-next-action-protocol.proposed.md` are provenance.
 - Conformance-review output: `docs/reviews/architecture-conformance.20260704.212913_schema-record-base-slice.md`; outcome `conforms-with-gaps`; gap is shallow immutability in metadata/generic mappings.
 - Scratch: `scratch/` is available for temporary notes and non-durable exploration.
 - Note: files may exist under `working/` as transitional artifacts; they are not active unless explicitly re-opened.

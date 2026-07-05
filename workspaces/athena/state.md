@@ -55,10 +55,11 @@
 - Process correction recorded: the next best step is always an incremental edit to the relevant control surface before expanding work.
 - Control-plane correction recorded: if Athena needs another role/agent to do something, Athena should send an explicit intercom handoff/request rather than only recording the need in local state.
 - Control-surface policy correction recorded on 20260705: architecture notes are no longer Hermes-only edit surfaces. Agents may edit `docs/architecture*.md` when explicitly directed by the user and within their document-domain authority; Hermes remains responsible for cross-domain reconciliation.
+- Workspace-state purpose correction recorded on 20260705: consolidated accepted workspace ADR exists at `docs/adr/adr.workspaces.20260705.105021Z.md` and supersedes `docs/archive/architecture/adr/adr.20260704.162218_canonical-workspace-state-next-action-protocol.md` plus `docs/archive/architecture/adr/adr.canonical-workspace-state-next-action-protocol.draft.md`. It defines `state.md` as each workspace's required cold-start resume/control surface. `state.md` is non-authoritative, must classify claims as validated facts/working assumptions/open questions where useful, must link to durable provenance, and must not duplicate full review/implementation/chat history preserved elsewhere. AAR recorded at `docs/AAR/aar.20260705.111255_workspace-adr-consolidation.md`.
 - Reconciliation recorded on 20260704.151218: the untracked GraphRAG persisted-index plan files are VULCAN-owned implementation-domain artifacts and have been handed off to the idle Vulcan session via intercom.
 - Portfolio correction recorded on 20260704.151749: Athena should keep multiple larger spec/ADR tracks moving while Vulcan owns implementation work, as long as Athena avoids implementation files and preserves document-domain authority.
 - No Athena implementation/code work is active.
-- Canonical workspace-state / next-action protocol accepted ADR exists at `docs/adr/adr.20260704.162218_canonical-workspace-state-next-action-protocol.md`; proposal remains review provenance at `dev/canonical-workspace-state-next-action-protocol/adr.canonical-workspace-state-next-action-protocol.proposed.md`; historical draft now links to the accepted ADR.
+- Consolidated workspace ADR exists at `docs/adr/adr.workspaces.20260705.105021Z.md`; previous accepted ADR `docs/archive/architecture/adr/adr.20260704.162218_canonical-workspace-state-next-action-protocol.md`, proposal `dev/canonical-workspace-state-next-action-protocol/adr.canonical-workspace-state-next-action-protocol.proposed.md`, and historical draft `docs/archive/architecture/adr/adr.canonical-workspace-state-next-action-protocol.draft.md` are provenance.
 - Schema-record base pre-Vulcan slice reconciled KOIOS/HERMES/VULCAN review on 20260704.173652.
 - HERMES guidance received: slice conformance review is a bounded comparison between implemented slice and controlling artifacts, not a general design review or validation run; ATHENA owns final architecture-conformance decision after VULCAN reports evidence.
 - VULCAN implementation report exists at `docs/implementation/implementation-report.20260704.174859_schema-record-base.md`.
@@ -76,7 +77,7 @@
 
 ## Open questions
 
-- Current working tree has uncommitted control-surface updates, including the new `docs/architecture/architecture.petrinet.00.md` and policy/template updates removing the Hermes-only architecture-note edit restriction.
+- Current working tree has uncommitted workspace-ADR consolidation updates ready for packaging.
 - Whether a future validator should parse the top JSON metadata sections directly or require a structured companion.
 - Whether historical/transitional working files should be archived or removed from the active workspace surface.
 - Whether HERMES/user should accept, revise, or reject the template representation and namespace split proposal or its schema-backed draft projection.

@@ -11,7 +11,7 @@ Implementation complete for bounded policy/bootstrap reconciliation against the 
 - Workspace: `workspaces/vulcan/`
 - Branch: `master`
 - Request source: HERMES handoff authorized by user
-- Controlling ADR: `docs/adr/adr.20260704.162218_canonical-workspace-state-next-action-protocol.md`
+- Controlling ADR: `docs/archive/architecture/adr/adr.20260704.162218_canonical-workspace-state-next-action-protocol.md`
 - Scope: stale policy/guidance/bootstrap surfaces only
 - Next expected artifact: HERMES/user review or commit packaging decision
 

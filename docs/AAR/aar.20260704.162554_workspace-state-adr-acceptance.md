@@ -7,9 +7,9 @@ Athena session in `projectkoios-bootstrap` responding to Hermes routing that use
 ## What happened
 
 - Received Hermes routing that user accepted the proposal in principle.
-- Created accepted ADR authority surface at `docs/adr/adr.20260704.162218_canonical-workspace-state-next-action-protocol.md`.
+- Created accepted ADR authority surface at `docs/archive/architecture/adr/adr.20260704.162218_canonical-workspace-state-next-action-protocol.md`.
 - Preserved proposal provenance at `dev/canonical-workspace-state-next-action-protocol/adr.canonical-workspace-state-next-action-protocol.proposed.md` and marked it as superseded by the accepted ADR.
-- Updated the historical draft `docs/adr/adr.canonical-workspace-state-next-action-protocol.draft.md` to point to the accepted ADR.
+- Updated the historical draft `docs/archive/architecture/adr/adr.canonical-workspace-state-next-action-protocol.draft.md` to point to the accepted ADR.
 - Updated Athena workspace `state.md` and `active.md` to reflect the accepted ADR and remaining follow-on boundary.
 - Relayed the user's note to Hermes that Hermes policy is outdated, with context that policy/bootstrap guidance needs reconciliation after the accepted ADR exists.
 

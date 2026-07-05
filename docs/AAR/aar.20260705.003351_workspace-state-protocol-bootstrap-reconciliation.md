@@ -6,7 +6,7 @@ VULCAN reconciled policy, architecture guidance, workspace bootstrap code, and w
 
 ## What happened
 
-- Updated stale draft/proposal links and wording to point to `docs/adr/adr.20260704.162218_canonical-workspace-state-next-action-protocol.md`.
+- Updated stale draft/proposal links and wording to point to `docs/archive/architecture/adr/adr.20260704.162218_canonical-workspace-state-next-action-protocol.md`.
 - Removed stale workspace handoff mailbox convention from policy/bootstrap surfaces.
 - Updated workspace initialization to seed `state.md` and `active.md` with stable top JSON metadata blocks.
 - Added focused tests for metadata, deprecated directory absence, and canonical architecture reference path.
