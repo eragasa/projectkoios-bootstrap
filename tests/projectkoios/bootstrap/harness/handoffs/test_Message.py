@@ -2,10 +2,10 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from projectkoios.bootstrap.harness.data.artifact import HandoffArtifact
+from projectkoios.bootstrap.harness.data.handoff import KoiosHandoff
 from projectkoios.bootstrap.harness.handoffs.topics import (
     Message,
-    artifact_to_message,
+    handoff_to_message,
     message_id,
 )
 
@@ -13,7 +13,7 @@ from projectkoios.bootstrap.harness.handoffs.topics import (
 def test__Message__construction__builds_message_with_path_derived_id() -> None:
     """Validate message construction derives stable archive-relative IDs."""
     # Artifact is the handoff token converted into a topic message.
-    artifact: HandoffArtifact = HandoffArtifact(
+    handoff: KoiosHandoff = KoiosHandoff(
         path=Path("/repo/docs/archive/handoffs/archon/spec.md"),
         kind="architecture-spec",
         origin="Athena",
@@ -21,8 +21,8 @@ def test__Message__construction__builds_message_with_path_derived_id() -> None:
         recipient="Vulcan",
     )
     # Message is the topic representation under assertion.
-    message: Message = artifact_to_message(
-        "docs/archive/handoffs/archon/spec.md", artifact,
+    message: Message = handoff_to_message(
+        "docs/archive/handoffs/archon/spec.md", handoff,
     )
     assert message.message_id == "archon/spec.md"
     assert message.source_path == "docs/archive/handoffs/archon/spec.md"
@@ -37,9 +37,9 @@ def test__Message__construction__strips_handoffs_prefix() -> None:
 
 
 def test__Message__construction__copies_artifact_fields() -> None:
-    """Validate message construction copies handoff artifact metadata."""
+    """Validate message construction copies Koios handoff metadata."""
     # Artifact is the handoff token converted into a topic message.
-    artifact: HandoffArtifact = HandoffArtifact(
+    handoff: KoiosHandoff = KoiosHandoff(
         path=Path("/r/docs/archive/handoffs/pi/out.md"),
         kind="routing-decision",
         origin="pi",
@@ -50,7 +50,7 @@ def test__Message__construction__copies_artifact_fields() -> None:
         provenance=["origin: pi", "from: Hermes"],
     )
     # Message is the topic representation under assertion.
-    message: Message = artifact_to_message("docs/archive/handoffs/pi/out.md", artifact)
+    message: Message = handoff_to_message("docs/archive/handoffs/pi/out.md", handoff)
     assert message.kind == "routing-decision"
     assert message.origin == "pi"
     assert message.sender == "Hermes"
@@ -61,9 +61,9 @@ def test__Message__construction__copies_artifact_fields() -> None:
 
 
 def test__Message__construction__preserves_optional_fields_when_absent() -> None:
-    """Validate absent optional artifact metadata remains absent on messages."""
+    """Validate absent optional Koios handoff metadata remains absent on messages."""
     # Artifact is the handoff token converted into a topic message.
-    artifact: HandoffArtifact = HandoffArtifact(
+    handoff: KoiosHandoff = KoiosHandoff(
         path=Path("/r/docs/archive/handoffs/goose/k.md"),
         kind="knowledge-note",
         origin="Koios",
@@ -71,7 +71,7 @@ def test__Message__construction__preserves_optional_fields_when_absent() -> None
         recipient="Hermes",
     )
     # Message is the topic representation under assertion.
-    message: Message = artifact_to_message("docs/archive/handoffs/goose/k.md", artifact)
+    message: Message = handoff_to_message("docs/archive/handoffs/goose/k.md", handoff)
     assert message.acting_as is None
     assert message.delegated_operator is None
     assert message.provenance is None
@@ -91,7 +91,7 @@ def test__Message__construction__maps_place_from_source_path() -> None:
     expected_place: str
     for path, expected_place in cases:
         # Artifact is the handoff token converted into a topic message.
-        artifact: HandoffArtifact = HandoffArtifact(
+        handoff: KoiosHandoff = KoiosHandoff(
             path=Path("/r/" + path),
             kind="user-request",
             origin="user",
@@ -99,5 +99,5 @@ def test__Message__construction__maps_place_from_source_path() -> None:
             recipient="Hermes",
         )
         # Message is the topic representation under assertion.
-        message: Message = artifact_to_message(path, artifact)
+        message: Message = handoff_to_message(path, handoff)
         assert message.place == expected_place, f"{path} → {message.place}"

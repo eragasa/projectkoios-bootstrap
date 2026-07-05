@@ -1,12 +1,12 @@
 from projectkoios.bootstrap.harness.data.adr import ArchitecturalDataRecord, AdrStatus
-from projectkoios.bootstrap.harness.data.artifact import HandoffArtifact
+from projectkoios.bootstrap.harness.data.handoff import KoiosHandoff
 from projectkoios.bootstrap.harness.data.violation import Violation, ViolationCode
 
 
 __all__ = [
     "ArchitecturalDataRecord",
     "AdrStatus",
-    "HandoffArtifact",
+    "KoiosHandoff",
     "Violation",
     "ViolationCode",
 ]

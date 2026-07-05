@@ -1,7 +1,7 @@
 """Colored Petri net DataObjects for the Graphify ingestion daemon.
 
 These types model daemon runtime state as CPN tokens. They reuse the existing
-``Marking`` and ``Violation`` types from ``harness/data/`` and define new
+``PetriNetMarking`` and ``Violation`` types from ``harness/data/`` and define new
 token kinds (not a parallel type hierarchy) for the daemon's first slice.
 
 Freshness places follow the five states named in the ADR:
@@ -37,7 +37,7 @@ class DaemonTokenKind(StrEnum):
 class DaemonToken:
     """A colored token in the daemon Petri net.
 
-    Mirrors the shape of ``HandoffArtifact`` (a colored token with metadata
+    Mirrors the shape of ``KoiosHandoff`` (a colored token with metadata
     that determines which guards apply) but carries daemon-specific fields
     rather than handoff-header fields. The ``kind`` and ``place`` fields form
     the token's color.

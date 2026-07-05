@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from projectkoios.workflow.petrinet import Arc, PetriNet
+from projectkoios.workflow.petrinet import PetriNetArc, PetriNet
 
 
 @dataclass(frozen=True, slots=True)
@@ -52,7 +52,7 @@ class WorkflowValidator:
         place_ids: set[str] = net.place_ids()
         # Declared transition identifiers are used to validate every arc endpoint.
         transition_ids: set[str] = net.transition_ids()
-        arc: Arc
+        arc: PetriNetArc
         for arc in net.arcs:
             if arc.place_id not in place_ids:
                 issues.append(ValidationIssue(code="unknown-place", message=f"unknown place: {arc.place_id}"))

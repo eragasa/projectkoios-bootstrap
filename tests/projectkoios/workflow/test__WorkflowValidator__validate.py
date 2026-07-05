@@ -3,16 +3,16 @@ from __future__ import annotations
 import ast
 from pathlib import Path
 
-from projectkoios.workflow import Arc, ArcKind, Place, Transition, ValidationResult, PetriNet, WorkflowValidator
+from projectkoios.workflow import PetriNetArc, PetriNetArcKind, PetriNetPlace, PetriNetTransition, ValidationResult, PetriNet, WorkflowValidator
 
 
 def test__WorkflowValidator__validate__rejects_unknown_arc_endpoints() -> None:
     """Validate workflow validation rejects unknown arc endpoints."""
     # Net fixture references an unknown place and transition from one arc.
     net: PetriNet = PetriNet(
-        places=(Place("known"),),
-        transitions=(Transition("known-transition"),),
-        arcs=(Arc(place_id="missing", transition_id="missing-transition", kind=ArcKind.INPUT),),
+        places=(PetriNetPlace("known"),),
+        transitions=(PetriNetTransition("known-transition"),),
+        arcs=(PetriNetArc(place_id="missing", transition_id="missing-transition", kind=PetriNetArcKind.INPUT),),
     )
 
     # Result contains deterministic endpoint validation issues.

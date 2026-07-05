@@ -7,12 +7,12 @@ import pytest
 from projectkoios.workflow import (
     AdapterExport,
     AdapterUnavailableError,
-    Arc,
-    ArcKind,
-    Place,
+    PetriNetArc,
+    PetriNetArcKind,
+    PetriNetPlace,
     Pm4pyProcessMiningAdapter,
     SnakesColoredNetAdapter,
-    Transition,
+    PetriNetTransition,
     PetriNet,
     PetriNetPayload,
     PetriNetPayloadBuilder,
@@ -22,11 +22,11 @@ from projectkoios.workflow import (
 def workflow_fixture() -> PetriNet:
     """Create a minimal workflow net fixture for adapter tests."""
     return PetriNet(
-        places=(Place("draft", "Draft"), Place("review", "Review")),
-        transitions=(Transition("submit", "Submit"),),
+        places=(PetriNetPlace("draft", "Draft"), PetriNetPlace("review", "Review")),
+        transitions=(PetriNetTransition("submit", "Submit"),),
         arcs=(
-            Arc(place_id="draft", transition_id="submit", kind=ArcKind.INPUT),
-            Arc(place_id="review", transition_id="submit", kind=ArcKind.OUTPUT),
+            PetriNetArc(place_id="draft", transition_id="submit", kind=PetriNetArcKind.INPUT),
+            PetriNetArc(place_id="review", transition_id="submit", kind=PetriNetArcKind.OUTPUT),
         ),
     )
 

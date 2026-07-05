@@ -43,7 +43,7 @@ Each handoff file becomes a token in its directory's place.
 
 ### Colored tokens
 
-A token is a `HandoffArtifact` — a frozen dataclass with these fields:
+A token is a `KoiosHandoff` — a frozen dataclass with these fields:
 
 | Field | Color | Source |
 |-------|-------|--------|
@@ -58,15 +58,15 @@ A token is a `HandoffArtifact` — a frozen dataclass with these fields:
 
 The color is everything except `path` — it determines which guard rules apply.
 
-### Marking
+### PetriNetMarking
 
-A `Marking` is the current distribution of tokens across places. The evaluator
+A `PetriNetMarking` is the current distribution of tokens across places. The evaluator
 builds it once per `evaluate()` call by parsing all handoff directories, then
 passes it to every guard.
 
 ### Guards (transitions)
 
-A guard is a function `(Marking) → list[Violation]`. It inspects the marking
+A guard is a function `(PetriNetMarking) → list[Violation]`. It inspects the marking
 and returns zero or more violations. There is no transition firing — the
 evaluator is read-only. Guards are the "enabledness check" half of a Petri net
 transition.
@@ -92,8 +92,8 @@ can be serialized to Markdown blocks for appending to handoff files.
 
 | Class | File | Petri net analog |
 |-------|------|------------------|
-| `HandoffArtifact` | `data/artifact.py` | Colored token |
-| `Marking` | `data/marking.py` | Current marking |
+| `KoiosHandoff` | `data/handoff.py` | Colored token |
+| `PetriNetMarking` | `data/marking.py` | Current marking |
 | `Violation` / `ViolationCode` | `data/violation.py` | Guard output |
 
 DataObjects are frozen dataclasses — immutable, hashable, comparable. They
@@ -103,13 +103,13 @@ carry state but no side effects.
 
 | Class / function | File | Petri net analog |
 |------------------|------|------------------|
-| `HandoffParser` | `handoffs/parser.py` | Tokenizer — parses handoff files into `HandoffArtifact` instances |
+| `HandoffParser` | `handoffs/parser.py` | Tokenizer — parses handoff files into `KoiosHandoff` instances |
 | `HandoffEvaluator` | `handoffs/evaluator.py` | Orchestrator — builds marking, runs guards, collects violations |
 | Guards (4 functions) | `handoffs/guards.py` | Guard predicates — check enabledness |
 | `append_violations` | `handoffs/appender.py` | Output writer — serializes violations into files (mutation opt-in) |
 
 Activities are stateless by design. `HandoffParser` has no instance state (only
-methods). Guard functions take `Marking`, return `list[Violation]`. The
+methods). Guard functions take `PetriNetMarking`, return `list[Violation]`. The
 evaluator owns a parser and a guard list but stores no evaluation results.
 
 ### Flow
@@ -117,11 +117,11 @@ evaluator owns a parser and a guard list but stores no evaluation results.
 ```
 HandoffParser.parse_directory(path)
          ↓
-   HandoffArtifact instances
+   KoiosHandoff instances
          ↓
 HandoffEvaluator.build_marking()
          ↓
-   Marking (tokens_by_place)
+   PetriNetMarking (tokens_by_place)
          ↓
 HandoffEvaluator.evaluate()
          ↓

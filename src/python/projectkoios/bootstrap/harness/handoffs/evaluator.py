@@ -3,8 +3,8 @@ from __future__ import annotations
 from collections.abc import Callable
 from pathlib import Path
 
-from projectkoios.bootstrap.harness.data.artifact import HandoffArtifact
-from projectkoios.bootstrap.harness.data.marking import HandoffMarking, Marking
+from projectkoios.bootstrap.harness.data.handoff import KoiosHandoff
+from projectkoios.bootstrap.harness.data.marking import HandoffMarking, PetriNetMarking
 from projectkoios.bootstrap.harness.data.violation import Violation
 from projectkoios.bootstrap.harness.handoffs.guards import (
     ALL_GUARDS,
@@ -53,19 +53,19 @@ class HandoffEvaluator:
         Directories that don't exist or contain no parseable files are
         omitted from the marking.
         """
-        # Tokens by place collects parsed handoff artifacts for each Petri-net place.
-        tokens_by_place: dict[str, list[HandoffArtifact]] = {}
+        # Tokens by place collects parsed Koios handoffs for each Petri-net place.
+        tokens_by_place: dict[str, list[KoiosHandoff]] = {}
         place_name: str
         rel_path: str
         for place_name, rel_path in PLACE_DIRECTORIES.items():
             # Directory path is the concrete filesystem location for this place.
             dir_path: Path = self.repo_root / rel_path
-            # Tokens are parseable handoff artifacts found under the place directory.
-            tokens: list[HandoffArtifact] = self.parser.parse_directory(dir_path)
+            # Tokens are parseable Koios handoffs found under the place directory.
+            tokens: list[KoiosHandoff] = self.parser.parse_directory(dir_path)
             if tokens:
                 tokens_by_place[place_name] = tokens
 
-        return Marking(
+        return PetriNetMarking(
             tokens_by_place=tokens_by_place,
         )
 
@@ -73,11 +73,11 @@ class HandoffEvaluator:
         """Build the current marking and run all guards.
 
         Returns a flat list of ``Violation`` instances aggregated from every
-        guard function. Each guard receives the same ``Marking`` and returns
+        guard function. Each guard receives the same ``PetriNetMarking`` and returns
         its own list; the evaluator concatenates them in guard registration
         order.
         """
-        # Marking is rebuilt for each evaluation so guard input reflects current files.
+        # PetriNetMarking is rebuilt for each evaluation so guard input reflects current files.
         marking: HandoffMarking = self.build_marking()
         # Violations accumulates guard outputs in registration order.
         violations: list[Violation] = []

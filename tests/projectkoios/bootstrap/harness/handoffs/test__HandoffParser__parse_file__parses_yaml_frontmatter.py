@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from projectkoios.bootstrap.harness.data.artifact import HandoffArtifact
+from projectkoios.bootstrap.harness.data.handoff import KoiosHandoff
 from projectkoios.bootstrap.harness.handoffs.parser import HandoffParser
 
 
@@ -37,15 +37,15 @@ No To field.
 
 
 def test__HandoffParser__parse_file__parses_valid_frontmatter(tmp_path: Path) -> None:
-    """Validate parser converts a complete handoff file into an artifact."""
+    """Validate parser converts a complete handoff file into a Koios handoff."""
     # File path is the handoff fixture parsed by the parser.
     file_path: Path = tmp_path / "handoff.md"
     file_path.write_text(VALID_HANDOFF, encoding="utf-8")
 
-    # Parser is the unit under test for handoff artifact extraction.
+    # Parser is the unit under test for Koios handoff extraction.
     parser: HandoffParser = HandoffParser()
-    # Token is the parsed artifact returned from the handoff file.
-    token: HandoffArtifact | None = parser.parse_file(file_path)
+    # Token is the parsed Koios handoff returned from the handoff file.
+    token: KoiosHandoff | None = parser.parse_file(file_path)
 
     assert token is not None
     assert token.origin == "Athena"
@@ -60,10 +60,10 @@ def test__HandoffParser__parse_file__returns_none_for_no_frontmatter(tmp_path: P
     file_path: Path = tmp_path / "handoff.md"
     file_path.write_text(MISSING_FIELDS, encoding="utf-8")
 
-    # Parser is the unit under test for handoff artifact extraction.
+    # Parser is the unit under test for Koios handoff extraction.
     parser: HandoffParser = HandoffParser()
     # Token is absent because the fixture has no handoff headers.
-    token: HandoffArtifact | None = parser.parse_file(file_path)
+    token: KoiosHandoff | None = parser.parse_file(file_path)
 
     assert token is None
 
@@ -74,10 +74,10 @@ def test__HandoffParser__parse_file__parses_partial_headers(tmp_path: Path) -> N
     file_path: Path = tmp_path / "partial.md"
     file_path.write_text(PARTIAL_HEADERS, encoding="utf-8")
 
-    # Parser is the unit under test for handoff artifact extraction.
+    # Parser is the unit under test for Koios handoff extraction.
     parser: HandoffParser = HandoffParser()
-    # Token is the parsed artifact returned from partial handoff headers.
-    token: HandoffArtifact | None = parser.parse_file(file_path)
+    # Token is the parsed Koios handoff returned from partial handoff headers.
+    token: KoiosHandoff | None = parser.parse_file(file_path)
 
     assert token is not None
     assert token.origin == "Hermes"
@@ -87,10 +87,10 @@ def test__HandoffParser__parse_file__parses_partial_headers(tmp_path: Path) -> N
 
 def test__HandoffParser__parse_file__nonexistent_file(tmp_path: Path) -> None:
     """Validate parser returns none for missing handoff files."""
-    # Parser is the unit under test for handoff artifact extraction.
+    # Parser is the unit under test for Koios handoff extraction.
     parser: HandoffParser = HandoffParser()
     # Token is absent because the target file does not exist.
-    token: HandoffArtifact | None = parser.parse_file(tmp_path / "nonexistent.md")
+    token: KoiosHandoff | None = parser.parse_file(tmp_path / "nonexistent.md")
     assert token is None
 
 
@@ -100,15 +100,15 @@ def test__HandoffParser__parse_file__parses_any_file_regardless_of_extension(tmp
     file_path: Path = tmp_path / "notes.txt"
     file_path.write_text("Origin: Athena\nFrom: Athena\nTo: Vulcan", encoding="utf-8")
 
-    # Parser is the unit under test for handoff artifact extraction.
+    # Parser is the unit under test for Koios handoff extraction.
     parser: HandoffParser = HandoffParser()
-    # Token is the parsed artifact returned from the handoff file.
-    token: HandoffArtifact | None = parser.parse_file(file_path)
+    # Token is the parsed Koios handoff returned from the handoff file.
+    token: KoiosHandoff | None = parser.parse_file(file_path)
     assert token is not None
 
 
 def test__HandoffParser__parse_directory__aggregates_tokens(tmp_path: Path) -> None:
-    """Validate parser aggregates handoff artifacts from a directory."""
+    """Validate parser aggregates Koios handoffs from a directory."""
     (tmp_path / "a.md").write_text(
         "Origin: Athena\nFrom: Athena\nTo: Vulcan\n\n# Spec\n", encoding="utf-8"
     )
@@ -116,13 +116,13 @@ def test__HandoffParser__parse_directory__aggregates_tokens(tmp_path: Path) -> N
         "Origin: Vulcan\nFrom: Vulcan\nTo: Hermes\n\n# Report\n", encoding="utf-8"
     )
 
-    # Parser is the unit under test for directory artifact extraction.
+    # Parser is the unit under test for directory Koios handoff extraction.
     parser: HandoffParser = HandoffParser()
-    # Tokens are the parsed artifacts returned from the directory.
-    tokens: list[HandoffArtifact] = parser.parse_directory(tmp_path)
+    # Tokens are the parsed Koios handoffs returned from the directory.
+    tokens: list[KoiosHandoff] = parser.parse_directory(tmp_path)
 
     assert len(tokens) == 2
-    # Kinds provide a concise assertion over inferred artifact types.
+    # Kinds provide a concise assertion over inferred Koios handoff kinds.
     kinds: set[str] = {token.kind for token in tokens}
     assert "implementation-report" in kinds
     assert "architecture-spec" in kinds or "implementation-brief" in kinds

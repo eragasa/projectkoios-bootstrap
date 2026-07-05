@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from collections.abc import Callable
 
-from projectkoios.bootstrap.harness.data.artifact import HandoffArtifact
+from projectkoios.bootstrap.harness.data.handoff import KoiosHandoff
 from projectkoios.bootstrap.harness.data.marking import HandoffMarking
 from projectkoios.bootstrap.harness.data.violation import Violation, ViolationCode
 
@@ -38,7 +38,7 @@ def check_hermes_forwarded_without_decision(marking: HandoffMarking) -> list[Vio
     violations: list[Violation] = []
     place_name: str
     for place_name in ("pi_inbox",):
-        token: HandoffArtifact
+        token: KoiosHandoff
         for token in marking.tokens_at(place_name):
             if token.sender not in HERMES_IDS and token.recipient not in HERMES_IDS:
                 continue
@@ -69,7 +69,7 @@ def check_wrong_implementation_owner(marking: HandoffMarking) -> list[Violation]
     """
     # Violations accumulates implementation artifacts emitted by non-Vulcan owners.
     violations: list[Violation] = []
-    token: HandoffArtifact
+    token: KoiosHandoff
     for token in marking.all_tokens:
         if token.kind not in IMPLEMENTATION_KINDS:
             continue
@@ -104,7 +104,7 @@ def check_delegated_operator_missing(marking: HandoffMarking) -> list[Violation]
     """
     # Violations accumulates Codex-mediated artifacts missing operator provenance.
     violations: list[Violation] = []
-    token: HandoffArtifact
+    token: KoiosHandoff
     for token in marking.all_tokens:
         # Boolean records whether any identity-bearing field claims Codex mediation.
         is_codex_actor: bool = bool(
@@ -123,7 +123,7 @@ def check_delegated_operator_missing(marking: HandoffMarking) -> list[Violation]
                 ),
                 required_owner="Codex",
                 suggested_next_action=(
-                    "Add Delegated-Operator header to the handoff artifact "
+                    "Add Delegated-Operator header to the Koios handoff "
                     "or route through a non-mediated channel."
                 ),
             ))
@@ -142,7 +142,7 @@ def check_codex_as_pi_identity_collapse(marking: HandoffMarking) -> list[Violati
     """
     # Violations accumulates artifacts that collapse delegated and accountable identities.
     violations: list[Violation] = []
-    token: HandoffArtifact
+    token: KoiosHandoff
     for token in marking.all_tokens:
         # Claims-pi-origin records whether identity fields assert Hermes or pi authority.
         claims_pi_origin: bool = bool(

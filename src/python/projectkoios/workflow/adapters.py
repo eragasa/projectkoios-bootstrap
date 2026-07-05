@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from importlib import import_module
 from types import ModuleType
 
-from projectkoios.workflow.petrinet import Arc, Place, Transition, PetriNet
+from projectkoios.workflow.petrinet import PetriNetArc, PetriNetPlace, PetriNetTransition, PetriNet
 
 
 class AdapterUnavailableError(RuntimeError):
@@ -104,23 +104,23 @@ class PetriNetPayloadBuilder:
             Workflow payload data object containing places, transitions, and arcs.
         """
 
-        # Places preserve declaration order for deterministic adapter exports.
+        # PetriNetPlaces preserve declaration order for deterministic adapter exports.
         places: list[PetriNetPlacePayload] = []
-        place: Place
+        place: PetriNetPlace
         for place in net.places:
             places.append(PetriNetPlacePayload(place_id=place.place_id, label=place.label))
 
-        # Transitions preserve declaration order and omit non-serializable guard callables.
+        # PetriNetTransitions preserve declaration order and omit non-serializable guard callables.
         transitions: list[PetriNetTransitionPayload] = []
-        transition: Transition
+        transition: PetriNetTransition
         for transition in net.transitions:
             transitions.append(
                 PetriNetTransitionPayload(transition_id=transition.transition_id, label=transition.label)
             )
 
-        # Arcs preserve declaration order and expose explicit direction and weight.
+        # PetriNetArcs preserve declaration order and expose explicit direction and weight.
         arcs: list[PetriNetArcPayload] = []
-        arc: Arc
+        arc: PetriNetArc
         for arc in net.arcs:
             arcs.append(
                 PetriNetArcPayload(

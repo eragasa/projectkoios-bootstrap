@@ -4,7 +4,7 @@ from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
 
-from projectkoios.bootstrap.harness.data.artifact import HandoffArtifact
+from projectkoios.bootstrap.harness.data.handoff import KoiosHandoff
 from projectkoios.bootstrap.harness.data.violation import Violation
 from projectkoios.bootstrap.harness.handoffs.evaluator import (
     HandoffEvaluator,
@@ -18,7 +18,7 @@ HANDOFFS_PREFIX: str = "docs/archive/handoffs/"
 
 @dataclass(frozen=True)
 class Message:
-    """Serializable topic message derived from one handoff artifact."""
+    """Serializable topic message derived from one Koios handoff."""
 
     message_id: str
     source_path: str
@@ -114,12 +114,12 @@ def infer_place(source_path: str) -> str:
     return "unknown"
 
 
-def artifact_to_message(source_path: str, artifact: HandoffArtifact) -> Message:
-    """Convert a parsed handoff artifact into a topic message.
+def handoff_to_message(source_path: str, handoff: KoiosHandoff) -> Message:
+    """Convert a parsed Koios handoff into a topic message.
 
     Args:
-        source_path: Repository-relative source path for the artifact.
-        artifact: Parsed handoff artifact.
+        source_path: Repository-relative source path for the Koios handoff.
+        handoff: Parsed Koios handoff.
 
     Returns:
         Serializable topic message.
@@ -129,22 +129,22 @@ def artifact_to_message(source_path: str, artifact: HandoffArtifact) -> Message:
         message_id=message_id(source_path),
         source_path=source_path,
         place=infer_place(source_path),
-        kind=artifact.kind,
-        origin=artifact.origin,
-        sender=artifact.sender,
-        recipient=artifact.recipient,
-        acting_as=artifact.acting_as,
-        delegated_operator=artifact.delegated_operator,
-        provenance=artifact.provenance,
+        kind=handoff.kind,
+        origin=handoff.origin,
+        sender=handoff.sender,
+        recipient=handoff.recipient,
+        acting_as=handoff.acting_as,
+        delegated_operator=handoff.delegated_operator,
+        provenance=handoff.provenance,
     )
 
 
-def artifact_to_transition(message_id_value: str, source_path: str) -> Transition:
-    """Create an inferred transition for a handoff artifact.
+def handoff_to_transition(message_id_value: str, source_path: str) -> Transition:
+    """Create an inferred transition for a Koios handoff.
 
     Args:
-        message_id_value: Stable message identifier for the artifact.
-        source_path: Repository-relative source path for the artifact.
+        message_id_value: Stable message identifier for the Koios handoff.
+        source_path: Repository-relative source path for the Koios handoff.
 
     Returns:
         Serializable inferred transition.
@@ -212,7 +212,7 @@ def collect_messages(root: Path, parser: HandoffParser) -> tuple[list[Message], 
         Tuple of messages, transitions, skipped files, and source-path-to-message-ID mapping.
     """
 
-    # Messages accumulates parsed handoff artifacts in topic-message form.
+    # Messages accumulates parsed Koios handoffs in topic-message form.
     messages: list[Message] = []
     # Transitions accumulates inferred creation transitions for parsed handoffs.
     transitions: list[Transition] = []
@@ -234,18 +234,18 @@ def collect_messages(root: Path, parser: HandoffParser) -> tuple[list[Message], 
                 continue
             # Source path is repository-relative and stable for JSON output.
             source_path: str = str(file_path.relative_to(root).as_posix())
-            # Artifact is absent when the file has no parseable handoff headers.
-            artifact: HandoffArtifact | None = parser.parse_file(file_path)
-            if artifact is None:
+            # Koios handoff is absent when the file has no parseable handoff headers.
+            handoff: KoiosHandoff | None = parser.parse_file(file_path)
+            if handoff is None:
                 skipped.append(SkippedFile(
                     source_path=source_path,
                     reason="no parseable handoff headers",
                 ))
                 continue
-            # Message is the JSON-facing representation of the parsed artifact.
-            msg: Message = artifact_to_message(source_path, artifact)
+            # Message is the JSON-facing representation of the parsed Koios handoff.
+            msg: Message = handoff_to_message(source_path, handoff)
             messages.append(msg)
-            transitions.append(artifact_to_transition(msg.message_id, source_path))
+            transitions.append(handoff_to_transition(msg.message_id, source_path))
             path_to_message_id[source_path] = msg.message_id
     return messages, transitions, skipped, path_to_message_id
 
@@ -271,7 +271,7 @@ def build_topics_view(
 
     # Collected holds messages, transitions, skipped files, and message lookup data.
     collected: tuple[list[Message], list[Transition], list[SkippedFile], dict[str, str]] = collect_messages(root, parser)
-    # Messages are the parsed handoff artifacts for JSON output.
+    # Messages are the parsed Koios handoffs for JSON output.
     messages: list[Message] = collected[0]
     # Transitions are inferred from file existence and headers.
     transitions: list[Transition] = collected[1]

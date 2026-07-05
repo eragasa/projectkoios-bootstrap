@@ -48,7 +48,7 @@ def test__HandoffEvaluator__build_marking__includes_all_directories(tmp_path: Pa
 
     # Evaluator builds the Petri-net marking for archived handoffs.
     evaluator: HandoffEvaluator = HandoffEvaluator(repo_root=root)
-    # Marking captures parsed artifacts grouped by inbox place.
+    # PetriNetMarking captures parsed artifacts grouped by inbox place.
     marking: HandoffMarking = evaluator.build_marking()
 
     assert "archon_inbox" in marking.tokens_by_place

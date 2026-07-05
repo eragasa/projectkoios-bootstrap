@@ -5,10 +5,10 @@ from pathlib import Path
 
 
 @dataclass(frozen=True)
-class HandoffArtifact:
+class KoiosHandoff:
     """A colored token in the meta-harness Petri net.
 
-    Each handoff file under ``*/handoffs/*.md`` is parsed into one artifact.
+    Each handoff file under ``*/handoffs/*.md`` is parsed into one KoiosHandoff.
     The fields other than ``path`` form the token's *color* — the metadata
     that determines which guard rules apply.
 

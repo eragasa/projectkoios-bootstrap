@@ -26,16 +26,16 @@ This slice creates the canonical `projectkoios.workflow` package boundary and va
 - `src/python/projectkoios/workflow/__init__.py`
   - Exports the canonical workflow API.
 - `src/python/projectkoios/workflow/petrinet.py`
-  - Adds `Place`, `Transition`, `Token`, `Arc`, `Marking`, `PetriNet`, `Binding`, `FiringRule`, `NetSchema`, `ExecutionState`, and semantic wrapper types.
+  - Adds `PetriNetPlace`, `PetriNetTransition`, `PetriNetToken`, `PetriNetArc`, `PetriNetMarking`, `PetriNet`, `PetriNetTransitionBinding`, `PetriNetFiringRequest`, `PetriNetSchema`, `PetriNetState`, and semantic wrapper types.
 - `src/python/projectkoios/workflow/runtime.py`
-  - Adds `WorkflowRuntime` enabled-binding and transition-firing behavior.
+  - Adds `PetriNetExecutor` enabled-binding and transition-firing behavior.
 - `src/python/projectkoios/workflow/validation.py`
   - Adds workflow net validation and validation errors.
 - `src/python/projectkoios/workflow/events.py`
   - Adds event, trace, and event-log inspection types.
 - `src/python/projectkoios/workflow/adapters.py`
   - Adds SNAKES and PM4Py adapter-boundary placeholders without third-party imports.
-- `tests/projectkoios/workflow/test__WorkflowRuntime__fire.py`
+- `tests/projectkoios/workflow/test__PetriNetExecutor__fire.py`
   - Covers enabled transition firing, marking movement, trace emission, and guard filtering.
 - `tests/projectkoios/workflow/test__WorkflowValidator__validate.py`
   - Covers endpoint validation and adapter import-boundary enforcement.
