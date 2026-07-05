@@ -2,8 +2,8 @@
 {
   "title": "Vulcan workspace state",
   "artifact_type": "workspace-state",
-  "status": "remaining-test-policy-remediation-complete",
-  "datetime": "20260705.101124",
+  "status": "workflow-petri-net-executor-first-slice-validated",
+  "datetime": "20260705.102506",
   "acting_as": "VULCAN",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/vulcan/",
@@ -23,33 +23,34 @@
 
 ## Current scope
 
-- Focus: remaining test-code Python policy remediation.
-- Latest completed slice: Violation markdown formatting test policy/layout remediation.
-- Current remediation status: all-target Python policy validation passes with zero findings.
-- Authority boundary: Vulcan packaged implementation and validation evidence; Vulcan did not promote draft ADRs or create architecture authority.
+- Focus: workflow Petri-net executor first implementation slice.
+- Source plan: `docs/plans/projectkoios-workflow-petri-net-executor.md`.
+- Source ADR: `docs/adr/adr.20260702.042300_projectkoios-workflow-petri-net-executor.draft.md` remains draft.
+- Current implementation status: first executable substrate slice is validated; full plan remains incomplete by design.
+- Authority boundary: user explicitly authorized implementation despite draft ADR; VULCAN did not promote the ADR or create architecture authority.
 
 ## Latest validated state
 
 Latest completed report:
 
-- `docs/implementation/implementation-report.20260705.101124_violation-formatting-test-policy-and-layout-remediation.md`.
+- `docs/implementation/implementation-report.20260705.102506_workflow-petri-net-executor-first-slice.md`.
 
 Session AAR:
 
-- `docs/AAR/aar.20260705.101124_violation-formatting-test-policy-remediation.md`.
+- `docs/AAR/aar.20260705.102506_workflow-petri-net-executor-first-slice.md`.
 
 Latest validation evidence:
 
-- `uv run projectkoios bootstrap validate-python-policy tests/projectkoios/bootstrap/harness/data/test__Violation__to_markdown_block__formats_correctly.py` => `summary: 0 finding(s), 1 file(s)`.
-- `uv run mypy tests/projectkoios/bootstrap/harness/data/test__Violation__to_markdown_block__formats_correctly.py` => `Success: no issues found in 1 source file`.
-- `uv run pytest tests/projectkoios/bootstrap/harness/data/test__Violation__to_markdown_block__formats_correctly.py -q` => `2 passed in 0.01s`.
-- `uv run pytest -q` => `215 passed in 1.16s`.
-- `uv run projectkoios bootstrap validate-python-policy --all` => `summary: 0 finding(s), 107 file(s)`.
-- `graphify update /Users/eugene/repos/projectkoios-bootstrap` => rebuilt graph with `9538 nodes, 10257 edges, 846 communities`.
+- `uv run projectkoios bootstrap validate-python-policy src/python/projectkoios/workflow tests/projectkoios/workflow` => `summary: 0 finding(s), 8 file(s)`.
+- `uv run mypy src/python/projectkoios/workflow tests/projectkoios/workflow` => `Success: no issues found in 8 source files`.
+- `uv run pytest tests/projectkoios/workflow -q` => `4 passed in 0.01s`.
+- `uv run pytest -q` => `219 passed in 1.19s`.
+- `uv run projectkoios bootstrap validate-python-policy --all` => `summary: 0 finding(s), 115 file(s)`.
+- `graphify update /Users/eugene/repos/projectkoios-bootstrap` => rebuilt graph with `9666 nodes, 10456 edges, 858 communities`.
 
 ## Dirty tree caution
 
-- VULCAN has a large uncommitted remediation batch after pushed commit `1a47ad9`.
+- VULCAN has uncommitted workflow substrate implementation files.
 - KOIOS workspace files are also dirty/untracked and remain outside VULCAN scope:
   - `workspaces/koios/active.md`.
   - `workspaces/koios/state.md`.
@@ -59,7 +60,7 @@ Latest validation evidence:
 ## Next transition
 
 - Owner: user if packaging/push is desired.
-- Highest-leverage next action: stage, review, commit, and push VULCAN-owned remediation files only.
-- Owner: VULCAN if additional implementation work is requested.
-- Expected successor artifact: VULCAN-only commit/push or a new implementation work item.
+- Highest-leverage next action: stage, review, commit, and push VULCAN-owned workflow files only.
+- Owner: VULCAN if additional workflow implementation is requested.
+- Expected successor artifact: VULCAN-only commit/push or a follow-up workflow implementation brief/slice.
 - Blockers: none currently.
