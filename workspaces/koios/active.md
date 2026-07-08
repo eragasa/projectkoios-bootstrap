@@ -22,6 +22,8 @@ ATHENA has accepted `docs/adr/adr.20260705.011836_adr-lifecycle-and-naming-conso
 - `working/architecture.document.control-surface.adr-classification.20260704T024500Z.md`
 - `working/provenance-index.20260704T175525Z_adr-control-surfaces.md`
 - `working/provenance-note.20260705T100913Z_petrinet-followup-package.md`
+- `../../docs/process-capture/pc.workflow.document-trace.md`
+- `../../docs/process-capture/pc.workflow.document-trace.20260706.025408Z.md`
 
 ## Next expected artifact
 
@@ -29,11 +31,14 @@ Any follow-on policy/index/source-draft disposition should be explicitly request
 
 ATHENA should still produce a target document-surface map before any broader ADR-directory split or migration.
 
+For workflow document traces, KOIOS captured the first partial trace for the workflow adapter topology-roundtrip slice. A reusable schema or workflow-policy promotion should wait until repeated traces stabilize the pattern.
+
 ## KOIOS next actions
 
 1. Re-audit any follow-on policy/index/source-draft disposition for claim traceability and silent-supersession risk, if requested.
 2. Re-audit any future architecture-document proposal against the captured control-surface criteria.
 3. Update or create provenance notes when accepted/proposed ADR surfaces change materially.
+4. Capture additional workflow document traces when multi-role slices expose document-state evolution worth preserving.
 
 ## Blockers and cautions
 

@@ -3,7 +3,7 @@
   "title": "Hermes workspace state",
   "artifact_type": "workspace-state",
   "status": "active",
-  "datetime": "20260705.003351",
+  "datetime": "20260706.000000",
   "acting_as": "HERMES",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/hermes/",
@@ -61,14 +61,22 @@ Hermes local validation after grouping:
 
 ## Open questions
 
-- Whether to commit as one integrated closeout or split into at least two commits: workspace-state protocol reconciliation, then Python-policy/test-remediation chain.
+- Schema namespace reconciliation:
+  - Should `adr-draft.schema.json` become `schema.adr-draft.json`, and if so what alias/registry strategy preserves existing `$id` and `schema_id` references?
+  - Should `adr-active.schema.json` be renamed/reclassified as a candidate rather than implied canonical active schema?
+  - Should `adr.schema-implementation.json` be retained and reclassified as an implementation-record schema candidate, then eventually renamed to something like `schema.implementation-record.json`?
+  - Should `legacy-architecture.*.json` remain temporary provenance markers until a reconciliation artifact records what was preserved/superseded?
+  - Should `architecture-note` / `subsystem-architecture` become a new schema family, owned first by Athena as architecture/schema design?
+- Whether to commit as one integrated closeout or split into bounded commits by slice.
 - Whether to include untracked Koios `state.md`/`active.md` in this closeout or route them to Koios for review first.
-- Whether Koios should capture durable provenance after the reconciliation and validation reports are committed.
+- Whether Koios should capture durable provenance after reconciliation and validation reports are committed.
 
 ## Next owner
 
-- HERMES/user for repo-level closeout and staging-boundary decision.
+- HERMES/user for prioritization.
+- ATHENA for a bounded schema namespace / record-family naming reconciliation artifact if the user chooses to proceed.
+- VULCAN only after an accepted schema reconciliation handoff authorizes code/test/schema registry changes.
 
 ## Current status summary
 
-Repo-level closeout review is complete. The dirty tree is not a single unknown blob: it consists primarily of an accepted workspace-state protocol reconciliation slice and a VULCAN Python-policy/test-remediation chain, with Koios workspace control files as a separate inclusion decision. The next coherent state is a user staging/commit-boundary decision.
+Repo-level closeout review is complete for prior slices. A new schema governance item has been added to Hermes' queue: reconcile schema filenames, `$id` conventions, candidate/legacy status, `adr.schema-implementation.json` classification, and possible architecture-note/subsystem-architecture schema work. This should be handled as an Athena-owned schema architecture artifact before any file renames or implementation changes.

@@ -2,14 +2,15 @@
 {
   "title": "Vulcan workspace state",
   "artifact_type": "workspace-state",
-  "status": "idle-after-petrinet-followups-pushed",
-  "datetime": "20260705.174600",
+  "status": "workflow-adapter-topology-roundtrip-validated",
+  "datetime": "20260706.045501",
   "acting_as": "VULCAN",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/vulcan/",
   "branch": "master",
   "document_domain": "implementation, tests, validation, implementation reports, deviation reports",
-  "latest_commit": "184df13 Implement Petri-net follow-up cleanup",
+  "controlling_adr": "docs/adr/adr.petrinet.20260705.132740Z.md",
+  "latest_report": "docs/implementation/workflow-adapter-contract-hardening.20260706.045501.md",
   "python_coding_policy": "docs/policies/python-coding.md",
   "python_testing_policy": "docs/policies/python-testing.md",
   "control_files": ["state.md", "active.md"],
@@ -22,38 +23,38 @@
 
 ## Current scope
 
-- Latest completed scope: bounded follow-ups from ATHENA's Petri-net conformance review.
+- Latest completed scope: workflow adapter topology-only SNAKES round trip and dependency-boundary tests.
 - Controlling ADR: `docs/adr/adr.petrinet.20260705.132740Z.md`.
-- Follow-up conformance review: `docs/reviews/architecture-conformance.20260705.174118_petrinet-followups.md`.
-- Implementation report: `docs/implementation/petrinet-followups.20260705.173808.md`.
-- Commit pushed: `184df13 Implement Petri-net follow-up cleanup`.
-- Current implementation status: complete, reviewed, committed, and pushed.
+- Source brief: ATHENA intercom guidance revised by user clarification for bidirectional topology equivalence.
+- Implementation report: `docs/implementation/workflow-adapter-contract-hardening.20260706.045501.md`.
+- Current implementation status: validated; not yet committed.
 
 ## Latest validation evidence
 
-Validation recorded before commit `184df13`:
+- `uv sync --dev` => installed `snakes==0.9.33`; `uv.lock` was already satisfied and is not part of the final diff.
+- `uv run pytest tests/projectkoios/workflow -q` => `13 passed in 0.03s`.
+- `uv run mypy src/python/projectkoios/workflow tests/projectkoios/workflow` => `Success: no issues found in 11 source files`.
+- `uv run projectkoios bootstrap validate-python-policy src/python/projectkoios/workflow tests/projectkoios/workflow` => `summary: 0 finding(s), 11 file(s)`.
+- `uv run pytest -q` => `228 passed in 1.27s`.
+- `uv run projectkoios bootstrap validate-python-policy --all` => `summary: 0 finding(s), 118 file(s)`.
+- `uv run mypy src/python tests` => `Success: no issues found in 118 source files`.
+- `git diff --check` => clean.
+- `graphify update /Users/eugene/repos/projectkoios-bootstrap` => rebuilt graph with `8129 nodes, 9172 edges, 764 communities`.
 
-- `uv run pytest tests/projectkoios/workflow -q` => `9 passed`.
-- `uv run mypy src/python/projectkoios/workflow tests/projectkoios/workflow` => success.
-- `uv run projectkoios bootstrap validate-python-policy src/python/projectkoios/workflow tests/projectkoios/workflow` => `0 finding(s)`.
-- `uv run pytest -q` => `224 passed`.
-- `uv run projectkoios bootstrap validate-python-policy --all` => `0 finding(s)`.
-- `uv run mypy src/python tests` => success.
-- `graphify update /Users/eugene/repos/projectkoios-bootstrap` => rebuilt graph.
+## Implementation notes
+
+- Added `snakes>=0.9.33` as a dev/test dependency in `pyproject.toml`, not as a runtime dependency.
+- `SnakesColoredNetAdapter` now supports topology-only conversion to SNAKES and back to deterministic `PetriNetPayload`.
+- Round-trip tests compare canonical topology payload data, not backend object identity or ordering.
+- Always-on payload tests still cover topology shape without backend import.
+- No PM4Py conversion, marking/token semantics, guard serialization, runtime/executor changes, persistence, restart, event-bus, or handoff migration was implemented.
 
 ## Dirty tree caution
 
-VULCAN implementation files are clean after push. Remaining dirty files are outside VULCAN's completed Petri-net implementation scope:
-
-- `AGENTS.md`.
-- `workspaces/athena/active.md`.
-- `workspaces/athena/state.md`.
-- `workspaces/koios/active.md`.
-- `workspaces/koios/state.md`.
-- `workspaces/koios/working/provenance-index.20260704T175525Z_adr-control-surfaces.md`.
+VULCAN currently has uncommitted validated workflow adapter code/test/report/AAR/state changes. Stage only this bounded slice unless the user explicitly requests broader packaging.
 
 ## Next transition
 
-- Owner: user or ATHENA for the next bounded implementation brief.
-- Highest-leverage next action: triage unrelated dirty ATHENA/KOIOS/root files or wait for a new implementation slice.
-- Blockers: none currently.
+- Owner: user for commit/push direction.
+- Owner: ATHENA if PM4Py conversion, colored-token/marking round trip, or dependency/license policy is desired next.
+- Blockers: none for current slice.

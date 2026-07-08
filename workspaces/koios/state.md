@@ -28,6 +28,8 @@ Captured/advisory artifacts in this workspace:
 - `working/architecture.document.control-surface.adr-classification.20260704T024500Z.md`
 - `working/provenance-index.20260704T175525Z_adr-control-surfaces.md`
 - `working/provenance-note.20260705T100913Z_petrinet-followup-package.md`
+- `../../docs/process-capture/pc.workflow.document-trace.md`
+- `../../docs/process-capture/pc.workflow.document-trace.20260706.025408Z.md`
 
 ## Validated observations
 
@@ -45,6 +47,8 @@ KOIOS captured a provenance index for the accepted lifecycle/naming ADR and the 
 
 KOIOS captured a provenance note for the accepted Petri-net separation ADR and pushed follow-up package at commit `184df13`. The note records that durable provenance is sufficient for the next bounded implementation slice, with residual watchpoints for deterministic event timestamps and broader workflow/product-domain expansion.
 
+KOIOS captured the first workflow document-trace process artifact for the adapter topology-roundtrip slice. The trace maps observed repository document movement to Petri-net places, transitions, and tokens as a non-authoritative provenance lens. It records a provenance gap where the revised ATHENA brief exists only as intercom/user clarification rather than a standalone durable brief.
+
 ## Authority boundary
 
 These Koios artifacts are advisory provenance and knowledge-capture surfaces only.
@@ -52,6 +56,8 @@ These Koios artifacts are advisory provenance and knowledge-capture surfaces onl
 They do not promote the ATHENA incubating note into policy.
 
 They do not authorize moving ADR files or changing architecture documents.
+
+The workflow document-trace artifacts do not create product workflow architecture, implementation authority, validation authority, workflow policy, or a reusable schema. Any schema/policy promotion requires the appropriate owning surface.
 
 ## Repo-state note
 

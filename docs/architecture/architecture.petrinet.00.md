@@ -74,8 +74,16 @@ Current Petri-net development documents collected for synthesis:
 - `docs/implementation/workflow-adapter-dependency-encapsulation.20260705.105604.md`
 - `docs/implementation/petrinet-separation-adr-remediation.20260705.142149.md`
 - `docs/implementation/petrinet-followups.20260705.173808.md`
+- `docs/implementation/workflow-adapter-contract-hardening.20260706.045501.md`
 - `docs/reviews/architecture-conformance.20260705.144506_petrinet-separation-adr-remediation.md`
 - `docs/reviews/architecture-conformance.20260705.174118_petrinet-followups.md`
+- `docs/reviews/architecture-conformance.20260706.023601_workflow-adapter-topology-roundtrip.md`
+
+### Implementation briefs and process capture
+
+- `docs/plans/implementation-brief.20260706_workflow-adapter-topology-roundtrip.md` — ATHENA-owned brief preserving the topology-only adapter round-trip acceptance criteria that were initially conveyed by intercom.
+- `docs/process-capture/pc.workflow.document-trace.md` — KOIOS process capture for workflow/document trace context.
+- `docs/process-capture/pc.workflow.document-trace.20260706.025408Z.md` — KOIOS process capture snapshot for the same trace context.
 
 ### Related draft/workflow surfaces
 
@@ -103,6 +111,26 @@ Current Petri-net development documents collected for synthesis:
 
 - `docs/implementation/petrinet-separation-adr-remediation.20260705.142149.md`
 - `docs/implementation/petrinet-followups.20260705.173808.md`
+- `docs/implementation/workflow-adapter-contract-hardening.20260706.045501.md`
+- `docs/reviews/architecture-conformance.20260706.023601_workflow-adapter-topology-roundtrip.md`
+
+#### Workflow adapter topology round-trip slice
+
+ATHENA brief: `docs/plans/implementation-brief.20260706_workflow-adapter-topology-roundtrip.md`.
+
+The workflow adapter topology round-trip slice records the concrete adapter acceptance criteria requested by the user after the initial adapter-boundary work. It is bounded to bidirectional topology equivalence:
+
+```text
+canonical PetriNet / WorkflowNet
+  -> backend representation
+  -> canonical topology payload
+```
+
+Topology equivalence covers place IDs/labels, transition IDs/labels, arc endpoints, arc kind/direction, and weights. The comparison must be deterministic and must not depend on backend object identity or backend-specific ordering.
+
+The current implementation uses SNAKES as the first backend and keeps it as a dev/test dependency only. Normal adapter export remains library-neutral and optional backend imports remain lazy and adapter-owned.
+
+Non-goals for this slice: token/marking state, guards/callables, execution history, event provenance, persistence/restart, event bus, handoff migration, PM4Py conversion, and product workflow semantics.
 
 ## Decomposition map
 
@@ -114,6 +142,7 @@ Current Petri-net development documents collected for synthesis:
 | Provenance-bearing runtime events | working | ADR/spec | when audit payload exceeds debug event collection |
 | Dry-run execution | working | ADR/spec | when planning/simulation must be non-authoritative |
 | WorkflowNet domain wrapper | working | ADR/spec | when workflow-specific semantics exceed generic PetriNet |
+| Workflow adapter topology round trip | completed/validated | implementation brief + implementation report + conformance review | completed SNAKES topology-only round trip; expand only with new authority for PM4Py, markings/tokens, guards, runtime history, or persistence semantics |
 | UI/Gantt/projection surfaces | incubating | architecture spec | when a projection target is selected |
 | Ingestion pipeline workflows | incubating | product/bootstrap boundary ADR | when a concrete pipeline fixture is selected |
 
