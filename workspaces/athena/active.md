@@ -2,15 +2,16 @@
 {
   "title": "Athena active work",
   "artifact_type": "workspace-active-priorities",
-  "status": "schema-backed-conformance-reviewed",
-  "datetime": "20260709.011055Z",
+  "status": "skill-draft-conformance-reviewed",
+  "datetime": "20260709.012745Z",
   "acting_as": "ATHENA",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/athena/",
   "priority_count": 3,
   "active_working_items": [
     "docs/reviews/architecture-conformance.20260709.011055_template-representation-schema-backed.md",
-    "docs/plans/implementation-brief.20260709.010343_template-record-roundtrip-skill.md"
+    "docs/plans/implementation-brief.20260709.010343_template-record-roundtrip-skill.md",
+    "docs/reviews/architecture-conformance.20260709.012745_template-record-roundtrip-skill.md"
   ]
 }
 ```
@@ -19,15 +20,14 @@
 
 ## Current priority stack
 
-1. Return schema-backed conformance review to VULCAN.
-2. Let VULCAN proceed with draft/gated skill integration from `docs/plans/implementation-brief.20260709.010343_template-record-roundtrip-skill.md` if user wants skill integration before packaging.
-3. Otherwise let VULCAN/Hermes/user package the schema-backed parser slice.
+1. Package/commit decision for the validated parser slice plus draft/gated skill integration.
+2. Optional KOIOS process trace update using VULCAN's skill implementation report and ATHENA's skill conformance review.
+3. Preserve draft/gated status until an explicit future promotion review changes it.
 
 ## Waiting on
 
-- VULCAN decision/execution for draft/gated skill integration.
 - User/Hermes packaging and commit direction.
-- Optional KOIOS process trace update after skill implementation or packaging decision.
+- Optional KOIOS process trace update.
 
 ## Current repo state
 
@@ -40,15 +40,23 @@
   - `docs/AAR/aar.20260709.010828_koios-comments-skill-brief-update.md`
   - `docs/reviews/architecture-conformance.20260708.052436_template-representation-roundtrip.md`
   - `docs/reviews/architecture-conformance.20260709.011055_template-representation-schema-backed.md`
+  - `docs/reviews/architecture-conformance.20260709.012745_template-record-roundtrip-skill.md`
   - `workspaces/athena/state.md`
   - `workspaces/athena/active.md`
-- VULCAN and KOIOS also have uncommitted implementation/process artifacts in their domains.
+- VULCAN-authored current-session artifacts include:
+  - `agents/global/opencode/skills/template-record-roundtrip/SKILL.md`
+  - `docs/skills/skill-register.md`
+  - `docs/implementation/template-record-roundtrip-skill.20260709.012011.md`
+  - `docs/AAR/aar.20260709.012011_template-record-roundtrip-skill.md`
+  - `workspaces/vulcan/state.md`
+  - `workspaces/vulcan/active.md`
+- KOIOS has uncommitted process/provenance workspace artifacts in its domain.
 
 ## Ready follow-up candidates
 
-- VULCAN adds `agents/global/opencode/skills/template-record-roundtrip/SKILL.md` and updates `docs/skills/skill-register.md` as draft/gated.
-- ATHENA reviews the skill draft after implementation.
-- Hermes/user packages and commits the schema-backed parser slice if skill integration is deferred.
+- Hermes/user packages and commits the parser + skill integration.
+- KOIOS updates process trace now that skill implementation and ATHENA review exist.
+- A future explicit promotion review may evaluate whether `template-record-roundtrip` should move beyond `draft`; no such promotion is currently authorized.
 
 ## Ignore for now
 
@@ -58,4 +66,4 @@
 
 ## Exit criteria
 
-Athena state remains stable when VULCAN has received the schema-backed conformance review and next owner is clear.
+Athena state is stable: VULCAN implemented the skill, ATHENA reviewed it as conforming draft/gated work, and next owner is user/Hermes for packaging or KOIOS for optional trace capture.

@@ -8,7 +8,7 @@
 - Scope: workflow document traces mapped to Petri-net evolution vocabulary
 - Owner: KOIOS
 - Created: 20260706.025408Z
-- Updated: 20260708.044950Z
+- Updated: 20260709.012953Z
 - Authority: provenance/process observation only
 
 ## Non-authority statement
@@ -63,10 +63,14 @@ implementation brief.
 
 The template representation round-trip slice has a cleaner filesystem-visible
 chain: durable ATHENA brief, reported user approval, VULCAN implementation
-report, VULCAN AAR, VULCAN workspace state, and KOIOS trace. Its main remaining
-gaps are that user approval is currently cited through VULCAN's AAR rather than a
-separate durable approval artifact, and ATHENA conformance review has not yet
-been recorded.
+report, VULCAN AAR, VULCAN workspace state, and KOIOS trace. Its original
+ATHENA conformance gap has since been closed by the schema-backed parser review
+and the later draft/gated skill integration review.
+
+The template record round-trip skill integration slice now has durable parser
+gate evidence, an ATHENA skill brief, VULCAN implementation/validation evidence,
+VULCAN AAR, ATHENA conformance review, and KOIOS trace. The remaining state is
+intentional: the skill is conformant as draft/gated, not stable/promoted.
 
 ## Observed cause of behavior/gap
 
@@ -158,4 +162,5 @@ Provenance cautions:
 | Trace | Scope | Status | Primary gap |
 |---|---|---|---|
 | `docs/process-capture/pc.workflow.document-trace.20260706.025408Z.md` | workflow adapter topology-only SNAKES round trip | captured | ATHENA revised brief is intercom-only |
-| `docs/process-capture/pc.workflow.document-trace.20260708.044950Z.md` | template representation one-fixture Markdown/JSON round trip | captured | user approval cited through VULCAN AAR; ATHENA conformance review not yet recorded |
+| `docs/process-capture/pc.workflow.document-trace.20260708.044950Z.md` | template representation one-fixture Markdown/JSON round trip | captured | user approval cited through VULCAN AAR; later schema-backed ATHENA conformance now exists |
+| `docs/process-capture/pc.workflow.document-trace.20260709.012953Z.md` | draft/gated template record round-trip skill integration | captured | skill is conformant as draft/gated, not stable/promoted; no native Markdown skill validator yet |

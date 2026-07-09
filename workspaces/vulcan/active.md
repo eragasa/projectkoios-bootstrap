@@ -2,8 +2,8 @@
 {
   "title": "Vulcan active work",
   "artifact_type": "workspace-active-priorities",
-  "status": "template-representation-schema-backed-roundtrip-validated",
-  "datetime": "20260709.010748Z",
+  "status": "template-record-roundtrip-skill-reviewed-ready-to-package",
+  "datetime": "20260709.013100Z",
   "acting_as": "VULCAN",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/vulcan/",
@@ -11,13 +11,17 @@
   "priority_count": 3,
   "working_directory": "working/",
   "active_working_items": [
-    "docs/implementation/template-representation-roundtrip.20260708.044531.md",
-    "docs/AAR/aar.20260708.044531_template-representation-roundtrip.md",
-    "docs/schemas/template-record.schema.json"
+    "agents/global/opencode/skills/template-record-roundtrip/SKILL.md",
+    "docs/skills/skill-register.md",
+    "docs/implementation/template-record-roundtrip-skill.20260709.012011.md",
+    "docs/AAR/aar.20260709.012011_template-record-roundtrip-skill.md",
+    "docs/reviews/architecture-conformance.20260709.012745_template-record-roundtrip-skill.md",
+    "docs/process-capture/pc.workflow.document-trace.20260709.012953Z.md",
+    "docs/process-capture/pc.workflow.document-trace.md"
   ],
   "scratch_directory": "scratch/",
-  "source_brief": "docs/plans/implementation-brief.20260708.041245_template-representation-roundtrip.md",
-  "revision_request": "docs/plans/revision-request.20260708.070651_template-representation-schema-backed.md"
+  "source_brief": "docs/plans/implementation-brief.20260709.010343_template-record-roundtrip-skill.md",
+  "related_conformance_review": "docs/reviews/architecture-conformance.20260709.012745_template-record-roundtrip-skill.md"
 }
 ```
 
@@ -25,45 +29,48 @@
 
 ## Current priority stack
 
-1. Request ATHENA conformance re-review for the schema-backed revision.
-2. Package/commit/push the validated template representation schema-backed round-trip slice after review or explicit user direction.
-3. Do not expand to broad template migration, CLI enforcement, or ingestion systems without a new brief.
+1. Package/commit/push the validated parser + draft skill slice per user/Hermes direction.
+2. Keep KOIOS ADR-lifecycle provenance-audit workspace material out of the skill-slice commit unless explicitly requested.
+3. Do not promote the skill to stable, expand to broad template migration, add CLI enforcement, or create ingestion systems without a new brief.
 
 ## Latest working material
 
-- Source brief: `docs/plans/implementation-brief.20260708.041245_template-representation-roundtrip.md`.
-- Revision request: `docs/plans/revision-request.20260708.070651_template-representation-schema-backed.md`.
-- Latest report: `docs/implementation/template-representation-roundtrip.20260708.044531.md`.
-- Latest AAR: `docs/AAR/aar.20260708.044531_template-representation-roundtrip.md`.
-- Schema: `docs/schemas/template-record.schema.json`.
+- Skill source brief: `docs/plans/implementation-brief.20260709.010343_template-record-roundtrip-skill.md`.
+- Skill: `agents/global/opencode/skills/template-record-roundtrip/SKILL.md`.
+- Skill register: `docs/skills/skill-register.md`.
+- Latest skill report: `docs/implementation/template-record-roundtrip-skill.20260709.012011.md`.
+- Latest skill AAR: `docs/AAR/aar.20260709.012011_template-record-roundtrip-skill.md`.
+- Skill conformance review: `docs/reviews/architecture-conformance.20260709.012745_template-record-roundtrip-skill.md`.
+- KOIOS process trace: `docs/process-capture/pc.workflow.document-trace.20260709.012953Z.md` and aggregate `docs/process-capture/pc.workflow.document-trace.md`.
+- Parser report: `docs/implementation/template-representation-roundtrip.20260708.044531.md`.
+- Parser conformance review: `docs/reviews/architecture-conformance.20260709.011055_template-representation-schema-backed.md`.
 
 ## Latest validation evidence
 
-- `uv run pytest tests/projectkoios/bootstrap/template_representation tests/projectkoios/bootstrap/schema -q` => `34 passed in 0.16s`.
-- `uv run mypy src/python/projectkoios/bootstrap/template_representation tests/projectkoios/bootstrap/template_representation` => `Success: no issues found in 5 source files`.
-- `uv run projectkoios bootstrap validate-python-policy src/python/projectkoios/bootstrap/template_representation tests/projectkoios/bootstrap/template_representation` => `summary: 0 finding(s), 5 file(s)`.
-- `git diff --check` => clean.
-- `uv run pytest -q` => `243 passed in 1.30s`.
-- `uv run mypy src/python tests` => `Success: no issues found in 123 source files`.
-- `uv run projectkoios bootstrap validate-python-policy --all` => `summary: 0 finding(s), 123 file(s)`.
+- VULCAN: `uv run pytest tests/projectkoios/bootstrap/template_representation tests/projectkoios/bootstrap/schema -q` => `34 passed in 0.16s`.
+- VULCAN: `uv run projectkoios bootstrap validate-python-policy agents/global/opencode/skills/template-record-roundtrip` => `summary: 0 finding(s), 0 file(s)`; Markdown-only skill path.
+- VULCAN: frontmatter/Markdown inspection script => `frontmatter/markdown inspection: ok`.
+- VULCAN: `git diff --check` => clean.
+- ATHENA review reran focused pytest, skill-path Python policy, and `git diff --check` with passing/clean results.
 
 ## Implementation notes
 
-- New schema: `docs/schemas/template-record.schema.json`.
-- New package: `src/python/projectkoios/bootstrap/template_representation/`.
-- New tests: `tests/projectkoios/bootstrap/template_representation/`.
-- First fixture: `docs/templates/ADR.proposal.template.md`.
-- Round trip proven: controlled Markdown -> schema-backed record -> deterministic Markdown -> schema-backed record.
+- New skill is draft/gated and VULCAN/opencode-owned.
+- Skill register row uses draft/supporting binding mode and matches skill ADR bindings.
+- Skill procedure requires schema-backed records, schema validation, deterministic rendering, re-parse, re-validation, semantic equality, focused validation, and deviation reporting on boundary failures.
+- ATHENA accepted the skill integration as conforming draft/gated work; no promotion to stable is authorized.
 
 ## Ignore for now
 
+- KOIOS ADR-lifecycle provenance-audit workspace artifact unless explicitly requested.
 - Graphify ingestion daemon changes.
 - Vault/PDF/source/evidence ingestion.
 - `src/python/ingestion/`, `projectkoios.ingestion`, or generic ingestion framework.
 - Product-facing template architecture.
 - Broad migration of all templates.
+- Runtime CLI integration.
 - ADR lifecycle/status changes.
 
 ## Next expected artifact
 
-- ATHENA schema-backed conformance review, commit/push instruction, or follow-up brief.
+- Commit/push result for the coherent parser + draft skill integration slice, or user/Hermes packaging direction.
