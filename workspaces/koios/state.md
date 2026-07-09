@@ -4,7 +4,7 @@
 
 - Type: workspace-state
 - Status: active
-- Updated: 20260705T100913Z
+- Updated: 20260709T013735Z
 - Updated by: KOIOS
 - Repository: projectkoios-bootstrap
 - Workspace: `workspaces/koios/`
@@ -28,8 +28,11 @@ Captured/advisory artifacts in this workspace:
 - `working/architecture.document.control-surface.adr-classification.20260704T024500Z.md`
 - `working/provenance-index.20260704T175525Z_adr-control-surfaces.md`
 - `working/provenance-note.20260705T100913Z_petrinet-followup-package.md`
+- `working/provenance-audit.20260709T012117Z_adr-lifecycle-followon-reconciliation.md`
 - `../../docs/process-capture/pc.workflow.document-trace.md`
 - `../../docs/process-capture/pc.workflow.document-trace.20260706.025408Z.md`
+- `../../docs/process-capture/pc.workflow.document-trace.20260708.044950Z.md`
+- `../../docs/process-capture/pc.workflow.document-trace.20260709.012953Z.md`
 
 ## Validated observations
 
@@ -47,9 +50,13 @@ KOIOS captured a provenance index for the accepted lifecycle/naming ADR and the 
 
 KOIOS captured a provenance note for the accepted Petri-net separation ADR and pushed follow-up package at commit `184df13`. The note records that durable provenance is sufficient for the next bounded implementation slice, with residual watchpoints for deterministic event timestamps and broader workflow/product-domain expansion.
 
+KOIOS audited the follow-on policy/index/source-draft pointer reconciliation for the accepted lifecycle/naming ADR. The audit found the reconciliation provenance-safe for its bounded scope: policy and architecture index surfaces point to the accepted ADR as controlling where appropriate, source drafts are retained as provenance or non-canonical detailed guidance, and no silent supersession, schema/tooling authority, mass rename, archive migration, or implementation authority was introduced. Residual watchpoints remain for prose-only source-draft links, architecture-note frontmatter status ambiguity, and proposal-local legacy vocabulary.
+
 KOIOS captured the first workflow document-trace process artifact for the adapter topology-roundtrip slice. The trace maps observed repository document movement to Petri-net places, transitions, and tokens as a non-authoritative provenance lens. It records a provenance gap where the revised ATHENA brief exists only as intercom/user clarification rather than a standalone durable brief.
 
-KOIOS added a process-review observation and partial document trace for the template representation round-trip slice. The observation records that `src/python/projectkoios/bootstrap/template_representation/` preserves the bounded bootstrap authority boundary, `docs/plans/` and `docs/implementation/` are appropriate brief/report locations, live source fixtures should remain under `docs/templates/`, and generated/golden/malformed fixtures should remain test-only unless explicitly promoted. The trace records durable ATHENA brief, reported user approval, VULCAN implementation report, VULCAN AAR, and VULCAN workspace state, with residual gaps for separate durable approval evidence and missing ATHENA conformance review.
+KOIOS added a process-review observation and partial document trace for the template representation round-trip slice. The observation records that `src/python/projectkoios/bootstrap/template_representation/` preserves the bounded bootstrap authority boundary, `docs/plans/` and `docs/implementation/` are appropriate brief/report locations, live source fixtures should remain under `docs/templates/`, and generated/golden/malformed fixtures should remain test-only unless explicitly promoted. The trace records durable ATHENA brief, reported user approval, VULCAN implementation report, VULCAN AAR, and VULCAN workspace state; the later schema-backed ATHENA conformance review closes the prior conformance gap.
+
+KOIOS captured the template record round-trip skill integration process trace after VULCAN implementation report and ATHENA conformance review existed. The trace records parser-gate evidence, ATHENA skill brief, VULCAN draft/gated skill implementation, skill-register update, VULCAN AAR, ATHENA conforms-draft-gated review, and residual constraints: the skill remains draft/gated, no stable skill/frontmatter validator exists yet, and no broad ingestion/all-template/product authority is created.
 
 ## Authority boundary
 
@@ -63,4 +70,4 @@ The workflow document-trace artifacts do not create product workflow architectur
 
 ## Repo-state note
 
-At session initialization, local uncommitted changes existed outside this Koios workspace. KOIOS did not inspect or modify those unrelated changes.
+After VULCAN commit `4223527`, the remaining dirty repository state was limited to KOIOS-owned workspace files for the ADR lifecycle follow-on provenance audit. KOIOS packaged those files as a separate coherent knowledge/provenance slice.
