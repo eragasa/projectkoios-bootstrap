@@ -49,6 +49,8 @@ KOIOS captured a provenance note for the accepted Petri-net separation ADR and p
 
 KOIOS captured the first workflow document-trace process artifact for the adapter topology-roundtrip slice. The trace maps observed repository document movement to Petri-net places, transitions, and tokens as a non-authoritative provenance lens. It records a provenance gap where the revised ATHENA brief exists only as intercom/user clarification rather than a standalone durable brief.
 
+KOIOS added a process-review observation and partial document trace for the template representation round-trip slice. The observation records that `src/python/projectkoios/bootstrap/template_representation/` preserves the bounded bootstrap authority boundary, `docs/plans/` and `docs/implementation/` are appropriate brief/report locations, live source fixtures should remain under `docs/templates/`, and generated/golden/malformed fixtures should remain test-only unless explicitly promoted. The trace records durable ATHENA brief, reported user approval, VULCAN implementation report, VULCAN AAR, and VULCAN workspace state, with residual gaps for separate durable approval evidence and missing ATHENA conformance review.
+
 ## Authority boundary
 
 These Koios artifacts are advisory provenance and knowledge-capture surfaces only.

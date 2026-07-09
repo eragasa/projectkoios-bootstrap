@@ -8,7 +8,7 @@
 - Scope: workflow document traces mapped to Petri-net evolution vocabulary
 - Owner: KOIOS
 - Created: 20260706.025408Z
-- Updated: 20260706.025408Z
+- Updated: 20260708.044950Z
 - Authority: provenance/process observation only
 
 ## Non-authority statement
@@ -56,20 +56,17 @@ In Petri-net terms for process observation only:
 
 ## What is actually happening
 
-The current workflow adapter topology-roundtrip slice has enough durable
-repository evidence to trace most of the document evolution:
+The workflow adapter topology-roundtrip slice has enough durable repository
+evidence to trace most of the document evolution, but its revised ATHENA brief
+exists only as intercom/user clarification rather than a standalone durable
+implementation brief.
 
-1. accepted controlling ADR exists;
-2. ATHENA/user revised brief exists only as intercom/user clarification rather
-   than a standalone durable implementation brief;
-3. VULCAN implementation report records the implemented and validated slice;
-4. ATHENA conformance review records pass-with-nonblocking-documentation-note;
-5. VULCAN AAR records process issues and follow-up candidates;
-6. VULCAN workspace state records the current implementation status and next
-   expected owners.
-
-The trace therefore has one important gap: the revised ATHENA brief that shaped
-implementation acceptance is not durable as its own filesystem artifact.
+The template representation round-trip slice has a cleaner filesystem-visible
+chain: durable ATHENA brief, reported user approval, VULCAN implementation
+report, VULCAN AAR, VULCAN workspace state, and KOIOS trace. Its main remaining
+gaps are that user approval is currently cited through VULCAN's AAR rather than a
+separate durable approval artifact, and ATHENA conformance review has not yet
+been recorded.
 
 ## Observed cause of behavior/gap
 
@@ -82,6 +79,38 @@ as a standalone ATHENA brief.
 As a result, later artifacts cite an intercom-only revised brief. The document
 chain is still intelligible because implementation and review documents name the
 brief content, but provenance is weaker than it would be with a durable brief.
+
+## Process review observations
+
+### Template representation round-trip boundary review
+
+KOIOS reviewed the pre-implementation handoff for the template representation
+round-trip slice at
+`docs/plans/implementation-brief.20260708.041245_template-representation-roundtrip.md`.
+The review found that `src/python/projectkoios/bootstrap/template_representation/`
+is the appropriate bounded package for bootstrap template representation code
+because it remains beside existing bootstrap schema code and avoids silently
+creating broad ingestion or product-template architecture authority.
+
+The review also found that `docs/plans/` is an acceptable location for the
+ATHENA implementation brief and `docs/implementation/` is the correct location
+for the VULCAN implementation report. The first live source fixture may be
+`docs/templates/ADR.proposal.template.md`, but generated/golden/malformed test
+fixtures should live under `tests/projectkoios/bootstrap/template_representation/`
+unless the task explicitly changes canonical template documents.
+
+Provenance cautions:
+
+- implementation should proceed only after explicit user approval because the
+  brief is implementation-ready only after approval;
+- the active authority is `docs/adr/adr.templates.md`; draft/proposal inputs are
+  provenance only and must not be silently promoted;
+- this first slice should be described as one-fixture bootstrap template
+  representation round-trip, not broad ingestion, all-template validation, or
+  template enforcement activation;
+- after VULCAN report and ATHENA conformance review, KOIOS may add a partial
+  process trace if the user wants this slice mapped into the document-evolution
+  chain.
 
 ## Recommendations
 
@@ -113,8 +142,14 @@ brief content, but provenance is weaker than it would be with a durable brief.
 
 - ATHENA should materialize brief changes that become implementation acceptance
   criteria.
+- Pre-implementation package-boundary reviews should name whether a proposed
+  code location preserves or expands authority boundaries before VULCAN writes
+  code.
 - VULCAN implementation reports should continue naming controlling ADRs,
   source briefs, validation commands, explicit non-changes, and residual risks.
+- VULCAN reports for representation slices should distinguish live source
+  fixtures, test-only golden fixtures, and generated outputs so canonical
+  document surfaces are not silently rewritten.
 - KOIOS should keep trace documents non-authoritative unless the pattern is
   promoted through the appropriate owner.
 
@@ -123,3 +158,4 @@ brief content, but provenance is weaker than it would be with a durable brief.
 | Trace | Scope | Status | Primary gap |
 |---|---|---|---|
 | `docs/process-capture/pc.workflow.document-trace.20260706.025408Z.md` | workflow adapter topology-only SNAKES round trip | captured | ATHENA revised brief is intercom-only |
+| `docs/process-capture/pc.workflow.document-trace.20260708.044950Z.md` | template representation one-fixture Markdown/JSON round trip | captured | user approval cited through VULCAN AAR; ATHENA conformance review not yet recorded |

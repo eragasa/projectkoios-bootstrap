@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://projectkoios.local/schemas/template-record.schema.json",
+  "title": "TemplateRecord",
+  "description": "Schema-backed bootstrap template representation record. Extends the Project Koios record base with template-specific content constraints.",
+  "allOf": [
+    { "$ref": "https://projectkoios.local/schemas/schema.record-base.json" },
+    {
+      "type": "object",
+      "properties": {
+        "metadata": {
+          "type": "object",
+          "properties": {
+            "schema_id": { "const": "https://projectkoios.local/schemas/template-record.schema.json" },
+            "status": { "const": "draft" }
+          }
+        },
+        "content": { "$ref": "#/$defs/TemplateRecordContent" }
+      }
+    }
+  ],
+  "$defs": {
+    "TemplateMarker": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["marker", "location"],
+      "properties": {
+        "marker": { "type": "string", "minLength": 1 },
+        "location": { "type": "string", "minLength": 1 }
+      }
+    },
+    "TemplateSection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["heading", "body", "markers"],
+      "properties": {
+        "heading": { "type": "string", "minLength": 1 },
+        "body": { "type": "string" },
+        "markers": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/TemplateMarker" }
+        }
+      }
+    },
+    "TemplateRecordContent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "template_id",
+        "source_path",
+        "title",
+        "sections",
+        "markers",
+        "representation_version",
+        "preamble",
+        "lead_body"
+      ],
+      "properties": {
+        "template_id": { "type": "string", "minLength": 1 },
+        "source_path": {
+          "type": "string",
+          "pattern": "^docs/templates/.+\\.md$"
+        },
+        "title": { "type": "string", "minLength": 1 },
+        "sections": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/TemplateSection" }
+        },
+        "markers": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/TemplateMarker" }
+        },
+        "representation_version": { "type": "string", "minLength": 1 },
+        "preamble": { "type": "string" },
+        "lead_body": { "type": "string" }
+      }
+    }
+  }
+}

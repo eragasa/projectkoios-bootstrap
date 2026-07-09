@@ -31,14 +31,14 @@ Any follow-on policy/index/source-draft disposition should be explicitly request
 
 ATHENA should still produce a target document-surface map before any broader ADR-directory split or migration.
 
-For workflow document traces, KOIOS captured the first partial trace for the workflow adapter topology-roundtrip slice. A reusable schema or workflow-policy promotion should wait until repeated traces stabilize the pattern.
+For workflow document traces, KOIOS captured partial traces for the workflow adapter topology-roundtrip slice and the template representation round-trip slice. KOIOS also added a pre-implementation process-review observation for the template representation round-trip package/document boundary. A reusable schema or workflow-policy promotion should wait until repeated traces stabilize the pattern.
 
 ## KOIOS next actions
 
 1. Re-audit any follow-on policy/index/source-draft disposition for claim traceability and silent-supersession risk, if requested.
 2. Re-audit any future architecture-document proposal against the captured control-surface criteria.
 3. Update or create provenance notes when accepted/proposed ADR surfaces change materially.
-4. Capture additional workflow document traces when multi-role slices expose document-state evolution worth preserving.
+4. Capture additional workflow document traces when multi-role slices expose document-state evolution worth preserving, especially after ATHENA conformance reviews or packaging decisions add new trace states.
 
 ## Blockers and cautions
 

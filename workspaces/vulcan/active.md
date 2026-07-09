@@ -2,8 +2,8 @@
 {
   "title": "Vulcan active work",
   "artifact_type": "workspace-active-priorities",
-  "status": "workflow-adapter-topology-roundtrip-validated",
-  "datetime": "20260706.045501",
+  "status": "template-representation-schema-backed-roundtrip-validated",
+  "datetime": "20260709.010748Z",
   "acting_as": "VULCAN",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/vulcan/",
@@ -11,11 +11,13 @@
   "priority_count": 3,
   "working_directory": "working/",
   "active_working_items": [
-    "docs/implementation/workflow-adapter-contract-hardening.20260706.045501.md",
-    "docs/AAR/aar.20260706.045501_workflow-adapter-contract-hardening.md"
+    "docs/implementation/template-representation-roundtrip.20260708.044531.md",
+    "docs/AAR/aar.20260708.044531_template-representation-roundtrip.md",
+    "docs/schemas/template-record.schema.json"
   ],
   "scratch_directory": "scratch/",
-  "controlling_adr": "docs/adr/adr.petrinet.20260705.132740Z.md"
+  "source_brief": "docs/plans/implementation-brief.20260708.041245_template-representation-roundtrip.md",
+  "revision_request": "docs/plans/revision-request.20260708.070651_template-representation-schema-backed.md"
 }
 ```
 
@@ -23,45 +25,45 @@
 
 ## Current priority stack
 
-1. Package/commit/push the validated workflow adapter topology round-trip slice if directed.
-2. Request ATHENA conformance review if desired before packaging.
-3. Do not implement PM4Py conversion, marking/token round trip, guard serialization, or runtime semantics without new ATHENA authority.
+1. Request ATHENA conformance re-review for the schema-backed revision.
+2. Package/commit/push the validated template representation schema-backed round-trip slice after review or explicit user direction.
+3. Do not expand to broad template migration, CLI enforcement, or ingestion systems without a new brief.
 
 ## Latest working material
 
-- Controlling ADR: `docs/adr/adr.petrinet.20260705.132740Z.md`.
-- Source brief: ATHENA intercom guidance revised to require topology-only adapter round trip.
-- Latest report: `docs/implementation/workflow-adapter-contract-hardening.20260706.045501.md`.
-- Latest AAR: `docs/AAR/aar.20260706.045501_workflow-adapter-contract-hardening.md`.
+- Source brief: `docs/plans/implementation-brief.20260708.041245_template-representation-roundtrip.md`.
+- Revision request: `docs/plans/revision-request.20260708.070651_template-representation-schema-backed.md`.
+- Latest report: `docs/implementation/template-representation-roundtrip.20260708.044531.md`.
+- Latest AAR: `docs/AAR/aar.20260708.044531_template-representation-roundtrip.md`.
+- Schema: `docs/schemas/template-record.schema.json`.
 
 ## Latest validation evidence
 
-- `uv sync --dev` => installed `snakes==0.9.33`; `uv.lock` was already satisfied and is not part of the final diff.
-- `uv run pytest tests/projectkoios/workflow -q` => `13 passed in 0.03s`.
-- `uv run mypy src/python/projectkoios/workflow tests/projectkoios/workflow` => `Success: no issues found in 11 source files`.
-- `uv run projectkoios bootstrap validate-python-policy src/python/projectkoios/workflow tests/projectkoios/workflow` => `summary: 0 finding(s), 11 file(s)`.
-- `uv run pytest -q` => `228 passed in 1.27s`.
-- `uv run projectkoios bootstrap validate-python-policy --all` => `summary: 0 finding(s), 118 file(s)`.
-- `uv run mypy src/python tests` => `Success: no issues found in 118 source files`.
+- `uv run pytest tests/projectkoios/bootstrap/template_representation tests/projectkoios/bootstrap/schema -q` => `34 passed in 0.16s`.
+- `uv run mypy src/python/projectkoios/bootstrap/template_representation tests/projectkoios/bootstrap/template_representation` => `Success: no issues found in 5 source files`.
+- `uv run projectkoios bootstrap validate-python-policy src/python/projectkoios/bootstrap/template_representation tests/projectkoios/bootstrap/template_representation` => `summary: 0 finding(s), 5 file(s)`.
 - `git diff --check` => clean.
-- `graphify update /Users/eugene/repos/projectkoios-bootstrap` => rebuilt graph with `8129 nodes, 9172 edges, 764 communities`.
+- `uv run pytest -q` => `243 passed in 1.30s`.
+- `uv run mypy src/python tests` => `Success: no issues found in 123 source files`.
+- `uv run projectkoios bootstrap validate-python-policy --all` => `summary: 0 finding(s), 123 file(s)`.
 
 ## Implementation notes
 
-- SNAKES is now a dev/test dependency in `pyproject.toml` only.
-- `SnakesColoredNetAdapter` converts canonical topology to SNAKES backend topology and imports SNAKES topology back to canonical payload.
-- Round-trip test covers place IDs/labels, transition IDs/labels, arc endpoints, direction, and weights.
-- Always-on payload tests remain backend-independent.
+- New schema: `docs/schemas/template-record.schema.json`.
+- New package: `src/python/projectkoios/bootstrap/template_representation/`.
+- New tests: `tests/projectkoios/bootstrap/template_representation/`.
+- First fixture: `docs/templates/ADR.proposal.template.md`.
+- Round trip proven: controlled Markdown -> schema-backed record -> deterministic Markdown -> schema-backed record.
 
 ## Ignore for now
 
-- PM4Py conversion and dependency/license policy.
-- Marking/token round-trip semantics.
-- Transition guard/callable serialization.
-- Executor/runtime/event changes.
-- Persistence/restart/event-bus behavior.
-- Handoff/evaluator migration.
+- Graphify ingestion daemon changes.
+- Vault/PDF/source/evidence ingestion.
+- `src/python/ingestion/`, `projectkoios.ingestion`, or generic ingestion framework.
+- Product-facing template architecture.
+- Broad migration of all templates.
+- ADR lifecycle/status changes.
 
 ## Next expected artifact
 
-- Commit/push instruction, optional ATHENA conformance review, or new architecture authority for broader adapter semantics.
+- ATHENA schema-backed conformance review, commit/push instruction, or follow-up brief.
