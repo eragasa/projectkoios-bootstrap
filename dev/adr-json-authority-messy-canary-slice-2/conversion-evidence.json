@@ -1,0 +1,23 @@
+{
+  "authority_change": false,
+  "blocked_reasons": [
+    "missing_observed_status",
+    "manual_review_required",
+    "schema_implementation_contract_ambiguity"
+  ],
+  "candidate_only": true,
+  "conversion_attempted": true,
+  "conversion_completed_as_authoritative_record": false,
+  "normalized_status_inserted": false,
+  "outcome": "conversion_candidate_blocked_pending_review",
+  "review_required_before_promotion": true,
+  "slice_name": "adr-json-authority-messy-canary-slice-2",
+  "source_hash": "48a5fed34bec41b18885fdb57d7491895783f735c07efc33202098bbf61a2d51",
+  "source_non_mutation_proof": {
+    "source_hash_after": "48a5fed34bec41b18885fdb57d7491895783f735c07efc33202098bbf61a2d51",
+    "source_hash_before": "48a5fed34bec41b18885fdb57d7491895783f735c07efc33202098bbf61a2d51",
+    "source_mutated": false
+  },
+  "source_path": "docs/adr/adr.schema-base.md",
+  "status_invented": false
+}

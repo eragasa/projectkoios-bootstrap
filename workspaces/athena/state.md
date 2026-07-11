@@ -2,7 +2,7 @@
 {
   "title": "Athena workspace state",
   "artifact_type": "workspace-state",
-  "status": "adr-json-authority-messy-canary-brief-drafted-pending-approval",
+  "status": "adr-json-authority-messy-canary-athena-reviewed-pending-hermes-final-acceptance",
   "datetime": "20260711.140200Z",
   "acting_as": "ATHENA",
   "repository": "projectkoios-bootstrap",
@@ -160,12 +160,15 @@
 - KOIOS provenance review for Slice 1 exists at `workspaces/koios/working/provenance-review.20260711_adr-json-authority-inventory-review-overrides-slice-1.md`; ATHENA incorporated its minor watchpoints into the conformance review addendum.
 - HERMES accepted Slice 1 with watchpoints in `docs/reviews/hermes-acceptance.20260711.143600_adr-json-authority-inventory-review-overrides-slice-1.md` and relayed USER/HERMES GO for the next recommended messy canary slice.
 - ATHENA drafted `docs/plans/implementation-brief.20260711.143800_adr-json-authority-messy-canary-slice-2.md` for exactly one source, `docs/adr/adr.schema-base.md`, requiring reviewed inventory/override input, candidate evidence under `dev/`, missing-status/conflict/lossiness reporting, sidecar/provenance preservation, optional evidence-only projection/parse-back, and strict no-mutation/no-schema/no-cutover/no-DB/no-bulk boundaries.
+- HERMES approved Slice 2 for VULCAN implementation in `docs/reviews/hermes-decision.20260711.144200_adr-json-authority-messy-canary-slice-2.md`; VULCAN implemented and reported `docs/implementation/adr-json-authority-messy-canary-slice-2.20260711.144500.md`, code under `src/python/projectkoios/bootstrap/control_surface/adr/messy_canary.py`, tests, and one-source messy canary evidence under `dev/adr-json-authority-messy-canary-slice-2/`.
+- ATHENA reviewed and accepted Slice 2 with watchpoints in `docs/reviews/architecture-conformance.20260711.144800_adr-json-authority-messy-canary-slice-2.md`; ATHENA reran focused pytest, mypy, python policy, JSON validity, DB-file scan, docs/adr and docs/schemas status check, `git diff --check`, and spot checks confirming exactly one source, missing status preserved as missing, embedded `draft` status sidecar-only, blocked outcome, no projection, and non-authority markers.
+- KOIOS provenance review for Slice 2 exists at `workspaces/koios/working/provenance-review.20260711_adr-json-authority-messy-canary-slice-2.md`; ATHENA incorporated its watchpoints into the conformance review addendum.
 
 ## Current active item
 
 - `adr-json-authority-messy-canary-slice-2`
   - Parent effort: ADR rationalization / JSON-authoritative ADR store staged migration.
-  - Status: implementation brief drafted; pending HERMES/USER approval before VULCAN routing or implementation.
+  - Status: VULCAN implemented and ATHENA conformance-reviewed/accepted with watchpoints; pending HERMES/USER final acceptance.
   - Purpose: prove one messy/ambiguous ADR-space canary conversion behavior for `docs/adr/adr.schema-base.md` without authority cutover or source mutation.
   - Key artifacts:
     - `docs/plans/architecture-intake.20260711.131140_adr-bidirectional-json-markdown-objects.md`
@@ -195,6 +198,11 @@
     - `dev/adr-json-authority-inventory-review-overrides-slice-1/`
     - `docs/reviews/hermes-acceptance.20260711.143600_adr-json-authority-inventory-review-overrides-slice-1.md`
     - `docs/plans/implementation-brief.20260711.143800_adr-json-authority-messy-canary-slice-2.md`
+    - `docs/reviews/hermes-decision.20260711.144200_adr-json-authority-messy-canary-slice-2.md`
+    - `docs/implementation/adr-json-authority-messy-canary-slice-2.20260711.144500.md`
+    - `docs/reviews/architecture-conformance.20260711.144800_adr-json-authority-messy-canary-slice-2.md`
+    - `workspaces/koios/working/provenance-review.20260711_adr-json-authority-messy-canary-slice-2.md`
+    - `dev/adr-json-authority-messy-canary-slice-2/`
 
 ## Queued/backlog items
 
@@ -214,8 +222,8 @@
 
 ## Waiting on / blocked items
 
-- HERMES/USER approval of `docs/plans/implementation-brief.20260711.143800_adr-json-authority-messy-canary-slice-2.md` before VULCAN routing or implementation.
-- Slice 0 package is committed/pushed as `ad91148c`; Slice 1 package boundary remains separate unless HERMES reports it committed/pushed.
+- HERMES/USER final acceptance of `docs/reviews/architecture-conformance.20260711.144800_adr-json-authority-messy-canary-slice-2.md`, KOIOS provenance review `workspaces/koios/working/provenance-review.20260711_adr-json-authority-messy-canary-slice-2.md`, and one-source messy canary evidence before any corpus dry-run, source mutation, schema publication, JSON authority cutover, bulk conversion, or migration slice proceeds.
+- Slice 0 package is committed/pushed as `ad91148c`; later package boundaries remain separate unless HERMES reports committed/pushed.
 
 ## Open questions
 
@@ -231,7 +239,7 @@
 
 - Owner: HERMES/USER.
 - Recommended next actions:
-  1. HERMES/USER should review `docs/plans/implementation-brief.20260711.143800_adr-json-authority-messy-canary-slice-2.md` and decide whether to approve, revise, or defer it.
+  1. HERMES/USER should review `docs/reviews/architecture-conformance.20260711.144800_adr-json-authority-messy-canary-slice-2.md` plus `dev/adr-json-authority-messy-canary-slice-2/` evidence and decide final acceptance.
   2. Preserve `pi-skill-determinism-slice-0` as queued-only unless explicitly activated.
 - Operator Console P0/P1/P2 accepted boundaries: bootstrap incubation only; package-local lockfile only; behavior owned by ActionObject-style classes with data in typed interfaces/constants; `docs/policies/typescript-coding.md` remains draft/non-controlling; fixtures are static/stale-by-design; readability/navigation affordances are local browser inspection helpers only; no backend, live reads, messaging capability, activation/mutation, Petri-net graph editor, product UI authority, or bootstrap production-backend claim.
 - ADR conformance work remains available as a separate track: future slices should use updated `docs/schemas/adr.schema.json` without `routing`, preserve sidecar provenance, and avoid schema/lifecycle/workflow/storage-authority redesign unless repeated conformance pressure justifies it.

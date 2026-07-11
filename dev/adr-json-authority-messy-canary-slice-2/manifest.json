@@ -1,0 +1,41 @@
+{
+  "artifact_hashes": {
+    "candidate_object": "41e0ae858ef5bba097928097b4bd1727cca580df62dd5766e359fc98dc613381",
+    "conflict_lossiness_report": "b0cac18c33b296b168e0acaddbf949592083d38f9625a382a3f2f613192ad888",
+    "conversion_evidence": "cf04f1fd2321acd179c2cbca76e7517fa2a9d4b4a78dc789bce05e783d7a3b1c",
+    "sidecar_provenance": "414e166437f4e1482b309874f35c6cd924a73482a478ec29dc97c9e1ab019eb3"
+  },
+  "artifacts": {
+    "candidate_object": "dev/adr-json-authority-messy-canary-slice-2/adr.schema-base.candidate-object.json",
+    "conflict_lossiness_report": "dev/adr-json-authority-messy-canary-slice-2/conflict-lossiness-report.json",
+    "conversion_evidence": "dev/adr-json-authority-messy-canary-slice-2/conversion-evidence.json",
+    "manifest": "dev/adr-json-authority-messy-canary-slice-2/manifest.json",
+    "sidecar_provenance": "dev/adr-json-authority-messy-canary-slice-2/sidecar-provenance.json"
+  },
+  "authority_change": false,
+  "candidate_only": true,
+  "conversion_scope": "exactly-one-source",
+  "database_authority": false,
+  "generated_at": "20260711.144200Z",
+  "mode": "candidate messy canary evidence only",
+  "outcome": "conversion_candidate_blocked_pending_review",
+  "schema_change_allowed": false,
+  "slice_name": "adr-json-authority-messy-canary-slice-2",
+  "source": {
+    "path": "docs/adr/adr.schema-base.md",
+    "sha256": "48a5fed34bec41b18885fdb57d7491895783f735c07efc33202098bbf61a2d51"
+  },
+  "source_mutation_allowed": false,
+  "source_refs": {
+    "brief": "docs/plans/implementation-brief.20260711.143800_adr-json-authority-messy-canary-slice-2.md",
+    "hermes_decision": "docs/reviews/hermes-decision.20260711.144200_adr-json-authority-messy-canary-slice-2.md",
+    "reviewed_inventory": "dev/adr-json-authority-inventory-review-overrides-slice-1/reviewed-inventory.json",
+    "slice_1_acceptance": "docs/reviews/hermes-acceptance.20260711.143600_adr-json-authority-inventory-review-overrides-slice-1.md"
+  },
+  "validation_command_summary": {
+    "exactly_one_source": "docs/adr/adr.schema-base.md only",
+    "json_validity": "pending closeout validation",
+    "no_database_files": "pending closeout validation",
+    "source_schema_non_mutation": "pending closeout validation"
+  }
+}

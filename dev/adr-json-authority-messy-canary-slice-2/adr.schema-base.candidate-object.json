@@ -1,0 +1,65 @@
+{
+  "authority_change": false,
+  "authority_mode": "candidate-evidence-only-not-repository-authority",
+  "candidate_only": true,
+  "conflict_lossiness": {
+    "missing_status": true,
+    "outcome": "conversion_candidate_blocked_pending_review",
+    "path": "dev/adr-json-authority-messy-canary-slice-2/conflict-lossiness-report.json",
+    "requires_review": true
+  },
+  "content_candidate": {
+    "complete_adr_schema_payload": false,
+    "schema_validation_blocked": true,
+    "status": null,
+    "status_preservation": "missing in Markdown source; not invented",
+    "title": "ADR: Schema Base Class for ADR Records"
+  },
+  "conversion_scope": {
+    "source_count": 1,
+    "sources": [
+      "docs/adr/adr.schema-base.md"
+    ]
+  },
+  "database_authority": false,
+  "object_type": "AdrJsonAuthorityMessyCanaryCandidate",
+  "object_version": "candidate-0",
+  "projection": {
+    "generated": false,
+    "reason": "Projection omitted because canary must not invent a status or imply schema-valid ADR content."
+  },
+  "reviewed_inventory": {
+    "authority_effect": "candidate",
+    "automatic_conversion_eligibility_candidate": false,
+    "category_candidate": "template_schema_contract",
+    "disposition_candidate": "manual_review_required",
+    "exclusion_blocking_reasons": [
+      "manual_review_required",
+      "missing_observed_status",
+      "missing_status"
+    ],
+    "owner_domain_review_flags": {
+      "domain_review_required": false,
+      "manual_review_required": true,
+      "owner_review_required": true
+    }
+  },
+  "schema_change": false,
+  "sidecar_provenance": {
+    "embedded_metadata_preserved": true,
+    "path": "dev/adr-json-authority-messy-canary-slice-2/sidecar-provenance.json",
+    "schema_implementation_contract_ambiguity": true
+  },
+  "slice_name": "adr-json-authority-messy-canary-slice-2",
+  "source_hash": "48a5fed34bec41b18885fdb57d7491895783f735c07efc33202098bbf61a2d51",
+  "source_mutation": false,
+  "source_path": "docs/adr/adr.schema-base.md",
+  "validation": {
+    "docs_schemas_mutation": false,
+    "exactly_one_source": true,
+    "mutable_database_files": false,
+    "source_hash_after": "48a5fed34bec41b18885fdb57d7491895783f735c07efc33202098bbf61a2d51",
+    "source_hash_before": "48a5fed34bec41b18885fdb57d7491895783f735c07efc33202098bbf61a2d51",
+    "source_mutated": false
+  }
+}

@@ -18,6 +18,12 @@ from projectkoios.bootstrap.control_surface.adr.inventory import (
     run_adr_json_authority_inventory,
 )
 from projectkoios.bootstrap.control_surface.adr.markdown import AdrMarkdownError, AdrMarkdownRecordParser, AdrProjectionRenderer
+from projectkoios.bootstrap.control_surface.adr.messy_canary import (
+    AdrMessyCanaryPaths,
+    AdrMessyCanaryResult,
+    AdrMessyCanaryRunner,
+    run_adr_json_authority_messy_canary,
+)
 from projectkoios.bootstrap.control_surface.adr.overrides import (
     AdrInventoryOverridePaths,
     AdrInventoryOverrideResult,
@@ -45,6 +51,9 @@ __all__ = [
     "AdrInventoryPaths",
     "AdrInventoryResult",
     "AdrInventoryRunner",
+    "AdrMessyCanaryPaths",
+    "AdrMessyCanaryResult",
+    "AdrMessyCanaryRunner",
     "AdrInventoryOverridePaths",
     "AdrInventoryOverrideResult",
     "AdrInventoryOverrideRunner",
@@ -64,6 +73,7 @@ __all__ = [
     "run_adr_bidirectional_object_canary",
     "run_adr_json_authority_inventory",
     "run_adr_json_authority_inventory_overrides",
+    "run_adr_json_authority_messy_canary",
     "run_json_schemas_conformance",
     "run_pilot",
 ]

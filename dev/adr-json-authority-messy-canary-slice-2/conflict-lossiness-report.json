@@ -1,0 +1,44 @@
+{
+  "authority_change": false,
+  "blocked_from_authority_promotion": true,
+  "candidate_only": true,
+  "embedded_metadata_status_preserved_as_sidecar": "draft",
+  "lossiness_findings": [
+    "source uses schema-record metadata/content envelope rather than normal ADR schema payload",
+    "Markdown Status section is absent and must remain missing in canary evidence",
+    "embedded JSON status is preserved as provenance but not promoted into ADR lifecycle authority",
+    "schema/implementation-contract ambiguity requires manual review before conversion"
+  ],
+  "missing_status": true,
+  "normalized_status_candidate": null,
+  "observed_markdown_status": null,
+  "outcome": "conversion_candidate_blocked_pending_review",
+  "requires_review": true,
+  "reviewed_inventory_values": {
+    "authority_effect": "candidate",
+    "automatic_conversion_eligibility_candidate": false,
+    "category_candidate": "template_schema_contract",
+    "disposition_candidate": "manual_review_required",
+    "exclusion_blocking_reasons": [
+      "manual_review_required",
+      "missing_observed_status",
+      "missing_status"
+    ],
+    "owner_domain_review_flags": {
+      "domain_review_required": false,
+      "manual_review_required": true,
+      "owner_review_required": true
+    }
+  },
+  "schema_validation_without_invented_status": {
+    "blocked_by": [
+      "missing_observed_status",
+      "schema_implementation_contract_ambiguity"
+    ],
+    "can_validate_against_current_adr_content_schema": false
+  },
+  "slice_name": "adr-json-authority-messy-canary-slice-2",
+  "source_hash": "48a5fed34bec41b18885fdb57d7491895783f735c07efc33202098bbf61a2d51",
+  "source_path": "docs/adr/adr.schema-base.md",
+  "status_inference": "blocked; no status invented to satisfy schema"
+}

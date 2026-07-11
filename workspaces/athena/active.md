@@ -2,7 +2,7 @@
 {
   "title": "Athena active work",
   "artifact_type": "workspace-active-priorities",
-  "status": "adr-json-authority-messy-canary-brief-drafted-pending-approval",
+  "status": "adr-json-authority-messy-canary-athena-reviewed-pending-hermes-final-acceptance",
   "datetime": "20260711.140200Z"},{
   "acting_as": "ATHENA",
   "repository": "projectkoios-bootstrap",
@@ -91,7 +91,7 @@
 
 1. Workflow-object Slice 0 is implemented, VULCAN-validated, ATHENA conformance-reviewed and implementation-reviewed/accepted, KOIOS-reviewed, and USER/HERMES-accepted with watchpoints.
 2. Operator Console P0/P1/P2 are implemented, user-previewed where required, ATHENA-reviewed/accepted, and reconciled into architecture as bootstrap-incubation as-built evidence.
-3. JSON-authoritative authority-change ADR proposal is accepted as staged direction; Phase 0 inventory/classification accepted/committed/pushed; Phase 1 inventory review/overrides accepted by HERMES/USER; Phase 2 messy canary brief is drafted and pending HERMES/USER approval before VULCAN routing.
+3. JSON-authoritative authority-change ADR proposal is accepted as staged direction; Phase 0 inventory/classification accepted/committed/pushed; Phase 1 inventory review/overrides accepted by HERMES/USER; Phase 2 messy canary implemented by VULCAN and ATHENA-reviewed/accepted with watchpoints, pending HERMES/USER final acceptance.
 
 ## Recently completed
 
@@ -133,7 +133,7 @@
 
 - `adr-json-authority-messy-canary-slice-2`
   - Parent effort: ADR rationalization / JSON-authoritative ADR store staged migration.
-  - Status: implementation brief drafted; pending HERMES/USER approval before VULCAN routing or implementation.
+  - Status: VULCAN implemented and ATHENA conformance-reviewed/accepted with watchpoints; pending HERMES/USER final acceptance.
   - Purpose: prove one messy/ambiguous ADR-space canary conversion behavior for `docs/adr/adr.schema-base.md` without authority cutover or source mutation.
   - Key artifacts:
     - `docs/plans/architecture-intake.20260711.131140_adr-bidirectional-json-markdown-objects.md`
@@ -162,6 +162,11 @@
     - `dev/adr-json-authority-inventory-review-overrides-slice-1/`
     - `docs/reviews/hermes-acceptance.20260711.143600_adr-json-authority-inventory-review-overrides-slice-1.md`
     - `docs/plans/implementation-brief.20260711.143800_adr-json-authority-messy-canary-slice-2.md`
+    - `docs/reviews/hermes-decision.20260711.144200_adr-json-authority-messy-canary-slice-2.md`
+    - `docs/implementation/adr-json-authority-messy-canary-slice-2.20260711.144500.md`
+    - `docs/reviews/architecture-conformance.20260711.144800_adr-json-authority-messy-canary-slice-2.md`
+    - `workspaces/koios/working/provenance-review.20260711_adr-json-authority-messy-canary-slice-2.md`
+    - `dev/adr-json-authority-messy-canary-slice-2/`
 
 ## Queued/backlog items
 
@@ -171,7 +176,7 @@
    - Boundary: must not replace, rename, reframe, or block Petri-net workflow work.
 2. `operator-console-review-orientation-copy-fixture`
    - Deferred UI readability/provenance refinement.
-   - Boundary: not active while ADR JSON authority inventory review/overrides awaits HERMES/USER approval.
+   - Boundary: not active while ADR JSON authority messy canary awaits HERMES/USER final acceptance.
 
 ## Superseded/rejected items
 
@@ -182,12 +187,12 @@
 
 ## Waiting on / blocked items
 
-- HERMES/USER approval of `docs/plans/implementation-brief.20260711.143800_adr-json-authority-messy-canary-slice-2.md` before VULCAN routing or implementation.
-- Slice 0 package is committed/pushed as `ad91148c`; Slice 1 package boundary remains separate unless HERMES reports it committed/pushed.
+- HERMES/USER final acceptance of `docs/reviews/architecture-conformance.20260711.144800_adr-json-authority-messy-canary-slice-2.md`, KOIOS provenance review `workspaces/koios/working/provenance-review.20260711_adr-json-authority-messy-canary-slice-2.md`, and one-source messy canary evidence before any corpus dry-run, source mutation, schema publication, JSON authority cutover, bulk conversion, or migration slice proceeds.
+- Slice 0 package is committed/pushed as `ad91148c`; later package boundaries remain separate unless HERMES reports committed/pushed.
 
 ## Recommended next actions
 
-1. HERMES/USER should review `docs/plans/implementation-brief.20260711.143800_adr-json-authority-messy-canary-slice-2.md` and decide whether to approve, revise, or defer it.
+1. HERMES/USER should review `docs/reviews/architecture-conformance.20260711.144800_adr-json-authority-messy-canary-slice-2.md` plus `dev/adr-json-authority-messy-canary-slice-2/` evidence and decide final acceptance.
 2. Preserve `pi-skill-determinism-slice-0` as queued-only unless explicitly activated.
 
 ## Packaging watchpoints

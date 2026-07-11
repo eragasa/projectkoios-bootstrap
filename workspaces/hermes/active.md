@@ -3,7 +3,7 @@
   "title": "Hermes active work",
   "artifact_type": "workspace-active-priorities",
   "status": "active",
-  "datetime": "20260711.131600Z",
+  "datetime": "20260711.145000Z",
   "acting_as": "HERMES",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/hermes/",
@@ -18,96 +18,39 @@
 
 ## Current priority stack
 
-1. Package/commit accepted `petrinet-workflow-status-queue-consistency-slice-6` when ready.
-2. Choose whether to activate `pi-skill-determinism-slice-0` or define another bounded workflow-engine slice after packaging.
-3. Preserve `pi-skill-determinism-slice-0` as queued-only unless USER/HERMES explicitly activates it.
+1. Package/commit accepted `adr-json-authority-messy-canary-slice-2` when ready.
+2. Choose the next bounded ADR JSON authority proof point or workflow-engine action.
+3. Preserve queued/deferred work as queued-only unless USER/HERMES explicitly activates it.
 
-## Accepted Petri-net workflow inspectability artifacts
+## Accepted Slice 2: ADR JSON authority messy canary
 
-### Slice 0: live Petri-net skeleton
+- Brief: `docs/plans/implementation-brief.20260711.143800_adr-json-authority-messy-canary-slice-2.md`
+- HERMES decision: `docs/reviews/hermes-decision.20260711.144200_adr-json-authority-messy-canary-slice-2.md`
+- Implementation report: `docs/implementation/adr-json-authority-messy-canary-slice-2.20260711.144500.md`
+- Evidence dir: `dev/adr-json-authority-messy-canary-slice-2/`
+- VULCAN AAR: `docs/AAR/aar.20260711.144500_adr-json-authority-messy-canary-slice-2.md`
+- ATHENA review: `docs/reviews/architecture-conformance.20260711.144800_adr-json-authority-messy-canary-slice-2.md`
+- KOIOS review: `workspaces/koios/working/provenance-review.20260711_adr-json-authority-messy-canary-slice-2.md`
+- HERMES acceptance: `docs/reviews/hermes-acceptance.20260711.145000_adr-json-authority-messy-canary-slice-2.md`
 
-- `docs/plans/implementation-brief.20260711.114600_live-petri-net-skeleton-slice-0.md`
-- `docs/plans/implementation-plan.20260711.114700_live-petri-net-skeleton-slice-0.md`
-- `dev/workflow-nets/bootstrap-harness.workflow-net.json`
-- `src/python/projectkoios/cli/workflow.py`
-- `src/python/projectkoios/cli/main.py`
-- `tests/projectkoios/cli/test__workflow_status.py`
-- `docs/implementation/live-petri-net-skeleton-slice-0.20260711.114916.md`
+## Slice 2 accepted meaning
 
-### Slice 1: Petri-net workflow agent status skill
+- Accepted as a one-source evidence-only messy canary.
+- Source: `docs/adr/adr.schema-base.md` only.
+- Outcome: `conversion_candidate_blocked_pending_review`.
+- Missing Markdown/ADR status remains missing.
+- Embedded JSON `status: draft` remains sidecar/source metadata only.
+- No source mutation, schema change, projection, authoritative JSON ADR record, database/storage authority, or authority cutover.
 
-- `docs/plans/slicing.20260711.121500_petrinet-workflow-agent-affordances.md`
-- `docs/plans/implementation-brief.20260711.121600_petrinet-workflow-agent-status-skill-slice-1.md`
-- `src/python/projectkoios/workflow/skills/README.md`
-- `src/python/projectkoios/workflow/skills/manifest.json`
-- `src/python/projectkoios/workflow/skills/petrinet-workflow-status/SKILL.md`
-- `.agents/skills/petrinet-workflow-status`
-- `tests/projectkoios/workflow/test__PetriNetWorkflowSkills__status_skill.py`
-- `docs/implementation/petrinet-workflow-agent-status-skill-slice-1.20260711.121800.md`
-- `docs/reviews/architecture-conformance.20260711.122300_petrinet-workflow-agent-status-skill-slice-1.md`
+## Validation summary
 
-### Slice 2: current-slice status reconciliation
-
-- `docs/plans/implementation-brief.20260711.122048_petrinet-workflow-current-slice-status-reconciliation.md`
-- `docs/plans/implementation-plan.20260711.122325_petrinet-workflow-current-slice-status-reconciliation.md`
-- `dev/workflow-nets/bootstrap-harness.workflow-net.json`
-- `tests/projectkoios/cli/test__workflow_status.py`
-- `docs/implementation/petrinet-workflow-current-slice-status-reconciliation-slice-2.20260711.122814.md`
-
-### Slice 3: interactive-control skill
-
-- `docs/plans/implementation-brief.20260711.123305_petrinet-workflow-interactive-control-skill-slice-3.md`
-- `src/python/projectkoios/workflow/skills/README.md`
-- `src/python/projectkoios/workflow/skills/manifest.json`
-- `src/python/projectkoios/workflow/skills/petrinet-workflow-interactive-control/SKILL.md`
-- `tests/projectkoios/workflow/test__PetriNetWorkflowSkills__interactive_control_skill.py`
-- `docs/implementation/petrinet-workflow-interactive-control-skill-slice-3.20260711.123801.md`
-
-### Slice 4: queue state command
-
-- `docs/plans/implementation-brief.20260711.124106_petrinet-workflow-queue-state-slice-4.md`
-- `dev/workflow-nets/bootstrap-harness.queue-state.json`
-- `src/python/projectkoios/cli/workflow.py`
-- `tests/projectkoios/cli/test__workflow_queue.py`
-- `docs/implementation/petrinet-workflow-queue-state-slice-4.20260711.124549.md`
-- `workspaces/koios/working/provenance-note.20260711_queue-state-slice-4.md`
-
-## Accepted Slice 5: activation command
-
-- `docs/plans/implementation-brief.20260711.124950_petrinet-workflow-activate-slice-5.md` — ATHENA brief approved by USER/HERMES.
-- `docs/reviews/hermes-decision.20260711.125800_petrinet-workflow-activate-slice-5.md` — HERMES approval decision.
-- `workspaces/koios/working/provenance-note.20260711_activate-slice-5.md` — KOIOS provenance input complete enough for routing.
-- `docs/implementation/petrinet-workflow-activate-slice-5.20260711.125832.md` — VULCAN implementation report.
-- `docs/AAR/aar.20260711.125832_petrinet-workflow-activate-slice-5.md` — VULCAN process note.
-- `docs/reviews/hermes-acceptance.20260711.130500_petrinet-workflow-activate-slice-5.md` — HERMES acceptance.
-- Live queue fixture is reconciled: Slice 4 is completed at commit `5f209114`, `active_item` remains null, and `pi-skill-determinism-slice-0` remains queued-only.
-
-## Accepted Slice 6: status/queue consistency
-
-- `docs/plans/implementation-brief.20260711.130723_petrinet-workflow-status-queue-consistency-slice-6.md` — ATHENA brief.
-- `workspaces/koios/working/provenance-note.20260711_status-queue-consistency-slice.md` — KOIOS provenance input.
-- `docs/reviews/hermes-decision.20260711.131000_petrinet-workflow-status-queue-consistency-slice-6.md` — HERMES approval decision.
-- `docs/implementation/petrinet-workflow-status-queue-consistency-slice-6.20260711.131316.md` — VULCAN implementation report.
-- `docs/AAR/aar.20260711.131316_petrinet-workflow-status-queue-consistency-slice-6.md` — VULCAN process note.
-- `docs/reviews/hermes-acceptance.20260711.131600_petrinet-workflow-status-queue-consistency-slice-6.md` — HERMES acceptance.
-- Status and queue now agree: `workflow status` reports `active_slice=none`; `workflow queue` reports active none.
-
-## Queued follow-ups
-
-- `docs/plans/queued-slice.20260711.122000_pi-skill-determinism-slice-0.md` — queued only; must not supersede accepted Petri-net slices.
-
-## Closeout watchpoints
-
-- Keep `workflow status` read-only until a specific transition-firing/activation slice is approved.
-- Keep the static bootstrap workflow-net fixture non-authoritative.
-- Keep canonical skill source under `src/python/projectkoios/workflow/skills/`; `.agents/skills/petrinet-workflow-status` is discovery exposure only.
-- Do not treat skill guidance as mechanical workflow-state authority.
-- Preserve active/queued/superseded/deferred distinctions.
+HERMES reran status, focused tests, mypy, Python policy, JSON validity, DB-file scan, docs/adr/docs/schemas mutation check, and diff-check. Results passed: 26 tests, mypy clean, 0 policy findings, JSON valid, no DB files, no ADR/schema mutation, diff-check clean.
 
 ## Waiting on
 
-- Packaging/commit decision for accepted Slice 6 changes.
+- Packaging/commit decision for accepted Slice 2 changes.
+- User/HERMES decision for next bounded proof point.
 
 ## Exit criteria
 
-Hermes state is stable when accepted Slice 6 changes are packaged/committed and the next bounded workflow-engine control slice is chosen without implicitly activating `pi-skill-determinism-slice-0`.
+Hermes state is stable when accepted Slice 2 changes are packaged/committed and the next bounded ADR JSON authority proof point or workflow-engine action is chosen without implicitly authorizing corpus conversion or queued/deferred work.

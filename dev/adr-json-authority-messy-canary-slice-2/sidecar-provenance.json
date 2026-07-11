@@ -1,0 +1,114 @@
+{
+  "ambiguity": {
+    "manual_review_required": true,
+    "missing_status_preserved": true,
+    "schema_implementation_contract": true
+  },
+  "authority_change": false,
+  "candidate_only": true,
+  "embedded_metadata": {
+    "created_on": "20260704.153108",
+    "derived_from": [],
+    "domain": {
+      "domain_scope": "schema",
+      "domain_subtype": "software",
+      "domain_type": "architecture"
+    },
+    "evidence": [
+      {
+        "claim": "docs/schemas/ is the draft durable namespace for machine-readable schema artifacts until ADR promotion.",
+        "kind": "file",
+        "ref": "docs/schemas/README.md"
+      },
+      {
+        "claim": "The base schema draft defines the metadata/content envelope and provenance field definitions.",
+        "kind": "file",
+        "ref": "docs/schemas/schema.record-base.json"
+      },
+      {
+        "claim": "The draft ADR-family schema composes with the base schema and constrains draft ADR content.",
+        "kind": "file",
+        "ref": "docs/schemas/adr-draft.schema.json"
+      },
+      {
+        "claim": "KOIOS reviewed provenance, projection, and rejected-content semantics and identified pre-handoff corrections.",
+        "kind": "review",
+        "ref": "intercom:subagent-chat-019f2c6d/bd69199b-c1dd-4bef-bcc1-ff94fc892ede"
+      }
+    ],
+    "origin": {
+      "actor": "ATHENA",
+      "authority": "user",
+      "method": "manual",
+      "type": "user_request"
+    },
+    "projections": [
+      {
+        "editable": true,
+        "generated_by": "ATHENA",
+        "path": "docs/adr/adr.schema-base.md",
+        "projection_method": "manual",
+        "projection_type": "editable_markdown",
+        "source_of_truth": "projection",
+        "source_record_id": "adr.schema-base",
+        "source_schema_id": "https://projectkoios.local/schemas/schema.record-base.json",
+        "source_schema_version": "0.1.0-draft"
+      }
+    ],
+    "record_id": "adr.schema-base",
+    "record_version": "0.1.0-draft",
+    "repository": "projectkoios-bootstrap",
+    "schema_id": "https://projectkoios.local/schemas/schema.record-base.json",
+    "schema_version": "0.1.0-draft",
+    "scope": "projectkoios-bootstrap",
+    "source_artifacts": [
+      {
+        "note": "Workplan integrating KOIOS, HERMES, and VULCAN review points for the pre-Vulcan schema-base slice.",
+        "path": "docs/plans/schema-base-adr-records-workplan.md",
+        "relationship": "controls",
+        "role": "ATHENA"
+      },
+      {
+        "note": "Schema namespace authority and migration table.",
+        "path": "docs/schemas/README.md",
+        "relationship": "supports",
+        "role": "ATHENA"
+      },
+      {
+        "note": "Draft base schema for the metadata/content envelope.",
+        "path": "docs/schemas/schema.record-base.json",
+        "relationship": "supports",
+        "role": "ATHENA"
+      },
+      {
+        "note": "Draft ADR-family schema composed with the base schema.",
+        "path": "docs/schemas/adr-draft.schema.json",
+        "relationship": "supports",
+        "role": "ATHENA"
+      },
+      {
+        "note": "KOIOS provenance review of this pre-Vulcan slice.",
+        "path": "intercom:subagent-chat-019f2c6d/bd69199b-c1dd-4bef-bcc1-ff94fc892ede",
+        "relationship": "review",
+        "role": "KOIOS"
+      }
+    ],
+    "status": "draft",
+    "title": "Schema Base Class for ADR Records",
+    "updated_on": "20260704.172632"
+  },
+  "observed_markdown_status": null,
+  "reviewed_inventory_reference": {
+    "authority_change": false,
+    "automatic_conversion_eligibility_candidate": false,
+    "candidate_only": true,
+    "reviewed_authority_effect": "candidate",
+    "reviewed_category": "template_schema_contract",
+    "reviewed_disposition": "manual_review_required",
+    "source_hash": "48a5fed34bec41b18885fdb57d7491895783f735c07efc33202098bbf61a2d51"
+  },
+  "slice_name": "adr-json-authority-messy-canary-slice-2",
+  "source_hash": "48a5fed34bec41b18885fdb57d7491895783f735c07efc33202098bbf61a2d51",
+  "source_path": "docs/adr/adr.schema-base.md",
+  "source_title": "ADR: Schema Base Class for ADR Records"
+}
