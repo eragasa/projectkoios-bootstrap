@@ -4,7 +4,7 @@
 
 - Type: workspace-active-state
 - Status: active
-- Updated: 20260711T091607Z
+- Updated: 20260711T114216Z
 - Updated by: KOIOS
 - Repository: projectkoios-bootstrap
 - Workspace: `workspaces/koios/`
@@ -25,6 +25,7 @@ ATHENA has accepted `docs/adr/adr.20260705.011836_adr-lifecycle-and-naming-conso
 - `working/provenance-audit.20260709T012117Z_adr-lifecycle-followon-reconciliation.md`
 - `working/provenance-note.20260711T033323Z_architecture-led-workflow-doctrine.md`
 - `working/provenance-audit.20260711T065332Z_adr-json-schemas-conformance.md`
+- `working/provenance-note.20260711T114216Z_live-petrinet-skeleton-pivot.md`
 - `../../docs/process-capture/pc.workflow.document-trace.md`
 - `../../docs/process-capture/pc.workflow.document-trace.20260706.025408Z.md`
 - `../../docs/process-capture/pc.workflow.document-trace.20260708.044950Z.md`
@@ -50,6 +51,8 @@ KOIOS added the two Operator Console AAR lessons to `../../docs/process-capture/
 
 KOIOS completed an all-AAR synthesis covering 298 AAR files under `../../docs/AAR/`. Outputs: `../../docs/process-capture/pc.aar-consolidation.20260711.091607Z.md` and `../../docs/process-capture/requirements.workflow-object.from-aar-synthesis.20260711.091607Z.md`. The requirements draft is candidate-only and should go to ATHENA/user before any workflow-object implementation.
 
+KOIOS captured the USER/HERMES pivot toward live Petri-net inspectability in `working/provenance-note.20260711T114216Z_live-petrinet-skeleton-pivot.md`. Next KOIOS posture: do not expand process notes unless asked; preserve that the next useful state is mechanical workflow visibility, e.g. `uv run projectkoios workflow status` over a static bootstrap workflow-net fixture.
+
 ## KOIOS next actions
 
 1. Re-audit any future architecture-document proposal against the captured control-surface criteria.
@@ -57,6 +60,7 @@ KOIOS completed an all-AAR synthesis covering 298 AAR files under `../../docs/AA
 3. Capture additional workflow document traces when multi-role slices expose document-state evolution worth preserving, especially after packaging decisions, stable-skill promotion decisions, or ADR/JSON migration pilots add new trace states.
 4. If the current conformance slice is packaged, ensure a VULCAN implementation report exists or explicitly record why the plan/tests/generated artifacts are sufficient for this small completed run.
 5. Route the all-AAR workflow-object requirements draft to ATHENA/user if promotion into architecture/spec authority is desired.
+6. If the live Petri-net skeleton slice proceeds, review only for provenance boundaries: status-only, static fixture, no firing/persistence/UI integration, and separation from workflow-object projections.
 
 ## Blockers and cautions
 

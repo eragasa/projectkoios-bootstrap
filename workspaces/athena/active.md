@@ -51,6 +51,9 @@
     "docs/reviews/provenance-addendum.20260711.113900_operator-console-current-implementation-review-fixture.md",
     "docs/reviews/hermes-feedback.20260711.113500_operator-console-current-implementation-review-fixture.md",
     "docs/reviews/architecture-final-acceptance.20260711.113700_operator-console-current-implementation-review-fixture.md",
+    "docs/reviews/provenance-final.20260711.114100_operator-console-current-implementation-review-fixture.md",
+    "docs/plans/schema-proposal.operator-console-current-implementation-review-snapshot.20260711.114300.md",
+    "docs/plans/implementation-brief.20260711.114600_live-petri-net-skeleton-slice-0.md",
     "docs/plans/roadmap.20260711.102324_workflow-object-future-slices.md",
     "src/typescript/projectkoios/ui/operator-console/"
   ]
@@ -95,11 +98,11 @@
 
 ## Waiting on
 
-- USER/HERMES selection of the next bounded slice or closeout/commit direction. KOIOS addendum recommends `operator-console-review-orientation-copy-fixture` as readability/orientation refinement, not authority correction.
+- USER/HERMES pivoted the preferred next direction away from ADR/process sprawl toward visibly inspectable/live Petri-net workflow harness behavior. ATHENA drafted `docs/plans/implementation-brief.20260711.114600_live-petri-net-skeleton-slice-0.md` for `uv run projectkoios workflow status`, backed by a static bootstrap workflow-net fixture and existing Petri-net runtime classes.
 
 ## Recommended next action
 
-Recommend next bounded slice `operator-console-review-orientation-copy-fixture` to address the accepted user-orientation/provenance-communication gap, or close/commit the accepted Operator Console/workflow-object bundle if USER/HERMES prefers repository closeout.
+Route `live-petri-net-skeleton-slice-0` to VULCAN planning/coding approval so the harness gets an immediately inspectable `projectkoios workflow status` command. Keep `operator-console-review-orientation-copy-fixture` as a later UI readability refinement, not the current priority.
 
 ## Packaging watchpoints
 

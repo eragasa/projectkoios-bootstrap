@@ -4,7 +4,7 @@
 
 - Type: workspace-state
 - Status: active
-- Updated: 20260711T091607Z
+- Updated: 20260711T114216Z
 - Updated by: KOIOS
 - Repository: projectkoios-bootstrap
 - Workspace: `workspaces/koios/`
@@ -31,6 +31,7 @@ Captured/advisory artifacts in this workspace:
 - `working/provenance-audit.20260709T012117Z_adr-lifecycle-followon-reconciliation.md`
 - `working/provenance-note.20260711T033323Z_architecture-led-workflow-doctrine.md`
 - `working/provenance-audit.20260711T065332Z_adr-json-schemas-conformance.md`
+- `working/provenance-note.20260711T114216Z_live-petrinet-skeleton-pivot.md`
 - `../../docs/process-capture/pc.workflow.document-trace.md`
 - `../../docs/process-capture/pc.workflow.document-trace.20260706.025408Z.md`
 - `../../docs/process-capture/pc.workflow.document-trace.20260708.044950Z.md`
@@ -69,6 +70,8 @@ KOIOS audited the current uncommitted `adr.json-schemas` active conformance slic
 KOIOS added Operator Console AAR lessons to `../../docs/process-capture/pc.workflow.document-trace.md` as process-review observations. The captured lessons are that user-visible preview should be treated as a validation gate for UI/operator-facing slices, display-only visibility must be distinguished from interactive controls, readability/navigation controls should be separate bounded work, and TypeScript DataObject/ActionObject or enum-class expectations should not become global policy unless promoted through an owning surface.
 
 KOIOS completed a comprehensive AAR consolidation over all 298 AARs present under `../../docs/AAR/` at synthesis time. The consolidation produced `../../docs/process-capture/pc.aar-consolidation.20260711.091607Z.md` and a non-authoritative workflow-object requirements draft at `../../docs/process-capture/requirements.workflow-object.from-aar-synthesis.20260711.091607Z.md`. The requirements draft distinguishes observed process lessons from candidate requirements and marks items needing ATHENA/user promotion before implementation.
+
+KOIOS captured the USER/HERMES pivot away from further ADR/process sprawl and toward live Petri-net inspectability in `working/provenance-note.20260711T114216Z_live-petrinet-skeleton-pivot.md`. The durable insight is that document workflow must become mechanically inspectable as Petri-net state: tests, AARs, workflow-object projections, and static UI fixtures do not by themselves answer what agents are doing now or where user attention is required.
 
 ## Authority boundary
 
