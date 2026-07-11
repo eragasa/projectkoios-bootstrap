@@ -9,7 +9,7 @@
   "workspace": "workspaces/hermes/",
   "document_domain": "orchestration, repo-state reconciliation, cross-domain consistency",
   "control_files": ["state.md", "active.md"],
-  "next_owner": "ATHENA",
+  "next_owner": "HERMES_USER",
   "blockers": []
 }
 ```
@@ -18,10 +18,9 @@
 
 ## Current priority stack
 
-1. Package HERMES-owned activation/routing recovery for Slice 11.
-2. Stop HERMES artifact production for the ATHENA-owned ADR draft.
-3. Hand off active Slice 11 to ATHENA.
-4. Preserve `pi-skill-determinism-slice-0` as queued unless USER/HERMES explicitly reprioritizes it.
+1. Commit the draft-only Slice 11 package for `docs/adr/adr.adr-template-schema-contract.draft.md`.
+2. Preserve the ATHENA/VULCAN/KOIOS review set as sufficient for draft-only packaging, not ADR acceptance authority.
+3. Preserve `pi-skill-determinism-slice-0` as queued unless USER/HERMES explicitly reprioritizes it.
 
 ## Active slice
 
@@ -31,28 +30,42 @@ Active queue item:
 adr-template-schema-contract-successor-draft-slice-11
 ```
 
-Intended ATHENA output, not yet created by the corrected HERMES state:
+ATHENA-authored draft created in active worktree:
 
 ```text
 docs/adr/adr.adr-template-schema-contract.draft.md
 ```
 
-Updated workflow fixtures:
+## Validation and review observed
+
+ATHENA reported and HERMES independently reran:
+
+```bash
+git status --short -- docs/adr docs/schemas dev/adr-json-authority-corpus-dry-run-inventory-slice-4
+git diff --check
+```
+
+Observed: only `?? docs/adr/adr.adr-template-schema-contract.draft.md` on the constrained surface; no `docs/schemas` or dry-run evidence mutation; diff check passed.
+
+VULCAN implementation-reality review reported implementation-feasible / no blocking implementation objection, with no blockers. Watchpoints remain for parser/ingester compatibility if immediate machine ingest is requested, future source-disposition decisions, and keeping `metadata.record_id` distinct from `dcn`.
+
+KOIOS provenance review reported provenance-adequate for HERMES/USER review, with no blocking provenance issues. Watchpoints remain for explicit later relation decision for `docs/adr/adr.adr-template-contract.md`, draft-internal proposed resolutions becoming authority only if/when accepted, invalid reflog/Archon/Codex drafts remaining non-authoritative, and closeout checks before packaging.
+
+HERMES packaging decision recorded:
 
 ```text
-dev/workflow-nets/bootstrap-harness.queue-state.json
-dev/workflow-nets/bootstrap-harness.workflow-net.json
+docs/reviews/hermes-decision.20260711.181920_adr-template-schema-contract-successor-draft-slice-11.md
 ```
 
 ## Role-boundary correction
 
-HERMES previously overstepped by creating the ATHENA-owned draft directly. Recovery removed that draft and retained only activation/routing state. `go` means proceed with the recommended action within the meta-harness framework, not cross into another role's artifact ownership.
+This draft was created by the ATHENA session after HERMES routing and USER `proceed`. Invalid HERMES reflog and Archon/Codex drafts are not current authority and were not used as source text.
 
 ## Waiting on
 
-- Packaging/commit of corrected activation/routing state.
-- ATHENA drafting of the successor ADR.
+- Commit of draft-only Slice 11 package.
+- Later USER/HERMES lifecycle/source-disposition decision after packaging.
 
 ## Exit criteria
 
-Hermes state is stable when Slice 11 activation/routing is packaged, the role-boundary AAR is committed, and the next owner is clearly ATHENA for ADR drafting.
+Hermes state is stable when the Slice 11 draft-only package is committed, with later acceptance/source-disposition decisions left explicitly unmade.

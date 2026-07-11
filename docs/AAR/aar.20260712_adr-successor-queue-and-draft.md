@@ -33,4 +33,4 @@ HERMES session in `projectkoios-bootstrap` reconciling workflow queue visibility
 
 ## Current status
 
-Slice 11 is active in the workflow fixtures. The ATHENA-owned successor ADR draft was removed during recovery. Next owner is ATHENA for drafting `docs/adr/adr.adr-template-schema-contract.draft.md` from the accepted successor brief.
+Slice 11 is active in the workflow fixtures. The invalid HERMES-authored draft was removed during recovery. After USER said `proceed`, HERMES routed the active slice to the existing ATHENA session via intercom, without Archon. ATHENA reconstructed `docs/adr/adr.adr-template-schema-contract.draft.md` fresh from accepted/current control surfaces. VULCAN and KOIOS returned no-blocker reviews. HERMES packaged the draft as draft-only review material in `docs/reviews/hermes-decision.20260711.181920_adr-template-schema-contract-successor-draft-slice-11.md`; acceptance, activation, supersession, schema mutation, migration, and source-disposition decisions remain unmade.
