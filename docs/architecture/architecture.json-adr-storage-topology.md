@@ -1,7 +1,7 @@
 ---
 status: pilot-as-built
 date: 20260711.032904Z
-last_updated: 20260711.062407Z
+last_updated: 20260711.070254Z
 back_to: architecture.00
 controlled_by: docs/adr/adr.json-database-for-adr-storage.draft.md
 ---
@@ -400,9 +400,62 @@ Implementation briefs, plans, and reports are supporting slice artifacts. This a
 - After conformance work creates real pressure, should ADR storage configuration remain per-pilot/per-slice, or should a reusable repository-level ADR storage config be introduced?
 - Does `docs/schemas/schema.record-base.json` need source-of-truth enum values for database rows/documents, or can that wait until a workflow/storage authority slice exists?
 
-## YAGNI planning boundary for next conformance slice
+## Completed implementation slice: JSON schemas ADR conformance
 
-The next slice should be a schema-conformance slice, not a schema-redesign, naming-machinery, workflow-state, or storage-authority slice.
+Active implementation evidence:
+
+- Plan: `docs/plans/implementation-plan.20260711.062654_json-schemas-adr-conformance.md`
+- Report: `docs/implementation/json-schemas-adr-conformance.20260711.065704.md`
+- AAR: `docs/AAR/aar.20260711.065704_json-schemas-adr-conformance.md`
+- Active conformed record: `dev/adr-json-schemas-conformance/adr.json-schemas.json`
+- Sidecar evidence: `dev/adr-json-schemas-conformance/conversion-evidence.json`, `dev/adr-json-schemas-conformance/mapping.json`, and `dev/adr-json-schemas-conformance/manifest.json`
+
+ATHENA review result: accept the JSON schemas ADR conformance implementation as conforming to current architecture and user forward-active/YAGNI direction.
+
+Accepted behavior:
+
+- `docs/adr/adr.json-schemas.draft.md` remains unmutated source evidence.
+- `dev/adr-json-schemas-conformance/adr.json-schemas.json` is the active conformed record for `adr.json-schemas` going forward.
+- `routing` is absent from the schema record.
+- Source `routing.owner`, `routing.next_phase`, `routing.notes`, source date/status/path/hash, and `links.related` are preserved in sidecar evidence.
+- `links.related` is not added to the ADR schema record because the current schema does not define it.
+- `links.supersedes` and `links.superseded_by` normalize source `None` values to JSON `null`.
+- Existing document/storage substrate is reused; no schema/lifecycle/workflow/storage-authority redesign was introduced.
+- Generated projection text remains a review projection; the JSON checkpoint is the active conformed record.
+
+VULCAN reported validation:
+
+```bash
+uv run pytest tests/projectkoios/bootstrap/control_surface_adr tests/projectkoios/bootstrap/control_surface_storage tests/projectkoios/bootstrap/schema -q
+# 32 passed in 0.19s
+
+uv run pytest -q
+# 256 passed in 1.25s
+
+uv run mypy src/python/projectkoios/bootstrap/control_surface tests/projectkoios/bootstrap/control_surface_adr tests/projectkoios/bootstrap/control_surface_storage
+# Success: no issues found in 18 source files
+
+uv run ruff check src/python/projectkoios/bootstrap/control_surface tests/projectkoios/bootstrap/control_surface_adr tests/projectkoios/bootstrap/control_surface_storage
+# All checks passed!
+
+uv run projectkoios bootstrap validate-python-policy src/python/projectkoios/bootstrap/control_surface tests/projectkoios/bootstrap/control_surface_adr tests/projectkoios/bootstrap/control_surface_storage
+# summary: 0 finding(s), 18 file(s)
+
+git diff --check
+# clean
+
+find dev/adr-json-schemas-conformance -type f \( -name '*.sqlite' -o -name '*.db' \) -print
+# no output
+
+git status --short -- docs/adr
+# no output
+```
+
+ATHENA did not rerun the full validation in this review pass.
+
+## YAGNI planning boundary for future conformance slices
+
+Future slices should remain schema-conformance slices, not schema-redesign, naming-machinery, workflow-state, or storage-authority slices.
 
 | Issue | YAGNI resolution | Controlling authority | Implementation impact |
 |---|---|---|---|
