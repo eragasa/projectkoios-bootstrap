@@ -18,7 +18,7 @@
 
 ## Current priority stack
 
-1. Package/commit accepted Petri-net workflow agent status skill Slice 1, including project discovery symlink.
+1. Package/commit accepted Petri-net workflow current-slice status reconciliation Slice 2.
 2. Preserve queue discipline: new topics are queued, not substituted for active work.
 3. After packaging, choose the next queued follow-up only by USER/HERMES direction.
 
@@ -46,10 +46,18 @@
 - `docs/implementation/petrinet-workflow-agent-status-skill-slice-1.20260711.121800.md`
 - `docs/reviews/architecture-conformance.20260711.122300_petrinet-workflow-agent-status-skill-slice-1.md`
 
+### Slice 2: current-slice status reconciliation
+
+- `docs/plans/implementation-brief.20260711.122048_petrinet-workflow-current-slice-status-reconciliation.md`
+- `docs/plans/implementation-plan.20260711.122325_petrinet-workflow-current-slice-status-reconciliation.md`
+- `dev/workflow-nets/bootstrap-harness.workflow-net.json`
+- `tests/projectkoios/cli/test__workflow_status.py`
+- `docs/implementation/petrinet-workflow-current-slice-status-reconciliation-slice-2.20260711.122814.md`
+
 ## Queued follow-ups
 
-- `docs/plans/queued-slice.20260711.122000_pi-skill-determinism-slice-0.md` — queued only; must not supersede active/accepted Petri-net Slice 1.
-- Petri-net workflow interactive-control affordance — deferred Slice 2 candidate.
+- `docs/plans/queued-slice.20260711.122000_pi-skill-determinism-slice-0.md` — queued only; must not supersede accepted Petri-net slices.
+- Petri-net workflow interactive-control affordance — deferred follow-up candidate.
 
 ## Closeout watchpoints
 
@@ -65,4 +73,4 @@
 
 ## Exit criteria
 
-Hermes state is stable when accepted Petri-net workflow agent status skill Slice 1 is packaged according to user direction and the next queued follow-up is left queued unless explicitly activated.
+Hermes state is stable when accepted Petri-net workflow current-slice status reconciliation Slice 2 is packaged according to user direction and the next queued follow-up is left queued unless explicitly activated.

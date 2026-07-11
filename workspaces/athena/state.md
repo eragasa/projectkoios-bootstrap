@@ -2,8 +2,8 @@
 {
   "title": "Athena workspace state",
   "artifact_type": "workspace-state",
-  "status": "petrinet-workflow-agent-status-skill-slice-1-user-acceptance-pending-queue-discipline-corrected",
-  "datetime": "20260711.122600Z",
+  "status": "petrinet-workflow-agent-status-skill-slice-1-accepted-committed-queued-work-corrected",
+  "datetime": "20260711.122048Z",
   "acting_as": "ATHENA",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/athena/",
@@ -131,26 +131,29 @@
 - HERMES relayed USER instruction that workflow inspectability and interactive-control behavior should be implemented as reusable agent skills. HERMES added `docs/plans/spec-intake.20260711.115957_agent-skills-for-workflow-inspectability.md`. ATHENA first produced a harness-global-first slicing/brief, then a workflow-project-local correction. USER then clarified more strongly that this is not a new project and must be sliced into the existing Petri-net workflow harness / workflow inspectability effort. ATHENA superseded prior framings and produced `docs/plans/slicing.20260711.121500_petrinet-workflow-agent-affordances.md` plus `docs/plans/implementation-brief.20260711.121600_petrinet-workflow-agent-status-skill-slice-1.md`. The new slice is `petrinet-workflow-agent-status-skill-slice-1`, continuing `live-petri-net-skeleton-slice-0`.
 - HERMES relayed KOIOS's Pi determinism proposal with explicit instruction to add it to the queue, not replace active Petri-net Slice 1. ATHENA recorded it as `docs/plans/queued-slice.20260711.122000_pi-skill-determinism-slice-0.md`; it is queued after `petrinet-workflow-agent-status-skill-slice-1` and explicitly defers opencode/goose/archon propagation.
 - HERMES relayed USER's operational correction that ATHENA must preserve active work and maintain a queue/backlog instead of replacing active state with each new incoming topic. ATHENA updated `workspaces/athena/active.md` and this state file to distinguish current active item, queued/backlog items, superseded/rejected items, and waiting/blocked items. Effective rule: new requests are queued unless USER/HERMES explicitly says to switch active work.
+- USER requested a new Petri-net slice after ATHENA reviewed VULCAN's Slice 1 work and identified a control-surface gap: `uv run projectkoios workflow status` still reports `active_slice=live-petri-net-skeleton-slice-0` while active Petri-net work has advanced. ATHENA drafted `docs/plans/implementation-brief.20260711.122048_petrinet-workflow-current-slice-status-reconciliation.md` for `petrinet-workflow-current-slice-status-reconciliation-slice-2`.
+- HERMES corrected queue discipline: `petrinet-workflow-agent-status-skill-slice-1` is accepted and committed as `e6742a76 Add Petri net workflow status skill`; the current-slice status reconciliation brief is queued/proposed only and must not be treated as active or routed to VULCAN unless USER/HERMES explicitly activates it after Slice 1 packaging/push. VULCAN produced `docs/plans/implementation-plan.20260711.122325_petrinet-workflow-current-slice-status-reconciliation.md` before the correction; ATHENA treats that plan as paused/queued input only.
 
 ## Current active item
 
-- `petrinet-workflow-agent-status-skill-slice-1`
-  - Parent effort: Petri-net workflow harness / workflow inspectability.
-  - Status: implemented by VULCAN; ATHENA conformance review evidence exists; HERMES recommends acceptance with watchpoints; USER acceptance is still being discussed.
-  - Key artifacts:
-    - `docs/plans/implementation-brief.20260711.121600_petrinet-workflow-agent-status-skill-slice-1.md`
-    - `docs/implementation/petrinet-workflow-agent-status-skill-slice-1.20260711.121800.md`
-    - `docs/reviews/architecture-conformance.20260711.122300_petrinet-workflow-agent-status-skill-slice-1.md`
+- No new Petri-net implementation slice is active by default.
+- `petrinet-workflow-agent-status-skill-slice-1` is accepted and committed as `e6742a76 Add Petri net workflow status skill`.
+- Current operational boundary: finish packaging/push decision for Slice 1 before activating queued work.
 
 ## Queued/backlog items
 
-1. `pi-skill-determinism-slice-0`
+1. `petrinet-workflow-current-slice-status-reconciliation-slice-2`
+   - Proposed brief: `docs/plans/implementation-brief.20260711.122048_petrinet-workflow-current-slice-status-reconciliation.md`.
+   - VULCAN plan produced before correction: `docs/plans/implementation-plan.20260711.122325_petrinet-workflow-current-slice-status-reconciliation.md`; treat as paused/queued input only.
+   - Ordering: queued/proposed only; do not route to VULCAN or treat as active unless USER/HERMES explicitly activates it after Slice 1 packaging/push.
+   - Boundary: fixture/status-output reconciliation only if later activated.
+2. `pi-skill-determinism-slice-0`
    - Queue artifact: `docs/plans/queued-slice.20260711.122000_pi-skill-determinism-slice-0.md`.
-   - Ordering: later, after active Slice 1 is accepted or USER/HERMES explicitly activates it.
-   - Boundary: must not replace, rename, reframe, or block active Petri-net workflow Slice 1.
-2. `petrinet-workflow-interactive-control-skill-slice-2`
+   - Ordering: queued; do not activate unless USER/HERMES explicitly selects it.
+   - Boundary: must not replace, rename, reframe, or block Petri-net workflow work.
+3. `petrinet-workflow-interactive-control-skill-slice-2`
    - Deferred follow-on from `docs/plans/slicing.20260711.121500_petrinet-workflow-agent-affordances.md`.
-3. `operator-console-review-orientation-copy-fixture`
+4. `operator-console-review-orientation-copy-fixture`
    - Deferred UI readability/provenance refinement.
 
 ## Superseded/rejected items
@@ -162,12 +165,12 @@
 
 ## Waiting on / blocked items
 
-- USER/HERMES final acceptance decision for active `petrinet-workflow-agent-status-skill-slice-1`.
-- Commit/push boundary after USER/HERMES decides what to include.
+- USER/HERMES packaging/push decision for committed Slice 1.
+- USER/HERMES explicit activation of any queued next work after packaging/push.
 
 ## Open questions
 
-- USER/HERMES final acceptance decision for active `petrinet-workflow-agent-status-skill-slice-1`.
+- USER/HERMES packaging/push decision for committed Slice 1.
 - USER/HERMES review of future-slice roadmap if desired; roadmap is advisory and does not authorize later slices.
 - Whether to close/commit the accepted Operator Console P0/P1/P2 plus workflow-object architecture/brief bundle or select another bounded UI slice.
 - When to extract `src/typescript/projectkoios/ui/operator-console/` to `projectkoios/ui/operator-console/` and promote product/mothership authority.
@@ -179,9 +182,9 @@
 
 - Owner: HERMES/USER.
 - Recommended next actions:
-  1. Hold active item as `petrinet-workflow-agent-status-skill-slice-1`; do not activate queued work unless USER/HERMES explicitly says to switch.
-  2. Await USER/HERMES final acceptance decision for active Slice 1.
-  3. Preserve `pi-skill-determinism-slice-0` as queued-only until active Slice 1 is accepted or USER/HERMES explicitly promotes it.
+  1. Do not route queued `petrinet-workflow-current-slice-status-reconciliation-slice-2` unless USER/HERMES explicitly activates it.
+  2. Finish Slice 1 packaging/push decision first.
+  3. Preserve queued items as queued-only until USER/HERMES explicitly promotes one.
 - Operator Console P0/P1/P2 accepted boundaries: bootstrap incubation only; package-local lockfile only; behavior owned by ActionObject-style classes with data in typed interfaces/constants; `docs/policies/typescript-coding.md` remains draft/non-controlling; fixtures are static/stale-by-design; readability/navigation affordances are local browser inspection helpers only; no backend, live reads, messaging capability, activation/mutation, Petri-net graph editor, product UI authority, or bootstrap production-backend claim.
 - ADR conformance work remains available as a separate track: future slices should use updated `docs/schemas/adr.schema.json` without `routing`, preserve sidecar provenance, and avoid schema/lifecycle/workflow/storage-authority redesign unless repeated conformance pressure justifies it.
 

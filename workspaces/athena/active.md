@@ -2,8 +2,8 @@
 {
   "title": "Athena active work",
   "artifact_type": "workspace-active-priorities",
-  "status": "petrinet-workflow-agent-status-skill-slice-1-user-acceptance-pending-queue-discipline-corrected",
-  "datetime": "20260711.122600Z"},{
+  "status": "petrinet-workflow-agent-status-skill-slice-1-accepted-committed-queued-work-corrected",
+  "datetime": "20260711.122048Z"},{
   "acting_as": "ATHENA",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/athena/",
@@ -65,6 +65,7 @@
     "docs/plans/slicing.20260711.121500_petrinet-workflow-agent-affordances.md",
     "docs/plans/implementation-brief.20260711.121600_petrinet-workflow-agent-status-skill-slice-1.md",
     "docs/plans/queued-slice.20260711.122000_pi-skill-determinism-slice-0.md",
+    "docs/plans/implementation-brief.20260711.122048_petrinet-workflow-current-slice-status-reconciliation.md",
     "docs/plans/roadmap.20260711.102324_workflow-object-future-slices.md",
     "src/typescript/projectkoios/ui/operator-console/"
   ]
@@ -77,7 +78,7 @@
 
 1. Workflow-object Slice 0 is implemented, VULCAN-validated, ATHENA conformance-reviewed and implementation-reviewed/accepted, KOIOS-reviewed, and USER/HERMES-accepted with watchpoints.
 2. Operator Console P0/P1/P2 are implemented, user-previewed where required, ATHENA-reviewed/accepted, and reconciled into architecture as bootstrap-incubation as-built evidence.
-3. Active item is `petrinet-workflow-agent-status-skill-slice-1`: VULCAN implemented it, ATHENA created conformance review evidence, and HERMES recommends acceptance with watchpoints; USER acceptance is still being discussed.
+3. `petrinet-workflow-agent-status-skill-slice-1` is accepted and committed as `e6742a76 Add Petri net workflow status skill`; no new Petri-net slice is active by default.
 
 ## Recently completed
 
@@ -117,24 +118,25 @@
 
 ## Current active item
 
-- `petrinet-workflow-agent-status-skill-slice-1`
-  - Parent effort: Petri-net workflow harness / workflow inspectability.
-  - Status: implemented by VULCAN; ATHENA conformance review evidence exists; HERMES recommends acceptance with watchpoints; USER acceptance is still being discussed.
-  - Key artifacts:
-    - `docs/plans/implementation-brief.20260711.121600_petrinet-workflow-agent-status-skill-slice-1.md`
-    - `docs/implementation/petrinet-workflow-agent-status-skill-slice-1.20260711.121800.md`
-    - `docs/reviews/architecture-conformance.20260711.122300_petrinet-workflow-agent-status-skill-slice-1.md`
+- No new Petri-net implementation slice is active by default.
+- `petrinet-workflow-agent-status-skill-slice-1` is accepted and committed as `e6742a76 Add Petri net workflow status skill`.
+- Current operational boundary: finish packaging/push decision for Slice 1 before activating queued work.
 
 ## Queued/backlog items
 
-1. `pi-skill-determinism-slice-0`
+1. `petrinet-workflow-current-slice-status-reconciliation-slice-2`
+   - Proposed brief: `docs/plans/implementation-brief.20260711.122048_petrinet-workflow-current-slice-status-reconciliation.md`.
+   - VULCAN plan produced before correction: `docs/plans/implementation-plan.20260711.122325_petrinet-workflow-current-slice-status-reconciliation.md`; treat as paused/queued input only.
+   - Ordering: queued/proposed only; do not route to VULCAN or treat as active unless USER/HERMES explicitly activates it after Slice 1 packaging/push.
+   - Boundary: fixture/status-output reconciliation only if later activated.
+2. `pi-skill-determinism-slice-0`
    - Queue artifact: `docs/plans/queued-slice.20260711.122000_pi-skill-determinism-slice-0.md`.
-   - Ordering: later, after `petrinet-workflow-agent-status-skill-slice-1` is accepted or USER/HERMES explicitly activates it.
-   - Boundary: must not replace, rename, reframe, or block active Petri-net workflow Slice 1.
-2. `petrinet-workflow-interactive-control-skill-slice-2`
+   - Ordering: queued; do not activate unless USER/HERMES explicitly selects it.
+   - Boundary: must not replace, rename, reframe, or block Petri-net workflow work.
+3. `petrinet-workflow-interactive-control-skill-slice-2`
    - Deferred follow-on from `docs/plans/slicing.20260711.121500_petrinet-workflow-agent-affordances.md`.
    - Boundary: not active until USER/HERMES selects it.
-3. `operator-console-review-orientation-copy-fixture`
+4. `operator-console-review-orientation-copy-fixture`
    - Deferred UI readability/provenance refinement.
    - Boundary: not active while Petri-net workflow inspectability remains selected.
 
@@ -147,14 +149,14 @@
 
 ## Waiting on / blocked items
 
-- USER/HERMES final acceptance decision for active `petrinet-workflow-agent-status-skill-slice-1`.
-- Commit/push boundary after USER/HERMES decides what to include.
+- USER/HERMES packaging/push decision for committed Slice 1.
+- USER/HERMES explicit activation of any queued next work after packaging/push.
 
 ## Recommended next actions
 
-1. Hold active item as `petrinet-workflow-agent-status-skill-slice-1`; do not activate queued work unless USER/HERMES explicitly says to switch.
-2. Await USER/HERMES final acceptance decision for active Slice 1.
-3. Preserve `pi-skill-determinism-slice-0` as queued-only until active Slice 1 is accepted or USER/HERMES explicitly promotes it.
+1. Do not route queued `petrinet-workflow-current-slice-status-reconciliation-slice-2` unless USER/HERMES explicitly activates it.
+2. Finish Slice 1 packaging/push decision first.
+3. Preserve queued items as queued-only until USER/HERMES explicitly promotes one.
 
 ## Packaging watchpoints
 

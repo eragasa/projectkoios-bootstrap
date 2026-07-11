@@ -57,7 +57,7 @@
         "color": {
           "kind": "workflow-slice",
           "requires_user_decision": "true",
-          "active_slice": "live-petri-net-skeleton-slice-0"
+          "active_slice": "petrinet-workflow-current-slice-status-reconciliation-slice-2"
         }
       }
     ]

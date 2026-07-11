@@ -156,6 +156,16 @@ This slice is intentionally read-only. It does not add transition firing, persis
 
 The static fixture is a bootstrap inspectability fixture, not canonical workflow authority. It proves the user's requested pivot from document/process surfaces toward visibly inspectable Petri-net workflow state.
 
+#### Current-slice status reconciliation slice
+
+ATHENA brief: `docs/plans/implementation-brief.20260711.122048_petrinet-workflow-current-slice-status-reconciliation.md`.
+VULCAN plan: `docs/plans/implementation-plan.20260711.122325_petrinet-workflow-current-slice-status-reconciliation.md`.
+VULCAN report: `docs/implementation/petrinet-workflow-current-slice-status-reconciliation-slice-2.20260711.122814.md`.
+
+This slice reconciled the static bootstrap workflow-net fixture with the current Petri-net workflow control surface after USER/HERMES explicitly activated it. The live status command remains read-only; the fixture now reports `active_slice=petrinet-workflow-current-slice-status-reconciliation-slice-2` while staying in `user_decision` until USER/HERMES approves the next implementation transition.
+
+This slice did not change Petri-net runtime semantics, transition firing, persistence, live adapters, Operator Console integration, workflow-object runtime coupling, schema authority, role/permission expansion, or product/mothership workflow authority.
+
 ## Decomposition map
 
 | Section | Current state | Decomposes to | Trigger |
