@@ -18,16 +18,16 @@
 
 ## Current priority stack
 
-1. Commit Slice 12 proposal-only acceptance package.
-2. Prepare for explicit activation of `adr-schema-base-architecture-extraction-planning-slice-13` if USER/HERMES proceeds.
-3. Keep ADR track priority; do not activate `pi-skill-determinism-slice-0` unless explicitly reprioritized.
+1. Route `adr-schema-base-architecture-extraction-planning-slice-13` to ATHENA.
+2. Keep ADR track priority; do not activate `pi-skill-determinism-slice-0` while ADR active item remains set.
+3. Preserve `docs/adr/adr.schema-base.md` unchanged as source/provenance unless a later approved slice changes disposition.
 
 ## Active slice
 
 Active queue item after reconciliation:
 
 ```text
-none
+adr-schema-base-architecture-extraction-planning-slice-13
 ```
 
 Target source:
@@ -88,7 +88,7 @@ dev/workflow-nets/bootstrap-harness.queue-state.json
 dev/workflow-nets/bootstrap-harness.workflow-net.json
 ```
 
-Current workflow status reports `active_slice=none`; queue reports no active item and next decision needed: explicitly activate `adr-schema-base-architecture-extraction-planning-slice-13` or define another ADR-track slice.
+Current workflow status reports `active_slice=adr-schema-base-architecture-extraction-planning-slice-13`; queue reports active item set and warns not to activate queued non-ADR work.
 
 Activation decision recorded:
 
@@ -118,9 +118,9 @@ The successor ADR was created by the ATHENA session after HERMES routing and USE
 
 ## Waiting on
 
-- Commit of Slice 12 proposal-only acceptance package.
-- Later USER/HERMES activation of `adr-schema-base-architecture-extraction-planning-slice-13` or another ADR-track slice.
+- Commit of ADR-track Slice 13 activation/routing decision and queue/status update.
+- ATHENA proposal-only architecture-extraction brief for `docs/adr/adr.schema-base.md`.
 
 ## Exit criteria
 
-Hermes state is stable when Slice 12 proposal-only acceptance is committed and no active queue item remains.
+Hermes state is stable when Slice 13 activation/routing is committed and ATHENA is the explicit next owner.
