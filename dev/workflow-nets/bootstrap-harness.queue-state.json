@@ -4,17 +4,7 @@
   "parent_effort": "petri-net-workflow-inspectability",
   "status": "static-read-only-fixture",
   "authority": "Static read-only fixture; not canonical workflow authority and not product authority.",
-  "active_item": {
-    "name": "adr-template-schema-contract-successor-draft-slice-11",
-    "state": "active",
-    "artifact_refs": [
-      "docs/plans/successor-brief.20260711.172500_adr-template-schema-contract.md",
-      "docs/reviews/hermes-acceptance.20260711.174500_adr-template-schema-contract-successor-planning-slice-10.md"
-    ],
-    "why": "Accepted Slice 10 successor planning recommends one ATHENA-owned successor ADR draft.",
-    "dependency_or_blocker": "Requires explicit USER/HERMES activation before creating docs/adr/adr.adr-template-schema-contract.draft.md.",
-    "recommendation": "Activate this before lower-priority skill determinism work unless USER/HERMES reprioritizes."
-  },
+  "active_item": null,
   "queued_items": [
     {
       "name": "pi-skill-determinism-slice-0",
@@ -28,6 +18,16 @@
     }
   ],
   "completed_items": [
+    {
+      "name": "adr-template-schema-contract-successor-draft-slice-11",
+      "state": "accepted-committed-pending",
+      "artifact_refs": [
+        "docs/adr/adr.adr-template-schema-contract.md",
+        "docs/reviews/hermes-acceptance.20260711.182653_adr-template-schema-contract-successor-draft-slice-11.md",
+        "docs/reviews/hermes-decision.20260711.181920_adr-template-schema-contract-successor-draft-slice-11.md"
+      ],
+      "why": "HERMES/USER accepted the ATHENA-authored successor ADR; source-disposition for docs/adr/adr.adr-template-contract.md remains a separate ADR-track decision."
+    },
     {
       "name": "petrinet-workflow-queue-state-slice-4",
       "state": "accepted-committed-pushed",
@@ -89,5 +89,5 @@
     }
   ],
   "deferred_items": [],
-  "next_decision_needed": "Complete or review active item adr-template-schema-contract-successor-draft-slice-11; do not activate another item until active_item is cleared."
+  "next_decision_needed": "Decide source disposition for docs/adr/adr.adr-template-contract.md or explicitly activate the next queued item."
 }

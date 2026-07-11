@@ -18,7 +18,7 @@
 
 ## Current focus
 
-Slice 11 draft-only package is committed; next decision is lifecycle/source-disposition handling or moving to the next queued workflow item.
+Slice 11 successor ADR has been accepted; next ADR-track decision is source disposition for `docs/adr/adr.adr-template-contract.md`.
 
 ## Current validated state
 
@@ -48,31 +48,43 @@ Slice 11 draft-only package is committed; next decision is lifecycle/source-disp
 - HERMES created draft-only packaging decision:
   - `docs/reviews/hermes-decision.20260711.181920_adr-template-schema-contract-successor-draft-slice-11.md`
 - HERMES committed the draft-only Slice 11 package as `026147dd Package ADR template schema successor draft`.
+- USER said `proceed` after HERMES corrected that the ADR track remains active.
+- HERMES accepted the successor ADR and renamed it from draft path to accepted stable path:
+  - from `docs/adr/adr.adr-template-schema-contract.draft.md`
+  - to `docs/adr/adr.adr-template-schema-contract.md`
+- HERMES recorded acceptance:
+  - `docs/reviews/hermes-acceptance.20260711.182653_adr-template-schema-contract-successor-draft-slice-11.md`
+- HERMES cleared the active queue item for Slice 11 and reconciled workflow status to `active_slice=none`.
 
 ## Current coherent state
 
-The draft-only Slice 11 package is committed in `026147dd`.
-
-Packaged artifacts:
+Uncommitted acceptance/queue reconciliation work:
 
 ```text
-docs/adr/adr.adr-template-schema-contract.draft.md
-docs/reviews/hermes-decision.20260711.181920_adr-template-schema-contract-successor-draft-slice-11.md
-docs/AAR/aar.20260712_adr-successor-queue-and-draft.md
+docs/adr/adr.adr-template-schema-contract.md
+docs/reviews/hermes-acceptance.20260711.182653_adr-template-schema-contract-successor-draft-slice-11.md
+dev/workflow-nets/bootstrap-harness.queue-state.json
+dev/workflow-nets/bootstrap-harness.workflow-net.json
 workspaces/hermes/state.md
 workspaces/hermes/active.md
 ```
 
-The workflow fixtures remain committed with active slice `adr-template-schema-contract-successor-draft-slice-11`; live status still reports the token at `user_decision`.
+Previously packaged Slice 11 draft-only commit:
+
+```text
+026147dd Package ADR template schema successor draft
+```
+
+The workflow fixtures now show no active queue item and `active_slice=none`; the next decision remains user-gated.
 
 ## Active boundaries
 
-The ATHENA draft is a draft only. It does not edit `docs/adr/adr.adr-template-contract.md`, edit `docs/schemas/`, change source status or casing, supersede the old source, accept/activate a new ADR, migrate records, replace generated projections, create database/storage authority, or cut over JSON authority.
+The successor ADR is accepted as the current ADR template/schema contract. This acceptance does not edit `docs/adr/adr.adr-template-contract.md`, edit `docs/schemas/`, change old-source status or casing, supersede the old source, migrate records, replace generated projections, create database/storage authority, or cut over JSON authority.
 
 ## Current blockers
 
-- USER/HERMES decision is required to either keep Slice 11 draft-only and move to the next queued item, or open a separate lifecycle/source-disposition decision for the draft.
+- USER/HERMES decision is required for source disposition of `docs/adr/adr.adr-template-contract.md` or explicit activation of another queued item.
 
 ## Next owner
 
-HERMES_USER for choosing the next transition: close Slice 11 as draft-only packaged work, or begin acceptance/revision/source-disposition handling.
+HERMES_USER for choosing the next transition: continue ADR source-disposition handling or explicitly activate another queued item.

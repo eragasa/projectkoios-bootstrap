@@ -2,7 +2,7 @@
 {
   "title": "ADR template/schema contract",
   "artifact_type": "adr",
-  "status": "draft",
+  "status": "accepted",
   "datetime": "20260711.181500Z",
   "acting_as": "ATHENA",
   "repository": "projectkoios-bootstrap",
@@ -12,7 +12,7 @@
   "source_status_observed": "Accepted",
   "source_mutation": false,
   "schema_mutation": false,
-  "authority_change": false
+  "authority_change": true
 }
 ```
 
@@ -20,7 +20,7 @@
 
 ## Status
 
-draft
+accepted
 
 ## Provenance
 
@@ -51,7 +51,7 @@ Planning and review basis:
 - `docs/adr/adr.adr-lifecycle.20260705.011836Z.md`
 - root `AGENTS.md` ADR filename/body convention
 
-This draft is reconstructed fresh from current accepted control surfaces. It does not use a bad HERMES reflog draft or Archon/Codex log draft as source text or authority.
+This ADR was reconstructed fresh from current accepted control surfaces. It does not use a bad HERMES reflog draft or Archon/Codex log draft as source text or authority.
 
 ## Context
 
@@ -74,11 +74,11 @@ Later control surfaces clarified the active boundary:
 - `routing` and `dcn` are not current ADR content-schema fields.
 - `workflow_binding` is optional schema-supported content, not operational workflow authority.
 
-This successor draft exists to state the current template/schema contract without mutating, normalizing, superseding, or migrating the older source.
+This successor ADR states the current template/schema contract without mutating, normalizing, superseding, or migrating the older source.
 
 ## Decision
 
-Project Koios should treat this draft as the proposed successor ADR template/schema contract, subject to later HERMES/USER review and acceptance.
+Project Koios treats this ADR as the accepted successor ADR template/schema contract.
 
 ### ADR content schema
 
@@ -108,7 +108,7 @@ The ADR content schema must not be assumed to own `routing`, `dcn`, source hashe
 
 The envelope direction owns record identity, schema identity/versioning, provenance, derivation, evidence, projection, repository/domain typing, and source-of-truth metadata only after an approved schema/record-envelope slice makes those rules authoritative for the relevant records.
 
-This draft must not be read as saying that every current ADR is already emitted, stored, or validated as a `metadata` + `content` record.
+This ADR must not be read as saying that every current ADR is already emitted, stored, or validated as a `metadata` + `content` record.
 
 ### Markdown source/control and projection boundary
 
@@ -152,25 +152,25 @@ It is documentary/schema content only unless a later workflow authority decision
 
 ### Lifecycle and filename boundary
 
-This draft uses status `draft` according to the accepted lifecycle vocabulary:
+This ADR uses status `accepted` according to the accepted lifecycle vocabulary:
 
 ```text
 proposal, draft, accepted, active, superseded
 ```
 
-This draft uses stable semantic filename:
+This ADR uses stable semantic filename:
 
 ```text
-docs/adr/adr.adr-template-schema-contract.draft.md
+docs/adr/adr.adr-template-schema-contract.md
 ```
 
 Timestamps for this draft belong in metadata, provenance, review artifacts, and git history rather than the ADR filename.
 
-The observed old-source status/casing `Accepted` remains provenance and is not normalized by this draft.
+The observed old-source status/casing `Accepted` remains provenance and is not normalized by this ADR.
 
 ### Relationship to prior source
 
-Creating this draft does not supersede, edit, rename, move, archive, normalize, split, delete, migrate, or demote `docs/adr/adr.adr-template-contract.md`.
+Accepting this ADR does not supersede, edit, rename, move, archive, normalize, split, delete, migrate, or demote `docs/adr/adr.adr-template-contract.md`.
 
 A later HERMES/USER decision is required to decide whether the older source is superseded, retained as accepted source/provenance, left with errata, or handled by another source-disposition path.
 
@@ -184,7 +184,7 @@ A later HERMES/USER decision is required to decide whether the older source is s
 
 ## Acceptance criteria
 
-For this draft to become accepted authority, reviewers should confirm:
+Reviewers confirmed:
 
 - The draft identifies `docs/schemas/adr.schema.json` as current ADR content-shape schema only.
 - The draft distinguishes ADR content payload from record-envelope metadata and sidecar/provenance evidence.
@@ -221,7 +221,7 @@ If this draft is accepted, possible follow-up slices remain separately gated:
 
 ## Non-goals
 
-This draft does not:
+This ADR does not:
 
 - edit `docs/adr/adr.adr-template-contract.md`;
 - edit any existing `docs/adr/` source;
@@ -244,7 +244,7 @@ git status --short -- docs/adr docs/schemas dev/adr-json-authority-corpus-dry-ru
 git diff --check
 ```
 
-Expected result for this slice: only the new successor draft appears under `docs/adr/`; no existing ADR, schema, or dry-run evidence surfaces are modified; diff hygiene passes.
+Expected result for this slice: only the accepted successor ADR rename/update appears under `docs/adr/`; no existing ADR source beyond this successor, schema, or dry-run evidence surfaces are modified; diff hygiene passes.
 
 ## Links
 

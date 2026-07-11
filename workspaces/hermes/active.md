@@ -18,19 +18,25 @@
 
 ## Current priority stack
 
-1. Decide whether to close Slice 11 as draft-only packaged work or open a separate acceptance/revision/source-disposition action.
-2. Preserve the ATHENA/VULCAN/KOIOS review set as sufficient for draft-only packaging, not ADR acceptance authority.
-3. Preserve `pi-skill-determinism-slice-0` as queued unless USER/HERMES explicitly reprioritizes it.
+1. Commit Slice 11 successor ADR acceptance and queue/status reconciliation.
+2. Continue ADR-track source-disposition handling for `docs/adr/adr.adr-template-contract.md` unless USER/HERMES explicitly reprioritizes.
+3. Preserve `pi-skill-determinism-slice-0` as queued unless USER/HERMES explicitly activates it.
 
 ## Active slice
 
-Active queue item:
+Active queue item after reconciliation:
 
 ```text
-adr-template-schema-contract-successor-draft-slice-11
+none
 ```
 
-ATHENA-authored draft created in active worktree:
+Accepted successor ADR:
+
+```text
+docs/adr/adr.adr-template-schema-contract.md
+```
+
+Prior draft path:
 
 ```text
 docs/adr/adr.adr-template-schema-contract.draft.md
@@ -63,14 +69,30 @@ Draft-only package committed:
 026147dd Package ADR template schema successor draft
 ```
 
+Successor ADR acceptance recorded:
+
+```text
+docs/reviews/hermes-acceptance.20260711.182653_adr-template-schema-contract-successor-draft-slice-11.md
+```
+
+Queue/status reconciliation:
+
+```text
+dev/workflow-nets/bootstrap-harness.queue-state.json
+dev/workflow-nets/bootstrap-harness.workflow-net.json
+```
+
+Current workflow status reports `active_slice=none`; queue reports active none and next decision needed: source disposition for `docs/adr/adr.adr-template-contract.md` or explicit activation of another queued item.
+
 ## Role-boundary correction
 
-This draft was created by the ATHENA session after HERMES routing and USER `proceed`. Invalid HERMES reflog and Archon/Codex drafts are not current authority and were not used as source text.
+The successor ADR was created by the ATHENA session after HERMES routing and USER `proceed`. Invalid HERMES reflog and Archon/Codex drafts are not current authority and were not used as source text. HERMES accepted the successor ADR only after ATHENA authorship, VULCAN implementation-reality review, KOIOS provenance review, and USER `proceed`.
 
 ## Waiting on
 
-- USER/HERMES decision: close Slice 11 as draft-only packaged work and move to next queued item, or begin separate lifecycle/source-disposition handling.
+- Commit of Slice 11 acceptance and workflow queue/status reconciliation.
+- Later USER/HERMES decision for source disposition of `docs/adr/adr.adr-template-contract.md`.
 
 ## Exit criteria
 
-Hermes state is stable when this post-commit state correction is committed and USER/HERMES chooses the next transition.
+Hermes state is stable when the Slice 11 successor ADR acceptance and queue/status reconciliation are committed, with old-source disposition explicitly unmade.
