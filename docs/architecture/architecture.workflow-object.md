@@ -395,20 +395,32 @@ The architecture note does not inline all 298 AAR sources. Representative eviden
 | Dirty-tree/package boundary deferred hook | R7 | `aar.20260701.053127_dirty-tree-review.md`, `aar.20260702.052145_blind-commit-all-scope.md`, `aar.20260705.101124_violation-formatting-test-policy-remediation.md` |
 | Skill/procedure stability deferred hook | R13 | `aar.20260709.010343_template-record-roundtrip-skill-brief.md`, `aar.20260709.010828_koios-comments-skill-brief-update.md`, `aar.20260709.012011_template-record-roundtrip-skill.md` |
 
-## First implementation candidate after architecture approval
+## First implementation slice as-built
 
-After this architecture note is reviewed and accepted, a later VULCAN implementation slice may create exactly one static workflow-object example for the accepted Operator Console P0/P1 work.
+VULCAN implemented the first static workflow-object record and ATHENA accepted it as conforming on `20260711.105430Z`.
 
-Suggested implementation boundaries:
+As-built artifacts:
 
-- place the example under an explicitly non-authoritative fixture/dev path;
-- reference existing artifacts by path and hash;
-- do not mutate source artifacts;
-- do not create repository-wide workflow state;
-- do not create storage/database authority;
-- validate that referenced paths exist and hashes match if feasible.
+- implementation report: `docs/implementation/workflow-object-static-operator-console-record.20260711.105117.md`
+- static record: `dev/workflow-objects/operator-console-bootstrap-bundle.workflow-object.json`
+- test-only validator: `tests/projectkoios/bootstrap/workflow_objects/test__operator_console_static_record.py`
+- ATHENA conformance review: `docs/reviews/architecture-conformance.20260711.105430_workflow-object-static-operator-console-record.md`
 
-Implementation requires a separate implementation brief/plan and approval.
+As-built behavior:
+
+- one candidate/static `WorkflowObjectRecord` projection/index under `dev/workflow-objects/`;
+- nine representative `ArtifactRecord` entries, all file-based with current SHA-256 content refs;
+- exactly one package/source ref: `src/typescript/projectkoios/ui/operator-console/package.json`;
+- three `WorkflowPlaceRecord` entries that are explicitly not documents;
+- one projection-only token, three transition gates, and three gate evaluations;
+- all gate evaluations have `completion_authority_created: false`;
+- one validation evidence record and one preview evidence record;
+- explicit non-authority markers for projection/index-only, not source/completion/schema/storage/Petri-net/product authority, bootstrap incubation, fixture/static/non-live/stale-by-design behavior;
+- deferred-extension records preserving omitted broader artifact/package/source indexing, schema, storage/database, and Operator Console UI display scope.
+
+ATHENA reran focused validation: JSON parse passed, pytest `5 passed`, ruff passed, mypy passed, `git diff --check` clean, `docs/adr` unchanged, and only one `dev/*workflow-object*` file was present.
+
+This as-built slice does not authorize repository-wide workflow state, schema authority, storage/database authority, CLI, UI rendering, Petri-net runtime changes, live adapters, bulk generation, recursive package/source hashing, source artifact mutation, product/mothership authority, or completion authority.
 
 ## Open questions
 

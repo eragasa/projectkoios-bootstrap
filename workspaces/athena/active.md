@@ -2,8 +2,8 @@
 {
   "title": "Athena active work",
   "artifact_type": "workspace-active-priorities",
-  "status": "workflow-object-architecture-accepted",
-  "datetime": "20260711.093600Z"},{
+  "status": "workflow-object-static-record-hermes-user-accepted",
+  "datetime": "20260711.110031Z"},{
   "acting_as": "ATHENA",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/athena/",
@@ -38,6 +38,11 @@
     "docs/plans/implementation-plan.20260711.103626_workflow-object-static-operator-console-record.md",
     "docs/reviews/architecture-plan-review.20260711.104117_workflow-object-static-operator-console-record.md",
     "docs/reviews/architecture-plan-review.20260711.104845_workflow-object-static-operator-console-record-revised.md",
+    "docs/implementation/workflow-object-static-operator-console-record.20260711.105117.md",
+    "dev/workflow-objects/operator-console-bootstrap-bundle.workflow-object.json",
+    "tests/projectkoios/bootstrap/workflow_objects/test__operator_console_static_record.py",
+    "docs/reviews/architecture-conformance.20260711.105430_workflow-object-static-operator-console-record.md",
+    "docs/reviews/implementation-review.20260711.105822_workflow-object-static-operator-console-record.md",
     "docs/plans/roadmap.20260711.102324_workflow-object-future-slices.md",
     "src/typescript/projectkoios/ui/operator-console/"
   ]
@@ -48,9 +53,9 @@
 
 ## Current priority stack
 
-1. Operator Console P0 and P1 interaction visibility are implemented, user-previewed, ATHENA-reviewed/accepted, and reconciled into architecture as bootstrap-incubation as-built evidence.
-2. Operator Console readability/navigation fixture is implemented, VULCAN-validated, ATHENA-reviewed/accepted, and reconciled into architecture.
-3. VULCAN revised `docs/plans/implementation-plan.20260711.103626_workflow-object-static-operator-console-record.md`; ATHENA approved the revised plan in `docs/reviews/architecture-plan-review.20260711.104845_workflow-object-static-operator-console-record-revised.md` for USER/HERMES coding approval.
+1. Workflow-object Slice 0 is implemented, VULCAN-validated, ATHENA conformance-reviewed and implementation-reviewed/accepted, KOIOS-reviewed, and USER/HERMES-accepted with watchpoints.
+2. Operator Console P0/P1/P2 are implemented, user-previewed where required, ATHENA-reviewed/accepted, and reconciled into architecture as bootstrap-incubation as-built evidence.
+3. Next state: close out/commit the accepted bundle or select a new bounded workflow-object/UI/ADR-conformance slice.
 
 ## Recently completed
 
@@ -82,12 +87,18 @@
 
 ## Waiting on
 
-- USER/HERMES coding approval for VULCAN's `workflow-object-static-operator-console-record` plan, with ATHENA watchpoints.
-- User/HERMES decision to close/commit the accepted Operator Console/workflow-object architecture bundle or select another bounded slice.
+- Packaging/commit closeout for the USER/HERMES-accepted Operator Console/workflow-object architecture bundle, or selection of another bounded slice.
 
 ## Recommended next action
 
-Route ATHENA's approve-with-watchpoints review of VULCAN's plan to USER/HERMES for coding approval. Operator Console P0/P1/P2 are accepted; if continuing UI work, select a new bounded slice.
+Close out/commit the USER/HERMES-accepted workflow-object Slice 0 bundle, or select a new bounded slice. Rerun the Slice 0 validator if referenced source artifacts change before packaging.
+
+## Packaging watchpoints
+
+- Static record remains projection/index only.
+- Candidate JSON shape and test-only validator are not schema/storage/production authority.
+- Hashes are working-tree content hashes, not commit identity.
+- Rerun validator if referenced source artifacts change before packaging.
 
 ## Do not do yet
 
@@ -104,4 +115,4 @@ Route ATHENA's approve-with-watchpoints review of VULCAN's plan to USER/HERMES f
 
 ## Exit criteria
 
-The one-ADR pilot, JSON document database separation slice, control-surface cleanup/schema conformance report, `adr.json-schemas` conformance slice, Operator Console P0 including the ActionObject refactor, Operator Console P1 fixture interaction visibility, and Operator Console P2 readability/navigation fixture are implemented, VULCAN-validated, ATHENA-accepted, and reconciled into architecture as as-built evidence. Operator Console remains bootstrap incubation only, with fixture/static non-live data and no product UI authority. Durable ADR/database authority remains unresolved.
+The one-ADR pilot, JSON document database separation slice, control-surface cleanup/schema conformance report, `adr.json-schemas` conformance slice, Operator Console P0 including the ActionObject refactor, Operator Console P1 fixture interaction visibility, Operator Console P2 readability/navigation fixture, and workflow-object Slice 0 static Operator Console record are implemented, VULCAN-validated, ATHENA conformance-reviewed and implementation-reviewed/accepted, and reconciled into architecture as as-built evidence. Operator Console remains bootstrap incubation only, with fixture/static non-live data and no product UI authority. Workflow-object Slice 0 remains candidate/static projection only, not schema/storage/UI/runtime/completion authority. Durable ADR/database authority remains unresolved.

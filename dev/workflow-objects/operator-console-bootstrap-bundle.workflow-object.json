@@ -73,7 +73,7 @@
       "authority_boundary": "source-authority",
       "content_ref": {
         "ref_type": "sha256",
-        "value": "036cb97514cae99dd0679acc89401b958dba0c05ba83afdee5a814675ccf5abf",
+        "value": "acdddf274f721ac2fe2003716194677781931805efd7a6e9155df436692ba553",
         "availability": "present"
       },
       "provenance_summary": "Controlling architecture for workflow-object artifact/workflow separation and DataObject/ActionObject vocabulary."
