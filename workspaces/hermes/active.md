@@ -18,35 +18,31 @@
 
 ## Current priority stack
 
-1. Package/commit accepted workflow-object Slice 0 and related architecture/review artifacts, or decide next bounded slice.
-2. Before packaging, rerun validator if referenced workflow-object source artifacts changed.
-3. Preserve authority boundaries during closeout.
+1. Package/commit accepted live Petri-net skeleton Slice 0 and related planning/implementation artifacts, or decide next bounded inspectability slice.
+2. Preserve authority boundaries during closeout.
+3. If packaging also includes workflow-object Slice 0 or changed workflow-object refs, rerun the workflow-object validator as needed.
 
-## Accepted workflow-object Slice 0 artifacts
+## Accepted live Petri-net skeleton Slice 0 artifacts
 
-- `docs/architecture/architecture.workflow-object.md`
-- `docs/plans/implementation-brief.20260711.102123_workflow-object-static-operator-console-record.md`
-- `docs/plans/schema-proposal.workflow-object.static-record.20260711.102743.md`
-- `docs/plans/example.workflow-object.operator-console-skeleton.20260711.103748.json`
-- `docs/plans/roadmap.20260711.102324_workflow-object-future-slices.md`
-- `docs/plans/implementation-plan.20260711.103626_workflow-object-static-operator-console-record.md`
-- `dev/workflow-objects/operator-console-bootstrap-bundle.workflow-object.json`
-- `tests/projectkoios/bootstrap/workflow_objects/test__operator_console_static_record.py`
-- `docs/implementation/workflow-object-static-operator-console-record.20260711.105117.md`
-- `docs/reviews/architecture-conformance.20260711.105430_workflow-object-static-operator-console-record.md`
-- `docs/reviews/implementation-review.20260711.105822_workflow-object-static-operator-console-record.md`
+- `docs/plans/implementation-brief.20260711.114600_live-petri-net-skeleton-slice-0.md`
+- `docs/plans/implementation-plan.20260711.114700_live-petri-net-skeleton-slice-0.md`
+- `dev/workflow-nets/bootstrap-harness.workflow-net.json`
+- `src/python/projectkoios/cli/workflow.py`
+- `src/python/projectkoios/cli/main.py`
+- `tests/projectkoios/cli/test__workflow_status.py`
+- `docs/implementation/live-petri-net-skeleton-slice-0.20260711.114916.md`
 
 ## Closeout watchpoints
 
-- Do not promote candidate shape or test-only validator into schema/storage/production authority.
-- Do not treat static record as completion authority.
-- Do not treat static record as full Operator Console artifact closure.
-- Rerun `uv run pytest tests/projectkoios/bootstrap/workflow_objects/test__operator_console_static_record.py -q` if referenced files changed before commit.
+- Keep `workflow status` read-only.
+- Keep the static bootstrap workflow-net fixture non-authoritative.
+- Do not treat this as transition firing, persistence, Operator Console integration, workflow-object runtime coupling, schema authority, role/permission expansion, or product/mothership workflow authority.
+- Treat the current output as a first inspectability skeleton, not a complete control surface.
 
 ## Waiting on
 
-- USER/HERMES packaging/commit or next-slice decision.
+- USER/HERMES packaging/commit or next bounded inspectability slice decision.
 
 ## Exit criteria
 
-Hermes state is stable when the accepted workflow-object Slice 0 is packaged according to user direction, or the user explicitly starts the next bounded slice.
+Hermes state is stable when the accepted live Petri-net skeleton Slice 0 is packaged according to user direction, or the user explicitly starts the next bounded inspectability slice.

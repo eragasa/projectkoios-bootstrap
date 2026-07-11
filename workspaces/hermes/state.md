@@ -18,38 +18,39 @@
 
 ## Current focus
 
-Close out accepted workflow-object Slice 0 and decide packaging/commit boundary.
+Close out accepted live Petri-net skeleton Slice 0 and decide packaging/commit boundary.
 
 ## Current validated state
 
-- Workflow-object architecture and Slice 0 planning package exists and was accepted for implementation.
-- VULCAN implemented Slice 0 static Operator Console workflow-object record:
-  - `dev/workflow-objects/operator-console-bootstrap-bundle.workflow-object.json`
-  - `tests/projectkoios/bootstrap/workflow_objects/test__operator_console_static_record.py`
-  - `docs/implementation/workflow-object-static-operator-console-record.20260711.105117.md`
-- ATHENA reviewed and accepted with watchpoints:
-  - `docs/reviews/architecture-conformance.20260711.105430_workflow-object-static-operator-console-record.md`
-  - `docs/reviews/implementation-review.20260711.105822_workflow-object-static-operator-console-record.md`
-- KOIOS reviewed and accepted with watchpoints after the stale architecture hash was remediated.
-- USER/HERMES accepted workflow-object Slice 0.
+- Workflow-object Slice 0 remains accepted as a static projection/index with watchpoints.
+- USER redirected the harness toward live/mechanical inspectability rather than more ADR/process expansion.
+- ATHENA confirmed existing Petri-net architecture/ADR authority is sufficient for the narrow read-only CLI slice and produced:
+  - `docs/plans/implementation-brief.20260711.114600_live-petri-net-skeleton-slice-0.md`
+- VULCAN planned and implemented live Petri-net skeleton Slice 0:
+  - `dev/workflow-nets/bootstrap-harness.workflow-net.json`
+  - `src/python/projectkoios/cli/workflow.py`
+  - `src/python/projectkoios/cli/main.py`
+  - `tests/projectkoios/cli/test__workflow_status.py`
+  - `docs/implementation/live-petri-net-skeleton-slice-0.20260711.114916.md`
+- HERMES independently smoke-checked `uv run projectkoios workflow status`.
+- USER asked HERMES to act in their stead; HERMES accepts live Petri-net skeleton Slice 0 with watchpoints.
 
 ## Acceptance boundaries
 
-- Static workflow object is projection/index only.
-- Candidate JSON shape is not schema authority.
-- Test-only validator is not production/schema/storage authority.
-- Record is representative/minimal, not a complete Operator Console history.
-- Hashes are working-tree content hashes, not commit identity.
-- If referenced artifacts change before packaging, rerun the test-only validator and refresh hashes as needed.
+- `workflow status` is read-only inspectability only.
+- Static bootstrap workflow-net fixture is not canonical workflow authority.
+- Enabled transitions are computed through existing `PetriNetExecutor.enabled_bindings(...)`.
+- No transition firing, persistence, Operator Console integration, workflow-object runtime coupling, schema authority, live adapter/session read, role/permission expansion, or product/mothership authority is accepted by this slice.
+- Output is a first skeleton, not the final operator control surface.
 
 ## Current blockers
 
-- None for accepted workflow-object Slice 0.
+- None for accepted live Petri-net skeleton Slice 0.
 
 ## Next owner
 
-- USER/HERMES for packaging/commit decision or next bounded slice.
+- USER/HERMES for packaging/commit decision or next bounded inspectability slice.
 
 ## Current status summary
 
-Workflow-object Slice 0 is implemented, reviewed by ATHENA and KOIOS, and accepted by USER/HERMES with watchpoints. The next coherent state is packaging/commit or a separately approved next slice.
+Live Petri-net skeleton Slice 0 is implemented, validated by VULCAN, smoke-checked and accepted by HERMES on USER's behalf with watchpoints. The repo now has `uv run projectkoios workflow status` as a first live inspectability surface. The next coherent state is packaging/commit or a separately approved next slice.
