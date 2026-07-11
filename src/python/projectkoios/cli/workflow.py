@@ -447,20 +447,313 @@ class WorkflowStatusReporter:
         return "no"
 
 
+@dataclass(frozen=True, slots=True)
+class WorkflowQueueItem:
+    """Static queue item copied from the queue-state fixture.
+
+    Args:
+        name: Stable queue item name.
+        state: Queue state label from the fixture.
+        artifact_refs: Source artifact locators copied from the fixture.
+        why: Optional human-readable reason for the queue item.
+        dependency_or_blocker: Optional dependency or blocker text.
+        recommendation: Optional item-specific recommendation.
+        commit: Optional commit reference for completed items.
+    """
+
+    name: str
+    state: str
+    artifact_refs: tuple[str, ...]
+    why: str = ""
+    dependency_or_blocker: str = ""
+    recommendation: str = ""
+    commit: str = ""
+
+
+@dataclass(frozen=True, slots=True)
+class WorkflowQueueStateFixture:
+    """Loaded static workflow queue-state fixture.
+
+    Args:
+        path: Fixture path used for the load.
+        queue_id: Stable queue-state identifier.
+        surface: Fixture surface identifier.
+        parent_effort: Parent effort name.
+        status: Fixture status label.
+        authority: Non-authority caveat copied from the fixture.
+        active_item: Active queue item or None.
+        queued_items: Queued/proposed items in fixture order.
+        completed_items: Completed/accepted recent items in fixture order.
+        superseded_items: Superseded/rejected items in fixture order.
+        deferred_items: Deferred items in fixture order.
+        next_decision_needed: Exact next decision copied from the fixture.
+    """
+
+    path: Path
+    queue_id: str
+    surface: str
+    parent_effort: str
+    status: str
+    authority: str
+    active_item: WorkflowQueueItem | None
+    queued_items: tuple[WorkflowQueueItem, ...]
+    completed_items: tuple[WorkflowQueueItem, ...]
+    superseded_items: tuple[WorkflowQueueItem, ...]
+    deferred_items: tuple[WorkflowQueueItem, ...]
+    next_decision_needed: str
+
+
+class WorkflowQueueStateFixtureLoader:
+    """Load the static workflow queue-state fixture."""
+
+    def __init__(self) -> None:
+        """Initialize the queue-state fixture loader."""
+        # Field reader reuses the existing narrow JSON validation helpers.
+        self.field_reader: WorkflowStatusFixtureLoader = WorkflowStatusFixtureLoader()
+
+    def load(self, fixture_path: Path) -> WorkflowQueueStateFixture:
+        """Load the static queue-state fixture.
+
+        Args:
+            fixture_path: Queue-state fixture path.
+
+        Returns:
+            Loaded queue-state fixture.
+        """
+        # Raw JSON data is parsed from the explicit static fixture only.
+        raw_data: object = json.loads(fixture_path.read_text(encoding="utf-8"))
+        # Fixture data is validated by narrow field readers before rendering.
+        fixture_data: Mapping[str, object] = self.field_reader.require_mapping(raw_data, "queue fixture")
+        # Active item is optional and may be null when no item is active.
+        active_item: WorkflowQueueItem | None = self.load_optional_item(fixture_data.get("active_item"), "active_item")
+        return WorkflowQueueStateFixture(
+            path=fixture_path,
+            queue_id=self.field_reader.require_string(fixture_data, "queue_id"),
+            surface=self.field_reader.require_string(fixture_data, "surface"),
+            parent_effort=self.field_reader.require_string(fixture_data, "parent_effort"),
+            status=self.field_reader.require_string(fixture_data, "status"),
+            authority=self.field_reader.require_string(fixture_data, "authority"),
+            active_item=active_item,
+            queued_items=self.load_items(self.field_reader.require_sequence(fixture_data.get("queued_items"), "queued_items")),
+            completed_items=self.load_items(
+                self.field_reader.require_sequence(fixture_data.get("completed_items"), "completed_items")
+            ),
+            superseded_items=self.load_items(
+                self.field_reader.require_sequence(fixture_data.get("superseded_items"), "superseded_items")
+            ),
+            deferred_items=self.load_items(
+                self.field_reader.require_sequence(fixture_data.get("deferred_items"), "deferred_items")
+            ),
+            next_decision_needed=self.field_reader.require_string(fixture_data, "next_decision_needed"),
+        )
+
+    def load_optional_item(self, item_value: object, field_name: str) -> WorkflowQueueItem | None:
+        """Load an optional queue item.
+
+        Args:
+            item_value: Raw queue item value or None.
+            field_name: Field name used for errors.
+
+        Returns:
+            Loaded queue item or None.
+        """
+        if item_value is None:
+            return None
+        return self.load_item(self.field_reader.require_mapping(item_value, field_name))
+
+    def load_items(self, item_values: Sequence[object]) -> tuple[WorkflowQueueItem, ...]:
+        """Load queue items from a fixture array.
+
+        Args:
+            item_values: Raw queue item values.
+
+        Returns:
+            Queue items in fixture order.
+        """
+        # Items preserve fixture order so queue output remains deterministic.
+        items: list[WorkflowQueueItem] = []
+        item_value: object
+        for item_value in item_values:
+            # Each queue item is represented by one JSON object.
+            item_data: Mapping[str, object] = self.field_reader.require_mapping(item_value, "queue item")
+            items.append(self.load_item(item_data))
+        return tuple(items)
+
+    def load_item(self, item_data: Mapping[str, object]) -> WorkflowQueueItem:
+        """Load one queue item.
+
+        Args:
+            item_data: Raw queue item mapping.
+
+        Returns:
+            Queue item data object.
+        """
+        # Artifact refs are display locators only, not live file readers.
+        artifact_refs: tuple[str, ...] = self.load_artifact_refs(
+            self.field_reader.require_sequence(item_data.get("artifact_refs", []), "artifact_refs")
+        )
+        return WorkflowQueueItem(
+            name=self.field_reader.require_string(item_data, "name"),
+            state=self.field_reader.require_string(item_data, "state"),
+            artifact_refs=artifact_refs,
+            why=self.field_reader.optional_string(item_data, "why", default=""),
+            dependency_or_blocker=self.field_reader.optional_string(item_data, "dependency_or_blocker", default=""),
+            recommendation=self.field_reader.optional_string(item_data, "recommendation", default=""),
+            commit=self.field_reader.optional_string(item_data, "commit", default=""),
+        )
+
+    def load_artifact_refs(self, ref_values: Sequence[object]) -> tuple[str, ...]:
+        """Load artifact reference strings.
+
+        Args:
+            ref_values: Raw artifact reference values.
+
+        Returns:
+            Artifact reference strings in fixture order.
+        """
+        # References are copied strings used only for display.
+        refs: list[str] = []
+        ref_value: object
+        for ref_value in ref_values:
+            if not isinstance(ref_value, str):
+                raise ValueError("artifact_refs entries must be strings")
+            refs.append(ref_value)
+        return tuple(refs)
+
+
+class WorkflowQueueStateReporter:
+    """Render workflow queue-state fixtures for operator-readable CLI output."""
+
+    def render(self, fixture: WorkflowQueueStateFixture) -> str:
+        """Render deterministic queue-state text.
+
+        Args:
+            fixture: Loaded queue-state fixture.
+
+        Returns:
+            Human-readable queue-state text.
+        """
+        # Output lines are accumulated in fixed section order.
+        lines: list[str] = [
+            f"workflow queue: {fixture.queue_id}",
+            f"fixture: {fixture.path.as_posix()}",
+            f"mode: {fixture.status}; {fixture.authority}",
+            "",
+            "active:",
+        ]
+        lines.extend(self.active_lines(fixture.active_item))
+        lines.extend(["", "queued/proposed:"])
+        lines.extend(self.numbered_item_lines(fixture.queued_items))
+        lines.extend(["", "completed/recent:"])
+        lines.extend(self.bullet_item_lines(fixture.completed_items))
+        lines.extend(["", "superseded/rejected:"])
+        lines.extend(self.bullet_item_lines(fixture.superseded_items))
+        lines.extend(["", "deferred:"])
+        lines.extend(self.bullet_item_lines(fixture.deferred_items))
+        lines.extend(["", "next decision needed:", f"  {fixture.next_decision_needed}"])
+        return "\n".join(lines)
+
+    def active_lines(self, active_item: WorkflowQueueItem | None) -> list[str]:
+        """Render active queue item lines.
+
+        Args:
+            active_item: Active item or None.
+
+        Returns:
+            Active section lines.
+        """
+        if active_item is None:
+            return ["  none"]
+        return self.item_detail_lines(active_item, prefix="  - ")
+
+    def numbered_item_lines(self, items: tuple[WorkflowQueueItem, ...]) -> list[str]:
+        """Render numbered queue item lines.
+
+        Args:
+            items: Queue items to render.
+
+        Returns:
+            Numbered item lines.
+        """
+        if not items:
+            return ["  none"]
+        # Numbered items show queue/proposal order explicitly.
+        lines: list[str] = []
+        index: int
+        item: WorkflowQueueItem
+        for index, item in enumerate(items, start=1):
+            lines.extend(self.item_detail_lines(item, prefix=f"  {index}. "))
+        return lines
+
+    def bullet_item_lines(self, items: tuple[WorkflowQueueItem, ...]) -> list[str]:
+        """Render bullet queue item lines.
+
+        Args:
+            items: Queue items to render.
+
+        Returns:
+            Bullet item lines.
+        """
+        if not items:
+            return ["  none"]
+        # Bullet items preserve fixture order for stable output.
+        lines: list[str] = []
+        item: WorkflowQueueItem
+        for item in items:
+            lines.extend(self.item_detail_lines(item, prefix="  - "))
+        return lines
+
+    def item_detail_lines(self, item: WorkflowQueueItem, *, prefix: str) -> list[str]:
+        """Render one queue item.
+
+        Args:
+            item: Queue item to render.
+            prefix: Prefix for the first line.
+
+        Returns:
+            Item detail lines.
+        """
+        # First line carries the optional commit reference.
+        commit_text: str = f" commit={item.commit}" if item.commit else ""
+        # Detail lines begin with the item name and state before optional fields.
+        lines: list[str] = [f"{prefix}{item.name} state={item.state}{commit_text}"]
+        if item.why:
+            lines.append(f"     why: {item.why}")
+        if item.dependency_or_blocker:
+            lines.append(f"     blocker: {item.dependency_or_blocker}")
+        if item.recommendation:
+            lines.append(f"     recommendation: {item.recommendation}")
+        if item.artifact_refs:
+            lines.append(f"     refs: {', '.join(item.artifact_refs)}")
+        return lines
+
+
 class Command:
     """Workflow CLI command adapter."""
 
-    def __init__(self, loader: WorkflowStatusFixtureLoader | None = None, reporter: WorkflowStatusReporter | None = None) -> None:
+    def __init__(
+        self,
+        loader: WorkflowStatusFixtureLoader | None = None,
+        reporter: WorkflowStatusReporter | None = None,
+        queue_loader: WorkflowQueueStateFixtureLoader | None = None,
+        queue_reporter: WorkflowQueueStateReporter | None = None,
+    ) -> None:
         """Initialize the command adapter.
 
         Args:
             loader: Optional fixture loader for tests.
             reporter: Optional status reporter for tests.
+            queue_loader: Optional queue-state fixture loader for tests.
+            queue_reporter: Optional queue-state reporter for tests.
         """
         # Loader maps the static fixture into runtime objects.
         self.loader: WorkflowStatusFixtureLoader = loader or WorkflowStatusFixtureLoader()
         # Reporter formats runtime-computed status for CLI output.
         self.reporter: WorkflowStatusReporter = reporter or WorkflowStatusReporter()
+        # Queue loader maps the static queue fixture into queue data objects.
+        self.queue_loader: WorkflowQueueStateFixtureLoader = queue_loader or WorkflowQueueStateFixtureLoader()
+        # Queue reporter formats static queue state for CLI output.
+        self.queue_reporter: WorkflowQueueStateReporter = queue_reporter or WorkflowQueueStateReporter()
 
     def register(self, subparsers: SubparserCollection) -> None:
         """Register workflow commands on the top-level parser.
@@ -478,6 +771,10 @@ class Command:
         status_parser: ArgumentParser = workflow_subparsers.add_parser("status", help="Show current workflow status")
         status_parser.set_defaults(func=self.run_status)
 
+        # Queue parser exposes static workflow queue-state inspectability.
+        queue_parser: ArgumentParser = workflow_subparsers.add_parser("queue", help="Show workflow queue state")
+        queue_parser.set_defaults(func=self.run_queue)
+
     def run_status(self, args: Namespace) -> None:
         """Run the read-only workflow status command.
 
@@ -489,6 +786,18 @@ class Command:
         # Loaded fixture contains both static metadata and Petri-net runtime state.
         fixture: WorkflowStatusFixture = self.loader.load(fixture_path)
         print(self.reporter.render(fixture))
+
+    def run_queue(self, args: Namespace) -> None:
+        """Run the read-only workflow queue-state command.
+
+        Args:
+            args: Parsed CLI namespace.
+        """
+        # Fixture path is intentionally fixed for static queue-state inspectability.
+        fixture_path: Path = Path("dev/workflow-nets/bootstrap-harness.queue-state.json")
+        # Loaded queue fixture contains static control-surface state only.
+        fixture: WorkflowQueueStateFixture = self.queue_loader.load(fixture_path)
+        print(self.queue_reporter.render(fixture))
 
 
 def register(subparsers: SubparserCollection) -> None:

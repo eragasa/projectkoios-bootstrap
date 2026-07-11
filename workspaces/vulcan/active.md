@@ -2,8 +2,8 @@
 {
   "title": "Vulcan active work",
   "artifact_type": "workspace-active-priorities",
-  "status": "petrinet-workflow-interactive-control-skill-slice-3-implemented-validated",
-  "datetime": "20260711.123801Z",
+  "status": "petrinet-workflow-queue-state-slice-4-implemented-validated",
+  "datetime": "20260711.124549Z",
   "acting_as": "VULCAN",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/vulcan/",
@@ -11,17 +11,16 @@
   "priority_count": 1,
   "working_directory": "working/",
   "active_working_items": [
-    "docs/plans/implementation-brief.20260711.123305_petrinet-workflow-interactive-control-skill-slice-3.md",
-    "docs/implementation/petrinet-workflow-interactive-control-skill-slice-3.20260711.123801.md",
-    "src/python/projectkoios/workflow/skills/manifest.json",
-    "src/python/projectkoios/workflow/skills/README.md",
-    "src/python/projectkoios/workflow/skills/petrinet-workflow-interactive-control/SKILL.md",
-    "tests/projectkoios/workflow/test__PetriNetWorkflowSkills__interactive_control_skill.py"
+    "docs/plans/implementation-brief.20260711.124106_petrinet-workflow-queue-state-slice-4.md",
+    "docs/implementation/petrinet-workflow-queue-state-slice-4.20260711.124549.md",
+    "dev/workflow-nets/bootstrap-harness.queue-state.json",
+    "src/python/projectkoios/cli/workflow.py",
+    "tests/projectkoios/cli/test__workflow_queue.py"
   ],
   "scratch_directory": "scratch/",
   "implementation_plan": null,
-  "latest_report": "docs/implementation/petrinet-workflow-interactive-control-skill-slice-3.20260711.123801.md",
-  "latest_aar": "docs/AAR/aar.20260711.123801_petrinet-workflow-interactive-control-skill-slice-3.md"
+  "latest_report": "docs/implementation/petrinet-workflow-queue-state-slice-4.20260711.124549.md",
+  "latest_aar": "docs/AAR/aar.20260711.124549_petrinet-workflow-queue-state-slice-4.md"
 }
 ```
 
@@ -29,39 +28,49 @@
 
 ## Current priority stack
 
-1. `petrinet-workflow-interactive-control-skill-slice-3`: implemented and validated.
+1. `petrinet-workflow-queue-state-slice-4`: implemented and validated.
 2. Parent effort: Petri-net workflow harness / workflow inspectability.
-3. Boundaries preserved: no new project identity, no runtime or CLI behavior changes, no fixture edits, no transition firing/dry-run, no persistence, no live adapters/session reads, no Operator Console/workflow-object coupling, no schema/product authority, no role/permission expansion, no global skill directories, and `pi-skill-determinism-slice-0` remains queued.
+3. Boundaries preserved: read-only queue view only; no transition firing, activation/queue mutation, persistence beyond static fixture, git/chat/intercom-derived reconstruction, Operator Console, workflow-object runtime coupling, schema/product authority, global skill propagation, or `pi-skill-determinism-slice-0` implementation/supersession.
 
 ## Latest working material
 
-- Brief: `docs/plans/implementation-brief.20260711.123305_petrinet-workflow-interactive-control-skill-slice-3.md`.
-- Implementation report: `docs/implementation/petrinet-workflow-interactive-control-skill-slice-3.20260711.123801.md`.
-- AAR: `docs/AAR/aar.20260711.123801_petrinet-workflow-interactive-control-skill-slice-3.md`.
+- Brief: `docs/plans/implementation-brief.20260711.124106_petrinet-workflow-queue-state-slice-4.md`.
+- Implementation report: `docs/implementation/petrinet-workflow-queue-state-slice-4.20260711.124549.md`.
+- AAR: `docs/AAR/aar.20260711.124549_petrinet-workflow-queue-state-slice-4.md`.
 
 ## Implemented outputs
 
-- `src/python/projectkoios/workflow/skills/manifest.json` now lists `petrinet-workflow-status` and `petrinet-workflow-interactive-control`.
-- `src/python/projectkoios/workflow/skills/README.md` describes both workflow-local affordances and boundaries.
-- `src/python/projectkoios/workflow/skills/petrinet-workflow-interactive-control/SKILL.md` defines inspect → summarize → recommend → ask/act behavior.
-- `tests/projectkoios/workflow/test__PetriNetWorkflowSkills__status_skill.py` preserves status-skill manifest coverage.
-- `tests/projectkoios/workflow/test__PetriNetWorkflowSkills__interactive_control_skill.py` validates Slice 3 manifest, instruction, and boundary language.
+- `dev/workflow-nets/bootstrap-harness.queue-state.json` static queue-state fixture.
+- `uv run projectkoios workflow queue` command in `src/python/projectkoios/cli/workflow.py`.
+- `tests/projectkoios/cli/test__workflow_queue.py` focused queue command and fixture tests.
 
 ## Validation results
 
 From repository root:
 
 ```bash
-uv run pytest tests/projectkoios/workflow/test__PetriNetWorkflowSkills__status_skill.py tests/projectkoios/workflow/test__PetriNetWorkflowSkills__interactive_control_skill.py -q
+uv run projectkoios workflow queue
 ```
 
-Passed: `6 passed in 0.01s`.
+Passed; prints active none, queued/proposed items, completed commits, superseded items, deferred none, next decision needed, fixture path, and static read-only/non-canonical authority caveat.
 
 ```bash
-uv run projectkoios bootstrap validate-python-policy src/python/projectkoios/workflow tests/projectkoios/workflow
+uv run pytest tests/projectkoios/cli/test__workflow_queue.py tests/projectkoios/cli/test__workflow_status.py tests/projectkoios/workflow -q
 ```
 
-Passed: `summary: 0 finding(s), 13 file(s)`.
+Passed: `24 passed in 0.06s`.
+
+```bash
+uv run projectkoios bootstrap validate-python-policy src/python/projectkoios/workflow src/python/projectkoios/cli tests/projectkoios/workflow tests/projectkoios/cli
+```
+
+Passed: `summary: 0 finding(s), 19 file(s)`.
+
+```bash
+uv run python -m json.tool dev/workflow-nets/bootstrap-harness.queue-state.json >/dev/null
+```
+
+Passed.
 
 ```bash
 git diff --check

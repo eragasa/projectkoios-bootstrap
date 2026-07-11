@@ -1,0 +1,85 @@
+{
+  "queue_id": "bootstrap-harness.queue-state",
+  "surface": "projectkoios.workflow.queue_state",
+  "parent_effort": "petri-net-workflow-inspectability",
+  "status": "static-read-only-fixture",
+  "authority": "Static read-only fixture; not canonical workflow authority and not product authority.",
+  "active_item": null,
+  "queued_items": [
+    {
+      "name": "petrinet-workflow-queue-state-slice-4",
+      "state": "proposed-next",
+      "artifact_refs": [
+        "docs/plans/implementation-brief.20260711.124106_petrinet-workflow-queue-state-slice-4.md"
+      ],
+      "why": "Current workflow-engine control topic: add mechanical read-only queue state inspectability.",
+      "dependency_or_blocker": "Requires USER/HERMES review after implementation; read-only queue view only.",
+      "recommendation": "Review the queue-state command output and decide whether to accept or revise Slice 4."
+    },
+    {
+      "name": "pi-skill-determinism-slice-0",
+      "state": "queued",
+      "artifact_refs": [
+        "docs/plans/queued-slice.20260711.122000_pi-skill-determinism-slice-0.md"
+      ],
+      "why": "Future Pi skill determinism improvement topic.",
+      "dependency_or_blocker": "Requires explicit USER/HERMES activation; must not replace workflow-engine work.",
+      "recommendation": "Not next while workflow-engine controls are prioritized."
+    }
+  ],
+  "completed_items": [
+    {
+      "name": "petrinet-workflow-interactive-control-skill-slice-3",
+      "state": "accepted-committed-pushed",
+      "commit": "b4de9c64",
+      "artifact_refs": [
+        "docs/implementation/petrinet-workflow-interactive-control-skill-slice-3.20260711.123801.md"
+      ]
+    },
+    {
+      "name": "vulcan-interactive-control-state-fix",
+      "state": "accepted-committed-pushed",
+      "commit": "ed9110b9",
+      "artifact_refs": [
+        "workspaces/vulcan/state.md",
+        "workspaces/vulcan/active.md"
+      ]
+    }
+  ],
+  "superseded_items": [
+    {
+      "name": "agent-skills-workflow-inspectability-slicing-120200",
+      "state": "superseded",
+      "artifact_refs": [
+        "docs/plans/slicing.20260711.120200_agent-skills-workflow-inspectability.md"
+      ],
+      "why": "Superseded by Petri-net workflow harness affordance framing."
+    },
+    {
+      "name": "agent-skills-workflow-status-slice-0-120300",
+      "state": "superseded",
+      "artifact_refs": [
+        "docs/plans/implementation-brief.20260711.120300_agent-skills-workflow-status-slice-0.md"
+      ],
+      "why": "Superseded by revised workflow-local status skill brief."
+    },
+    {
+      "name": "agent-skills-workflow-project-slicing-120900",
+      "state": "superseded",
+      "artifact_refs": [
+        "docs/plans/slicing.20260711.120900_agent-skills-workflow-project.md"
+      ],
+      "why": "Superseded by existing Petri-net workflow harness framing; no new project identity."
+    },
+    {
+      "name": "agent-skills-workflow-status-slice-0-121000",
+      "state": "superseded",
+      "artifact_refs": [
+        "docs/plans/implementation-brief.20260711.121000_agent-skills-workflow-status-slice-0.md"
+      ],
+      "why": "Superseded by final Slice 1 status skill brief."
+    }
+  ],
+  "deferred_items": [],
+  "next_decision_needed": "Review and accept or revise petrinet-workflow-queue-state-slice-4; do not activate or implement pi-skill-determinism-slice-0 unless USER/HERMES explicitly switches priority."
+}

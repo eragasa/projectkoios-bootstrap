@@ -18,9 +18,9 @@
 
 ## Current priority stack
 
-1. Package/commit accepted Petri-net workflow interactive-control skill Slice 3.
-2. Prioritize mechanical workflow engine controls over additional prose-only skill work.
-3. Request/prepare the next bounded workflow-engine slice for machine-visible queue/activate state.
+1. Package/commit accepted Petri-net workflow queue state Slice 4.
+2. Continue prioritizing mechanical workflow engine controls over additional prose-only skill work.
+3. Prepare the next bounded workflow-engine slice for explicit activation/transition control.
 
 ## Accepted Petri-net workflow inspectability artifacts
 
@@ -63,10 +63,19 @@
 - `tests/projectkoios/workflow/test__PetriNetWorkflowSkills__interactive_control_skill.py`
 - `docs/implementation/petrinet-workflow-interactive-control-skill-slice-3.20260711.123801.md`
 
+### Slice 4: queue state command
+
+- `docs/plans/implementation-brief.20260711.124106_petrinet-workflow-queue-state-slice-4.md`
+- `dev/workflow-nets/bootstrap-harness.queue-state.json`
+- `src/python/projectkoios/cli/workflow.py`
+- `tests/projectkoios/cli/test__workflow_queue.py`
+- `docs/implementation/petrinet-workflow-queue-state-slice-4.20260711.124549.md`
+- `workspaces/koios/working/provenance-note.20260711_queue-state-slice-4.md`
+
 ## Queued follow-ups
 
 - `docs/plans/queued-slice.20260711.122000_pi-skill-determinism-slice-0.md` — queued only; must not supersede accepted Petri-net slices.
-- Mechanical workflow queue/activate controls — recommended next priority; needs bounded slice/brief.
+- Mechanical workflow activation/transition controls — recommended next priority; needs bounded slice/brief.
 
 ## Closeout watchpoints
 
@@ -78,8 +87,8 @@
 
 ## Waiting on
 
-- HERMES packaging/commit, then orchestration of next workflow-engine control slice.
+- HERMES packaging/commit, then orchestration of next workflow-engine activation/transition-control slice.
 
 ## Exit criteria
 
-Hermes state is stable when accepted Petri-net workflow interactive-control skill Slice 3 is packaged and the next workflow-engine control slice is queued/briefed without replacing existing queued work.
+Hermes state is stable when accepted Petri-net workflow queue state Slice 4 is packaged and the next workflow-engine activation/control slice is queued/briefed without replacing existing queued work.

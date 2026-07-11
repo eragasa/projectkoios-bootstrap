@@ -2,18 +2,18 @@
 {
   "title": "Vulcan workspace state",
   "artifact_type": "workspace-state",
-  "status": "petrinet-workflow-interactive-control-skill-slice-3-implemented-validated",
-  "datetime": "20260711.123801Z",
+  "status": "petrinet-workflow-queue-state-slice-4-implemented-validated",
+  "datetime": "20260711.124549Z",
   "acting_as": "VULCAN",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/vulcan/",
   "branch": "master",
   "document_domain": "implementation, tests, validation, implementation reports, deviation reports",
-  "source_brief": "docs/plans/implementation-brief.20260711.123305_petrinet-workflow-interactive-control-skill-slice-3.md",
-  "slice_name": "petrinet-workflow-interactive-control-skill-slice-3",
-  "latest_report": "docs/implementation/petrinet-workflow-interactive-control-skill-slice-3.20260711.123801.md",
-  "latest_aar": "docs/AAR/aar.20260711.123801_petrinet-workflow-interactive-control-skill-slice-3.md",
-  "target_path": "src/python/projectkoios/workflow/skills/",
+  "source_brief": "docs/plans/implementation-brief.20260711.124106_petrinet-workflow-queue-state-slice-4.md",
+  "slice_name": "petrinet-workflow-queue-state-slice-4",
+  "latest_report": "docs/implementation/petrinet-workflow-queue-state-slice-4.20260711.124549.md",
+  "latest_aar": "docs/AAR/aar.20260711.124549_petrinet-workflow-queue-state-slice-4.md",
+  "target_command": "uv run projectkoios workflow queue",
   "control_files": ["state.md", "active.md"],
   "next_owner": "USER_HERMES_ATHENA_REVIEW",
   "blockers": []
@@ -24,49 +24,47 @@
 
 ## Current scope
 
-- Current scope: implemented and validated Petri-net workflow interactive-control skill Slice 3.
-- Slice name: `petrinet-workflow-interactive-control-skill-slice-3`.
-- Parent effort: Petri-net workflow harness / workflow inspectability.
-- Brief: `docs/plans/implementation-brief.20260711.123305_petrinet-workflow-interactive-control-skill-slice-3.md`.
-- Report: `docs/implementation/petrinet-workflow-interactive-control-skill-slice-3.20260711.123801.md`.
+- Current scope: implemented and validated Petri-net workflow queue state Slice 4.
+- Slice name: `petrinet-workflow-queue-state-slice-4`.
+- Target command: `uv run projectkoios workflow queue`.
+- Brief: `docs/plans/implementation-brief.20260711.124106_petrinet-workflow-queue-state-slice-4.md`.
+- Report: `docs/implementation/petrinet-workflow-queue-state-slice-4.20260711.124549.md`.
 
 ## Current status
 
-- VULCAN added workflow-local interactive-control skill instructions under `src/python/projectkoios/workflow/skills/petrinet-workflow-interactive-control/SKILL.md`.
-- The manifest now lists both `petrinet-workflow-status` and `petrinet-workflow-interactive-control`.
-- The README now describes both workflow-local affordances and preserves non-authority/non-propagation boundaries.
-- The new skill requires inspect → summarize → recommend → ask/act.
-- The new skill requires exactly one primary recommendation unless the user asks for options.
-- The new skill requires asking before file edits, routing, subagent launch, active/queued-state change, or user-decision-gated action.
-- The new skill preserves active/queued/superseded/deferred distinctions.
+- VULCAN added a static read-only queue-state fixture at `dev/workflow-nets/bootstrap-harness.queue-state.json`.
+- VULCAN added `projectkoios workflow queue` under the existing workflow CLI group.
+- The command prints queue id, fixture path, active item, queued/proposed items, completed/recent items, superseded/rejected items, deferred items, and exact next decision needed.
+- The command visibly labels the fixture as static/read-only and not canonical workflow/product authority.
+- `pi-skill-determinism-slice-0` remains queued, not superseded or implemented.
 
 ## Validation evidence
 
 From repository root:
 
-- `uv run pytest tests/projectkoios/workflow/test__PetriNetWorkflowSkills__status_skill.py tests/projectkoios/workflow/test__PetriNetWorkflowSkills__interactive_control_skill.py -q` => `6 passed in 0.01s`.
-- `uv run projectkoios bootstrap validate-python-policy src/python/projectkoios/workflow tests/projectkoios/workflow` => `summary: 0 finding(s), 13 file(s)`.
+- `uv run projectkoios workflow queue` => passed; output includes active none, queued/proposed items, completed commits `b4de9c64` and `ed9110b9`, superseded framing artifacts, deferred none, next decision needed, fixture path, and static read-only caveat.
+- `uv run pytest tests/projectkoios/cli/test__workflow_queue.py tests/projectkoios/cli/test__workflow_status.py tests/projectkoios/workflow -q` => `24 passed in 0.06s`.
+- `uv run projectkoios bootstrap validate-python-policy src/python/projectkoios/workflow src/python/projectkoios/cli tests/projectkoios/workflow tests/projectkoios/cli` => `summary: 0 finding(s), 19 file(s)`.
+- `uv run python -m json.tool dev/workflow-nets/bootstrap-harness.queue-state.json >/dev/null` => passed.
 - `git diff --check` => clean.
 
 ## Boundaries preserved
 
-No Petri-net runtime change, `uv run projectkoios workflow status` behavior change, workflow-net fixture edit, transition firing/dry-run, persistence, live adapter/session read, Operator Console integration, workflow-object runtime coupling, schema/product authority, role/permission expansion, global skill directory edit, or `pi-skill-determinism-slice-0` replacement/supersession was added.
+No transition firing, activation/queue mutation command, persistence beyond static committed fixture, generalized workflow database/storage, live intercom/session reads, git-history-derived state reconstruction, Operator Console integration, workflow-object runtime coupling, schema authority under `docs/schemas/`, product/mothership workflow authority, global skill propagation, or `pi-skill-determinism-slice-0` replacement/supersession was added.
 
 ## Dirty tree caution
 
 Treat VULCAN-owned changes for this slice as:
 
-- `src/python/projectkoios/workflow/skills/manifest.json`
-- `src/python/projectkoios/workflow/skills/README.md`
-- `src/python/projectkoios/workflow/skills/petrinet-workflow-interactive-control/SKILL.md`
-- `tests/projectkoios/workflow/test__PetriNetWorkflowSkills__status_skill.py`
-- `tests/projectkoios/workflow/test__PetriNetWorkflowSkills__interactive_control_skill.py`
-- `docs/implementation/petrinet-workflow-interactive-control-skill-slice-3.20260711.123801.md`
-- `docs/AAR/aar.20260711.123801_petrinet-workflow-interactive-control-skill-slice-3.md`
+- `dev/workflow-nets/bootstrap-harness.queue-state.json`
+- `src/python/projectkoios/cli/workflow.py`
+- `tests/projectkoios/cli/test__workflow_queue.py`
+- `docs/implementation/petrinet-workflow-queue-state-slice-4.20260711.124549.md`
+- `docs/AAR/aar.20260711.124549_petrinet-workflow-queue-state-slice-4.md`
 - `workspaces/vulcan/active.md`
 - `workspaces/vulcan/state.md`
 
-Known ATHENA-owned architecture/workspace/planning files may also exist in the dirty tree. Keep commit boundaries explicit.
+Known ATHENA/KOIOS planning or provenance files may also exist in the dirty tree. Keep commit boundaries explicit.
 
 ## Next transition
 

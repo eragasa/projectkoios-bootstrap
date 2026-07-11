@@ -2,8 +2,8 @@
 {
   "title": "Athena workspace state",
   "artifact_type": "workspace-state",
-  "status": "petrinet-workflow-interactive-control-skill-slice-3-brief-drafted-pending-approval",
-  "datetime": "20260711.123305Z",
+  "status": "petrinet-workflow-queue-state-slice-4-brief-drafted-pending-review",
+  "datetime": "20260711.124106Z",
   "acting_as": "ATHENA",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/athena/",
@@ -134,27 +134,24 @@
 - USER requested a new Petri-net slice after ATHENA reviewed VULCAN's Slice 1 work and identified a control-surface gap: `uv run projectkoios workflow status` still reports `active_slice=live-petri-net-skeleton-slice-0` while active Petri-net work has advanced. ATHENA drafted `docs/plans/implementation-brief.20260711.122048_petrinet-workflow-current-slice-status-reconciliation.md` for `petrinet-workflow-current-slice-status-reconciliation-slice-2`.
 - HERMES corrected queue discipline: `petrinet-workflow-agent-status-skill-slice-1` is accepted and committed as `e6742a76 Add Petri net workflow status skill`; the current-slice status reconciliation brief is queued/proposed only and must not be treated as active or routed to VULCAN unless USER/HERMES explicitly activates it after Slice 1 packaging/push. VULCAN produced `docs/plans/implementation-plan.20260711.122325_petrinet-workflow-current-slice-status-reconciliation.md` before the correction; ATHENA treats that plan as paused/queued input only.
 - HERMES later relayed explicit USER `go` to choose the Petri-net workflow interactive-control affordance as the next inspectability slice. ATHENA drafted `docs/plans/implementation-brief.20260711.123305_petrinet-workflow-interactive-control-skill-slice-3.md` and paused before VULCAN routing/implementation.
+- HERMES reported `petrinet-workflow-interactive-control-skill-slice-3` accepted, committed, and pushed as `b4de9c64 Add Petri net interactive control skill`, with follow-up VULCAN state fix committed/pushed as `ed9110b9 Update Vulcan interactive control state`. USER delegated automatic mode to HERMES and clarified workflow engine work must be prioritized. ATHENA drafted `docs/plans/implementation-brief.20260711.124106_petrinet-workflow-queue-state-slice-4.md` to make active/queued/completed/superseded workflow state machine-visible via a read-only queue/status command surface, then paused.
 
 ## Current active item
 
-- `petrinet-workflow-interactive-control-skill-slice-3`
+- `petrinet-workflow-queue-state-slice-4`
   - Parent effort: Petri-net workflow harness / workflow inspectability.
-  - Status: ATHENA brief drafted; pending USER/HERMES approval before VULCAN routing/implementation.
+  - Status: ATHENA brief drafted; pause for USER/HERMES queue/control review before VULCAN routing/implementation.
+  - Purpose: make active/queued/completed/superseded workflow state machine-visible through a read-only workflow queue/status command surface.
   - Key artifact:
-    - `docs/plans/implementation-brief.20260711.123305_petrinet-workflow-interactive-control-skill-slice-3.md`
+    - `docs/plans/implementation-brief.20260711.124106_petrinet-workflow-queue-state-slice-4.md`
 
 ## Queued/backlog items
 
-1. `petrinet-workflow-current-slice-status-reconciliation-slice-2`
-   - Proposed brief: `docs/plans/implementation-brief.20260711.122048_petrinet-workflow-current-slice-status-reconciliation.md`.
-   - VULCAN plan produced before correction: `docs/plans/implementation-plan.20260711.122325_petrinet-workflow-current-slice-status-reconciliation.md`; treat as paused/queued input only.
-   - Ordering: queued/proposed only; do not route to VULCAN or treat as active unless USER/HERMES explicitly activates it after Slice 1 packaging/push.
-   - Boundary: fixture/status-output reconciliation only if later activated.
-2. `pi-skill-determinism-slice-0`
+1. `pi-skill-determinism-slice-0`
    - Queue artifact: `docs/plans/queued-slice.20260711.122000_pi-skill-determinism-slice-0.md`.
    - Ordering: queued; do not activate unless USER/HERMES explicitly selects it.
    - Boundary: must not replace, rename, reframe, or block Petri-net workflow work.
-3. `operator-console-review-orientation-copy-fixture`
+2. `operator-console-review-orientation-copy-fixture`
    - Deferred UI readability/provenance refinement.
 
 ## Superseded/rejected items
@@ -166,12 +163,12 @@
 
 ## Waiting on / blocked items
 
-- USER/HERMES approval to route `petrinet-workflow-interactive-control-skill-slice-3` to VULCAN planning/implementation.
+- USER/HERMES review of `petrinet-workflow-queue-state-slice-4` brief and decision whether to route to VULCAN planning/implementation.
 - Commit/push boundary for accumulated accepted work remains a separate packaging decision.
 
 ## Open questions
 
-- USER/HERMES approval to route `petrinet-workflow-interactive-control-skill-slice-3` to VULCAN planning/implementation.
+- USER/HERMES review of `petrinet-workflow-queue-state-slice-4` brief and decision whether to route to VULCAN planning/implementation.
 - USER/HERMES review of future-slice roadmap if desired; roadmap is advisory and does not authorize later slices.
 - Whether to close/commit the accepted Operator Console P0/P1/P2 plus workflow-object architecture/brief bundle or select another bounded UI slice.
 - When to extract `src/typescript/projectkoios/ui/operator-console/` to `projectkoios/ui/operator-console/` and promote product/mothership authority.
@@ -183,7 +180,7 @@
 
 - Owner: HERMES/USER.
 - Recommended next actions:
-  1. Review the interactive-control brief and decide whether to approve VULCAN planning/implementation.
+  1. Review the queue-state Slice 4 brief and decide whether to approve VULCAN planning/implementation.
   2. Do not route to VULCAN until USER/HERMES approves implementation or explicitly authorizes direct coding.
   3. Preserve `pi-skill-determinism-slice-0` as queued-only.
 - Operator Console P0/P1/P2 accepted boundaries: bootstrap incubation only; package-local lockfile only; behavior owned by ActionObject-style classes with data in typed interfaces/constants; `docs/policies/typescript-coding.md` remains draft/non-controlling; fixtures are static/stale-by-design; readability/navigation affordances are local browser inspection helpers only; no backend, live reads, messaging capability, activation/mutation, Petri-net graph editor, product UI authority, or bootstrap production-backend claim.
