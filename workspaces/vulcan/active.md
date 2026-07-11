@@ -49,7 +49,7 @@
 
 ## Latest validation evidence
 
-- `uv run pytest tests/projectkoios/bootstrap/control_surface_storage tests/projectkoios/bootstrap/control_surface_adr tests/projectkoios/bootstrap/schema -q` => `29 passed in 0.17s`.
+- `uv run pytest tests/projectkoios/bootstrap/control_surface_storage tests/projectkoios/bootstrap/control_surface_adr tests/projectkoios/bootstrap/schema -q` => `29 passed in 0.16s`.
 - `uv run mypy src/python/projectkoios/bootstrap/control_surface/documents src/python/projectkoios/bootstrap/control_surface/storage src/python/projectkoios/bootstrap/control_surface/adr tests/projectkoios/bootstrap/control_surface_storage tests/projectkoios/bootstrap/control_surface_adr` => `Success: no issues found in 15 source files`.
 - `uv run projectkoios bootstrap validate-python-policy src/python/projectkoios/bootstrap/control_surface/documents src/python/projectkoios/bootstrap/control_surface/storage src/python/projectkoios/bootstrap/control_surface/adr tests/projectkoios/bootstrap/control_surface_storage tests/projectkoios/bootstrap/control_surface_adr` => `summary: 0 finding(s), 15 file(s)`.
 - `git diff --check` => clean.
@@ -66,6 +66,7 @@
 - Removed ADR-specific query columns from the generic table.
 - Generated SQLite DDL from `DocumentRecord` through `DocumentStoreSqlSchema`.
 - Updated ADR parser/checkpoint behavior for the schema change that removed `routing`; source routing text is mapping evidence only.
+- Removed YAGNI `AdrRecordComparer`, moved pilot evidence building into `AdrPilotEvidenceBuilder`, and introduced `PilotAdrSourceConfig`.
 - Replaced `list_by_status` evidence with `list_by_kind(DocumentType.ADR)` evidence.
 - Preserved source `.draft.md` path/hash, old pilot identity, and mapping provenance in migration evidence.
 

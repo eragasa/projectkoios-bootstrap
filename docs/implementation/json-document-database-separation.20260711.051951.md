@@ -68,6 +68,9 @@ Generic document store:
 - `MemoryDocumentStore` provides a non-SQLite implementation for boundary tests.
 - Tests assert runtime protocol conformance for generic `DocumentStore` implementations and the ADR-facing `AdrStorageAdapter` wrapper.
 - SQLite DDL is generated from `DocumentRecord` through `DocumentStoreSqlSchema`, with `payload` translated to the storage column `payload_json`.
+- Removed the YAGNI `AdrRecordComparer`; pilot equality checks now use direct record comparison.
+- Moved database and migration evidence construction from `AdrStoragePilot` into `AdrPilotEvidenceBuilder`.
+- Added `PilotAdrSourceConfig` so pilot source identity/path/date values are explicit config instead of parser literals.
 
 ADR layer:
 
@@ -96,7 +99,7 @@ Commands run from repository root:
 
 ```bash
 uv run pytest tests/projectkoios/bootstrap/control_surface_storage tests/projectkoios/bootstrap/control_surface_adr tests/projectkoios/bootstrap/schema -q
-# 29 passed in 0.17s
+# 29 passed in 0.16s
 
 uv run mypy src/python/projectkoios/bootstrap/control_surface/documents src/python/projectkoios/bootstrap/control_surface/storage src/python/projectkoios/bootstrap/control_surface/adr tests/projectkoios/bootstrap/control_surface_storage tests/projectkoios/bootstrap/control_surface_adr
 # Success: no issues found in 15 source files
