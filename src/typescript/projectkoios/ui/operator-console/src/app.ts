@@ -4,6 +4,7 @@ import { ChangeReviewRenderer } from "./components/ChangeReview";
 import { EvidencePanelRenderer } from "./components/EvidencePanel";
 import { ExternalStatusCardRenderer } from "./components/ExternalStatusCard";
 import { HtmlRenderer } from "./components/html";
+import { InteractionThreadPanelRenderer } from "./components/InteractionThreadPanel";
 import { ValidationSummaryRenderer } from "./components/ValidationSummary";
 import { InMemoryFixtureProvider } from "./fixtures/provider";
 import { FixtureGraphResolver } from "./fixtures/resolver";
@@ -12,6 +13,7 @@ export class OperatorConsoleRenderer {
   constructor(
     private readonly agentSummaryRenderer: AgentSummaryRenderer,
     private readonly externalStatusCardRenderer: ExternalStatusCardRenderer,
+    private readonly interactionThreadPanelRenderer: InteractionThreadPanelRenderer,
     private readonly changeReviewRenderer: ChangeReviewRenderer
   ) {}
 
@@ -31,6 +33,7 @@ export class OperatorConsoleRenderer {
       agentCards,
       externalCards,
       "</section>",
+      this.interactionThreadPanelRenderer.render(readModel.interactionThreads),
       this.changeReviewRenderer.render(readModel.primaryProposal),
       "</div>"
     ].join("");
@@ -63,6 +66,7 @@ export class OperatorConsoleApplicationFactory {
     const renderer: OperatorConsoleRenderer = new OperatorConsoleRenderer(
       new AgentSummaryRenderer(htmlRenderer),
       new ExternalStatusCardRenderer(htmlRenderer),
+      new InteractionThreadPanelRenderer(htmlRenderer),
       new ChangeReviewRenderer(htmlRenderer, evidencePanelRenderer)
     );
     const provider: InMemoryFixtureProvider = new InMemoryFixtureProvider(new FixtureGraphResolver());

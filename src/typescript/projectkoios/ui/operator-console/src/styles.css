@@ -15,6 +15,9 @@ body {
 .banner,
 .summary-card,
 .change-review,
+.interaction-panel,
+.interaction-thread,
+.interaction-card,
 .review-panel,
 .evidence-panel,
 .evidence-item,
@@ -46,6 +49,9 @@ body {
 
 .summary-card,
 .change-review,
+.interaction-panel,
+.interaction-thread,
+.interaction-card,
 .review-panel,
 .evidence-panel,
 .evidence-item,
@@ -73,6 +79,13 @@ body {
   white-space: pre-wrap;
 }
 
+.interaction-panel,
+.change-review {
+  margin-top: 16px;
+}
+
+.interaction-thread,
+.interaction-card,
 .evidence-item,
 .validation-result {
   margin-top: 12px;

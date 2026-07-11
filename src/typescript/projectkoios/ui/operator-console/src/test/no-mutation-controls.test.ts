@@ -5,10 +5,17 @@ import { OperatorConsoleApplicationFactory } from "../app";
 
 const packageRoot = new URL("../..", import.meta.url).pathname;
 const contractPath = join(packageRoot, "src", "contracts", "index.ts");
-const forbiddenControlWords: readonly RegExp[] = [/\bactivate\b/i, /\bapply\b/i, /\bsave\b/i];
+const forbiddenControlWords: readonly RegExp[] = [
+  /\bactivate\b/i,
+  /\bapply\b/i,
+  /\bsave\b/i,
+  /\bsend\b/i,
+  /\breply\b/i,
+  /\bask\b/i
+];
 
 describe("operator console P0 mutation-control boundary", () => {
-  it("renders no activate/apply/save controls or availability text", () => {
+  it("renders no send/reply/ask/activate/apply/save controls or availability text", () => {
     const html: string = new OperatorConsoleApplicationFactory().build().render();
     const matchedWords: string[] = forbiddenControlWords
       .filter((pattern: RegExp) => pattern.test(html))
@@ -17,7 +24,7 @@ describe("operator console P0 mutation-control boundary", () => {
     expect(matchedWords).toEqual([]);
   });
 
-  it("exposes no activate/apply/save operation surfaces in contracts", () => {
+  it("exposes no send/reply/ask/activate/apply/save operation surfaces in contracts", () => {
     const contractSource: string = readFileSync(contractPath, "utf8");
     const matchedWords: string[] = forbiddenControlWords
       .filter((pattern: RegExp) => pattern.test(contractSource))

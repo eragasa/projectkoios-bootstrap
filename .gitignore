@@ -208,6 +208,12 @@ graphify-out/
 # Graphify AST cache (regenerated on extract)
 graphify-out/cache/ast/
 
+# TypeScript / Node local artifacts (never commit)
+node_modules/
+dist/
+coverage/
+.vite/
+
 # macOS metadata
 .DS_Store
 

@@ -2,9 +2,12 @@ import {
   AgentState,
   AuthorityBoundary,
   ContentKind,
+  DeliveryStatus,
   EvidenceKind,
   FixtureStatus,
   HashLabel,
+  InteractionDirection,
+  InteractionSurface,
   ProposalKind,
   SourceArtifactType,
   StatusClass,
@@ -13,7 +16,10 @@ import {
   ValidationStatus
 } from "../src/contracts";
 import type {
+  AgentInteraction,
+  AgentMessage,
   AgentStatus,
+  AgentThread,
   ChangeProposal,
   ContentRef,
   EvidenceRef,
@@ -188,11 +194,51 @@ export const manifestEvidence: EvidenceRef = {
   )
 };
 
+export const terminalInteractionEvidence: EvidenceRef = {
+  id: "evidence.interaction-terminal-vulcan",
+  title: "Terminal-originated VULCAN interaction fixture",
+  kind: EvidenceKind.AgentInteraction,
+  locator: "fixture://operator-console/interactions/terminal-vulcan-plan-summary",
+  contentHash: "synthetic-terminal-interaction-fixture-hash",
+  summary: "Synthetic terminal-originated fixture showing a local agent terminal update surfaced in the console.",
+  displayedAs: FixtureStatus.Synthetic,
+  metadata: metadataFactory.build(
+    "fixture.evidence.interaction-terminal-vulcan",
+    FixtureStatus.Synthetic,
+    "fixtures/operator-console-fixture.ts",
+    SourceArtifactType.AgentInteractionFixture,
+    "synthetic-terminal-interaction-fixture-hash",
+    "Synthetic interaction evidence created before browser runtime; no terminal transcript is read.",
+    "Trust is limited to fixture layout validation; this is not live terminal state."
+  )
+};
+
+export const consoleInteractionEvidence: EvidenceRef = {
+  id: "evidence.interaction-console-example",
+  title: "Console-originated example interaction fixture",
+  kind: EvidenceKind.AgentInteraction,
+  locator: "fixture://operator-console/interactions/console-example-acknowledgement",
+  contentHash: "synthetic-console-interaction-fixture-hash",
+  summary: "Synthetic console-originated fixture showing how a future console message could be displayed without enabling outbound messaging.",
+  displayedAs: FixtureStatus.Synthetic,
+  metadata: metadataFactory.build(
+    "fixture.evidence.interaction-console-example",
+    FixtureStatus.Synthetic,
+    "fixtures/operator-console-fixture.ts",
+    SourceArtifactType.AgentInteractionFixture,
+    "synthetic-console-interaction-fixture-hash",
+    "Synthetic interaction evidence created before browser runtime; outbound console messaging is unavailable.",
+    "Trust is limited to fixture layout validation; this is not live console messaging."
+  )
+};
+
 export const evidenceRefs: readonly EvidenceRef[] = [
   implementationReportEvidence,
   conversionEvidence,
   mappingEvidence,
-  manifestEvidence
+  manifestEvidence,
+  terminalInteractionEvidence,
+  consoleInteractionEvidence
 ];
 
 export const validationResults: readonly ValidationResult[] = [
@@ -295,6 +341,130 @@ export const changeProposals: readonly ChangeProposal[] = [
       "8fea236558950935e9f76e754c62bea8d12b8b8c62a932d45cca4d9b1350c340",
       "Proposal assembled from copied and summarized bootstrap conformance evidence.",
       "Trust is bounded to fixture review of source/proposed/evidence refs, not product authority."
+    )
+  }
+];
+
+export const agentMessages: readonly AgentMessage[] = [
+  {
+    id: "message.terminal.vulcan-summary",
+    threadId: "thread.operator-console-fixture-interactions",
+    sessionId: "subagent-chat-fixture-vulcan",
+    surface: InteractionSurface.Terminal,
+    direction: InteractionDirection.TerminalOriginated,
+    senderId: "agent.vulcan",
+    recipientId: "operator.console.fixture",
+    representedRole: "VULCAN",
+    timestamp: fixtureTimestamp,
+    summary: "VULCAN terminal fixture reports that the P0 proposal review is implemented and validated.",
+    body: "Terminal-originated fixture: VULCAN reports completed P0 validation evidence for the proposal review screen.",
+    deliveryStatus: DeliveryStatus.Observed,
+    evidenceRefId: terminalInteractionEvidence.id,
+    metadata: metadataFactory.build(
+      "fixture.message.terminal.vulcan-summary",
+      FixtureStatus.Synthetic,
+      "fixtures/operator-console-fixture.ts",
+      SourceArtifactType.AgentInteractionFixture,
+      "synthetic-terminal-message-fixture-hash",
+      "Synthetic terminal-originated message fixture; no terminal transcript is read at runtime.",
+      "Shows interaction visibility layout only; not live agent communication."
+    )
+  },
+  {
+    id: "message.console.example-acknowledgement",
+    threadId: "thread.operator-console-fixture-interactions",
+    sessionId: "operator-console-fixture-session",
+    surface: InteractionSurface.Console,
+    direction: InteractionDirection.ConsoleOriginated,
+    senderId: "operator.console.fixture",
+    recipientId: "agent.vulcan",
+    representedRole: "OPERATOR",
+    timestamp: fixtureTimestamp,
+    summary: "Console-originated example fixture acknowledges the reviewed evidence without enabling outbound messaging.",
+    body: "Console-originated example fixture: acknowledged for display only. The P0/P1 console provides no outbound messaging control.",
+    deliveryStatus: DeliveryStatus.Observed,
+    evidenceRefId: consoleInteractionEvidence.id,
+    metadata: metadataFactory.build(
+      "fixture.message.console.example-acknowledgement",
+      FixtureStatus.Synthetic,
+      "fixtures/operator-console-fixture.ts",
+      SourceArtifactType.AgentInteractionFixture,
+      "synthetic-console-message-fixture-hash",
+      "Synthetic console-originated message fixture; no message was sent by the browser.",
+      "Shows future-direction distinction only; not live console communication."
+    )
+  }
+];
+
+export const agentInteractions: readonly AgentInteraction[] = [
+  {
+    id: "interaction.terminal.vulcan-summary",
+    threadId: "thread.operator-console-fixture-interactions",
+    messageId: "message.terminal.vulcan-summary",
+    sessionId: "subagent-chat-fixture-vulcan",
+    surface: InteractionSurface.Terminal,
+    direction: InteractionDirection.TerminalOriginated,
+    representedRole: "VULCAN",
+    timestamp: fixtureTimestamp,
+    summary: "Terminal-originated VULCAN fixture update.",
+    body: "A local VULCAN terminal update would appear here as display-only read-model data.",
+    deliveryStatus: DeliveryStatus.Observed,
+    transcriptLocator: "fixture://transcripts/subagent-chat-fixture-vulcan#terminal-summary",
+    evidenceRefId: terminalInteractionEvidence.id,
+    metadata: metadataFactory.build(
+      "fixture.interaction.terminal.vulcan-summary",
+      FixtureStatus.Synthetic,
+      "fixtures/operator-console-fixture.ts",
+      SourceArtifactType.AgentInteractionFixture,
+      "synthetic-terminal-interaction-read-model-hash",
+      "Synthetic terminal-originated interaction fixture; no terminal/session source is read at runtime.",
+      "Demonstrates central visibility without replacing terminal interaction surfaces."
+    )
+  },
+  {
+    id: "interaction.console.example-acknowledgement",
+    threadId: "thread.operator-console-fixture-interactions",
+    messageId: "message.console.example-acknowledgement",
+    sessionId: "operator-console-fixture-session",
+    surface: InteractionSurface.Console,
+    direction: InteractionDirection.ConsoleOriginated,
+    representedRole: "OPERATOR",
+    timestamp: fixtureTimestamp,
+    summary: "Console-originated example fixture acknowledgement.",
+    body: "A future console-originated message would be displayed here after going through an approved communication substrate.",
+    deliveryStatus: DeliveryStatus.Observed,
+    transcriptLocator: "fixture://transcripts/operator-console-fixture-session#example-acknowledgement",
+    evidenceRefId: consoleInteractionEvidence.id,
+    metadata: metadataFactory.build(
+      "fixture.interaction.console.example-acknowledgement",
+      FixtureStatus.Synthetic,
+      "fixtures/operator-console-fixture.ts",
+      SourceArtifactType.AgentInteractionFixture,
+      "synthetic-console-interaction-read-model-hash",
+      "Synthetic console-originated interaction fixture; the browser exposes no outbound messaging action.",
+      "Demonstrates direction labeling only; not live console messaging."
+    )
+  }
+];
+
+export const agentThreads: readonly AgentThread[] = [
+  {
+    id: "thread.operator-console-fixture-interactions",
+    title: "Operator Console fixture interaction visibility",
+    sessionId: "operator-console-fixture-thread",
+    representedRole: "VULCAN / OPERATOR",
+    summary: "Static fixture thread showing terminal-originated and console-originated/example interactions in one read model.",
+    messageIds: agentMessages.map((message: AgentMessage) => message.id),
+    interactionIds: agentInteractions.map((interaction: AgentInteraction) => interaction.id),
+    evidenceRefIds: [terminalInteractionEvidence.id, consoleInteractionEvidence.id],
+    metadata: metadataFactory.build(
+      "fixture.thread.operator-console-fixture-interactions",
+      FixtureStatus.Synthetic,
+      "fixtures/operator-console-fixture.ts",
+      SourceArtifactType.AgentInteractionFixture,
+      "synthetic-interaction-thread-fixture-hash",
+      "Synthetic thread fixture; no session or transcript is read at runtime.",
+      "Shows central visibility over multiple interaction surfaces while remaining static and non-live."
     )
   }
 ];

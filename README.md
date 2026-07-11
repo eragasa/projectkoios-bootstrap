@@ -84,6 +84,24 @@ git clean -fdX graphify-out/
 You can also delete `graphify-out/` manually. Graphify will regenerate it when
 needed.
 
+TypeScript/Node package artifacts such as `node_modules/`, `dist/`,
+`coverage/`, and `.vite/` are generated local state and are ignored by git at
+both repo-root safety level and, where useful, package-local level. Do not
+commit these directories. If a package install or build recreates them, clean
+with targeted removal or ignored-file cleanup before staging:
+
+```bash
+rm -rf src/typescript/projectkoios/ui/operator-console/node_modules \
+       src/typescript/projectkoios/ui/operator-console/dist \
+       src/typescript/projectkoios/ui/operator-console/coverage
+# or, from repo root, inspect ignored generated files before cleaning:
+git status --ignored --short src/typescript/projectkoios/ui/operator-console
+```
+
+Package lockfiles, package manifests, source files, fixtures, and tests are not
+generated local state and may be committed when the implementation report
+explains the package-local lockfile decision.
+
 `.archon/mcp/` is local Archon MCP runtime config and is ignored by git.
 `.archon/mcp/*.json` files may contain machine-specific notification or server
 settings and must not be committed. Repo-owned Archon assets live in

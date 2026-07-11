@@ -1,5 +1,8 @@
 import {
+  agentInteractions,
+  agentMessages,
   agentStatuses,
+  agentThreads,
   changeProposals,
   contentBodies,
   contentRefs,
@@ -8,10 +11,15 @@ import {
   validationResults
 } from "../../fixtures/operator-console-fixture";
 import type {
+  AgentInteraction,
+  AgentMessage,
+  AgentThread,
   ChangeProposal,
   ContentRef,
   DashboardReadModel,
   EvidenceRef,
+  ResolvedAgentInteraction,
+  ResolvedAgentThread,
   ResolvedChangeProposal,
   ResolvedContent,
   ValidationResult
@@ -39,6 +47,14 @@ export class FixtureGraphResolver {
     };
   }
 
+  resolveAgentThread(thread: AgentThread): ResolvedAgentThread {
+    return {
+      thread,
+      interactions: thread.interactionIds.map((interactionId: string) => this.resolveAgentInteraction(interactionId)),
+      evidence: thread.evidenceRefIds.map((evidenceRefId: string) => this.findEvidenceRef(evidenceRefId))
+    };
+  }
+
   buildDashboardReadModel(): DashboardReadModel {
     const primaryProposal: ChangeProposal | undefined = changeProposals[0];
     if (primaryProposal === undefined) {
@@ -47,6 +63,7 @@ export class FixtureGraphResolver {
     return {
       agentStatuses,
       externalStatuses,
+      interactionThreads: agentThreads.map((thread: AgentThread) => this.resolveAgentThread(thread)),
       primaryProposal: this.resolveChangeProposal(primaryProposal)
     };
   }
@@ -60,7 +77,27 @@ export class FixtureGraphResolver {
         problems.push(error instanceof Error ? error.message : String(error));
       }
     }
+    for (const thread of agentThreads) {
+      try {
+        this.resolveAgentThread(thread);
+      } catch (error: unknown) {
+        problems.push(error instanceof Error ? error.message : String(error));
+      }
+    }
     return problems;
+  }
+
+  private resolveAgentInteraction(interactionId: string): ResolvedAgentInteraction {
+    const interaction: AgentInteraction = this.findAgentInteraction(interactionId);
+    const message: AgentMessage = this.findAgentMessage(interaction.messageId);
+    if (message.threadId !== interaction.threadId) {
+      throw new Error(`Interaction/message thread mismatch: ${interaction.id}`);
+    }
+    return {
+      interaction,
+      message,
+      evidence: this.findEvidenceRef(interaction.evidenceRefId)
+    };
   }
 
   private findContentRef(contentRefId: string): ContentRef {
@@ -91,5 +128,23 @@ export class FixtureGraphResolver {
       throw new Error(`Missing validation result: ${validationResultId}`);
     }
     return validationResult;
+  }
+
+  private findAgentMessage(messageId: string): AgentMessage {
+    const message: AgentMessage | undefined = agentMessages.find((candidate: AgentMessage) => candidate.id === messageId);
+    if (message === undefined) {
+      throw new Error(`Missing agent message: ${messageId}`);
+    }
+    return message;
+  }
+
+  private findAgentInteraction(interactionId: string): AgentInteraction {
+    const interaction: AgentInteraction | undefined = agentInteractions.find(
+      (candidate: AgentInteraction) => candidate.id === interactionId
+    );
+    if (interaction === undefined) {
+      throw new Error(`Missing agent interaction: ${interactionId}`);
+    }
+    return interaction;
   }
 }

@@ -56,7 +56,8 @@ export enum ContentKind {
 export enum EvidenceKind {
   ImplementationReport = "implementation-report",
   Sidecar = "sidecar",
-  Manifest = "manifest"
+  Manifest = "manifest",
+  AgentInteraction = "agent-interaction"
 }
 
 export enum ProposalKind {
@@ -71,7 +72,8 @@ export enum SourceArtifactType {
   Manifest = "manifest",
   ValidationOutputSummary = "validation-output-summary",
   SyntheticFixture = "synthetic-fixture",
-  ChangeProposalFixture = "change-proposal-fixture"
+  ChangeProposalFixture = "change-proposal-fixture",
+  AgentInteractionFixture = "agent-interaction-fixture"
 }
 
 export enum HashLabel {
@@ -188,26 +190,39 @@ export interface AgentMessage {
   readonly representedRole: string;
   readonly timestamp: string;
   readonly summary: string;
+  readonly body: string;
   readonly deliveryStatus: DeliveryStatus;
   readonly evidenceRefId: string;
+  readonly metadata: FixtureMetadata;
 }
 
 export interface AgentThread {
   readonly id: string;
   readonly title: string;
+  readonly sessionId: string;
+  readonly representedRole: string;
+  readonly summary: string;
   readonly messageIds: readonly string[];
+  readonly interactionIds: readonly string[];
   readonly evidenceRefIds: readonly string[];
+  readonly metadata: FixtureMetadata;
 }
 
 export interface AgentInteraction {
   readonly id: string;
   readonly threadId: string;
+  readonly messageId: string;
   readonly sessionId: string;
   readonly surface: InteractionSurface;
   readonly direction: InteractionDirection;
+  readonly representedRole: string;
+  readonly timestamp: string;
   readonly summary: string;
+  readonly body: string;
+  readonly deliveryStatus: DeliveryStatus;
   readonly transcriptLocator: string;
   readonly evidenceRefId: string;
+  readonly metadata: FixtureMetadata;
 }
 
 export interface ExternalSystemStatus {
@@ -282,8 +297,21 @@ export interface ResolvedContent {
   readonly body: string;
 }
 
+export interface ResolvedAgentInteraction {
+  readonly interaction: AgentInteraction;
+  readonly message: AgentMessage;
+  readonly evidence: EvidenceRef;
+}
+
+export interface ResolvedAgentThread {
+  readonly thread: AgentThread;
+  readonly interactions: readonly ResolvedAgentInteraction[];
+  readonly evidence: readonly EvidenceRef[];
+}
+
 export interface DashboardReadModel {
   readonly agentStatuses: readonly AgentStatus[];
   readonly externalStatuses: readonly ExternalSystemStatus[];
+  readonly interactionThreads: readonly ResolvedAgentThread[];
   readonly primaryProposal: ResolvedChangeProposal;
 }
