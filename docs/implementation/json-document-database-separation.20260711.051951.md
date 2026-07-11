@@ -75,7 +75,7 @@ Generic document store:
 ADR layer:
 
 - `DocumentStoreAdrStorageAdapter` converts ADR records into generic `DocumentRecord` instances and delegates persistence.
-- ADR schema validation, Markdown projection, semantic equality, and source mapping remain outside the generic store.
+- ADR schema validation, Markdown projection, record comparison, and source mapping remain outside the generic store.
 - The pilot now records generic document-store metadata in the manifest and database evidence.
 
 Migration evidence:

@@ -37,6 +37,7 @@
 - Generic document-store code now lives under `src/python/projectkoios/bootstrap/control_surface/documents/` and `src/python/projectkoios/bootstrap/control_surface/storage/`.
 - SQLite DDL is generated from `DocumentRecord` through `DocumentStoreSqlSchema`.
 - ADR parser/checkpoint behavior now conforms to the schema change that removed `routing`; source routing text is mapping evidence only.
+- YAGNI cleanup removed `AdrRecordComparer`, moved pilot evidence construction into `AdrPilotEvidenceBuilder`, and added `PilotAdrSourceConfig` for pilot source values.
 - ADR-specific storage now delegates through `DocumentStoreAdrStorageAdapter` in `src/python/projectkoios/bootstrap/control_surface/adr/storage.py`.
 - Generic SQLite table is `json_documents` with no ADR-specific fields.
 - Scoped enum/type values are used for introduced semantic values; no dangling semantic constants were introduced.
@@ -46,7 +47,7 @@
 
 ## Latest validation evidence
 
-- `uv run pytest tests/projectkoios/bootstrap/control_surface_storage tests/projectkoios/bootstrap/control_surface_adr tests/projectkoios/bootstrap/schema -q` => `29 passed in 0.17s`.
+- `uv run pytest tests/projectkoios/bootstrap/control_surface_storage tests/projectkoios/bootstrap/control_surface_adr tests/projectkoios/bootstrap/schema -q` => `29 passed in 0.16s`.
 - `uv run mypy src/python/projectkoios/bootstrap/control_surface/documents src/python/projectkoios/bootstrap/control_surface/storage src/python/projectkoios/bootstrap/control_surface/adr tests/projectkoios/bootstrap/control_surface_storage tests/projectkoios/bootstrap/control_surface_adr` => `Success: no issues found in 15 source files`.
 - `uv run projectkoios bootstrap validate-python-policy src/python/projectkoios/bootstrap/control_surface/documents src/python/projectkoios/bootstrap/control_surface/storage src/python/projectkoios/bootstrap/control_surface/adr tests/projectkoios/bootstrap/control_surface_storage tests/projectkoios/bootstrap/control_surface_adr` => `summary: 0 finding(s), 15 file(s)`.
 - `git diff --check` => clean.
