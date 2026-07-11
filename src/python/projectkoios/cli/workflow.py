@@ -729,6 +729,214 @@ class WorkflowQueueStateReporter:
 
 
 @dataclass(frozen=True, slots=True)
+class WorkflowStatusReconciliationResult:
+    """Result of reconciling status fixture active-slice from queue state.
+
+    Args:
+        success: Whether reconciliation completed.
+        status_fixture_path: Status fixture path inspected or written.
+        queue_fixture_path: Queue fixture path used as source.
+        queue_active_item_name: Queue active item name or none.
+        previous_active_slice: Status active-slice before reconciliation.
+        new_active_slice: Status active-slice after reconciliation.
+        next_decision_needed: Queue next-decision text.
+        wrote_fixture: Whether the status fixture was written.
+        dry_run: Whether the attempt intentionally avoided writing.
+    """
+
+    success: bool
+    status_fixture_path: Path
+    queue_fixture_path: Path
+    queue_active_item_name: str
+    previous_active_slice: str
+    new_active_slice: str
+    next_decision_needed: str
+    wrote_fixture: bool
+    dry_run: bool
+
+
+class WorkflowStatusReconciler:
+    """Reconcile static workflow status fixture from static queue state."""
+
+    def __init__(self) -> None:
+        """Initialize the status reconciler."""
+        # Field reader reuses existing narrow JSON validation helpers.
+        self.field_reader: WorkflowStatusFixtureLoader = WorkflowStatusFixtureLoader()
+
+    def reconcile(self, status_fixture_path: Path, queue_fixture_path: Path, *, dry_run: bool = False) -> WorkflowStatusReconciliationResult:
+        """Reconcile the status fixture active-slice from queue state.
+
+        Args:
+            status_fixture_path: Status fixture path that may be written.
+            queue_fixture_path: Queue fixture path used as source state.
+            dry_run: Whether to render the update without writing.
+
+        Returns:
+            Reconciliation result with before/after summary data.
+        """
+        # Queue fixture is read-only source state for reconciliation.
+        queue_data: Mapping[str, object] = self.load_json_mapping(queue_fixture_path, "queue fixture")
+        # Status fixture is copied into a mutable mapping before optional write.
+        status_data: dict[str, object] = dict(self.load_json_mapping(status_fixture_path, "status fixture"))
+        # Queue active name determines the desired status active-slice value.
+        queue_active_item_name: str = self.queue_active_item_name(queue_data)
+        # Previous active-slice is reported for operator review.
+        previous_active_slice: str = self.status_active_slice(status_data)
+        # New active-slice mirrors queue active item or none.
+        new_active_slice: str = queue_active_item_name if queue_active_item_name != "none" else "none"
+        self.update_status_fixture(status_data, new_active_slice)
+        if not dry_run:
+            self.write_status_fixture(status_fixture_path, status_data)
+        return WorkflowStatusReconciliationResult(
+            success=True,
+            status_fixture_path=status_fixture_path,
+            queue_fixture_path=queue_fixture_path,
+            queue_active_item_name=queue_active_item_name,
+            previous_active_slice=previous_active_slice,
+            new_active_slice=new_active_slice,
+            next_decision_needed=self.field_reader.require_string(queue_data, "next_decision_needed"),
+            wrote_fixture=not dry_run,
+            dry_run=dry_run,
+        )
+
+    def load_json_mapping(self, fixture_path: Path, field_name: str) -> Mapping[str, object]:
+        """Load one JSON fixture object.
+
+        Args:
+            fixture_path: Fixture path to read.
+            field_name: Field name used for errors.
+
+        Returns:
+            Parsed fixture mapping.
+        """
+        # Raw JSON data is read only from explicit fixture paths.
+        raw_data: object = json.loads(fixture_path.read_text(encoding="utf-8"))
+        return self.field_reader.require_mapping(raw_data, field_name)
+
+    def queue_active_item_name(self, queue_data: Mapping[str, object]) -> str:
+        """Return queue active item name or none.
+
+        Args:
+            queue_data: Queue fixture mapping.
+
+        Returns:
+            Active item name or none.
+        """
+        # Active item may be null when no workflow-engine item is active.
+        active_item_value: object = queue_data.get("active_item")
+        if active_item_value is None:
+            return "none"
+        # Active item name is copied from the queue fixture.
+        active_item: Mapping[str, object] = self.field_reader.require_mapping(active_item_value, "active_item")
+        return self.field_reader.require_string(active_item, "name")
+
+    def status_active_slice(self, status_data: Mapping[str, object]) -> str:
+        """Return the current status fixture active-slice value.
+
+        Args:
+            status_data: Status fixture mapping.
+
+        Returns:
+            Active-slice token color value.
+        """
+        # Color mapping contains the active-slice status under the current token.
+        color_data: Mapping[str, object] = self.status_token_color(status_data)
+        return self.field_reader.require_string(color_data, "active_slice")
+
+    def update_status_fixture(self, status_data: dict[str, object], active_slice: str) -> None:
+        """Update only status active-slice and decision reason.
+
+        Args:
+            status_data: Mutable status fixture mapping.
+            active_slice: Active-slice value derived from queue state.
+        """
+        # Color mapping is the only token field modified by reconciliation.
+        color_data: dict[str, object] = dict(self.status_token_color(status_data))
+        color_data["active_slice"] = active_slice
+        # Token mapping is copied so unrelated token fields are preserved.
+        token_data: dict[str, object] = dict(self.status_token(status_data))
+        token_data["color"] = color_data
+        # Marking is copied and retains token id/place/topology.
+        marking_data: dict[str, object] = dict(self.field_reader.require_mapping(status_data.get("marking"), "marking"))
+        marking_data["user_decision"] = [token_data]
+        status_data["marking"] = marking_data
+        # Decision reason is aligned with queue state while preserving the decision requirement.
+        decision_data: dict[str, object] = dict(self.field_reader.require_mapping(status_data.get("decision"), "decision"))
+        decision_data["reason"] = "USER/HERMES decision is required to activate a queued item or define the next workflow-engine control slice."
+        status_data["decision"] = decision_data
+
+    def status_token(self, status_data: Mapping[str, object]) -> Mapping[str, object]:
+        """Return the current status token mapping.
+
+        Args:
+            status_data: Status fixture mapping.
+
+        Returns:
+            Current token mapping at user_decision.
+        """
+        # Marking object contains token locations and must preserve user_decision place.
+        marking_data: Mapping[str, object] = self.field_reader.require_mapping(status_data.get("marking"), "marking")
+        # User-decision tokens contain the single current-slice token.
+        token_values: Sequence[object] = self.field_reader.require_sequence(marking_data.get("user_decision"), "marking.user_decision")
+        if len(token_values) != 1:
+            raise ValueError("expected exactly one user_decision token")
+        return self.field_reader.require_mapping(token_values[0], "current token")
+
+    def status_token_color(self, status_data: Mapping[str, object]) -> Mapping[str, object]:
+        """Return the current status token color mapping.
+
+        Args:
+            status_data: Status fixture mapping.
+
+        Returns:
+            Current token color mapping.
+        """
+        # Token color holds active_slice and requires_user_decision fields.
+        token_data: Mapping[str, object] = self.status_token(status_data)
+        return self.field_reader.require_mapping(token_data.get("color"), "token color")
+
+    def write_status_fixture(self, status_fixture_path: Path, status_data: Mapping[str, object]) -> None:
+        """Write deterministic status fixture JSON.
+
+        Args:
+            status_fixture_path: Status fixture path to write.
+            status_data: Status fixture mapping to write.
+        """
+        # Deterministic JSON keeps fixture diffs reviewable.
+        rendered_json: str = json.dumps(status_data, indent=2) + "\n"
+        status_fixture_path.write_text(rendered_json, encoding="utf-8")
+
+
+class WorkflowStatusReconciliationReporter:
+    """Render status reconciliation results for CLI output."""
+
+    def render(self, result: WorkflowStatusReconciliationResult) -> str:
+        """Render a status reconciliation result.
+
+        Args:
+            result: Reconciliation result to render.
+
+        Returns:
+            Human-readable reconciliation summary.
+        """
+        # Output lines are intentionally compact for command-line review.
+        lines: list[str] = [
+            "workflow reconcile-status: reconciled status fixture from queue fixture",
+            f"status fixture: {result.status_fixture_path.as_posix()}",
+            f"queue fixture: {result.queue_fixture_path.as_posix()}",
+            "mode: static fixture update; not canonical workflow authority and not product authority.",
+            f"queue active item: {result.queue_active_item_name}",
+            f"previous status active_slice: {result.previous_active_slice}",
+            f"new status active_slice: {result.new_active_slice}",
+            f"next decision needed: {result.next_decision_needed}",
+            f"written: {'yes' if result.wrote_fixture else 'no'}",
+        ]
+        if result.dry_run:
+            lines.append("dry run: no changes written")
+        return "\n".join(lines)
+
+
+@dataclass(frozen=True, slots=True)
 class WorkflowQueueActivationResult:
     """Result of a static queue activation attempt.
 
@@ -949,6 +1157,8 @@ class Command:
         queue_reporter: WorkflowQueueStateReporter | None = None,
         queue_activator: WorkflowQueueStateActivator | None = None,
         activation_reporter: WorkflowQueueActivationReporter | None = None,
+        status_reconciler: WorkflowStatusReconciler | None = None,
+        reconciliation_reporter: WorkflowStatusReconciliationReporter | None = None,
     ) -> None:
         """Initialize the command adapter.
 
@@ -959,6 +1169,8 @@ class Command:
             queue_reporter: Optional queue-state reporter for tests.
             queue_activator: Optional queue-state activator for tests.
             activation_reporter: Optional activation reporter for tests.
+            status_reconciler: Optional status reconciler for tests.
+            reconciliation_reporter: Optional reconciliation reporter for tests.
         """
         # Loader maps the static fixture into runtime objects.
         self.loader: WorkflowStatusFixtureLoader = loader or WorkflowStatusFixtureLoader()
@@ -972,6 +1184,10 @@ class Command:
         self.queue_activator: WorkflowQueueStateActivator = queue_activator or WorkflowQueueStateActivator()
         # Activation reporter formats before/after mutation summaries.
         self.activation_reporter: WorkflowQueueActivationReporter = activation_reporter or WorkflowQueueActivationReporter()
+        # Status reconciler mutates only the static status fixture from queue state.
+        self.status_reconciler: WorkflowStatusReconciler = status_reconciler or WorkflowStatusReconciler()
+        # Reconciliation reporter formats status before/after summaries.
+        self.reconciliation_reporter: WorkflowStatusReconciliationReporter = reconciliation_reporter or WorkflowStatusReconciliationReporter()
 
     def register(self, subparsers: SubparserCollection) -> None:
         """Register workflow commands on the top-level parser.
@@ -998,6 +1214,11 @@ class Command:
         activate_parser.add_argument("item")
         activate_parser.add_argument("--dry-run", action="store_true")
         activate_parser.set_defaults(func=self.run_activate)
+
+        # Reconcile-status parser mutates only the static status fixture from queue state.
+        reconcile_parser: ArgumentParser = workflow_subparsers.add_parser("reconcile-status", help="Reconcile workflow status from queue state")
+        reconcile_parser.add_argument("--dry-run", action="store_true")
+        reconcile_parser.set_defaults(func=self.run_reconcile_status)
 
     def run_status(self, args: Namespace) -> None:
         """Run the read-only workflow status command.
@@ -1040,6 +1261,24 @@ class Command:
         print(self.activation_reporter.render(result))
         if not result.success:
             raise SystemExit(1)
+
+    def run_reconcile_status(self, args: Namespace) -> None:
+        """Run the workflow status reconciliation command.
+
+        Args:
+            args: Parsed CLI namespace.
+        """
+        # Status fixture is the only persistent write target authorized for reconciliation.
+        status_fixture_path: Path = Path("dev/workflow-nets/bootstrap-harness.workflow-net.json")
+        # Queue fixture is read-only source state for reconciliation.
+        queue_fixture_path: Path = Path("dev/workflow-nets/bootstrap-harness.queue-state.json")
+        # Reconciliation result describes the status fixture before and after update.
+        result: WorkflowStatusReconciliationResult = self.status_reconciler.reconcile(
+            status_fixture_path,
+            queue_fixture_path,
+            dry_run=args.dry_run,
+        )
+        print(self.reconciliation_reporter.render(result))
 
 
 def register(subparsers: SubparserCollection) -> None:

@@ -2,8 +2,8 @@
 {
   "title": "Vulcan active work",
   "artifact_type": "workspace-active-priorities",
-  "status": "petrinet-workflow-activate-slice-5-implemented-validated",
-  "datetime": "20260711.125832Z",
+  "status": "petrinet-workflow-status-queue-consistency-slice-6-implemented-validated",
+  "datetime": "20260711.131316Z",
   "acting_as": "VULCAN",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/vulcan/",
@@ -11,17 +11,17 @@
   "priority_count": 1,
   "working_directory": "working/",
   "active_working_items": [
-    "docs/plans/implementation-brief.20260711.124950_petrinet-workflow-activate-slice-5.md",
-    "docs/reviews/hermes-decision.20260711.125800_petrinet-workflow-activate-slice-5.md",
-    "docs/implementation/petrinet-workflow-activate-slice-5.20260711.125832.md",
-    "dev/workflow-nets/bootstrap-harness.queue-state.json",
+    "docs/plans/implementation-brief.20260711.130723_petrinet-workflow-status-queue-consistency-slice-6.md",
+    "docs/reviews/hermes-decision.20260711.131000_petrinet-workflow-status-queue-consistency-slice-6.md",
+    "docs/implementation/petrinet-workflow-status-queue-consistency-slice-6.20260711.131316.md",
+    "dev/workflow-nets/bootstrap-harness.workflow-net.json",
     "src/python/projectkoios/cli/workflow.py",
-    "tests/projectkoios/cli/test__workflow_activate.py"
+    "tests/projectkoios/cli/test__workflow_reconcile_status.py"
   ],
   "scratch_directory": "scratch/",
   "implementation_plan": null,
-  "latest_report": "docs/implementation/petrinet-workflow-activate-slice-5.20260711.125832.md",
-  "latest_aar": "docs/AAR/aar.20260711.125832_petrinet-workflow-activate-slice-5.md"
+  "latest_report": "docs/implementation/petrinet-workflow-status-queue-consistency-slice-6.20260711.131316.md",
+  "latest_aar": "docs/AAR/aar.20260711.131316_petrinet-workflow-status-queue-consistency-slice-6.md"
 }
 ```
 
@@ -29,26 +29,23 @@
 
 ## Current priority stack
 
-1. `petrinet-workflow-activate-slice-5`: implemented and validated.
+1. `petrinet-workflow-status-queue-consistency-slice-6`: implemented and validated.
 2. Parent effort: Petri-net workflow harness / workflow inspectability.
-3. Boundaries preserved: command execution writes only `dev/workflow-nets/bootstrap-harness.queue-state.json`; no Petri-net firing/runtime mutation, generalized persistence/database/storage, git/chat/intercom reconstruction, Operator Console, workflow-object coupling, schema/product authority, global skill propagation, or `pi-skill-determinism-slice-0` implementation/supersession.
+3. Boundaries preserved: `workflow status` remains read-only; reconciliation writes only `dev/workflow-nets/bootstrap-harness.workflow-net.json`; no queue activation, Petri-net firing/runtime mutation, generalized persistence/database/storage, git/chat/intercom/workspace reconstruction, Operator Console, workflow-object coupling, schema/product authority, global skill propagation, or `pi-skill-determinism-slice-0` implementation/supersession.
 
 ## Latest working material
 
-- Brief: `docs/plans/implementation-brief.20260711.124950_petrinet-workflow-activate-slice-5.md`.
-- HERMES decision: `docs/reviews/hermes-decision.20260711.125800_petrinet-workflow-activate-slice-5.md`.
-- Implementation report: `docs/implementation/petrinet-workflow-activate-slice-5.20260711.125832.md`.
-- AAR: `docs/AAR/aar.20260711.125832_petrinet-workflow-activate-slice-5.md`.
+- Brief: `docs/plans/implementation-brief.20260711.130723_petrinet-workflow-status-queue-consistency-slice-6.md`.
+- HERMES decision: `docs/reviews/hermes-decision.20260711.131000_petrinet-workflow-status-queue-consistency-slice-6.md`.
+- Implementation report: `docs/implementation/petrinet-workflow-status-queue-consistency-slice-6.20260711.131316.md`.
+- AAR: `docs/AAR/aar.20260711.131316_petrinet-workflow-status-queue-consistency-slice-6.md`.
 
 ## Implemented outputs
 
-- `uv run projectkoios workflow activate <item>`.
-- Optional `--dry-run` support.
-- Safe no-write failure for active-item conflict.
-- Safe no-write failure for missing/nonqueued item.
-- Deterministic JSON write for successful activation.
-- Before/after activation summary with static-fixture/non-canonical warning.
-- Baseline fixture reconciliation: Slice 4 completed with commit `5f209114`; `pi-skill-determinism-slice-0` remains queued.
+- `uv run projectkoios workflow reconcile-status [--dry-run]`.
+- Status fixture reconciled to queue state: `active_slice=none` when queue `active_item` is null.
+- Status decision reason aligned with queue decision gate.
+- Focused reconciliation tests using temporary fixture copies.
 
 ## Validation results
 
@@ -56,18 +53,14 @@ From repository root:
 
 ```bash
 uv run projectkoios workflow queue
+uv run projectkoios workflow reconcile-status --dry-run
+uv run projectkoios workflow status
 ```
 
-Passed.
+Passed. Status output shows `current-slice at user_decision`, `active_slice=none`, `requires_user_decision=true`, and `user decision required: yes`.
 
 ```bash
-uv run projectkoios workflow activate pi-skill-determinism-slice-0 --dry-run
-```
-
-Passed; printed `dry run: no changes written`.
-
-```bash
-uv run pytest tests/projectkoios/cli/test__workflow_activate.py tests/projectkoios/cli/test__workflow_queue.py tests/projectkoios/cli/test__workflow_status.py tests/projectkoios/workflow -q
+uv run pytest tests/projectkoios/cli/test__workflow_reconcile_status.py tests/projectkoios/cli/test__workflow_status.py tests/projectkoios/cli/test__workflow_queue.py tests/projectkoios/workflow -q
 ```
 
 Passed: `28 passed in 0.08s`.
@@ -76,19 +69,15 @@ Passed: `28 passed in 0.08s`.
 uv run projectkoios bootstrap validate-python-policy src/python/projectkoios/workflow src/python/projectkoios/cli tests/projectkoios/workflow tests/projectkoios/cli
 ```
 
-Passed: `summary: 0 finding(s), 20 file(s)`.
+Passed: `summary: 0 finding(s), 21 file(s)`.
 
 ```bash
+uv run python -m json.tool dev/workflow-nets/bootstrap-harness.workflow-net.json >/dev/null
 uv run python -m json.tool dev/workflow-nets/bootstrap-harness.queue-state.json >/dev/null
-```
-
-Passed.
-
-```bash
 git diff --check
 ```
 
-Passed with no output.
+Passed.
 
 ## Next expected artifact
 

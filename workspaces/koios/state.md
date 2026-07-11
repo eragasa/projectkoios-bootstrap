@@ -4,7 +4,7 @@
 
 - Type: workspace-state
 - Status: active
-- Updated: 20260711T130000Z
+- Updated: 20260711T132000Z
 - Updated by: KOIOS
 - Repository: projectkoios-bootstrap
 - Workspace: `workspaces/koios/`
@@ -17,9 +17,9 @@ KOIOS does not create architecture authority, implementation authority, or workf
 
 ## Current knowledge state
 
-The current active Koios thread is bounded provenance support for Petri-net workflow inspectability and mechanical workflow-engine controls.
+The current active Koios thread includes bounded provenance support for Petri-net workflow inspectability and ADR rationalization / bidirectional JSON↔Markdown object intake.
 
-Queue Slice 4 has been accepted/committed as `5f209114 Add Petri net workflow queue view`. KOIOS completed bounded provenance input for activate Slice 5, and HERMES has approved/routed Slice 5 to VULCAN. KOIOS is not blocking implementation.
+KOIOS completed ADR rationalization provenance intake in `working/provenance-intake.20260711_adr-rationalization-json-md-object-track.md`, incorporating ATHENA intake `docs/plans/architecture-intake.20260711.131140_adr-bidirectional-json-markdown-objects.md`. KOIOS is not blocking implementation.
 
 Captured/advisory artifacts in this workspace:
 
@@ -34,6 +34,9 @@ Captured/advisory artifacts in this workspace:
 - `working/provenance-note.20260711T114216Z_live-petrinet-skeleton-pivot.md`
 - `working/provenance-note.20260711_queue-state-slice-4.md`
 - `working/provenance-note.20260711_activate-slice-5.md`
+- `working/provenance-note.20260711_status-queue-consistency-slice.md`
+- `working/provenance-intake.20260711_adr-rationalization-json-md-object-track.md`
+- `working/candidate-schema.20260711_adr-bidirectional-json-md-object.md`
 - `../../docs/process-capture/pc.workflow.document-trace.md`
 - `../../docs/process-capture/pc.workflow.document-trace.20260706.025408Z.md`
 - `../../docs/process-capture/pc.workflow.document-trace.20260708.044950Z.md`
@@ -79,6 +82,12 @@ KOIOS captured bounded provenance input for queue Slice 4 in `working/provenance
 
 KOIOS captured bounded provenance input for activate Slice 5 in `working/provenance-note.20260711_activate-slice-5.md`. The note records that activation/update control is needed because static queue state exposes stale state but cannot reconcile itself, and that safe mutation should be explicit-command-only, deterministic, limited to `dev/workflow-nets/bootstrap-harness.queue-state.json`, and preserve completed/queued/superseded/deferred provenance.
 
+KOIOS captured bounded provenance input for a status/queue consistency slice in `working/provenance-note.20260711_status-queue-consistency-slice.md`, preserving the observed inconsistency between stale `workflow status` active-slice output and reconciled `workflow queue` state.
+
+KOIOS completed ADR rationalization / bidirectional JSON↔Markdown object provenance intake in `working/provenance-intake.20260711_adr-rationalization-json-md-object-track.md`. The note validates ADR corpus messiness, inventories lifecycle/naming, storage topology, JSON/database pilot, and conformance surfaces, incorporates ATHENA intake, and preserves that authority/object semantics must remain architecture-owned before implementation or bulk migration.
+
+KOIOS added a non-authoritative candidate schema sketch in `working/candidate-schema.20260711_adr-bidirectional-json-md-object.md`. It proposes an envelope around existing ADR schema payloads with projection, conversion evidence, source refs, sidecar, validation, and conflict-policy sections. This requires ATHENA/USER promotion before any schema publication or implementation.
+
 ## Authority boundary
 
 These Koios artifacts are advisory provenance and knowledge-capture surfaces only.
@@ -91,4 +100,4 @@ The workflow document-trace artifacts do not create product workflow architectur
 
 ## Repo-state note
 
-KOIOS is not blocking current implementation. Current non-KOIOS dirty state belongs to ongoing Slice 5 routing/implementation surfaces; KOIOS-owned dirty state is limited to this workspace-state refresh and the activate Slice 5 provenance note unless HERMES/VULCAN add more.
+KOIOS is not blocking current implementation. KOIOS-owned dirty state includes workspace-state refreshes and bounded provenance/intake notes under `workspaces/koios/working/`; non-KOIOS dirty state belongs to ongoing HERMES/ATHENA/VULCAN workflow or architecture surfaces.

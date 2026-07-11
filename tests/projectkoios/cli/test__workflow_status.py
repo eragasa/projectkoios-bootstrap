@@ -31,7 +31,8 @@ def test__workflow_status__prints_static_fixture_status(capsys: pytest.CaptureFi
     assert "tokens:" in output
     assert "current-slice at user_decision" in output
     assert "requires_user_decision=true" in output
-    assert "active_slice=petrinet-workflow-current-slice-status-reconciliation-slice-2" in output
+    assert "active_slice=none" in output
+    assert "petrinet-workflow-current-slice-status-reconciliation-slice-2" not in output
     assert "live-petri-net-skeleton-slice-0" not in output
     assert "enabled transitions:" in output
     assert "- approve_next_slice: Approve next slice" in output

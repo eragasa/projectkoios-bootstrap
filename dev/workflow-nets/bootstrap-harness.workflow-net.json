@@ -57,14 +57,14 @@
         "color": {
           "kind": "workflow-slice",
           "requires_user_decision": "true",
-          "active_slice": "petrinet-workflow-current-slice-status-reconciliation-slice-2"
+          "active_slice": "none"
         }
       }
     ]
   },
   "decision": {
     "requires_user_decision": true,
-    "reason": "USER/HERMES approval is required before the next implementation transition."
+    "reason": "USER/HERMES decision is required to activate a queued item or define the next workflow-engine control slice."
   },
   "fixture_note": "Static bootstrap fixture for CLI inspectability only; not canonical workflow authority."
 }

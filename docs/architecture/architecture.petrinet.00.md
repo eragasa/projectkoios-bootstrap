@@ -213,6 +213,27 @@ The implementation also reconciles the static queue baseline so `petrinet-workfl
 
 This is a fixture-only mutation slice, not Petri-net runtime firing. It does not add Petri-net executor/runtime mutation, generalized persistence/database/storage, writes outside the queue fixture during command execution, git/chat/intercom reconstruction, Operator Console integration, workflow-object runtime coupling, schema/product authority, global skill propagation, or implementation/supersession of `pi-skill-determinism-slice-0`.
 
+#### Status/queue consistency slice 6
+
+ATHENA brief: `docs/plans/implementation-brief.20260711.130723_petrinet-workflow-status-queue-consistency-slice-6.md`.
+HERMES decision: `docs/reviews/hermes-decision.20260711.131000_petrinet-workflow-status-queue-consistency-slice-6.md`.
+Implementation evidence: `docs/implementation/petrinet-workflow-status-queue-consistency-slice-6.20260711.131316.md`.
+ATHENA review: `docs/reviews/architecture-conformance.20260711.131900_petrinet-workflow-status-queue-consistency-slice-6.md`.
+HERMES acceptance: `docs/reviews/hermes-acceptance.20260711.131600_petrinet-workflow-status-queue-consistency-slice-6.md`.
+
+This slice repairs disagreement between `workflow status` and `workflow queue` after queue-state and activation controls were introduced:
+
+```bash
+uv run projectkoios workflow reconcile-status
+uv run projectkoios workflow reconcile-status --dry-run
+```
+
+As built, `workflow reconcile-status` reads only `dev/workflow-nets/bootstrap-harness.workflow-net.json` and `dev/workflow-nets/bootstrap-harness.queue-state.json`, derives status `active_slice` from queue `active_item`, and writes only `dev/workflow-nets/bootstrap-harness.workflow-net.json` when not dry-run. If queue `active_item` is null, status uses `active_slice=none`; if queue later has an active item, tests verify that active item name becomes the status `active_slice`.
+
+The reconciled status fixture now reports token `current-slice` at `user_decision`, `active_slice=none`, `requires_user_decision=true`, and a USER/HERMES decision reason. `pi-skill-determinism-slice-0` remains queued-only and is not activated or superseded.
+
+This is a static fixture consistency command, not Petri-net runtime firing or canonical workflow authority. It does not add transition firing, queue activation, generalized persistence/database/storage, git/chat/intercom/workspace-prose reconstruction, Operator Console integration, workflow-object runtime coupling, schema/product authority, global skill propagation, or implementation/supersession of queued work.
+
 ## Decomposition map
 
 | Section | Current state | Decomposes to | Trigger |

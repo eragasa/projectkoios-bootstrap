@@ -3,7 +3,7 @@
   "title": "Hermes workspace state",
   "artifact_type": "workspace-state",
   "status": "active",
-  "datetime": "20260711.130500Z"
+  "datetime": "20260711.131600Z",
   "acting_as": "HERMES",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/hermes/",
@@ -51,6 +51,12 @@ Reconcile accepted Petri-net workflow queue state Slice 4 with the drafted activ
 - HERMES reran queue, dry-run activation, focused pytest, Python policy, JSON validity, and diff-check validation.
 - HERMES accepted Slice 5 with watchpoints in `docs/reviews/hermes-acceptance.20260711.130500_petrinet-workflow-activate-slice-5.md`.
 - Live queue fixture is reconciled: Slice 4 is completed with commit `5f209114`, `active_item` is null, and `pi-skill-determinism-slice-0` remains queued-only.
+- ATHENA drafted `docs/plans/implementation-brief.20260711.130723_petrinet-workflow-status-queue-consistency-slice-6.md` and KOIOS provided `workspaces/koios/working/provenance-note.20260711_status-queue-consistency-slice.md`.
+- HERMES approved Slice 6 in `docs/reviews/hermes-decision.20260711.131000_petrinet-workflow-status-queue-consistency-slice-6.md` and routed to VULCAN.
+- VULCAN implemented Slice 6 and reported `docs/implementation/petrinet-workflow-status-queue-consistency-slice-6.20260711.131316.md` plus AAR `docs/AAR/aar.20260711.131316_petrinet-workflow-status-queue-consistency-slice-6.md`.
+- HERMES reran status, queue, reconcile dry-run, focused pytest, Python policy, JSON validity for both fixtures, and diff-check validation.
+- HERMES accepted Slice 6 with watchpoints in `docs/reviews/hermes-acceptance.20260711.131600_petrinet-workflow-status-queue-consistency-slice-6.md`.
+- Status and queue now agree: status `active_slice=none`; queue `active_item` is null.
 
 ## Acceptance boundaries
 
@@ -59,16 +65,16 @@ Reconcile accepted Petri-net workflow queue state Slice 4 with the drafted activ
 - Slice 4 does not mutate active/queued state; it only renders explicit fixture state.
 - No transition firing, activation mutation, queue mutation, persistence beyond committed static fixture, Operator Console integration, workflow-object runtime coupling, schema authority, live adapter/session read, git-history/chat reconstruction, role/permission expansion, global skill propagation, or product/mothership authority is accepted by this slice.
 - Pi skill determinism remains queued/deferred unless explicitly activated.
-- Slice 5 is accepted as a narrow activation/queue-fixture update command; any further mutation behavior needs a separate slice.
+- Slice 5 is accepted as a narrow activation/queue-fixture update command; Slice 6 is accepted as a narrow status-fixture reconciliation command; any further mutation behavior needs a separate slice.
 
 ## Current blockers
 
-- None for accepted Slice 5.
+- None for accepted Slice 6.
 
 ## Next owner
 
-- HERMES_OR_USER for packaging/commit and choosing the next bounded workflow-engine slice.
+- HERMES_OR_USER for packaging/commit and choosing whether to activate `pi-skill-determinism-slice-0` or define another bounded workflow-engine slice.
 
 ## Current status summary
 
-Petri-net workflow activate Slice 5 is implemented, independently validated, and accepted with watchpoints. The project now has `uv run projectkoios workflow queue` for queue visibility and `uv run projectkoios workflow activate <item>` for explicit static-fixture activation with dry-run support. The fixture has been reconciled so Slice 4 is completed at `5f209114`, `active_item` is null, and `pi-skill-determinism-slice-0` remains queued-only unless explicitly activated.
+Petri-net workflow status/queue consistency Slice 6 is implemented, independently validated, and accepted with watchpoints. The project now has `uv run projectkoios workflow queue` for queue visibility, `uv run projectkoios workflow activate <item>` for explicit static-fixture activation, and `uv run projectkoios workflow reconcile-status` for explicit status-fixture reconciliation. `workflow status` now reports `active_slice=none` while `workflow queue` reports active none; `pi-skill-determinism-slice-0` remains queued-only unless explicitly activated.
