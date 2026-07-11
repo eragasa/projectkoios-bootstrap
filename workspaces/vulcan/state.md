@@ -12,7 +12,7 @@
   "source_architecture": "docs/architecture/architecture.json-adr-storage-topology.md",
   "source_brief": "docs/plans/implementation-brief.20260711.045012_json-document-database-separation.md",
   "implementation_plan": "docs/plans/implementation-plan.20260711.050606_json-document-database-separation.md",
-  "latest_report": "docs/implementation/json-document-database-separation.20260711.051951.md",
+  "latest_report": "docs/implementation/control-surface-cleanup-and-schema-conformance.20260711.061724.md",
   "latest_aar": "docs/AAR/aar.20260711.051951_json-document-database-separation.md",
   "control_files": ["state.md", "active.md"],
   "next_owner": "ATHENA_OR_USER_OR_HERMES",
@@ -28,7 +28,7 @@
 - Architecture surface: `docs/architecture/architecture.json-adr-storage-topology.md`.
 - Source brief: `docs/plans/implementation-brief.20260711.045012_json-document-database-separation.md`.
 - Implementation plan: `docs/plans/implementation-plan.20260711.050606_json-document-database-separation.md`.
-- Implementation report: `docs/implementation/json-document-database-separation.20260711.051951.md`.
+- Implementation report: `docs/implementation/control-surface-cleanup-and-schema-conformance.20260711.061724.md`.
 - AAR: `docs/AAR/aar.20260711.051951_json-document-database-separation.md`.
 
 ## Current status

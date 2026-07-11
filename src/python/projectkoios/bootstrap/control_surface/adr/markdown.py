@@ -1,11 +1,11 @@
-from __future__ import annotations
-
 """Small Markdown helpers for the one-ADR storage pilot.
 
 This module is not a general ADR Markdown importer. It reads the pilot source
 ADR Markdown file, reads the generated projection's embedded JSON block, and
 renders the generated projection used as pilot evidence.
 """
+
+from __future__ import annotations
 
 import re
 from re import Pattern

@@ -23,7 +23,7 @@
   "scratch_directory": "scratch/",
   "source_brief": "docs/plans/implementation-brief.20260711.045012_json-document-database-separation.md",
   "implementation_plan": "docs/plans/implementation-plan.20260711.050606_json-document-database-separation.md",
-  "latest_report": "docs/implementation/json-document-database-separation.20260711.051951.md"
+  "latest_report": "docs/implementation/control-surface-cleanup-and-schema-conformance.20260711.061724.md"
 }
 ```
 
@@ -40,7 +40,7 @@
 - Architecture surface: `docs/architecture/architecture.json-adr-storage-topology.md`.
 - Source brief: `docs/plans/implementation-brief.20260711.045012_json-document-database-separation.md`.
 - Approved implementation plan: `docs/plans/implementation-plan.20260711.050606_json-document-database-separation.md`.
-- Implementation report: `docs/implementation/json-document-database-separation.20260711.051951.md`.
+- Implementation report: `docs/implementation/control-surface-cleanup-and-schema-conformance.20260711.061724.md`.
 - AAR: `docs/AAR/aar.20260711.051951_json-document-database-separation.md`.
 - Generic document/storage code: `src/python/projectkoios/bootstrap/control_surface/documents/`, `src/python/projectkoios/bootstrap/control_surface/storage/`.
 - ADR wrapper/code: `src/python/projectkoios/bootstrap/control_surface/adr/`.
