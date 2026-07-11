@@ -1,0 +1,70 @@
+{
+  "net_id": "bootstrap-harness.slice-0",
+  "places": [
+    {
+      "place_id": "intake",
+      "label": "Intake"
+    },
+    {
+      "place_id": "user_decision",
+      "label": "User decision"
+    },
+    {
+      "place_id": "implementation",
+      "label": "Implementation"
+    },
+    {
+      "place_id": "validated",
+      "label": "Validated"
+    }
+  ],
+  "transitions": [
+    {
+      "transition_id": "approve_next_slice",
+      "label": "Approve next slice"
+    },
+    {
+      "transition_id": "complete_implementation",
+      "label": "Complete implementation"
+    }
+  ],
+  "arcs": [
+    {
+      "place_id": "user_decision",
+      "transition_id": "approve_next_slice",
+      "kind": "input"
+    },
+    {
+      "place_id": "implementation",
+      "transition_id": "approve_next_slice",
+      "kind": "output"
+    },
+    {
+      "place_id": "implementation",
+      "transition_id": "complete_implementation",
+      "kind": "input"
+    },
+    {
+      "place_id": "validated",
+      "transition_id": "complete_implementation",
+      "kind": "output"
+    }
+  ],
+  "marking": {
+    "user_decision": [
+      {
+        "token_id": "current-slice",
+        "color": {
+          "kind": "workflow-slice",
+          "requires_user_decision": "true",
+          "active_slice": "live-petri-net-skeleton-slice-0"
+        }
+      }
+    ]
+  },
+  "decision": {
+    "requires_user_decision": true,
+    "reason": "USER/HERMES approval is required before the next implementation transition."
+  },
+  "fixture_note": "Static bootstrap fixture for CLI inspectability only; not canonical workflow authority."
+}

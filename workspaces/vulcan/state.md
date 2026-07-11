@@ -2,8 +2,8 @@
 {
   "title": "Vulcan workspace state",
   "artifact_type": "workspace-state",
-  "status": "live-petri-net-skeleton-slice-0-planned-awaiting-approval",
-  "datetime": "20260711.114700Z",
+  "status": "live-petri-net-skeleton-slice-0-implemented-validated",
+  "datetime": "20260711.114916Z",
   "acting_as": "VULCAN",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/vulcan/",
@@ -16,12 +16,12 @@
   ],
   "slice_name": "live-petri-net-skeleton-slice-0",
   "implementation_plan": "docs/plans/implementation-plan.20260711.114700_live-petri-net-skeleton-slice-0.md",
-  "latest_report": null,
-  "latest_aar": null,
+  "latest_report": "docs/implementation/live-petri-net-skeleton-slice-0.20260711.114916.md",
+  "latest_aar": "docs/AAR/aar.20260711.114916_live-petri-net-skeleton-slice-0.md",
   "target_command": "uv run projectkoios workflow status",
   "control_files": ["state.md", "active.md"],
-  "next_owner": "USER_HERMES_APPROVAL",
-  "blockers": ["awaiting approval before coding"]
+  "next_owner": "USER_HERMES_ATHENA_REVIEW",
+  "blockers": []
 }
 ```
 
@@ -29,46 +29,53 @@
 
 ## Current scope
 
-- Current scope: planned Live Petri-net skeleton slice 0; paused before coding.
+- Current scope: implemented and validated Live Petri-net skeleton slice 0.
 - Slice name: `live-petri-net-skeleton-slice-0`.
 - Target command: `uv run projectkoios workflow status`.
 - Brief: `docs/plans/implementation-brief.20260711.114600_live-petri-net-skeleton-slice-0.md`.
 - Plan: `docs/plans/implementation-plan.20260711.114700_live-petri-net-skeleton-slice-0.md`.
+- Report: `docs/implementation/live-petri-net-skeleton-slice-0.20260711.114916.md`.
 
 ## Current status
 
-- VULCAN reviewed the ATHENA brief and existing Petri-net runtime substrate under `src/python/projectkoios/workflow/`.
-- Existing runtime provides `PetriNet`, `PetriNetPlace`, `PetriNetTransition`, `PetriNetArc`, `PetriNetMarking`, `PetriNetToken`, `PetriNetState`, `PetriNetExecutor.enabled_bindings(...)`, and validation.
-- VULCAN produced a concise implementation plan and is paused for USER/HERMES approval before implementation.
+- VULCAN added a static bootstrap Petri-net fixture at `dev/workflow-nets/bootstrap-harness.workflow-net.json`.
+- VULCAN added the read-only workflow CLI command adapter at `src/python/projectkoios/cli/workflow.py`.
+- `src/python/projectkoios/cli/main.py` now registers the top-level `workflow` command group.
+- `uv run projectkoios workflow status` prints workflow id, fixture path, places, token locations/color, enabled transitions, and user-decision-required status.
+- Enabled transitions are computed via `PetriNetExecutor.enabled_bindings(...)`.
+- The fixture remains static bootstrap inspectability material, not canonical workflow authority.
 
-## Planned implementation
+## Validation evidence
 
-- Add `dev/workflow-nets/bootstrap-harness.workflow-net.json` as a narrow static fixture.
-- Add `src/python/projectkoios/cli/workflow.py` with a command adapter, fixture loader, and deterministic status reporter.
-- Register `workflow` in `src/python/projectkoios/cli/main.py`.
-- Add `tests/projectkoios/cli/test__workflow_status.py`.
+From repository root:
 
-## Boundaries
+- `uv run projectkoios workflow status` => passed; printed expected status.
+- `uv run pytest tests/projectkoios/cli/test__workflow_status.py tests/projectkoios/workflow -q` => `15 passed in 0.06s`.
+- `uv run mypy src/python/projectkoios/cli src/python/projectkoios/workflow tests/projectkoios/cli` => `Success: no issues found in 12 source files`.
+- `uv run projectkoios bootstrap validate-python-policy src/python/projectkoios/cli src/python/projectkoios/workflow tests/projectkoios/cli` => `summary: 0 finding(s), 12 file(s)`.
+- `git diff --check` => clean.
 
-- Use existing `projectkoios.workflow` Petri-net runtime classes.
-- Compute enabled transitions through `PetriNetExecutor.enabled_bindings(...)`.
-- Keep command read-only.
-- Do not add firing, persistence, workflow-object integration, Operator Console integration, schema/product authority, role/permission expansion, or live adapters.
+## Boundaries preserved
 
-## Validation plan
-
-- `uv run projectkoios workflow status`
-- `uv run pytest tests/projectkoios/cli/test__workflow_status.py tests/projectkoios/workflow -q`
-- `uv run mypy src/python/projectkoios/cli src/python/projectkoios/workflow tests/projectkoios/cli`
-- `uv run projectkoios bootstrap validate-python-policy src/python/projectkoios/cli src/python/projectkoios/workflow tests/projectkoios/cli`
-- `git diff --check`
+No transition firing command, persistence, mutable workflow state, runtime event-log persistence, Operator Console integration, workflow-object integration, Petri-net graph UI, `docs/schemas/` authority, generalized workflow-net loader framework, role/permission expansion, live intercom/session adapters, or product/mothership workflow authority was added.
 
 ## Dirty tree caution
 
-Known uncommitted non-VULCAN/handoff surfaces exist in the working tree, including ATHENA/KOIOS workspace files and proposal material. Keep VULCAN implementation commit boundaries explicit.
+Treat VULCAN-owned changes for this slice as:
+
+- `dev/workflow-nets/bootstrap-harness.workflow-net.json`
+- `src/python/projectkoios/cli/workflow.py`
+- `src/python/projectkoios/cli/main.py`
+- `tests/projectkoios/cli/test__workflow_status.py`
+- `docs/implementation/live-petri-net-skeleton-slice-0.20260711.114916.md`
+- `docs/AAR/aar.20260711.114916_live-petri-net-skeleton-slice-0.md`
+- `workspaces/vulcan/active.md`
+- `workspaces/vulcan/state.md`
+
+Known non-VULCAN handoff/planning files may also exist in the dirty tree. Keep commit boundaries explicit.
 
 ## Next transition
 
-- Owner: USER/HERMES.
-- Expected action: approve implementation plan or request plan edits.
-- Blocker: coding is paused until approval or direct authorization.
+- Owner: USER/HERMES/ATHENA review.
+- Expected action: review status output and conformance, or request closeout/commit.
+- Blockers: none from VULCAN.

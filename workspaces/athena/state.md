@@ -2,8 +2,8 @@
 {
   "title": "Athena workspace state",
   "artifact_type": "workspace-state",
-  "status": "live-petri-net-skeleton-brief-ready",
-  "datetime": "20260711.113700Z",
+  "status": "live-petri-net-skeleton-slice-0-athena-accepted",
+  "datetime": "20260711.115100Z",
   "acting_as": "ATHENA",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/athena/",
@@ -127,10 +127,11 @@
 - KOIOS added a post-browser-inspection provenance addendum: the user-orientation gap is not evidence laundering or an authority defect, but a readability/provenance communication gap. ATHENA recorded it in `docs/reviews/provenance-addendum.20260711.113900_operator-console-current-implementation-review-fixture.md` and tightened the final acceptance/architecture follow-up language.
 - After USER clarification that KOIOS should provide an authoritative schema candidate rather than more watchpoint prose, KOIOS supplied a concrete `CurrentImplementationReviewSnapshot` provenance/read-model shape. ATHENA recorded the final KOIOS review in `docs/reviews/provenance-final.20260711.114100_operator-console-current-implementation-review-fixture.md` and promoted the schema candidate into `docs/plans/schema-proposal.operator-console-current-implementation-review-snapshot.20260711.114300.md` as proposal input, not `docs/schemas/` authority.
 - HERMES relayed USER's preferred pivot: stop ADR/process sprawl and make the Petri-net workflow harness visibly inspectable/live. HERMES surveyed the repo and recommended `live-petri-net-skeleton-slice-0`: `uv run projectkoios workflow status` backed by a static bootstrap workflow-net fixture. ATHENA confirmed existing `docs/architecture/architecture.petrinet.00.md` plus `docs/adr/adr.petrinet.20260705.132740Z.md` are sufficient for this narrow read-only CLI slice and drafted `docs/plans/implementation-brief.20260711.114600_live-petri-net-skeleton-slice-0.md` for VULCAN.
+- VULCAN implemented `live-petri-net-skeleton-slice-0` and reported `docs/implementation/live-petri-net-skeleton-slice-0.20260711.114916.md`. The slice adds `uv run projectkoios workflow status`, static fixture `dev/workflow-nets/bootstrap-harness.workflow-net.json`, CLI adapter `src/python/projectkoios/cli/workflow.py`, command registration, and focused CLI tests. ATHENA reviewed and accepted it in `docs/reviews/architecture-conformance.20260711.115100_live-petri-net-skeleton-slice-0.md`, reran validation successfully, and reconciled as-built behavior into `docs/architecture/architecture.petrinet.00.md`.
 
 ## Open questions
 
-- USER/HERMES/VULCAN planning/coding approval for `live-petri-net-skeleton-slice-0`.
+- USER/HERMES selection of the next live Petri-net harness slice or closeout/commit direction.
 - USER/HERMES review of future-slice roadmap if desired; roadmap is advisory and does not authorize later slices.
 - Whether to close/commit the accepted Operator Console P0/P1/P2 plus workflow-object architecture/brief bundle or select another bounded UI slice.
 - When to extract `src/typescript/projectkoios/ui/operator-console/` to `projectkoios/ui/operator-console/` and promote product/mothership authority.
@@ -141,7 +142,7 @@
 ## Next transition
 
 - Owner: HERMES/USER.
-- Recommended next state: route `live-petri-net-skeleton-slice-0` to VULCAN planning/coding approval so the harness gets an immediately inspectable `projectkoios workflow status` command. `operator-console-review-orientation-copy-fixture` remains a later UI readability refinement; rerun the Slice 0 workflow-object validator if referenced Operator Console artifacts change before packaging, or record intentional fixture staleness.
+- Recommended next state: use `uv run projectkoios workflow status` as the current live inspectability baseline and explicitly select the next live Petri-net harness slice, likely bounded transition firing/dry-run or richer status fixture coverage. `operator-console-review-orientation-copy-fixture` remains a later UI readability refinement; rerun the Slice 0 workflow-object validator if referenced Operator Console artifacts change before packaging, or record intentional fixture staleness.
 - Operator Console P0/P1/P2 accepted boundaries: bootstrap incubation only; package-local lockfile only; behavior owned by ActionObject-style classes with data in typed interfaces/constants; `docs/policies/typescript-coding.md` remains draft/non-controlling; fixtures are static/stale-by-design; readability/navigation affordances are local browser inspection helpers only; no backend, live reads, messaging capability, activation/mutation, Petri-net graph editor, product UI authority, or bootstrap production-backend claim.
 - ADR conformance work remains available as a separate track: future slices should use updated `docs/schemas/adr.schema.json` without `routing`, preserve sidecar provenance, and avoid schema/lifecycle/workflow/storage-authority redesign unless repeated conformance pressure justifies it.
 

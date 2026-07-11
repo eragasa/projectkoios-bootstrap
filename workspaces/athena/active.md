@@ -2,8 +2,8 @@
 {
   "title": "Athena active work",
   "artifact_type": "workspace-active-priorities",
-  "status": "operator-console-current-implementation-review-accepted-with-watchpoints",
-  "datetime": "20260711.113700Z"},{
+  "status": "live-petri-net-skeleton-slice-0-athena-accepted",
+  "datetime": "20260711.115100Z"},{
   "acting_as": "ATHENA",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/athena/",
@@ -54,6 +54,9 @@
     "docs/reviews/provenance-final.20260711.114100_operator-console-current-implementation-review-fixture.md",
     "docs/plans/schema-proposal.operator-console-current-implementation-review-snapshot.20260711.114300.md",
     "docs/plans/implementation-brief.20260711.114600_live-petri-net-skeleton-slice-0.md",
+    "docs/plans/implementation-plan.20260711.114700_live-petri-net-skeleton-slice-0.md",
+    "docs/implementation/live-petri-net-skeleton-slice-0.20260711.114916.md",
+    "docs/reviews/architecture-conformance.20260711.115100_live-petri-net-skeleton-slice-0.md",
     "docs/plans/roadmap.20260711.102324_workflow-object-future-slices.md",
     "src/typescript/projectkoios/ui/operator-console/"
   ]
@@ -66,7 +69,7 @@
 
 1. Workflow-object Slice 0 is implemented, VULCAN-validated, ATHENA conformance-reviewed and implementation-reviewed/accepted, KOIOS-reviewed, and USER/HERMES-accepted with watchpoints.
 2. Operator Console P0/P1/P2 are implemented, user-previewed where required, ATHENA-reviewed/accepted, and reconciled into architecture as bootstrap-incubation as-built evidence.
-3. `operator-console-current-implementation-review-fixture` is implemented and accepted with watchpoints. ATHENA completed conformance review, KOIOS returned accept-with-watchpoints provenance feedback, USER/HERMES inspected and accepted with a user-orientation watchpoint, ATHENA wrote final acceptance, and ATHENA reconciled the as-built state into Operator Console architecture.
+3. `live-petri-net-skeleton-slice-0` is implemented and ATHENA-accepted. `uv run projectkoios workflow status` now provides the first live/read-only Petri-net harness inspectability surface over a static bootstrap workflow-net fixture using existing runtime enabledness checks.
 
 ## Recently completed
 
@@ -98,11 +101,11 @@
 
 ## Waiting on
 
-- USER/HERMES pivoted the preferred next direction away from ADR/process sprawl toward visibly inspectable/live Petri-net workflow harness behavior. ATHENA drafted `docs/plans/implementation-brief.20260711.114600_live-petri-net-skeleton-slice-0.md` for `uv run projectkoios workflow status`, backed by a static bootstrap workflow-net fixture and existing Petri-net runtime classes.
+- USER/HERMES selection of the next live Petri-net harness slice or closeout/commit direction.
 
 ## Recommended next action
 
-Route `live-petri-net-skeleton-slice-0` to VULCAN planning/coding approval so the harness gets an immediately inspectable `projectkoios workflow status` command. Keep `operator-console-review-orientation-copy-fixture` as a later UI readability refinement, not the current priority.
+Use `uv run projectkoios workflow status` as the current live inspectability baseline. Recommended next slice should be selected explicitly, likely bounded transition firing/dry-run or richer status fixture coverage; keep `operator-console-review-orientation-copy-fixture` as a later UI readability refinement, not the current priority.
 
 ## Packaging watchpoints
 

@@ -113,6 +113,9 @@ Current Petri-net development documents collected for synthesis:
 - `docs/implementation/petrinet-followups.20260705.173808.md`
 - `docs/implementation/workflow-adapter-contract-hardening.20260706.045501.md`
 - `docs/reviews/architecture-conformance.20260706.023601_workflow-adapter-topology-roundtrip.md`
+- `docs/plans/implementation-brief.20260711.114600_live-petri-net-skeleton-slice-0.md`
+- `docs/implementation/live-petri-net-skeleton-slice-0.20260711.114916.md`
+- `docs/reviews/architecture-conformance.20260711.115100_live-petri-net-skeleton-slice-0.md`
 
 #### Workflow adapter topology round-trip slice
 
@@ -131,6 +134,27 @@ Topology equivalence covers place IDs/labels, transition IDs/labels, arc endpoin
 The current implementation uses SNAKES as the first backend and keeps it as a dev/test dependency only. Normal adapter export remains library-neutral and optional backend imports remain lazy and adapter-owned.
 
 Non-goals for this slice: token/marking state, guards/callables, execution history, event provenance, persistence/restart, event bus, handoff migration, PM4Py conversion, and product workflow semantics.
+
+#### Live Petri-net skeleton slice 0
+
+ATHENA brief: `docs/plans/implementation-brief.20260711.114600_live-petri-net-skeleton-slice-0.md`.
+
+Implementation evidence:
+
+- `docs/implementation/live-petri-net-skeleton-slice-0.20260711.114916.md`
+- `docs/reviews/architecture-conformance.20260711.115100_live-petri-net-skeleton-slice-0.md`
+
+`live-petri-net-skeleton-slice-0` adds the first directly inspectable CLI status surface:
+
+```bash
+uv run projectkoios workflow status
+```
+
+As built, the command loads the static bootstrap fixture `dev/workflow-nets/bootstrap-harness.workflow-net.json`, maps it into existing `projectkoios.workflow` Petri-net runtime classes, validates/computes enabled transitions through `PetriNetExecutor.enabled_bindings(...)`, and prints workflow id, fixture path, places, token locations, enabled transitions, and whether user decision is required.
+
+This slice is intentionally read-only. It does not add transition firing, persistence, event-log storage, Operator Console integration, workflow-object integration, graph UI, `docs/schemas/` authority, generalized loader/schema authority, role/permission expansion, live adapters, or product/mothership workflow authority.
+
+The static fixture is a bootstrap inspectability fixture, not canonical workflow authority. It proves the user's requested pivot from document/process surfaces toward visibly inspectable Petri-net workflow state.
 
 ## Decomposition map
 
