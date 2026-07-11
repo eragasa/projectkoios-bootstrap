@@ -642,6 +642,11 @@ class WorkflowQueueStateReporter:
             "active:",
         ]
         lines.extend(self.active_lines(fixture.active_item))
+        if fixture.active_item is not None:
+            lines.extend([
+                "",
+                "WARNING: queue active_item is set; do not recommend or activate queued items until active item is cleared/accepted/rejected by HERMES/USER.",
+            ])
         lines.extend(["", "queued/proposed:"])
         lines.extend(self.numbered_item_lines(fixture.queued_items))
         lines.extend(["", "completed/recent:"])
@@ -1230,7 +1235,15 @@ class Command:
         fixture_path: Path = Path("dev/workflow-nets/bootstrap-harness.workflow-net.json")
         # Loaded fixture contains both static metadata and Petri-net runtime state.
         fixture: WorkflowStatusFixture = self.loader.load(fixture_path)
-        print(self.reporter.render(fixture))
+        # Queue fixture path is read-only overlay state for operator safety.
+        queue_fixture_path: Path = Path("dev/workflow-nets/bootstrap-harness.queue-state.json")
+        # Queue fixture prevents Petri-net token status from hiding queue blockers.
+        queue_fixture: WorkflowQueueStateFixture = self.queue_loader.load(queue_fixture_path)
+        # Status text preserves the existing Petri-net runtime-derived output.
+        status_text: str = self.reporter.render(fixture)
+        # Queue text is displayed as read-only overlay control state.
+        queue_text: str = self.queue_reporter.render(queue_fixture)
+        print(f"{status_text}\n\nqueue control surface:\n{queue_text}")
 
     def run_queue(self, args: Namespace) -> None:
         """Run the read-only workflow queue-state command.

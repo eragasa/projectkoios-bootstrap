@@ -7,7 +7,14 @@ import sys
 import pytest
 
 from projectkoios.cli.main import main
-from projectkoios.cli.workflow import WorkflowStatusFixture, WorkflowStatusFixtureLoader, WorkflowStatusReporter
+from projectkoios.cli.workflow import (
+    WorkflowQueueItem,
+    WorkflowQueueStateFixture,
+    WorkflowQueueStateReporter,
+    WorkflowStatusFixture,
+    WorkflowStatusFixtureLoader,
+    WorkflowStatusReporter,
+)
 from projectkoios.workflow import PetriNetExecutor, PetriNetState, PetriNetTransitionBinding
 
 
@@ -38,6 +45,50 @@ def test__workflow_status__prints_static_fixture_status(capsys: pytest.CaptureFi
     assert "- approve_next_slice: Approve next slice" in output
     assert "complete_implementation" not in output
     assert "user decision required: yes" in output
+    assert "queue control surface:" in output
+    assert "workflow queue: bootstrap-harness.queue-state" in output
+    assert "queued/proposed:" in output
+    assert "next decision needed:" in output
+    assert "WARNING: queue active_item is set" not in output
+
+
+def test__WorkflowStatusReporter__renders_queue_active_item_warning() -> None:
+    """Validate queue overlay warns when an active item blocks queued activation."""
+    # Active item simulates queue state that should block queued advancement.
+    active_item: WorkflowQueueItem = WorkflowQueueItem(
+        name="active-workflow-item",
+        state="active",
+        artifact_refs=("docs/plans/active.md",),
+    )
+    # Queued item demonstrates that warning must appear before recommending activation.
+    queued_item: WorkflowQueueItem = WorkflowQueueItem(
+        name="queued-workflow-item",
+        state="queued",
+        artifact_refs=("docs/plans/queued.md",),
+    )
+    # Queue fixture is synthetic read-only state for reporter behavior.
+    queue_fixture: WorkflowQueueStateFixture = WorkflowQueueStateFixture(
+        path=Path("dev/workflow-nets/bootstrap-harness.queue-state.json"),
+        queue_id="bootstrap-harness.queue-state",
+        surface="projectkoios.workflow.queue_state",
+        parent_effort="test",
+        status="static-read-only-fixture",
+        authority="Static read-only fixture; not canonical workflow authority and not product authority.",
+        active_item=active_item,
+        queued_items=(queued_item,),
+        completed_items=(),
+        superseded_items=(),
+        deferred_items=(),
+        next_decision_needed="Clear active item before queued activation.",
+    )
+
+    # Queue reporter output is the status overlay warning source.
+    output: str = WorkflowQueueStateReporter().render(queue_fixture)
+
+    assert "active-workflow-item state=active" in output
+    assert "queued-workflow-item state=queued" in output
+    assert "WARNING: queue active_item is set" in output
+    assert "do not recommend or activate queued items" in output
 
 
 def test__WorkflowStatusReporter__uses_executor_enabled_bindings(monkeypatch: pytest.MonkeyPatch) -> None:

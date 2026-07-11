@@ -2,21 +2,17 @@
 {
   "title": "Vulcan workspace state",
   "artifact_type": "workspace-state",
-  "status": "adr-heading-parser-stable-format-slice-12-implemented-validated-pending-retrospective-acceptance",
-  "datetime": "20260711.175500Z",
+  "status": "workflow-status-queue-overlay-hotfix-implemented-validated",
+  "datetime": "20260712",
   "acting_as": "VULCAN",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/vulcan/",
   "branch": "master",
-  "document_domain": "implementation, tests, validation, implementation reports, deviation reports",
-  "source_decision": null,
-  "process_status": "original_workpackage_invalidated_pending_retrospective_acceptance",
-  "slice_name": "adr-heading-parser-stable-format-slice-12",
-  "latest_report": "docs/implementation/adr-heading-parser-stable-format-slice-12.20260711.175500.md",
-  "latest_aar": "docs/AAR/aar.20260711.175500_adr-heading-parser-stable-format-slice-12.md",
-  "control_files": ["state.md", "active.md"],
-  "next_owner": "ATHENA_KOIOS_HERMES_USER",
-  "blockers": ["retrospective-athena-conformance-required", "koios-provenance-review-required", "hermes-user-acceptance-required"]
+  "slice_name": "workflow-status-queue-overlay-hotfix",
+  "latest_report": "docs/implementation/workflow-status-queue-overlay-hotfix.20260712.md",
+  "latest_aar": "docs/AAR/aar.20260712_workflow-status-queue-overlay-hotfix.md",
+  "next_owner": "HERMES_USER",
+  "blockers": []
 }
 ```
 
@@ -24,48 +20,22 @@
 
 ## Current scope
 
-- Current scope: implemented and validated ADR heading parser stable format Slice 12, pending retrospective acceptance.
-- Slice name: `adr-heading-parser-stable-format-slice-12`.
-- Original workpackage/decision reference was invalidated because it skipped ATHENA-owned brief and acceptance-criteria ownership.
-- Report: `docs/implementation/adr-heading-parser-stable-format-slice-12.20260711.175500.md`.
-- AAR: `docs/AAR/aar.20260711.175500_adr-heading-parser-stable-format-slice-12.md`.
+VULCAN implemented and validated the dirty read-only `workflow-status-queue-overlay-hotfix`.
 
 ## Current status
 
-- Implementation exists in working tree as implementation evidence only pending ATHENA retrospective conformance, KOIOS review, and HERMES/USER decision.
-- Stable heading `# ADR: Title` is accepted by the control-surface ADR parser.
-- Legacy heading `# ADR 20260711.000000Z: Title` remains accepted.
-- Legacy heading-prefix stripping is recorded only for legacy prefixed headings.
-- Projectable messy canary title parsing accepts stable and legacy headings.
-- Stale timestamped filename docstring in `ArchitecturalDataRecord` is corrected.
-- No source ADR, schema, lifecycle, successor, rename, migration, or projection replacement boundary changed.
+- `uv run projectkoios workflow status` preserves existing Petri-net status output.
+- It now appends the queue control surface from `dev/workflow-nets/bootstrap-harness.queue-state.json`.
+- Queue reporter emits a hard warning when `active_item` is set.
+- No workflow mutation, activation/deactivation, schema/fixture semantics, transition logic, role model, live adapter, `docs/adr`, or `docs/schemas` changes were introduced.
 
-## Validation evidence
+## Validation
 
-From repository root:
+- `uv run pytest tests/projectkoios/cli/test__workflow_status.py tests/projectkoios/cli/test__workflow_queue.py -q` → `6 passed in 0.06s`
+- `uv run mypy src/python/projectkoios/cli/workflow.py tests/projectkoios/cli/test__workflow_status.py tests/projectkoios/cli/test__workflow_queue.py` → success
+- `uv run projectkoios bootstrap validate-python-policy src/python/projectkoios/cli/workflow.py tests/projectkoios/cli/test__workflow_status.py tests/projectkoios/cli/test__workflow_queue.py` → `summary: 0 finding(s), 3 file(s)`
+- Manual `uv run projectkoios workflow status` check showed queue overlay and next decision needed.
 
-- `uv run pytest tests/projectkoios/bootstrap/control_surface_adr -q` => `35 passed in 0.33s`.
-- `uv run mypy src/python/projectkoios/bootstrap/control_surface/adr src/python/projectkoios/bootstrap/harness/data/adr.py tests/projectkoios/bootstrap/control_surface_adr` => `Success: no issues found in 24 source files`.
-- `uv run projectkoios bootstrap validate-python-policy src/python/projectkoios/bootstrap/control_surface/adr src/python/projectkoios/bootstrap/harness/data/adr.py tests/projectkoios/bootstrap/control_surface_adr` => `summary: 0 finding(s), 24 file(s)`.
-- `git status --short -- docs/adr docs/schemas` => no output.
-- `git diff --check` => passed.
+## Next expected owner
 
-## Dirty tree caution
-
-Treat VULCAN-owned changes for this slice as:
-
-- `src/python/projectkoios/bootstrap/control_surface/adr/markdown.py`
-- `src/python/projectkoios/bootstrap/control_surface/adr/projectable_messy_canary.py`
-- `src/python/projectkoios/bootstrap/harness/data/adr.py`
-- `tests/projectkoios/bootstrap/control_surface_adr/test__AdrConformanceRunner__json_schemas.py`
-- `docs/implementation/adr-heading-parser-stable-format-slice-12.20260711.175500.md`
-- `docs/AAR/aar.20260711.175500_adr-heading-parser-stable-format-slice-12.md`
-- `workspaces/vulcan/active.md`
-- `workspaces/vulcan/state.md`
-
-Known HERMES/ATHENA/KOIOS working-tree files may also exist. Keep commit boundaries explicit.
-
-## Next transition
-
-- Owner: ATHENA/KOIOS/HERMES/USER retrospective review and decision.
-- Blockers: retrospective ATHENA conformance, KOIOS provenance review, and HERMES/USER acceptance are required before treating Slice 12 as accepted.
+HERMES/USER review. Optional ATHENA follow-up can formalize workflow status/queue consistency architecture later.
