@@ -18,7 +18,7 @@
 
 ## Current priority stack
 
-1. Commit the draft-only Slice 11 package for `docs/adr/adr.adr-template-schema-contract.draft.md`.
+1. Decide whether to close Slice 11 as draft-only packaged work or open a separate acceptance/revision/source-disposition action.
 2. Preserve the ATHENA/VULCAN/KOIOS review set as sufficient for draft-only packaging, not ADR acceptance authority.
 3. Preserve `pi-skill-determinism-slice-0` as queued unless USER/HERMES explicitly reprioritizes it.
 
@@ -57,15 +57,20 @@ HERMES packaging decision recorded:
 docs/reviews/hermes-decision.20260711.181920_adr-template-schema-contract-successor-draft-slice-11.md
 ```
 
+Draft-only package committed:
+
+```text
+026147dd Package ADR template schema successor draft
+```
+
 ## Role-boundary correction
 
 This draft was created by the ATHENA session after HERMES routing and USER `proceed`. Invalid HERMES reflog and Archon/Codex drafts are not current authority and were not used as source text.
 
 ## Waiting on
 
-- Commit of draft-only Slice 11 package.
-- Later USER/HERMES lifecycle/source-disposition decision after packaging.
+- USER/HERMES decision: close Slice 11 as draft-only packaged work and move to next queued item, or begin separate lifecycle/source-disposition handling.
 
 ## Exit criteria
 
-Hermes state is stable when the Slice 11 draft-only package is committed, with later acceptance/source-disposition decisions left explicitly unmade.
+Hermes state is stable when this post-commit state correction is committed and USER/HERMES chooses the next transition.

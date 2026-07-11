@@ -18,7 +18,7 @@
 
 ## Current focus
 
-Package ATHENA-authored Slice 11 draft after VULCAN and KOIOS no-blocker reviews under current meta-harness framework.
+Slice 11 draft-only package is committed; next decision is lifecycle/source-disposition handling or moving to the next queued workflow item.
 
 ## Current validated state
 
@@ -47,19 +47,23 @@ Package ATHENA-authored Slice 11 draft after VULCAN and KOIOS no-blocker reviews
   - HERMES treats this as provenance review input, not architecture or acceptance authority.
 - HERMES created draft-only packaging decision:
   - `docs/reviews/hermes-decision.20260711.181920_adr-template-schema-contract-successor-draft-slice-11.md`
+- HERMES committed the draft-only Slice 11 package as `026147dd Package ADR template schema successor draft`.
 
 ## Current coherent state
 
-Current uncommitted work:
+The draft-only Slice 11 package is committed in `026147dd`.
+
+Packaged artifacts:
 
 ```text
 docs/adr/adr.adr-template-schema-contract.draft.md
 docs/reviews/hermes-decision.20260711.181920_adr-template-schema-contract-successor-draft-slice-11.md
+docs/AAR/aar.20260712_adr-successor-queue-and-draft.md
 workspaces/hermes/state.md
 workspaces/hermes/active.md
 ```
 
-The workflow fixtures remain committed with active slice `adr-template-schema-contract-successor-draft-slice-11`.
+The workflow fixtures remain committed with active slice `adr-template-schema-contract-successor-draft-slice-11`; live status still reports the token at `user_decision`.
 
 ## Active boundaries
 
@@ -67,8 +71,8 @@ The ATHENA draft is a draft only. It does not edit `docs/adr/adr.adr-template-co
 
 ## Current blockers
 
-- No packaging blocker remains; later USER/HERMES decision is required for acceptance, revision, discard, or source-disposition handling.
+- USER/HERMES decision is required to either keep Slice 11 draft-only and move to the next queued item, or open a separate lifecycle/source-disposition decision for the draft.
 
 ## Next owner
 
-HERMES_USER for later lifecycle/source-disposition decision after this draft-only package is committed.
+HERMES_USER for choosing the next transition: close Slice 11 as draft-only packaged work, or begin acceptance/revision/source-disposition handling.
