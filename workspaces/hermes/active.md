@@ -9,7 +9,7 @@
   "workspace": "workspaces/hermes/",
   "document_domain": "orchestration, repo-state reconciliation, cross-domain consistency",
   "control_files": ["state.md", "active.md"],
-  "next_owner": "HERMES_USER",
+  "next_owner": "ATHENA",
   "blockers": []
 }
 ```
@@ -18,35 +18,41 @@
 
 ## Current priority stack
 
-1. Validate and package workflow queue reconciliation for ADR successor next-action visibility.
-2. Decide whether to activate `adr-template-schema-contract-successor-draft-slice-11` for ATHENA.
-3. Preserve `pi-skill-determinism-slice-0` as queued unless USER/HERMES explicitly reprioritizes it.
+1. Package HERMES-owned activation/routing recovery for Slice 11.
+2. Stop HERMES artifact production for the ATHENA-owned ADR draft.
+3. Hand off active Slice 11 to ATHENA.
+4. Preserve `pi-skill-determinism-slice-0` as queued unless USER/HERMES explicitly reprioritizes it.
 
-## Active reconciliation update
+## Active slice
 
-Updated in working tree:
+Active queue item:
+
+```text
+adr-template-schema-contract-successor-draft-slice-11
+```
+
+Intended ATHENA output, not yet created by the corrected HERMES state:
+
+```text
+docs/adr/adr.adr-template-schema-contract.draft.md
+```
+
+Updated workflow fixtures:
 
 ```text
 dev/workflow-nets/bootstrap-harness.queue-state.json
-tests/projectkoios/cli/test__workflow_queue.py
-docs/implementation/workflow-queue-adr-successor-reconciliation.20260712.md
-workspaces/hermes/state.md
-workspaces/hermes/active.md
+dev/workflow-nets/bootstrap-harness.workflow-net.json
 ```
 
-Intended visible queue result:
+## Role-boundary correction
 
-- active: none
-- queued/proposed #1: `adr-template-schema-contract-successor-draft-slice-11` state=`recommended-next`
-- queued/proposed #2: `pi-skill-determinism-slice-0` state=`queued`
-- next decision: activate Slice 11 for ATHENA or explicitly reprioritize
+HERMES previously overstepped by creating the ATHENA-owned draft directly. Recovery removed that draft and retained only activation/routing state. `go` means proceed with the recommended action within the meta-harness framework, not cross into another role's artifact ownership.
 
 ## Waiting on
 
-- Validation.
-- Packaging/commit decision after validation.
-- USER/HERMES decision whether to activate Slice 11 after packaging.
+- Packaging/commit of corrected activation/routing state.
+- ATHENA drafting of the successor ADR.
 
 ## Exit criteria
 
-Hermes state is stable when the queue fixture and tests reflect accepted ADR successor next-action state, validation passes, and the reconciliation is packaged or explicitly revised.
+Hermes state is stable when Slice 11 activation/routing is packaged, the role-boundary AAR is committed, and the next owner is clearly ATHENA for ADR drafting.

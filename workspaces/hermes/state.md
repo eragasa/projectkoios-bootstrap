@@ -9,7 +9,7 @@
   "workspace": "workspaces/hermes/",
   "document_domain": "orchestration, repo-state reconciliation, cross-domain consistency",
   "control_files": ["state.md", "active.md"],
-  "next_owner": "HERMES_USER",
+  "next_owner": "ATHENA",
   "blockers": []
 }
 ```
@@ -18,42 +18,40 @@
 
 ## Current focus
 
-Reconcile startup workflow queue/status visibility with accepted ADR successor-planning state, then choose whether to activate Slice 11.
+Restore role boundaries after activating `adr-template-schema-contract-successor-draft-slice-11`: HERMES owns activation/routing; ATHENA owns the successor ADR draft.
 
 ## Current validated state
 
-- Stable ADR filename convention/control-surface corrections and corrected retrospective Slice 12 acceptance were committed and pushed as `d9aa360c Stabilize ADR filename convention and parser compatibility`.
-- Initial Hermes control-surface guardrails were committed and pushed as `92556ac9 Harden Hermes control-surface guardrails`.
 - Hermes normative-language guardrail tightening was committed as `4fba6224 Tighten Hermes guardrails with normative language`.
-- Accepted Slice 10 records proposal-only successor planning for the ADR template/schema contract:
-  - `docs/plans/successor-brief.20260711.172500_adr-template-schema-contract.md`
-  - `docs/reviews/hermes-acceptance.20260711.174500_adr-template-schema-contract-successor-planning-slice-10.md`
-- Accepted Slice 10 recommends the next bounded action `adr-template-schema-contract-successor-draft-slice-11`, with intended output `docs/adr/adr.adr-template-schema-contract.draft.md`.
-- User observed the Petri-net workflow status skill may be incomplete because the queue/status surface hid the ADR successor next action.
-- USER said `go` to HERMES recommendation to reconcile the queue/status gap before activating Slice 11.
+- Workflow queue reconciliation was committed as `c0c6e482 Reconcile workflow queue with ADR successor next action`.
+- USER said `go`, meaning proceed with the recommended action within the meta-harness framework.
+- `uv run projectkoios workflow activate adr-template-schema-contract-successor-draft-slice-11` activated the queue item.
+- `uv run projectkoios workflow reconcile-status` updated the status fixture active slice to `adr-template-schema-contract-successor-draft-slice-11`.
+- HERMES initially overstepped by authoring an ATHENA-owned successor ADR draft directly.
+- Recovery removed the draft and preserved only HERMES-owned workflow activation/routing state.
 
 ## Current coherent state
 
-Current working-tree reconciliation updates:
+Current uncommitted recovery/activation work:
 
 ```text
 dev/workflow-nets/bootstrap-harness.queue-state.json
-tests/projectkoios/cli/test__workflow_queue.py
-docs/implementation/workflow-queue-adr-successor-reconciliation.20260712.md
+dev/workflow-nets/bootstrap-harness.workflow-net.json
+docs/AAR/aar.20260712_adr-successor-queue-and-draft.md
 workspaces/hermes/state.md
 workspaces/hermes/active.md
 ```
 
-The queue fixture should now show `adr-template-schema-contract-successor-draft-slice-11` as `recommended-next` while preserving `pi-skill-determinism-slice-0` as queued.
+No successor ADR draft is present in `docs/adr/` from this HERMES recovery state.
 
 ## Active boundaries
 
-This reconciliation does not authorize creating the successor ADR draft, editing existing `docs/adr/` files, editing `docs/schemas/`, changing source status or casing, supersession, lifecycle changes, migration, generated projection replacement, database/storage authority, or cutover.
+This state activates and routes Slice 11 only. It does not create the successor ADR draft, edit `docs/adr/adr.adr-template-contract.md`, edit `docs/schemas/`, change source status or casing, supersede the old source, accept/activate a new ADR, migrate records, replace generated projections, create database/storage authority, or cut over JSON authority.
 
 ## Current blockers
 
-- Validation and packaging are pending.
+- ATHENA must author the successor draft if USER/HERMES proceeds with the active slice.
 
 ## Next owner
 
-HERMES for validation/package, then HERMES_USER for deciding whether to activate Slice 11.
+ATHENA for `docs/adr/adr.adr-template-schema-contract.draft.md` creation from `docs/plans/successor-brief.20260711.172500_adr-template-schema-contract.md`.

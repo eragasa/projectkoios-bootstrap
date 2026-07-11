@@ -4,19 +4,18 @@
   "parent_effort": "petri-net-workflow-inspectability",
   "status": "static-read-only-fixture",
   "authority": "Static read-only fixture; not canonical workflow authority and not product authority.",
-  "active_item": null,
+  "active_item": {
+    "name": "adr-template-schema-contract-successor-draft-slice-11",
+    "state": "active",
+    "artifact_refs": [
+      "docs/plans/successor-brief.20260711.172500_adr-template-schema-contract.md",
+      "docs/reviews/hermes-acceptance.20260711.174500_adr-template-schema-contract-successor-planning-slice-10.md"
+    ],
+    "why": "Accepted Slice 10 successor planning recommends one ATHENA-owned successor ADR draft.",
+    "dependency_or_blocker": "Requires explicit USER/HERMES activation before creating docs/adr/adr.adr-template-schema-contract.draft.md.",
+    "recommendation": "Activate this before lower-priority skill determinism work unless USER/HERMES reprioritizes."
+  },
   "queued_items": [
-    {
-      "name": "adr-template-schema-contract-successor-draft-slice-11",
-      "state": "recommended-next",
-      "artifact_refs": [
-        "docs/plans/successor-brief.20260711.172500_adr-template-schema-contract.md",
-        "docs/reviews/hermes-acceptance.20260711.174500_adr-template-schema-contract-successor-planning-slice-10.md"
-      ],
-      "why": "Accepted Slice 10 successor planning recommends one ATHENA-owned successor ADR draft.",
-      "dependency_or_blocker": "Requires explicit USER/HERMES activation before creating docs/adr/adr.adr-template-schema-contract.draft.md.",
-      "recommendation": "Activate this before lower-priority skill determinism work unless USER/HERMES reprioritizes."
-    },
     {
       "name": "pi-skill-determinism-slice-0",
       "state": "queued",
@@ -90,5 +89,5 @@
     }
   ],
   "deferred_items": [],
-  "next_decision_needed": "Choose whether to activate adr-template-schema-contract-successor-draft-slice-11 for ATHENA or explicitly reprioritize; do not implement queued work without explicit USER/HERMES activation."
+  "next_decision_needed": "Complete or review active item adr-template-schema-contract-successor-draft-slice-11; do not activate another item until active_item is cleared."
 }
