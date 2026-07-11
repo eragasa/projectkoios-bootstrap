@@ -6,8 +6,10 @@ import {
   EvidenceKind,
   FixtureStatus,
   HashLabel,
+  ImplementationReviewStatus,
   InteractionDirection,
   InteractionSurface,
+  OwnerDomain,
   ProposalKind,
   SourceArtifactType,
   StatusClass,
@@ -25,10 +27,13 @@ import type {
   EvidenceRef,
   ExternalSystemStatus,
   FixtureMetadata,
-  ValidationResult
+  ImplementationReviewItem,
+  ValidationResult,
+  WorkflowObjectSummaryFixture
 } from "../src/contracts";
 
 const fixtureTimestamp = "20260711.074650Z";
+const currentImplementationSnapshotTimestamp = "20260711.111457Z";
 
 class FixtureMetadataFactory {
   build(
@@ -468,5 +473,137 @@ export const agentThreads: readonly AgentThread[] = [
     )
   }
 ];
+
+export const currentImplementationReviewItems: readonly ImplementationReviewItem[] = [
+  {
+    id: "implementation-review.operator-console-p0",
+    sliceName: "operator-console-review-one-proposal-fixture",
+    displayName: "Operator Console P0 review-one-proposal fixture",
+    status: ImplementationReviewStatus.AcceptedStaticSnapshot,
+    ownerDomain: OwnerDomain.Implementation,
+    implementationReportLocator: "docs/implementation/operator-console-review-one-proposal-fixture.20260711.081405.md",
+    acceptanceReviewLocator: "docs/reviews/architecture-conformance.20260711.081734_operator-console-review-one-proposal-fixture.md",
+    validationSourceLocator: "docs/reviews/architecture-conformance.20260711.081734_operator-console-review-one-proposal-fixture.md",
+    validationSummary: "Static copied summary: P0 package validation and browser preview evidence accepted by review.",
+    authorityBoundary: "static snapshot; fixture-only; not live; not product authority",
+    fixtureDerivedStatus: true,
+    evidenceLocators: [
+      "docs/architecture/architecture.operator-console.md",
+      "docs/implementation/operator-console-review-one-proposal-fixture.20260711.081405.md",
+      "docs/reviews/architecture-conformance.20260711.081734_operator-console-review-one-proposal-fixture.md"
+    ],
+    snapshotGeneratedAt: currentImplementationSnapshotTimestamp,
+    sourceHashLabel: "fixture-generation/source-snapshot timestamp; not live freshness"
+  },
+  {
+    id: "implementation-review.operator-console-actionobject-refactor",
+    sliceName: "operator-console-actionobject-refactor",
+    displayName: "Operator Console ActionObject/DataObject refactor",
+    status: ImplementationReviewStatus.AcceptedStaticSnapshot,
+    ownerDomain: OwnerDomain.Review,
+    implementationReportLocator: "docs/implementation/operator-console-review-one-proposal-fixture.20260711.081405.md",
+    acceptanceReviewLocator: "docs/reviews/architecture-conformance.20260711.082740_operator-console-actionobject-refactor.md",
+    validationSourceLocator: "docs/reviews/architecture-conformance.20260711.082740_operator-console-actionobject-refactor.md",
+    validationSummary: "Static copied summary: ActionObject/DataObject conformance review accepted the refactor evidence.",
+    authorityBoundary: "static snapshot; fixture-only; not live; not product authority",
+    fixtureDerivedStatus: true,
+    evidenceLocators: [
+      "docs/architecture/architecture.operator-console.md",
+      "docs/reviews/architecture-conformance.20260711.082740_operator-console-actionobject-refactor.md"
+    ],
+    snapshotGeneratedAt: currentImplementationSnapshotTimestamp,
+    sourceHashLabel: "fixture-generation/source-snapshot timestamp; not live freshness"
+  },
+  {
+    id: "implementation-review.operator-console-p1",
+    sliceName: "operator-console-fixture-interaction-visibility",
+    displayName: "Operator Console P1 interaction visibility",
+    status: ImplementationReviewStatus.AcceptedStaticSnapshot,
+    ownerDomain: OwnerDomain.Implementation,
+    implementationReportLocator: "docs/implementation/operator-console-fixture-interaction-visibility.20260711.090601.md",
+    acceptanceReviewLocator: "docs/reviews/architecture-conformance.20260711.091137_operator-console-fixture-interaction-visibility.md",
+    validationSourceLocator: "docs/implementation/operator-console-fixture-interaction-visibility.20260711.090601.md",
+    validationSummary: "Static copied summary: interaction visibility typecheck, tests, build, audit, and preview passed.",
+    authorityBoundary: "static snapshot; fixture-only; not live; not product authority",
+    fixtureDerivedStatus: true,
+    evidenceLocators: [
+      "docs/implementation/operator-console-fixture-interaction-visibility.20260711.090601.md",
+      "docs/reviews/architecture-conformance.20260711.091137_operator-console-fixture-interaction-visibility.md"
+    ],
+    snapshotGeneratedAt: currentImplementationSnapshotTimestamp,
+    sourceHashLabel: "fixture-generation/source-snapshot timestamp; not live freshness"
+  },
+  {
+    id: "implementation-review.operator-console-p2",
+    sliceName: "operator-console-readability-navigation-fixture",
+    displayName: "Operator Console P2 readability/navigation fixture",
+    status: ImplementationReviewStatus.AcceptedStaticSnapshot,
+    ownerDomain: OwnerDomain.Implementation,
+    implementationReportLocator: "docs/implementation/operator-console-readability-navigation-fixture.20260711.092524.md",
+    acceptanceReviewLocator: "docs/reviews/architecture-conformance.20260711.093009_operator-console-readability-navigation-fixture.md",
+    validationSourceLocator: "docs/implementation/operator-console-readability-navigation-fixture.20260711.092524.md",
+    validationSummary: "Static copied summary: readability/navigation typecheck, tests, build, audit, and preview passed.",
+    authorityBoundary: "static snapshot; fixture-only; not live; not product authority",
+    fixtureDerivedStatus: true,
+    evidenceLocators: [
+      "docs/implementation/operator-console-readability-navigation-fixture.20260711.092524.md",
+      "docs/reviews/architecture-conformance.20260711.093009_operator-console-readability-navigation-fixture.md"
+    ],
+    snapshotGeneratedAt: currentImplementationSnapshotTimestamp,
+    sourceHashLabel: "fixture-generation/source-snapshot timestamp; not live freshness"
+  },
+  {
+    id: "implementation-review.workflow-object-slice-0",
+    sliceName: "workflow-object-static-operator-console-record",
+    displayName: "Workflow-object Slice 0 static Operator Console record",
+    status: ImplementationReviewStatus.AcceptedStaticSnapshot,
+    ownerDomain: OwnerDomain.Provenance,
+    implementationReportLocator: "docs/implementation/workflow-object-static-operator-console-record.20260711.105117.md",
+    acceptanceReviewLocator: "docs/reviews/implementation-review.20260711.105822_workflow-object-static-operator-console-record.md",
+    validationSourceLocator: "tests/projectkoios/bootstrap/workflow_objects/test__operator_console_static_record.py",
+    validationSummary: "Static copied summary: workflow-object static-record validator passed after current hash remediation.",
+    authorityBoundary: "static snapshot; projection/index only; not schema authority; not live",
+    fixtureDerivedStatus: true,
+    evidenceLocators: [
+      "dev/workflow-objects/operator-console-bootstrap-bundle.workflow-object.json",
+      "tests/projectkoios/bootstrap/workflow_objects/test__operator_console_static_record.py",
+      "docs/implementation/workflow-object-static-operator-console-record.20260711.105117.md",
+      "docs/reviews/implementation-review.20260711.105822_workflow-object-static-operator-console-record.md"
+    ],
+    snapshotGeneratedAt: currentImplementationSnapshotTimestamp,
+    sourceHashLabel: "fixture-generation/source-snapshot timestamp; not live freshness"
+  }
+];
+
+export const workflowObjectSummaryFixture: WorkflowObjectSummaryFixture = {
+  recordId: "workflow-object.operator-console-bootstrap-bundle.20260711",
+  status: ImplementationReviewStatus.AcceptedStaticSnapshot,
+  snapshotGeneratedAt: currentImplementationSnapshotTimestamp,
+  sourceHashTimestampLabel: "source hashes are working-tree content refs observed at fixture generation time",
+  nonAuthorityMarkers: [
+    "projection-index-only",
+    "not-source-authority",
+    "not-completion-authority",
+    "not-petri-net-runtime",
+    "not-storage-authority",
+    "not-schema-authority",
+    "static-record",
+    "bootstrap-incubation",
+    "fixture-only",
+    "non-live",
+    "stale-by-design",
+    "not-product-authority"
+  ],
+  artifactRecordCount: 9,
+  gateEvaluationCount: 3,
+  validationEvidenceCount: 1,
+  previewEvidenceCount: 1,
+  packageSourceRef: "src/typescript/projectkoios/ui/operator-console/package.json",
+  hashCaveat:
+    "Hashes identify the referenced working-tree file contents at fixture generation time; they are not commit IDs and do not make this UI or workflow object source authority. This screen is a static snapshot, not live operational truth, and may be stale until intentionally refreshed.",
+  refreshProtocolStatement: "Workflow-object refresh protocol is not yet defined for this static fixture screen.",
+  staleHashPackagingRule:
+    "Stale source hashes require workflow-object static-record validator rerun before packaging or explicit intentional-staleness recording."
+};
 
 export const contentRefs: readonly ContentRef[] = [currentAdrMarkdownRef, proposedAdrJsonRef];

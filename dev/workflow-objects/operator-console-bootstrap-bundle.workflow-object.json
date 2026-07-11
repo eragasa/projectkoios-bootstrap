@@ -92,7 +92,7 @@
       "authority_boundary": "source-authority",
       "content_ref": {
         "ref_type": "sha256",
-        "value": "b8c29580e537c8d42522cb3999cd6ea9a75049c87f8dd417b5a0923adda4e3e4",
+        "value": "cfcb08ffb7edf002db810af134181243006ab069fd08211cde76d5e7c7b064ca",
         "availability": "present"
       },
       "provenance_summary": "Bootstrap-incubation Operator Console architecture and as-built reconciliation."

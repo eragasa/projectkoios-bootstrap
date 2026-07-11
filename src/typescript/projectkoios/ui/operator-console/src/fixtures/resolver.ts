@@ -6,9 +6,11 @@ import {
   changeProposals,
   contentBodies,
   contentRefs,
+  currentImplementationReviewItems,
   evidenceRefs,
   externalStatuses,
-  validationResults
+  validationResults,
+  workflowObjectSummaryFixture
 } from "../../fixtures/operator-console-fixture";
 import type {
   AgentInteraction,
@@ -63,6 +65,17 @@ export class FixtureGraphResolver {
     return {
       agentStatuses,
       externalStatuses,
+      currentImplementationReview: {
+        panelTitle: "Current implementation review static snapshot",
+        snapshotLabel: "Static snapshot; not live; stale-by-design until refreshed",
+        snapshotGeneratedAt: workflowObjectSummaryFixture.snapshotGeneratedAt,
+        stalenessWarning:
+          "Displayed status is copied fixture/read-model data from cited artifacts. It is not live operational truth.",
+        statusSourceStatement:
+          "Status labels are fixture-derived from cited review and implementation artifacts, not computed live by the console.",
+        items: currentImplementationReviewItems,
+        workflowObjectSummary: workflowObjectSummaryFixture
+      },
       interactionThreads: agentThreads.map((thread: AgentThread) => this.resolveAgentThread(thread)),
       primaryProposal: this.resolveChangeProposal(primaryProposal)
     };

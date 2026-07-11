@@ -46,6 +46,9 @@ body {
 
 .banner,
 .summary-card,
+.current-implementation-review,
+.implementation-review-card,
+.workflow-object-summary-card,
 .change-review,
 .interaction-panel,
 .interaction-thread,
@@ -80,6 +83,9 @@ body {
 }
 
 .summary-card,
+.current-implementation-review,
+.implementation-review-card,
+.workflow-object-summary-card,
 .change-review,
 .interaction-panel,
 .interaction-thread,
@@ -149,8 +155,28 @@ body {
   border-left: 6px solid #16a34a;
 }
 
+.current-implementation-review,
 .interaction-panel,
 .change-review {
+  margin-top: 16px;
+}
+
+.implementation-review-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.snapshot-warning {
+  background: #7f1d1d;
+  border-radius: 8px;
+  color: #fff7ed;
+  font-weight: 800;
+  padding: 10px 12px;
+}
+
+.workflow-object-summary-card {
+  border-left: 6px solid #7c3aed;
   margin-top: 16px;
 }
 

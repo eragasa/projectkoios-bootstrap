@@ -1,6 +1,7 @@
 import type { DashboardReadModel } from "./contracts";
 import { AgentSummaryRenderer } from "./components/AgentSummary";
 import { ChangeReviewRenderer } from "./components/ChangeReview";
+import { CurrentImplementationReviewRenderer } from "./components/CurrentImplementationReview";
 import { EvidencePanelRenderer } from "./components/EvidencePanel";
 import { ExternalStatusCardRenderer } from "./components/ExternalStatusCard";
 import { HtmlRenderer } from "./components/html";
@@ -13,6 +14,7 @@ export class OperatorConsoleRenderer {
   constructor(
     private readonly agentSummaryRenderer: AgentSummaryRenderer,
     private readonly externalStatusCardRenderer: ExternalStatusCardRenderer,
+    private readonly currentImplementationReviewRenderer: CurrentImplementationReviewRenderer,
     private readonly interactionThreadPanelRenderer: InteractionThreadPanelRenderer,
     private readonly changeReviewRenderer: ChangeReviewRenderer
   ) {}
@@ -33,6 +35,7 @@ export class OperatorConsoleRenderer {
       '<span>Fixture preview navigation:</span>',
       '<a href="#console-context">Context</a>',
       '<a href="#fixture-summaries">Summary</a>',
+      '<a href="#current-implementation-review">Implementation review</a>',
       '<a href="#interaction-panel-title">Interactions</a>',
       '<a href="#review-current">Current</a>',
       '<a href="#review-proposed">Proposed</a>',
@@ -42,6 +45,7 @@ export class OperatorConsoleRenderer {
       agentCards,
       externalCards,
       "</section>",
+      this.currentImplementationReviewRenderer.render(readModel.currentImplementationReview),
       this.interactionThreadPanelRenderer.render(readModel.interactionThreads),
       this.changeReviewRenderer.render(readModel.primaryProposal),
       "</div>"
@@ -75,6 +79,7 @@ export class OperatorConsoleApplicationFactory {
     const renderer: OperatorConsoleRenderer = new OperatorConsoleRenderer(
       new AgentSummaryRenderer(htmlRenderer),
       new ExternalStatusCardRenderer(htmlRenderer),
+      new CurrentImplementationReviewRenderer(htmlRenderer),
       new InteractionThreadPanelRenderer(htmlRenderer),
       new ChangeReviewRenderer(htmlRenderer, evidencePanelRenderer)
     );

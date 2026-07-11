@@ -95,9 +95,9 @@ During bootstrap incubation, the Operator Console technology baseline is:
 | Type checking | `tsc --noEmit` | Package-local TypeScript config. |
 | Package manager/lockfile | npm + package-local `package-lock.json` | Lockfile is package-local reproducibility evidence, not repo-wide policy. |
 | Browser entry | Vite `index.html` | Satisfies separated browser/static entry surface; literal `www/` is not required. |
-| Fixture data | TypeScript fixture constants | Static, deterministic, stale-by-design; no runtime repo reads. |
-| Data contracts | TypeScript interfaces and typed constants | DataObject-style material stays in data/contracts. |
-| Behavior organization | ActionObject-style classes | Durable behavior lives in classes such as renderers, providers, resolvers, factories, validators, applications. |
+| Fixture data | TypeScript fixture constants | Static, deterministic, stale-by-design; no runtime repo reads. Values derived from repository artifacts are copied/encoded at source/build time, not fetched or computed live in the browser. |
+| Data contracts | TypeScript interfaces and typed constants | DataObject-style material stays in data/contracts. Current implementation review fixtures should use small read-model shapes such as `ImplementationReviewItem` and `WorkflowObjectSummaryFixture`. |
+| Behavior organization | ActionObject-style classes | Durable behavior lives in classes such as renderers, providers, resolvers, factories, validators, applications. Current implementation review behavior should remain in renderer/application classes such as `CurrentImplementationReviewRenderer`. |
 | Live integration | Deferred | No live intercom/session/network/terminal adapters in P0/P1 unless separately approved. |
 | Backend/API | Deferred | No backend/API server for fixture-only slices. |
 | Generated output | Not committed | `node_modules`, `dist`, `coverage`, preview state, and local artifacts are removed/ignored. |
@@ -527,6 +527,60 @@ ATHENA reran validation and accepted the implementation:
 
 P2 remains bootstrap incubation and local UI inspection only. It does not create product UI authority, live state, backend/API service, persistent storage, polling, workflow mutation/activation, Petri-net editor, TUI/product extraction, or messaging capability.
 
+## Current implementation review fixture as-built state
+
+`operator-console-current-implementation-review-fixture` has been implemented by VULCAN and accepted by ATHENA with watchpoints.
+
+Implementation and review evidence:
+
+- `docs/plans/implementation-brief.20260711.110430_operator-console-current-implementation-review-fixture.md`
+- `docs/plans/implementation-plan.20260711.111205_operator-console-current-implementation-review-fixture.md`
+- `docs/implementation/operator-console-current-implementation-review-fixture.20260711.112245.md`
+- `docs/reviews/architecture-conformance.20260711.113100_operator-console-current-implementation-review-fixture.md`
+- `docs/reviews/provenance-review.20260711.113300_operator-console-current-implementation-review-fixture.md`
+- `docs/reviews/hermes-feedback.20260711.113500_operator-console-current-implementation-review-fixture.md`
+- `docs/reviews/architecture-final-acceptance.20260711.113700_operator-console-current-implementation-review-fixture.md`
+
+As built:
+
+- one compact read-only current implementation review panel on the existing Operator Console page;
+- static fixture/read-model status summaries for P0, ActionObject/DataObject refactor, P1, P2, and workflow-object Slice 0;
+- each bundle item displays implementation report locator, acceptance/review locator, validation source/summary, authority boundary, fixture-derived status, snapshot timestamp, source/snapshot label, and evidence display locators;
+- one compact workflow-object summary copied from accepted Slice 0 evidence, not imported or parsed by browser runtime;
+- workflow-object summary displays record id, status, non-authority markers, `artifact_records=9`, `gate_evaluations=3`, `validation_evidence=1`, `preview_evidence=1`, package source ref `src/typescript/projectkoios/ui/operator-console/package.json`, working-tree hash caveat, refresh-protocol-not-defined statement, and stale-hash packaging rule;
+- static snapshot/stale-by-design-until-refreshed/non-live, bootstrap-incubation, projection/index-only, and not-product-authority labels are visible;
+- ActionObject/DataObject structure is preserved with data in typed interfaces/constants and renderer behavior in classes;
+- existing P0/P1/P2 content remains available.
+
+Accepted boundaries:
+
+- no runtime repository reads, workflow-object reads, Node `fs`/`path` browser dependency, live status derivation, backend/API service, live adapters, persistent storage, schema/storage authority, Petri-net runtime change, mutation/activation controls, route-level navigation, graph visualization, workflow-object browser/editor, broad source/package indexing, broad staleness policy, product authority, or `docs/adr` mutation;
+- evidence paths are display locators only;
+- status values are copied static fixture/read-model values from cited artifacts, not live console computation;
+- workflow-object hash remediation after validator-detected source drift is accepted as the approved static-record staleness packaging behavior.
+
+Validation accepted:
+
+- package install/typecheck/tests/build/audit passed;
+- package tests passed: 6 files / 12 tests;
+- workflow-object static-record validator passed: 5 tests;
+- `git diff --check` clean;
+- `docs/adr` unchanged;
+- generated `node_modules`, `dist`, and coverage artifacts removed;
+- scans found no production live primitives, durable free behavior functions, or enum-like dangling semantic raw strings.
+
+User/HERMES inspected the browser preview and accepted the slice, but reported an orientation gap: “I don't know what I am looking at.” KOIOS interpreted this as a provenance/UX communication gap, not evidence laundering or an authority defect: the UI explains what authority it does not have, but does not yet plainly explain what the snapshot is, why it exists, how to read it, and what question it answers. This is not a blocking boundary violation. It should be handled as a bounded follow-up candidate, `operator-console-review-orientation-copy-fixture`, rather than by reopening this implementation slice.
+
+The orientation follow-up should add a plain-language block covering: what this is, why it exists, how to read it, what it is not, and what to do next. It should frame the work as readability/orientation refinement only, with no backend/live/model expansion and no authority change. ATHENA promoted KOIOS's concrete provenance-shape input into candidate proposal `docs/plans/schema-proposal.operator-console-current-implementation-review-snapshot.20260711.114300.md`; that candidate defines `CurrentImplementationReviewSnapshot` as a fixture/read-model shape for any follow-up brief, but does not create `docs/schemas/` authority.
+
+Residual watchpoints:
+
+- rerun the workflow-object static-record validator if referenced artifacts change again before packaging, or explicitly record intentional fixture staleness;
+- keep “current implementation” paired with “static fixture/read-model snapshot” in future copy;
+- preserve the caveat that hashes are working-tree content hashes, not commit IDs and not source authority;
+- broader workflow-object refresh/staleness policy remains deferred;
+- bootstrap incubation remains non-product authority until extraction/promotion through the appropriate product/mothership document domain.
+
 ## YAGNI-prioritized implementation task plan
 
 ### P0 — required first-slice proof
@@ -595,6 +649,14 @@ These tasks are the smallest coherent implementation bundle and should be comple
 - Local browser readability/navigation affordances are implemented as `operator-console-readability-navigation-fixture`.
 - Accepted affordances include sticky local navigation, jump anchors, bounded scroll regions, collapsible readability cards, CSS-only fixture visual emphasis, and responsive layout improvements.
 - Any future usability expansion remains local UI-only unless separately approved.
+
+### Current implementation review fixture — planning-ready follow-up
+
+- Implement one compact static panel/card set for `operator-console-current-implementation-review-fixture` according to the planned slice above and the implementation brief.
+- Keep it fixture/read-model only: no runtime repository reads, no workflow-object browser/editor, no route-level navigation, and no live status derivation.
+- Use copied static values from accepted evidence; evidence paths are display locators, not live file readers.
+- Display snapshot/generated timestamp, source-hash timestamp/label where available, and loud static snapshot / not-live / stale-by-design-until-refreshed language.
+- Preserve the UI acceptance gate and multi-role feedback gate before final ATHENA acceptance.
 
 ### P3 — explicitly deferred
 
@@ -701,5 +763,5 @@ Fixtures should be copied or transformed into product test data with source refs
 
 - HERMES: route/confirm cross-role state responsibility and later extraction to the product/mothership repository.
 - ATHENA: maintain this architecture/spec surface during bootstrap incubation and review new implementation reports for conformance.
-- VULCAN: implement only explicitly approved bounded follow-up slices; likely next candidates are readability/navigation polish or a separately approved live-adapter boundary plan.
+- VULCAN: implement only explicitly approved bounded follow-up slices; current next candidate is `operator-console-current-implementation-review-fixture` planning from `docs/plans/implementation-brief.20260711.110430_operator-console-current-implementation-review-fixture.md`. Live-adapter boundary work remains separate and deferred.
 - KOIOS: preserve provenance from bootstrap fixtures and validate claims in product documentation.

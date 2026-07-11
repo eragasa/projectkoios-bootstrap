@@ -114,6 +114,18 @@ export enum ApprovalState {
   Rejected = "rejected"
 }
 
+export enum ImplementationReviewStatus {
+  AcceptedStaticSnapshot = "accepted-static-snapshot"
+}
+
+export enum OwnerDomain {
+  Architecture = "architecture",
+  Implementation = "implementation",
+  Review = "review",
+  Provenance = "provenance",
+  Source = "source"
+}
+
 export interface FixtureMetadata {
   readonly fixtureId: string;
   readonly fixtureStatus: FixtureStatus;
@@ -284,6 +296,49 @@ export interface WorkflowProposal {
   readonly updatedAt: string;
 }
 
+export interface ImplementationReviewItem {
+  readonly id: string;
+  readonly sliceName: string;
+  readonly displayName: string;
+  readonly status: ImplementationReviewStatus;
+  readonly ownerDomain: OwnerDomain;
+  readonly implementationReportLocator: string;
+  readonly acceptanceReviewLocator: string;
+  readonly validationSummary: string;
+  readonly validationSourceLocator: string;
+  readonly authorityBoundary: string;
+  readonly fixtureDerivedStatus: true;
+  readonly evidenceLocators: readonly string[];
+  readonly snapshotGeneratedAt: string;
+  readonly sourceHashLabel: string;
+}
+
+export interface WorkflowObjectSummaryFixture {
+  readonly recordId: string;
+  readonly status: ImplementationReviewStatus;
+  readonly snapshotGeneratedAt: string;
+  readonly sourceHashTimestampLabel: string;
+  readonly nonAuthorityMarkers: readonly string[];
+  readonly artifactRecordCount: number;
+  readonly gateEvaluationCount: number;
+  readonly validationEvidenceCount: number;
+  readonly previewEvidenceCount: number;
+  readonly packageSourceRef: string;
+  readonly hashCaveat: string;
+  readonly refreshProtocolStatement: string;
+  readonly staleHashPackagingRule: string;
+}
+
+export interface CurrentImplementationReviewReadModel {
+  readonly panelTitle: string;
+  readonly snapshotLabel: string;
+  readonly snapshotGeneratedAt: string;
+  readonly stalenessWarning: string;
+  readonly statusSourceStatement: string;
+  readonly items: readonly ImplementationReviewItem[];
+  readonly workflowObjectSummary: WorkflowObjectSummaryFixture;
+}
+
 export interface ResolvedChangeProposal {
   readonly proposal: ChangeProposal;
   readonly current: ResolvedContent;
@@ -312,6 +367,7 @@ export interface ResolvedAgentThread {
 export interface DashboardReadModel {
   readonly agentStatuses: readonly AgentStatus[];
   readonly externalStatuses: readonly ExternalSystemStatus[];
+  readonly currentImplementationReview: CurrentImplementationReviewReadModel;
   readonly interactionThreads: readonly ResolvedAgentThread[];
   readonly primaryProposal: ResolvedChangeProposal;
 }

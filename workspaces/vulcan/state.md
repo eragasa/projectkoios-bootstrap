@@ -2,24 +2,25 @@
 {
   "title": "Vulcan workspace state",
   "artifact_type": "workspace-state",
-  "status": "workflow-object-static-operator-console-record-implemented-validated",
-  "datetime": "20260711.105117Z",
+  "status": "operator-console-current-implementation-review-fixture-accepted-with-orientation-followup",
+  "datetime": "20260711.112245Z",
   "acting_as": "VULCAN",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/vulcan/",
   "branch": "master",
   "document_domain": "implementation, tests, validation, implementation reports, deviation reports",
-  "source_architecture": "docs/architecture/architecture.workflow-object.md",
-  "source_brief": "docs/plans/implementation-brief.20260711.102123_workflow-object-static-operator-console-record.md",
-  "source_schema_candidate": "docs/plans/schema-proposal.workflow-object.static-record.20260711.102743.md",
-  "source_example_skeleton": "docs/plans/example.workflow-object.operator-console-skeleton.20260711.103748.json",
-  "source_plan_review": "docs/reviews/architecture-plan-review.20260711.104845_workflow-object-static-operator-console-record-revised.md",
-  "slice_name": "workflow-object-static-operator-console-record",
-  "implementation_plan": "docs/plans/implementation-plan.20260711.103626_workflow-object-static-operator-console-record.md",
-  "target_record": "dev/workflow-objects/operator-console-bootstrap-bundle.workflow-object.json",
-  "latest_report": "docs/implementation/workflow-object-static-operator-console-record.20260711.105117.md",
+  "source_brief": "docs/plans/implementation-brief.20260711.110430_operator-console-current-implementation-review-fixture.md",
+  "source_architecture": [
+    "docs/architecture/architecture.operator-console.md",
+    "docs/architecture/architecture.workflow-object.md"
+  ],
+  "slice_name": "operator-console-current-implementation-review-fixture",
+  "implementation_plan": "docs/plans/implementation-plan.20260711.111205_operator-console-current-implementation-review-fixture.md",
+  "latest_report": "docs/implementation/operator-console-current-implementation-review-fixture.20260711.112245.md",
+  "latest_aar": "docs/AAR/aar.20260711.112900_operator-console-current-implementation-review-orientation-gap.md",
+  "target_path": "src/typescript/projectkoios/ui/operator-console/",
   "control_files": ["state.md", "active.md"],
-  "next_owner": "USER_OR_HERMES_OR_ATHENA_REVIEW",
+  "next_owner": "USER_HERMES_ATHENA_KOIOS_REVIEW",
   "blockers": []
 }
 ```
@@ -28,50 +29,69 @@
 
 ## Current scope
 
-- Current scope: implemented and validated workflow-object Slice 0.
-- Slice name: `workflow-object-static-operator-console-record`.
-- Target record: `dev/workflow-objects/operator-console-bootstrap-bundle.workflow-object.json`.
-- Test-only validator: `tests/projectkoios/bootstrap/workflow_objects/test__operator_console_static_record.py`.
-- Implementation report: `docs/implementation/workflow-object-static-operator-console-record.20260711.105117.md`.
+- Current scope: implemented, validated, and previewed Operator Console current implementation review fixture.
+- Slice name: `operator-console-current-implementation-review-fixture`.
+- Target path: `src/typescript/projectkoios/ui/operator-console/`.
+- Brief: `docs/plans/implementation-brief.20260711.110430_operator-console-current-implementation-review-fixture.md`.
+- Plan: `docs/plans/implementation-plan.20260711.111205_operator-console-current-implementation-review-fixture.md`.
+- Implementation report: `docs/implementation/operator-console-current-implementation-review-fixture.20260711.112245.md`.
 
 ## Current status
 
-- VULCAN implemented exactly one static JSON `WorkflowObjectRecord` projection/index based on the ATHENA-approved skeleton.
-- VULCAN replaced skeleton hash placeholders with current SHA-256 content refs for the nine referenced file artifacts.
-- The record includes exactly one package/source ref: `src/typescript/projectkoios/ui/operator-console/package.json`.
-- Broad package/source indexing remains deferred.
-- VULCAN added one narrow test-only validator.
-- No schema authority, storage/database adapter, CLI, UI integration, Petri-net runtime changes, live adapters, bulk generation, recursive source/package hashing, source artifact mutation, or `docs/adr/` changes were introduced.
+- VULCAN added one compact read-only current implementation review panel to the existing Operator Console page.
+- The panel uses copied fixture/read-model values only.
+- The UI shows P0, ActionObject/DataObject refactor, P1, P2, and workflow-object Slice 0 status/evidence summaries.
+- The UI includes loud static snapshot / not live / stale-by-design until refreshed language, snapshot timestamp, source-hash label, hash caveat, refresh-protocol-not-defined wording, and packaging staleness rule.
+- Preview was opened at `http://127.0.0.1:4173/` and then stopped.
+- USER/HERMES browser inspection accepted the visible/functioning slice but reported: “I don't know what I am looking at.”
+- VULCAN captured this as an orientation/comprehension follow-up candidate, not a functional rejection.
+- Generated `node_modules`/`dist` were removed after validation.
 
-## Latest validation evidence
+## Validation evidence
+
+From `src/typescript/projectkoios/ui/operator-console/`:
+
+- `npm install --ignore-scripts` => completed; local `node_modules/` removed after validation.
+- `npm run typecheck` => passed.
+- `npm test` => `6 test files passed, 12 tests passed`.
+- `npm run build` => passed; generated `dist/` removed after validation.
+- `npm audit --audit-level=moderate` => `found 0 vulnerabilities`.
+- `npm ls --depth=0` => `@types/node@26.1.1`, `typescript@7.0.2`, `vite@8.1.4`, `vitest@4.1.10`.
+- `npm run preview -- --host 127.0.0.1` => local URL `http://127.0.0.1:4173/`; local preview inspection completed.
 
 From repository root:
 
-- `python3 -m json.tool dev/workflow-objects/operator-console-bootstrap-bundle.workflow-object.json` => passed.
-- `uv run pytest tests/projectkoios/bootstrap/workflow_objects/test__operator_console_static_record.py` => `5 passed`.
-- KOIOS remediation re-run: `uv run pytest tests/projectkoios/bootstrap/workflow_objects/test__operator_console_static_record.py -q` => `5 passed in 0.01s`.
-- `uv run ruff check tests/projectkoios/bootstrap/workflow_objects/test__operator_console_static_record.py` => passed.
-- `uv run mypy tests/projectkoios/bootstrap/workflow_objects/test__operator_console_static_record.py` => passed.
+- `uv run pytest tests/projectkoios/bootstrap/workflow_objects/test__operator_console_static_record.py -q` => initially failed due stale Operator Console architecture hash; passed after hash remediation: `5 passed in 0.01s`.
 - `git diff --check` => clean.
 - `git status --short -- docs/adr` => no output.
-- `find dev -path '*workflow-object*' -type f -maxdepth 4 -print || true` => `dev/workflow-objects/operator-console-bootstrap-bundle.workflow-object.json`.
-- Focused record check: `artifact_records=9`, `gate_evaluations=3`, `validation_evidence=1`, `preview_evidence=1`, package/source refs only `src/typescript/projectkoios/ui/operator-console/package.json`, all `completion_authority_created=false`.
-- Remediation: updated `artifact:architecture.workflow-object` content ref to `acdddf274f721ac2fe2003716194677781931805efd7a6e9155df436692ba553` after KOIOS detected stale hash.
+- generated artifact cleanup check for `node_modules`, `dist`, `coverage` => no output after cleanup.
+- no-free-function grep over TypeScript source/fixtures => no output.
+- enum-like raw string grep over TypeScript source/fixtures => no output.
+- no-live primitive grep output was only test pattern definitions; no production live primitive usage found.
+- forbidden action-word grep output was limited to test patterns, existing contract enum names, existing `senderId` fields, and existing read-only fixture prose; interactive control tests passed.
 
 ## Dirty tree caution
 
 Treat VULCAN-owned changes for this slice as:
 
+- `src/typescript/projectkoios/ui/operator-console/fixtures/operator-console-fixture.ts`
+- `src/typescript/projectkoios/ui/operator-console/src/app.ts`
+- `src/typescript/projectkoios/ui/operator-console/src/components/CurrentImplementationReview.ts`
+- `src/typescript/projectkoios/ui/operator-console/src/contracts/index.ts`
+- `src/typescript/projectkoios/ui/operator-console/src/fixtures/resolver.ts`
+- `src/typescript/projectkoios/ui/operator-console/src/styles.css`
+- `src/typescript/projectkoios/ui/operator-console/src/test/current-implementation-review.test.ts`
+- `src/typescript/projectkoios/ui/operator-console/src/test/no-mutation-controls.test.ts`
 - `dev/workflow-objects/operator-console-bootstrap-bundle.workflow-object.json`
-- `tests/projectkoios/bootstrap/workflow_objects/test__operator_console_static_record.py`
-- `docs/implementation/workflow-object-static-operator-console-record.20260711.105117.md`
+- `docs/implementation/operator-console-current-implementation-review-fixture.20260711.112245.md`
+- `docs/AAR/aar.20260711.112900_operator-console-current-implementation-review-orientation-gap.md`
 - `workspaces/vulcan/state.md`
 - `workspaces/vulcan/active.md`
 
-Known concurrent/non-VULCAN surfaces remain in the dirty tree, including workflow-object architecture/plans/reviews and ATHENA workspace files. Do not include unrelated changes in a VULCAN implementation commit unless explicitly requested.
+Known concurrent/non-VULCAN surfaces remain in the dirty tree, including ATHENA architecture/brief/workspace files. Do not include unrelated changes in a VULCAN implementation commit unless explicitly requested.
 
 ## Next transition
 
-- Owner: USER_OR_HERMES_OR_ATHENA_REVIEW.
-- Expected action: review static workflow-object record and test-only validator.
+- Owner: ATHENA_KOIOS_HERMES_REVIEW_OR_USER_NEXT_SLICE.
+- Expected action: post-implementation review and/or decide whether to brief `operator-console-review-orientation-copy-fixture`.
 - Blockers: none from VULCAN.
