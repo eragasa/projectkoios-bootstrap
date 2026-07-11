@@ -20,13 +20,14 @@
   "completed_items": [
     {
       "name": "adr-schema-base-architecture-extraction-planning-slice-13",
-      "state": "accepted-committed-pending",
+      "state": "accepted-committed",
       "artifact_refs": [
         "docs/plans/architecture-extraction-brief.20260711.184325_adr-schema-base.md",
         "docs/reviews/hermes-acceptance.20260711.185430_adr-schema-base-architecture-extraction-planning-slice-13.md",
         "docs/reviews/hermes-decision.20260711.184325_adr-schema-base-architecture-extraction-planning-slice-13.md"
       ],
-      "why": "HERMES accepted ATHENA architecture-extraction brief as proposal-only planning after KOIOS no-blocker provenance review."
+      "why": "HERMES accepted ATHENA architecture-extraction brief as proposal-only planning after KOIOS no-blocker provenance review.",
+      "commit": "564651c"
     },
     {
       "name": "adr-schema-base-source-disposition-planning-slice-12",
