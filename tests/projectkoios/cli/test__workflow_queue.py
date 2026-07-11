@@ -26,9 +26,10 @@ def test__workflow_queue__prints_static_queue_state(capsys: pytest.CaptureFixtur
     assert "active:" in output
     assert "  none" in output
     assert "queued/proposed:" in output
-    assert "1. petrinet-workflow-queue-state-slice-4 state=proposed-next" in output
-    assert "2. pi-skill-determinism-slice-0 state=queued" in output
+    assert "1. pi-skill-determinism-slice-0 state=queued" in output
+    assert "petrinet-workflow-queue-state-slice-4 state=proposed-next" not in output
     assert "completed/recent:" in output
+    assert "petrinet-workflow-queue-state-slice-4 state=accepted-committed-pushed commit=5f209114" in output
     assert "petrinet-workflow-interactive-control-skill-slice-3 state=accepted-committed-pushed commit=b4de9c64" in output
     assert "vulcan-interactive-control-state-fix state=accepted-committed-pushed commit=ed9110b9" in output
     assert "superseded/rejected:" in output
@@ -38,7 +39,7 @@ def test__workflow_queue__prints_static_queue_state(capsys: pytest.CaptureFixtur
     assert "implementation-brief.20260711.121000_agent-skills-workflow-status-slice-0.md" in output
     assert "deferred:" in output
     assert "next decision needed:" in output
-    assert "do not activate or implement pi-skill-determinism-slice-0" in output
+    assert "Choose whether to activate pi-skill-determinism-slice-0" in output
 
 
 def test__WorkflowQueueStateFixtureLoader__loads_static_fixture() -> None:
@@ -52,11 +53,12 @@ def test__WorkflowQueueStateFixtureLoader__loads_static_fixture() -> None:
     assert fixture.surface == "projectkoios.workflow.queue_state"
     assert fixture.status == "static-read-only-fixture"
     assert fixture.active_item is None
-    assert fixture.queued_items[0].name == "petrinet-workflow-queue-state-slice-4"
-    assert fixture.queued_items[1].name == "pi-skill-determinism-slice-0"
-    assert fixture.queued_items[1].state == "queued"
-    assert fixture.completed_items[0].commit == "b4de9c64"
-    assert fixture.completed_items[1].commit == "ed9110b9"
+    assert fixture.queued_items[0].name == "pi-skill-determinism-slice-0"
+    assert fixture.queued_items[0].state == "queued"
+    assert fixture.completed_items[0].name == "petrinet-workflow-queue-state-slice-4"
+    assert fixture.completed_items[0].commit == "5f209114"
+    assert fixture.completed_items[1].commit == "b4de9c64"
+    assert fixture.completed_items[2].commit == "ed9110b9"
     assert len(fixture.superseded_items) == 4
     assert fixture.deferred_items == ()
 

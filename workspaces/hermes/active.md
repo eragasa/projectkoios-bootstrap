@@ -3,13 +3,13 @@
   "title": "Hermes active work",
   "artifact_type": "workspace-active-priorities",
   "status": "active",
-  "datetime": "20260711.110000Z",
+  "datetime": "20260711.130500Z"
   "acting_as": "HERMES",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/hermes/",
   "document_domain": "orchestration, repo-state reconciliation, cross-domain consistency",
   "control_files": ["state.md", "active.md"],
-  "next_owner": "USER_OR_HERMES",
+  "next_owner": "HERMES_OR_USER",
   "blockers": []
 }
 ```
@@ -18,9 +18,9 @@
 
 ## Current priority stack
 
-1. Package/commit accepted Petri-net workflow queue state Slice 4.
-2. Continue prioritizing mechanical workflow engine controls over additional prose-only skill work.
-3. Prepare the next bounded workflow-engine slice for explicit activation/transition control.
+1. Package/commit accepted `petrinet-workflow-activate-slice-5` when ready.
+2. Choose the next bounded workflow-engine slice after packaging.
+3. Preserve `pi-skill-determinism-slice-0` as queued-only unless USER/HERMES explicitly switches priority.
 
 ## Accepted Petri-net workflow inspectability artifacts
 
@@ -72,10 +72,19 @@
 - `docs/implementation/petrinet-workflow-queue-state-slice-4.20260711.124549.md`
 - `workspaces/koios/working/provenance-note.20260711_queue-state-slice-4.md`
 
+## Accepted Slice 5: activation command
+
+- `docs/plans/implementation-brief.20260711.124950_petrinet-workflow-activate-slice-5.md` — ATHENA brief approved by USER/HERMES.
+- `docs/reviews/hermes-decision.20260711.125800_petrinet-workflow-activate-slice-5.md` — HERMES approval decision.
+- `workspaces/koios/working/provenance-note.20260711_activate-slice-5.md` — KOIOS provenance input complete enough for routing.
+- `docs/implementation/petrinet-workflow-activate-slice-5.20260711.125832.md` — VULCAN implementation report.
+- `docs/AAR/aar.20260711.125832_petrinet-workflow-activate-slice-5.md` — VULCAN process note.
+- `docs/reviews/hermes-acceptance.20260711.130500_petrinet-workflow-activate-slice-5.md` — HERMES acceptance.
+- Live queue fixture is reconciled: Slice 4 is completed at commit `5f209114`, `active_item` remains null, and `pi-skill-determinism-slice-0` remains queued-only.
+
 ## Queued follow-ups
 
 - `docs/plans/queued-slice.20260711.122000_pi-skill-determinism-slice-0.md` — queued only; must not supersede accepted Petri-net slices.
-- Mechanical workflow activation/transition controls — recommended next priority; needs bounded slice/brief.
 
 ## Closeout watchpoints
 
@@ -87,8 +96,8 @@
 
 ## Waiting on
 
-- HERMES packaging/commit, then orchestration of next workflow-engine activation/transition-control slice.
+- Packaging/commit decision for accepted Slice 5 changes.
 
 ## Exit criteria
 
-Hermes state is stable when accepted Petri-net workflow queue state Slice 4 is packaged and the next workflow-engine activation/control slice is queued/briefed without replacing existing queued work.
+Hermes state is stable when accepted Slice 5 changes are packaged/committed and the next bounded workflow-engine control slice is chosen without implicitly activating `pi-skill-determinism-slice-0`.

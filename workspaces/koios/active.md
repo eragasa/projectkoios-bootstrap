@@ -4,16 +4,16 @@
 
 - Type: workspace-active-state
 - Status: active
-- Updated: 20260711T114216Z
+- Updated: 20260711T130000Z
 - Updated by: KOIOS
 - Repository: projectkoios-bootstrap
 - Workspace: `workspaces/koios/`
 
 ## Active thread
 
-ADR control-surface provenance review and knowledge capture.
+Bounded provenance support for Petri-net workflow inspectability and mechanical workflow-engine controls.
 
-ATHENA has accepted `docs/adr/adr.20260705.011836_adr-lifecycle-and-naming-consolidation.md` after cross-role review and user direction `go`.
+Queue Slice 4 has been accepted/committed as `5f209114 Add Petri net workflow queue view`. KOIOS completed activate Slice 5 provenance input, HERMES has approved/routed Slice 5 to VULCAN, and KOIOS is not blocking implementation.
 
 ## Current artifacts
 
@@ -26,6 +26,8 @@ ATHENA has accepted `docs/adr/adr.20260705.011836_adr-lifecycle-and-naming-conso
 - `working/provenance-note.20260711T033323Z_architecture-led-workflow-doctrine.md`
 - `working/provenance-audit.20260711T065332Z_adr-json-schemas-conformance.md`
 - `working/provenance-note.20260711T114216Z_live-petrinet-skeleton-pivot.md`
+- `working/provenance-note.20260711_queue-state-slice-4.md`
+- `working/provenance-note.20260711_activate-slice-5.md`
 - `../../docs/process-capture/pc.workflow.document-trace.md`
 - `../../docs/process-capture/pc.workflow.document-trace.20260706.025408Z.md`
 - `../../docs/process-capture/pc.workflow.document-trace.20260708.044950Z.md`
@@ -51,19 +53,20 @@ KOIOS added the two Operator Console AAR lessons to `../../docs/process-capture/
 
 KOIOS completed an all-AAR synthesis covering 298 AAR files under `../../docs/AAR/`. Outputs: `../../docs/process-capture/pc.aar-consolidation.20260711.091607Z.md` and `../../docs/process-capture/requirements.workflow-object.from-aar-synthesis.20260711.091607Z.md`. The requirements draft is candidate-only and should go to ATHENA/user before any workflow-object implementation.
 
-KOIOS captured the USER/HERMES pivot toward live Petri-net inspectability in `working/provenance-note.20260711T114216Z_live-petrinet-skeleton-pivot.md`. Next KOIOS posture: do not expand process notes unless asked; preserve that the next useful state is mechanical workflow visibility, e.g. `uv run projectkoios workflow status` over a static bootstrap workflow-net fixture.
+KOIOS captured the USER/HERMES pivot toward live Petri-net inspectability in `working/provenance-note.20260711T114216Z_live-petrinet-skeleton-pivot.md`.
+
+KOIOS completed `working/provenance-note.20260711_queue-state-slice-4.md`; Slice 4 added `uv run projectkoios workflow queue` as a static read-only queue view and was accepted/committed as `5f209114`.
+
+KOIOS completed `working/provenance-note.20260711_activate-slice-5.md`; it is complete enough for HERMES/VULCAN routing. It frames Slice 5 as explicit-command-only, deterministic queue fixture update control over `dev/workflow-nets/bootstrap-harness.queue-state.json`, with before/after visibility and no implicit activation from chat/intercom.
 
 ## KOIOS next actions
 
-1. Re-audit any future architecture-document proposal against the captured control-surface criteria.
-2. Update or create provenance notes when accepted/proposed ADR surfaces change materially.
-3. Capture additional workflow document traces when multi-role slices expose document-state evolution worth preserving, especially after packaging decisions, stable-skill promotion decisions, or ADR/JSON migration pilots add new trace states.
-4. If the current conformance slice is packaged, ensure a VULCAN implementation report exists or explicitly record why the plan/tests/generated artifacts are sufficient for this small completed run.
-5. Route the all-AAR workflow-object requirements draft to ATHENA/user if promotion into architecture/spec authority is desired.
-6. If the live Petri-net skeleton slice proceeds, review only for provenance boundaries: status-only, static fixture, no firing/persistence/UI integration, and separation from workflow-object projections.
+1. Stay available for bounded provenance review if HERMES/VULCAN request it for Slice 5.
+2. Do not route or block implementation; HERMES has already approved/routed Slice 5 to VULCAN.
+3. If Slice 5 completes, verify only provenance boundaries if asked: explicit command, fixture-only mutation, before/after summary, no runtime firing/persistence/product/global propagation, and no supersession of `pi-skill-determinism-slice-0`.
 
 ## Blockers and cautions
 
-- Koios `state.md` and `active.md` were missing before this update and have now been created.
-- After VULCAN commit `4223527`, remaining dirty state was limited to KOIOS-owned provenance-audit workspace files and is being packaged as its own coherent KOIOS slice.
-- KOIOS should not edit architecture, ADR, policy, implementation, or source-code surfaces unless explicitly requested within its knowledge/provenance role.
+- KOIOS is not blocked and is not blocking Slice 5 implementation.
+- KOIOS should not edit architecture, implementation, source-code, or queue fixture surfaces unless explicitly requested within its knowledge/provenance role.
+- Current non-KOIOS dirty state appears to belong to ongoing Slice 5 routing/implementation work.

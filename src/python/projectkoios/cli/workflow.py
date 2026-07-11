@@ -728,6 +728,216 @@ class WorkflowQueueStateReporter:
         return lines
 
 
+@dataclass(frozen=True, slots=True)
+class WorkflowQueueActivationResult:
+    """Result of a static queue activation attempt.
+
+    Args:
+        success: Whether activation succeeded.
+        fixture_path: Queue fixture path inspected by the command.
+        previous_active_name: Active item name before activation, or none.
+        activated_name: Item activated by this attempt, or none.
+        remaining_queued_names: Queue item names remaining after the attempt.
+        next_decision_needed: Next decision text after the attempt.
+        message: Human-readable result message.
+        wrote_fixture: Whether the fixture was written.
+        dry_run: Whether the attempt intentionally avoided writing.
+    """
+
+    success: bool
+    fixture_path: Path
+    previous_active_name: str
+    activated_name: str
+    remaining_queued_names: tuple[str, ...]
+    next_decision_needed: str
+    message: str
+    wrote_fixture: bool
+    dry_run: bool
+
+
+class WorkflowQueueStateActivator:
+    """Activate one item in the static workflow queue fixture."""
+
+    def __init__(self) -> None:
+        """Initialize the queue activator."""
+        # Field reader reuses the existing narrow JSON validation helpers.
+        self.field_reader: WorkflowStatusFixtureLoader = WorkflowStatusFixtureLoader()
+
+    def activate(self, fixture_path: Path, item_name: str, *, dry_run: bool = False) -> WorkflowQueueActivationResult:
+        """Activate one queued item in the static queue fixture.
+
+        Args:
+            fixture_path: Queue-state fixture path to update.
+            item_name: Queued item name to activate.
+            dry_run: Whether to render the update without writing.
+
+        Returns:
+            Activation result with before/after summary data.
+        """
+        # Fixture data is the only persistent state this command may inspect or write.
+        fixture_data: dict[str, object] = self.load_fixture_data(fixture_path)
+        # Previous active item blocks activation when present.
+        active_item_value: object = fixture_data.get("active_item")
+        if active_item_value is not None:
+            # Active item mapping is inspected to build a clear no-write failure.
+            active_item: Mapping[str, object] = self.field_reader.require_mapping(active_item_value, "active_item")
+            # Active item name is reported without mutating the fixture.
+            active_name: str = self.field_reader.require_string(active_item, "name")
+            return WorkflowQueueActivationResult(
+                success=False,
+                fixture_path=fixture_path,
+                previous_active_name=active_name,
+                activated_name="",
+                remaining_queued_names=self.queued_names(fixture_data),
+                next_decision_needed=self.field_reader.require_string(fixture_data, "next_decision_needed"),
+                message=f"cannot activate {item_name}: active item already exists: {active_name}",
+                wrote_fixture=False,
+                dry_run=dry_run,
+            )
+
+        # Queued values are copied into a mutable list for deterministic removal.
+        queued_values: list[object] = list(self.field_reader.require_sequence(fixture_data.get("queued_items"), "queued_items"))
+        # Matching indexes identify the exact queued item requested by name.
+        matching_indexes: list[int] = self.matching_item_indexes(queued_values, item_name)
+        if len(matching_indexes) != 1:
+            return WorkflowQueueActivationResult(
+                success=False,
+                fixture_path=fixture_path,
+                previous_active_name="none",
+                activated_name="",
+                remaining_queued_names=self.queued_names(fixture_data),
+                next_decision_needed=self.field_reader.require_string(fixture_data, "next_decision_needed"),
+                message=f"cannot activate {item_name}: item is not queued/proposed",
+                wrote_fixture=False,
+                dry_run=dry_run,
+            )
+
+        # Activated index identifies the queued item to move.
+        activated_index: int = matching_indexes[0]
+        # Activated item is removed from the queue and marked active.
+        activated_item: dict[str, object] = dict(
+            self.field_reader.require_mapping(queued_values.pop(activated_index), "queued item")
+        )
+        activated_item["state"] = "active"
+        fixture_data["active_item"] = activated_item
+        fixture_data["queued_items"] = queued_values
+        fixture_data["next_decision_needed"] = (
+            f"Complete or review active item {item_name}; do not activate another item until active_item is cleared."
+        )
+
+        if not dry_run:
+            self.write_fixture(fixture_path, fixture_data)
+
+        return WorkflowQueueActivationResult(
+            success=True,
+            fixture_path=fixture_path,
+            previous_active_name="none",
+            activated_name=item_name,
+            remaining_queued_names=self.queued_names(fixture_data),
+            next_decision_needed=self.field_reader.require_string(fixture_data, "next_decision_needed"),
+            message=f"activated {item_name}",
+            wrote_fixture=not dry_run,
+            dry_run=dry_run,
+        )
+
+    def load_fixture_data(self, fixture_path: Path) -> dict[str, object]:
+        """Load queue fixture JSON as a mutable mapping.
+
+        Args:
+            fixture_path: Queue-state fixture path.
+
+        Returns:
+            Mutable fixture mapping.
+        """
+        # Raw JSON data is parsed from the explicit static fixture only.
+        raw_data: object = json.loads(fixture_path.read_text(encoding="utf-8"))
+        # Fixture object is copied so activation can mutate a local mapping before writing.
+        fixture_data: dict[str, object] = dict(self.field_reader.require_mapping(raw_data, "queue fixture"))
+        return fixture_data
+
+    def matching_item_indexes(self, queued_values: list[object], item_name: str) -> list[int]:
+        """Find queued item indexes matching a requested name.
+
+        Args:
+            queued_values: Raw queued item values.
+            item_name: Requested item name.
+
+        Returns:
+            Matching indexes in queue order.
+        """
+        # Matching indexes preserve exact-match semantics and detect duplicates.
+        indexes: list[int] = []
+        index: int
+        item_value: object
+        for index, item_value in enumerate(queued_values):
+            # Each queued value must be an object with a name.
+            item_data: Mapping[str, object] = self.field_reader.require_mapping(item_value, "queued item")
+            if self.field_reader.require_string(item_data, "name") == item_name:
+                indexes.append(index)
+        return indexes
+
+    def queued_names(self, fixture_data: Mapping[str, object]) -> tuple[str, ...]:
+        """Return queued item names from fixture data.
+
+        Args:
+            fixture_data: Queue fixture mapping.
+
+        Returns:
+            Queued item names in fixture order.
+        """
+        # Queued values are read from the fixture mapping for summary output.
+        queued_values: Sequence[object] = self.field_reader.require_sequence(fixture_data.get("queued_items"), "queued_items")
+        # Names preserve queue order for deterministic summaries.
+        names: list[str] = []
+        item_value: object
+        for item_value in queued_values:
+            # Each queued item contributes one display name.
+            item_data: Mapping[str, object] = self.field_reader.require_mapping(item_value, "queued item")
+            names.append(self.field_reader.require_string(item_data, "name"))
+        return tuple(names)
+
+    def write_fixture(self, fixture_path: Path, fixture_data: Mapping[str, object]) -> None:
+        """Write deterministic queue fixture JSON.
+
+        Args:
+            fixture_path: Queue-state fixture path.
+            fixture_data: Fixture mapping to write.
+        """
+        # Deterministic JSON keeps fixture diffs reviewable.
+        rendered_json: str = json.dumps(fixture_data, indent=2) + "\n"
+        fixture_path.write_text(rendered_json, encoding="utf-8")
+
+
+class WorkflowQueueActivationReporter:
+    """Render queue activation results for CLI output."""
+
+    def render(self, result: WorkflowQueueActivationResult) -> str:
+        """Render an activation result.
+
+        Args:
+            result: Activation result to render.
+
+        Returns:
+            Human-readable activation summary.
+        """
+        # Remaining queue text is explicit even when empty.
+        remaining_text: str = ", ".join(result.remaining_queued_names) if result.remaining_queued_names else "none"
+        # Output lines are intentionally compact for command-line review.
+        lines: list[str] = [
+            f"workflow activate: {result.message}",
+            f"fixture: {result.fixture_path.as_posix()}",
+            "mode: static fixture update; not canonical workflow authority and not product authority.",
+            f"previous active: {result.previous_active_name}",
+            f"activated item: {result.activated_name or 'none'}",
+            f"remaining queued: {remaining_text}",
+            f"next decision needed: {result.next_decision_needed}",
+            f"written: {'yes' if result.wrote_fixture else 'no'}",
+        ]
+        if result.dry_run:
+            lines.append("dry run: no changes written")
+        return "\n".join(lines)
+
+
 class Command:
     """Workflow CLI command adapter."""
 
@@ -737,6 +947,8 @@ class Command:
         reporter: WorkflowStatusReporter | None = None,
         queue_loader: WorkflowQueueStateFixtureLoader | None = None,
         queue_reporter: WorkflowQueueStateReporter | None = None,
+        queue_activator: WorkflowQueueStateActivator | None = None,
+        activation_reporter: WorkflowQueueActivationReporter | None = None,
     ) -> None:
         """Initialize the command adapter.
 
@@ -745,6 +957,8 @@ class Command:
             reporter: Optional status reporter for tests.
             queue_loader: Optional queue-state fixture loader for tests.
             queue_reporter: Optional queue-state reporter for tests.
+            queue_activator: Optional queue-state activator for tests.
+            activation_reporter: Optional activation reporter for tests.
         """
         # Loader maps the static fixture into runtime objects.
         self.loader: WorkflowStatusFixtureLoader = loader or WorkflowStatusFixtureLoader()
@@ -754,6 +968,10 @@ class Command:
         self.queue_loader: WorkflowQueueStateFixtureLoader = queue_loader or WorkflowQueueStateFixtureLoader()
         # Queue reporter formats static queue state for CLI output.
         self.queue_reporter: WorkflowQueueStateReporter = queue_reporter or WorkflowQueueStateReporter()
+        # Queue activator mutates only the static queue fixture by explicit command.
+        self.queue_activator: WorkflowQueueStateActivator = queue_activator or WorkflowQueueStateActivator()
+        # Activation reporter formats before/after mutation summaries.
+        self.activation_reporter: WorkflowQueueActivationReporter = activation_reporter or WorkflowQueueActivationReporter()
 
     def register(self, subparsers: SubparserCollection) -> None:
         """Register workflow commands on the top-level parser.
@@ -774,6 +992,12 @@ class Command:
         # Queue parser exposes static workflow queue-state inspectability.
         queue_parser: ArgumentParser = workflow_subparsers.add_parser("queue", help="Show workflow queue state")
         queue_parser.set_defaults(func=self.run_queue)
+
+        # Activate parser mutates only the static queue-state fixture by explicit item name.
+        activate_parser: ArgumentParser = workflow_subparsers.add_parser("activate", help="Activate a queued workflow item")
+        activate_parser.add_argument("item")
+        activate_parser.add_argument("--dry-run", action="store_true")
+        activate_parser.set_defaults(func=self.run_activate)
 
     def run_status(self, args: Namespace) -> None:
         """Run the read-only workflow status command.
@@ -798,6 +1022,24 @@ class Command:
         # Loaded queue fixture contains static control-surface state only.
         fixture: WorkflowQueueStateFixture = self.queue_loader.load(fixture_path)
         print(self.queue_reporter.render(fixture))
+
+    def run_activate(self, args: Namespace) -> None:
+        """Run the workflow queue activation command.
+
+        Args:
+            args: Parsed CLI namespace.
+        """
+        # Fixture path is the only persistent write target authorized for activation.
+        fixture_path: Path = Path("dev/workflow-nets/bootstrap-harness.queue-state.json")
+        # Activation result describes either a safe no-write failure or the written update.
+        result: WorkflowQueueActivationResult = self.queue_activator.activate(
+            fixture_path,
+            args.item,
+            dry_run=args.dry_run,
+        )
+        print(self.activation_reporter.render(result))
+        if not result.success:
+            raise SystemExit(1)
 
 
 def register(subparsers: SubparserCollection) -> None:

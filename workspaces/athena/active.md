@@ -2,8 +2,8 @@
 {
   "title": "Athena active work",
   "artifact_type": "workspace-active-priorities",
-  "status": "petrinet-workflow-queue-state-slice-4-brief-drafted-pending-review",
-  "datetime": "20260711.124106Z"},{
+  "status": "petrinet-workflow-activate-slice-5-approved-routed-no-athena-routing-pending",
+  "datetime": "20260711.125800Z"},{
   "acting_as": "ATHENA",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/athena/",
@@ -68,6 +68,7 @@
     "docs/plans/implementation-brief.20260711.122048_petrinet-workflow-current-slice-status-reconciliation.md",
     "docs/plans/implementation-brief.20260711.123305_petrinet-workflow-interactive-control-skill-slice-3.md",
     "docs/plans/implementation-brief.20260711.124106_petrinet-workflow-queue-state-slice-4.md",
+    "docs/plans/implementation-brief.20260711.124950_petrinet-workflow-activate-slice-5.md",
     "docs/plans/roadmap.20260711.102324_workflow-object-future-slices.md",
     "src/typescript/projectkoios/ui/operator-console/"
   ]
@@ -80,7 +81,7 @@
 
 1. Workflow-object Slice 0 is implemented, VULCAN-validated, ATHENA conformance-reviewed and implementation-reviewed/accepted, KOIOS-reviewed, and USER/HERMES-accepted with watchpoints.
 2. Operator Console P0/P1/P2 are implemented, user-previewed where required, ATHENA-reviewed/accepted, and reconciled into architecture as bootstrap-incubation as-built evidence.
-3. Active HERMES-recommended next priority is `petrinet-workflow-queue-state-slice-4`: ATHENA brief drafted; paused for USER/HERMES review before routing/implementation.
+3. Active HERMES-recommended next priority is `petrinet-workflow-activate-slice-5`: ATHENA brief approved by USER/HERMES and routed to VULCAN; no additional ATHENA routing is pending.
 
 ## Recently completed
 
@@ -120,12 +121,13 @@
 
 ## Current active item
 
-- `petrinet-workflow-queue-state-slice-4`
+- `petrinet-workflow-activate-slice-5`
   - Parent effort: Petri-net workflow harness / workflow inspectability.
-  - Status: ATHENA brief drafted; pause for USER/HERMES queue/control review before VULCAN routing/implementation.
-  - Purpose: make active/queued/completed/superseded workflow state machine-visible through a read-only workflow queue/status command surface.
-  - Key artifact:
-    - `docs/plans/implementation-brief.20260711.124106_petrinet-workflow-queue-state-slice-4.md`
+  - Status: ATHENA brief approved by USER/HERMES and routed to VULCAN; no additional ATHENA routing is pending.
+  - Purpose: add the first explicit mechanical activation/queue-update command operating only on the static queue fixture.
+  - Key artifacts:
+    - `docs/plans/implementation-brief.20260711.124950_petrinet-workflow-activate-slice-5.md`
+    - `docs/reviews/hermes-decision.20260711.125800_petrinet-workflow-activate-slice-5.md`
 
 ## Queued/backlog items
 
@@ -146,13 +148,13 @@
 
 ## Waiting on / blocked items
 
-- USER/HERMES review of `petrinet-workflow-queue-state-slice-4` brief and decision whether to route to VULCAN planning/implementation.
+- VULCAN execution/reporting for `petrinet-workflow-activate-slice-5` after USER/HERMES approval and routing.
 - Commit/push boundary for accumulated accepted work remains a separate packaging decision.
 
 ## Recommended next actions
 
-1. Review the queue-state Slice 4 brief and decide whether to approve VULCAN planning/implementation.
-2. Do not route to VULCAN until USER/HERMES approves implementation or explicitly authorizes direct coding.
+1. No further ATHENA routing action is pending for Slice 5.
+2. Await VULCAN implementation/report or USER/HERMES disposition.
 3. Preserve `pi-skill-determinism-slice-0` as queued-only.
 
 ## Packaging watchpoints

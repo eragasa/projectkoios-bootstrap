@@ -7,16 +7,6 @@
   "active_item": null,
   "queued_items": [
     {
-      "name": "petrinet-workflow-queue-state-slice-4",
-      "state": "proposed-next",
-      "artifact_refs": [
-        "docs/plans/implementation-brief.20260711.124106_petrinet-workflow-queue-state-slice-4.md"
-      ],
-      "why": "Current workflow-engine control topic: add mechanical read-only queue state inspectability.",
-      "dependency_or_blocker": "Requires USER/HERMES review after implementation; read-only queue view only.",
-      "recommendation": "Review the queue-state command output and decide whether to accept or revise Slice 4."
-    },
-    {
       "name": "pi-skill-determinism-slice-0",
       "state": "queued",
       "artifact_refs": [
@@ -28,6 +18,14 @@
     }
   ],
   "completed_items": [
+    {
+      "name": "petrinet-workflow-queue-state-slice-4",
+      "state": "accepted-committed-pushed",
+      "commit": "5f209114",
+      "artifact_refs": [
+        "docs/implementation/petrinet-workflow-queue-state-slice-4.20260711.124549.md"
+      ]
+    },
     {
       "name": "petrinet-workflow-interactive-control-skill-slice-3",
       "state": "accepted-committed-pushed",
@@ -81,5 +79,5 @@
     }
   ],
   "deferred_items": [],
-  "next_decision_needed": "Review and accept or revise petrinet-workflow-queue-state-slice-4; do not activate or implement pi-skill-determinism-slice-0 unless USER/HERMES explicitly switches priority."
+  "next_decision_needed": "Choose whether to activate pi-skill-determinism-slice-0 or define another workflow-engine control slice; do not implement queued work without explicit USER/HERMES activation."
 }
