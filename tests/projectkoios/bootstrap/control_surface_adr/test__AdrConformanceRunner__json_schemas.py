@@ -68,6 +68,38 @@ def test__AdrRecordValidator__validate__accepts_json_schemas_record() -> None:
     AdrRecordValidator().validate(record)
 
 
+def test__AdrConformanceRunner__run__round_trips_without_mutating_source(tmp_path: Path) -> None:
+    """Round-trip conformed JSON through projection without source mutation."""
+    # Repo root isolates generated conformance artifacts from the real repository.
+    repo_root: Path = tmp_path / "repo"
+    # Source directory holds the copied source ADR fixture.
+    source_dir: Path = repo_root / "docs" / "adr"
+    # Schema directory holds the copied current ADR schema fixture.
+    schema_dir: Path = repo_root / "docs" / "schemas"
+    source_dir.mkdir(parents=True)
+    schema_dir.mkdir(parents=True)
+    # Original source text is the non-destructive baseline.
+    original_source_text: str = SOURCE_ADR.read_text(encoding="utf-8")
+    (source_dir / SOURCE_ADR.name).write_text(original_source_text, encoding="utf-8")
+    (schema_dir / SCHEMA.name).write_text(SCHEMA.read_text(encoding="utf-8"), encoding="utf-8")
+
+    # Paths point the runner at the isolated fixture repository.
+    paths: AdrConformancePaths = AdrConformancePaths(repo_root=repo_root)
+    # Result exposes storage export and projection parse records.
+    result: AdrConformanceResult = AdrConformanceRunner(paths=paths).run()
+    # Checkpoint is the active conformed JSON record artifact.
+    checkpoint: JsonObject = json.loads(paths.json_checkpoint.read_text(encoding="utf-8"))
+    # Copied source path must remain byte-for-byte unchanged after generation.
+    copied_source_text: str = paths.source_adr.read_text(encoding="utf-8")
+
+    assert copied_source_text == original_source_text
+    assert result.projection_record == result.exported_record
+    assert checkpoint == result.projection_record
+    assert "routing" not in result.projection_record
+    assert not list(paths.target_dir.rglob("*.sqlite"))
+    assert not list(paths.target_dir.rglob("*.db"))
+
+
 def test__AdrConformanceRunner__run__writes_active_conformance_artifacts(tmp_path: Path) -> None:
     """Run the approved JSON schemas conformance slice."""
     # Repo root isolates generated conformance artifacts from the real repository.
