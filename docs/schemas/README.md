@@ -17,12 +17,25 @@ but SHOULD NOT host canonical JSON schema artifacts themselves.
 - SHOULD NOT rewrite historical AARs or provenance records solely to update old paths.
 - MAY add short-lived compatibility mirrors only when path-based tooling requires them.
 
+## Schema-family layering
+
+The current ADR schema-family boundary is layered:
+
+1. `adr.schema.json` is the current ADR content-shape schema until a later approved slice wraps, replaces, or retires it.
+2. `schema.record-base.json` is the draft record-envelope direction for schema-backed records with top-level `metadata` and `content`.
+3. `adr-draft.schema.json` demonstrates ADR-family composition with the base envelope.
+4. `adr-active.schema.json` is a compatibility/reconciliation candidate, not co-authoritative with the newer base-envelope family by implication.
+
+Markdown under `docs/adr/` remains source/control for unmigrated records. Generated projections remain evidence or review/navigation surfaces unless a later accepted migration/cutover package changes the specific file's disposition.
+
+`routing` and `dcn` are not current ADR content-schema fields. `routing` defaults to sidecar/provenance preservation unless later promoted by workflow/envelope decision. `dcn` remains unresolved namespace/control metadata. `workflow_binding` is optional schema content, not operational workflow authority.
+
 ## Canonical schema files
 
-- `adr.schema.json` — canonical ADR content schema migrated from `docs/adr/`.
+- `adr.schema.json` — current ADR content-shape schema migrated from `docs/adr/`; not a complete record envelope.
 - `schema.record-base.json` — draft base `metadata` + `content` envelope schema.
 - `adr-draft.schema.json` — draft ADR record schema using the base envelope.
-- `adr-active.schema.json` — migrated current ADR record schema candidate; requires reconciliation with legacy architecture copy.
+- `adr-active.schema.json` — migrated current ADR record schema candidate; compatibility/reconciliation candidate until wrapped, replaced, retired, or preserved for compatibility.
 - `adr.schema-implementation.json` — implementation record schema candidate; requires reconciliation with legacy architecture copy.
 
 ## Legacy migration markers
@@ -51,15 +64,15 @@ Schema-backed records use exactly two top-level fields:
    - `metadata`
    - `content`
 
-`metadata` carries identity, routing, provenance, and domain typing. `content` is
-family-specific and is constrained by the controlling family schema.
+`metadata` carries identity, provenance, evidence, projection, repository, and domain typing. `content` is
+family-specific and is constrained by the controlling family schema. Do not read legacy `routing` prose as a current content-schema field unless a later schema-change slice explicitly adds it.
 
 Current base and ADR-family schema drafts:
 
 - `schema.record-base.json`
 - `adr-draft.schema.json`
 
-The migrated current ADR schema is retained as:
+The migrated current ADR schema candidate is retained for reconciliation as:
 
 - `adr-active.schema.json`
 
