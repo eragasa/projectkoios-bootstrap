@@ -2,23 +2,22 @@
 {
   "title": "Vulcan workspace state",
   "artifact_type": "workspace-state",
-  "status": "live-petri-net-skeleton-slice-0-implemented-validated",
-  "datetime": "20260711.114916Z",
+  "status": "petrinet-workflow-agent-status-skill-slice-1-implemented-validated",
+  "datetime": "20260711.121800Z",
   "acting_as": "VULCAN",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/vulcan/",
   "branch": "master",
   "document_domain": "implementation, tests, validation, implementation reports, deviation reports",
-  "source_brief": "docs/plans/implementation-brief.20260711.114600_live-petri-net-skeleton-slice-0.md",
+  "source_brief": "docs/plans/implementation-brief.20260711.121600_petrinet-workflow-agent-status-skill-slice-1.md",
   "source_architecture": [
-    "docs/architecture/architecture.petrinet.00.md",
-    "docs/adr/adr.petrinet.20260705.132740Z.md"
+    "docs/plans/spec-intake.20260711.115957_agent-skills-for-workflow-inspectability.md",
+    "docs/plans/slicing.20260711.121500_petrinet-workflow-agent-affordances.md"
   ],
-  "slice_name": "live-petri-net-skeleton-slice-0",
-  "implementation_plan": "docs/plans/implementation-plan.20260711.114700_live-petri-net-skeleton-slice-0.md",
-  "latest_report": "docs/implementation/live-petri-net-skeleton-slice-0.20260711.114916.md",
-  "latest_aar": "docs/AAR/aar.20260711.114916_live-petri-net-skeleton-slice-0.md",
-  "target_command": "uv run projectkoios workflow status",
+  "slice_name": "petrinet-workflow-agent-status-skill-slice-1",
+  "latest_report": "docs/implementation/petrinet-workflow-agent-status-skill-slice-1.20260711.121800.md",
+  "latest_aar": "docs/AAR/aar.20260711.121800_petrinet-workflow-agent-status-skill-slice-1.md",
+  "target_path": "src/python/projectkoios/workflow/skills/",
   "control_files": ["state.md", "active.md"],
   "next_owner": "USER_HERMES_ATHENA_REVIEW",
   "blockers": []
@@ -29,53 +28,49 @@
 
 ## Current scope
 
-- Current scope: implemented and validated Live Petri-net skeleton slice 0.
-- Slice name: `live-petri-net-skeleton-slice-0`.
-- Target command: `uv run projectkoios workflow status`.
-- Brief: `docs/plans/implementation-brief.20260711.114600_live-petri-net-skeleton-slice-0.md`.
-- Plan: `docs/plans/implementation-plan.20260711.114700_live-petri-net-skeleton-slice-0.md`.
-- Report: `docs/implementation/live-petri-net-skeleton-slice-0.20260711.114916.md`.
+- Current scope: implemented and validated Petri-net workflow agent status skill Slice 1.
+- Slice name: `petrinet-workflow-agent-status-skill-slice-1`.
+- Parent effort: Petri-net workflow harness / workflow inspectability.
+- Brief: `docs/plans/implementation-brief.20260711.121600_petrinet-workflow-agent-status-skill-slice-1.md`.
+- Report: `docs/implementation/petrinet-workflow-agent-status-skill-slice-1.20260711.121800.md`.
 
 ## Current status
 
-- VULCAN added a static bootstrap Petri-net fixture at `dev/workflow-nets/bootstrap-harness.workflow-net.json`.
-- VULCAN added the read-only workflow CLI command adapter at `src/python/projectkoios/cli/workflow.py`.
-- `src/python/projectkoios/cli/main.py` now registers the top-level `workflow` command group.
-- `uv run projectkoios workflow status` prints workflow id, fixture path, places, token locations/color, enabled transitions, and user-decision-required status.
-- Enabled transitions are computed via `PetriNetExecutor.enabled_bindings(...)`.
-- The fixture remains static bootstrap inspectability material, not canonical workflow authority.
+- VULCAN added workflow-local agent-facing affordance files under `src/python/projectkoios/workflow/skills/`.
+- The manifest lists exactly one Slice 1 skill: `petrinet-workflow-status`.
+- The skill instructs agents to run `uv run projectkoios workflow status`, summarize workflow id, current token/place, enabled transitions, user-decision requirement, and one recommendation.
+- The skill instructs agents to stop and ask/await approval when user decision is required unless explicitly delegated.
+- The skill preserves non-mutation and non-propagation boundaries.
 
 ## Validation evidence
 
 From repository root:
 
-- `uv run projectkoios workflow status` => passed; printed expected status.
-- `uv run pytest tests/projectkoios/cli/test__workflow_status.py tests/projectkoios/workflow -q` => `15 passed in 0.06s`.
-- `uv run mypy src/python/projectkoios/cli src/python/projectkoios/workflow tests/projectkoios/cli` => `Success: no issues found in 12 source files`.
-- `uv run projectkoios bootstrap validate-python-policy src/python/projectkoios/cli src/python/projectkoios/workflow tests/projectkoios/cli` => `summary: 0 finding(s), 12 file(s)`.
+- `uv run pytest tests/projectkoios/workflow/test__PetriNetWorkflowSkills__status_skill.py -q` => `3 passed in 0.01s`.
+- `uv run projectkoios bootstrap validate-python-policy src/python/projectkoios/workflow tests/projectkoios/workflow` => `summary: 0 finding(s), 12 file(s)`.
 - `git diff --check` => clean.
 
 ## Boundaries preserved
 
-No transition firing command, persistence, mutable workflow state, runtime event-log persistence, Operator Console integration, workflow-object integration, Petri-net graph UI, `docs/schemas/` authority, generalized workflow-net loader framework, role/permission expansion, live intercom/session adapters, or product/mothership workflow authority was added.
+No new project identity, `agents/global/*/skills/`, `docs/skills/skill-register.md`, workflow CLI behavior change, Petri-net runtime change, transition firing, persistence, Operator Console integration, workflow-object runtime coupling, schema authority, live adapter/session read, role/permission semantic, product/mothership authority, or interactive-control skill behavior was added.
 
 ## Dirty tree caution
 
 Treat VULCAN-owned changes for this slice as:
 
-- `dev/workflow-nets/bootstrap-harness.workflow-net.json`
-- `src/python/projectkoios/cli/workflow.py`
-- `src/python/projectkoios/cli/main.py`
-- `tests/projectkoios/cli/test__workflow_status.py`
-- `docs/implementation/live-petri-net-skeleton-slice-0.20260711.114916.md`
-- `docs/AAR/aar.20260711.114916_live-petri-net-skeleton-slice-0.md`
+- `src/python/projectkoios/workflow/skills/README.md`
+- `src/python/projectkoios/workflow/skills/manifest.json`
+- `src/python/projectkoios/workflow/skills/petrinet-workflow-status/SKILL.md`
+- `tests/projectkoios/workflow/test__PetriNetWorkflowSkills__status_skill.py`
+- `docs/implementation/petrinet-workflow-agent-status-skill-slice-1.20260711.121800.md`
+- `docs/AAR/aar.20260711.121800_petrinet-workflow-agent-status-skill-slice-1.md`
 - `workspaces/vulcan/active.md`
 - `workspaces/vulcan/state.md`
 
-Known non-VULCAN handoff/planning files may also exist in the dirty tree. Keep commit boundaries explicit.
+Known ATHENA planning files may also exist in the dirty tree. Keep commit boundaries explicit.
 
 ## Next transition
 
 - Owner: USER/HERMES/ATHENA review.
-- Expected action: review status output and conformance, or request closeout/commit.
+- Expected action: review status skill affordance or request closeout/commit.
 - Blockers: none from VULCAN.

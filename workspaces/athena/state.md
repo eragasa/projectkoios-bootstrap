@@ -2,8 +2,8 @@
 {
   "title": "Athena workspace state",
   "artifact_type": "workspace-state",
-  "status": "live-petri-net-skeleton-slice-0-athena-accepted",
-  "datetime": "20260711.115100Z",
+  "status": "petrinet-workflow-agent-status-skill-slice-1-user-acceptance-pending-queue-discipline-corrected",
+  "datetime": "20260711.122600Z",
   "acting_as": "ATHENA",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/athena/",
@@ -128,10 +128,46 @@
 - After USER clarification that KOIOS should provide an authoritative schema candidate rather than more watchpoint prose, KOIOS supplied a concrete `CurrentImplementationReviewSnapshot` provenance/read-model shape. ATHENA recorded the final KOIOS review in `docs/reviews/provenance-final.20260711.114100_operator-console-current-implementation-review-fixture.md` and promoted the schema candidate into `docs/plans/schema-proposal.operator-console-current-implementation-review-snapshot.20260711.114300.md` as proposal input, not `docs/schemas/` authority.
 - HERMES relayed USER's preferred pivot: stop ADR/process sprawl and make the Petri-net workflow harness visibly inspectable/live. HERMES surveyed the repo and recommended `live-petri-net-skeleton-slice-0`: `uv run projectkoios workflow status` backed by a static bootstrap workflow-net fixture. ATHENA confirmed existing `docs/architecture/architecture.petrinet.00.md` plus `docs/adr/adr.petrinet.20260705.132740Z.md` are sufficient for this narrow read-only CLI slice and drafted `docs/plans/implementation-brief.20260711.114600_live-petri-net-skeleton-slice-0.md` for VULCAN.
 - VULCAN implemented `live-petri-net-skeleton-slice-0` and reported `docs/implementation/live-petri-net-skeleton-slice-0.20260711.114916.md`. The slice adds `uv run projectkoios workflow status`, static fixture `dev/workflow-nets/bootstrap-harness.workflow-net.json`, CLI adapter `src/python/projectkoios/cli/workflow.py`, command registration, and focused CLI tests. ATHENA reviewed and accepted it in `docs/reviews/architecture-conformance.20260711.115100_live-petri-net-skeleton-slice-0.md`, reran validation successfully, and reconciled as-built behavior into `docs/architecture/architecture.petrinet.00.md`.
+- HERMES relayed USER instruction that workflow inspectability and interactive-control behavior should be implemented as reusable agent skills. HERMES added `docs/plans/spec-intake.20260711.115957_agent-skills-for-workflow-inspectability.md`. ATHENA first produced a harness-global-first slicing/brief, then a workflow-project-local correction. USER then clarified more strongly that this is not a new project and must be sliced into the existing Petri-net workflow harness / workflow inspectability effort. ATHENA superseded prior framings and produced `docs/plans/slicing.20260711.121500_petrinet-workflow-agent-affordances.md` plus `docs/plans/implementation-brief.20260711.121600_petrinet-workflow-agent-status-skill-slice-1.md`. The new slice is `petrinet-workflow-agent-status-skill-slice-1`, continuing `live-petri-net-skeleton-slice-0`.
+- HERMES relayed KOIOS's Pi determinism proposal with explicit instruction to add it to the queue, not replace active Petri-net Slice 1. ATHENA recorded it as `docs/plans/queued-slice.20260711.122000_pi-skill-determinism-slice-0.md`; it is queued after `petrinet-workflow-agent-status-skill-slice-1` and explicitly defers opencode/goose/archon propagation.
+- HERMES relayed USER's operational correction that ATHENA must preserve active work and maintain a queue/backlog instead of replacing active state with each new incoming topic. ATHENA updated `workspaces/athena/active.md` and this state file to distinguish current active item, queued/backlog items, superseded/rejected items, and waiting/blocked items. Effective rule: new requests are queued unless USER/HERMES explicitly says to switch active work.
+
+## Current active item
+
+- `petrinet-workflow-agent-status-skill-slice-1`
+  - Parent effort: Petri-net workflow harness / workflow inspectability.
+  - Status: implemented by VULCAN; ATHENA conformance review evidence exists; HERMES recommends acceptance with watchpoints; USER acceptance is still being discussed.
+  - Key artifacts:
+    - `docs/plans/implementation-brief.20260711.121600_petrinet-workflow-agent-status-skill-slice-1.md`
+    - `docs/implementation/petrinet-workflow-agent-status-skill-slice-1.20260711.121800.md`
+    - `docs/reviews/architecture-conformance.20260711.122300_petrinet-workflow-agent-status-skill-slice-1.md`
+
+## Queued/backlog items
+
+1. `pi-skill-determinism-slice-0`
+   - Queue artifact: `docs/plans/queued-slice.20260711.122000_pi-skill-determinism-slice-0.md`.
+   - Ordering: later, after active Slice 1 is accepted or USER/HERMES explicitly activates it.
+   - Boundary: must not replace, rename, reframe, or block active Petri-net workflow Slice 1.
+2. `petrinet-workflow-interactive-control-skill-slice-2`
+   - Deferred follow-on from `docs/plans/slicing.20260711.121500_petrinet-workflow-agent-affordances.md`.
+3. `operator-console-review-orientation-copy-fixture`
+   - Deferred UI readability/provenance refinement.
+
+## Superseded/rejected items
+
+- `docs/plans/slicing.20260711.120200_agent-skills-workflow-inspectability.md` — superseded; harness-global-first framing was rejected.
+- `docs/plans/implementation-brief.20260711.120300_agent-skills-workflow-status-slice-0.md` — superseded; Pi/global skill-register-first placement was rejected.
+- `docs/plans/slicing.20260711.120900_agent-skills-workflow-project.md` — superseded; separate workflow-project skill framing was rejected.
+- `docs/plans/implementation-brief.20260711.121000_agent-skills-workflow-status-slice-0.md` — superseded; separate workflow-project skill placement was rejected.
+
+## Waiting on / blocked items
+
+- USER/HERMES final acceptance decision for active `petrinet-workflow-agent-status-skill-slice-1`.
+- Commit/push boundary after USER/HERMES decides what to include.
 
 ## Open questions
 
-- USER/HERMES selection of the next live Petri-net harness slice or closeout/commit direction.
+- USER/HERMES final acceptance decision for active `petrinet-workflow-agent-status-skill-slice-1`.
 - USER/HERMES review of future-slice roadmap if desired; roadmap is advisory and does not authorize later slices.
 - Whether to close/commit the accepted Operator Console P0/P1/P2 plus workflow-object architecture/brief bundle or select another bounded UI slice.
 - When to extract `src/typescript/projectkoios/ui/operator-console/` to `projectkoios/ui/operator-console/` and promote product/mothership authority.
@@ -142,7 +178,10 @@
 ## Next transition
 
 - Owner: HERMES/USER.
-- Recommended next state: use `uv run projectkoios workflow status` as the current live inspectability baseline and explicitly select the next live Petri-net harness slice, likely bounded transition firing/dry-run or richer status fixture coverage. `operator-console-review-orientation-copy-fixture` remains a later UI readability refinement; rerun the Slice 0 workflow-object validator if referenced Operator Console artifacts change before packaging, or record intentional fixture staleness.
+- Recommended next actions:
+  1. Hold active item as `petrinet-workflow-agent-status-skill-slice-1`; do not activate queued work unless USER/HERMES explicitly says to switch.
+  2. Await USER/HERMES final acceptance decision for active Slice 1.
+  3. Preserve `pi-skill-determinism-slice-0` as queued-only until active Slice 1 is accepted or USER/HERMES explicitly promotes it.
 - Operator Console P0/P1/P2 accepted boundaries: bootstrap incubation only; package-local lockfile only; behavior owned by ActionObject-style classes with data in typed interfaces/constants; `docs/policies/typescript-coding.md` remains draft/non-controlling; fixtures are static/stale-by-design; readability/navigation affordances are local browser inspection helpers only; no backend, live reads, messaging capability, activation/mutation, Petri-net graph editor, product UI authority, or bootstrap production-backend claim.
 - ADR conformance work remains available as a separate track: future slices should use updated `docs/schemas/adr.schema.json` without `routing`, preserve sidecar provenance, and avoid schema/lifecycle/workflow/storage-authority redesign unless repeated conformance pressure justifies it.
 

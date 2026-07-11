@@ -2,8 +2,8 @@
 {
   "title": "Vulcan active work",
   "artifact_type": "workspace-active-priorities",
-  "status": "live-petri-net-skeleton-slice-0-implemented-validated",
-  "datetime": "20260711.114916Z",
+  "status": "petrinet-workflow-agent-status-skill-slice-1-implemented-validated",
+  "datetime": "20260711.121800Z",
   "acting_as": "VULCAN",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/vulcan/",
@@ -11,18 +11,17 @@
   "priority_count": 1,
   "working_directory": "working/",
   "active_working_items": [
-    "docs/plans/implementation-brief.20260711.114600_live-petri-net-skeleton-slice-0.md",
-    "docs/plans/implementation-plan.20260711.114700_live-petri-net-skeleton-slice-0.md",
-    "docs/implementation/live-petri-net-skeleton-slice-0.20260711.114916.md",
-    "dev/workflow-nets/bootstrap-harness.workflow-net.json",
-    "src/python/projectkoios/cli/workflow.py",
-    "src/python/projectkoios/cli/main.py",
-    "tests/projectkoios/cli/test__workflow_status.py"
+    "docs/plans/implementation-brief.20260711.121600_petrinet-workflow-agent-status-skill-slice-1.md",
+    "docs/implementation/petrinet-workflow-agent-status-skill-slice-1.20260711.121800.md",
+    "src/python/projectkoios/workflow/skills/README.md",
+    "src/python/projectkoios/workflow/skills/manifest.json",
+    "src/python/projectkoios/workflow/skills/petrinet-workflow-status/SKILL.md",
+    "tests/projectkoios/workflow/test__PetriNetWorkflowSkills__status_skill.py"
   ],
   "scratch_directory": "scratch/",
-  "implementation_plan": "docs/plans/implementation-plan.20260711.114700_live-petri-net-skeleton-slice-0.md",
-  "latest_report": "docs/implementation/live-petri-net-skeleton-slice-0.20260711.114916.md",
-  "latest_aar": "docs/AAR/aar.20260711.114916_live-petri-net-skeleton-slice-0.md"
+  "implementation_plan": null,
+  "latest_report": "docs/implementation/petrinet-workflow-agent-status-skill-slice-1.20260711.121800.md",
+  "latest_aar": "docs/AAR/aar.20260711.121800_petrinet-workflow-agent-status-skill-slice-1.md"
 }
 ```
 
@@ -30,50 +29,35 @@
 
 ## Current priority stack
 
-1. `live-petri-net-skeleton-slice-0`: implemented and validated.
-2. Target command: `uv run projectkoios workflow status`.
-3. Boundaries preserved: read-only CLI status; static fixture only; existing `projectkoios.workflow` Petri-net runtime; no firing, persistence, Operator Console integration, workflow-object integration, schema/product expansion, or live adapters.
+1. `petrinet-workflow-agent-status-skill-slice-1`: implemented and validated.
+2. Parent effort: Petri-net workflow harness / workflow inspectability, continuing `live-petri-net-skeleton-slice-0`.
+3. Boundaries preserved: no new project identity, no harness-global skill propagation, no `docs/skills/skill-register.md`, no workflow CLI behavior change, no Petri-net runtime changes, no firing/persistence, no Operator Console/workflow-object coupling, no schema/product authority, and no interactive-control behavior.
 
 ## Latest working material
 
-- Brief: `docs/plans/implementation-brief.20260711.114600_live-petri-net-skeleton-slice-0.md`.
-- Plan: `docs/plans/implementation-plan.20260711.114700_live-petri-net-skeleton-slice-0.md`.
-- Implementation report: `docs/implementation/live-petri-net-skeleton-slice-0.20260711.114916.md`.
-- AAR: `docs/AAR/aar.20260711.114916_live-petri-net-skeleton-slice-0.md`.
-- Source architecture: `docs/architecture/architecture.petrinet.00.md`.
-- Source ADR: `docs/adr/adr.petrinet.20260705.132740Z.md`.
+- Brief: `docs/plans/implementation-brief.20260711.121600_petrinet-workflow-agent-status-skill-slice-1.md`.
+- Implementation report: `docs/implementation/petrinet-workflow-agent-status-skill-slice-1.20260711.121800.md`.
+- AAR: `docs/AAR/aar.20260711.121800_petrinet-workflow-agent-status-skill-slice-1.md`.
 
 ## Implemented outputs
 
-- Static fixture: `dev/workflow-nets/bootstrap-harness.workflow-net.json`.
-- CLI adapter/loader/reporter: `src/python/projectkoios/cli/workflow.py`.
-- Top-level command registration in `src/python/projectkoios/cli/main.py`.
-- Focused CLI tests: `tests/projectkoios/cli/test__workflow_status.py`.
+- `src/python/projectkoios/workflow/skills/README.md`.
+- `src/python/projectkoios/workflow/skills/manifest.json`.
+- `src/python/projectkoios/workflow/skills/petrinet-workflow-status/SKILL.md`.
+- `tests/projectkoios/workflow/test__PetriNetWorkflowSkills__status_skill.py`.
 
 ## Validation results
 
 From repository root:
 
 ```bash
-uv run projectkoios workflow status
+uv run pytest tests/projectkoios/workflow/test__PetriNetWorkflowSkills__status_skill.py -q
 ```
 
-Passed; printed workflow id, fixture path, places, current token location/color, enabled transition, and user decision status.
+Passed: `3 passed in 0.01s`.
 
 ```bash
-uv run pytest tests/projectkoios/cli/test__workflow_status.py tests/projectkoios/workflow -q
-```
-
-Passed: `15 passed in 0.06s`.
-
-```bash
-uv run mypy src/python/projectkoios/cli src/python/projectkoios/workflow tests/projectkoios/cli
-```
-
-Passed: `Success: no issues found in 12 source files`.
-
-```bash
-uv run projectkoios bootstrap validate-python-policy src/python/projectkoios/cli src/python/projectkoios/workflow tests/projectkoios/cli
+uv run projectkoios bootstrap validate-python-policy src/python/projectkoios/workflow tests/projectkoios/workflow
 ```
 
 Passed: `summary: 0 finding(s), 12 file(s)`.
