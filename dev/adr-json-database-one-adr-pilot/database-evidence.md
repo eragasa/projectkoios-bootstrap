@@ -1,10 +1,10 @@
-# ADR JSON/database pilot database evidence
+# ADR JSON/document-store pilot database evidence
 
 Status: pilot-derived/non-authoritative evidence.
 
 ## Storage adapter policy
 
-ADR workflow logic uses a narrow storage adapter boundary. SQLite is the selected pilot adapter implementation only.
+ADR workflow logic uses an ADR adapter wrapper over a generic JSON document store. SQLite is the selected pilot document-store backend only.
 
 ## SQLite operational store policy
 
@@ -12,28 +12,34 @@ Generated database path during run: `/Users/eugene/repos/projectkoios-bootstrap/
 
 Mutable `.sqlite`/`.db` files are local/generated and are not committed as repository authority.
 
-## SQLite adapter DDL
+## SQLite document-store DDL
 
 ```sql
-CREATE TABLE IF NOT EXISTS adr_records (
-  id TEXT PRIMARY KEY,
-  slug TEXT NOT NULL,
-  title TEXT NOT NULL,
-  status TEXT NOT NULL,
-  routing_owner TEXT NOT NULL,
-  routing_next_phase TEXT NOT NULL,
-  schema_id TEXT NOT NULL,
+CREATE TABLE IF NOT EXISTS json_documents (
+  document_id TEXT PRIMARY KEY NOT NULL,
+  document_kind TEXT NOT NULL,
+  payload_json TEXT NOT NULL,
   content_hash TEXT NOT NULL,
-  record_json TEXT NOT NULL,
   created_at TEXT NOT NULL,
   updated_at TEXT NOT NULL
 )
 ```
 
+## SQLite document-store index
+
+```sql
+CREATE INDEX IF NOT EXISTS idx_json_documents_kind
+ON json_documents (document_kind, document_id)
+```
+
+## Replaced ADR-specific table
+
+The previous `adr_records` table and ADR-specific query columns are retained only as historical migration evidence.
+
 ## Adapter query evidence
 
-`list_by_status('draft')` returned: `adr.json-database-for-adr-storage`
+`list_by_kind(DocumentType.ADR)` returned: `adr.json-database-for-adr-storage`
 
 ## JSON checkpoint hash
 
-`9e2bd6ed13f8cfa2d9e8b63c444248f19da960e818f22eb3d8a516bcebefb55e`
+`0bb030d8f33bd1081f5415871431e10aeb943d23d00dd346dc91b645ede45d04`

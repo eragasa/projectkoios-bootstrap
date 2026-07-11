@@ -1,80 +1,91 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
+"""Small Markdown helpers for the one-ADR storage pilot.
+
+This module is not a general ADR Markdown importer. It reads the pilot source
+ADR Markdown file, reads the generated projection's embedded JSON block, and
+renders the generated projection used as pilot evidence.
+"""
+
 import re
 from re import Pattern
 
+from projectkoios.bootstrap.control_surface.adr.models import PilotAdrSourceConfig
+from projectkoios.bootstrap.schema import SchemaRegistry
 from projectkoios.bootstrap.schema.models import JsonObject
 
 
 class AdrMarkdownError(ValueError):
-    """Raised when ADR Markdown cannot be mapped deterministically."""
+    """Raised when ADR Markdown cannot be parsed."""
 
 
-SECTION_HEADING_PATTERN: Pattern[str] = re.compile(r"^## (?P<heading>.+)$")
-REQUIRED_SECTION_KEYS: tuple[str, ...] = (
-    "status",
-    "context",
-    "decision",
-    "consequences",
-    "architecture-spec",
-    "acceptance-criteria",
-    "implementation-brief",
-    "resolved_open_questions",
-    "non_goals",
-    "validation_expectations",
-    "routing",
-    "links",
-)
+class AdrMarkdownRecordParser:
+    """Parse ADR Markdown into ADR JSON records.
 
+    This parser reads the pilot source ADR and generated projection file. It is
+    intentionally narrow and does not try to import arbitrary ADR Markdown.
 
-@dataclass(frozen=True, slots=True)
-class AdrMarkdownMapper:
-    """Map the one source ADR Markdown fixture into schema-shaped JSON."""
+    Args:
+        source_config: Source ADR values used by the one-ADR pilot.
+        schema_registry: Loads `adr.schema.json`.
+    """
 
-    def map_source(self, markdown: str) -> tuple[JsonObject, JsonObject]:
-        """Map legacy/source Markdown to a plain ADR schema record.
+    def __init__(
+        self,
+        source_config: PilotAdrSourceConfig | None = None,
+        schema_registry: SchemaRegistry | None = None,
+    ) -> None:
+        """Initialize the ADR record parser.
+
+        Args:
+            source_config: Source ADR values used by the one-ADR pilot.
+            schema_registry: Loads `adr.schema.json`.
+        """
+        # Source config keeps pilot-specific values out of parser logic.
+        self.source_config: PilotAdrSourceConfig = source_config or PilotAdrSourceConfig()
+        # The parser uses the schema to know which sections to require.
+        self.schema_registry: SchemaRegistry = schema_registry or SchemaRegistry()
+
+    def parse_source_record(self, markdown: str) -> tuple[JsonObject, JsonObject]:
+        """Parse source Markdown into an ADR JSON record.
 
         Args:
             markdown: Source Markdown text.
 
         Returns:
-            ADR record and mapping evidence.
+            ADR record and notes about copied/changed fields.
         """
-        # Parsed sections drive the deterministic fixture mapping.
+        # Split the Markdown before reading individual fields.
         sections: dict[str, str] = self.sections(markdown)
-        # Title is extracted separately because it includes timestamp provenance.
+        # The title lives in the top-level `# ADR ...` heading.
         title: str = self.title(markdown)
-        # Context key-value lines become the schema context object.
-        context: JsonObject = self.context(sections["context"])
-        # Routing key-value lines become schema routing values.
-        routing: JsonObject = self.routing(sections["routing"])
-        # Links key-value lines become optional schema links values.
-        links: JsonObject = self.links(sections["links"])
-        # Record is the plain schema-backed checkpoint object.
+        # Context is a small key-value section.
+        context: JsonObject = self.context(sections[self.section_key_for_schema_field("context")])
+        # Links is a small key-value section.
+        links: JsonObject = self.links(sections[self.section_key_for_schema_field("links")])
+        # The JSON record follows `docs/schemas/adr.schema.json`.
         record: JsonObject = {
-            "id": "adr.json-database-for-adr-storage",
-            "slug": "json-database-for-adr-storage",
+            "id": self.source_config.record_id,
+            "slug": self.source_config.slug,
             "title": title,
-            "status": self.status(sections["status"]),
+            "status": self.status(sections[self.section_key_for_schema_field("status")]),
             "context": context,
-            "decision": sections["decision"],
-            "consequences": sections["consequences"],
-            "architecture_spec": sections["architecture-spec"],
-            "acceptance_criteria": self.bullets(sections["acceptance-criteria"]),
-            "implementation_brief": sections["implementation-brief"],
-            "resolved_open_questions": self.bullets(sections["resolved_open_questions"]),
-            "non_goals": self.bullets(sections["non_goals"]),
-            "validation_expectations": self.bullets(sections["validation_expectations"]),
-            "routing": routing,
+            "decision": sections[self.section_key_for_schema_field("decision")],
+            "consequences": sections[self.section_key_for_schema_field("consequences")],
+            "architecture_spec": sections[self.section_key_for_schema_field("architecture_spec")],
+            "acceptance_criteria": self.bullets(sections[self.section_key_for_schema_field("acceptance_criteria")]),
+            "implementation_brief": sections[self.section_key_for_schema_field("implementation_brief")],
+            "resolved_open_questions": self.bullets(sections[self.section_key_for_schema_field("resolved_open_questions")]),
+            "non_goals": self.bullets(sections[self.section_key_for_schema_field("non_goals")]),
+            "validation_expectations": self.bullets(sections[self.section_key_for_schema_field("validation_expectations")]),
             "links": links,
         }
-        # Mapping evidence carries source provenance excluded by the plain ADR schema.
-        mapping: JsonObject = self.mapping_evidence(sections)
-        return record, mapping
+        # Notes explain values that were copied, normalized, or kept outside the record.
+        source_notes: JsonObject = self.source_mapping_notes(sections)
+        return record, source_notes
 
-    def map_projection(self, markdown: str) -> JsonObject:
-        """Map generated projection Markdown back to ADR record JSON.
+    def parse_projection_record(self, markdown: str) -> JsonObject:
+        """Parse generated projection Markdown back to ADR JSON.
 
         Args:
             markdown: Generated projection Markdown.
@@ -82,111 +93,171 @@ class AdrMarkdownMapper:
         Returns:
             ADR record contained in the projection.
         """
-        # Projection embeds deterministic JSON between explicit fences.
+        # The generated projection embeds the record in a fenced JSON block.
         start_marker: str = "```json adr-record"
         # End marker closes the embedded ADR record JSON block.
         end_marker: str = "```"
-        # Start index locates the generated schema-backed payload.
+        # Find the embedded JSON record.
         start_index: int = markdown.find(start_marker)
         if start_index < 0:
             raise AdrMarkdownError("Projection missing ADR record JSON fence")
-        # JSON start skips the projection fence marker.
+        # Skip the fence marker itself.
         json_start: int = start_index + len(start_marker)
-        # End index terminates the embedded JSON payload.
+        # Find the closing fence.
         end_index: int = markdown.find(end_marker, json_start)
         if end_index < 0:
             raise AdrMarkdownError("Projection ADR record JSON fence is unclosed")
         import json
-        # JSON payload is parsed only after fence boundaries are known.
+        # Parse only the text inside the fence.
         payload: object = json.loads(markdown[json_start:end_index].strip())
         if not isinstance(payload, dict):
             raise AdrMarkdownError("Projection ADR record payload must be an object")
         return payload
 
     def title(self, markdown: str) -> str:
-        """Extract the ADR title without timestamp prefix.
+        """Return the ADR title from the top heading.
 
         Args:
             markdown: Source Markdown text.
 
         Returns:
-            Schema title.
+            ADR title.
         """
-        # First line must be the one source title heading.
+        # First line must be the source title heading.
         first_line: str = markdown.splitlines()[0]
         if not first_line.startswith("# ADR "):
             raise AdrMarkdownError("Source ADR missing title heading")
         return first_line.split(": ", maxsplit=1)[1].strip()
 
     def sections(self, markdown: str) -> dict[str, str]:
-        """Split Markdown into normalized second-level sections.
+        """Split Markdown into `##` sections.
 
         Args:
             markdown: Source Markdown text.
 
         Returns:
-            Mapping from normalized section key to body.
+            Section name to section body.
         """
-        # Lines preserve section boundaries for fixture parsing.
+        # Work line-by-line so headings define section boundaries.
         lines: list[str] = markdown.splitlines()
-        # Parsed section bodies are accumulated under normalized headings.
+        # Sections are collected under their normalized heading names.
         sections: dict[str, list[str]] = {}
-        # Current key tracks which second-level section receives following lines.
+        # Current key names the section receiving following lines.
         current_key: str | None = None
         line: str
         for line in lines[1:]:
-            # Match identifies the next second-level section boundary.
-            match: re.Match[str] | None = SECTION_HEADING_PATTERN.match(line)
+            # A `##` line starts a new section.
+            match: re.Match[str] | None = self.section_heading_pattern().match(line)
             if match is not None:
                 current_key = self.section_key(match.group("heading"))
                 sections[current_key] = []
                 continue
             if current_key is not None:
                 sections[current_key].append(line)
-        # Normalized sections collapse line arrays into comparable body text.
+        # Join each section body back into text.
         normalized: dict[str, str] = {key: "\n".join(value).strip() for key, value in sections.items()}
-        # Missing section names produce an explicit fixture mapping failure.
-        missing: list[str] = [key for key in REQUIRED_SECTION_KEYS if key not in normalized]
+        # Fail early if the source lacks a required section.
+        missing: list[str] = [key for key in self.required_section_keys() if key not in normalized]
         if missing:
             raise AdrMarkdownError(f"Source ADR missing sections: {', '.join(missing)}")
         return normalized
 
+    def section_heading_pattern(self) -> Pattern[str]:
+        """Return the pattern for `##` headings.
+
+        Returns:
+            Compiled heading pattern.
+        """
+        return re.compile(r"^## (?P<heading>.+)$")
+
+    def required_section_keys(self) -> tuple[str, ...]:
+        """Return Markdown sections required for the source ADR.
+
+        Returns:
+            Required section names.
+        """
+        # The schema defines required ADR fields. Title comes from the H1 heading.
+        required_fields: tuple[str, ...] = self.required_schema_fields()
+        # The schema-required fields map to same-named Markdown sections, except
+        # for a few legacy source headings handled by `section_key_for_schema_field`.
+        # Links is optional in the schema but preserved because this source file has it.
+        source_fields: list[str] = [field_name for field_name in required_fields if field_name != "title"]
+        if "links" not in source_fields:
+            source_fields.append("links")
+        return tuple(self.section_key_for_schema_field(field_name) for field_name in source_fields)
+
+    def required_schema_fields(self) -> tuple[str, ...]:
+        """Return required top-level fields from `adr.schema.json`.
+
+        Returns:
+            Required schema field names.
+        """
+        # Load the schema instead of duplicating its required field list here.
+        schema: JsonObject = self.schema_registry.load_schema("adr.schema.json")
+        # Validate the raw `required` value before using it.
+        required_value: object = schema.get("required", [])
+        if not isinstance(required_value, list):
+            raise AdrMarkdownError("ADR schema required fields must be an array")
+        # Copy field names into a typed list.
+        required_fields: list[str] = []
+        field_name: object
+        for field_name in required_value:
+            if not isinstance(field_name, str):
+                raise AdrMarkdownError("ADR schema required field names must be strings")
+            required_fields.append(field_name)
+        return tuple(required_fields)
+
+    def section_key_for_schema_field(self, field_name: str) -> str:
+        """Return the Markdown section name for a schema field.
+
+        Args:
+            field_name: Top-level schema field name.
+
+        Returns:
+            Markdown section name.
+        """
+        # These source headings use hyphens instead of underscores.
+        legacy_hyphen_fields: set[str] = {"architecture_spec", "acceptance_criteria", "implementation_brief"}
+        if field_name in legacy_hyphen_fields:
+            return field_name.replace("_", "-")
+        return field_name
+
     def section_key(self, heading: str) -> str:
-        """Normalize a Markdown heading to a fixture section key.
+        """Normalize a Markdown heading.
 
         Args:
             heading: Markdown heading text.
 
         Returns:
-            Normalized section key.
+            Normalized section name.
         """
         return heading.strip().lower().replace(" ", "_").replace("-", "-")
 
     def status(self, body: str) -> str:
-        """Extract lifecycle status from the status section body.
+        """Return the value from the Status section.
 
         Args:
             body: Status section body.
 
         Returns:
-            Schema status.
+            ADR status.
         """
-        # First non-empty line is the lifecycle status value.
+        # First non-empty line is the status value.
         lines: list[str] = [line.strip() for line in body.splitlines() if line.strip()]
         if not lines:
             raise AdrMarkdownError("Status section is empty")
         return lines[0]
 
     def context(self, body: str) -> JsonObject:
-        """Map source context lines to schema context.
+        """Read the Context section.
 
         Args:
             body: Context section body.
 
         Returns:
-            Schema context object.
+            Context JSON object.
         """
-        # Parsed key-value metadata precedes context prose.
+        # The source stores context values as `Key: value` lines.
         values: dict[str, str] = self.key_values(body)
         return {
             "origin": values["Origin"],
@@ -194,37 +265,20 @@ class AdrMarkdownMapper:
             "acting_as": values["Acting-As"],
             "scope": values["Scope"],
             "repository": values["Repository"],
-            "delegated_operator": "HERMES",
+            "delegated_operator": self.source_config.delegated_operator,
             "architecture_domain": values["Architecture-Domain"],
         }
 
-    def routing(self, body: str) -> JsonObject:
-        """Map source routing lines to schema routing.
-
-        Args:
-            body: Routing section body.
-
-        Returns:
-            Schema routing object.
-        """
-        # Routing key names are title-cased in the source fixture.
-        values: dict[str, str] = self.key_values(body)
-        # Next phase is normalized from legacy wording into schema enum wording.
-        next_phase: str = values["Next phase"].lower()
-        if next_phase == "proposed":
-            next_phase = "proposal"
-        return {"owner": values["Owner"], "next_phase": next_phase, "notes": values["Notes"]}
-
     def links(self, body: str) -> JsonObject:
-        """Map source links lines to schema links.
+        """Read the Links section.
 
         Args:
             body: Links section body.
 
         Returns:
-            Schema links object.
+            Links JSON object.
         """
-        # Link values may use textual None in legacy Markdown.
+        # The source uses the string `None` for empty links.
         values: dict[str, str] = self.key_values(body)
         return {
             "back_to": values["back_to"],
@@ -233,19 +287,19 @@ class AdrMarkdownMapper:
         }
 
     def key_values(self, body: str) -> dict[str, str]:
-        """Parse colon key-value lines from a section body.
+        """Parse `Key: value` lines.
 
         Args:
             body: Section body.
 
         Returns:
-            Parsed key-value mapping.
+            Key-value pairs.
         """
-        # Parsed key-value pairs ignore prose and bullet lines.
+        # Ignore prose and bullet lines that are not key-value pairs.
         values: dict[str, str] = {}
         line: str
         for line in body.splitlines():
-            # Bullet prefix is presentation-only for key-value sections.
+            # Some key-value lines are written as bullets.
             cleaned_line: str = line.removeprefix("- ")
             if ":" not in cleaned_line:
                 continue
@@ -257,7 +311,7 @@ class AdrMarkdownMapper:
         return values
 
     def bullets(self, body: str) -> list[str]:
-        """Extract Markdown bullet text from a section body.
+        """Return bullet text from a section.
 
         Args:
             body: Section body.
@@ -265,7 +319,7 @@ class AdrMarkdownMapper:
         Returns:
             Bullet text values.
         """
-        # Bullets carry list-shaped schema values.
+        # Bullet sections become JSON arrays.
         values: list[str] = []
         line: str
         for line in body.splitlines():
@@ -276,7 +330,7 @@ class AdrMarkdownMapper:
         return values
 
     def none_value(self, value: str) -> str | None:
-        """Convert legacy textual None to JSON null.
+        """Convert textual `None` to JSON null.
 
         Args:
             value: Source value.
@@ -288,23 +342,23 @@ class AdrMarkdownMapper:
             return None
         return value
 
-    def mapping_evidence(self, sections: dict[str, str]) -> JsonObject:
-        """Build copied, inferred, and normalized mapping evidence.
+    def source_mapping_notes(self, sections: dict[str, str]) -> JsonObject:
+        """Return notes about how the source file became JSON.
 
         Args:
             sections: Parsed source sections.
 
         Returns:
-            Mapping evidence object.
+            Source conversion notes.
         """
         return {
             "status": "pilot-derived-non-authoritative",
-            "source_path": "docs/adr/adr.json-database-for-adr-storage.draft.md",
-            "source_filename_status_suffix": ".draft",
+            "source_path": self.source_config.source_path,
+            "source_filename_status_suffix": self.source_config.legacy_filename_status_suffix,
             "canonical_identity_rule": "status-free id and slug; lifecycle status lives in record content",
-            "canonical_id": "adr.json-database-for-adr-storage",
-            "canonical_slug": "json-database-for-adr-storage",
-            "record_status": self.status(sections["status"]),
+            "canonical_id": self.source_config.record_id,
+            "canonical_slug": self.source_config.slug,
+            "record_status": self.status(sections[self.section_key_for_schema_field("status")]),
             "copied_fields": [
                 "title",
                 "status",
@@ -322,17 +376,17 @@ class AdrMarkdownMapper:
                 "resolved_open_questions",
                 "non_goals",
                 "validation_expectations",
-                "routing.owner",
-                "routing.notes",
                 "links",
             ],
             "inferred_fields": {"context.delegated_operator": "HERMES"},
-            "normalized_fields": {"routing.next_phase": "proposed -> proposal"},
-            "preserved_outside_schema": {"source_date": "20260702.121432Z"},
+            "normalized_fields": {},
+            "preserved_outside_schema": {
+                "source_date": self.source_config.source_date,
+                "routing_section": sections.get("routing", ""),
+            },
         }
 
 
-@dataclass(frozen=True, slots=True)
 class AdrProjectionRenderer:
     """Render deterministic non-authoritative Markdown projections."""
 
@@ -395,7 +449,6 @@ class AdrProjectionRenderer:
         lines.extend(self.render_list("resolved_open_questions", record["resolved_open_questions"]))
         lines.extend(self.render_list("non_goals", record["non_goals"]))
         lines.extend(self.render_list("validation_expectations", record["validation_expectations"]))
-        lines.extend(["## routing", "", str(record["routing"]), ""])
         lines.extend(["## links", "", str(record["links"]), ""])
         return lines
 

@@ -2,8 +2,8 @@
 {
   "title": "Athena active work",
   "artifact_type": "workspace-active-priorities",
-  "status": "adr-json-database-pilot-as-built-reconciled",
-  "datetime": "20260711.040952Z",
+  "status": "adr-schema-routing-removed-yagni-conformance-next",
+  "datetime": "20260711.060447Z",
   "acting_as": "ATHENA",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/athena/",
@@ -12,7 +12,12 @@
     "docs/architecture/architecture.json-adr-storage-topology.md",
     "docs/implementation/adr-json-database-one-adr-pilot.20260711.035759.md",
     "dev/adr-json-database-one-adr-pilot/manifest.json",
-    "src/python/projectkoios/bootstrap/control_surface/adr/"
+    "src/python/projectkoios/bootstrap/control_surface/adr/",
+    "docs/plans/implementation-brief.20260711.045012_json-document-database-separation.md",
+    "docs/plans/implementation-plan.20260711.050606_json-document-database-separation.md",
+    "docs/implementation/json-document-database-separation.20260711.051951.md",
+    "dev/adr-json-database-one-adr-pilot/document-store-replacement-evidence.json",
+    "src/python/projectkoios/bootstrap/control_surface/document_store/"
   ]
 }
 ```
@@ -21,9 +26,9 @@
 
 ## Current priority stack
 
-1. User/Hermes review of the pilot as-built architecture in `docs/architecture/architecture.json-adr-storage-topology.md`.
-2. Decide whether ATHENA should revise, replace, promote, or supersede `docs/adr/adr.json-database-for-adr-storage.draft.md` based on pilot evidence.
-3. If approved, prepare the next architecture/ADR slice for broader ADR storage authority, identity policy, timestamp schema, projection policy, or repository-level config.
+1. USER/HERMES review of VULCAN implementation evidence and architecture as-built reconciliation.
+2. Completed slice: generic JSON document database substrate separated from ADR-specific code; SQLite as first backend; one-ADR pilot evidence only; no backward compatibility shim; enumerated semantic values as enums/types; no dangling semantic constants reported.
+3. If accepted, next slice should be YAGNI ADR conformance to the updated schema without `routing`, not schema/lifecycle/workflow redesign.
 
 ## Recently completed
 
@@ -47,11 +52,11 @@
 
 ## Waiting on
 
-- User/Hermes direction for next architecture/ADR action.
+- USER/HERMES acceptance or revision request for the implementation evidence and architecture reconciliation.
 
 ## Recommended next action
 
-Review the pilot as-built architecture and decide whether to start a controlling ADR update for ADR storage authority.
+Review `docs/implementation/json-document-database-separation.20260711.051951.md`, `dev/adr-json-database-one-adr-pilot/document-store-migration-evidence.json`, the updated architecture as-built section, and `docs/schemas/adr.schema.json` routing removal. If accepted, proceed toward a YAGNI conformance slice that pushes ADRs toward the updated schema shape without redesigning lifecycle, workflow state, or storage authority.
 
 ## Do not do yet
 
@@ -60,7 +65,8 @@ Review the pilot as-built architecture and decide whether to start a controlling
 - Treat `dev/` pilot artifacts as accepted ADR authority.
 - Change `docs/adr/` source files based on generated projection without explicit approval.
 - Expand the storage adapter into a generic database framework before a follow-up architecture slice.
+- Redesign schema, lifecycle, routing, timestamp taxonomy, naming machinery, or workflow state before existing-schema conformance work demonstrates concrete need.
 
 ## Exit criteria
 
-The one-ADR pilot is implemented, validated, and reconciled into the architecture document as pilot as-built evidence. Durable ADR authority remains unresolved pending user/Hermes direction.
+The one-ADR pilot and the JSON document database separation slice are implemented, VULCAN-validated, and reconciled into the architecture document as as-built evidence. Routing has been removed from the ADR schema by user direction because it is not required for the Petri-net workflow. Durable ADR/database authority remains unresolved. KOIOS/user YAGNI direction points next toward updated-schema ADR conformance with sidecar provenance, pending explicit user/Hermes acceptance.

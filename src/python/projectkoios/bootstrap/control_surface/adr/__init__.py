@@ -1,22 +1,29 @@
-from projectkoios.bootstrap.control_surface.adr.equality import AdrSemanticComparer, AdrSemanticEqualityError
-from projectkoios.bootstrap.control_surface.adr.markdown import AdrMarkdownError, AdrMarkdownMapper, AdrProjectionRenderer
-from projectkoios.bootstrap.control_surface.adr.models import PilotPaths, PilotResult
-from projectkoios.bootstrap.control_surface.adr.pilot import AdrJsonDatabasePilot, run_pilot
-from projectkoios.bootstrap.control_surface.adr.storage import AdrStorageAdapter, MemoryAdrStorageAdapter, SqliteAdrStorageAdapter
+from projectkoios.bootstrap.control_surface.adr.evidence import AdrPilotEvidenceBuilder
+from projectkoios.bootstrap.control_surface.adr.markdown import AdrMarkdownError, AdrMarkdownRecordParser, AdrProjectionRenderer
+from projectkoios.bootstrap.control_surface.adr.models import (
+    ArtifactDisposition,
+    PilotPaths,
+    PilotResult,
+    ReplacementAction,
+    SourceOfTruthMode,
+)
+from projectkoios.bootstrap.control_surface.adr.pilot import AdrStoragePilot, run_pilot
+from projectkoios.bootstrap.control_surface.adr.storage import AdrStorageAdapter, DocumentStoreAdrStorageAdapter
 from projectkoios.bootstrap.control_surface.adr.validation import AdrRecordValidator
 
 __all__ = [
-    "AdrJsonDatabasePilot",
+    "AdrStoragePilot",
     "AdrMarkdownError",
-    "AdrMarkdownMapper",
+    "AdrMarkdownRecordParser",
     "AdrProjectionRenderer",
     "AdrRecordValidator",
-    "AdrSemanticComparer",
-    "AdrSemanticEqualityError",
+    "AdrPilotEvidenceBuilder",
     "AdrStorageAdapter",
-    "MemoryAdrStorageAdapter",
+    "ArtifactDisposition",
+    "DocumentStoreAdrStorageAdapter",
     "PilotPaths",
     "PilotResult",
-    "SqliteAdrStorageAdapter",
+    "ReplacementAction",
+    "SourceOfTruthMode",
     "run_pilot",
 ]

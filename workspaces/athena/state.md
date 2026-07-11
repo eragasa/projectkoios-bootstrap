@@ -2,14 +2,14 @@
 {
   "title": "Athena workspace state",
   "artifact_type": "workspace-state",
-  "status": "adr-json-database-pilot-as-built-reconciled",
-  "datetime": "20260711.040952Z",
+  "status": "adr-schema-routing-removed-yagni-conformance-next",
+  "datetime": "20260711.060447Z",
   "acting_as": "ATHENA",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/athena/",
   "document_domain": "architecture, ADRs, specs, acceptance criteria, implementation briefs, conformance reviews",
   "control_files": ["state.md", "active.md"],
-  "next_owner": "USER_OR_HERMES",
+  "next_owner": "USER",
   "blockers": []
 }
 ```
@@ -49,20 +49,40 @@
   - `git diff --check` => clean
   - no `.sqlite`/`.db` file found under `dev/adr-json-database-one-adr-pilot/`
 - ATHENA revised `docs/architecture/architecture.json-adr-storage-topology.md` into pilot as-built state, mapping delivered evidence back to architecture invariants and residual gaps.
+- HERMES returned approve-with-watchpoints on the cleanup and recommended ATHENA proceed to draft the bounded implementation brief for storage support of naming/lifecycle metadata, while deferring broad storage-authority revision/promotion unless the user explicitly changes authority now.
+- KOIOS returned approve-with-watchpoints on the cleaned-up storage topology architecture, confirming provenance concerns were preserved in architectural form and the cleanup is provenance-safer than the prior comment-heavy version.
+- VULCAN returned approve-with-watchpoints, confirming the cleanup is implementable from the architecture plus a bounded brief without VULCAN inventing policy.
+- User redirected the next slice to separation of concerns: a generalized JSON document database, initially piloted as SQLite with JSON blobs/payloads, with ADR concerns separated by documents and likewise separated in code.
+- ATHENA updated `docs/architecture/architecture.json-adr-storage-topology.md` to make the next slice JSON document database separation of concerns and drafted `docs/plans/implementation-brief.20260711.045012_json-document-database-separation.md`.
+- User/HERMES corrected that backward compatibility is not required for this slice: nothing is backcompat. ATHENA updated the architecture and brief to require explicit intentional replacement behavior and evidence instead of compatibility support.
+- User directed removal of resolution-table rows already resolved into the main architecture document; ATHENA pruned the table to only remaining VULCAN planning decisions.
+- User directed further pruning of resolved/historical architecture content; ATHENA removed dated update callouts, collapsed pilot manifest details and authority-model background, replaced general blueprint lifecycle text with a pointer to `docs/meta-harness.md`, removed the historical pilot interaction gate, and removed stale naming/lifecycle open-question rows from the active architecture surface.
+- User directed updating the next implementation slice; ATHENA reduced the architecture next-slice section to the active JSON document database separation handoff and marked the implementation brief VULCAN planning-ready with no backward compatibility requirement.
+- VULCAN produced `docs/plans/implementation-plan.20260711.050606_json-document-database-separation.md` and paused before coding. The plan proposes generic document-store package `src/python/projectkoios/bootstrap/control_surface/document_store/`, ADR wrapper/delegation under `src/python/projectkoios/bootstrap/control_surface/adr/`, generic SQLite table `json_documents(document_id, document_kind, content_hash, payload_json, created_at, updated_at)`, removal of ADR-specific query columns from the generic table, and pilot-local replacement evidence `dev/adr-json-database-one-adr-pilot/document-store-replacement-evidence.json`.
+- User added implementation constraints: enumerated semantic types must be enumerated, and there must be no dangling constant variables. ATHENA updated the architecture and brief and requested VULCAN revise the paused plan before approval/coding.
+- VULCAN revised `docs/plans/implementation-plan.20260711.050606_json-document-database-separation.md` and remains paused. The plan now uses `DocumentKind` as an explicit enum/type boundary, adds an enumerated semantic values/constants policy, forbids dangling semantic constants such as `DOCUMENT_KIND_ADR = "adr"`, updates examples to `list_by_kind(DocumentKind.ADR)`, and adds evidence/tests/pause triggers for enum/type-owned or schema-owned semantic values.
+- USER approved the revised VULCAN implementation plan for coding.
+- VULCAN implemented and validated the approved JSON document database separation slice, reporting `docs/implementation/json-document-database-separation.20260711.051951.md` and `docs/AAR/aar.20260711.051951_json-document-database-separation.md`.
+- VULCAN validation: pytest `26 passed`, mypy success for 16 source files, python policy `0 finding(s)`, `git diff --check` clean, no `.sqlite`/`.db` under pilot directory, and no `docs/adr` source changes.
+- ATHENA reconciled the implementation report into `docs/architecture/architecture.json-adr-storage-topology.md` as completed separation-slice as-built evidence; ATHENA has not rerun VULCAN's validation commands in this reconciliation pass.
+- KOIOS updated `docs/architecture/architecture.json-adr-storage-topology.md` per user YAGNI direction: residual gaps are observations, not authorization for schema/workflow expansion; the recommended next step is review of implementation evidence followed by a YAGNI conformance slice that pushes ADRs toward the existing `docs/schemas/adr.schema.json` shape; source date and extra metadata remain in sidecar evidence unless repeated conformance work proves that insufficient.
+- User clarified routing is not required for the Petri-net workflow and directed removal from the existing ADR schema. ATHENA removed `routing` from `docs/schemas/adr.schema.json` required fields/properties/defs and updated architecture/state to treat conformance as targeting the schema without routing.
 
 ## Open questions
 
-- Whether to promote, revise, or supersede `docs/adr/adr.json-database-for-adr-storage.draft.md` based on pilot evidence.
-- Long-term ADR identity policy: topic-stable, event/timestamp-stable, or another scheme.
-- Whether `docs/schemas/adr.schema.json` should include creation date/lifecycle timestamps.
-- Whether future Markdown projections should be human-readable-only, JSON-embedded, or both.
-- Whether/when repository-level reusable ADR storage config should replace per-pilot manifest/config.
-- Whether database-authoritative repository policy should be pursued in a follow-up ADR.
+- Whether USER/HERMES accepts the VULCAN implementation evidence and ATHENA as-built reconciliation.
+- Which ADRs or ADR-like documents should be targeted first for existing-schema conformance.
+- Which source/projection metadata must remain in sidecar evidence while the existing ADR schema is used unchanged.
+- Which recurring schema discomforts, if any, become concrete enough to justify later schema revision after conformance work.
+- Whether future Markdown projections should be human-readable-only, JSON-embedded, or both, after conformance pressure exists.
+- Whether/when repository-level reusable ADR storage config or database-authoritative repository policy should be pursued in a later follow-up ADR.
 
 ## Next transition
 
-- Owner: USER_OR_HERMES.
-- Recommended next state: review pilot as-built architecture and decide whether ATHENA should draft/revise/supersede the controlling ADR for ADR storage authority.
+- Owner: USER.
+- Recommended next state: USER/HERMES review of `docs/implementation/json-document-database-separation.20260711.051951.md`, `docs/architecture/architecture.json-adr-storage-topology.md`, the pilot replacement evidence, and the ADR schema routing removal. If accepted, the next architecture/implementation slice should be YAGNI ADR conformance to the updated schema, not schema redesign, naming machinery, workflow-state modeling, reusable config, or storage-authority promotion.
+- Separation brief watchpoints remain satisfied by VULCAN report unless review finds otherwise: generic JSON document database substrate stores opaque JSON documents with generic metadata only; SQLite remains behind the adapter; ADR logic stays in ADR-specific code; replacement evidence is explicit; no bulk ADR migration, reusable repo config, or database-authority promotion.
+- YAGNI conformance watchpoints: use updated `docs/schemas/adr.schema.json` without `routing`; preserve sidecar provenance for source/projection metadata; prefer general-to-specific identifiers only when new identifiers are actually produced; defer workflow-system assumptions and schema/lifecycle expansion until repeated conformance work creates concrete pressure.
 
 ## Startup checklist
 

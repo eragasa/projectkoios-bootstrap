@@ -34,11 +34,6 @@
     "Should promoted ADRs still have Markdown-first review files?",
     "Should the repository migrate existing ADR drafts into JSON records later?"
   ],
-  "routing": {
-    "next_phase": "proposal",
-    "notes": "Storage-authority decision candidate for the ADR surface.",
-    "owner": "Athena"
-  },
   "slug": "json-database-for-adr-storage",
   "status": "draft",
   "title": "JSON ADR Storage Topology",

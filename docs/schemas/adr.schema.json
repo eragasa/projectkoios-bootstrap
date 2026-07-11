@@ -16,8 +16,7 @@
     "implementation_brief",
     "resolved_open_questions",
     "non_goals",
-    "validation_expectations",
-    "routing"
+    "validation_expectations"
   ],
   "$defs": {
     "Status": {
@@ -77,38 +76,6 @@
         },
         "architecture_domain": {
           "$ref": "#/$defs/ArchitectureDomain"
-        }
-      }
-    },
-    "Routing": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "owner",
-        "next_phase"
-      ],
-      "properties": {
-        "owner": {
-          "type": "string",
-          "enum": [
-            "Hermes",
-            "Athena",
-            "Vulcan",
-            "Koios"
-          ]
-        },
-        "next_phase": {
-          "type": "string",
-          "enum": [
-            "proposal",
-            "draft",
-            "accepted",
-            "active",
-            "superseded"
-          ]
-        },
-        "notes": {
-          "type": "string"
         }
       }
     },
@@ -246,9 +213,6 @@
         "minLength": 1
       },
       "minItems": 1
-    },
-    "routing": {
-      "$ref": "#/$defs/Routing"
     },
     "links": {
       "$ref": "#/$defs/Links"

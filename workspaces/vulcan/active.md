@@ -2,8 +2,8 @@
 {
   "title": "Vulcan active work",
   "artifact_type": "workspace-active-priorities",
-  "status": "adr-json-database-pilot-control-surface-package-validated",
-  "datetime": "20260711.040819Z",
+  "status": "json-document-database-separation-validated",
+  "datetime": "20260711.051951Z",
   "acting_as": "VULCAN",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/vulcan/",
@@ -11,16 +11,19 @@
   "priority_count": 3,
   "working_directory": "working/",
   "active_working_items": [
+    "src/python/projectkoios/bootstrap/control_surface/documents/",
+    "src/python/projectkoios/bootstrap/control_surface/storage/",
     "src/python/projectkoios/bootstrap/control_surface/adr/",
+    "tests/projectkoios/bootstrap/control_surface_storage/",
     "tests/projectkoios/bootstrap/control_surface_adr/",
     "dev/adr-json-database-one-adr-pilot/",
-    "docs/implementation/adr-json-database-one-adr-pilot.20260711.035759.md",
-    "docs/AAR/aar.20260711.035759_adr-json-database-one-adr-pilot.md"
+    "docs/implementation/json-document-database-separation.20260711.051951.md",
+    "docs/AAR/aar.20260711.051951_json-document-database-separation.md"
   ],
   "scratch_directory": "scratch/",
-  "source_brief": "docs/plans/adr-json-database-one-adr-pilot.implementation-brief.20260709.014124.md",
-  "implementation_plan": "docs/plans/implementation-plan.20260711.033558_adr-json-database-one-adr-pilot.md",
-  "latest_report": "docs/implementation/adr-json-database-one-adr-pilot.20260711.035759.md"
+  "source_brief": "docs/plans/implementation-brief.20260711.045012_json-document-database-separation.md",
+  "implementation_plan": "docs/plans/implementation-plan.20260711.050606_json-document-database-separation.md",
+  "latest_report": "docs/implementation/json-document-database-separation.20260711.051951.md"
 }
 ```
 
@@ -28,51 +31,52 @@
 
 ## Current priority stack
 
-1. Await user/Hermes decision on ADR revision/promotion/supersession, next architecture slice, or packaging direction.
-2. Preserve KOIOS terminology caveat: this was a SQLite operational adapter storing schema-backed ADR JSON records and exporting a JSON checkpoint, not a persistent/repository-authoritative JSON database service.
-3. Keep the pilot bounded to one ADR and do not overwrite `docs/adr/adr.json-database-for-adr-storage.draft.md` unless explicitly authorized.
+1. Await ATHENA/user/Hermes review of the validated JSON document database separation slice.
+2. Preserve the explicit boundary: generic document store owns opaque JSON payload persistence; ADR layer owns ADR schema, projection, naming/lifecycle metadata, and evidence.
+3. Keep the pilot bounded to one ADR; do not bulk migrate, promote database authority, or add reusable repo-level config without a new brief.
 
 ## Latest working material
 
-- Architecture blueprint: `docs/architecture/architecture.json-adr-storage-topology.md`.
-- Source brief: `docs/plans/adr-json-database-one-adr-pilot.implementation-brief.20260709.014124.md`.
-- Approved implementation plan: `docs/plans/implementation-plan.20260711.033558_adr-json-database-one-adr-pilot.md`.
-- Implementation report: `docs/implementation/adr-json-database-one-adr-pilot.20260711.035759.md`.
-- AAR: `docs/AAR/aar.20260711.035759_adr-json-database-one-adr-pilot.md`.
-- Pilot code: `src/python/projectkoios/bootstrap/control_surface/adr/`.
-- Pilot tests: `tests/projectkoios/bootstrap/control_surface_adr/`.
+- Architecture surface: `docs/architecture/architecture.json-adr-storage-topology.md`.
+- Source brief: `docs/plans/implementation-brief.20260711.045012_json-document-database-separation.md`.
+- Approved implementation plan: `docs/plans/implementation-plan.20260711.050606_json-document-database-separation.md`.
+- Implementation report: `docs/implementation/json-document-database-separation.20260711.051951.md`.
+- AAR: `docs/AAR/aar.20260711.051951_json-document-database-separation.md`.
+- Generic document/storage code: `src/python/projectkoios/bootstrap/control_surface/documents/`, `src/python/projectkoios/bootstrap/control_surface/storage/`.
+- ADR wrapper/code: `src/python/projectkoios/bootstrap/control_surface/adr/`.
+- Tests: `tests/projectkoios/bootstrap/control_surface_storage/`, `tests/projectkoios/bootstrap/control_surface_adr/`.
 - Pilot evidence: `dev/adr-json-database-one-adr-pilot/`.
 
 ## Latest validation evidence
 
-- `uv run pytest tests/projectkoios/bootstrap/control_surface_adr tests/projectkoios/bootstrap/schema -q` => `24 passed in 0.17s`.
-- `uv run mypy src/python/projectkoios/bootstrap/control_surface/adr tests/projectkoios/bootstrap/control_surface_adr` => `Success: no issues found in 10 source files`.
-- `uv run projectkoios bootstrap validate-python-policy src/python/projectkoios/bootstrap/control_surface/adr tests/projectkoios/bootstrap/control_surface_adr` => `summary: 0 finding(s), 10 file(s)`.
+- `uv run pytest tests/projectkoios/bootstrap/control_surface_storage tests/projectkoios/bootstrap/control_surface_adr tests/projectkoios/bootstrap/schema -q` => `29 passed in 0.17s`.
+- `uv run mypy src/python/projectkoios/bootstrap/control_surface/documents src/python/projectkoios/bootstrap/control_surface/storage src/python/projectkoios/bootstrap/control_surface/adr tests/projectkoios/bootstrap/control_surface_storage tests/projectkoios/bootstrap/control_surface_adr` => `Success: no issues found in 15 source files`.
+- `uv run projectkoios bootstrap validate-python-policy src/python/projectkoios/bootstrap/control_surface/documents src/python/projectkoios/bootstrap/control_surface/storage src/python/projectkoios/bootstrap/control_surface/adr tests/projectkoios/bootstrap/control_surface_storage tests/projectkoios/bootstrap/control_surface_adr` => `summary: 0 finding(s), 15 file(s)`.
 - `git diff --check` => clean.
 - `find dev/adr-json-database-one-adr-pilot -type f \( -name '*.sqlite' -o -name '*.db' \) -print` => no output.
+- `git status --short -- docs/adr` => no output.
 
 ## Implementation notes
 
-- Implemented database-operational / JSON-checkpointed pilot mode.
-- Implemented status-free canonical identity: `id = adr.json-database-for-adr-storage`, `slug = json-database-for-adr-storage`, and `status = draft` inside record content.
-- Implemented committed pilot-local manifest/config and evidence index at `dev/adr-json-database-one-adr-pilot/manifest.json`.
-- Implemented narrow storage adapter boundary; SQLite is the selected pilot adapter implementation and not a direct dependency for ADR mapping, validation, projection, or equality logic.
-- Mutable SQLite `.sqlite`/`.db` files are generated/local only and are not committed.
-- Source `.draft.md` filename is preserved as legacy/source evidence in mapping and manifest.
-- KOIOS terminology update added to the implementation report and AAR.
-- Package-boundary update implemented after user approval: code now lives under `projectkoios.bootstrap.control_surface.adr`.
+- Implemented `DocumentType.ADR` rather than a dangling document-kind constant.
+- Implemented enum/type ownership for introduced semantic evidence values.
+- Removed duplicate hashing helper modules and encapsulated JSON payload serialization/hash behavior on `DocumentRecord`.
+- Replaced Markdown parser constants with schema-derived section requirements and parser-owned legacy heading translation.
+- Replaced old ADR-specific `adr_records` DDL with generic `json_documents` DDL.
+- Removed ADR-specific query columns from the generic table.
+- Generated SQLite DDL from `DocumentRecord` through `DocumentStoreSqlSchema`.
+- Updated ADR parser/checkpoint behavior for the schema change that removed `routing`; source routing text is mapping evidence only.
+- Replaced `list_by_status` evidence with `list_by_kind(DocumentType.ADR)` evidence.
+- Preserved source `.draft.md` path/hash, old pilot identity, and mapping provenance in migration evidence.
 
 ## Ignore for now
 
-- KOIOS ADR-lifecycle provenance-audit workspace artifact unless explicitly requested.
-- Graphify ingestion daemon changes.
-- Vault/PDF/source/evidence ingestion.
-- `src/python/ingestion/`, `projectkoios.ingestion`, or generic ingestion framework.
-- Product-facing template architecture.
-- Broad migration of all templates.
-- Runtime CLI integration.
-- ADR lifecycle/status changes.
+- Bulk ADR migration.
+- Repository-level reusable ADR storage config.
+- Database-authoritative repository policy.
+- ADR naming/lifecycle policy changes.
+- Product-facing document database architecture.
 
 ## Next expected artifact
 
-- User/Hermes decision on ADR revision/promotion/supersession, next architecture slice, or packaging direction.
+- ATHENA as-built review or user/Hermes decision on next slice.

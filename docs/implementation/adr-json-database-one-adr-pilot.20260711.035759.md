@@ -43,7 +43,7 @@ The implementation follows the approved database-operational / JSON-checkpointed
 
 ### Tests
 
-- `tests/projectkoios/bootstrap/control_surface_adr/test__AdrJsonDatabasePilot__run.py`
+- `tests/projectkoios/bootstrap/control_surface_adr/test__AdrStoragePilot__run.py`
 
 ### Pilot evidence artifacts
 
@@ -75,7 +75,7 @@ The implementation follows the approved database-operational / JSON-checkpointed
 | Source hash preservation | Manifest records source content hash `b7e48d5b2a07c14704689b4dcae738c8f21731e6d20e8d63d8eab33c75819d87`. |
 | Source date preservation despite schema gap | `mapping.json` preserves `source_date = 20260702.121432Z` outside the plain ADR schema. |
 | Schema failure distinguishability | `mapping.json` records an invalid status validation error for schema failure evidence. |
-| Semantic equality | Tests and pilot compare source-derived JSON, adapter-exported JSON, and projection-derived JSON under `AdrSemanticComparer`. |
+| Semantic equality | Tests and pilot compare source-derived JSON, adapter-exported JSON, and projection-derived JSON under `AdrRecordComparer`. |
 
 ## Mapping notes
 
@@ -133,7 +133,7 @@ KOIOS found no blocking provenance gap in the inspected artifacts. The naming/ar
 
 After KOIOS comment and user approval, VULCAN moved the pilot implementation from `projectkoios.bootstrap.adr_records` to `projectkoios.bootstrap.control_surface.adr` and moved tests from `tests/projectkoios/bootstrap/adr_records/` to `tests/projectkoios/bootstrap/control_surface_adr/`.
 
-The pilot manifest/projection generation method now records `projectkoios.bootstrap.control_surface.adr.pilot.AdrJsonDatabasePilot.run`.
+The pilot manifest/projection generation method now records `projectkoios.bootstrap.control_surface.adr.pilot.AdrStoragePilot.run`.
 
 ## Residual risks and follow-up questions for ATHENA
 

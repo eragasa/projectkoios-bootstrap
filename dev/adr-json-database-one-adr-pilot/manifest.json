@@ -1,8 +1,8 @@
 {
   "architecture": {
     "blueprint": "docs/architecture/architecture.json-adr-storage-topology.md",
-    "brief": "docs/plans/adr-json-database-one-adr-pilot.implementation-brief.20260709.014124.md",
-    "plan": "docs/plans/implementation-plan.20260711.033558_adr-json-database-one-adr-pilot.md"
+    "brief": "docs/plans/implementation-brief.20260711.045012_json-document-database-separation.md",
+    "plan": "docs/plans/implementation-plan.20260711.050606_json-document-database-separation.md"
   },
   "authority_mode": "database-operational/json-checkpointed",
   "canonical_record": {
@@ -12,17 +12,35 @@
     "status_location_rule": "Lifecycle status belongs in record content, not filename or record identity."
   },
   "conflict_rule": "Source Markdown remains migration evidence; SQLite is local operational state behind the adapter; JSON checkpoint is committed review checkpoint; generated Markdown projection is non-authoritative pilot evidence.",
+  "document_store": {
+    "document_kind_enum": "DocumentType.ADR",
+    "document_kind_value": "adr",
+    "documents_package": "projectkoios.bootstrap.control_surface.documents",
+    "generic_columns": [
+      "document_id",
+      "document_kind",
+      "content_hash",
+      "payload_json",
+      "created_at",
+      "updated_at"
+    ],
+    "memory_store": "MemoryDocumentStore",
+    "sqlite_store": "SqliteDocumentStore",
+    "storage_package": "projectkoios.bootstrap.control_surface.storage",
+    "table": "json_documents"
+  },
   "evidence": {
     "database": "dev/adr-json-database-one-adr-pilot/database-evidence.md",
     "implementation_report": "docs/implementation/adr-json-database-one-adr-pilot.20260711.035759.md",
     "manifest": "dev/adr-json-database-one-adr-pilot/manifest.json",
-    "mapping": "dev/adr-json-database-one-adr-pilot/mapping.json"
+    "mapping": "dev/adr-json-database-one-adr-pilot/mapping.json",
+    "migration": "dev/adr-json-database-one-adr-pilot/document-store-migration-evidence.json"
   },
   "generation": {
-    "method": "projectkoios.bootstrap.control_surface.adr.pilot.AdrJsonDatabasePilot.run"
+    "method": "projectkoios.bootstrap.control_surface.adr.pilot.AdrStoragePilot.run"
   },
   "json_checkpoint": {
-    "content_hash": "9e2bd6ed13f8cfa2d9e8b63c444248f19da960e818f22eb3d8a516bcebefb55e",
+    "content_hash": "0bb030d8f33bd1081f5415871431e10aeb943d23d00dd346dc91b645ede45d04",
     "path": "dev/adr-json-database-one-adr-pilot/adr.json-database-for-adr-storage.json"
   },
   "markdown_projection": {
@@ -47,7 +65,8 @@
     "policy": "Mutable .sqlite/.db files are local/generated and not committed."
   },
   "storage_adapter": {
-    "policy": "ADR mapping, validation, projection, and equality use a narrow adapter boundary and do not depend directly on SQLite.",
+    "adr_wrapper": "projectkoios.bootstrap.control_surface.adr.storage.DocumentStoreAdrStorageAdapter",
+    "policy": "ADR mapping, validation, projection, and equality use an ADR wrapper that delegates persistence to a generic document store.",
     "selected": "sqlite"
   },
   "watchpoints": {

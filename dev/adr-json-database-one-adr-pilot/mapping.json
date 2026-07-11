@@ -19,19 +19,16 @@
     "resolved_open_questions",
     "non_goals",
     "validation_expectations",
-    "routing.owner",
-    "routing.notes",
     "links"
   ],
   "inferred_fields": {
     "context.delegated_operator": "HERMES"
   },
   "invalid_schema_error": "'invalid-status' is not one of ['proposal', 'draft', 'accepted', 'active', 'superseded']",
-  "json_hash": "9e2bd6ed13f8cfa2d9e8b63c444248f19da960e818f22eb3d8a516bcebefb55e",
-  "normalized_fields": {
-    "routing.next_phase": "proposed -> proposal"
-  },
+  "json_hash": "0bb030d8f33bd1081f5415871431e10aeb943d23d00dd346dc91b645ede45d04",
+  "normalized_fields": {},
   "preserved_outside_schema": {
+    "routing_section": "- Owner: Athena\n- Next phase: proposed\n- Notes: Storage-authority decision candidate for the ADR surface.",
     "source_date": "20260702.121432Z"
   },
   "projection_round_trip_equal": true,

@@ -7,15 +7,17 @@ import pytest
 from jsonschema.exceptions import ValidationError
 
 from projectkoios.bootstrap.control_surface.adr import (
-    AdrJsonDatabasePilot,
-    AdrMarkdownMapper,
+    AdrStoragePilot,
+    AdrMarkdownRecordParser,
     AdrRecordValidator,
-    AdrSemanticComparer,
-    MemoryAdrStorageAdapter,
+    AdrStorageAdapter,
+    DocumentStoreAdrStorageAdapter,
     PilotPaths,
     PilotResult,
 )
-from projectkoios.bootstrap.control_surface.adr.hashing import canonical_json_text, hash_text
+from projectkoios.bootstrap.control_surface.adr.manifest import PilotManifestBuilder
+from projectkoios.bootstrap.control_surface.documents import DocumentRecord, DocumentType
+from projectkoios.bootstrap.control_surface.storage import MemoryDocumentStore
 from projectkoios.bootstrap.schema.models import JsonObject
 
 
@@ -33,17 +35,18 @@ def source_record() -> JsonObject:
     markdown: str = SOURCE_ADR.read_text(encoding="utf-8")
     record: JsonObject
     mapping: JsonObject
-    record, mapping = AdrMarkdownMapper().map_source(markdown)
+    record, mapping = AdrMarkdownRecordParser().parse_source_record(markdown)
     return record
 
 
-def test__AdrMarkdownMapper__map_source__uses_status_free_identity() -> None:
-    """Map source ADR while keeping lifecycle status out of identity."""
+def test__AdrMarkdownRecordParser__parse_source_record__uses_status_free_identity() -> None:
+    """Parse pilot source ADR while keeping lifecycle status out of identity."""
     # Record proves the status-free canonical identity rule.
     record: JsonObject = source_record()
     assert record["id"] == "adr.json-database-for-adr-storage"
     assert record["slug"] == "json-database-for-adr-storage"
     assert record["status"] == "draft"
+    assert "routing" not in record
 
 
 def test__AdrRecordValidator__validate__accepts_source_record() -> None:
@@ -62,20 +65,38 @@ def test__AdrRecordValidator__validate__rejects_invalid_status() -> None:
         AdrRecordValidator().validate(record)
 
 
-def test__MemoryAdrStorageAdapter__export__proves_storage_boundary_without_sqlite() -> None:
-    """Exercise the storage adapter contract without SQLite."""
-    # Record is stored through the adapter contract.
+def test__DocumentStoreAdrStorageAdapter__protocol__conforms_to_adr_storage_adapter() -> None:
+    """Verify ADR wrapper conforms to the ADR storage adapter protocol."""
+    # Document store avoids SQLite for the protocol check.
+    document_store: MemoryDocumentStore = MemoryDocumentStore(records={})
+    # Adapter must satisfy the ADR-facing storage boundary.
+    adapter: DocumentStoreAdrStorageAdapter = DocumentStoreAdrStorageAdapter(
+        document_store=document_store,
+        timestamp="20260711.034817Z",
+    )
+    assert isinstance(adapter, AdrStorageAdapter)
+
+
+def test__DocumentStoreAdrStorageAdapter__export__proves_storage_boundary_without_sqlite() -> None:
+    """Exercise the ADR storage adapter contract without SQLite."""
+    # Record is stored through the ADR adapter contract.
     record: JsonObject = source_record()
-    # Adapter avoids SQLite to prove backend-independent behavior.
-    adapter: MemoryAdrStorageAdapter = MemoryAdrStorageAdapter(records={})
+    # Document store avoids SQLite to prove backend-independent behavior.
+    document_store: MemoryDocumentStore = MemoryDocumentStore(records={})
+    # Adapter delegates persistence to the generic document store.
+    adapter: DocumentStoreAdrStorageAdapter = DocumentStoreAdrStorageAdapter(
+        document_store=document_store,
+        timestamp="20260711.034817Z",
+    )
     adapter.store(record)
-    # Exported record must match the input under semantic equality.
+    # Exported record must match the input record.
     exported: JsonObject = adapter.export("adr.json-database-for-adr-storage")
-    AdrSemanticComparer().assert_equal(record, exported)
-    assert adapter.list_by_status("draft") == ("adr.json-database-for-adr-storage",)
+    assert exported == record
+    assert adapter.list_document_ids() == ("adr.json-database-for-adr-storage",)
+    assert document_store.list_by_kind(DocumentType.ADR) == ("adr.json-database-for-adr-storage",)
 
 
-def test__AdrJsonDatabasePilot__run__writes_pilot_artifacts(tmp_path: Path) -> None:
+def test__AdrStoragePilot__run__writes_pilot_artifacts(tmp_path: Path) -> None:
     """Run the one-ADR pilot and write deterministic evidence artifacts."""
     # Temporary repo copy isolates generated artifacts from the real working tree.
     repo_root: Path = tmp_path / "repo"
@@ -93,20 +114,31 @@ def test__AdrJsonDatabasePilot__run__writes_pilot_artifacts(tmp_path: Path) -> N
     # Pilot paths redirect generated evidence to the temporary repo.
     paths: PilotPaths = PilotPaths(repo_root=repo_root)
     # Result exposes generated records for equality assertions.
-    result: PilotResult = AdrJsonDatabasePilot(paths=paths).run()
+    result: PilotResult = AdrStoragePilot(paths=paths).run()
     # Checkpoint is the committed JSON review surface.
     checkpoint: JsonObject = json.loads(paths.json_checkpoint.read_text(encoding="utf-8"))
     # Manifest is the pilot-local config and evidence index.
     manifest: JsonObject = json.loads(paths.manifest.read_text(encoding="utf-8"))
     # Mapping preserves source status suffix and inferred-field evidence.
     mapping: JsonObject = json.loads(paths.mapping.read_text(encoding="utf-8"))
+    # Migration evidence records the intentional storage-substrate break.
+    migration_evidence: JsonObject = json.loads(paths.migration_evidence.read_text(encoding="utf-8"))
     assert checkpoint == result.exported_record
+    assert "routing" not in checkpoint
     assert manifest["pilot"]["status"] == "non-authoritative-pilot"
     assert manifest["storage_adapter"]["selected"] == "sqlite"
+    assert manifest["document_store"]["document_kind_enum"] == "DocumentType.ADR"
     assert manifest["sqlite_operational_store"]["committed_database_file"] is False
-    assert manifest["source_adr"]["content_hash"] == hash_text(SOURCE_ADR.read_text(encoding="utf-8"))
-    assert manifest["json_checkpoint"]["content_hash"] == hash_text(canonical_json_text(checkpoint))
+    assert manifest["source_adr"]["content_hash"] == PilotManifestBuilder.hash_text(
+        SOURCE_ADR.read_text(encoding="utf-8")
+    )
+    assert manifest["json_checkpoint"]["content_hash"] == PilotManifestBuilder.hash_text(
+        DocumentRecord.canonical_payload_text(checkpoint)
+    )
     assert mapping["source_filename_status_suffix"] == ".draft"
+    assert migration_evidence["new_surfaces"]["document_kind_enum"] == "DocumentType.ADR"
+    assert migration_evidence["old_surfaces"]["table"] == "adr_records"
+    assert migration_evidence["new_surfaces"]["table"] == "json_documents"
     assert not list(paths.pilot_dir.rglob("*.sqlite"))
     assert not list(paths.pilot_dir.rglob("*.db"))
     assert "GENERATED PILOT PROJECTION" in paths.markdown_projection.read_text(encoding="utf-8")

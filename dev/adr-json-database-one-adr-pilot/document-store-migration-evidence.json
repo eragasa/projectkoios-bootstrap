@@ -1,0 +1,105 @@
+{
+  "artifact_dispositions": {
+    "adr.json-database-for-adr-storage.json": "retained-or-regenerated-same-payload",
+    "adr.json-database-for-adr-storage.projected.md": "regenerated",
+    "database-evidence.md": "replaced",
+    "document-store-migration-evidence.json": "added",
+    "generated-local/pilot.sqlite": "generated-local-deleted",
+    "manifest.json": "replaced",
+    "mapping.json": "replaced-with-prior-provenance-retained"
+  },
+  "commit_safety": {
+    "committed_sqlite_or_db_files": false,
+    "docs_adr_modified": false
+  },
+  "field_treatment": {
+    "copied_fields": [
+      "title",
+      "status",
+      "context.origin",
+      "context.from",
+      "context.acting_as",
+      "context.scope",
+      "context.repository",
+      "context.architecture_domain",
+      "decision",
+      "consequences",
+      "architecture_spec",
+      "acceptance_criteria",
+      "implementation_brief",
+      "resolved_open_questions",
+      "non_goals",
+      "validation_expectations",
+      "links"
+    ],
+    "inferred_fields": {
+      "context.delegated_operator": "HERMES"
+    },
+    "new_fields": [
+      "documents.package",
+      "storage.table",
+      "documents.document_kind_enum",
+      "migration_evidence"
+    ],
+    "normalized_fields": {},
+    "retained_outside_schema": {
+      "routing_section": "- Owner: Athena\n- Next phase: proposed\n- Notes: Storage-authority decision candidate for the ADR surface.",
+      "source_date": "20260702.121432Z"
+    }
+  },
+  "new_surfaces": {
+    "adr_wrapper": "DocumentStoreAdrStorageAdapter",
+    "adr_wrapper_package": "projectkoios.bootstrap.control_surface.adr.storage",
+    "document_kind_enum": "DocumentType.ADR",
+    "document_kind_value": "adr",
+    "documents_package": "projectkoios.bootstrap.control_surface.documents",
+    "generic_columns": [
+      "document_id",
+      "document_kind",
+      "payload_json",
+      "content_hash",
+      "created_at",
+      "updated_at"
+    ],
+    "json_checkpoint_hash": "0bb030d8f33bd1081f5415871431e10aeb943d23d00dd346dc91b645ede45d04",
+    "memory_store": "MemoryDocumentStore",
+    "sqlite_store": "SqliteDocumentStore",
+    "storage_package": "projectkoios.bootstrap.control_surface.storage",
+    "table": "json_documents"
+  },
+  "old_surfaces": {
+    "json_checkpoint_hash": "0bb030d8f33bd1081f5415871431e10aeb943d23d00dd346dc91b645ede45d04",
+    "json_checkpoint_path": "dev/adr-json-database-one-adr-pilot/adr.json-database-for-adr-storage.json",
+    "memory_adapter": "MemoryAdrStorageAdapter",
+    "old_pilot_identity": {
+      "id": "adr.json-database-for-adr-storage",
+      "slug": "json-database-for-adr-storage"
+    },
+    "package": "projectkoios.bootstrap.control_surface.adr.storage",
+    "query_columns": [
+      "slug",
+      "title",
+      "status",
+      "routing_owner",
+      "routing_next_phase",
+      "schema_id"
+    ],
+    "source_hash": "b7e48d5b2a07c14704689b4dcae738c8f21731e6d20e8d63d8eab33c75819d87",
+    "source_path": "docs/adr/adr.json-database-for-adr-storage.draft.md",
+    "sqlite_adapter": "SqliteAdrStorageAdapter",
+    "table": "adr_records"
+  },
+  "provenance_preserved": {
+    "mapping_json_prior_fields_retained": true,
+    "old_pilot_identity_retained_as_evidence": true,
+    "source_draft_path_hash_retained": true
+  },
+  "replacement_actions": {
+    "adr_records_table": "replaced-by-json_documents",
+    "adr_specific_query_columns": "removed-from-generic-table",
+    "adr_specific_sqlite_adapter": "replaced-by-generic-document-store-plus-adr-wrapper"
+  },
+  "source_brief": "docs/plans/implementation-brief.20260711.045012_json-document-database-separation.md",
+  "source_plan": "docs/plans/implementation-plan.20260711.050606_json-document-database-separation.md",
+  "status": "pilot-derived-non-authoritative"
+}

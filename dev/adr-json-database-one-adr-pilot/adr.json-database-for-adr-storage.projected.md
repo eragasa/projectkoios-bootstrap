@@ -9,10 +9,10 @@
 - Record status: draft
 - Legacy/source path: docs/adr/adr.json-database-for-adr-storage.draft.md
 - Schema ID: https://projectkoios.local/schemas/adr.schema.json
-- Generation method: projectkoios.bootstrap.control_surface.adr.pilot.AdrJsonDatabasePilot.run
+- Generation method: projectkoios.bootstrap.control_surface.adr.pilot.AdrStoragePilot.run
 - Source-of-truth mode: database-operational/json-checkpointed
 - Source hash: b7e48d5b2a07c14704689b4dcae738c8f21731e6d20e8d63d8eab33c75819d87
-- JSON checkpoint hash: 9e2bd6ed13f8cfa2d9e8b63c444248f19da960e818f22eb3d8a516bcebefb55e
+- JSON checkpoint hash: 0bb030d8f33bd1081f5415871431e10aeb943d23d00dd346dc91b645ede45d04
 - Conflict rule: Source Markdown remains migration evidence; SQLite is local operational state behind the adapter; JSON checkpoint is committed review checkpoint; generated Markdown projection is non-authoritative pilot evidence.
 
 ```json adr-record
@@ -52,11 +52,6 @@
     "Should promoted ADRs still have Markdown-first review files?",
     "Should the repository migrate existing ADR drafts into JSON records later?"
   ],
-  "routing": {
-    "next_phase": "proposal",
-    "notes": "Storage-authority decision candidate for the ADR surface.",
-    "owner": "Athena"
-  },
   "slug": "json-database-for-adr-storage",
   "status": "draft",
   "title": "JSON ADR Storage Topology",
@@ -133,10 +128,6 @@ verification_method: validate that a representative ADR can round-trip from JSON
 - a reviewer can identify the canonical source form
 - the render stays consistent with the stored record
 - lookup and promotion behavior remain explicit
-
-## routing
-
-{'next_phase': 'proposal', 'notes': 'Storage-authority decision candidate for the ADR surface.', 'owner': 'Athena'}
 
 ## links
 

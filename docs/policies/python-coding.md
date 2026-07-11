@@ -62,6 +62,7 @@ These rules do not create architecture authority. Architecture and specification
 - Python code MUST use type annotations for public functions, methods, dataclass fields, and variables.
 - New Python code SHOULD use `from __future__ import annotations`.
 - Structured data SHOULD use `@dataclass(frozen=True, slots=True)` when mutation is not required.
+- Enumerated value sets MUST be represented with enumeration classes rather than free string constants or repeated string literals.
 - Runtime enums SHOULD use `StrEnum` when values cross config, CLI, JSON, YAML, or other text boundaries.
 - Code MUST NOT use untyped dictionaries as durable domain objects when a dataclass or explicit schema would make the contract clearer.
 - Local variables inside functions and methods MUST have explicit type annotations when introduced.
@@ -80,6 +81,7 @@ These rules do not create architecture authority. Architecture and specification
 - Test names SHOULD describe the behavior under test using the repository's current test naming convention.
 - File and module names SHOULD be lower-case and descriptive.
 - Abbreviations SHOULD be avoided unless they are established in the surrounding code or source artifact.
+- Module-level `CONSTANT_VARIABLES` SHOULD NOT dangle as loose policy or mode definitions; prefer scoped enum classes, dataclass fields, or explicit configuration objects.
 
 ## Configuration
 
