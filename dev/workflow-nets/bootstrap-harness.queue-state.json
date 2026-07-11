@@ -4,7 +4,19 @@
   "parent_effort": "petri-net-workflow-inspectability",
   "status": "static-read-only-fixture",
   "authority": "Static read-only fixture; not canonical workflow authority and not product authority.",
-  "active_item": null,
+  "active_item": {
+    "name": "adr-schema-record-envelope-architecture-slice-14",
+    "state": "active",
+    "artifact_refs": [
+      "docs/reviews/hermes-decision.20260711.190407_adr-schema-record-envelope-architecture-slice-14.md",
+      "docs/reviews/hermes-acceptance.20260711.185430_adr-schema-base-architecture-extraction-planning-slice-13.md",
+      "docs/plans/architecture-extraction-brief.20260711.184325_adr-schema-base.md",
+      "docs/adr/adr.schema-base.md"
+    ],
+    "why": "ADR track remains priority. Slice 13 accepted proposal-only planning recommending one architecture artifact for schema-family record-envelope concepts.",
+    "dependency_or_blocker": "Requires ATHENA architecture artifact creation before HERMES/USER acceptance; must preserve source/schema/lifecycle boundaries.",
+    "recommendation": "Route to ATHENA to create docs/architecture/architecture.schema-record-envelope.md; do not activate non-ADR queued work while this active item remains set."
+  },
   "queued_items": [
     {
       "name": "pi-skill-determinism-slice-0",
@@ -113,5 +125,5 @@
     }
   ],
   "deferred_items": [],
-  "next_decision_needed": "Explicitly activate adr-schema-record-envelope-architecture-slice-14 or define another ADR-track slice."
+  "next_decision_needed": "ATHENA should create docs/architecture/architecture.schema-record-envelope.md for Slice 14; do not activate queued non-ADR work until active_item is cleared."
 }
