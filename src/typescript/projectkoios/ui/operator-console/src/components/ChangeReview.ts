@@ -19,12 +19,14 @@ export class ChangeReviewRenderer {
       "</div>",
       '<div class="review-grid">',
       this.renderContentPanel(
+        "review-current",
         "What changed?",
         resolved.current.body,
         resolved.current.ref.locator,
         resolved.current.ref.contentHash
       ),
       this.renderContentPanel(
+        "review-proposed",
         "What is proposed?",
         resolved.proposed.body,
         resolved.proposed.ref.locator,
@@ -36,13 +38,15 @@ export class ChangeReviewRenderer {
     ].join("");
   }
 
-  private renderContentPanel(heading: string, body: string, locator: string, hash: string): string {
+  private renderContentPanel(sectionId: string, heading: string, body: string, locator: string, hash: string): string {
     return [
-      '<section class="review-panel">',
+      `<section class="review-panel" id="${this.html.escape(sectionId)}">`,
       `<h3>${this.html.escape(heading)}</h3>`,
       `<p>Source locator: <code>${this.html.escape(locator)}</code></p>`,
       `<p>Fixture/source identity hash: <code>${this.html.escape(hash)}</code></p>`,
+      '<div class="scroll-region" tabindex="0" aria-label="Scrollable fixture review content">',
       `<pre>${this.html.escape(body)}</pre>`,
+      "</div>",
       "</section>"
     ].join("");
   }

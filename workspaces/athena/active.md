@@ -2,8 +2,8 @@
 {
   "title": "Athena active work",
   "artifact_type": "workspace-active-priorities",
-  "status": "json-schemas-conformance-athena-accepted",
-  "datetime": "20260711.070254Z",
+  "status": "workflow-object-architecture-accepted",
+  "datetime": "20260711.093600Z"},{
   "acting_as": "ATHENA",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/athena/",
@@ -19,7 +19,20 @@
     "docs/implementation/control-surface-cleanup-and-schema-conformance.20260711.061724.md",
     "dev/adr-json-database-one-adr-pilot/document-store-migration-evidence.json",
     "src/python/projectkoios/bootstrap/control_surface/documents/",
-    "src/python/projectkoios/bootstrap/control_surface/storage/"
+    "src/python/projectkoios/bootstrap/control_surface/storage/",
+    "docs/architecture/architecture.operator-console.md",
+    "docs/implementation/operator-console-review-one-proposal-fixture.20260711.081405.md",
+    "docs/reviews/architecture-conformance.20260711.081734_operator-console-review-one-proposal-fixture.md",
+    "docs/reviews/architecture-conformance.20260711.082740_operator-console-actionobject-refactor.md",
+    "docs/implementation/operator-console-fixture-interaction-visibility.20260711.090601.md",
+    "docs/reviews/architecture-conformance.20260711.091137_operator-console-fixture-interaction-visibility.md",
+    "docs/plans/implementation-brief.20260711.091622_operator-console-readability-navigation-fixture.md",
+    "docs/implementation/operator-console-readability-navigation-fixture.20260711.092524.md",
+    "docs/reviews/architecture-conformance.20260711.093009_operator-console-readability-navigation-fixture.md",
+    "docs/architecture/architecture.workflow-object.md",
+    "docs/reviews/architecture-intake.20260711.092400_workflow-object-aar-synthesis.md",
+    "docs/reviews/architecture-review.20260711.093600_workflow-object-architecture-first-record.md",
+    "src/typescript/projectkoios/ui/operator-console/"
   ]
 }
 ```
@@ -28,9 +41,9 @@
 
 ## Current priority stack
 
-1. Decide whether to continue one-document active ADR conformance slices.
-2. Accepted slice: `adr.json-schemas` active conformance against updated ADR schema without `routing`.
-3. Future slices must preserve sidecar provenance, keep records active going forward, and avoid schema/lifecycle/workflow/storage-authority redesign.
+1. Operator Console P0 and P1 interaction visibility are implemented, user-previewed, ATHENA-reviewed/accepted, and reconciled into architecture as bootstrap-incubation as-built evidence.
+2. Operator Console readability/navigation fixture is implemented, VULCAN-validated, ATHENA-reviewed/accepted, and reconciled into architecture.
+3. USER selected review/accept for `docs/architecture/architecture.workflow-object.md`; ATHENA marked the first workflow-object architecture slice accepted and wrote `docs/reviews/architecture-review.20260711.093600_workflow-object-architecture-first-record.md`.
 
 ## Recently completed
 
@@ -51,24 +64,37 @@
   - python policy: 0 findings
   - diff check: clean
   - no committed pilot `.sqlite`/`.db` file found
+- Operator Console P0 accepted:
+  - architecture: `docs/architecture/architecture.operator-console.md`
+  - implementation report: `docs/implementation/operator-console-review-one-proposal-fixture.20260711.081405.md`
+  - initial ATHENA review: `docs/reviews/architecture-conformance.20260711.081734_operator-console-review-one-proposal-fixture.md`
+  - ActionObject refactor ATHENA review: `docs/reviews/architecture-conformance.20260711.082740_operator-console-actionobject-refactor.md`
+  - package: `src/typescript/projectkoios/ui/operator-console/`
+  - ATHENA validation rerun: `npm ci`, `npm run typecheck`, `npm test` (3 files, 4 tests), `npm run build`, `npm audit --audit-level=moderate`, `git diff --check`; all passed/clean, generated `node_modules` and `dist` removed.
+  - ATHENA post-refactor validation rerun: `npm ci --ignore-scripts`, `npm run typecheck`, `npm test`, `npm run build`, `npm audit --audit-level=moderate`, free-function grep, `git diff --check`; all passed/clean, generated `node_modules` and `dist` removed.
 
 ## Waiting on
 
-- User/Hermes direction for the next conformance target or pause/commit.
+- User/HERMES decision whether ATHENA should draft the workflow-object implementation brief for one static Operator Console P0/P1/P2 record.
+- User/HERMES decision to close/commit the accepted Operator Console bundle or select a new bounded slice.
 
 ## Recommended next action
 
-If continuing, choose the next small ADR-shaped target for active conformance against the current schema without `routing`. If pausing, commit/push the accepted conformance reports and state.
+ATHENA can draft the implementation brief for one static Operator Console P0/P1/P2 workflow-object record if USER/HERMES wants to proceed. Operator Console P0/P1/P2 are accepted; if continuing UI work, select a new bounded slice.
 
 ## Do not do yet
 
-- Bulk ADR migration.
-- Make mutable SQLite/database state repository-authoritative.
-- Treat `dev/` pilot artifacts as accepted ADR authority.
-- Change `docs/adr/` source files based on generated projection without explicit approval.
-- Expand the storage adapter into a generic database framework before a follow-up architecture slice.
-- Redesign schema, lifecycle, routing, timestamp taxonomy, naming machinery, or workflow state before existing-schema conformance work demonstrates concrete need.
+- Treat Operator Console P0 fixtures as live operational state.
+- Reintroduce dangling/free behavior functions into the TypeScript implementation without explicit standards approval.
+- Mark a UI slice complete without a preview command, local URL, and user-visible inspection step.
+- Implement workflow-object schema/storage/CLI/UI from KOIOS synthesis or ATHENA architecture without separate implementation brief/plan approval.
+- Implement readability/navigation changes without VULCAN plan/approval unless USER/HERMES explicitly permits direct coding from the brief.
+- Add live intercom/session/terminal adapters without a new slice.
+- Add backend/API transport, workflow activation/versioning, direct mutation, or Petri-net graph editing without separate architecture/approval.
+- Treat bootstrap incubation artifacts as final product/mothership UI authority.
+- Treat `docs/policies/typescript-coding.md` as controlling unless separately accepted.
+- Bulk ADR migration or schema/lifecycle/workflow/storage-authority redesign without concrete pressure and approval.
 
 ## Exit criteria
 
-The one-ADR pilot, JSON document database separation slice, and control-surface cleanup/schema conformance report are implemented, VULCAN-validated, ATHENA-accepted, and reconciled into architecture as as-built evidence. Routing has been removed from the ADR schema by user direction because it is not required for the Petri-net workflow. Durable ADR/database authority remains unresolved. User direction now says forward conformance entries are active; sidecars preserve conversion provenance without historical-only framing.
+The one-ADR pilot, JSON document database separation slice, control-surface cleanup/schema conformance report, `adr.json-schemas` conformance slice, Operator Console P0 including the ActionObject refactor, Operator Console P1 fixture interaction visibility, and Operator Console P2 readability/navigation fixture are implemented, VULCAN-validated, ATHENA-accepted, and reconciled into architecture as as-built evidence. Operator Console remains bootstrap incubation only, with fixture/static non-live data and no product UI authority. Durable ADR/database authority remains unresolved.

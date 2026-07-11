@@ -3,7 +3,7 @@ from __future__ import annotations
 import argparse
 from argparse import Namespace
 
-from projectkoios.bootstrap.commands import handoff, harnesses, ingestion, init, install, validate_harnesses, validate_python_policy, workspaces
+from projectkoios.bootstrap.commands import handoff, harnesses, ingestion, init, install, operator_console, validate_harnesses, validate_python_policy, workspaces
 from projectkoios.cli import koios
 
 
@@ -29,6 +29,7 @@ def main() -> None:
     workspaces.register(bootstrap_subparsers)
     harnesses.register(subparsers)
     ingestion.register(subparsers)
+    operator_console.register(subparsers)
     koios.register(subparsers)
 
     # Args contains the parsed command namespace and selected handler.

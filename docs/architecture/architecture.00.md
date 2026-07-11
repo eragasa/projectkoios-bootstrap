@@ -53,6 +53,8 @@ The docs model is intentionally portable across Python 3, TypeScript, and Rust.
 | [architecture.unified-diff-review-surface](architecture.unified-diff-review-surface.md) | [adr.unified-diff-review-surface](../adr/adr.unified-diff-review-surface.draft.md) |
 | [architecture.ui-core](architecture.ui-core.md) | [adr.ui-core](../adr/adr.ui-core.draft.md) |
 | [architecture.workflow-ui](architecture.workflow-ui.md) | [adr.workflow-ui](../adr/adr.workflow-ui.draft.md) |
+| [architecture.operator-console](architecture.operator-console.md) | None |
+| [architecture.workflow-object](architecture.workflow-object.md) | None |
 | [architecture.workflows.00](architecture.workflows.00.md) | None |
 | [architecture.petrinet.00](architecture.petrinet.00.md) | [adr.petrinet](../adr/adr.petrinet.20260705.132740Z.md) |
 | [architecture.json-schemas](architecture.json-schemas.md) | [adr.json-schemas](../adr/adr.json-schemas.draft.md) |

@@ -4,7 +4,7 @@
 
 - Type: workspace-state
 - Status: active
-- Updated: 20260711T065332Z
+- Updated: 20260711T091607Z
 - Updated by: KOIOS
 - Repository: projectkoios-bootstrap
 - Workspace: `workspaces/koios/`
@@ -35,6 +35,8 @@ Captured/advisory artifacts in this workspace:
 - `../../docs/process-capture/pc.workflow.document-trace.20260706.025408Z.md`
 - `../../docs/process-capture/pc.workflow.document-trace.20260708.044950Z.md`
 - `../../docs/process-capture/pc.workflow.document-trace.20260709.012953Z.md`
+- `../../docs/process-capture/pc.aar-consolidation.20260711.091607Z.md`
+- `../../docs/process-capture/requirements.workflow-object.from-aar-synthesis.20260711.091607Z.md`
 
 ## Validated observations
 
@@ -63,6 +65,10 @@ KOIOS captured the template record round-trip skill integration process trace af
 KOIOS preserved ATHENA/user clarified architecture-led workflow doctrine for the ADR JSON/database pilot and meta-harness workflow surfaces. The note records that architecture documents are pre-implementation blueprints and later as-built documentation; implementation work is sliced into bounded briefs/plans/patches; and implementation evidence must reconcile back into architecture as as-built state or explicit deviation/correction. The inspected ATHENA surfaces align with this doctrine for the current pilot scope, with watchpoints that briefs, reports, patches, generated projections, and local database state must not replace architecture documents as durable system surfaces.
 
 KOIOS audited the current uncommitted `adr.json-schemas` active conformance slice. The audit found the slice provenance-safe for its bounded one-document scope: source Markdown and ADR schema were not mutated, the JSON checkpoint omits `routing` and `links.related`, sidecars preserve source path/date/hash/status plus omitted routing/related-link evidence, generated-local SQLite state is not committed, and focused tests passed. Residual watchpoints remain for the absence of a VULCAN implementation report specific to this completed conformance run, the `dev/` checkpoint's non-global authority, and the need for separate architecture authority before reusable conformance/storage policy or bulk migration.
+
+KOIOS added Operator Console AAR lessons to `../../docs/process-capture/pc.workflow.document-trace.md` as process-review observations. The captured lessons are that user-visible preview should be treated as a validation gate for UI/operator-facing slices, display-only visibility must be distinguished from interactive controls, readability/navigation controls should be separate bounded work, and TypeScript DataObject/ActionObject or enum-class expectations should not become global policy unless promoted through an owning surface.
+
+KOIOS completed a comprehensive AAR consolidation over all 298 AARs present under `../../docs/AAR/` at synthesis time. The consolidation produced `../../docs/process-capture/pc.aar-consolidation.20260711.091607Z.md` and a non-authoritative workflow-object requirements draft at `../../docs/process-capture/requirements.workflow-object.from-aar-synthesis.20260711.091607Z.md`. The requirements draft distinguishes observed process lessons from candidate requirements and marks items needing ATHENA/user promotion before implementation.
 
 ## Authority boundary
 

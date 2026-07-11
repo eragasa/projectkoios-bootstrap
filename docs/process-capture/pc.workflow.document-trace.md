@@ -8,7 +8,7 @@
 - Scope: workflow document traces mapped to Petri-net evolution vocabulary
 - Owner: KOIOS
 - Created: 20260706.025408Z
-- Updated: 20260709.012953Z
+- Updated: 20260711.091607Z
 - Authority: provenance/process observation only
 
 ## Non-authority statement
@@ -115,6 +115,70 @@ Provenance cautions:
 - after VULCAN report and ATHENA conformance review, KOIOS may add a partial
   process trace if the user wants this slice mapped into the document-evolution
   chain.
+
+### Operator Console fixture review and interaction-visibility process review
+
+KOIOS reviewed the Operator Console AARs:
+
+- `docs/AAR/aar.20260711.081405_operator-console-review-one-proposal-fixture.md`
+- `docs/AAR/aar.20260711.090601_operator-console-fixture-interaction-visibility.md`
+
+The review found a recurring first-slice pattern worth preserving as process
+observation: user-visible preview is part of validation when the artifact is a UI
+or operator-facing review surface. The P0 Operator Console slice was not complete
+as a process lesson merely because typecheck, tests, build, audit, and repo
+safety checks passed; the user also inspected the local browser preview and used
+that inspection to clarify implementation style expectations. That clarification
+led VULCAN to refactor module-owned helper/render functions into explicit
+ActionObject-style renderer/resolver/provider/application classes and to replace
+loose string-union/literal contract values with scoped enum classes.
+
+The interaction-visibility follow-on slice added another process lesson:
+"interaction visibility" was interpreted by the user as potentially implying
+interactive UI controls. VULCAN clarified that the approved slice was
+read-model/display-only: browser scrolling only, no send/reply/ask/apply/save or
+activate controls, no internal tabs, filters, expand/collapse controls, and no
+live connections. Any usability affordances such as internal scroll panels,
+sticky headers, jump anchors, collapsible evidence cards, or selected
+thread/message state should be a separate bounded readability/navigation slice.
+
+Provenance cautions:
+
+- UI slices should state whether user preview is an expected validation gate and
+  record the preview result in the implementation report or AAR.
+- Slice names and acceptance criteria should distinguish display-only visibility
+  from user-interactive behavior.
+- Readability/navigation controls are not the same as mutation or communication
+  controls, but they still change user expectations and should be explicitly
+  scoped.
+- TypeScript coding expectations that emerged during review, such as
+  DataObject/ActionObject style and scoped enum classes, should not silently
+  become global policy unless promoted through the TypeScript policy or another
+  owning surface.
+- Fixture-backed UI status, evidence, and interaction panels must continue to
+  preserve non-live/non-authoritative provenance markers so previewed UI does not
+  become mistaken for operational truth.
+
+### All-AAR consolidation and workflow-object requirements draft
+
+KOIOS performed an all-AAR consolidation across the `docs/AAR/` set present at
+synthesis time and created two companion artifacts:
+
+- `docs/process-capture/pc.aar-consolidation.20260711.091607Z.md`
+- `docs/process-capture/requirements.workflow-object.from-aar-synthesis.20260711.091607Z.md`
+
+The consolidation preserves a source index for all 298 reviewed AARs and groups
+repeated observations around durable filesystem state, role-domain authority,
+bounded slices, approval gates, validation evidence, dirty-tree packaging,
+lifecycle markers, fixture/sidecar provenance, tooling locality, user-preview
+validation, ephemeral-message limitations, and skill stability gates.
+
+The requirements draft is explicitly non-authoritative. It proposes candidate
+workflow-object requirements for later ATHENA/user promotion, including work item
+identity, artifact nodes, transitions/gates, role-domain guards, validation
+evidence, dirty-tree package boundaries, lifecycle markers, fixture provenance,
+user-preview validation, ephemeral-message promotion rules, dependency/tooling
+records, skill stability records, and process-capture links.
 
 ## Recommendations
 

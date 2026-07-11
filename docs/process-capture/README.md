@@ -17,6 +17,8 @@ Process-capture records MAY recommend follow-up ADRs, policy updates, checklist 
 - `workflow.process-capture.md` defines the filesystem-sequential process-capture workflow.
 - `schema.process-chain.md` defines the reusable process-chain note schema.
 - `20260704_graphrag-first-slice-athena-vulcan-process-chain.md` captures the GraphRAG first-slice ATHENA/VULCAN process chain.
+- `pc.aar-consolidation.20260711.091607Z.md` consolidates process observations from all AARs present at synthesis time.
+- `requirements.workflow-object.from-aar-synthesis.20260711.091607Z.md` drafts non-authoritative workflow-object requirements from the all-AAR synthesis.
 
 ## Naming
 

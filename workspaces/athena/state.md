@@ -2,8 +2,8 @@
 {
   "title": "Athena workspace state",
   "artifact_type": "workspace-state",
-  "status": "json-schemas-conformance-athena-accepted",
-  "datetime": "20260711.070254Z",
+  "status": "workflow-object-architecture-accepted",
+  "datetime": "20260711.093600Z",
   "acting_as": "ATHENA",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/athena/",
@@ -77,21 +77,39 @@
 - VULCAN implemented and validated the approved JSON schemas ADR conformance slice, reporting `docs/implementation/json-schemas-adr-conformance.20260711.065704.md` and `docs/AAR/aar.20260711.065704_json-schemas-adr-conformance.md`.
 - VULCAN validation: focused pytest `32 passed`, full pytest `256 passed`, mypy success for 18 source files, ruff clean, python policy `0 finding(s)`, `git diff --check` clean, no `.sqlite`/`.db` under `dev/adr-json-schemas-conformance/`, and no `docs/adr` source changes.
 - ATHENA reviewed and accepted `docs/implementation/json-schemas-adr-conformance.20260711.065704.md`, confirming active artifact framing, sidecar preservation for `routing.*` and `links.related`, no source mutation, no committed DB files, and no schema/lifecycle/workflow/storage-authority redesign. ATHENA reconciled the accepted behavior into `docs/architecture/architecture.json-adr-storage-topology.md`.
+- User/HERMES requested an Operator Console architecture and first slice to incubate in `src/typescript/projectkoios/ui/operator-console/` before extraction to `projectkoios/ui/operator-console/`.
+- ATHENA authored `docs/architecture/architecture.operator-console.md` and indexed it in `docs/architecture/architecture.00.md`; the architecture preserves bootstrap as incubator/fixture provider only, not final product UI owner/backend.
+- KOIOS, HERMES, and VULCAN reviewed the Operator Console architecture and P0 plan; user/HERMES approved VULCAN coding for `operator-console-review-one-proposal-fixture`.
+- VULCAN implemented Operator Console P0 and reported `docs/implementation/operator-console-review-one-proposal-fixture.20260711.081405.md`, `docs/AAR/aar.20260711.081405_operator-console-review-one-proposal-fixture.md`, and package files under `src/typescript/projectkoios/ui/operator-console/`.
+- ATHENA reviewed and accepted the Operator Console P0 as conforming to `docs/architecture/architecture.operator-console.md`, wrote `docs/reviews/architecture-conformance.20260711.081734_operator-console-review-one-proposal-fixture.md`, and reconciled as-built behavior into `docs/architecture/architecture.operator-console.md`.
+- ATHENA reran package-local validation for Operator Console P0: `npm ci`, `npm run typecheck`, `npm test` (3 files, 4 tests), `npm run build`, `npm audit --audit-level=moderate`; all passed/0 vulnerabilities. Generated `node_modules` and `dist` were removed after validation; `git diff --check` was clean.
+- After user review, VULCAN refactored Operator Console P0 to remove dangling/free behavior functions and align with a DataObject/ActionObject convention. ATHENA reviewed and accepted the refactor, wrote `docs/reviews/architecture-conformance.20260711.082740_operator-console-actionobject-refactor.md`, and reconciled the ActionObject/DataObject as-built structure into `docs/architecture/architecture.operator-console.md`.
+- ATHENA reran validation after the refactor: `npm ci --ignore-scripts`, `npm run typecheck`, `npm test` (3 files, 4 tests), `npm run build`, `npm audit --audit-level=moderate`, and grep for exported/free functions under `src`/`fixtures`; all passed/clean. Generated `node_modules` and `dist` were removed after validation; `git diff --check` was clean.
+- USER accepted Operator Console P0 after opening the local preview at `http://127.0.0.1:5173/` and confirming the UI was visible. ATHENA recorded a future UI acceptance gate in `docs/architecture/architecture.operator-console.md`: UI slices require preview command, local URL, and user-visible smoke/inspection step, not only tests/build.
+- HERMES routed the next slice to VULCAN planning based on ATHENA recommendation: `operator-console-fixture-interaction-visibility` for display-only fixture-backed terminal interaction/message visibility.
+- VULCAN implemented `operator-console-fixture-interaction-visibility`, reported `docs/implementation/operator-console-fixture-interaction-visibility.20260711.090601.md`, and user inspected the local preview at `http://127.0.0.1:4173/`. VULCAN clarified the slice is display-only with browser scrolling only and no internal widgets/live controls.
+- ATHENA reviewed and accepted `operator-console-fixture-interaction-visibility`, wrote `docs/reviews/architecture-conformance.20260711.091137_operator-console-fixture-interaction-visibility.md`, reran validation, and confirmed `docs/architecture/architecture.operator-console.md` records the P1 as-built state.
+- USER/HERMES directed the next bounded Operator Console slice. ATHENA updated `docs/architecture/architecture.operator-console.md` and wrote `docs/plans/implementation-brief.20260711.091622_operator-console-readability-navigation-fixture.md` for VULCAN planning.
+- USER/HERMES directed ATHENA to begin `workflow-object-architecture-first-record`. ATHENA created `docs/architecture/architecture.workflow-object.md` from KOIOS AAR synthesis/intake and indexed it in `docs/architecture/architecture.00.md`. The document defines workflow object purpose/non-purpose, requirement triage, first minimal record vocabulary, Operator Console P0/P1 as proving case, and implementation deferral pending separate plan/approval.
+- KOIOS reviewed ATHENA's workflow-object intake and requested provenance/authority clarifications. ATHENA incorporated them into `docs/architecture/architecture.workflow-object.md`: prominent non-authority/source-domain boundary, 298-AAR index caveat, Operator Console proving-case rationale, minimal R7/R9/R13 hooks, and representative evidence mapping.
+- USER selected review/accept for the workflow-object architecture direction. ATHENA marked `docs/architecture/architecture.workflow-object.md` accepted and wrote `docs/reviews/architecture-review.20260711.093600_workflow-object-architecture-first-record.md`.
+- VULCAN implemented `operator-console-readability-navigation-fixture`, reported `docs/implementation/operator-console-readability-navigation-fixture.20260711.092524.md`, and previewed it at `http://127.0.0.1:4173/`. ATHENA reviewed and accepted it, wrote `docs/reviews/architecture-conformance.20260711.093009_operator-console-readability-navigation-fixture.md`, reran validation, and reconciled as-built state into `docs/architecture/architecture.operator-console.md`.
 
 ## Open questions
 
+- Whether to proceed to a workflow-object implementation brief for one static Operator Console P0/P1/P2 record.
+- Whether to close/commit the accepted Operator Console P0/P1/P2 bundle or select another bounded UI slice.
+- When to extract `src/typescript/projectkoios/ui/operator-console/` to `projectkoios/ui/operator-console/` and promote product/mothership authority.
 - Which one-document active conformance target should follow `adr.json-schemas`, if any.
-- Which source/projection metadata must remain in sidecar evidence while the existing ADR schema is used unchanged.
-- Which recurring schema discomforts, if any, become concrete enough to justify later schema revision after conformance work.
-- Whether future Markdown projections should be human-readable-only, JSON-embedded, or both, after conformance pressure exists.
+- Which recurring ADR schema discomforts, if any, become concrete enough to justify later schema revision after conformance work.
 - Whether/when repository-level reusable ADR storage config or database-authoritative repository policy should be pursued in a later follow-up ADR.
 
 ## Next transition
 
-- Owner: USER.
-- Recommended next state: choose whether to continue one-document active ADR conformance slices. If continuing, select the next small ADR-shaped target and keep the same YAGNI boundaries: current schema without `routing`, active conformed record, sidecar provenance, no schema/lifecycle/workflow/storage-authority redesign.
-- Separation brief watchpoints remain satisfied by VULCAN report unless review finds otherwise: generic JSON document database substrate stores opaque JSON documents with generic metadata only; SQLite remains behind the adapter; ADR logic stays in ADR-specific code; replacement evidence is explicit; no bulk ADR migration, reusable repo config, or database-authority promotion.
-- YAGNI conformance watchpoints: use updated `docs/schemas/adr.schema.json` without `routing`; preserve sidecar provenance for source/projection metadata; preserve `routing.owner`, `routing.next_phase`, `routing.notes`, and `links.related` from `docs/adr/adr.json-schemas.draft.md` outside the schema record as conversion provenance; treat the newly conformed record as active going forward; prefer general-to-specific identifiers only when new identifiers are actually produced; defer workflow-system assumptions and schema/lifecycle expansion until repeated conformance work creates concrete pressure.
+- Owner: HERMES/USER.
+- Recommended next state: ATHENA should draft a workflow-object implementation brief for a single static Operator Console P0/P1/P2 record if USER/HERMES wants to proceed. Operator Console UI incubation slices P0/P1/P2 are accepted; any additional UI work should be a new bounded slice.
+- Operator Console P0/P1/P2 accepted boundaries: bootstrap incubation only; package-local lockfile only; behavior owned by ActionObject-style classes with data in typed interfaces/constants; `docs/policies/typescript-coding.md` remains draft/non-controlling; fixtures are static/stale-by-design; readability/navigation affordances are local browser inspection helpers only; no backend, live reads, messaging capability, activation/mutation, Petri-net graph editor, product UI authority, or bootstrap production-backend claim.
+- ADR conformance work remains available as a separate track: future slices should use updated `docs/schemas/adr.schema.json` without `routing`, preserve sidecar provenance, and avoid schema/lifecycle/workflow/storage-authority redesign unless repeated conformance pressure justifies it.
 
 ## Startup checklist
 

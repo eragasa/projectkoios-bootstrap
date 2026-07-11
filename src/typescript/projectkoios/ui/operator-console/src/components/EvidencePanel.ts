@@ -11,9 +11,10 @@ export class EvidencePanelRenderer {
   render(evidence: readonly EvidenceRef[], validations: readonly ValidationResult[]): string {
     const evidenceItems: string = evidence.map((item: EvidenceRef) => this.renderEvidenceItem(item)).join("");
     return [
-      '<section class="evidence-panel">',
+      '<section class="evidence-panel" id="review-evidence">',
       '<h3>Why trust this evidence?</h3>',
       '<p class="notice">This panel displays copied or transformed fixture evidence. The console does not rerun commands or read repository files at runtime.</p>',
+      '<p class="notice">Expandable evidence cards are local readability-only UI for this static preview.</p>',
       this.validationSummaryRenderer.render(validations),
       evidenceItems,
       "</section>"
@@ -22,8 +23,9 @@ export class EvidencePanelRenderer {
 
   private renderEvidenceItem(evidence: EvidenceRef): string {
     return [
-      '<article class="evidence-item">',
-      `<h4>${this.html.escape(evidence.title)}</h4>`,
+      '<details class="evidence-item readable-card" open>',
+      `<summary>${this.html.escape(evidence.title)} <span>local readability-only UI</span></summary>`,
+      '<div class="scroll-region evidence-scroll" tabindex="0" aria-label="Scrollable fixture evidence content">',
       `<p>Kind: ${this.html.escape(evidence.kind)}; displayed as: ${this.html.escape(evidence.displayedAs)}</p>`,
       `<p>Source locator: <code>${this.html.escape(evidence.locator)}</code></p>`,
       `<p>Source/content hash: <code>${this.html.escape(evidence.contentHash)}</code></p>`,
@@ -32,7 +34,8 @@ export class EvidencePanelRenderer {
       `<p>Authority boundary: ${this.html.escape(evidence.metadata.authorityBoundary.join(", "))}</p>`,
       `<p>Transformation notes: ${this.html.escape(evidence.metadata.transformationNotes)}</p>`,
       `<p>Trust explanation: ${this.html.escape(evidence.metadata.trustExplanation)}</p>`,
-      "</article>"
+      "</div>",
+      "</details>"
     ].join("");
   }
 }
