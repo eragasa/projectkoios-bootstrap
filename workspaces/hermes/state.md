@@ -18,7 +18,7 @@
 
 ## Current focus
 
-ADR template/schema repair track source disposition is implemented; next decision is explicit activation of the next queued item or definition of another ADR-track slice.
+ADR track remains priority. HERMES activated `adr-schema-base-source-disposition-planning-slice-12` for ATHENA handoff.
 
 ## Current validated state
 
@@ -60,27 +60,31 @@ ADR template/schema repair track source disposition is implemented; next decisio
   - recorded `docs/reviews/hermes-decision.20260711.183303_adr-template-contract-source-disposition.md`;
   - preserved old-source `Accepted` status/casing;
   - identified `docs/adr/adr.adr-template-schema-contract.md` as current authority.
+- USER corrected that priority remains the ADR track, not queued Pi skill work.
+- HERMES activated the remaining Slice 5 ADR repair target:
+  - `adr-schema-base-source-disposition-planning-slice-12`
+  - target source: `docs/adr/adr.schema-base.md`
+  - decision: `docs/reviews/hermes-decision.20260711.183536_adr-schema-base-source-disposition-planning-slice-12.md`
 
 ## Current coherent state
 
-Uncommitted source-disposition work:
+Uncommitted ADR-track activation work:
 
 ```text
-docs/adr/adr.adr-template-contract.md
-docs/reviews/hermes-decision.20260711.183303_adr-template-contract-source-disposition.md
+docs/reviews/hermes-decision.20260711.183536_adr-schema-base-source-disposition-planning-slice-12.md
 dev/workflow-nets/bootstrap-harness.queue-state.json
 dev/workflow-nets/bootstrap-harness.workflow-net.json
 workspaces/hermes/state.md
 workspaces/hermes/active.md
 ```
 
-Committed successor acceptance:
+Committed source disposition:
 
 ```text
-813478f5 Accept ADR template schema successor
+abef6bb Record ADR template contract source disposition
 ```
 
-The workflow fixtures show no active queue item and `active_slice=none`; `next_decision_needed` is explicit activation of the next queued item or definition of another ADR-track slice.
+The workflow fixtures now show active item `adr-schema-base-source-disposition-planning-slice-12` and `active_slice=adr-schema-base-source-disposition-planning-slice-12`.
 
 ## Active boundaries
 
@@ -88,9 +92,8 @@ The old source is preserved as legacy/source provenance with a disposition note.
 
 ## Current blockers
 
-- No ADR template/schema repair blocker remains after source-disposition commit.
-- USER/HERMES decision is still required before activating `pi-skill-determinism-slice-0` or defining another slice.
+- ATHENA must produce the proposal-only source-disposition brief for `docs/adr/adr.schema-base.md` before any source/schema mutation or lifecycle change.
 
 ## Next owner
 
-HERMES_USER for explicit activation of the next queued item or definition of another ADR-track slice.
+ATHENA for `docs/plans/source-disposition-brief.20260711.183536_adr-schema-base.md`.

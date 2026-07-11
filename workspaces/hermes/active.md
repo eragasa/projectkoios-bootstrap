@@ -18,19 +18,25 @@
 
 ## Current priority stack
 
-1. Commit ADR template/schema old-source disposition.
-2. Keep `docs/adr/adr.adr-template-schema-contract.md` as current ADR template/schema contract authority.
-3. Preserve `pi-skill-determinism-slice-0` as queued unless USER/HERMES explicitly activates it.
+1. Route `adr-schema-base-source-disposition-planning-slice-12` to ATHENA.
+2. Keep ADR track priority; do not activate `pi-skill-determinism-slice-0` while ADR active item remains set.
+3. Preserve `docs/adr/adr.adr-template-schema-contract.md` as current ADR template/schema contract authority.
 
 ## Active slice
 
 Active queue item after reconciliation:
 
 ```text
-none
+adr-schema-base-source-disposition-planning-slice-12
 ```
 
-Accepted successor ADR:
+Target source:
+
+```text
+docs/adr/adr.schema-base.md
+```
+
+Accepted successor ADR authority remains:
 
 ```text
 docs/adr/adr.adr-template-schema-contract.md
@@ -82,18 +88,18 @@ dev/workflow-nets/bootstrap-harness.queue-state.json
 dev/workflow-nets/bootstrap-harness.workflow-net.json
 ```
 
-Current workflow status reports `active_slice=none`; queue reports active none and next decision needed: explicitly activate the next queued item or define another ADR-track slice.
+Current workflow status reports `active_slice=adr-schema-base-source-disposition-planning-slice-12`; queue reports active item set and warns not to activate queued non-ADR work.
 
-Source disposition recorded:
+Activation decision recorded:
 
 ```text
-docs/reviews/hermes-decision.20260711.183303_adr-template-contract-source-disposition.md
+docs/reviews/hermes-decision.20260711.183536_adr-schema-base-source-disposition-planning-slice-12.md
 ```
 
-Old source updated with disposition note:
+Expected ATHENA output:
 
 ```text
-docs/adr/adr.adr-template-contract.md
+docs/plans/source-disposition-brief.20260711.183536_adr-schema-base.md
 ```
 
 ## Role-boundary correction
@@ -102,9 +108,9 @@ The successor ADR was created by the ATHENA session after HERMES routing and USE
 
 ## Waiting on
 
-- Commit of old-source disposition decision and queue/status update.
-- Later USER/HERMES explicit activation of next queued item or definition of another slice.
+- Commit of ADR-track Slice 12 activation/routing decision and queue/status update.
+- ATHENA proposal-only source-disposition brief for `docs/adr/adr.schema-base.md`.
 
 ## Exit criteria
 
-Hermes state is stable when the ADR template/schema source-disposition decision is committed and no active queue item remains.
+Hermes state is stable when Slice 12 activation/routing is committed and ATHENA is the explicit next owner.
