@@ -3,13 +3,13 @@
   "title": "Hermes active work",
   "artifact_type": "workspace-active-priorities",
   "status": "active",
-  "datetime": "20260711.172000Z",
+  "datetime": "20260711.173500Z",
   "acting_as": "HERMES",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/hermes/",
   "document_domain": "orchestration, repo-state reconciliation, cross-domain consistency",
   "control_files": ["state.md", "active.md"],
-  "next_owner": "HERMES_USER",
+  "next_owner": "ATHENA",
   "blockers": []
 }
 ```
@@ -18,42 +18,31 @@
 
 ## Current priority stack
 
-1. Package/commit accepted Slice 9 schema-family doc/index clarification.
-2. Decide whether to activate recommended `adr-template-schema-contract-successor-planning-slice-10`.
+1. Package/commit corrected Slice 10 handoff-only decision.
+2. Await ATHENA successor-planning brief for `adr-template-schema-contract-successor-planning-slice-10`.
 3. Preserve queued/deferred work as queued-only unless USER/HERMES explicitly activates it.
 
-## Accepted Slice 9: schema-family doc/index clarification
+## Corrected Slice 10 handoff
 
-- HERMES decision: `docs/reviews/hermes-decision.20260711.171500_schema-family-doc-index-clarification-slice-9.md`
-- Edited control/index doc: `docs/schemas/README.md`
-- HERMES acceptance: `docs/reviews/hermes-acceptance.20260711.172000_schema-family-doc-index-clarification-slice-9.md`
+- Improper unpushed completion commit reset: `d197b3e5 Accept ADR template schema contract successor planning slice 10`.
+- HERMES handoff decision: `docs/reviews/hermes-decision.20260711.173500_adr-template-schema-contract-successor-planning-slice-10.md`
+- Process AAR: `docs/AAR/aar.20260711_hermes-athena-handoff-boundary.md`
 
-## Accepted Slice 9 meaning
+## Next owner
 
-- `adr.schema.json` is current ADR content-shape schema until explicitly wrapped, replaced, or retired.
-- `schema.record-base.json` is the draft record-envelope direction.
-- `adr-draft.schema.json` demonstrates ADR-family composition with the base envelope.
-- `adr-active.schema.json` is a compatibility/reconciliation candidate.
-- Markdown under `docs/adr/` remains source/control for unmigrated records.
-- Generated projections remain evidence or review/navigation surfaces unless later cutover changes a specific file's disposition.
-- `routing` and `dcn` are not current ADR content-schema fields.
-- `workflow_binding` is optional schema content, not operational workflow authority.
+ATHENA should produce the successor-planning brief.
 
-## Accepted next recommendation
-
-Primary recommended next bounded action:
+Suggested output:
 
 ```text
-adr-template-schema-contract-successor-planning-slice-10
+docs/plans/successor-brief.20260711.172500_adr-template-schema-contract.md
 ```
-
-Purpose: draft a proposal-only successor plan or explicit ADR-creation brief for `docs/adr/adr.adr-template-contract.md`, preserving old-source provenance and requiring separate approval before ADR creation, supersession, source mutation, or schema edits.
 
 ## Waiting on
 
-- Packaging/commit decision for accepted Slice 9 changes.
-- HERMES/USER decision to activate Slice 10 or choose a different bounded repair action.
+- Commit/push decision for corrected HERMES handoff state.
+- ATHENA output before any HERMES acceptance of Slice 10.
 
 ## Exit criteria
 
-Hermes state is stable when accepted Slice 9 changes are packaged/committed and the next bounded action is chosen without implicitly authorizing source mutation, schema changes, lifecycle/status changes, supersession, migration, generated projection replacement, database/storage authority, or cutover.
+Hermes state is stable when the corrected handoff is packaged and Athena receives the bounded Slice 10 planning task without Hermes producing Athena-owned artifacts directly.
