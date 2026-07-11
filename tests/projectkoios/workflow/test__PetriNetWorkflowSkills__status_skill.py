@@ -6,7 +6,7 @@ from typing import cast
 
 
 def test__PetriNetWorkflowSkills__manifest_lists_status_skill() -> None:
-    """Validate the workflow skills manifest lists exactly the Slice 1 status skill."""
+    """Validate the workflow skills manifest preserves the Slice 1 status skill."""
     # Manifest path is the slice-owned skills index under the workflow package.
     manifest_path: Path = Path("src/python/projectkoios/workflow/skills/manifest.json")
     # Manifest data is parsed so assertions inspect JSON structure, not text only.
@@ -14,12 +14,12 @@ def test__PetriNetWorkflowSkills__manifest_lists_status_skill() -> None:
 
     assert manifest_data["surface"] == "projectkoios.workflow.petrinet.agent_affordances"
     assert manifest_data["parent_effort"] == "petri-net-workflow-inspectability"
-    assert manifest_data["previous_slice"] == "live-petri-net-skeleton-slice-0"
-    assert manifest_data["status"] == "candidate-slice-1"
+    assert manifest_data["previous_slice"] == "petrinet-workflow-current-slice-status-reconciliation-slice-2"
+    assert manifest_data["status"] == "candidate-slice-3"
 
-    # Skills collection is intentionally limited to the one approved Slice 1 affordance.
+    # Skills collection includes the original status skill plus later workflow affordances.
     skills: list[object] = cast(list[object], manifest_data["skills"])
-    assert len(skills) == 1
+    assert len(skills) == 2
 
     # Skill entry carries the inspectable command and distribution boundaries.
     skill: dict[str, object] = cast(dict[str, object], skills[0])
@@ -72,4 +72,4 @@ def test__PetriNetWorkflowSkills__status_skill_preserves_boundaries() -> None:
     assert "Do not launch subagents merely because a transition is enabled." in combined_text
     assert "Do not expand scope beyond the user's current request." in combined_text
     assert "do not propagate themselves into `agents/global/*/skills/`" in combined_text
-    assert "Interactive workflow-control behavior remains deferred" in combined_text
+    assert "ask before file edits, routing, subagent launch, active/queued-state change" in combined_text

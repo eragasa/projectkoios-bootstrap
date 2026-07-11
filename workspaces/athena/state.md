@@ -2,8 +2,8 @@
 {
   "title": "Athena workspace state",
   "artifact_type": "workspace-state",
-  "status": "petrinet-workflow-agent-status-skill-slice-1-accepted-committed-queued-work-corrected",
-  "datetime": "20260711.122048Z",
+  "status": "petrinet-workflow-interactive-control-skill-slice-3-brief-drafted-pending-approval",
+  "datetime": "20260711.123305Z",
   "acting_as": "ATHENA",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/athena/",
@@ -133,12 +133,15 @@
 - HERMES relayed USER's operational correction that ATHENA must preserve active work and maintain a queue/backlog instead of replacing active state with each new incoming topic. ATHENA updated `workspaces/athena/active.md` and this state file to distinguish current active item, queued/backlog items, superseded/rejected items, and waiting/blocked items. Effective rule: new requests are queued unless USER/HERMES explicitly says to switch active work.
 - USER requested a new Petri-net slice after ATHENA reviewed VULCAN's Slice 1 work and identified a control-surface gap: `uv run projectkoios workflow status` still reports `active_slice=live-petri-net-skeleton-slice-0` while active Petri-net work has advanced. ATHENA drafted `docs/plans/implementation-brief.20260711.122048_petrinet-workflow-current-slice-status-reconciliation.md` for `petrinet-workflow-current-slice-status-reconciliation-slice-2`.
 - HERMES corrected queue discipline: `petrinet-workflow-agent-status-skill-slice-1` is accepted and committed as `e6742a76 Add Petri net workflow status skill`; the current-slice status reconciliation brief is queued/proposed only and must not be treated as active or routed to VULCAN unless USER/HERMES explicitly activates it after Slice 1 packaging/push. VULCAN produced `docs/plans/implementation-plan.20260711.122325_petrinet-workflow-current-slice-status-reconciliation.md` before the correction; ATHENA treats that plan as paused/queued input only.
+- HERMES later relayed explicit USER `go` to choose the Petri-net workflow interactive-control affordance as the next inspectability slice. ATHENA drafted `docs/plans/implementation-brief.20260711.123305_petrinet-workflow-interactive-control-skill-slice-3.md` and paused before VULCAN routing/implementation.
 
 ## Current active item
 
-- No new Petri-net implementation slice is active by default.
-- `petrinet-workflow-agent-status-skill-slice-1` is accepted and committed as `e6742a76 Add Petri net workflow status skill`.
-- Current operational boundary: finish packaging/push decision for Slice 1 before activating queued work.
+- `petrinet-workflow-interactive-control-skill-slice-3`
+  - Parent effort: Petri-net workflow harness / workflow inspectability.
+  - Status: ATHENA brief drafted; pending USER/HERMES approval before VULCAN routing/implementation.
+  - Key artifact:
+    - `docs/plans/implementation-brief.20260711.123305_petrinet-workflow-interactive-control-skill-slice-3.md`
 
 ## Queued/backlog items
 
@@ -151,9 +154,7 @@
    - Queue artifact: `docs/plans/queued-slice.20260711.122000_pi-skill-determinism-slice-0.md`.
    - Ordering: queued; do not activate unless USER/HERMES explicitly selects it.
    - Boundary: must not replace, rename, reframe, or block Petri-net workflow work.
-3. `petrinet-workflow-interactive-control-skill-slice-2`
-   - Deferred follow-on from `docs/plans/slicing.20260711.121500_petrinet-workflow-agent-affordances.md`.
-4. `operator-console-review-orientation-copy-fixture`
+3. `operator-console-review-orientation-copy-fixture`
    - Deferred UI readability/provenance refinement.
 
 ## Superseded/rejected items
@@ -165,12 +166,12 @@
 
 ## Waiting on / blocked items
 
-- USER/HERMES packaging/push decision for committed Slice 1.
-- USER/HERMES explicit activation of any queued next work after packaging/push.
+- USER/HERMES approval to route `petrinet-workflow-interactive-control-skill-slice-3` to VULCAN planning/implementation.
+- Commit/push boundary for accumulated accepted work remains a separate packaging decision.
 
 ## Open questions
 
-- USER/HERMES packaging/push decision for committed Slice 1.
+- USER/HERMES approval to route `petrinet-workflow-interactive-control-skill-slice-3` to VULCAN planning/implementation.
 - USER/HERMES review of future-slice roadmap if desired; roadmap is advisory and does not authorize later slices.
 - Whether to close/commit the accepted Operator Console P0/P1/P2 plus workflow-object architecture/brief bundle or select another bounded UI slice.
 - When to extract `src/typescript/projectkoios/ui/operator-console/` to `projectkoios/ui/operator-console/` and promote product/mothership authority.
@@ -182,9 +183,9 @@
 
 - Owner: HERMES/USER.
 - Recommended next actions:
-  1. Do not route queued `petrinet-workflow-current-slice-status-reconciliation-slice-2` unless USER/HERMES explicitly activates it.
-  2. Finish Slice 1 packaging/push decision first.
-  3. Preserve queued items as queued-only until USER/HERMES explicitly promotes one.
+  1. Review the interactive-control brief and decide whether to approve VULCAN planning/implementation.
+  2. Do not route to VULCAN until USER/HERMES approves implementation or explicitly authorizes direct coding.
+  3. Preserve `pi-skill-determinism-slice-0` as queued-only.
 - Operator Console P0/P1/P2 accepted boundaries: bootstrap incubation only; package-local lockfile only; behavior owned by ActionObject-style classes with data in typed interfaces/constants; `docs/policies/typescript-coding.md` remains draft/non-controlling; fixtures are static/stale-by-design; readability/navigation affordances are local browser inspection helpers only; no backend, live reads, messaging capability, activation/mutation, Petri-net graph editor, product UI authority, or bootstrap production-backend claim.
 - ADR conformance work remains available as a separate track: future slices should use updated `docs/schemas/adr.schema.json` without `routing`, preserve sidecar provenance, and avoid schema/lifecycle/workflow/storage-authority redesign unless repeated conformance pressure justifies it.
 

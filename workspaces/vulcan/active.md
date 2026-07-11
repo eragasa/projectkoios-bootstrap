@@ -2,8 +2,8 @@
 {
   "title": "Vulcan active work",
   "artifact_type": "workspace-active-priorities",
-  "status": "petrinet-workflow-current-slice-status-reconciliation-slice-2-implemented-validated",
-  "datetime": "20260711.122814Z",
+  "status": "petrinet-workflow-interactive-control-skill-slice-3-implemented-validated",
+  "datetime": "20260711.123801Z",
   "acting_as": "VULCAN",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/vulcan/",
@@ -11,16 +11,17 @@
   "priority_count": 1,
   "working_directory": "working/",
   "active_working_items": [
-    "docs/plans/implementation-brief.20260711.122048_petrinet-workflow-current-slice-status-reconciliation.md",
-    "docs/plans/implementation-plan.20260711.122325_petrinet-workflow-current-slice-status-reconciliation.md",
-    "docs/implementation/petrinet-workflow-current-slice-status-reconciliation-slice-2.20260711.122814.md",
-    "dev/workflow-nets/bootstrap-harness.workflow-net.json",
-    "tests/projectkoios/cli/test__workflow_status.py"
+    "docs/plans/implementation-brief.20260711.123305_petrinet-workflow-interactive-control-skill-slice-3.md",
+    "docs/implementation/petrinet-workflow-interactive-control-skill-slice-3.20260711.123801.md",
+    "src/python/projectkoios/workflow/skills/manifest.json",
+    "src/python/projectkoios/workflow/skills/README.md",
+    "src/python/projectkoios/workflow/skills/petrinet-workflow-interactive-control/SKILL.md",
+    "tests/projectkoios/workflow/test__PetriNetWorkflowSkills__interactive_control_skill.py"
   ],
   "scratch_directory": "scratch/",
-  "implementation_plan": "docs/plans/implementation-plan.20260711.122325_petrinet-workflow-current-slice-status-reconciliation.md",
-  "latest_report": "docs/implementation/petrinet-workflow-current-slice-status-reconciliation-slice-2.20260711.122814.md",
-  "latest_aar": null
+  "implementation_plan": null,
+  "latest_report": "docs/implementation/petrinet-workflow-interactive-control-skill-slice-3.20260711.123801.md",
+  "latest_aar": "docs/AAR/aar.20260711.123801_petrinet-workflow-interactive-control-skill-slice-3.md"
 }
 ```
 
@@ -28,48 +29,39 @@
 
 ## Current priority stack
 
-1. `petrinet-workflow-current-slice-status-reconciliation-slice-2`: implemented and validated after USER/HERMES activation.
-2. Purpose: update the static bootstrap workflow-net fixture/status output so `uv run projectkoios workflow status` no longer reports stale `active_slice=live-petri-net-skeleton-slice-0`.
-3. Boundaries preserved: fixture/status-output reconciliation only; workflow remains at `user_decision`; `user decision required: yes`; no runtime semantics changes, firing, persistence, live adapters, Operator Console/workflow-object coupling, schema/product authority, role/permission expansion, or product/mothership authority.
+1. `petrinet-workflow-interactive-control-skill-slice-3`: implemented and validated.
+2. Parent effort: Petri-net workflow harness / workflow inspectability.
+3. Boundaries preserved: no new project identity, no runtime or CLI behavior changes, no fixture edits, no transition firing/dry-run, no persistence, no live adapters/session reads, no Operator Console/workflow-object coupling, no schema/product authority, no role/permission expansion, no global skill directories, and `pi-skill-determinism-slice-0` remains queued.
 
 ## Latest working material
 
-- Brief: `docs/plans/implementation-brief.20260711.122048_petrinet-workflow-current-slice-status-reconciliation.md`.
-- Plan: `docs/plans/implementation-plan.20260711.122325_petrinet-workflow-current-slice-status-reconciliation.md`.
-- Implementation report: `docs/implementation/petrinet-workflow-current-slice-status-reconciliation-slice-2.20260711.122814.md`.
+- Brief: `docs/plans/implementation-brief.20260711.123305_petrinet-workflow-interactive-control-skill-slice-3.md`.
+- Implementation report: `docs/implementation/petrinet-workflow-interactive-control-skill-slice-3.20260711.123801.md`.
+- AAR: `docs/AAR/aar.20260711.123801_petrinet-workflow-interactive-control-skill-slice-3.md`.
 
 ## Implemented outputs
 
-- `dev/workflow-nets/bootstrap-harness.workflow-net.json` token color now reports `active_slice=petrinet-workflow-current-slice-status-reconciliation-slice-2`.
-- `tests/projectkoios/cli/test__workflow_status.py` asserts the new active-slice value and rejects the stale Slice 0 value.
+- `src/python/projectkoios/workflow/skills/manifest.json` now lists `petrinet-workflow-status` and `petrinet-workflow-interactive-control`.
+- `src/python/projectkoios/workflow/skills/README.md` describes both workflow-local affordances and boundaries.
+- `src/python/projectkoios/workflow/skills/petrinet-workflow-interactive-control/SKILL.md` defines inspect → summarize → recommend → ask/act behavior.
+- `tests/projectkoios/workflow/test__PetriNetWorkflowSkills__status_skill.py` preserves status-skill manifest coverage.
+- `tests/projectkoios/workflow/test__PetriNetWorkflowSkills__interactive_control_skill.py` validates Slice 3 manifest, instruction, and boundary language.
 
 ## Validation results
 
 From repository root:
 
 ```bash
-uv run projectkoios workflow status
+uv run pytest tests/projectkoios/workflow/test__PetriNetWorkflowSkills__status_skill.py tests/projectkoios/workflow/test__PetriNetWorkflowSkills__interactive_control_skill.py -q
 ```
 
-Passed; output shows new active slice, token at `user_decision`, enabled `approve_next_slice`, and `user decision required: yes`.
+Passed: `6 passed in 0.01s`.
 
 ```bash
-uv run pytest tests/projectkoios/workflow tests/projectkoios/cli -q
-```
-
-Passed: `18 passed in 0.06s`.
-
-```bash
-uv run projectkoios bootstrap validate-python-policy src/python/projectkoios/workflow tests/projectkoios/workflow tests/projectkoios/cli
+uv run projectkoios bootstrap validate-python-policy src/python/projectkoios/workflow tests/projectkoios/workflow
 ```
 
 Passed: `summary: 0 finding(s), 13 file(s)`.
-
-```bash
-uv run python -m json.tool dev/workflow-nets/bootstrap-harness.workflow-net.json >/dev/null
-```
-
-Passed.
 
 ```bash
 git diff --check

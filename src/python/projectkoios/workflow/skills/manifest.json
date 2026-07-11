@@ -1,13 +1,21 @@
 {
   "surface": "projectkoios.workflow.petrinet.agent_affordances",
   "parent_effort": "petri-net-workflow-inspectability",
-  "previous_slice": "live-petri-net-skeleton-slice-0",
-  "status": "candidate-slice-1",
+  "previous_slice": "petrinet-workflow-current-slice-status-reconciliation-slice-2",
+  "status": "candidate-slice-3",
   "skills": [
     {
       "name": "petrinet-workflow-status",
       "path": "src/python/projectkoios/workflow/skills/petrinet-workflow-status/SKILL.md",
       "purpose": "Teach agents to inspect and report Petri-net workflow status before advancing work",
+      "command": "uv run projectkoios workflow status",
+      "runtime_mutation_allowed": false,
+      "harness_global_propagation": "deferred"
+    },
+    {
+      "name": "petrinet-workflow-interactive-control",
+      "path": "src/python/projectkoios/workflow/skills/petrinet-workflow-interactive-control/SKILL.md",
+      "purpose": "Teach agents to operate Petri-net workflow sessions interactively by inspecting, summarizing, recommending, and asking before action",
       "command": "uv run projectkoios workflow status",
       "runtime_mutation_allowed": false,
       "harness_global_propagation": "deferred"

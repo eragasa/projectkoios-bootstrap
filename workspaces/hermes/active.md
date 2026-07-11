@@ -18,9 +18,9 @@
 
 ## Current priority stack
 
-1. Package/commit accepted Petri-net workflow current-slice status reconciliation Slice 2.
-2. Preserve queue discipline: new topics are queued, not substituted for active work.
-3. After packaging, choose the next queued follow-up only by USER/HERMES direction.
+1. Package/commit accepted Petri-net workflow interactive-control skill Slice 3.
+2. Prioritize mechanical workflow engine controls over additional prose-only skill work.
+3. Request/prepare the next bounded workflow-engine slice for machine-visible queue/activate state.
 
 ## Accepted Petri-net workflow inspectability artifacts
 
@@ -54,23 +54,32 @@
 - `tests/projectkoios/cli/test__workflow_status.py`
 - `docs/implementation/petrinet-workflow-current-slice-status-reconciliation-slice-2.20260711.122814.md`
 
+### Slice 3: interactive-control skill
+
+- `docs/plans/implementation-brief.20260711.123305_petrinet-workflow-interactive-control-skill-slice-3.md`
+- `src/python/projectkoios/workflow/skills/README.md`
+- `src/python/projectkoios/workflow/skills/manifest.json`
+- `src/python/projectkoios/workflow/skills/petrinet-workflow-interactive-control/SKILL.md`
+- `tests/projectkoios/workflow/test__PetriNetWorkflowSkills__interactive_control_skill.py`
+- `docs/implementation/petrinet-workflow-interactive-control-skill-slice-3.20260711.123801.md`
+
 ## Queued follow-ups
 
 - `docs/plans/queued-slice.20260711.122000_pi-skill-determinism-slice-0.md` — queued only; must not supersede accepted Petri-net slices.
-- Petri-net workflow interactive-control affordance — deferred follow-up candidate.
+- Mechanical workflow queue/activate controls — recommended next priority; needs bounded slice/brief.
 
 ## Closeout watchpoints
 
-- Keep `workflow status` read-only.
+- Keep `workflow status` read-only until a specific transition-firing/activation slice is approved.
 - Keep the static bootstrap workflow-net fixture non-authoritative.
 - Keep canonical skill source under `src/python/projectkoios/workflow/skills/`; `.agents/skills/petrinet-workflow-status` is discovery exposure only.
-- Do not treat this as transition firing, persistence, Operator Console integration, workflow-object runtime coupling, schema authority, role/permission expansion, or product/mothership workflow authority.
+- Do not treat skill guidance as mechanical workflow-state authority.
 - Preserve active/queued/superseded/deferred distinctions.
 
 ## Waiting on
 
-- USER/HERMES packaging/commit, then next queued-slice decision.
+- HERMES packaging/commit, then orchestration of next workflow-engine control slice.
 
 ## Exit criteria
 
-Hermes state is stable when accepted Petri-net workflow current-slice status reconciliation Slice 2 is packaged according to user direction and the next queued follow-up is left queued unless explicitly activated.
+Hermes state is stable when accepted Petri-net workflow interactive-control skill Slice 3 is packaged and the next workflow-engine control slice is queued/briefed without replacing existing queued work.
