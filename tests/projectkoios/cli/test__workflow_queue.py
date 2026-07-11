@@ -24,10 +24,9 @@ def test__workflow_queue__prints_static_queue_state(capsys: pytest.CaptureFixtur
     assert "mode: static-read-only-fixture" in output
     assert "not canonical workflow authority" in output
     assert "active:" in output
-    assert "  none" in output
     assert "queued/proposed:" in output
     assert "1. pi-skill-determinism-slice-0 state=queued" in output
-    assert "adr-template-schema-contract-successor-draft-slice-11 state=accepted-committed-pending" in output
+    assert "adr-template-schema-contract-successor-draft-slice-11 state=accepted-committed" in output
     assert "petrinet-workflow-queue-state-slice-4 state=proposed-next" not in output
     assert "completed/recent:" in output
     assert "petrinet-workflow-queue-state-slice-4 state=accepted-committed-pushed commit=5f209114" in output
@@ -40,7 +39,7 @@ def test__workflow_queue__prints_static_queue_state(capsys: pytest.CaptureFixtur
     assert "implementation-brief.20260711.121000_agent-skills-workflow-status-slice-0.md" in output
     assert "deferred:" in output
     assert "next decision needed:" in output
-    assert "Decide source disposition for docs/adr/adr.adr-template-contract.md" in output
+    assert "do not activate queued" in output
 
 
 def test__WorkflowQueueStateFixtureLoader__loads_static_fixture() -> None:
@@ -53,11 +52,12 @@ def test__WorkflowQueueStateFixtureLoader__loads_static_fixture() -> None:
     assert fixture.queue_id == "bootstrap-harness.queue-state"
     assert fixture.surface == "projectkoios.workflow.queue_state"
     assert fixture.status == "static-read-only-fixture"
-    assert fixture.active_item is None
+    assert fixture.active_item is not None
+    assert fixture.active_item.name == "adr-schema-base-source-disposition-planning-slice-12"
     assert fixture.queued_items[0].name == "pi-skill-determinism-slice-0"
     assert fixture.queued_items[0].state == "queued"
     assert fixture.completed_items[0].name == "adr-template-schema-contract-successor-draft-slice-11"
-    assert fixture.completed_items[0].state == "accepted-committed-pending"
+    assert fixture.completed_items[0].state == "accepted-committed"
     assert fixture.completed_items[1].name == "petrinet-workflow-queue-state-slice-4"
     assert fixture.completed_items[1].commit == "5f209114"
     assert fixture.completed_items[2].commit == "b4de9c64"
@@ -68,16 +68,29 @@ def test__WorkflowQueueStateFixtureLoader__loads_static_fixture() -> None:
 
 def test__WorkflowQueueStateReporter__renders_empty_sections_as_none() -> None:
     """Validate empty queue sections render explicitly as none."""
-    # Loader provides the static fixture with no active or deferred item.
-    loader: WorkflowQueueStateFixtureLoader = WorkflowQueueStateFixtureLoader()
-    # Fixture is rendered through the queue reporter under test.
-    fixture: WorkflowQueueStateFixture = loader.load(PathLikeQueueFixture.default_path())
+    # Synthetic fixture avoids coupling absence behavior to current live queue state.
+    fixture: WorkflowQueueStateFixture = WorkflowQueueStateFixture(
+        path=PathLikeQueueFixture.default_path(),
+        queue_id="bootstrap-harness.queue-state",
+        surface="projectkoios.workflow.queue_state",
+        parent_effort="test",
+        status="static-read-only-fixture",
+        authority="Static read-only fixture; not canonical workflow authority and not product authority.",
+        active_item=None,
+        queued_items=(),
+        completed_items=(),
+        superseded_items=(),
+        deferred_items=(),
+        next_decision_needed="None.",
+    )
 
     # Rendered text must make absent sections explicit for operators.
     output: str = WorkflowQueueStateReporter().render(fixture)
 
     assert "active:\n  none" in output
+    assert "queued/proposed:\n  none" in output
     assert "deferred:\n  none" in output
+    assert "WARNING: queue active_item is set" not in output
 
 
 class PathLikeQueueFixture:

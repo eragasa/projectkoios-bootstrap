@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 from collections.abc import Callable
+import json
 from pathlib import Path
+import shutil
 import sys
 
 import pytest
@@ -16,6 +18,9 @@ from projectkoios.cli.workflow import (
     WorkflowStatusReporter,
 )
 from projectkoios.workflow import PetriNetExecutor, PetriNetState, PetriNetTransitionBinding
+
+
+REPO_ROOT: Path = Path(__file__).resolve().parents[3]
 
 
 def test__workflow_status__prints_static_fixture_status(capsys: pytest.CaptureFixture[str], monkeypatch: pytest.MonkeyPatch) -> None:
@@ -38,7 +43,7 @@ def test__workflow_status__prints_static_fixture_status(capsys: pytest.CaptureFi
     assert "tokens:" in output
     assert "current-slice at user_decision" in output
     assert "requires_user_decision=true" in output
-    assert "active_slice=none" in output
+    assert "active_slice=" in output
     assert "petrinet-workflow-current-slice-status-reconciliation-slice-2" not in output
     assert "live-petri-net-skeleton-slice-0" not in output
     assert "enabled transitions:" in output
@@ -48,8 +53,46 @@ def test__workflow_status__prints_static_fixture_status(capsys: pytest.CaptureFi
     assert "queue control surface:" in output
     assert "workflow queue: bootstrap-harness.queue-state" in output
     assert "queued/proposed:" in output
+    assert "active:" in output
     assert "next decision needed:" in output
-    assert "WARNING: queue active_item is set" not in output
+
+
+def test__workflow_status__prints_active_item_warning_from_queue_overlay(
+    capsys: pytest.CaptureFixture[str], monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    """Validate status command surfaces queue active-item warnings from fixture state."""
+    # Temporary fixtures prove the CLI reads queue overlay state at status time.
+    fixture_dir: Path = tmp_path / "dev" / "workflow-nets"
+    fixture_dir.mkdir(parents=True)
+    shutil.copyfile(REPO_ROOT / "dev/workflow-nets/bootstrap-harness.workflow-net.json", fixture_dir / "bootstrap-harness.workflow-net.json")
+    shutil.copyfile(REPO_ROOT / "dev/workflow-nets/bootstrap-harness.queue-state.json", fixture_dir / "bootstrap-harness.queue-state.json")
+    # Queue path is mutated only before command execution to create a warning fixture.
+    queue_path: Path = fixture_dir / "bootstrap-harness.queue-state.json"
+    # Queue data remains the standard fixture shape with only active_item overwritten.
+    queue_data: dict[str, object] = json.loads(queue_path.read_text(encoding="utf-8"))
+    queue_data["active_item"] = {
+        "name": "active-workflow-item",
+        "state": "active",
+        "artifact_refs": ["docs/plans/active.md"],
+    }
+    queue_path.write_text(json.dumps(queue_data, indent=2) + "\n", encoding="utf-8")
+    # Status snapshot proves the status command does not mutate the Petri-net fixture.
+    before_status: str = (fixture_dir / "bootstrap-harness.workflow-net.json").read_text(encoding="utf-8")
+    # Queue snapshot proves the status command reads but does not write queue state.
+    before_queue: str = queue_path.read_text(encoding="utf-8")
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setattr(sys, "argv", ["projectkoios", "workflow", "status"])
+
+    main()
+
+    # Output is checked for status-level overlay composition, not reporter-only behavior.
+    output: str = capsys.readouterr().out
+    assert "queue control surface:" in output
+    assert "active-workflow-item state=active" in output
+    assert "WARNING: queue active_item is set" in output
+    assert "do not recommend or activate queued items" in output
+    assert (fixture_dir / "bootstrap-harness.workflow-net.json").read_text(encoding="utf-8") == before_status
+    assert queue_path.read_text(encoding="utf-8") == before_queue
 
 
 def test__WorkflowStatusReporter__renders_queue_active_item_warning() -> None:

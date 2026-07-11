@@ -2,25 +2,14 @@
 {
   "title": "Vulcan active work",
   "artifact_type": "workspace-active-priorities",
-  "status": "workflow-status-queue-overlay-hotfix-implemented-validated",
+  "status": "workflow-status-queue-overlay-durability-reviewed",
   "datetime": "20260712",
   "acting_as": "VULCAN",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/vulcan/",
   "branch": "master",
   "priority_count": 1,
-  "working_directory": "working/",
-  "active_working_items": [
-    "src/python/projectkoios/cli/workflow.py",
-    "tests/projectkoios/cli/test__workflow_status.py",
-    "tests/projectkoios/cli/test__workflow_queue.py",
-    "docs/implementation/workflow-status-queue-overlay-hotfix.20260712.md",
-    "docs/AAR/aar.20260712_workflow-status-queue-overlay-hotfix.md"
-  ],
-  "scratch_directory": "scratch/",
-  "implementation_plan": null,
-  "latest_report": "docs/implementation/workflow-status-queue-overlay-hotfix.20260712.md",
-  "latest_aar": "docs/AAR/aar.20260712_workflow-status-queue-overlay-hotfix.md"
+  "latest_report": "docs/implementation/workflow-status-queue-overlay-durability-review.20260712.md"
 }
 ```
 
@@ -28,42 +17,23 @@
 
 ## Current priority stack
 
-1. `workflow-status-queue-overlay-hotfix`: implemented and validated.
-2. Parent issue: Petri-net workflow status hid queue control-surface state and misled HERMES/operator.
-3. Boundaries preserved: read-only display only; no workflow mutation; no activation/deactivation; no new persistence/schema semantics; no transition logic changes; no role permission model; no Operator Console/live adapter/session integration; no `docs/adr` or `docs/schemas` edits.
+1. `workflow-status-queue-overlay-hotfix`: durability reviewed and bounded test hardening applied.
+2. Source hotfix commit: `b13d7148 Show queue overlay in workflow status`.
+3. Boundaries preserved: read-only display/test hardening only; no workflow mutation, activation/deactivation, schema/fixture semantics, transition logic, role model, live adapter, Operator Console semantics, `docs/adr`, or `docs/schemas` edits.
 
-## Implemented outputs
+## Implemented durability hardening
 
-- `uv run projectkoios workflow status` now prints queue control surface state after existing Petri-net status output.
-- Queue overlay includes active item, queued/proposed items, completed/recent items, deferred/superseded sections, and next decision needed.
-- Hard warning is rendered when queue `active_item` is set.
-- Focused tests cover queue overlay in status output and active-item warning behavior.
+- Added CLI-level `workflow status` test with temporary queue fixture where `active_item` is set.
+- Test asserts queue overlay, active-item warning, and no mutation of status or queue fixture files.
+- Relaxed brittle current-fixture assumptions so queue/status advancement does not create false confidence or unnecessary failures.
+- Empty-section behavior now uses a synthetic fixture instead of depending on live queue state.
 
 ## Validation results
 
-From repository root:
-
-```bash
-uv run pytest tests/projectkoios/cli/test__workflow_status.py tests/projectkoios/cli/test__workflow_queue.py -q
-```
-
-Passed: `6 passed in 0.06s`.
-
-```bash
-uv run mypy src/python/projectkoios/cli/workflow.py tests/projectkoios/cli/test__workflow_status.py tests/projectkoios/cli/test__workflow_queue.py
-```
-
-Passed: `Success: no issues found in 3 source files`.
-
-```bash
-uv run projectkoios bootstrap validate-python-policy src/python/projectkoios/cli/workflow.py tests/projectkoios/cli/test__workflow_status.py tests/projectkoios/cli/test__workflow_queue.py
-```
-
-Passed: `summary: 0 finding(s), 3 file(s)`.
-
-Manual `uv run projectkoios workflow status` check showed queue overlay and next decision needed.
+- `uv run pytest tests/projectkoios/cli/test__workflow_status.py tests/projectkoios/cli/test__workflow_queue.py -q` → `7 passed in 0.10s`
+- `uv run mypy src/python/projectkoios/cli/workflow.py tests/projectkoios/cli/test__workflow_status.py tests/projectkoios/cli/test__workflow_queue.py` → success
+- `uv run projectkoios bootstrap validate-python-policy tests/projectkoios/cli/test__workflow_status.py tests/projectkoios/cli/test__workflow_queue.py` → `summary: 0 finding(s), 2 file(s)`
 
 ## Next expected artifact
 
-- HERMES/USER review of hotfix.
-- Optional ATHENA follow-up for formal workflow status/queue consistency architecture.
+HERMES/USER review. No additional implementation slice is required for durability. Optional future bounded slice: display-only mismatch reporting between status `active_slice` and queue `active_item`.
