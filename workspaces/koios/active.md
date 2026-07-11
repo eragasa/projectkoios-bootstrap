@@ -4,7 +4,7 @@
 
 - Type: workspace-active-state
 - Status: active
-- Updated: 20260711T141500Z
+- Updated: 20260711T143500Z
 - Updated by: KOIOS
 - Repository: projectkoios-bootstrap
 - Workspace: `workspaces/koios/`
@@ -34,6 +34,8 @@ KOIOS completed ADR rationalization provenance intake in `working/provenance-int
 - `working/classification-proposal.20260711_adr-hierarchy-rationalization.md`
 - `working/provenance-risk.20260711_adr-json-authority-mass-conversion.md`
 - `working/provenance-review.20260711_adr-json-authority-inventory-classification-slice-0.md`
+- `working/override-recommendations.20260711_adr-json-authority-inventory-slice-1.md`
+- `working/provenance-review.20260711_adr-json-authority-inventory-review-overrides-slice-1.md`
 - `../../docs/process-capture/pc.workflow.document-trace.md`
 - `../../docs/process-capture/pc.workflow.document-trace.20260706.025408Z.md`
 - `../../docs/process-capture/pc.workflow.document-trace.20260708.044950Z.md`
@@ -76,6 +78,10 @@ KOIOS completed `working/classification-proposal.20260711_adr-hierarchy-rational
 KOIOS completed `working/provenance-risk.20260711_adr-json-authority-mass-conversion.md` for the JSON-authoritative ADR store path.
 
 KOIOS completed `working/provenance-review.20260711_adr-json-authority-inventory-classification-slice-0.md`. Verdict: review-only evidence is provenance-adequate with watchpoints; do not consume generated `proposed_authority` / `json_authority_candidate` labels as final conversion authority without HERMES/USER review and likely overrides.
+
+KOIOS completed `working/override-recommendations.20260711_adr-json-authority-inventory-slice-1.md` for Slice 1 override planning. It recommends conservative candidate-only values, explicit domain-review/manual-review overrides, source-provenance handling, automatic-conversion exclusions, and messy canary candidates.
+
+KOIOS completed `working/provenance-review.20260711_adr-json-authority-inventory-review-overrides-slice-1.md`. Verdict: Slice 1 faithfully applies core KOIOS recommendations and is provenance-safe as review-only override evidence, with minor watchpoints; it still does not authorize conversion or cutover.
 
 ## KOIOS next actions
 

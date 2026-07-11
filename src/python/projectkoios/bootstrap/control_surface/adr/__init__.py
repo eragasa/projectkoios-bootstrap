@@ -18,6 +18,12 @@ from projectkoios.bootstrap.control_surface.adr.inventory import (
     run_adr_json_authority_inventory,
 )
 from projectkoios.bootstrap.control_surface.adr.markdown import AdrMarkdownError, AdrMarkdownRecordParser, AdrProjectionRenderer
+from projectkoios.bootstrap.control_surface.adr.overrides import (
+    AdrInventoryOverridePaths,
+    AdrInventoryOverrideResult,
+    AdrInventoryOverrideRunner,
+    run_adr_json_authority_inventory_overrides,
+)
 from projectkoios.bootstrap.control_surface.adr.models import (
     ArtifactDisposition,
     PilotPaths,
@@ -39,6 +45,9 @@ __all__ = [
     "AdrInventoryPaths",
     "AdrInventoryResult",
     "AdrInventoryRunner",
+    "AdrInventoryOverridePaths",
+    "AdrInventoryOverrideResult",
+    "AdrInventoryOverrideRunner",
     "AdrStoragePilot",
     "AdrMarkdownError",
     "AdrMarkdownRecordParser",
@@ -54,6 +63,7 @@ __all__ = [
     "SourceOfTruthMode",
     "run_adr_bidirectional_object_canary",
     "run_adr_json_authority_inventory",
+    "run_adr_json_authority_inventory_overrides",
     "run_json_schemas_conformance",
     "run_pilot",
 ]

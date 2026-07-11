@@ -1,0 +1,39 @@
+{
+  "artifact_hashes": {
+    "overrides": "5d9e7f241b61ab93f1f23cb9ee96b3e1b4d05e5e88d5bd295b5cb1ab7ec1213e",
+    "review_summary": "5d1717393d95e8ab6e3191fa13aa3de69df98e44abd7c33e6bdfe0e9ce938b61",
+    "reviewed_inventory": "76a3e11af3c1cd96e875a27a077d5bb021db1d6e8f541c97d1da2aeb8dd5f0da"
+  },
+  "artifacts": {
+    "manifest": "dev/adr-json-authority-inventory-review-overrides-slice-1/manifest.json",
+    "overrides": "dev/adr-json-authority-inventory-review-overrides-slice-1/overrides.json",
+    "review_summary": "dev/adr-json-authority-inventory-review-overrides-slice-1/review-summary.json",
+    "reviewed_inventory": "dev/adr-json-authority-inventory-review-overrides-slice-1/reviewed-inventory.json"
+  },
+  "authority_change": false,
+  "candidate_only": true,
+  "conversion_performed": false,
+  "database_authority": false,
+  "generated_at": "20260711.142700Z",
+  "mode": "review-only inventory override evidence",
+  "schema_change_allowed": false,
+  "slice_name": "adr-json-authority-inventory-review-overrides-slice-1",
+  "source_inventory": {
+    "entry_count": 43,
+    "path": "dev/adr-json-authority-inventory-classification-slice-0/source-inventory.json",
+    "sha256": "dbb5558ce332c74396c7bc21b3196ed57cbc85da99b4d89c1b1afe290476f421"
+  },
+  "source_mutation_allowed": false,
+  "source_refs": {
+    "hermes_decision": "docs/reviews/hermes-decision.20260711.142700_adr-json-authority-inventory-review-overrides-slice-1.md",
+    "koios_recommendations": "workspaces/koios/working/override-recommendations.20260711_adr-json-authority-inventory-slice-1.md",
+    "slice_0_acceptance": "docs/reviews/hermes-acceptance.20260711.142000_adr-json-authority-inventory-classification-slice-0.md",
+    "source_brief": "docs/plans/implementation-brief.20260711.142200_adr-json-authority-inventory-review-overrides-slice-1.md"
+  },
+  "validation_command_summary": {
+    "deterministic_generation": "canonical JSON with stable generated_at and deterministic rule set",
+    "json_validity": "pending closeout validation",
+    "no_database_files": "pending closeout validation",
+    "source_schema_non_mutation": "pending closeout validation"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "authority_change": false,
+  "automatic_conversion_eligibility_candidate_count": 17,
+  "candidate_only": true,
+  "changed_count": 43,
+  "messy_canary_recommendations": [
+    {
+      "candidate_only": true,
+      "rank": 1,
+      "rationale": "missing status and schema/implementation contract ambiguity without broader product-domain implications",
+      "recommendation": "primary_messy_canary_candidate",
+      "source_path": "docs/adr/adr.schema-base.md"
+    },
+    {
+      "candidate_only": true,
+      "rank": 2,
+      "rationale": "status casing preservation and domain/training review flags",
+      "recommendation": "alternate_messy_canary_candidate",
+      "source_path": "docs/adr/adr.20260702.144539_agent-production-trace-and-training-capture.draft.md"
+    }
+  ],
+  "mode": "review-only override summary",
+  "reviewed_counts": {
+    "by_authority_effect": {
+      "candidate": 37,
+      "domain_review_required": 5,
+      "none": 1
+    },
+    "by_category_candidate": {
+      "architecture_blueprint": 1,
+      "current_decision": 1,
+      "implementation_workflow_support": 15,
+      "index_or_control_surface": 1,
+      "policy_process": 5,
+      "product_future_system_draft": 5,
+      "template_schema_contract": 15
+    },
+    "by_disposition_candidate": {
+      "domain_review_required": 5,
+      "index_or_control_surface": 1,
+      "json_authority_candidate": 17,
+      "manual_review_required": 15,
+      "source_only_provenance_candidate": 5
+    }
+  },
+  "slice_name": "adr-json-authority-inventory-review-overrides-slice-1",
+  "total_reviewed": 43,
+  "unchanged_count": 0
+}

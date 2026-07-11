@@ -2,7 +2,7 @@
 {
   "title": "Athena workspace state",
   "artifact_type": "workspace-state",
-  "status": "adr-json-authority-inventory-athena-reviewed-pending-hermes-final-acceptance",
+  "status": "adr-json-authority-messy-canary-brief-drafted-pending-approval",
   "datetime": "20260711.140200Z",
   "acting_as": "ATHENA",
   "repository": "projectkoios-bootstrap",
@@ -153,13 +153,20 @@
 - VULCAN implemented Phase 0 inventory/classification and reported `docs/implementation/adr-json-authority-inventory-classification-slice-0.20260711.141200.md`, `docs/AAR/aar.20260711.141200_adr-json-authority-inventory-classification-slice-0.md`, and review-only evidence under `dev/adr-json-authority-inventory-classification-slice-0/`.
 - ATHENA reviewed and accepted the implementation with watchpoints in `docs/reviews/architecture-conformance.20260711.141500_adr-json-authority-inventory-classification-slice-0.md`; ATHENA reran focused pytest, mypy, python policy, JSON validity, DB-file scan, and `git diff --check` successfully.
 - KOIOS completed provenance review at `workspaces/koios/working/provenance-review.20260711_adr-json-authority-inventory-classification-slice-0.md`, finding the slice provenance-adequate as review-only inventory/classification evidence but not sufficient for direct conversion/cutover authority. ATHENA incorporated KOIOS watchpoints into the conformance review addendum: candidate authority labels require HERMES/USER review, domain/product ambiguity may be under-flagged, architecture/policy/template distinctions need human review/overrides, manifest validation summary has pre-closeout pending labels, and later conversion/canary evidence is still required.
+- HERMES accepted `adr-json-authority-inventory-classification-slice-0` with watchpoints in `docs/reviews/hermes-acceptance.20260711.142000_adr-json-authority-inventory-classification-slice-0.md`, committed/pushed package `ad91148c`, and selected an inventory review/override slice as the next recommended work.
+- ATHENA drafted `docs/plans/implementation-brief.20260711.142200_adr-json-authority-inventory-review-overrides-slice-1.md` for review-only correction/override evidence and paused for HERMES/USER approval before VULCAN routing.
+- HERMES approved Slice 1 for VULCAN implementation in `docs/reviews/hermes-decision.20260711.142700_adr-json-authority-inventory-review-overrides-slice-1.md`; VULCAN implemented and reported `docs/implementation/adr-json-authority-inventory-review-overrides-slice-1.20260711.143000.md`, code under `src/python/projectkoios/bootstrap/control_surface/adr/overrides.py`, tests, and review-only evidence under `dev/adr-json-authority-inventory-review-overrides-slice-1/`.
+- ATHENA reviewed and accepted Slice 1 with watchpoints in `docs/reviews/architecture-conformance.20260711.143300_adr-json-authority-inventory-review-overrides-slice-1.md`; ATHENA reran focused pytest, mypy, python policy, JSON validity, DB-file scan, `git diff --check`, and spot checks for 43/43 reviewed entries, no retained `proposed_authority`, called-out domain-review overrides, and primary messy canary recommendation.
+- KOIOS provenance review for Slice 1 exists at `workspaces/koios/working/provenance-review.20260711_adr-json-authority-inventory-review-overrides-slice-1.md`; ATHENA incorporated its minor watchpoints into the conformance review addendum.
+- HERMES accepted Slice 1 with watchpoints in `docs/reviews/hermes-acceptance.20260711.143600_adr-json-authority-inventory-review-overrides-slice-1.md` and relayed USER/HERMES GO for the next recommended messy canary slice.
+- ATHENA drafted `docs/plans/implementation-brief.20260711.143800_adr-json-authority-messy-canary-slice-2.md` for exactly one source, `docs/adr/adr.schema-base.md`, requiring reviewed inventory/override input, candidate evidence under `dev/`, missing-status/conflict/lossiness reporting, sidecar/provenance preservation, optional evidence-only projection/parse-back, and strict no-mutation/no-schema/no-cutover/no-DB/no-bulk boundaries.
 
 ## Current active item
 
-- `adr-json-authority-inventory-classification-slice-0`
+- `adr-json-authority-messy-canary-slice-2`
   - Parent effort: ADR rationalization / JSON-authoritative ADR store staged migration.
-  - Status: VULCAN implemented and ATHENA conformance-reviewed/accepted with watchpoints; pending HERMES/USER final acceptance.
-  - Purpose: review Phase 0 review-only inventory/classification manifest for `docs/adr/*.md` and ADR index/control surfaces before conversion or authority changes.
+  - Status: implementation brief drafted; pending HERMES/USER approval before VULCAN routing or implementation.
+  - Purpose: prove one messy/ambiguous ADR-space canary conversion behavior for `docs/adr/adr.schema-base.md` without authority cutover or source mutation.
   - Key artifacts:
     - `docs/plans/architecture-intake.20260711.131140_adr-bidirectional-json-markdown-objects.md`
     - `workspaces/koios/working/provenance-intake.20260711_adr-rationalization-json-md-object-track.md`
@@ -178,6 +185,16 @@
     - `docs/reviews/architecture-conformance.20260711.141500_adr-json-authority-inventory-classification-slice-0.md`
     - `workspaces/koios/working/provenance-review.20260711_adr-json-authority-inventory-classification-slice-0.md`
     - `dev/adr-json-authority-inventory-classification-slice-0/`
+    - `docs/reviews/hermes-acceptance.20260711.142000_adr-json-authority-inventory-classification-slice-0.md`
+    - `docs/plans/implementation-brief.20260711.142200_adr-json-authority-inventory-review-overrides-slice-1.md`
+    - `docs/reviews/hermes-decision.20260711.142700_adr-json-authority-inventory-review-overrides-slice-1.md`
+    - `workspaces/koios/working/override-recommendations.20260711_adr-json-authority-inventory-slice-1.md`
+    - `docs/implementation/adr-json-authority-inventory-review-overrides-slice-1.20260711.143000.md`
+    - `docs/reviews/architecture-conformance.20260711.143300_adr-json-authority-inventory-review-overrides-slice-1.md`
+    - `workspaces/koios/working/provenance-review.20260711_adr-json-authority-inventory-review-overrides-slice-1.md`
+    - `dev/adr-json-authority-inventory-review-overrides-slice-1/`
+    - `docs/reviews/hermes-acceptance.20260711.143600_adr-json-authority-inventory-review-overrides-slice-1.md`
+    - `docs/plans/implementation-brief.20260711.143800_adr-json-authority-messy-canary-slice-2.md`
 
 ## Queued/backlog items
 
@@ -197,8 +214,8 @@
 
 ## Waiting on / blocked items
 
-- HERMES/USER final acceptance of `docs/reviews/architecture-conformance.20260711.141500_adr-json-authority-inventory-classification-slice-0.md`, KOIOS provenance review `workspaces/koios/working/provenance-review.20260711_adr-json-authority-inventory-classification-slice-0.md`, and review-only inventory evidence before any follow-on migration work.
-- Commit/push boundary for accumulated accepted work remains a separate packaging decision.
+- HERMES/USER approval of `docs/plans/implementation-brief.20260711.143800_adr-json-authority-messy-canary-slice-2.md` before VULCAN routing or implementation.
+- Slice 0 package is committed/pushed as `ad91148c`; Slice 1 package boundary remains separate unless HERMES reports it committed/pushed.
 
 ## Open questions
 
@@ -214,7 +231,7 @@
 
 - Owner: HERMES/USER.
 - Recommended next actions:
-  1. HERMES/USER should review ATHENA conformance review `docs/reviews/architecture-conformance.20260711.141500_adr-json-authority-inventory-classification-slice-0.md`, KOIOS provenance review `workspaces/koios/working/provenance-review.20260711_adr-json-authority-inventory-classification-slice-0.md`, and `dev/adr-json-authority-inventory-classification-slice-0/` evidence, then decide final acceptance.
+  1. HERMES/USER should review `docs/plans/implementation-brief.20260711.143800_adr-json-authority-messy-canary-slice-2.md` and decide whether to approve, revise, or defer it.
   2. Preserve `pi-skill-determinism-slice-0` as queued-only unless explicitly activated.
 - Operator Console P0/P1/P2 accepted boundaries: bootstrap incubation only; package-local lockfile only; behavior owned by ActionObject-style classes with data in typed interfaces/constants; `docs/policies/typescript-coding.md` remains draft/non-controlling; fixtures are static/stale-by-design; readability/navigation affordances are local browser inspection helpers only; no backend, live reads, messaging capability, activation/mutation, Petri-net graph editor, product UI authority, or bootstrap production-backend claim.
 - ADR conformance work remains available as a separate track: future slices should use updated `docs/schemas/adr.schema.json` without `routing`, preserve sidecar provenance, and avoid schema/lifecycle/workflow/storage-authority redesign unless repeated conformance pressure justifies it.

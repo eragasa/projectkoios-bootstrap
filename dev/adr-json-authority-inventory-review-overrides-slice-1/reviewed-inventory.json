@@ -1,0 +1,1834 @@
+{
+  "authority_change": false,
+  "candidate_only": true,
+  "entries": [
+    {
+      "authority_change": false,
+      "candidate_only": true,
+      "changed": true,
+      "original": {
+        "authority_effect": "none",
+        "automatic_conversion_eligibility_candidate": false,
+        "category_candidate": "index_or_control_surface",
+        "disposition_candidate": "index_or_control_surface",
+        "exclusion_blocking_reasons": [
+          "missing_observed_status",
+          "missing_status",
+          "not_adr_source_candidate"
+        ],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": true,
+          "owner_review_required": true
+        }
+      },
+      "rationale": [
+        "index/control surface is not an ADR record"
+      ],
+      "reviewed": {
+        "authority_effect": "none",
+        "automatic_conversion_eligibility_candidate": false,
+        "category_candidate": "index_or_control_surface",
+        "disposition_candidate": "index_or_control_surface",
+        "exclusion_blocking_reasons": [
+          "index_or_control_surface",
+          "missing_observed_status",
+          "missing_status",
+          "not_adr_source_candidate"
+        ],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": true,
+          "owner_review_required": true
+        }
+      },
+      "source_basis": [
+        "KOIOS section A index/control recommendation"
+      ],
+      "source_hash": "9950799ed8c20d7980634fc086309cfd98fd3c065499d25f6aab965ec6dfef2e",
+      "source_mutation": false,
+      "source_path": "docs/adr/README.md"
+    },
+    {
+      "authority_change": false,
+      "candidate_only": true,
+      "changed": true,
+      "original": {
+        "authority_effect": "proposed_authority",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "implementation_workflow_support",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "rationale": [
+        "proposed_authority downgraded to candidate for review-only planning",
+        "json_authority_candidate retained only as candidate conversion-planning evidence",
+        "domain/product owner review required before conversion planning"
+      ],
+      "reviewed": {
+        "authority_effect": "domain_review_required",
+        "automatic_conversion_eligibility_candidate": false,
+        "category_candidate": "product_future_system_draft",
+        "disposition_candidate": "domain_review_required",
+        "exclusion_blocking_reasons": [
+          "domain_review_required"
+        ],
+        "owner_domain_review_flags": {
+          "domain_review_required": true,
+          "manual_review_required": true,
+          "owner_review_required": true
+        }
+      },
+      "source_basis": [
+        "HERMES authority-forward label watchpoint",
+        "KOIOS global override rule 3",
+        "KOIOS section B domain/product review recommendation"
+      ],
+      "source_hash": "690fdcc3754b779bc2b5becdc751465dbecad2368296edcdcb6f287695eef084",
+      "source_mutation": false,
+      "source_path": "docs/adr/adr.20260702.042300_projectkoios-workflow-petri-net-executor.draft.md"
+    },
+    {
+      "authority_change": false,
+      "candidate_only": true,
+      "changed": true,
+      "original": {
+        "authority_effect": "proposed_authority",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "implementation_workflow_support",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "rationale": [
+        "proposed_authority downgraded to candidate for review-only planning",
+        "json_authority_candidate retained only as candidate conversion-planning evidence"
+      ],
+      "reviewed": {
+        "authority_effect": "candidate",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "implementation_workflow_support",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "source_basis": [
+        "HERMES authority-forward label watchpoint",
+        "KOIOS global override rule 3"
+      ],
+      "source_hash": "7718e0b44a4b90c693b2866db18e9cec977ada73b1e94c2e2a33c86f19959ff0",
+      "source_mutation": false,
+      "source_path": "docs/adr/adr.20260702.043600_koios-adversarial-code-review-authority.draft.md"
+    },
+    {
+      "authority_change": false,
+      "candidate_only": true,
+      "changed": true,
+      "original": {
+        "authority_effect": "candidate",
+        "automatic_conversion_eligibility_candidate": false,
+        "category_candidate": "implementation_workflow_support",
+        "disposition_candidate": "manual_review_required",
+        "exclusion_blocking_reasons": [
+          "status_casing_or_text_would_normalize"
+        ],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": true,
+          "owner_review_required": true
+        }
+      },
+      "rationale": [
+        "domain/product owner review required before conversion planning"
+      ],
+      "reviewed": {
+        "authority_effect": "domain_review_required",
+        "automatic_conversion_eligibility_candidate": false,
+        "category_candidate": "product_future_system_draft",
+        "disposition_candidate": "domain_review_required",
+        "exclusion_blocking_reasons": [
+          "domain_review_required",
+          "status_casing_or_text_would_normalize"
+        ],
+        "owner_domain_review_flags": {
+          "domain_review_required": true,
+          "manual_review_required": true,
+          "owner_review_required": true
+        }
+      },
+      "source_basis": [
+        "KOIOS section B domain/product review recommendation"
+      ],
+      "source_hash": "e7b02c4521e0ab696ce8c3431e7b58cfd4976c5ed4216dd1dfb8d1b3e77c8361",
+      "source_mutation": false,
+      "source_path": "docs/adr/adr.20260702.144539_agent-production-trace-and-training-capture.draft.md"
+    },
+    {
+      "authority_change": false,
+      "candidate_only": true,
+      "changed": true,
+      "original": {
+        "authority_effect": "proposed_authority",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "template_schema_contract",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "rationale": [
+        "proposed_authority downgraded to candidate for review-only planning",
+        "json_authority_candidate retained only as candidate conversion-planning evidence",
+        "mixed document category or status ambiguity requires manual review"
+      ],
+      "reviewed": {
+        "authority_effect": "candidate",
+        "automatic_conversion_eligibility_candidate": false,
+        "category_candidate": "template_schema_contract",
+        "disposition_candidate": "manual_review_required",
+        "exclusion_blocking_reasons": [
+          "manual_review_required"
+        ],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": true,
+          "owner_review_required": true
+        }
+      },
+      "source_basis": [
+        "HERMES authority-forward label watchpoint",
+        "KOIOS global override rule 3",
+        "KOIOS sections A/E mixed-document recommendation"
+      ],
+      "source_hash": "d8f468f9ed031223067c48c677e82b7d962314083b9b1cf0cff276a9b8ae4e77",
+      "source_mutation": false,
+      "source_path": "docs/adr/adr.20260702.213000_template-representation-ingestion-scope.draft.md"
+    },
+    {
+      "authority_change": false,
+      "candidate_only": true,
+      "changed": true,
+      "original": {
+        "authority_effect": "proposed_authority",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "implementation_workflow_support",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "rationale": [
+        "proposed_authority downgraded to candidate for review-only planning",
+        "json_authority_candidate retained only as candidate conversion-planning evidence"
+      ],
+      "reviewed": {
+        "authority_effect": "candidate",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "implementation_workflow_support",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "source_basis": [
+        "HERMES authority-forward label watchpoint",
+        "KOIOS global override rule 3"
+      ],
+      "source_hash": "5ca4d8bc745c7f5e2e09d20d91edd781d6a9996d8f315fdfd973130b02141708",
+      "source_mutation": false,
+      "source_path": "docs/adr/adr.20260703.000001_kernel.md"
+    },
+    {
+      "authority_change": false,
+      "candidate_only": true,
+      "changed": true,
+      "original": {
+        "authority_effect": "proposed_authority",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "template_schema_contract",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "rationale": [
+        "proposed_authority downgraded to candidate for review-only planning",
+        "json_authority_candidate retained only as candidate conversion-planning evidence",
+        "source/provenance draft should not auto-promote to JSON authority planning"
+      ],
+      "reviewed": {
+        "authority_effect": "candidate",
+        "automatic_conversion_eligibility_candidate": false,
+        "category_candidate": "template_schema_contract",
+        "disposition_candidate": "source_only_provenance_candidate",
+        "exclusion_blocking_reasons": [
+          "source_provenance_review_required"
+        ],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": true,
+          "owner_review_required": true
+        }
+      },
+      "source_basis": [
+        "HERMES authority-forward label watchpoint",
+        "KOIOS global override rule 3",
+        "KOIOS section C source/provenance recommendation"
+      ],
+      "source_hash": "2776cdbb88a50d45b3af7f45ee1329813fa807161984c53b41ba5d6a5cb46a4a",
+      "source_mutation": false,
+      "source_path": "docs/adr/adr.adr-filename-naming-convention.draft.md"
+    },
+    {
+      "authority_change": false,
+      "candidate_only": true,
+      "changed": true,
+      "original": {
+        "authority_effect": "proposed_authority",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "implementation_workflow_support",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "rationale": [
+        "proposed_authority downgraded to candidate for review-only planning",
+        "json_authority_candidate retained only as candidate conversion-planning evidence",
+        "source/provenance draft should not auto-promote to JSON authority planning"
+      ],
+      "reviewed": {
+        "authority_effect": "candidate",
+        "automatic_conversion_eligibility_candidate": false,
+        "category_candidate": "implementation_workflow_support",
+        "disposition_candidate": "source_only_provenance_candidate",
+        "exclusion_blocking_reasons": [
+          "source_provenance_review_required"
+        ],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": true,
+          "owner_review_required": true
+        }
+      },
+      "source_basis": [
+        "HERMES authority-forward label watchpoint",
+        "KOIOS global override rule 3",
+        "KOIOS section C source/provenance recommendation"
+      ],
+      "source_hash": "98629e077abe91f3eb719da40b6b5051e879859aad42a1cea53c90dcbcddadd6",
+      "source_mutation": false,
+      "source_path": "docs/adr/adr.adr-lifecycle-promotion-mechanics.md"
+    },
+    {
+      "authority_change": false,
+      "candidate_only": true,
+      "changed": true,
+      "original": {
+        "authority_effect": "proposed_authority",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "template_schema_contract",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "rationale": [
+        "proposed_authority downgraded to candidate for review-only planning",
+        "json_authority_candidate retained only as candidate conversion-planning evidence"
+      ],
+      "reviewed": {
+        "authority_effect": "candidate",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "template_schema_contract",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "source_basis": [
+        "HERMES authority-forward label watchpoint",
+        "KOIOS global override rule 3"
+      ],
+      "source_hash": "b306f8ed6a44432c27451004c77ab0e5c2e9530518fe47912b9b5f08a77ac2ad",
+      "source_mutation": false,
+      "source_path": "docs/adr/adr.adr-lifecycle.20260705.011836Z.md"
+    },
+    {
+      "authority_change": false,
+      "candidate_only": true,
+      "changed": true,
+      "original": {
+        "authority_effect": "proposed_authority",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "template_schema_contract",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "rationale": [
+        "proposed_authority downgraded to candidate for review-only planning",
+        "json_authority_candidate retained only as candidate conversion-planning evidence",
+        "source/provenance draft should not auto-promote to JSON authority planning"
+      ],
+      "reviewed": {
+        "authority_effect": "candidate",
+        "automatic_conversion_eligibility_candidate": false,
+        "category_candidate": "template_schema_contract",
+        "disposition_candidate": "source_only_provenance_candidate",
+        "exclusion_blocking_reasons": [
+          "source_provenance_review_required"
+        ],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": true,
+          "owner_review_required": true
+        }
+      },
+      "source_basis": [
+        "HERMES authority-forward label watchpoint",
+        "KOIOS global override rule 3",
+        "KOIOS section C source/provenance recommendation"
+      ],
+      "source_hash": "d9068c3a5d10efcf9ee2216e34272cc8399c91e5af67ce51b0f1e5e5b5464706",
+      "source_mutation": false,
+      "source_path": "docs/adr/adr.adr-lifecycle.draft.md"
+    },
+    {
+      "authority_change": false,
+      "candidate_only": true,
+      "changed": true,
+      "original": {
+        "authority_effect": "proposed_authority",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "template_schema_contract",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "rationale": [
+        "proposed_authority downgraded to candidate for review-only planning",
+        "json_authority_candidate retained only as candidate conversion-planning evidence",
+        "source/provenance draft should not auto-promote to JSON authority planning"
+      ],
+      "reviewed": {
+        "authority_effect": "candidate",
+        "automatic_conversion_eligibility_candidate": false,
+        "category_candidate": "template_schema_contract",
+        "disposition_candidate": "source_only_provenance_candidate",
+        "exclusion_blocking_reasons": [
+          "source_provenance_review_required"
+        ],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": true,
+          "owner_review_required": true
+        }
+      },
+      "source_basis": [
+        "HERMES authority-forward label watchpoint",
+        "KOIOS global override rule 3",
+        "KOIOS section C source/provenance recommendation"
+      ],
+      "source_hash": "d69fcc8c9dc1ac84b92833459e31aa2ca1cbaa4fc53bd495a7fbee2df1c8175c",
+      "source_mutation": false,
+      "source_path": "docs/adr/adr.adr-names.draft.md"
+    },
+    {
+      "authority_change": false,
+      "candidate_only": true,
+      "changed": true,
+      "original": {
+        "authority_effect": "candidate",
+        "automatic_conversion_eligibility_candidate": false,
+        "category_candidate": "template_schema_contract",
+        "disposition_candidate": "manual_review_required",
+        "exclusion_blocking_reasons": [
+          "status_casing_or_text_would_normalize"
+        ],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": true,
+          "owner_review_required": true
+        }
+      },
+      "rationale": [
+        "mixed document category or status ambiguity requires manual review"
+      ],
+      "reviewed": {
+        "authority_effect": "candidate",
+        "automatic_conversion_eligibility_candidate": false,
+        "category_candidate": "template_schema_contract",
+        "disposition_candidate": "manual_review_required",
+        "exclusion_blocking_reasons": [
+          "manual_review_required",
+          "status_casing_or_text_would_normalize"
+        ],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": true,
+          "owner_review_required": true
+        }
+      },
+      "source_basis": [
+        "KOIOS sections A/E mixed-document recommendation"
+      ],
+      "source_hash": "2876dfbe031105d383fa9e33cec7d5dd49cf569cea6f43eae59e8fa1da502895",
+      "source_mutation": false,
+      "source_path": "docs/adr/adr.adr-template-contract.md"
+    },
+    {
+      "authority_change": false,
+      "candidate_only": true,
+      "changed": true,
+      "original": {
+        "authority_effect": "proposed_authority",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "template_schema_contract",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "rationale": [
+        "proposed_authority downgraded to candidate for review-only planning",
+        "json_authority_candidate retained only as candidate conversion-planning evidence",
+        "source/provenance draft should not auto-promote to JSON authority planning"
+      ],
+      "reviewed": {
+        "authority_effect": "candidate",
+        "automatic_conversion_eligibility_candidate": false,
+        "category_candidate": "template_schema_contract",
+        "disposition_candidate": "source_only_provenance_candidate",
+        "exclusion_blocking_reasons": [
+          "source_provenance_review_required"
+        ],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": true,
+          "owner_review_required": true
+        }
+      },
+      "source_basis": [
+        "HERMES authority-forward label watchpoint",
+        "KOIOS global override rule 3",
+        "KOIOS section C source/provenance recommendation"
+      ],
+      "source_hash": "dc6b09b73b16bf42c5e16f4d025e743c6ad95d1a0fa1cd3ba47062540886220e",
+      "source_mutation": false,
+      "source_path": "docs/adr/adr.adr-title-naming-convention.draft.md"
+    },
+    {
+      "authority_change": false,
+      "candidate_only": true,
+      "changed": true,
+      "original": {
+        "authority_effect": "proposed_authority",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "template_schema_contract",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "rationale": [
+        "proposed_authority downgraded to candidate for review-only planning",
+        "json_authority_candidate retained only as candidate conversion-planning evidence"
+      ],
+      "reviewed": {
+        "authority_effect": "candidate",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "template_schema_contract",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "source_basis": [
+        "HERMES authority-forward label watchpoint",
+        "KOIOS global override rule 3"
+      ],
+      "source_hash": "80cd6907cc6ebac5dc2306c6a868fe062547067e231aad9d5a366647c7a3326c",
+      "source_mutation": false,
+      "source_path": "docs/adr/adr.adr-workflow.draft.md"
+    },
+    {
+      "authority_change": false,
+      "candidate_only": true,
+      "changed": true,
+      "original": {
+        "authority_effect": "proposed_authority",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "template_schema_contract",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "rationale": [
+        "proposed_authority downgraded to candidate for review-only planning",
+        "json_authority_candidate retained only as candidate conversion-planning evidence",
+        "mixed document category or status ambiguity requires manual review"
+      ],
+      "reviewed": {
+        "authority_effect": "candidate",
+        "automatic_conversion_eligibility_candidate": false,
+        "category_candidate": "template_schema_contract",
+        "disposition_candidate": "manual_review_required",
+        "exclusion_blocking_reasons": [
+          "manual_review_required"
+        ],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": true,
+          "owner_review_required": true
+        }
+      },
+      "source_basis": [
+        "HERMES authority-forward label watchpoint",
+        "KOIOS global override rule 3",
+        "KOIOS sections A/E mixed-document recommendation"
+      ],
+      "source_hash": "b26beb2ebb459828bca639c05df764ed253877c2b7d9ae8b911bd3babb84852b",
+      "source_mutation": false,
+      "source_path": "docs/adr/adr.adr.md"
+    },
+    {
+      "authority_change": false,
+      "candidate_only": true,
+      "changed": true,
+      "original": {
+        "authority_effect": "proposed_authority",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "implementation_workflow_support",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "rationale": [
+        "proposed_authority downgraded to candidate for review-only planning",
+        "json_authority_candidate retained only as candidate conversion-planning evidence"
+      ],
+      "reviewed": {
+        "authority_effect": "candidate",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "implementation_workflow_support",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "source_basis": [
+        "HERMES authority-forward label watchpoint",
+        "KOIOS global override rule 3"
+      ],
+      "source_hash": "6abe71d374459cabf3d150a651557b461aec1b9fbeeb4ddb299815acbc384cc0",
+      "source_mutation": false,
+      "source_path": "docs/adr/adr.adversarial-two-plane-gate.draft.md"
+    },
+    {
+      "authority_change": false,
+      "candidate_only": true,
+      "changed": true,
+      "original": {
+        "authority_effect": "proposed_authority",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "architecture_blueprint",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "rationale": [
+        "proposed_authority downgraded to candidate for review-only planning",
+        "json_authority_candidate retained only as candidate conversion-planning evidence",
+        "domain/product owner review required before conversion planning"
+      ],
+      "reviewed": {
+        "authority_effect": "domain_review_required",
+        "automatic_conversion_eligibility_candidate": false,
+        "category_candidate": "product_future_system_draft",
+        "disposition_candidate": "domain_review_required",
+        "exclusion_blocking_reasons": [
+          "domain_review_required"
+        ],
+        "owner_domain_review_flags": {
+          "domain_review_required": true,
+          "manual_review_required": true,
+          "owner_review_required": true
+        }
+      },
+      "source_basis": [
+        "HERMES authority-forward label watchpoint",
+        "KOIOS global override rule 3",
+        "KOIOS section B domain/product review recommendation"
+      ],
+      "source_hash": "102d63582fad9f26e5ee0c282b3cfaf5b62c2c270fc3c1f44ced67185b9c7193",
+      "source_mutation": false,
+      "source_path": "docs/adr/adr.agent-windows-on-message-triggers.draft.md"
+    },
+    {
+      "authority_change": false,
+      "candidate_only": true,
+      "changed": true,
+      "original": {
+        "authority_effect": "proposed_authority",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "template_schema_contract",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "rationale": [
+        "proposed_authority downgraded to candidate for review-only planning",
+        "json_authority_candidate retained only as candidate conversion-planning evidence",
+        "mixed document category or status ambiguity requires manual review"
+      ],
+      "reviewed": {
+        "authority_effect": "candidate",
+        "automatic_conversion_eligibility_candidate": false,
+        "category_candidate": "template_schema_contract",
+        "disposition_candidate": "manual_review_required",
+        "exclusion_blocking_reasons": [
+          "manual_review_required"
+        ],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": true,
+          "owner_review_required": true
+        }
+      },
+      "source_basis": [
+        "HERMES authority-forward label watchpoint",
+        "KOIOS global override rule 3",
+        "KOIOS sections A/E mixed-document recommendation"
+      ],
+      "source_hash": "ce078b8e3a29a8d01c71eed2d371346151354090469fd726f1d8ffd24cc133e9",
+      "source_mutation": false,
+      "source_path": "docs/adr/adr.brainstorm-capture-and-incubator-template.draft.md"
+    },
+    {
+      "authority_change": false,
+      "candidate_only": true,
+      "changed": true,
+      "original": {
+        "authority_effect": "proposed_authority",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "implementation_workflow_support",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "rationale": [
+        "proposed_authority downgraded to candidate for review-only planning",
+        "json_authority_candidate retained only as candidate conversion-planning evidence"
+      ],
+      "reviewed": {
+        "authority_effect": "candidate",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "implementation_workflow_support",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "source_basis": [
+        "HERMES authority-forward label watchpoint",
+        "KOIOS global override rule 3"
+      ],
+      "source_hash": "ae7643605e046a00b9b979ed12094c06b0cae39262d159023b6582d398d09d9d",
+      "source_mutation": false,
+      "source_path": "docs/adr/adr.comment-scope-and-control-boundary-review-rule.draft.md"
+    },
+    {
+      "authority_change": false,
+      "candidate_only": true,
+      "changed": true,
+      "original": {
+        "authority_effect": "proposed_authority",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "implementation_workflow_support",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "rationale": [
+        "proposed_authority downgraded to candidate for review-only planning",
+        "json_authority_candidate retained only as candidate conversion-planning evidence",
+        "mixed document category or status ambiguity requires manual review"
+      ],
+      "reviewed": {
+        "authority_effect": "candidate",
+        "automatic_conversion_eligibility_candidate": false,
+        "category_candidate": "policy_process",
+        "disposition_candidate": "manual_review_required",
+        "exclusion_blocking_reasons": [
+          "manual_review_required"
+        ],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": true,
+          "owner_review_required": true
+        }
+      },
+      "source_basis": [
+        "HERMES authority-forward label watchpoint",
+        "KOIOS global override rule 3",
+        "KOIOS sections A/E mixed-document recommendation"
+      ],
+      "source_hash": "6353928bfec86f2c55c8e5296f8e7cac25360c7e8f532be00ef2f16a534a580c",
+      "source_mutation": false,
+      "source_path": "docs/adr/adr.control-surfaces-and-ownership-boundaries.draft.md"
+    },
+    {
+      "authority_change": false,
+      "candidate_only": true,
+      "changed": true,
+      "original": {
+        "authority_effect": "proposed_authority",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "policy_process",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "rationale": [
+        "proposed_authority downgraded to candidate for review-only planning",
+        "json_authority_candidate retained only as candidate conversion-planning evidence"
+      ],
+      "reviewed": {
+        "authority_effect": "candidate",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "policy_process",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "source_basis": [
+        "HERMES authority-forward label watchpoint",
+        "KOIOS global override rule 3"
+      ],
+      "source_hash": "d68e57f1a8f8ba654e076f5ce43e64c0ef505930c9dacf8fabcc021fe5393229",
+      "source_mutation": false,
+      "source_path": "docs/adr/adr.controlling-adr-join-protocol.draft.md"
+    },
+    {
+      "authority_change": false,
+      "candidate_only": true,
+      "changed": true,
+      "original": {
+        "authority_effect": "proposed_authority",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "implementation_workflow_support",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "rationale": [
+        "proposed_authority downgraded to candidate for review-only planning",
+        "json_authority_candidate retained only as candidate conversion-planning evidence"
+      ],
+      "reviewed": {
+        "authority_effect": "candidate",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "implementation_workflow_support",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "source_basis": [
+        "HERMES authority-forward label watchpoint",
+        "KOIOS global override rule 3"
+      ],
+      "source_hash": "dd83c42b0074c8da6847944e7d659f92616d37c76bc8c15ac8039f6fecb849e5",
+      "source_mutation": false,
+      "source_path": "docs/adr/adr.decision-note-promotion-trigger.draft.md"
+    },
+    {
+      "authority_change": false,
+      "candidate_only": true,
+      "changed": true,
+      "original": {
+        "authority_effect": "proposed_authority",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "policy_process",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "rationale": [
+        "proposed_authority downgraded to candidate for review-only planning",
+        "json_authority_candidate retained only as candidate conversion-planning evidence"
+      ],
+      "reviewed": {
+        "authority_effect": "candidate",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "policy_process",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "source_basis": [
+        "HERMES authority-forward label watchpoint",
+        "KOIOS global override rule 3"
+      ],
+      "source_hash": "2b06ae82fe19adc8688418f4f53995ceaff03913f94f8079c7e127a3c159341c",
+      "source_mutation": false,
+      "source_path": "docs/adr/adr.draft-adr-comment-processing-protocol.draft.md"
+    },
+    {
+      "authority_change": false,
+      "candidate_only": true,
+      "changed": true,
+      "original": {
+        "authority_effect": "proposed_authority",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "implementation_workflow_support",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "rationale": [
+        "proposed_authority downgraded to candidate for review-only planning",
+        "json_authority_candidate retained only as candidate conversion-planning evidence",
+        "mixed document category or status ambiguity requires manual review"
+      ],
+      "reviewed": {
+        "authority_effect": "candidate",
+        "automatic_conversion_eligibility_candidate": false,
+        "category_candidate": "policy_process",
+        "disposition_candidate": "manual_review_required",
+        "exclusion_blocking_reasons": [
+          "manual_review_required"
+        ],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": true,
+          "owner_review_required": true
+        }
+      },
+      "source_basis": [
+        "HERMES authority-forward label watchpoint",
+        "KOIOS global override rule 3",
+        "KOIOS sections A/E mixed-document recommendation"
+      ],
+      "source_hash": "b9e9f95f16e44b75729c43f2e0d202b067619c74bb928549a4688fa71fd556f7",
+      "source_mutation": false,
+      "source_path": "docs/adr/adr.idea-spike-adr-implementation-workflow.draft.md"
+    },
+    {
+      "authority_change": false,
+      "candidate_only": true,
+      "changed": true,
+      "original": {
+        "authority_effect": "proposed_authority",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "template_schema_contract",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "rationale": [
+        "proposed_authority downgraded to candidate for review-only planning",
+        "json_authority_candidate retained only as candidate conversion-planning evidence",
+        "mixed document category or status ambiguity requires manual review"
+      ],
+      "reviewed": {
+        "authority_effect": "candidate",
+        "automatic_conversion_eligibility_candidate": false,
+        "category_candidate": "implementation_workflow_support",
+        "disposition_candidate": "manual_review_required",
+        "exclusion_blocking_reasons": [
+          "manual_review_required"
+        ],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": true,
+          "owner_review_required": true
+        }
+      },
+      "source_basis": [
+        "HERMES authority-forward label watchpoint",
+        "KOIOS global override rule 3",
+        "KOIOS sections A/E mixed-document recommendation"
+      ],
+      "source_hash": "9dcf06bac1b96d795033443e851baafe4e0c1b7e86ab9c6927d2beaccf6ffe03",
+      "source_mutation": false,
+      "source_path": "docs/adr/adr.implementation-brief-verification-method.draft.md"
+    },
+    {
+      "authority_change": false,
+      "candidate_only": true,
+      "changed": true,
+      "original": {
+        "authority_effect": "proposed_authority",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "implementation_workflow_support",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "rationale": [
+        "proposed_authority downgraded to candidate for review-only planning",
+        "json_authority_candidate retained only as candidate conversion-planning evidence"
+      ],
+      "reviewed": {
+        "authority_effect": "candidate",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "implementation_workflow_support",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "source_basis": [
+        "HERMES authority-forward label watchpoint",
+        "KOIOS global override rule 3"
+      ],
+      "source_hash": "9f6cb15f32bdccf9d4fe7d5a8d7374f2f1e000b6bdac535d0db7b6e02877c102",
+      "source_mutation": false,
+      "source_path": "docs/adr/adr.implementation-plan-ownership.draft.md"
+    },
+    {
+      "authority_change": false,
+      "candidate_only": true,
+      "changed": true,
+      "original": {
+        "authority_effect": "proposed_authority",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "template_schema_contract",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "rationale": [
+        "proposed_authority downgraded to candidate for review-only planning",
+        "json_authority_candidate retained only as candidate conversion-planning evidence",
+        "mixed document category or status ambiguity requires manual review"
+      ],
+      "reviewed": {
+        "authority_effect": "candidate",
+        "automatic_conversion_eligibility_candidate": false,
+        "category_candidate": "implementation_workflow_support",
+        "disposition_candidate": "manual_review_required",
+        "exclusion_blocking_reasons": [
+          "manual_review_required"
+        ],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": true,
+          "owner_review_required": true
+        }
+      },
+      "source_basis": [
+        "HERMES authority-forward label watchpoint",
+        "KOIOS global override rule 3",
+        "KOIOS sections A/E mixed-document recommendation"
+      ],
+      "source_hash": "b5256526ba56b0924d51a4434d83d88162c72fe8272d6637dcebbad053d27005",
+      "source_mutation": false,
+      "source_path": "docs/adr/adr.implementation.draft.md"
+    },
+    {
+      "authority_change": false,
+      "candidate_only": true,
+      "changed": true,
+      "original": {
+        "authority_effect": "proposed_authority",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "template_schema_contract",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "rationale": [
+        "proposed_authority downgraded to candidate for review-only planning",
+        "json_authority_candidate retained only as candidate conversion-planning evidence",
+        "mixed document category or status ambiguity requires manual review"
+      ],
+      "reviewed": {
+        "authority_effect": "candidate",
+        "automatic_conversion_eligibility_candidate": false,
+        "category_candidate": "current_decision",
+        "disposition_candidate": "manual_review_required",
+        "exclusion_blocking_reasons": [
+          "manual_review_required"
+        ],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": true,
+          "owner_review_required": true
+        }
+      },
+      "source_basis": [
+        "HERMES authority-forward label watchpoint",
+        "KOIOS global override rule 3",
+        "KOIOS sections A/E mixed-document recommendation"
+      ],
+      "source_hash": "1344591b6181f9a3d1378127d2ec01e8a6d9cae83c9e7a95b6ecdfd1ba54eb33",
+      "source_mutation": false,
+      "source_path": "docs/adr/adr.json-authoritative-adr-store.draft.md"
+    },
+    {
+      "authority_change": false,
+      "candidate_only": true,
+      "changed": true,
+      "original": {
+        "authority_effect": "proposed_authority",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "template_schema_contract",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "rationale": [
+        "proposed_authority downgraded to candidate for review-only planning",
+        "json_authority_candidate retained only as candidate conversion-planning evidence",
+        "mixed document category or status ambiguity requires manual review"
+      ],
+      "reviewed": {
+        "authority_effect": "candidate",
+        "automatic_conversion_eligibility_candidate": false,
+        "category_candidate": "architecture_blueprint",
+        "disposition_candidate": "manual_review_required",
+        "exclusion_blocking_reasons": [
+          "manual_review_required"
+        ],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": true,
+          "owner_review_required": true
+        }
+      },
+      "source_basis": [
+        "HERMES authority-forward label watchpoint",
+        "KOIOS global override rule 3",
+        "KOIOS sections A/E mixed-document recommendation"
+      ],
+      "source_hash": "b7e48d5b2a07c14704689b4dcae738c8f21731e6d20e8d63d8eab33c75819d87",
+      "source_mutation": false,
+      "source_path": "docs/adr/adr.json-database-for-adr-storage.draft.md"
+    },
+    {
+      "authority_change": false,
+      "candidate_only": true,
+      "changed": true,
+      "original": {
+        "authority_effect": "proposed_authority",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "template_schema_contract",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "rationale": [
+        "proposed_authority downgraded to candidate for review-only planning",
+        "json_authority_candidate retained only as candidate conversion-planning evidence"
+      ],
+      "reviewed": {
+        "authority_effect": "candidate",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "template_schema_contract",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "source_basis": [
+        "HERMES authority-forward label watchpoint",
+        "KOIOS global override rule 3"
+      ],
+      "source_hash": "c95dfb0928ba1398eb058a7bb16b21f2dad77f4116169cbcc8075fb5186c2df5",
+      "source_mutation": false,
+      "source_path": "docs/adr/adr.json-schemas.draft.md"
+    },
+    {
+      "authority_change": false,
+      "candidate_only": true,
+      "changed": true,
+      "original": {
+        "authority_effect": "proposed_authority",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "implementation_workflow_support",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "rationale": [
+        "proposed_authority downgraded to candidate for review-only planning",
+        "json_authority_candidate retained only as candidate conversion-planning evidence",
+        "mixed document category or status ambiguity requires manual review"
+      ],
+      "reviewed": {
+        "authority_effect": "candidate",
+        "automatic_conversion_eligibility_candidate": false,
+        "category_candidate": "implementation_workflow_support",
+        "disposition_candidate": "manual_review_required",
+        "exclusion_blocking_reasons": [
+          "manual_review_required"
+        ],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": true,
+          "owner_review_required": true
+        }
+      },
+      "source_basis": [
+        "HERMES authority-forward label watchpoint",
+        "KOIOS global override rule 3",
+        "KOIOS sections A/E mixed-document recommendation"
+      ],
+      "source_hash": "826f65cb9eb24fe54199126d070e908ab4814ee48587f5a3b338aaa687a18ecc",
+      "source_mutation": false,
+      "source_path": "docs/adr/adr.kernel.md"
+    },
+    {
+      "authority_change": false,
+      "candidate_only": true,
+      "changed": true,
+      "original": {
+        "authority_effect": "proposed_authority",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "implementation_workflow_support",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "rationale": [
+        "proposed_authority downgraded to candidate for review-only planning",
+        "json_authority_candidate retained only as candidate conversion-planning evidence"
+      ],
+      "reviewed": {
+        "authority_effect": "candidate",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "implementation_workflow_support",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "source_basis": [
+        "HERMES authority-forward label watchpoint",
+        "KOIOS global override rule 3"
+      ],
+      "source_hash": "b93e82e3236897d34a3da11764c1066f96cd504776fa37c4c314ea85b2c4e2e5",
+      "source_mutation": false,
+      "source_path": "docs/adr/adr.ownership-ledger-role-alignment.draft.md"
+    },
+    {
+      "authority_change": false,
+      "candidate_only": true,
+      "changed": true,
+      "original": {
+        "authority_effect": "proposed_authority",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "template_schema_contract",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "rationale": [
+        "proposed_authority downgraded to candidate for review-only planning",
+        "json_authority_candidate retained only as candidate conversion-planning evidence"
+      ],
+      "reviewed": {
+        "authority_effect": "candidate",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "template_schema_contract",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "source_basis": [
+        "HERMES authority-forward label watchpoint",
+        "KOIOS global override rule 3"
+      ],
+      "source_hash": "7fd761c39056bf7a81032b98aabde038d053931e73cd161fb9a48934b2a700a3",
+      "source_mutation": false,
+      "source_path": "docs/adr/adr.petrinet.20260705.132740Z.md"
+    },
+    {
+      "authority_change": false,
+      "candidate_only": true,
+      "changed": true,
+      "original": {
+        "authority_effect": "candidate",
+        "automatic_conversion_eligibility_candidate": false,
+        "category_candidate": "template_schema_contract",
+        "disposition_candidate": "manual_review_required",
+        "exclusion_blocking_reasons": [
+          "missing_observed_status",
+          "missing_status"
+        ],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": true,
+          "owner_review_required": true
+        }
+      },
+      "rationale": [
+        "mixed document category or status ambiguity requires manual review"
+      ],
+      "reviewed": {
+        "authority_effect": "candidate",
+        "automatic_conversion_eligibility_candidate": false,
+        "category_candidate": "template_schema_contract",
+        "disposition_candidate": "manual_review_required",
+        "exclusion_blocking_reasons": [
+          "manual_review_required",
+          "missing_observed_status",
+          "missing_status"
+        ],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": true,
+          "owner_review_required": true
+        }
+      },
+      "source_basis": [
+        "KOIOS sections A/E mixed-document recommendation"
+      ],
+      "source_hash": "48a5fed34bec41b18885fdb57d7491895783f735c07efc33202098bbf61a2d51",
+      "source_mutation": false,
+      "source_path": "docs/adr/adr.schema-base.md"
+    },
+    {
+      "authority_change": false,
+      "candidate_only": true,
+      "changed": true,
+      "original": {
+        "authority_effect": "proposed_authority",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "policy_process",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "rationale": [
+        "proposed_authority downgraded to candidate for review-only planning",
+        "json_authority_candidate retained only as candidate conversion-planning evidence"
+      ],
+      "reviewed": {
+        "authority_effect": "candidate",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "policy_process",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "source_basis": [
+        "HERMES authority-forward label watchpoint",
+        "KOIOS global override rule 3"
+      ],
+      "source_hash": "62d8c00bd516d29b8bb53048141b59599555c312e3319f8a4d03ae65f1a09e35",
+      "source_mutation": false,
+      "source_path": "docs/adr/adr.skill-register-and-adr-binding-policy.draft.md"
+    },
+    {
+      "authority_change": false,
+      "candidate_only": true,
+      "changed": true,
+      "original": {
+        "authority_effect": "proposed_authority",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "implementation_workflow_support",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "rationale": [
+        "proposed_authority downgraded to candidate for review-only planning",
+        "json_authority_candidate retained only as candidate conversion-planning evidence"
+      ],
+      "reviewed": {
+        "authority_effect": "candidate",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "implementation_workflow_support",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "source_basis": [
+        "HERMES authority-forward label watchpoint",
+        "KOIOS global override rule 3"
+      ],
+      "source_hash": "d80cc92d74ffe10c382a570ebeee36d686215f8ddea4c1201b383a4649670182",
+      "source_mutation": false,
+      "source_path": "docs/adr/adr.spike-entry-conditions.draft.md"
+    },
+    {
+      "authority_change": false,
+      "candidate_only": true,
+      "changed": true,
+      "original": {
+        "authority_effect": "proposed_authority",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "template_schema_contract",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "rationale": [
+        "proposed_authority downgraded to candidate for review-only planning",
+        "json_authority_candidate retained only as candidate conversion-planning evidence",
+        "mixed document category or status ambiguity requires manual review"
+      ],
+      "reviewed": {
+        "authority_effect": "candidate",
+        "automatic_conversion_eligibility_candidate": false,
+        "category_candidate": "template_schema_contract",
+        "disposition_candidate": "manual_review_required",
+        "exclusion_blocking_reasons": [
+          "manual_review_required"
+        ],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": true,
+          "owner_review_required": true
+        }
+      },
+      "source_basis": [
+        "HERMES authority-forward label watchpoint",
+        "KOIOS global override rule 3",
+        "KOIOS sections A/E mixed-document recommendation"
+      ],
+      "source_hash": "f5527f980d440145866b8ebb998ed4c3faa063e2c41da5f9022739328013d3b2",
+      "source_mutation": false,
+      "source_path": "docs/adr/adr.templates-adr.md"
+    },
+    {
+      "authority_change": false,
+      "candidate_only": true,
+      "changed": true,
+      "original": {
+        "authority_effect": "proposed_authority",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "template_schema_contract",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "rationale": [
+        "proposed_authority downgraded to candidate for review-only planning",
+        "json_authority_candidate retained only as candidate conversion-planning evidence",
+        "mixed document category or status ambiguity requires manual review"
+      ],
+      "reviewed": {
+        "authority_effect": "candidate",
+        "automatic_conversion_eligibility_candidate": false,
+        "category_candidate": "template_schema_contract",
+        "disposition_candidate": "manual_review_required",
+        "exclusion_blocking_reasons": [
+          "manual_review_required"
+        ],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": true,
+          "owner_review_required": true
+        }
+      },
+      "source_basis": [
+        "HERMES authority-forward label watchpoint",
+        "KOIOS global override rule 3",
+        "KOIOS sections A/E mixed-document recommendation"
+      ],
+      "source_hash": "ea7d57b0ed9392eef4848b45e5b2e7245fbcbce725746f2354fae3b9df9e7ef7",
+      "source_mutation": false,
+      "source_path": "docs/adr/adr.templates.md"
+    },
+    {
+      "authority_change": false,
+      "candidate_only": true,
+      "changed": true,
+      "original": {
+        "authority_effect": "proposed_authority",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "template_schema_contract",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "rationale": [
+        "proposed_authority downgraded to candidate for review-only planning",
+        "json_authority_candidate retained only as candidate conversion-planning evidence",
+        "domain/product owner review required before conversion planning"
+      ],
+      "reviewed": {
+        "authority_effect": "domain_review_required",
+        "automatic_conversion_eligibility_candidate": false,
+        "category_candidate": "product_future_system_draft",
+        "disposition_candidate": "domain_review_required",
+        "exclusion_blocking_reasons": [
+          "domain_review_required"
+        ],
+        "owner_domain_review_flags": {
+          "domain_review_required": true,
+          "manual_review_required": true,
+          "owner_review_required": true
+        }
+      },
+      "source_basis": [
+        "HERMES authority-forward label watchpoint",
+        "KOIOS global override rule 3",
+        "KOIOS section B domain/product review recommendation"
+      ],
+      "source_hash": "b107111c91946afa7bfbfe6309697898f3f0b2e1d755e965dacca4d55d332526",
+      "source_mutation": false,
+      "source_path": "docs/adr/adr.ui-core.draft.md"
+    },
+    {
+      "authority_change": false,
+      "candidate_only": true,
+      "changed": true,
+      "original": {
+        "authority_effect": "proposed_authority",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "implementation_workflow_support",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "rationale": [
+        "proposed_authority downgraded to candidate for review-only planning",
+        "json_authority_candidate retained only as candidate conversion-planning evidence",
+        "mixed document category or status ambiguity requires manual review"
+      ],
+      "reviewed": {
+        "authority_effect": "candidate",
+        "automatic_conversion_eligibility_candidate": false,
+        "category_candidate": "implementation_workflow_support",
+        "disposition_candidate": "manual_review_required",
+        "exclusion_blocking_reasons": [
+          "manual_review_required"
+        ],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": true,
+          "owner_review_required": true
+        }
+      },
+      "source_basis": [
+        "HERMES authority-forward label watchpoint",
+        "KOIOS global override rule 3",
+        "KOIOS sections A/E mixed-document recommendation"
+      ],
+      "source_hash": "d7b5353f5ba52656d130dfadde600d3e9a7d37dda8decbb04d4252522e2d3fc8",
+      "source_mutation": false,
+      "source_path": "docs/adr/adr.unified-diff-review-surface.draft.md"
+    },
+    {
+      "authority_change": false,
+      "candidate_only": true,
+      "changed": true,
+      "original": {
+        "authority_effect": "proposed_authority",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "template_schema_contract",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "rationale": [
+        "proposed_authority downgraded to candidate for review-only planning",
+        "json_authority_candidate retained only as candidate conversion-planning evidence",
+        "domain/product owner review required before conversion planning"
+      ],
+      "reviewed": {
+        "authority_effect": "domain_review_required",
+        "automatic_conversion_eligibility_candidate": false,
+        "category_candidate": "product_future_system_draft",
+        "disposition_candidate": "domain_review_required",
+        "exclusion_blocking_reasons": [
+          "domain_review_required"
+        ],
+        "owner_domain_review_flags": {
+          "domain_review_required": true,
+          "manual_review_required": true,
+          "owner_review_required": true
+        }
+      },
+      "source_basis": [
+        "HERMES authority-forward label watchpoint",
+        "KOIOS global override rule 3",
+        "KOIOS section B domain/product review recommendation"
+      ],
+      "source_hash": "6d104eebadf68424fe97d823a77223b720a5aaed1d511300c374bf181b2d4702",
+      "source_mutation": false,
+      "source_path": "docs/adr/adr.workflow-ui.draft.md"
+    },
+    {
+      "authority_change": false,
+      "candidate_only": true,
+      "changed": true,
+      "original": {
+        "authority_effect": "proposed_authority",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "implementation_workflow_support",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "rationale": [
+        "proposed_authority downgraded to candidate for review-only planning",
+        "json_authority_candidate retained only as candidate conversion-planning evidence"
+      ],
+      "reviewed": {
+        "authority_effect": "candidate",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "implementation_workflow_support",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "source_basis": [
+        "HERMES authority-forward label watchpoint",
+        "KOIOS global override rule 3"
+      ],
+      "source_hash": "9791c61274db63f46fdea3f59457f7be459d661928c49207de56a9ec46b95459",
+      "source_mutation": false,
+      "source_path": "docs/adr/adr.workflow.draft.md"
+    },
+    {
+      "authority_change": false,
+      "candidate_only": true,
+      "changed": true,
+      "original": {
+        "authority_effect": "proposed_authority",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "implementation_workflow_support",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "rationale": [
+        "proposed_authority downgraded to candidate for review-only planning",
+        "json_authority_candidate retained only as candidate conversion-planning evidence"
+      ],
+      "reviewed": {
+        "authority_effect": "candidate",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "implementation_workflow_support",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "source_basis": [
+        "HERMES authority-forward label watchpoint",
+        "KOIOS global override rule 3"
+      ],
+      "source_hash": "f927f313f891482354b7db3beb177f0faabdd51f80402cf36dc155f62cd1dbcc",
+      "source_mutation": false,
+      "source_path": "docs/adr/adr.workspaces.20260705.105021Z.md"
+    }
+  ],
+  "mode": "review-only inventory override evidence",
+  "slice_name": "adr-json-authority-inventory-review-overrides-slice-1"
+}

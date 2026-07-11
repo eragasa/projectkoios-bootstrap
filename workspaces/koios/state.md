@@ -4,7 +4,7 @@
 
 - Type: workspace-state
 - Status: active
-- Updated: 20260711T141500Z
+- Updated: 20260711T143500Z
 - Updated by: KOIOS
 - Repository: projectkoios-bootstrap
 - Workspace: `workspaces/koios/`
@@ -40,6 +40,8 @@ Captured/advisory artifacts in this workspace:
 - `working/classification-proposal.20260711_adr-hierarchy-rationalization.md`
 - `working/provenance-risk.20260711_adr-json-authority-mass-conversion.md`
 - `working/provenance-review.20260711_adr-json-authority-inventory-classification-slice-0.md`
+- `working/override-recommendations.20260711_adr-json-authority-inventory-slice-1.md`
+- `working/provenance-review.20260711_adr-json-authority-inventory-review-overrides-slice-1.md`
 - `../../docs/process-capture/pc.workflow.document-trace.md`
 - `../../docs/process-capture/pc.workflow.document-trace.20260706.025408Z.md`
 - `../../docs/process-capture/pc.workflow.document-trace.20260708.044950Z.md`
@@ -96,6 +98,10 @@ KOIOS completed `working/classification-proposal.20260711_adr-hierarchy-rational
 KOIOS completed `working/provenance-risk.20260711_adr-json-authority-mass-conversion.md` for the JSON-authoritative ADR store path. It records risks around mass conversion, status/lifecycle ambiguity, unsupported fields, source/projection conflict policy, provenance/audit trail, and validation gates before JSON authority.
 
 KOIOS reviewed VULCAN `adr-json-authority-inventory-classification-slice-0` in `working/provenance-review.20260711_adr-json-authority-inventory-classification-slice-0.md`. Verdict: provenance-adequate as review-only inventory/classification evidence, with watchpoints that candidate labels are too authority-forward for automatic consumption and domain/mixed-document classifications need HERMES/USER review before conversion.
+
+KOIOS completed `working/override-recommendations.20260711_adr-json-authority-inventory-slice-1.md` for `adr-json-authority-inventory-review-overrides-slice-1`. It recommends safer candidate-only authority labels, domain-review flags for product/future-system files, source-provenance handling for lifecycle/naming drafts, exclusions from automatic conversion, and messy canary candidates.
+
+KOIOS reviewed VULCAN `adr-json-authority-inventory-review-overrides-slice-1` in `working/provenance-review.20260711_adr-json-authority-inventory-review-overrides-slice-1.md`. Verdict: review-only override evidence faithfully applies core KOIOS recommendations and is provenance-safe with minor watchpoints around manifest validation-summary wording and remaining candidate category imperfections.
 
 ## Authority boundary
 
