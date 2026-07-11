@@ -18,16 +18,16 @@
 
 ## Current priority stack
 
-1. Route `adr-schema-base-architecture-extraction-planning-slice-13` to ATHENA.
-2. Keep ADR track priority; do not activate `pi-skill-determinism-slice-0` while ADR active item remains set.
-3. Preserve `docs/adr/adr.schema-base.md` unchanged as source/provenance unless a later approved slice changes disposition.
+1. Commit Slice 13 proposal-only acceptance package.
+2. Prepare for explicit activation of `adr-schema-record-envelope-architecture-slice-14` if USER/HERMES proceeds.
+3. Keep ADR track priority; do not activate `pi-skill-determinism-slice-0` unless explicitly reprioritized.
 
 ## Active slice
 
 Active queue item after reconciliation:
 
 ```text
-adr-schema-base-architecture-extraction-planning-slice-13
+none
 ```
 
 Target source:
@@ -88,7 +88,7 @@ dev/workflow-nets/bootstrap-harness.queue-state.json
 dev/workflow-nets/bootstrap-harness.workflow-net.json
 ```
 
-Current workflow status reports `active_slice=adr-schema-base-architecture-extraction-planning-slice-13`; queue reports active item set and warns not to activate queued non-ADR work.
+Current workflow status reports `active_slice=none`; queue reports no active item and next decision needed: explicitly activate `adr-schema-record-envelope-architecture-slice-14` or define another ADR-track slice.
 
 Activation decision recorded:
 
@@ -116,11 +116,27 @@ Accepted recommendation: keep `docs/adr/adr.schema-base.md` unchanged as draft a
 
 The successor ADR was created by the ATHENA session after HERMES routing and USER `proceed`. Invalid HERMES reflog and Archon/Codex drafts are not current authority and were not used as source text. HERMES accepted the successor ADR only after ATHENA authorship, VULCAN implementation-reality review, KOIOS provenance review, and USER `proceed`.
 
+ATHENA output received:
+
+```text
+docs/plans/architecture-extraction-brief.20260711.184325_adr-schema-base.md
+```
+
+KOIOS comments received: provenance-adequate for HERMES proposal-only acceptance, no blockers.
+
+HERMES acceptance recorded:
+
+```text
+docs/reviews/hermes-acceptance.20260711.185430_adr-schema-base-architecture-extraction-planning-slice-13.md
+```
+
+Accepted recommendation: later extract still-current schema-family record-envelope architecture to `docs/architecture/architecture.schema-record-envelope.md`, while keeping `docs/adr/adr.schema-base.md` unchanged as source/provenance and preserving `schema.record-base.json` as draft direction.
+
 ## Waiting on
 
-- Commit of ADR-track Slice 13 activation/routing decision and queue/status update.
-- ATHENA proposal-only architecture-extraction brief for `docs/adr/adr.schema-base.md`.
+- Commit of Slice 13 proposal-only acceptance package.
+- Later USER/HERMES activation of `adr-schema-record-envelope-architecture-slice-14` or another ADR-track slice.
 
 ## Exit criteria
 
-Hermes state is stable when Slice 13 activation/routing is committed and ATHENA is the explicit next owner.
+Hermes state is stable when Slice 13 proposal-only acceptance is committed and no active queue item remains.

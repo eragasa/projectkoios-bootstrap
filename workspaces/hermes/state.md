@@ -18,7 +18,7 @@
 
 ## Current focus
 
-ADR track remains priority. HERMES activated `adr-schema-base-architecture-extraction-planning-slice-13` for ATHENA handoff.
+ADR schema-base architecture-extraction planning Slice 13 is accepted as proposal-only planning after KOIOS review; next ADR-track decision is architecture slice 14 activation.
 
 ## Current validated state
 
@@ -76,26 +76,34 @@ ADR track remains priority. HERMES activated `adr-schema-base-architecture-extra
 - HERMES activated Slice 13 and recorded:
   - `docs/reviews/hermes-decision.20260711.184325_adr-schema-base-architecture-extraction-planning-slice-13.md`
 - HERMES reconciled queue/status to active item and `active_slice=adr-schema-base-architecture-extraction-planning-slice-13`.
+- ATHENA completed the Slice 13 proposal-only architecture-extraction brief:
+  - `docs/plans/architecture-extraction-brief.20260711.184325_adr-schema-base.md`
+  - recommendation: later extract still-current schema-family record-envelope architecture to `docs/architecture/architecture.schema-record-envelope.md`, while keeping `docs/adr/adr.schema-base.md` unchanged as source/provenance and preserving `schema.record-base.json` as draft direction.
+- KOIOS reviewed the Slice 13 brief and found it provenance-adequate for HERMES proposal-only acceptance with no blockers.
+- HERMES accepted the Slice 13 brief as proposal-only planning:
+  - `docs/reviews/hermes-acceptance.20260711.185430_adr-schema-base-architecture-extraction-planning-slice-13.md`
+- HERMES cleared the active queue item and reconciled workflow status to `active_slice=none`; next decision is explicit activation of `adr-schema-record-envelope-architecture-slice-14` or another ADR-track slice.
 
 ## Current coherent state
 
-Uncommitted Slice 13 activation package:
+Uncommitted Slice 13 acceptance package:
 
 ```text
-docs/reviews/hermes-decision.20260711.184325_adr-schema-base-architecture-extraction-planning-slice-13.md
+docs/plans/architecture-extraction-brief.20260711.184325_adr-schema-base.md
+docs/reviews/hermes-acceptance.20260711.185430_adr-schema-base-architecture-extraction-planning-slice-13.md
 dev/workflow-nets/bootstrap-harness.queue-state.json
 dev/workflow-nets/bootstrap-harness.workflow-net.json
 workspaces/hermes/state.md
 workspaces/hermes/active.md
 ```
 
-Committed Slice 12 acceptance:
+Committed Slice 13 activation:
 
 ```text
-737f632 Accept ADR schema-base source-disposition planning
+f457be0 Activate ADR schema-base architecture extraction slice
 ```
 
-The workflow fixtures now show active item `adr-schema-base-architecture-extraction-planning-slice-13` and `active_slice=adr-schema-base-architecture-extraction-planning-slice-13`.
+The workflow fixtures now show no active item and `active_slice=none`; next decision is explicit activation of `adr-schema-record-envelope-architecture-slice-14` or another ADR-track slice.
 
 ## Active boundaries
 
@@ -103,8 +111,9 @@ The old source is preserved as legacy/source provenance with a disposition note.
 
 ## Current blockers
 
-- ATHENA must produce the proposal-only architecture-extraction brief for `docs/adr/adr.schema-base.md` before any architecture artifact creation, source/schema mutation, or lifecycle change.
+- No Slice 13 blocker remains after committing the acceptance package.
+- USER/HERMES explicit activation is required before Slice 14 or any other next item proceeds.
 
 ## Next owner
 
-ATHENA for `docs/plans/architecture-extraction-brief.20260711.184325_adr-schema-base.md`.
+HERMES_USER for explicit activation of `adr-schema-record-envelope-architecture-slice-14` or definition of another ADR-track slice.

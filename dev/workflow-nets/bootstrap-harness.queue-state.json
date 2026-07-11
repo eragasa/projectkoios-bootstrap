@@ -4,19 +4,7 @@
   "parent_effort": "petri-net-workflow-inspectability",
   "status": "static-read-only-fixture",
   "authority": "Static read-only fixture; not canonical workflow authority and not product authority.",
-  "active_item": {
-    "name": "adr-schema-base-architecture-extraction-planning-slice-13",
-    "state": "active",
-    "artifact_refs": [
-      "docs/reviews/hermes-decision.20260711.184325_adr-schema-base-architecture-extraction-planning-slice-13.md",
-      "docs/reviews/hermes-acceptance.20260711.184119_adr-schema-base-source-disposition-planning-slice-12.md",
-      "docs/plans/source-disposition-brief.20260711.183536_adr-schema-base.md",
-      "docs/adr/adr.schema-base.md"
-    ],
-    "why": "ADR track remains priority. Slice 12 accepted proposal-only disposition recommending architecture-extraction planning for docs/adr/adr.schema-base.md.",
-    "dependency_or_blocker": "Requires ATHENA proposal-only architecture-extraction brief before any architecture artifact creation, source/schema mutation, or lifecycle change.",
-    "recommendation": "Route to ATHENA for architecture-extraction planning; do not activate non-ADR queued work while this active item remains set."
-  },
+  "active_item": null,
   "queued_items": [
     {
       "name": "pi-skill-determinism-slice-0",
@@ -30,6 +18,16 @@
     }
   ],
   "completed_items": [
+    {
+      "name": "adr-schema-base-architecture-extraction-planning-slice-13",
+      "state": "accepted-committed-pending",
+      "artifact_refs": [
+        "docs/plans/architecture-extraction-brief.20260711.184325_adr-schema-base.md",
+        "docs/reviews/hermes-acceptance.20260711.185430_adr-schema-base-architecture-extraction-planning-slice-13.md",
+        "docs/reviews/hermes-decision.20260711.184325_adr-schema-base-architecture-extraction-planning-slice-13.md"
+      ],
+      "why": "HERMES accepted ATHENA architecture-extraction brief as proposal-only planning after KOIOS no-blocker provenance review."
+    },
     {
       "name": "adr-schema-base-source-disposition-planning-slice-12",
       "state": "accepted-committed",
@@ -114,5 +112,5 @@
     }
   ],
   "deferred_items": [],
-  "next_decision_needed": "ATHENA should produce the proposal-only architecture-extraction brief for docs/adr/adr.schema-base.md; do not activate queued non-ADR work until active_item is cleared."
+  "next_decision_needed": "Explicitly activate adr-schema-record-envelope-architecture-slice-14 or define another ADR-track slice."
 }
