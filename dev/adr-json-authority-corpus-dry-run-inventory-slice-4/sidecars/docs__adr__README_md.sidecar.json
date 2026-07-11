@@ -1,0 +1,54 @@
+{
+  "authority_change": false,
+  "candidate_content_section_keys": [
+    "status",
+    "decision",
+    "consequences",
+    "acceptance_criteria"
+  ],
+  "candidate_only": true,
+  "entry_type": "index_control_surface",
+  "normalized_status_candidate": null,
+  "normalized_status_review_only": false,
+  "observed_source_status_text": null,
+  "omitted_or_sidecar_preserved_source_sections": [
+    "boundary",
+    "current_migration_note",
+    "purpose",
+    "required_minimum_structure"
+  ],
+  "outcome": "index_control_surface_skipped",
+  "projection_parseback_scope": "candidate_fields_only_not_source_completeness",
+  "projection_path": null,
+  "reviewed_inventory_reference": {
+    "authority_effect": "none",
+    "automatic_conversion_eligibility_candidate": false,
+    "category_candidate": "index_or_control_surface",
+    "disposition_candidate": "index_or_control_surface",
+    "exclusion_blocking_reasons": [
+      "index_or_control_surface",
+      "missing_observed_status",
+      "missing_status",
+      "not_adr_source_candidate"
+    ],
+    "owner_domain_review_flags": {
+      "domain_review_required": false,
+      "manual_review_required": true,
+      "owner_review_required": true
+    }
+  },
+  "slice_name": "adr-json-authority-corpus-dry-run-inventory-slice-4",
+  "source_hash_after": "9950799ed8c20d7980634fc086309cfd98fd3c065499d25f6aab965ec6dfef2e",
+  "source_hash_before": "9950799ed8c20d7980634fc086309cfd98fd3c065499d25f6aab965ec6dfef2e",
+  "source_hash_matches_reviewed_inventory": true,
+  "source_path": "docs/adr/README.md",
+  "source_title": "ADR control surface",
+  "source_to_candidate_complete": false,
+  "status_invented": false,
+  "unsupported_or_sidecar_preserved_fields": [
+    "reviewed category/disposition/authority-effect",
+    "owner/manual/domain review flags",
+    "routing or lifecycle material outside content candidate",
+    "index/control Markdown skipped as non-ADR record"
+  ]
+}

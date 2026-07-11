@@ -1,0 +1,51 @@
+{
+  "authority_change": false,
+  "candidate_content_section_keys": [
+    "status",
+    "decision",
+    "consequences",
+    "acceptance_criteria"
+  ],
+  "candidate_only": true,
+  "entry_type": "adr_source_candidate",
+  "normalized_status_candidate": "accepted",
+  "normalized_status_review_only": true,
+  "observed_source_status_text": "accepted",
+  "omitted_or_sidecar_preserved_source_sections": [
+    "context",
+    "implementation_brief",
+    "non_goals",
+    "normative_language",
+    "provenance",
+    "rejected",
+    "validation_expectations"
+  ],
+  "outcome": "accepted_source_candidate_not_json_authority",
+  "projection_parseback_scope": "candidate_fields_only_not_source_completeness",
+  "projection_path": "dev/adr-json-authority-corpus-dry-run-inventory-slice-4/generated-projections/docs__adr__adr_petrinet_20260705_132740Z_md.generated-projection.md",
+  "reviewed_inventory_reference": {
+    "authority_effect": "candidate",
+    "automatic_conversion_eligibility_candidate": true,
+    "category_candidate": "template_schema_contract",
+    "disposition_candidate": "json_authority_candidate",
+    "exclusion_blocking_reasons": [],
+    "owner_domain_review_flags": {
+      "domain_review_required": false,
+      "manual_review_required": false,
+      "owner_review_required": false
+    }
+  },
+  "slice_name": "adr-json-authority-corpus-dry-run-inventory-slice-4",
+  "source_hash_after": "7fd761c39056bf7a81032b98aabde038d053931e73cd161fb9a48934b2a700a3",
+  "source_hash_before": "7fd761c39056bf7a81032b98aabde038d053931e73cd161fb9a48934b2a700a3",
+  "source_hash_matches_reviewed_inventory": true,
+  "source_path": "docs/adr/adr.petrinet.20260705.132740Z.md",
+  "source_title": "ADR 20260705.132740Z: Separate Petri-net Definition, Marking, Binding, and Execution Runtime",
+  "source_to_candidate_complete": false,
+  "status_invented": false,
+  "unsupported_or_sidecar_preserved_fields": [
+    "reviewed category/disposition/authority-effect",
+    "owner/manual/domain review flags",
+    "routing or lifecycle material outside content candidate"
+  ]
+}

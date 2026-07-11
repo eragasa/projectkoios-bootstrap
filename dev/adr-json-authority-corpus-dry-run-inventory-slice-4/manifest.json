@@ -1,0 +1,126 @@
+{
+  "aggregate_counts": {
+    "by_authority_effect": {
+      "candidate": 5,
+      "none": 1
+    },
+    "by_automatic_conversion_eligibility_candidate": {
+      "false": 4,
+      "true": 2
+    },
+    "by_entry_type": {
+      "adr_source_candidate": 4,
+      "index_control_surface": 1,
+      "source_provenance_draft": 1
+    },
+    "by_final_outcome": {
+      "accepted_source_candidate_not_json_authority": 1,
+      "blocked_missing_status_pending_review": 1,
+      "candidate_projectable_pending_review": 1,
+      "index_control_surface_skipped": 1,
+      "projectable_candidate_blocked_pending_template_contract_and_status_review": 1,
+      "source_only_provenance_draft_skipped_or_blocked": 1
+    },
+    "by_omitted_sidecar_preserved_source_section": {
+      "accepted_control": 1,
+      "architecture_spec": 4,
+      "boundary": 1,
+      "comments": 1,
+      "content": 1,
+      "context": 5,
+      "current_migration_note": 1,
+      "definitions": 1,
+      "implementation_brief": 5,
+      "links": 4,
+      "non_goals": 5,
+      "normative_language": 1,
+      "open_questions": 1,
+      "provenance": 1,
+      "purpose": 1,
+      "rejected": 1,
+      "required_minimum_structure": 1,
+      "resolved_open_questions": 4,
+      "routing": 4,
+      "validation_expectations": 5
+    },
+    "by_reviewed_category": {
+      "index_or_control_surface": 1,
+      "template_schema_contract": 5
+    },
+    "by_reviewed_disposition": {
+      "index_or_control_surface": 1,
+      "json_authority_candidate": 2,
+      "manual_review_required": 2,
+      "source_only_provenance_candidate": 1
+    },
+    "generated_candidate_objects": 4,
+    "generated_projections": 3,
+    "index_control_surface_exclusions": 1,
+    "manual_review_blockers": 4,
+    "missing_status_findings": 2,
+    "omitted_blocked_skipped_projections": 3,
+    "omitted_sidecar_preserved_source_sections_total": 48,
+    "parseback_comparisons_run": 3,
+    "selected_entry_count": 6,
+    "sidecar_provenance_required": 6,
+    "skipped_or_excluded_entries": 3,
+    "source_only_provenance_blockers": 1,
+    "status_casing_normalization_sensitive_findings": 1
+  },
+  "artifact_hashes": {
+    "conflict_lossiness_report": "f0f1b527b26c3eb3ad5e329bd6785d8a58a88cc5c7866e0e00765b620632275b",
+    "per_source_results": "4379c932e70ff8efd1dcc6482f621da887201de9ac6190b84a9e014486c9bab3",
+    "projection_parseback_report": "d2d67c2191c4dad49bc6258259d94ac9a88c3021307e5ceb915eda797950f0a0",
+    "selected_sources": "da54594527bd5c7b8ff56d96dcecb6da677d0a8efdd05556104abe5e0380b1b5",
+    "skipped_or_blocked_sources": "2c78f5a6746739b3b51aac159beaafd9d6525643ffc99f96c6803cff01fccd1c"
+  },
+  "artifacts": {
+    "candidate_objects_dir": "dev/adr-json-authority-corpus-dry-run-inventory-slice-4/candidate-objects/",
+    "conflict_lossiness_report": "dev/adr-json-authority-corpus-dry-run-inventory-slice-4/conflict-lossiness-report.json",
+    "generated_projections_dir": "dev/adr-json-authority-corpus-dry-run-inventory-slice-4/generated-projections/",
+    "manifest": "dev/adr-json-authority-corpus-dry-run-inventory-slice-4/manifest.json",
+    "per_source_results": "dev/adr-json-authority-corpus-dry-run-inventory-slice-4/per-source-results.json",
+    "projection_parseback_report": "dev/adr-json-authority-corpus-dry-run-inventory-slice-4/projection-parseback-report.json",
+    "selected_sources": "dev/adr-json-authority-corpus-dry-run-inventory-slice-4/selected-sources.json",
+    "sidecars_dir": "dev/adr-json-authority-corpus-dry-run-inventory-slice-4/sidecars/",
+    "skipped_or_blocked_sources": "dev/adr-json-authority-corpus-dry-run-inventory-slice-4/skipped-or-blocked-sources.json"
+  },
+  "authority_change": false,
+  "authority_mode": "candidate/evidence only",
+  "bounded_subset_only": true,
+  "bulk_migration": false,
+  "candidate_only": true,
+  "conversion_completed_as_authoritative_record": false,
+  "corpus_dry_run": true,
+  "cutover_authorized": false,
+  "database_authority": false,
+  "generated_at": "20260711.152000Z",
+  "mode": "candidate-only bounded subset corpus dry run",
+  "schema_change": false,
+  "selected_entry_count": 6,
+  "selected_sources": [
+    "docs/adr/adr.json-schemas.draft.md",
+    "docs/adr/adr.petrinet.20260705.132740Z.md",
+    "docs/adr/adr.adr-template-contract.md",
+    "docs/adr/adr.schema-base.md",
+    "docs/adr/adr.adr-lifecycle.draft.md",
+    "docs/adr/README.md"
+  ],
+  "slice_name": "adr-json-authority-corpus-dry-run-inventory-slice-4",
+  "source_mutation": false,
+  "source_refs": {
+    "brief": "docs/plans/implementation-brief.20260711.151500_adr-json-authority-corpus-dry-run-slice-4.md",
+    "hermes_decision": "docs/reviews/hermes-decision.20260711.152000_adr-json-authority-corpus-dry-run-inventory-slice-4.md",
+    "koios_input": "workspaces/koios/working/next-proof-input.20260711_adr-json-authority-corpus-dry-run-slice-4.md",
+    "reviewed_inventory": "dev/adr-json-authority-inventory-review-overrides-slice-1/reviewed-inventory.json",
+    "slice_2_acceptance": "docs/reviews/hermes-acceptance.20260711.145000_adr-json-authority-messy-canary-slice-2.md",
+    "slice_3_acceptance": "docs/reviews/hermes-acceptance.20260711.151000_adr-json-authority-projectable-messy-canary-slice-3.md"
+  },
+  "validation_command_summary": {
+    "aggregate_counts_match_per_source": "pending closeout validation",
+    "exactly_six_sources": "pending closeout validation",
+    "json_validity": "pending closeout validation",
+    "no_database_files": "pending closeout validation",
+    "source_schema_non_mutation": "pending closeout validation"
+  }
+}

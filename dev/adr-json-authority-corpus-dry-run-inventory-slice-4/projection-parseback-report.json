@@ -1,0 +1,49 @@
+{
+  "all_parsebacks_generated_projection_only": true,
+  "all_semantic_equal_for_candidate_fields": true,
+  "authority_change": false,
+  "candidate_only": true,
+  "parseback_count": 3,
+  "parseback_results": [
+    {
+      "hand_authored_source_parsed_as_replacement": false,
+      "normalized_status_candidate": "draft",
+      "observed_status_text": "draft",
+      "parseback_source": "generated_projection_only",
+      "projection_hash": "212e799ea32f00407b73d62c9ce6a465b088ce43bc3c0721c313702a1789f7e9",
+      "projection_introduced_authority": false,
+      "projection_path": "dev/adr-json-authority-corpus-dry-run-inventory-slice-4/generated-projections/docs__adr__adr_json-schemas_draft_md.generated-projection.md",
+      "projection_resolves_review_blockers": false,
+      "semantic_equal_for_candidate_fields": true,
+      "slice_name": "adr-json-authority-corpus-dry-run-inventory-slice-4",
+      "source_path": "docs/adr/adr.json-schemas.draft.md"
+    },
+    {
+      "hand_authored_source_parsed_as_replacement": false,
+      "normalized_status_candidate": "accepted",
+      "observed_status_text": "accepted",
+      "parseback_source": "generated_projection_only",
+      "projection_hash": "4f35f48ee25052b7e4f7e56c533c87e3c6d3a5965d8ddd5f8521f5ed2db6844d",
+      "projection_introduced_authority": false,
+      "projection_path": "dev/adr-json-authority-corpus-dry-run-inventory-slice-4/generated-projections/docs__adr__adr_petrinet_20260705_132740Z_md.generated-projection.md",
+      "projection_resolves_review_blockers": false,
+      "semantic_equal_for_candidate_fields": true,
+      "slice_name": "adr-json-authority-corpus-dry-run-inventory-slice-4",
+      "source_path": "docs/adr/adr.petrinet.20260705.132740Z.md"
+    },
+    {
+      "hand_authored_source_parsed_as_replacement": false,
+      "normalized_status_candidate": "accepted",
+      "observed_status_text": "Accepted",
+      "parseback_source": "generated_projection_only",
+      "projection_hash": "74918b999a31d1c463c90ea33062c5562e3585cc393417a0c2b186b27f7697a1",
+      "projection_introduced_authority": false,
+      "projection_path": "dev/adr-json-authority-corpus-dry-run-inventory-slice-4/generated-projections/docs__adr__adr_adr-template-contract_md.generated-projection.md",
+      "projection_resolves_review_blockers": false,
+      "semantic_equal_for_candidate_fields": true,
+      "slice_name": "adr-json-authority-corpus-dry-run-inventory-slice-4",
+      "source_path": "docs/adr/adr.adr-template-contract.md"
+    }
+  ],
+  "slice_name": "adr-json-authority-corpus-dry-run-inventory-slice-4"
+}

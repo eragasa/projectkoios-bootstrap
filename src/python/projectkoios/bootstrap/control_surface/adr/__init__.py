@@ -10,6 +10,12 @@ from projectkoios.bootstrap.control_surface.adr.conformance import (
     AdrConformanceRunner,
     run_json_schemas_conformance,
 )
+from projectkoios.bootstrap.control_surface.adr.corpus_dry_run import (
+    AdrCorpusDryRunPaths,
+    AdrCorpusDryRunResult,
+    AdrCorpusDryRunRunner,
+    run_adr_json_authority_corpus_dry_run,
+)
 from projectkoios.bootstrap.control_surface.adr.evidence import AdrPilotEvidenceBuilder
 from projectkoios.bootstrap.control_surface.adr.inventory import (
     AdrInventoryPaths,
@@ -54,6 +60,9 @@ __all__ = [
     "AdrConformancePaths",
     "AdrConformanceResult",
     "AdrConformanceRunner",
+    "AdrCorpusDryRunPaths",
+    "AdrCorpusDryRunResult",
+    "AdrCorpusDryRunRunner",
     "AdrInventoryPaths",
     "AdrInventoryResult",
     "AdrInventoryRunner",
@@ -80,6 +89,7 @@ __all__ = [
     "ReplacementAction",
     "SourceOfTruthMode",
     "run_adr_bidirectional_object_canary",
+    "run_adr_json_authority_corpus_dry_run",
     "run_adr_json_authority_inventory",
     "run_adr_json_authority_inventory_overrides",
     "run_adr_json_authority_messy_canary",

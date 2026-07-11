@@ -1,0 +1,287 @@
+{
+  "authority_change": false,
+  "candidate_only": true,
+  "skipped_or_blocked_count": 4,
+  "slice_name": "adr-json-authority-corpus-dry-run-inventory-slice-4",
+  "sources": [
+    {
+      "accepted_source_status_not_json_authority": false,
+      "attempted_candidate_conversion": true,
+      "authority_change": false,
+      "authority_mode": "candidate/evidence only",
+      "blockers": [
+        "manual_review_required",
+        "status_casing_or_text_would_normalize"
+      ],
+      "bounded_subset_only": true,
+      "bulk_migration": false,
+      "candidate_object_path": "dev/adr-json-authority-corpus-dry-run-inventory-slice-4/candidate-objects/docs__adr__adr_adr-template-contract_md.json",
+      "candidate_only": true,
+      "conversion_completed_as_authoritative_record": false,
+      "corpus_dry_run": true,
+      "cutover_authorized": false,
+      "database_authority": false,
+      "entry_type": "adr_source_candidate",
+      "final_outcome": "projectable_candidate_blocked_pending_template_contract_and_status_review",
+      "lossiness_conflict_findings": [
+        "observed status casing/text preserved separately from normalized candidate",
+        "Slice 3 wrapped-list continuation preserved in multi-file dry run",
+        "template/schema-contract manual-review blocker remains active",
+        "source-to-candidate omitted sections are enumerated separately; projection equality covers candidate fields only"
+      ],
+      "manual_review_required": true,
+      "normalized_status_candidate": "accepted",
+      "observed_status_text": "Accepted",
+      "omitted_or_sidecar_preserved_source_sections": [
+        "architecture_spec",
+        "context",
+        "implementation_brief",
+        "links",
+        "non_goals",
+        "resolved_open_questions",
+        "routing",
+        "validation_expectations"
+      ],
+      "parseback_status": "semantic_equal_for_candidate_fields",
+      "projection_parseback_scope": "candidate_fields_only_not_source_completeness",
+      "projection_path": "dev/adr-json-authority-corpus-dry-run-inventory-slice-4/generated-projections/docs__adr__adr_adr-template-contract_md.generated-projection.md",
+      "projection_status": "generated",
+      "reviewed_inventory": {
+        "authority_effect": "candidate",
+        "automatic_conversion_eligibility_candidate": false,
+        "category_candidate": "template_schema_contract",
+        "disposition_candidate": "manual_review_required",
+        "exclusion_blocking_reasons": [
+          "manual_review_required",
+          "status_casing_or_text_would_normalize"
+        ],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": true,
+          "owner_review_required": true
+        }
+      },
+      "schema_change": false,
+      "sidecar_path": "dev/adr-json-authority-corpus-dry-run-inventory-slice-4/sidecars/docs__adr__adr_adr-template-contract_md.sidecar.json",
+      "skipped_or_excluded_reason": null,
+      "slice_name": "adr-json-authority-corpus-dry-run-inventory-slice-4",
+      "source_hash_after": "2876dfbe031105d383fa9e33cec7d5dd49cf569cea6f43eae59e8fa1da502895",
+      "source_hash_before": "2876dfbe031105d383fa9e33cec7d5dd49cf569cea6f43eae59e8fa1da502895",
+      "source_hash_matches_reviewed_inventory": true,
+      "source_mutation": false,
+      "source_path": "docs/adr/adr.adr-template-contract.md",
+      "source_to_candidate_complete": false,
+      "status_casing_or_text_would_normalize": true,
+      "status_missing": false
+    },
+    {
+      "accepted_source_status_not_json_authority": false,
+      "attempted_candidate_conversion": true,
+      "authority_change": false,
+      "authority_mode": "candidate/evidence only",
+      "blockers": [
+        "manual_review_required",
+        "missing_observed_status",
+        "missing_status"
+      ],
+      "bounded_subset_only": true,
+      "bulk_migration": false,
+      "candidate_object_path": "dev/adr-json-authority-corpus-dry-run-inventory-slice-4/candidate-objects/docs__adr__adr_schema-base_md.json",
+      "candidate_only": true,
+      "conversion_completed_as_authoritative_record": false,
+      "corpus_dry_run": true,
+      "cutover_authorized": false,
+      "database_authority": false,
+      "entry_type": "adr_source_candidate",
+      "final_outcome": "blocked_missing_status_pending_review",
+      "lossiness_conflict_findings": [
+        "observed Markdown status missing; no status invented",
+        "source-to-candidate omitted sections are enumerated separately; projection equality covers candidate fields only"
+      ],
+      "manual_review_required": true,
+      "normalized_status_candidate": null,
+      "observed_status_text": null,
+      "omitted_or_sidecar_preserved_source_sections": [
+        "architecture_spec",
+        "comments",
+        "content",
+        "context",
+        "implementation_brief",
+        "links",
+        "non_goals",
+        "open_questions",
+        "resolved_open_questions",
+        "routing",
+        "validation_expectations"
+      ],
+      "parseback_status": null,
+      "projection_parseback_scope": "candidate_fields_only_not_source_completeness",
+      "projection_path": null,
+      "projection_status": "blocked_missing_status",
+      "reviewed_inventory": {
+        "authority_effect": "candidate",
+        "automatic_conversion_eligibility_candidate": false,
+        "category_candidate": "template_schema_contract",
+        "disposition_candidate": "manual_review_required",
+        "exclusion_blocking_reasons": [
+          "manual_review_required",
+          "missing_observed_status",
+          "missing_status"
+        ],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": true,
+          "owner_review_required": true
+        }
+      },
+      "schema_change": false,
+      "sidecar_path": "dev/adr-json-authority-corpus-dry-run-inventory-slice-4/sidecars/docs__adr__adr_schema-base_md.sidecar.json",
+      "skipped_or_excluded_reason": "missing observed Markdown status blocks authority promotion",
+      "slice_name": "adr-json-authority-corpus-dry-run-inventory-slice-4",
+      "source_hash_after": "48a5fed34bec41b18885fdb57d7491895783f735c07efc33202098bbf61a2d51",
+      "source_hash_before": "48a5fed34bec41b18885fdb57d7491895783f735c07efc33202098bbf61a2d51",
+      "source_hash_matches_reviewed_inventory": true,
+      "source_mutation": false,
+      "source_path": "docs/adr/adr.schema-base.md",
+      "source_to_candidate_complete": false,
+      "status_casing_or_text_would_normalize": false,
+      "status_missing": true
+    },
+    {
+      "accepted_source_status_not_json_authority": false,
+      "attempted_candidate_conversion": false,
+      "authority_change": false,
+      "authority_mode": "candidate/evidence only",
+      "blockers": [
+        "source_provenance_review_required"
+      ],
+      "bounded_subset_only": true,
+      "bulk_migration": false,
+      "candidate_object_path": null,
+      "candidate_only": true,
+      "conversion_completed_as_authoritative_record": false,
+      "corpus_dry_run": true,
+      "cutover_authorized": false,
+      "database_authority": false,
+      "entry_type": "source_provenance_draft",
+      "final_outcome": "source_only_provenance_draft_skipped_or_blocked",
+      "lossiness_conflict_findings": [
+        "source/provenance draft not promoted or superseded",
+        "source-to-candidate omitted sections are enumerated separately; projection equality covers candidate fields only"
+      ],
+      "manual_review_required": true,
+      "normalized_status_candidate": "draft",
+      "observed_status_text": "draft",
+      "omitted_or_sidecar_preserved_source_sections": [
+        "accepted_control",
+        "architecture_spec",
+        "context",
+        "implementation_brief",
+        "links",
+        "non_goals",
+        "resolved_open_questions",
+        "routing",
+        "validation_expectations"
+      ],
+      "parseback_status": null,
+      "projection_parseback_scope": "candidate_fields_only_not_source_completeness",
+      "projection_path": null,
+      "projection_status": "skipped_source_only_provenance",
+      "reviewed_inventory": {
+        "authority_effect": "candidate",
+        "automatic_conversion_eligibility_candidate": false,
+        "category_candidate": "template_schema_contract",
+        "disposition_candidate": "source_only_provenance_candidate",
+        "exclusion_blocking_reasons": [
+          "source_provenance_review_required"
+        ],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": true,
+          "owner_review_required": true
+        }
+      },
+      "schema_change": false,
+      "sidecar_path": "dev/adr-json-authority-corpus-dry-run-inventory-slice-4/sidecars/docs__adr__adr_adr-lifecycle_draft_md.sidecar.json",
+      "skipped_or_excluded_reason": "source/provenance draft is skipped from authority promotion",
+      "slice_name": "adr-json-authority-corpus-dry-run-inventory-slice-4",
+      "source_hash_after": "d9068c3a5d10efcf9ee2216e34272cc8399c91e5af67ce51b0f1e5e5b5464706",
+      "source_hash_before": "d9068c3a5d10efcf9ee2216e34272cc8399c91e5af67ce51b0f1e5e5b5464706",
+      "source_hash_matches_reviewed_inventory": true,
+      "source_mutation": false,
+      "source_path": "docs/adr/adr.adr-lifecycle.draft.md",
+      "source_to_candidate_complete": false,
+      "status_casing_or_text_would_normalize": false,
+      "status_missing": false
+    },
+    {
+      "accepted_source_status_not_json_authority": false,
+      "attempted_candidate_conversion": false,
+      "authority_change": false,
+      "authority_mode": "candidate/evidence only",
+      "blockers": [
+        "index_or_control_surface",
+        "missing_observed_status",
+        "missing_status",
+        "not_adr_source_candidate"
+      ],
+      "bounded_subset_only": true,
+      "bulk_migration": false,
+      "candidate_object_path": null,
+      "candidate_only": true,
+      "conversion_completed_as_authoritative_record": false,
+      "corpus_dry_run": true,
+      "cutover_authorized": false,
+      "database_authority": false,
+      "entry_type": "index_control_surface",
+      "final_outcome": "index_control_surface_skipped",
+      "lossiness_conflict_findings": [
+        "observed Markdown status missing; no status invented",
+        "index/control surface skipped, not converted as ADR record",
+        "source-to-candidate omitted sections are enumerated separately; projection equality covers candidate fields only"
+      ],
+      "manual_review_required": true,
+      "normalized_status_candidate": null,
+      "observed_status_text": null,
+      "omitted_or_sidecar_preserved_source_sections": [
+        "boundary",
+        "current_migration_note",
+        "purpose",
+        "required_minimum_structure"
+      ],
+      "parseback_status": null,
+      "projection_parseback_scope": "candidate_fields_only_not_source_completeness",
+      "projection_path": null,
+      "projection_status": "skipped_index_control_surface",
+      "reviewed_inventory": {
+        "authority_effect": "none",
+        "automatic_conversion_eligibility_candidate": false,
+        "category_candidate": "index_or_control_surface",
+        "disposition_candidate": "index_or_control_surface",
+        "exclusion_blocking_reasons": [
+          "index_or_control_surface",
+          "missing_observed_status",
+          "missing_status",
+          "not_adr_source_candidate"
+        ],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": true,
+          "owner_review_required": true
+        }
+      },
+      "schema_change": false,
+      "sidecar_path": "dev/adr-json-authority-corpus-dry-run-inventory-slice-4/sidecars/docs__adr__README_md.sidecar.json",
+      "skipped_or_excluded_reason": "index/control surface is not an ADR candidate record",
+      "slice_name": "adr-json-authority-corpus-dry-run-inventory-slice-4",
+      "source_hash_after": "9950799ed8c20d7980634fc086309cfd98fd3c065499d25f6aab965ec6dfef2e",
+      "source_hash_before": "9950799ed8c20d7980634fc086309cfd98fd3c065499d25f6aab965ec6dfef2e",
+      "source_hash_matches_reviewed_inventory": true,
+      "source_mutation": false,
+      "source_path": "docs/adr/README.md",
+      "source_to_candidate_complete": false,
+      "status_casing_or_text_would_normalize": false,
+      "status_missing": true
+    }
+  ]
+}

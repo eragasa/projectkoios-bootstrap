@@ -1,0 +1,57 @@
+{
+  "authority_change": false,
+  "candidate_content_section_keys": [
+    "status",
+    "decision",
+    "consequences",
+    "acceptance_criteria"
+  ],
+  "candidate_only": true,
+  "entry_type": "adr_source_candidate",
+  "normalized_status_candidate": "accepted",
+  "normalized_status_review_only": true,
+  "observed_source_status_text": "Accepted",
+  "omitted_or_sidecar_preserved_source_sections": [
+    "architecture_spec",
+    "context",
+    "implementation_brief",
+    "links",
+    "non_goals",
+    "resolved_open_questions",
+    "routing",
+    "validation_expectations"
+  ],
+  "outcome": "projectable_candidate_blocked_pending_template_contract_and_status_review",
+  "projection_parseback_scope": "candidate_fields_only_not_source_completeness",
+  "projection_path": "dev/adr-json-authority-corpus-dry-run-inventory-slice-4/generated-projections/docs__adr__adr_adr-template-contract_md.generated-projection.md",
+  "reviewed_inventory_reference": {
+    "authority_effect": "candidate",
+    "automatic_conversion_eligibility_candidate": false,
+    "category_candidate": "template_schema_contract",
+    "disposition_candidate": "manual_review_required",
+    "exclusion_blocking_reasons": [
+      "manual_review_required",
+      "status_casing_or_text_would_normalize"
+    ],
+    "owner_domain_review_flags": {
+      "domain_review_required": false,
+      "manual_review_required": true,
+      "owner_review_required": true
+    }
+  },
+  "slice_name": "adr-json-authority-corpus-dry-run-inventory-slice-4",
+  "source_hash_after": "2876dfbe031105d383fa9e33cec7d5dd49cf569cea6f43eae59e8fa1da502895",
+  "source_hash_before": "2876dfbe031105d383fa9e33cec7d5dd49cf569cea6f43eae59e8fa1da502895",
+  "source_hash_matches_reviewed_inventory": true,
+  "source_path": "docs/adr/adr.adr-template-contract.md",
+  "source_title": "ADR 20260701.131629: Canonical ADR proposal template",
+  "source_to_candidate_complete": false,
+  "status_invented": false,
+  "unsupported_or_sidecar_preserved_fields": [
+    "reviewed category/disposition/authority-effect",
+    "owner/manual/domain review flags",
+    "routing or lifecycle material outside content candidate",
+    "Slice 3 wrapped-list acceptance criteria preserved in content candidate",
+    "routing section preserved as sidecar/provenance"
+  ]
+}

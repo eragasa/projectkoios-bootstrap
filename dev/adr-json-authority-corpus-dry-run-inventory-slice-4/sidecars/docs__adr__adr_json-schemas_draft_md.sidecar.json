@@ -1,0 +1,54 @@
+{
+  "authority_change": false,
+  "candidate_content_section_keys": [
+    "status",
+    "decision",
+    "consequences",
+    "acceptance_criteria"
+  ],
+  "candidate_only": true,
+  "entry_type": "adr_source_candidate",
+  "normalized_status_candidate": "draft",
+  "normalized_status_review_only": true,
+  "observed_source_status_text": "draft",
+  "omitted_or_sidecar_preserved_source_sections": [
+    "architecture_spec",
+    "context",
+    "definitions",
+    "implementation_brief",
+    "links",
+    "non_goals",
+    "resolved_open_questions",
+    "routing",
+    "validation_expectations"
+  ],
+  "outcome": "candidate_projectable_pending_review",
+  "projection_parseback_scope": "candidate_fields_only_not_source_completeness",
+  "projection_path": "dev/adr-json-authority-corpus-dry-run-inventory-slice-4/generated-projections/docs__adr__adr_json-schemas_draft_md.generated-projection.md",
+  "reviewed_inventory_reference": {
+    "authority_effect": "candidate",
+    "automatic_conversion_eligibility_candidate": true,
+    "category_candidate": "template_schema_contract",
+    "disposition_candidate": "json_authority_candidate",
+    "exclusion_blocking_reasons": [],
+    "owner_domain_review_flags": {
+      "domain_review_required": false,
+      "manual_review_required": false,
+      "owner_review_required": false
+    }
+  },
+  "slice_name": "adr-json-authority-corpus-dry-run-inventory-slice-4",
+  "source_hash_after": "c95dfb0928ba1398eb058a7bb16b21f2dad77f4116169cbcc8075fb5186c2df5",
+  "source_hash_before": "c95dfb0928ba1398eb058a7bb16b21f2dad77f4116169cbcc8075fb5186c2df5",
+  "source_hash_matches_reviewed_inventory": true,
+  "source_path": "docs/adr/adr.json-schemas.draft.md",
+  "source_title": "ADR 20260702.213000Z: JSON Schemas Namespace",
+  "source_to_candidate_complete": false,
+  "status_invented": false,
+  "unsupported_or_sidecar_preserved_fields": [
+    "reviewed category/disposition/authority-effect",
+    "owner/manual/domain review flags",
+    "routing or lifecycle material outside content candidate",
+    "routing section preserved as sidecar/provenance"
+  ]
+}

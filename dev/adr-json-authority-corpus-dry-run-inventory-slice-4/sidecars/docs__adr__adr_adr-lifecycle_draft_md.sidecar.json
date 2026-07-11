@@ -1,0 +1,57 @@
+{
+  "authority_change": false,
+  "candidate_content_section_keys": [
+    "status",
+    "decision",
+    "consequences",
+    "acceptance_criteria"
+  ],
+  "candidate_only": true,
+  "entry_type": "source_provenance_draft",
+  "normalized_status_candidate": "draft",
+  "normalized_status_review_only": true,
+  "observed_source_status_text": "draft",
+  "omitted_or_sidecar_preserved_source_sections": [
+    "accepted_control",
+    "architecture_spec",
+    "context",
+    "implementation_brief",
+    "links",
+    "non_goals",
+    "resolved_open_questions",
+    "routing",
+    "validation_expectations"
+  ],
+  "outcome": "source_only_provenance_draft_skipped_or_blocked",
+  "projection_parseback_scope": "candidate_fields_only_not_source_completeness",
+  "projection_path": null,
+  "reviewed_inventory_reference": {
+    "authority_effect": "candidate",
+    "automatic_conversion_eligibility_candidate": false,
+    "category_candidate": "template_schema_contract",
+    "disposition_candidate": "source_only_provenance_candidate",
+    "exclusion_blocking_reasons": [
+      "source_provenance_review_required"
+    ],
+    "owner_domain_review_flags": {
+      "domain_review_required": false,
+      "manual_review_required": true,
+      "owner_review_required": true
+    }
+  },
+  "slice_name": "adr-json-authority-corpus-dry-run-inventory-slice-4",
+  "source_hash_after": "d9068c3a5d10efcf9ee2216e34272cc8399c91e5af67ce51b0f1e5e5b5464706",
+  "source_hash_before": "d9068c3a5d10efcf9ee2216e34272cc8399c91e5af67ce51b0f1e5e5b5464706",
+  "source_hash_matches_reviewed_inventory": true,
+  "source_path": "docs/adr/adr.adr-lifecycle.draft.md",
+  "source_title": "ADR 20260702.182000: ADR Lifecycle Policy",
+  "source_to_candidate_complete": false,
+  "status_invented": false,
+  "unsupported_or_sidecar_preserved_fields": [
+    "reviewed category/disposition/authority-effect",
+    "owner/manual/domain review flags",
+    "routing or lifecycle material outside content candidate",
+    "source/provenance draft not promoted to current lifecycle authority",
+    "routing section preserved as sidecar/provenance"
+  ]
+}

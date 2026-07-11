@@ -1,0 +1,60 @@
+{
+  "authority_change": false,
+  "candidate_content_section_keys": [
+    "status",
+    "decision",
+    "consequences",
+    "acceptance_criteria"
+  ],
+  "candidate_only": true,
+  "entry_type": "adr_source_candidate",
+  "normalized_status_candidate": null,
+  "normalized_status_review_only": false,
+  "observed_source_status_text": null,
+  "omitted_or_sidecar_preserved_source_sections": [
+    "architecture_spec",
+    "comments",
+    "content",
+    "context",
+    "implementation_brief",
+    "links",
+    "non_goals",
+    "open_questions",
+    "resolved_open_questions",
+    "routing",
+    "validation_expectations"
+  ],
+  "outcome": "blocked_missing_status_pending_review",
+  "projection_parseback_scope": "candidate_fields_only_not_source_completeness",
+  "projection_path": null,
+  "reviewed_inventory_reference": {
+    "authority_effect": "candidate",
+    "automatic_conversion_eligibility_candidate": false,
+    "category_candidate": "template_schema_contract",
+    "disposition_candidate": "manual_review_required",
+    "exclusion_blocking_reasons": [
+      "manual_review_required",
+      "missing_observed_status",
+      "missing_status"
+    ],
+    "owner_domain_review_flags": {
+      "domain_review_required": false,
+      "manual_review_required": true,
+      "owner_review_required": true
+    }
+  },
+  "slice_name": "adr-json-authority-corpus-dry-run-inventory-slice-4",
+  "source_hash_after": "48a5fed34bec41b18885fdb57d7491895783f735c07efc33202098bbf61a2d51",
+  "source_hash_before": "48a5fed34bec41b18885fdb57d7491895783f735c07efc33202098bbf61a2d51",
+  "source_hash_matches_reviewed_inventory": true,
+  "source_path": "docs/adr/adr.schema-base.md",
+  "source_title": "ADR: Schema Base Class for ADR Records",
+  "source_to_candidate_complete": false,
+  "status_invented": false,
+  "unsupported_or_sidecar_preserved_fields": [
+    "reviewed category/disposition/authority-effect",
+    "owner/manual/domain review flags",
+    "routing or lifecycle material outside content candidate",
+    "routing section preserved as sidecar/provenance"
+  ]
+}

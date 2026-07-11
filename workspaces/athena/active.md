@@ -2,8 +2,8 @@
 {
   "title": "Athena active work",
   "artifact_type": "workspace-active-priorities",
-  "status": "adr-json-authority-projectable-messy-canary-accepted-pending-next-selection",
-  "datetime": "20260711.140200Z"},{
+  "status": "adr-json-authority-corpus-dry-run-inventory-slice-4-brief-drafted-pending-hermes-user-approval",
+  "datetime": "20260711.151500Z"},{
   "acting_as": "ATHENA",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/athena/",
@@ -91,7 +91,7 @@
 
 1. Workflow-object Slice 0 is implemented, VULCAN-validated, ATHENA conformance-reviewed and implementation-reviewed/accepted, KOIOS-reviewed, and USER/HERMES-accepted with watchpoints.
 2. Operator Console P0/P1/P2 are implemented, user-previewed where required, ATHENA-reviewed/accepted, and reconciled into architecture as bootstrap-incubation as-built evidence.
-3. JSON-authoritative authority-change ADR proposal is accepted as staged direction; Phase 0 inventory/classification accepted/committed/pushed; Phase 1 inventory review/overrides accepted by HERMES/USER; Phase 2 messy canary accepted by HERMES/USER; Phase 3 projectable messy canary accepted by HERMES with watchpoints; pending next selection/packaging.
+3. JSON-authoritative authority-change ADR proposal is accepted as staged direction; Phase 0 inventory/classification accepted/committed/pushed; Phase 1 inventory review/overrides accepted by HERMES/USER; Phase 2 messy canary accepted by HERMES/USER; Phase 3 projectable messy canary accepted by HERMES with watchpoints; HERMES/USER selected Slice 4 candidate-only corpus dry-run and ATHENA drafted the implementation brief pending HERMES/USER approval.
 
 ## Recently completed
 
@@ -131,10 +131,10 @@
 
 ## Current active item
 
-- `adr-json-authority-projectable-messy-canary-slice-3`
+- `adr-json-authority-corpus-dry-run-inventory-slice-4`
   - Parent effort: ADR rationalization / JSON-authoritative ADR store staged migration.
-  - Status: HERMES accepted with watchpoints after VULCAN remediation and ATHENA post-remediation review; pending next selection/packaging.
-  - Purpose: prove messy-but-projectable one-source conversion/projection behavior for `docs/adr/adr.adr-template-contract.md` without authority cutover or source mutation.
+  - Status: VULCAN implemented, corrected KOIOS omission-reporting blocker, and ATHENA architecture/conformance-reviewed as accepted-with-watchpoints after correction in `docs/reviews/architecture-conformance.20260711.153400_adr-json-authority-corpus-dry-run-inventory-slice-4.md`; pending KOIOS provenance review and HERMES/USER final acceptance.
+  - Purpose: run a candidate-only dry-run over exactly six selected ADR/index entries to test multi-file reporting and lossiness/conflict aggregation without authority cutover, source mutation, schema changes, DB/storage authority, or bulk migration.
   - Key artifacts:
     - `docs/plans/architecture-intake.20260711.131140_adr-bidirectional-json-markdown-objects.md`
     - `workspaces/koios/working/provenance-intake.20260711_adr-rationalization-json-md-object-track.md`
@@ -177,6 +177,11 @@
     - `workspaces/koios/working/provenance-review.20260711_adr-json-authority-projectable-messy-canary-slice-3.md`
     - `docs/reviews/hermes-acceptance.20260711.151000_adr-json-authority-projectable-messy-canary-slice-3.md`
     - `dev/adr-json-authority-projectable-messy-canary-slice-3/`
+    - `docs/plans/implementation-brief.20260711.151500_adr-json-authority-corpus-dry-run-slice-4.md`
+    - `docs/reviews/hermes-decision.20260711.152000_adr-json-authority-corpus-dry-run-inventory-slice-4.md`
+    - `docs/implementation/adr-json-authority-corpus-dry-run-inventory-slice-4.20260711.153000.md`
+    - `docs/reviews/architecture-conformance.20260711.153400_adr-json-authority-corpus-dry-run-inventory-slice-4.md`
+    - `dev/adr-json-authority-corpus-dry-run-inventory-slice-4/`
 
 ## Queued/backlog items
 
@@ -197,12 +202,12 @@
 
 ## Waiting on / blocked items
 
-- HERMES/USER selection of next bounded ADR JSON authority proof point or packaging/commit boundary.
+- KOIOS provenance review and HERMES/USER final acceptance for `adr-json-authority-corpus-dry-run-inventory-slice-4`.
 - Slice 0 package is committed/pushed as `ad91148c`; later package boundaries remain separate unless HERMES reports committed/pushed.
 
 ## Recommended next actions
 
-1. HERMES/USER should choose the next bounded ADR JSON authority proof point or packaging/commit boundary.
+1. HERMES should wait for/obtain KOIOS provenance review, then decide final acceptance for Slice 4.
 2. Preserve `pi-skill-determinism-slice-0` as queued-only unless explicitly activated.
 
 ## Packaging watchpoints
@@ -223,7 +228,7 @@
 - Add backend/API transport, workflow activation/versioning, direct mutation, or Petri-net graph editing without separate architecture/approval.
 - Treat bootstrap incubation artifacts as final product/mothership UI authority.
 - Treat `docs/policies/typescript-coding.md` as controlling unless separately accepted.
-- Bulk ADR migration, source mutation, status normalization, schema/lifecycle/workflow/storage-authority redesign, corpus dry-run, or authority cutover from Slice 3 evidence without KOIOS/HERMES/USER acceptance.
+- Bulk ADR migration, source mutation, status normalization, schema/lifecycle/workflow/storage-authority redesign, broad corpus conversion, or authority cutover from Slice 4 planning/evidence without KOIOS/HERMES/USER acceptance.
 
 ## Exit criteria
 

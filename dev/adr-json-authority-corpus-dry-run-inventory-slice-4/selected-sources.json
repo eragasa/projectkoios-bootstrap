@@ -1,0 +1,279 @@
+{
+  "authority_change": false,
+  "bounded_subset_only": true,
+  "candidate_only": true,
+  "corpus_dry_run": true,
+  "exact_subset_only": true,
+  "no_extra_sources": true,
+  "reviewed_inventory_values": [
+    {
+      "authority_change": false,
+      "candidate_only": true,
+      "changed": true,
+      "original": {
+        "authority_effect": "proposed_authority",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "template_schema_contract",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "rationale": [
+        "proposed_authority downgraded to candidate for review-only planning",
+        "json_authority_candidate retained only as candidate conversion-planning evidence"
+      ],
+      "reviewed": {
+        "authority_effect": "candidate",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "template_schema_contract",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "source_basis": [
+        "HERMES authority-forward label watchpoint",
+        "KOIOS global override rule 3"
+      ],
+      "source_hash": "c95dfb0928ba1398eb058a7bb16b21f2dad77f4116169cbcc8075fb5186c2df5",
+      "source_mutation": false,
+      "source_path": "docs/adr/adr.json-schemas.draft.md"
+    },
+    {
+      "authority_change": false,
+      "candidate_only": true,
+      "changed": true,
+      "original": {
+        "authority_effect": "proposed_authority",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "template_schema_contract",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "rationale": [
+        "proposed_authority downgraded to candidate for review-only planning",
+        "json_authority_candidate retained only as candidate conversion-planning evidence"
+      ],
+      "reviewed": {
+        "authority_effect": "candidate",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "template_schema_contract",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "source_basis": [
+        "HERMES authority-forward label watchpoint",
+        "KOIOS global override rule 3"
+      ],
+      "source_hash": "7fd761c39056bf7a81032b98aabde038d053931e73cd161fb9a48934b2a700a3",
+      "source_mutation": false,
+      "source_path": "docs/adr/adr.petrinet.20260705.132740Z.md"
+    },
+    {
+      "authority_change": false,
+      "candidate_only": true,
+      "changed": true,
+      "original": {
+        "authority_effect": "candidate",
+        "automatic_conversion_eligibility_candidate": false,
+        "category_candidate": "template_schema_contract",
+        "disposition_candidate": "manual_review_required",
+        "exclusion_blocking_reasons": [
+          "status_casing_or_text_would_normalize"
+        ],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": true,
+          "owner_review_required": true
+        }
+      },
+      "rationale": [
+        "mixed document category or status ambiguity requires manual review"
+      ],
+      "reviewed": {
+        "authority_effect": "candidate",
+        "automatic_conversion_eligibility_candidate": false,
+        "category_candidate": "template_schema_contract",
+        "disposition_candidate": "manual_review_required",
+        "exclusion_blocking_reasons": [
+          "manual_review_required",
+          "status_casing_or_text_would_normalize"
+        ],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": true,
+          "owner_review_required": true
+        }
+      },
+      "source_basis": [
+        "KOIOS sections A/E mixed-document recommendation"
+      ],
+      "source_hash": "2876dfbe031105d383fa9e33cec7d5dd49cf569cea6f43eae59e8fa1da502895",
+      "source_mutation": false,
+      "source_path": "docs/adr/adr.adr-template-contract.md"
+    },
+    {
+      "authority_change": false,
+      "candidate_only": true,
+      "changed": true,
+      "original": {
+        "authority_effect": "candidate",
+        "automatic_conversion_eligibility_candidate": false,
+        "category_candidate": "template_schema_contract",
+        "disposition_candidate": "manual_review_required",
+        "exclusion_blocking_reasons": [
+          "missing_observed_status",
+          "missing_status"
+        ],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": true,
+          "owner_review_required": true
+        }
+      },
+      "rationale": [
+        "mixed document category or status ambiguity requires manual review"
+      ],
+      "reviewed": {
+        "authority_effect": "candidate",
+        "automatic_conversion_eligibility_candidate": false,
+        "category_candidate": "template_schema_contract",
+        "disposition_candidate": "manual_review_required",
+        "exclusion_blocking_reasons": [
+          "manual_review_required",
+          "missing_observed_status",
+          "missing_status"
+        ],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": true,
+          "owner_review_required": true
+        }
+      },
+      "source_basis": [
+        "KOIOS sections A/E mixed-document recommendation"
+      ],
+      "source_hash": "48a5fed34bec41b18885fdb57d7491895783f735c07efc33202098bbf61a2d51",
+      "source_mutation": false,
+      "source_path": "docs/adr/adr.schema-base.md"
+    },
+    {
+      "authority_change": false,
+      "candidate_only": true,
+      "changed": true,
+      "original": {
+        "authority_effect": "proposed_authority",
+        "automatic_conversion_eligibility_candidate": true,
+        "category_candidate": "template_schema_contract",
+        "disposition_candidate": "json_authority_candidate",
+        "exclusion_blocking_reasons": [],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": false,
+          "owner_review_required": false
+        }
+      },
+      "rationale": [
+        "proposed_authority downgraded to candidate for review-only planning",
+        "json_authority_candidate retained only as candidate conversion-planning evidence",
+        "source/provenance draft should not auto-promote to JSON authority planning"
+      ],
+      "reviewed": {
+        "authority_effect": "candidate",
+        "automatic_conversion_eligibility_candidate": false,
+        "category_candidate": "template_schema_contract",
+        "disposition_candidate": "source_only_provenance_candidate",
+        "exclusion_blocking_reasons": [
+          "source_provenance_review_required"
+        ],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": true,
+          "owner_review_required": true
+        }
+      },
+      "source_basis": [
+        "HERMES authority-forward label watchpoint",
+        "KOIOS global override rule 3",
+        "KOIOS section C source/provenance recommendation"
+      ],
+      "source_hash": "d9068c3a5d10efcf9ee2216e34272cc8399c91e5af67ce51b0f1e5e5b5464706",
+      "source_mutation": false,
+      "source_path": "docs/adr/adr.adr-lifecycle.draft.md"
+    },
+    {
+      "authority_change": false,
+      "candidate_only": true,
+      "changed": true,
+      "original": {
+        "authority_effect": "none",
+        "automatic_conversion_eligibility_candidate": false,
+        "category_candidate": "index_or_control_surface",
+        "disposition_candidate": "index_or_control_surface",
+        "exclusion_blocking_reasons": [
+          "missing_observed_status",
+          "missing_status",
+          "not_adr_source_candidate"
+        ],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": true,
+          "owner_review_required": true
+        }
+      },
+      "rationale": [
+        "index/control surface is not an ADR record"
+      ],
+      "reviewed": {
+        "authority_effect": "none",
+        "automatic_conversion_eligibility_candidate": false,
+        "category_candidate": "index_or_control_surface",
+        "disposition_candidate": "index_or_control_surface",
+        "exclusion_blocking_reasons": [
+          "index_or_control_surface",
+          "missing_observed_status",
+          "missing_status",
+          "not_adr_source_candidate"
+        ],
+        "owner_domain_review_flags": {
+          "domain_review_required": false,
+          "manual_review_required": true,
+          "owner_review_required": true
+        }
+      },
+      "source_basis": [
+        "KOIOS section A index/control recommendation"
+      ],
+      "source_hash": "9950799ed8c20d7980634fc086309cfd98fd3c065499d25f6aab965ec6dfef2e",
+      "source_mutation": false,
+      "source_path": "docs/adr/README.md"
+    }
+  ],
+  "selected_entry_count": 6,
+  "selected_sources": [
+    "docs/adr/adr.json-schemas.draft.md",
+    "docs/adr/adr.petrinet.20260705.132740Z.md",
+    "docs/adr/adr.adr-template-contract.md",
+    "docs/adr/adr.schema-base.md",
+    "docs/adr/adr.adr-lifecycle.draft.md",
+    "docs/adr/README.md"
+  ],
+  "slice_name": "adr-json-authority-corpus-dry-run-inventory-slice-4"
+}

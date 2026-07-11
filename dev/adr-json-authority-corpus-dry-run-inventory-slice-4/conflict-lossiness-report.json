@@ -1,0 +1,216 @@
+{
+  "accepted_source_status_not_json_authority": true,
+  "authority_change": false,
+  "candidate_only": true,
+  "per_source_findings": [
+    {
+      "blockers": [],
+      "final_outcome": "candidate_projectable_pending_review",
+      "lossiness_conflict_findings": [
+        "source-to-candidate omitted sections are enumerated separately; projection equality covers candidate fields only"
+      ],
+      "omitted_or_sidecar_preserved_source_sections": [
+        "architecture_spec",
+        "context",
+        "definitions",
+        "implementation_brief",
+        "links",
+        "non_goals",
+        "resolved_open_questions",
+        "routing",
+        "validation_expectations"
+      ],
+      "source_path": "docs/adr/adr.json-schemas.draft.md",
+      "source_to_candidate_complete": false
+    },
+    {
+      "blockers": [],
+      "final_outcome": "accepted_source_candidate_not_json_authority",
+      "lossiness_conflict_findings": [
+        "accepted/current source status remains source observation, not JSON authority",
+        "source-to-candidate omitted sections are enumerated separately; projection equality covers candidate fields only"
+      ],
+      "omitted_or_sidecar_preserved_source_sections": [
+        "context",
+        "implementation_brief",
+        "non_goals",
+        "normative_language",
+        "provenance",
+        "rejected",
+        "validation_expectations"
+      ],
+      "source_path": "docs/adr/adr.petrinet.20260705.132740Z.md",
+      "source_to_candidate_complete": false
+    },
+    {
+      "blockers": [
+        "manual_review_required",
+        "status_casing_or_text_would_normalize"
+      ],
+      "final_outcome": "projectable_candidate_blocked_pending_template_contract_and_status_review",
+      "lossiness_conflict_findings": [
+        "observed status casing/text preserved separately from normalized candidate",
+        "Slice 3 wrapped-list continuation preserved in multi-file dry run",
+        "template/schema-contract manual-review blocker remains active",
+        "source-to-candidate omitted sections are enumerated separately; projection equality covers candidate fields only"
+      ],
+      "omitted_or_sidecar_preserved_source_sections": [
+        "architecture_spec",
+        "context",
+        "implementation_brief",
+        "links",
+        "non_goals",
+        "resolved_open_questions",
+        "routing",
+        "validation_expectations"
+      ],
+      "source_path": "docs/adr/adr.adr-template-contract.md",
+      "source_to_candidate_complete": false
+    },
+    {
+      "blockers": [
+        "manual_review_required",
+        "missing_observed_status",
+        "missing_status"
+      ],
+      "final_outcome": "blocked_missing_status_pending_review",
+      "lossiness_conflict_findings": [
+        "observed Markdown status missing; no status invented",
+        "source-to-candidate omitted sections are enumerated separately; projection equality covers candidate fields only"
+      ],
+      "omitted_or_sidecar_preserved_source_sections": [
+        "architecture_spec",
+        "comments",
+        "content",
+        "context",
+        "implementation_brief",
+        "links",
+        "non_goals",
+        "open_questions",
+        "resolved_open_questions",
+        "routing",
+        "validation_expectations"
+      ],
+      "source_path": "docs/adr/adr.schema-base.md",
+      "source_to_candidate_complete": false
+    },
+    {
+      "blockers": [
+        "source_provenance_review_required"
+      ],
+      "final_outcome": "source_only_provenance_draft_skipped_or_blocked",
+      "lossiness_conflict_findings": [
+        "source/provenance draft not promoted or superseded",
+        "source-to-candidate omitted sections are enumerated separately; projection equality covers candidate fields only"
+      ],
+      "omitted_or_sidecar_preserved_source_sections": [
+        "accepted_control",
+        "architecture_spec",
+        "context",
+        "implementation_brief",
+        "links",
+        "non_goals",
+        "resolved_open_questions",
+        "routing",
+        "validation_expectations"
+      ],
+      "source_path": "docs/adr/adr.adr-lifecycle.draft.md",
+      "source_to_candidate_complete": false
+    },
+    {
+      "blockers": [
+        "index_or_control_surface",
+        "missing_observed_status",
+        "missing_status",
+        "not_adr_source_candidate"
+      ],
+      "final_outcome": "index_control_surface_skipped",
+      "lossiness_conflict_findings": [
+        "observed Markdown status missing; no status invented",
+        "index/control surface skipped, not converted as ADR record",
+        "source-to-candidate omitted sections are enumerated separately; projection equality covers candidate fields only"
+      ],
+      "omitted_or_sidecar_preserved_source_sections": [
+        "boundary",
+        "current_migration_note",
+        "purpose",
+        "required_minimum_structure"
+      ],
+      "source_path": "docs/adr/README.md",
+      "source_to_candidate_complete": false
+    }
+  ],
+  "projection_equality_does_not_imply_source_to_candidate_completeness": true,
+  "projection_equality_does_not_resolve_blockers": true,
+  "slice_2_missing_status_preserved": true,
+  "slice_3_wrapped_list_regression_preserved": true,
+  "slice_name": "adr-json-authority-corpus-dry-run-inventory-slice-4",
+  "summary": {
+    "by_authority_effect": {
+      "candidate": 5,
+      "none": 1
+    },
+    "by_automatic_conversion_eligibility_candidate": {
+      "false": 4,
+      "true": 2
+    },
+    "by_entry_type": {
+      "adr_source_candidate": 4,
+      "index_control_surface": 1,
+      "source_provenance_draft": 1
+    },
+    "by_final_outcome": {
+      "accepted_source_candidate_not_json_authority": 1,
+      "blocked_missing_status_pending_review": 1,
+      "candidate_projectable_pending_review": 1,
+      "index_control_surface_skipped": 1,
+      "projectable_candidate_blocked_pending_template_contract_and_status_review": 1,
+      "source_only_provenance_draft_skipped_or_blocked": 1
+    },
+    "by_omitted_sidecar_preserved_source_section": {
+      "accepted_control": 1,
+      "architecture_spec": 4,
+      "boundary": 1,
+      "comments": 1,
+      "content": 1,
+      "context": 5,
+      "current_migration_note": 1,
+      "definitions": 1,
+      "implementation_brief": 5,
+      "links": 4,
+      "non_goals": 5,
+      "normative_language": 1,
+      "open_questions": 1,
+      "provenance": 1,
+      "purpose": 1,
+      "rejected": 1,
+      "required_minimum_structure": 1,
+      "resolved_open_questions": 4,
+      "routing": 4,
+      "validation_expectations": 5
+    },
+    "by_reviewed_category": {
+      "index_or_control_surface": 1,
+      "template_schema_contract": 5
+    },
+    "by_reviewed_disposition": {
+      "index_or_control_surface": 1,
+      "json_authority_candidate": 2,
+      "manual_review_required": 2,
+      "source_only_provenance_candidate": 1
+    },
+    "generated_candidate_objects": 4,
+    "generated_projections": 3,
+    "index_control_surface_exclusions": 1,
+    "manual_review_blockers": 4,
+    "missing_status_findings": 2,
+    "omitted_blocked_skipped_projections": 3,
+    "omitted_sidecar_preserved_source_sections_total": 48,
+    "parseback_comparisons_run": 3,
+    "selected_entry_count": 6,
+    "sidecar_provenance_required": 6,
+    "skipped_or_excluded_entries": 3,
+    "source_only_provenance_blockers": 1,
+    "status_casing_normalization_sensitive_findings": 1
+  }
+}

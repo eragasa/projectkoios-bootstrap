@@ -1,0 +1,54 @@
+{
+  "authority_change": false,
+  "authority_mode": "candidate-evidence-only-not-repository-authority",
+  "blocked_from_authority_promotion": true,
+  "bounded_subset_only": true,
+  "bulk_migration": false,
+  "candidate_only": true,
+  "content_candidate": {
+    "acceptance_criteria": [
+      "A reviewer can identify the shared `metadata` + `content` envelope without reading ADR or implementation-specific schema files.",
+      "ADR schema and implementation schema are specified as constraints on the `content` object within a shared base record contract.",
+      "The architecture distinguishes schema contracts from Markdown render surfaces.",
+      "`docs/schemas/` is identified as the preferred durable namespace for machine-readable schema artifacts.",
+      "Duplicate ADR schema contents are explicitly identified as a reconciliation issue inside `docs/schemas/`.",
+      "No implementation work is authorized until the `docs/schemas/` schema-family migration path is confirmed.",
+      "Base metadata provenance fields are explicit and not overloaded into `origin`.",
+      "Markdown projection/editable-projection semantics are defined before renderer/ingester implementation."
+    ],
+    "consequences": "- ADR, implementation, workspace-state, and future schema records gain a common\n  metadata/content envelope.\n- Duplicate ADR schema files can be reconciled against a single family model.\n- Schema-first document state becomes easier to validate and evolve.\n- Future implementation can introduce code-level models without inventing field\n  semantics from each schema file independently.\n- Existing schema files may need migration or compatibility aliases.",
+    "decision": "Define a schema-family architecture with a shared base class for repository\nschema records.\n\nThe shared schema base class MUST define fields and invariants common to all\nschema-backed repository document records. ADR-specific, implementation-specific,\nworkspace-state-specific, or future schema families MUST extend the base class\nrather than duplicate its core identity and lifecycle fields.\n\nThe base class SHOULD be represented in implementation as a small immutable model\nor abstract data contract. The JSON Schema representation SHOULD expose the same\nbase fields through `$defs` and `$ref`, or through an equivalent schema\ncomposition mechanism.\n\nThe initial base class SHOULD include exactly two top-level fields:\n\n   - `metadata`\n   - `content`\n\nThe `metadata` object SHOULD include only common fields needed to identify,\nroute, prove, and govern the record:\n\n   - `record_id`\n   - `schema_id`\n   - `schema_version`\n   - `record_version`\n   - `title`\n   - `status`\n   - `created_on`\n   - `updated_on`\n   - `origin`\n   - `scope`\n   - `repository`\n   - `domain`\n   - `source_artifacts`\n   - `derived_from`\n   - `evidence`\n   - `projections`\n\n`origin` MUST describe only how the record entered the system:\n\n   - `type`\n   - `method`\n   - `actor`\n   - `authority`\n\n`origin` MUST NOT carry source evidence, derivation, projection, or claim-support\nsemantics. Those semantics MUST live in `source_artifacts`, `derived_from`,\n`evidence`, and `projections`.\n\n`source_artifacts` lists records, files, messages, or other inputs cited or\nreviewed by the current record. `derived_from` lists records whose content has\nbeen transformed, inherited, or migrated into the current record. A\n`SourceArtifact.relationship` value describes the source's relationship to the\ncurrent record within the array where it appears; records SHOULD avoid using a\n`derived_from` relationship value in `source_artifacts` when the separate\n`derived_from` array is the intended semantic.\n\nEach projection MUST declare the source record identity, source schema identity\nand version, projection method, generated-by actor or component, editability,\nand source-of-truth status. Until a separate schema-backed JSON source record is\nmaterialized, an editable Markdown ADR with embedded metadata MUST declare itself\nas a draft editable projection rather than implying that an external schema\nrecord is already the source of truth.\n\nThe `content` object SHOULD contain all family-specific document content. The\nbase class MUST NOT define ADR-specific, implementation-specific, or\nworkspace-specific content fields. Those fields MUST be deferred to the\ncontrolling family schema.\n\nThe schema base class MUST NOT decide product architecture, renderer behavior,\ntransport mechanics, or runtime implementation strategy. It defines common record\nshape only.",
+    "normalized_status_candidate": null,
+    "observed_status_text": null,
+    "status_missing": true,
+    "title": "ADR: Schema Base Class for ADR Records"
+  },
+  "conversion_completed_as_authoritative_record": false,
+  "corpus_dry_run": true,
+  "cutover_authorized": false,
+  "database_authority": false,
+  "entry_type": "adr_source_candidate",
+  "object_type": "AdrJsonAuthorityCorpusDryRunCandidate",
+  "outcome": "blocked_missing_status_pending_review",
+  "reviewed_inventory": {
+    "authority_effect": "candidate",
+    "automatic_conversion_eligibility_candidate": false,
+    "category_candidate": "template_schema_contract",
+    "disposition_candidate": "manual_review_required",
+    "exclusion_blocking_reasons": [
+      "manual_review_required",
+      "missing_observed_status",
+      "missing_status"
+    ],
+    "owner_domain_review_flags": {
+      "domain_review_required": false,
+      "manual_review_required": true,
+      "owner_review_required": true
+    }
+  },
+  "schema_change": false,
+  "slice_name": "adr-json-authority-corpus-dry-run-inventory-slice-4",
+  "source_hash": "48a5fed34bec41b18885fdb57d7491895783f735c07efc33202098bbf61a2d51",
+  "source_mutation": false,
+  "source_path": "docs/adr/adr.schema-base.md"
+}
