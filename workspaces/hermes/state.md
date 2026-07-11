@@ -3,13 +3,13 @@
   "title": "Hermes workspace state",
   "artifact_type": "workspace-state",
   "status": "active",
-  "datetime": "20260711.165218Z",
+  "datetime": "20260711.170000Z",
   "acting_as": "HERMES",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/hermes/",
   "document_domain": "orchestration, repo-state reconciliation, cross-domain consistency",
   "control_files": ["state.md", "active.md"],
-  "next_owner": "ATHENA",
+  "next_owner": "HERMES_USER",
   "blockers": []
 }
 ```
@@ -18,7 +18,7 @@
 
 ## Current focus
 
-Advance USER-selected option 3: broader schema-family repair planning.
+Close out accepted `schema-family-repair-planning-slice-7`, then choose whether to activate the recommended `adr-schema-family-contract-reconciliation-slice-8`.
 
 ## Current validated state
 
@@ -29,6 +29,11 @@ Advance USER-selected option 3: broader schema-family repair planning.
 - Petri-net workflow status showed `current-slice` at `user_decision`, enabled transition `approve_next_slice`, and `user decision required: yes`.
 - USER selected option `3`: broader schema-family repair planning.
 - HERMES recorded approval for `schema-family-repair-planning-slice-7` in `docs/reviews/hermes-decision.20260711.165218_schema-family-repair-planning-slice-7.md`.
+- ATHENA produced Slice 7 planning output in `docs/plans/repair-plan.20260711.165300_schema-family-adr-contract-slice-7.md`.
+- HERMES accepted Slice 7 as proposal-only repair planning in `docs/reviews/hermes-acceptance.20260711.170000_schema-family-repair-planning-slice-7.md`.
+- Closeout validation passed for planning-only scope:
+  - `git status --short -- docs/adr docs/schemas dev/adr-json-authority-corpus-dry-run-inventory-slice-4` produced no output.
+  - `git diff --check` passed.
 
 ## Active Slice 7 scope
 
@@ -58,15 +63,27 @@ Preferred ATHENA output:
 docs/plans/repair-plan.20260711.165300_schema-family-adr-contract-slice-7.md
 ```
 
-## Active boundaries
+## Accepted Slice 7 recommendation
 
-Slice 7 is planning/review only. It does not authorize editing `docs/adr/`, editing `docs/schemas/`, changing source status or casing, supersession, acceptance, activation, rejection, promotion, demotion, file moves/renames/deletes/archives/splits, JSON conversion/projection generation, generated projection replacement, authoritative JSON ADR records, database/storage authority, migration, or cutover.
+Primary recommended next slice:
+
+```text
+adr-schema-family-contract-reconciliation-slice-8
+```
+
+Recommended output:
+
+```text
+docs/plans/reconciliation-proposal.20260711.170000_adr-schema-family-contract.md
+```
+
+Slice 7 remains planning/review only. It does not authorize editing `docs/adr/`, editing `docs/schemas/`, changing source status or casing, supersession, acceptance, activation, rejection, promotion, demotion, file moves/renames/deletes/archives/splits, JSON conversion/projection generation, generated projection replacement, authoritative JSON ADR records, database/storage authority, migration, or cutover.
 
 ## Current blockers
 
-- None for routing the planning slice.
-- ATHENA planning output is required before HERMES can accept or choose the next concrete repair action.
+- None for accepted Slice 7.
+- HERMES/USER decision is required to package/commit Slice 7 and activate any Slice 8 work.
 
 ## Next owner
 
-ATHENA for schema-family repair planning/review under the approved Slice 7 scope.
+HERMES_USER for packaging/commit and next bounded repair decision.

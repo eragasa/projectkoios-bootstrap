@@ -3,13 +3,13 @@
   "title": "Hermes active work",
   "artifact_type": "workspace-active-priorities",
   "status": "active",
-  "datetime": "20260711.165218Z",
+  "datetime": "20260711.170000Z",
   "acting_as": "HERMES",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/hermes/",
   "document_domain": "orchestration, repo-state reconciliation, cross-domain consistency",
   "control_files": ["state.md", "active.md"],
-  "next_owner": "ATHENA",
+  "next_owner": "HERMES_USER",
   "blockers": []
 }
 ```
@@ -18,15 +18,16 @@
 
 ## Current priority stack
 
-1. ATHENA produces the approved Slice 7 schema-family repair planning artifact.
-2. HERMES reviews/accepts the Slice 7 plan and selects the next concrete repair action.
+1. Package/commit accepted Slice 7 schema-family repair planning.
+2. Decide whether to activate recommended `adr-schema-family-contract-reconciliation-slice-8`.
 3. Preserve queued/deferred work as queued-only unless USER/HERMES explicitly activates it.
 
 ## Active Slice 7: schema-family repair planning
 
 - HERMES decision: `docs/reviews/hermes-decision.20260711.165218_schema-family-repair-planning-slice-7.md`
 - Prior Slice 6 acceptance: `docs/reviews/hermes-acceptance.20260711.160700_adr-template-schema-contract-repair-planning-slice-6.md`
-- Preferred ATHENA output: `docs/plans/repair-plan.20260711.165300_schema-family-adr-contract-slice-7.md`
+- ATHENA output: `docs/plans/repair-plan.20260711.165300_schema-family-adr-contract-slice-7.md`
+- HERMES acceptance: `docs/reviews/hermes-acceptance.20260711.170000_schema-family-repair-planning-slice-7.md`
 
 ## Approved Slice 7 scope
 
@@ -58,9 +59,24 @@ Classify schema-family surfaces by role, identify contradictions/stale/ahead-of-
 - `accepted-staged-direction` JSON authority gates.
 - Legacy schema markers vs canonical `docs/schemas/` namespace.
 
+## Accepted next recommendation
+
+Primary recommended next slice:
+
+```text
+adr-schema-family-contract-reconciliation-slice-8
+```
+
+Recommended output:
+
+```text
+docs/plans/reconciliation-proposal.20260711.170000_adr-schema-family-contract.md
+```
+
 ## Waiting on
 
-- ATHENA planning/review output for Slice 7.
+- Packaging/commit decision for accepted Slice 7 changes.
+- HERMES/USER decision to activate Slice 8 or choose a different bounded repair action.
 
 ## Exit criteria
 
