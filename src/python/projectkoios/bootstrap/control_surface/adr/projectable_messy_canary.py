@@ -222,11 +222,17 @@ class AdrProjectableMessyCanaryRunner:
 
     def parse_title(self, source_text: str) -> str:
         """Parse source H1 title."""
-        # Local value keeps this canary step explicit for validation.
-        match: re.Match[str] | None = re.search(r"^#\s+ADR\s+[^:]+:\s*(?P<title>.+?)\s*$", source_text, flags=re.MULTILINE)
-        if match is None:
+        # Stable heading match supports timestamp-free ADR title lines.
+        stable_match: re.Match[str] | None = re.search(r"^#\s+ADR:\s*(?P<title>.+?)\s*$", source_text, flags=re.MULTILINE)
+        if stable_match is not None:
+            return stable_match.group("title")
+        # Legacy heading match preserves compatibility with timestamped headings.
+        legacy_match: re.Match[str] | None = re.search(
+            r"^#\s+ADR\s+[^:]+:\s*(?P<title>.+?)\s*$", source_text, flags=re.MULTILINE
+        )
+        if legacy_match is None:
             raise AdrMarkdownError("Source ADR missing parseable title")
-        return match.group("title")
+        return legacy_match.group("title")
 
     def sections(self, markdown: str) -> dict[str, str]:
         """Split source Markdown into normalized section bodies."""

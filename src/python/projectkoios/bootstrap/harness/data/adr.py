@@ -19,8 +19,8 @@ class AdrStatus(StrEnum):
 class ArchitecturalDataRecord:
     """An Architecture Decision Record (ADR).
 
-    Maps to ADR files under ``docs/adr/`` with the filename
-    convention ``adr.YYYYMMDD.HHMMSS_kebab-slug.md``.
+    Maps to ADR files under ``docs/adr/`` with stable semantic filenames such
+    as ``adr.<topic>.md`` or ``adr.<topic>.<status>.md``.
     Provides a programmatic view independent of the file format.
     """
 

@@ -36,6 +36,23 @@ def source_record() -> tuple[JsonObject, JsonObject]:
     return AdrMarkdownRecordParser(source_config=JSON_SCHEMAS_SOURCE_CONFIG).parse_source_record(markdown)
 
 
+def test__AdrMarkdownRecordParser__parse_source_record__accepts_stable_adr_heading() -> None:
+    """Parse stable `# ADR: Title` heading without legacy timestamp stripping note."""
+    # Legacy fixture body is reused while the heading exercises stable format.
+    markdown: str = SOURCE_ADR.read_text(encoding="utf-8").replace(
+        "# ADR 20260702.213000Z: JSON Schemas Namespace",
+        "# ADR: JSON Schemas Namespace",
+        1,
+    )
+    # Parser should accept stable heading and not record legacy heading stripping.
+    record: JsonObject
+    mapping: JsonObject
+    record, mapping = AdrMarkdownRecordParser(source_config=JSON_SCHEMAS_SOURCE_CONFIG).parse_source_record(markdown)
+
+    assert record["title"] == "JSON Schemas Namespace"
+    assert "legacy_title_heading" not in mapping["normalized_fields"]
+
+
 def test__AdrMarkdownRecordParser__parse_source_record__omits_routing_and_related() -> None:
     """Map JSON schemas ADR into the current schema without routing."""
     record: JsonObject
@@ -45,6 +62,7 @@ def test__AdrMarkdownRecordParser__parse_source_record__omits_routing_and_relate
     assert record["slug"] == "json-schemas"
     assert record["status"] == "draft"
     assert record["context"]["delegated_operator"] == "pi"
+    assert mapping["normalized_fields"]["legacy_title_heading"] == "removed legacy ADR heading prefix before title"
     assert "routing" not in record
     assert "related" not in record["links"]
     assert mapping["preserved_outside_schema"]["routing"] == {

@@ -3,7 +3,7 @@
   "title": "Hermes active work",
   "artifact_type": "workspace-active-priorities",
   "status": "active",
-  "datetime": "20260711.174500Z",
+  "datetime": "20260711.180700Z",
   "acting_as": "HERMES",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/hermes/",
@@ -18,47 +18,47 @@
 
 ## Current priority stack
 
-1. Package/commit accepted Slice 10 successor planning, review artifacts, and corrected handoff artifacts.
-2. Decide whether to activate recommended `adr-template-schema-contract-successor-draft-slice-11`.
-3. Preserve queued/deferred work as queued-only unless USER/HERMES explicitly activates it.
+1. Package/commit stable ADR filename convention, Slice 10 path corrections, and corrected retrospective Slice 12 acceptance if USER approves.
+2. Decide whether to activate `adr-template-schema-contract-successor-draft-slice-11` for ATHENA.
+3. Create a separate ATHENA-owned naming-policy/documentation reconciliation slice for remaining active guidance if USER approves.
 
-## Accepted Slice 10: ADR template/schema contract successor planning
+## Stabilized control-surface state
 
-- HERMES handoff decision: `docs/reviews/hermes-decision.20260711.173500_adr-template-schema-contract-successor-planning-slice-10.md`
-- ATHENA brief: `docs/plans/successor-brief.20260711.172500_adr-template-schema-contract.md`
-- KOIOS review: `workspaces/koios/working/provenance-review.20260711_adr-template-schema-contract-successor-planning-slice-10.md`
-- VULCAN review: `docs/reviews/implementation-reality.20260711_adr-template-schema-contract-successor-planning-slice-10.md`
-- HERMES acceptance: `docs/reviews/hermes-acceptance.20260711.174500_adr-template-schema-contract-successor-planning-slice-10.md`
-- Process AAR: `docs/AAR/aar.20260711_hermes-athena-handoff-boundary.md`
-
-## Accepted Slice 10 meaning
-
-- The old source `docs/adr/adr.adr-template-contract.md` remains unedited source/provenance.
-- No new successor ADR has been created yet.
-- A future successor draft should preserve old-source status/casing `Accepted` as provenance.
-- The future draft should distinguish content schema, record envelope, Markdown source/control, generated projections, sidecar/provenance, `routing`, `dcn`, and `workflow_binding` boundaries.
-- The future draft should defer supersession, source mutation, schema edits, migration, and cutover to later HERMES/USER-approved slices.
-- KOIOS packaging watchpoint on `workspaces/athena/active.md` metadata punctuation was corrected before acceptance.
-
-## Accepted next recommendation
-
-Primary recommended next bounded action:
+- Future Slice 11 successor draft path is now the stable semantic path:
 
 ```text
-adr-template-schema-contract-successor-draft-slice-11
+docs/adr/adr.adr-template-schema-contract.draft.md
 ```
 
-Recommended future draft path pattern:
+- Root `AGENTS.md` ADR filename convention is updated in the working tree to avoid timestamped ADR filenames by default.
+- Invalid uncommitted Slice 12 VULCAN implementation decision was removed.
+- Slice 12 implementation is accepted only through corrected retrospective review:
+  - VULCAN report: `docs/implementation/adr-heading-parser-stable-format-slice-12.20260711.175500.md`
+  - ATHENA conformance: `docs/reviews/architecture-conformance.20260711.180500_adr-heading-parser-stable-format-slice-12.md`
+  - KOIOS review: `workspaces/koios/working/provenance-review.20260711_adr-heading-parser-stable-format-slice-12.md`
+  - HERMES acceptance: `docs/reviews/hermes-acceptance.20260711.180700_adr-heading-parser-stable-format-slice-12.md`
+- Process AARs:
+  - `docs/AAR/aar.20260711_premature-vulcan-tooling-handoff.md`
+  - `docs/AAR/aar.20260711.175500_adr-heading-parser-stable-format-slice-12.md`
 
-```text
-docs/adr/adr.adr-template-schema-contract.<YYYYMMDD.HHMMSSZ>.draft.md
-```
+## Accepted Slice 12 meaning
+
+- Stable `# ADR: Title` headings are accepted by control-surface ADR parser tooling.
+- Legacy prefixed headings remain accepted for compatibility/provenance.
+- Legacy heading-prefix normalization is recorded only for legacy prefixed headings.
+- No `docs/adr`, `docs/schemas`, lifecycle/status policy, successor ADR, supersession, migration, projection replacement, storage authority, or cutover boundary changed.
+
+## Current boundaries
+
+Future document-policy/tooling implementation should start with ATHENA-owned brief/acceptance criteria unless USER explicitly waives that order.
+
+Current work does not authorize creating the successor ADR draft, editing existing `docs/adr/` files, editing `docs/schemas/`, changing source status or casing, supersession, lifecycle changes, migration, generated projection replacement, database/storage authority, or cutover.
 
 ## Waiting on
 
-- Packaging/commit decision for accepted Slice 10 changes.
-- HERMES/USER decision to activate Slice 11 or choose a different bounded repair action.
+- USER decision to package/commit current control-surface corrections and retrospective Slice 12 acceptance.
+- USER decision whether next work is ATHENA Slice 11 successor draft creation, naming-policy/documentation reconciliation, or another bounded action.
 
 ## Exit criteria
 
-Hermes state is stable when accepted Slice 10 changes are packaged/committed and the next bounded action is chosen without implicitly authorizing old-source mutation, schema changes, lifecycle/status changes, supersession, migration, generated projection replacement, database/storage authority, or cutover.
+Hermes state is stable when the current control-surface corrections and retrospective Slice 12 acceptance are packaged or explicitly revised, and any next work is assigned to the correct document-domain owner before implementation begins.

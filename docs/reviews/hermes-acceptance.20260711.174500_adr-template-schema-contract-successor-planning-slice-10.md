@@ -82,11 +82,13 @@ Primary recommended next slice:
 adr-template-schema-contract-successor-draft-slice-11
 ```
 
-Recommended output path pattern:
+Recommended output path:
 
 ```text
-docs/adr/adr.adr-template-schema-contract.<YYYYMMDD.HHMMSSZ>.draft.md
+docs/adr/adr.adr-template-schema-contract.draft.md
 ```
+
+This stable semantic path reflects USER's explicit no-timestamp ADR filename direction. Timestamps should be carried in metadata/provenance, review artifacts, and git history rather than in the ADR filename.
 
 A future Slice 11 must explicitly authorize creating at most one new draft/proposal artifact and must preserve old-source and schema boundaries unless HERMES/USER separately approves mutation.
 

@@ -81,7 +81,7 @@ class AdrMarkdownRecordParser:
             "links": links,
         }
         # Notes explain values that were copied, normalized, or kept outside the record.
-        source_notes: JsonObject = self.source_mapping_notes(sections)
+        source_notes: JsonObject = self.source_mapping_notes(sections, legacy_title_heading=self.legacy_title_heading(markdown))
         return record, source_notes
 
     def parse_projection_record(self, markdown: str) -> JsonObject:
@@ -123,11 +123,17 @@ class AdrMarkdownRecordParser:
         Returns:
             ADR title.
         """
-        # First line must be the source title heading.
+        # First line must be a supported source title heading.
         first_line: str = markdown.splitlines()[0]
-        if not first_line.startswith("# ADR "):
+        # Stable headings omit lifecycle/date material from the title line.
+        stable_prefix: str = "# ADR: "
+        if first_line.startswith(stable_prefix):
+            return first_line.removeprefix(stable_prefix).strip()
+        # Legacy headings may include timestamp/status text before the title colon.
+        legacy_match: re.Match[str] | None = re.match(r"^# ADR\s+[^:]+:\s*(?P<title>.+?)\s*$", first_line)
+        if legacy_match is None:
             raise AdrMarkdownError("Source ADR missing title heading")
-        return first_line.split(": ", maxsplit=1)[1].strip()
+        return legacy_match.group("title")
 
     def sections(self, markdown: str) -> dict[str, str]:
         """Split Markdown into `##` sections.
@@ -363,11 +369,44 @@ class AdrMarkdownRecordParser:
             return None
         return value
 
-    def source_mapping_notes(self, sections: dict[str, str]) -> JsonObject:
+    def legacy_title_heading(self, markdown: str) -> bool:
+        """Return true when source heading uses the legacy prefixed ADR form.
+
+        Args:
+            markdown: Source Markdown text.
+
+        Returns:
+            True when a legacy prefix before the title was parsed.
+        """
+        # First source line determines heading compatibility mode.
+        first_line: str = markdown.splitlines()[0]
+        return bool(re.match(r"^# ADR\s+[^:]+:\s*.+$", first_line))
+
+    def normalized_fields(self, *, legacy_title_heading: bool) -> JsonObject:
+        """Return source-to-record normalization notes.
+
+        Args:
+            legacy_title_heading: True when legacy heading prefix was stripped.
+
+        Returns:
+            Normalization notes keyed by transformed source surface.
+        """
+        # Stable headings require no legacy heading stripping note.
+        normalized: JsonObject = {
+            "context_labels": "converted source labels to schema snake_case keys",
+            "none_links": "converted textual None values to JSON null",
+            "bullet_sections": "converted Markdown bullets to JSON arrays",
+        }
+        if legacy_title_heading:
+            normalized["legacy_title_heading"] = "removed legacy ADR heading prefix before title"
+        return normalized
+
+    def source_mapping_notes(self, sections: dict[str, str], *, legacy_title_heading: bool) -> JsonObject:
         """Return notes about how the source file became JSON.
 
         Args:
             sections: Parsed source sections.
+            legacy_title_heading: True when legacy heading prefix was stripped.
 
         Returns:
             Source conversion notes.
@@ -411,12 +450,7 @@ class AdrMarkdownRecordParser:
                 "links.superseded_by",
             ],
             "inferred_fields": inferred_fields,
-            "normalized_fields": {
-                "title_heading": "removed ADR timestamp prefix",
-                "context_labels": "converted source labels to schema snake_case keys",
-                "none_links": "converted textual None values to JSON null",
-                "bullet_sections": "converted Markdown bullets to JSON arrays",
-            },
+            "normalized_fields": self.normalized_fields(legacy_title_heading=legacy_title_heading),
             "preserved_outside_schema": {
                 "source_date": self.source_config.source_date,
                 "routing_section": sections.get("routing", ""),

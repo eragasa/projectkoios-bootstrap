@@ -49,8 +49,10 @@ The future successor must preserve `docs/adr/adr.adr-template-contract.md` as so
 Recommended future draft path:
 
 ```text
-docs/adr/adr.adr-template-schema-contract.<YYYYMMDD.HHMMSSZ>.draft.md
+docs/adr/adr.adr-template-schema-contract.draft.md
 ```
+
+This stable semantic path reflects USER's explicit no-timestamp ADR filename direction. Timestamps for the draft should be carried in metadata/provenance, review artifacts, and git history rather than in the filename.
 
 Recommended initial status:
 
@@ -222,7 +224,7 @@ adr-template-schema-contract-successor-draft-slice-11
 Suggested output path for that later slice:
 
 ```text
-docs/adr/adr.adr-template-schema-contract.<YYYYMMDD.HHMMSSZ>.draft.md
+docs/adr/adr.adr-template-schema-contract.draft.md
 ```
 
 HERMES/USER may instead choose a lower-risk errata/reconciliation note or stop with this plan.

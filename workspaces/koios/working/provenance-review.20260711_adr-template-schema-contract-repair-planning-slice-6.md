@@ -72,7 +72,7 @@ Both produced no output / passed.
 
 1. The phrase "current `docs/schemas/adr.schema.json` is the ADR content-shape schema surface" is acceptable for planning, but HERMES acceptance should avoid implying schema publication or JSON authority cutover beyond existing staged decisions.
 
-2. If the next slice drafts `docs/adr/adr.adr-template-schema-contract.<timestamp>.draft.md`, HERMES/USER should explicitly decide whether creating a new draft ADR is allowed in that slice. The current Slice 6 plan only recommends that as a future path; it does not authorize file creation.
+2. If the next slice drafts `docs/adr/adr.adr-template-schema-contract.draft.md`, HERMES/USER should explicitly decide whether creating a new draft ADR is allowed in that slice. The stable semantic draft path reflects the current no-timestamp ADR filename convention; the Slice 6 plan only recommends future draft creation and does not authorize file creation.
 
 3. The `dcn` decision may need coordination with `docs/adr/adr.adr.md` and schema authority. Do not resolve `dcn` by silently adding it to `docs/schemas/adr.schema.json` or by dropping it from namespace guidance.
 

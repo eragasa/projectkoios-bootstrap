@@ -262,11 +262,13 @@ Local configs MUST NOT be committed to this repo.
 
 ## ADR file convention
 
-ADR filenames SHOULD use `adr.<topic>.<YYYYMMDD.HHMMSSZ>.md`.
+ADR filenames SHOULD use stable semantic names such as `adr.<topic>.md` or `adr.<topic>.<status>.md` when a lifecycle-status suffix is needed.
 
-`<topic>` SHOULD be a short kebab-case domain/topic slug. The timestamp SHOULD be the acceptance or creation timestamp in UTC compact form.
+ADR filenames SHOULD NOT include timestamps by default. Timestamps SHOULD live in metadata, provenance blocks, review/acceptance artifacts, and git history rather than in ADR storage filenames.
 
-ADR file bodies MUST include `# ADR YYYYMMDD.HHMMSSZ: Title`, `## Status`, `## Context`, `## Decision`, and `## Consequences`.
+`<topic>` SHOULD be a short kebab-case domain/topic slug. When multiple simultaneous drafts for the same topic are needed, agents SHOULD ask HERMES/USER for an explicit collision policy or use a non-ADR proposal packet under `docs/plans/` or `dev/` until one draft path is selected.
+
+ADR file bodies MUST include `# ADR: Title`, `## Status`, `## Context`, `## Decision`, and `## Consequences`.
 
 Provenance fields SHOULD be included when the source or delegation path matters.
 
