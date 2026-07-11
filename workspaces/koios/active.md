@@ -23,6 +23,7 @@ ATHENA has accepted `docs/adr/adr.20260705.011836_adr-lifecycle-and-naming-conso
 - `working/provenance-index.20260704T175525Z_adr-control-surfaces.md`
 - `working/provenance-note.20260705T100913Z_petrinet-followup-package.md`
 - `working/provenance-audit.20260709T012117Z_adr-lifecycle-followon-reconciliation.md`
+- `working/provenance-note.20260711T033323Z_architecture-led-workflow-doctrine.md`
 - `../../docs/process-capture/pc.workflow.document-trace.md`
 - `../../docs/process-capture/pc.workflow.document-trace.20260706.025408Z.md`
 - `../../docs/process-capture/pc.workflow.document-trace.20260708.044950Z.md`
@@ -37,6 +38,8 @@ Any further lifecycle/naming disposition beyond pointer reconciliation, such as 
 ATHENA should still produce a target document-surface map before any broader ADR-directory split or migration.
 
 For workflow document traces, KOIOS captured partial traces for the workflow adapter topology-roundtrip slice, the template representation round-trip slice, and the draft/gated template record round-trip skill integration slice. KOIOS also added a pre-implementation process-review observation for the template representation round-trip package/document boundary. A reusable schema or workflow-policy promotion should wait until repeated traces stabilize the pattern.
+
+KOIOS preserved the ATHENA/user clarified architecture-led workflow doctrine: architecture documents are pre-implementation blueprints and later as-built documentation; implementation work is sliced into bounded briefs/plans/patches; implementation evidence must reconcile back into the architecture document as as-built state or explicit deviation/correction. KOIOS should watch that briefs, reports, patches, generated projections, and local database state do not replace architecture documents as durable system surfaces.
 
 ## KOIOS next actions
 

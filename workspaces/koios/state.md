@@ -29,6 +29,7 @@ Captured/advisory artifacts in this workspace:
 - `working/provenance-index.20260704T175525Z_adr-control-surfaces.md`
 - `working/provenance-note.20260705T100913Z_petrinet-followup-package.md`
 - `working/provenance-audit.20260709T012117Z_adr-lifecycle-followon-reconciliation.md`
+- `working/provenance-note.20260711T033323Z_architecture-led-workflow-doctrine.md`
 - `../../docs/process-capture/pc.workflow.document-trace.md`
 - `../../docs/process-capture/pc.workflow.document-trace.20260706.025408Z.md`
 - `../../docs/process-capture/pc.workflow.document-trace.20260708.044950Z.md`
@@ -57,6 +58,8 @@ KOIOS captured the first workflow document-trace process artifact for the adapte
 KOIOS added a process-review observation and partial document trace for the template representation round-trip slice. The observation records that `src/python/projectkoios/bootstrap/template_representation/` preserves the bounded bootstrap authority boundary, `docs/plans/` and `docs/implementation/` are appropriate brief/report locations, live source fixtures should remain under `docs/templates/`, and generated/golden/malformed fixtures should remain test-only unless explicitly promoted. The trace records durable ATHENA brief, reported user approval, VULCAN implementation report, VULCAN AAR, and VULCAN workspace state; the later schema-backed ATHENA conformance review closes the prior conformance gap.
 
 KOIOS captured the template record round-trip skill integration process trace after VULCAN implementation report and ATHENA conformance review existed. The trace records parser-gate evidence, ATHENA skill brief, VULCAN draft/gated skill implementation, skill-register update, VULCAN AAR, ATHENA conforms-draft-gated review, and residual constraints: the skill remains draft/gated, no stable skill/frontmatter validator exists yet, and no broad ingestion/all-template/product authority is created.
+
+KOIOS preserved ATHENA/user clarified architecture-led workflow doctrine for the ADR JSON/database pilot and meta-harness workflow surfaces. The note records that architecture documents are pre-implementation blueprints and later as-built documentation; implementation work is sliced into bounded briefs/plans/patches; and implementation evidence must reconcile back into architecture as as-built state or explicit deviation/correction. The inspected ATHENA surfaces align with this doctrine for the current pilot scope, with watchpoints that briefs, reports, patches, generated projections, and local database state must not replace architecture documents as durable system surfaces.
 
 ## Authority boundary
 

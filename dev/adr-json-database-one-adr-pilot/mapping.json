@@ -1,0 +1,43 @@
+{
+  "canonical_id": "adr.json-database-for-adr-storage",
+  "canonical_identity_rule": "status-free id and slug; lifecycle status lives in record content",
+  "canonical_slug": "json-database-for-adr-storage",
+  "copied_fields": [
+    "title",
+    "status",
+    "context.origin",
+    "context.from",
+    "context.acting_as",
+    "context.scope",
+    "context.repository",
+    "context.architecture_domain",
+    "decision",
+    "consequences",
+    "architecture_spec",
+    "acceptance_criteria",
+    "implementation_brief",
+    "resolved_open_questions",
+    "non_goals",
+    "validation_expectations",
+    "routing.owner",
+    "routing.notes",
+    "links"
+  ],
+  "inferred_fields": {
+    "context.delegated_operator": "HERMES"
+  },
+  "invalid_schema_error": "'invalid-status' is not one of ['proposal', 'draft', 'accepted', 'active', 'superseded']",
+  "json_hash": "9e2bd6ed13f8cfa2d9e8b63c444248f19da960e818f22eb3d8a516bcebefb55e",
+  "normalized_fields": {
+    "routing.next_phase": "proposed -> proposal"
+  },
+  "preserved_outside_schema": {
+    "source_date": "20260702.121432Z"
+  },
+  "projection_round_trip_equal": true,
+  "record_status": "draft",
+  "source_filename_status_suffix": ".draft",
+  "source_hash": "b7e48d5b2a07c14704689b4dcae738c8f21731e6d20e8d63d8eab33c75819d87",
+  "source_path": "docs/adr/adr.json-database-for-adr-storage.draft.md",
+  "status": "pilot-derived-non-authoritative"
+}

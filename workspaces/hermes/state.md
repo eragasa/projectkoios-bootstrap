@@ -3,7 +3,7 @@
   "title": "Hermes workspace state",
   "artifact_type": "workspace-state",
   "status": "active",
-  "datetime": "20260706.000000",
+  "datetime": "20260711.000000Z",
   "acting_as": "HERMES",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/hermes/",
@@ -18,18 +18,22 @@
 
 ## Current focus
 
-- Reconcile workflow state after acceptance and implementation of the canonical workspace-state / next-action protocol.
+- Reconcile workflow state after ATHENA produced the bounded one-ADR JSON/database pilot brief and related architecture/meta-harness updates.
 - Preserve the boundary that workspace `state.md` and `active.md` are control surfaces, not replacements for ADRs, implementation reports, validation results, or knowledge notes.
 
 ## Validated current state
 
 - Accepted ADR exists at `docs/adr/adr.20260704.162218_canonical-workspace-state-next-action-protocol.md`.
-- Proposal and historical draft are provenance/historical surfaces only.
-- User separately authorized policy/bootstrap reconciliation after ADR acceptance.
-- Vulcan completed the authorized reconciliation and reported it in `docs/implementation/implementation-report.20260705.003351_workspace-state-protocol-bootstrap-reconciliation.md`.
-- Vulcan AAR exists at `docs/AAR/aar.20260705.003351_workspace-state-protocol-bootstrap-reconciliation.md`.
-- Reported validation for that slice: focused workspace tests passed, mypy passed, python policy validator returned 0 findings, full pytest passed, and graphify update completed.
-- Declared deferred gap was Hermes-owned control-surface update; this file and `active.md` now record that update.
+- Workspace-state protocol reconciliation and Python-policy/test-remediation slices were previously reported and spot-validated by Hermes.
+- VULCAN committed and pushed the template record roundtrip skill as commit `4223527` (`Add template record roundtrip skill`).
+- ATHENA produced a bounded one-ADR JSON/database pilot brief at `docs/plans/adr-json-database-one-adr-pilot.implementation-brief.20260709.014124.md`.
+- ATHENA produced related AAR `docs/AAR/aar.20260709.014124_adr-json-database-pilot-brief.md`.
+- ATHENA updated its workspace control files to next-owner `USER_OR_HERMES_THEN_VULCAN`.
+- Related architecture/meta-harness edits now emphasize architecture-led slicing and the ADR JSON/database topology blueprint/as-built lifecycle.
+- VULCAN produced the required pre-coding implementation plan at `docs/plans/implementation-plan.20260711.033558_adr-json-database-one-adr-pilot.md` and marked it approval-required before coding.
+- VULCAN workspace state says no pilot coding has started and next owner is `USER_OR_HERMES`.
+- Current filesystem also contains untracked `src/python/projectkoios/bootstrap/adr_records/` files; Hermes has not validated whether these are pre-existing, generated, or premature implementation work. Reconcile before approving or committing.
+- No ADR migration, mutable database file, or authoritative ADR status change has started for the JSON/database pilot.
 
 ## Repo closeout review
 
@@ -57,7 +61,9 @@ Hermes local validation after grouping:
 
 ## Blockers
 
-- None for the Hermes control-surface update.
+- User/Hermes approval or adjustment is needed before coding the pilot.
+- VULCAN's pre-coding implementation plan exists and requires approval or revision.
+- Untracked `src/python/projectkoios/bootstrap/adr_records/` files conflict with the reported planning-only state until their origin/status is reconciled.
 
 ## Open questions
 
@@ -73,10 +79,11 @@ Hermes local validation after grouping:
 
 ## Next owner
 
-- HERMES/user for prioritization.
-- ATHENA for a bounded schema namespace / record-family naming reconciliation artifact if the user chooses to proceed.
-- VULCAN only after an accepted schema reconciliation handoff authorizes code/test/schema registry changes.
+- HERMES/user for implementation-plan approval, adjustment, packaging, or commit-boundary decision.
+- VULCAN only after user/Hermes approves the implementation plan; coding remains blocked until then.
+- HERMES should reconcile the untracked `adr_records` source directory before commit/approval because it may contradict the planning-only state.
+- ATHENA after pilot evidence exists, to review conformance and revise the architecture note into as-built documentation or record deviation/follow-up ADR needs.
 
 ## Current status summary
 
-Repo-level closeout review is complete for prior slices. A new schema governance item has been added to Hermes' queue: reconcile schema filenames, `$id` conventions, candidate/legacy status, `adr.schema-implementation.json` classification, and possible architecture-note/subsystem-architecture schema work. This should be handled as an Athena-owned schema architecture artifact before any file renames or implementation changes.
+Hermes control surfaces now reflect the newer ATHENA/VULCAN state: a bounded one-ADR JSON/database pilot brief exists, architecture/meta-harness docs were updated to frame architecture-led slicing and the ADR storage topology, and VULCAN produced the required approval-gated implementation plan. Coding is not authorized. The next coherent state transition is user/Hermes review of the plan and commit boundary, with a reconciliation check on untracked `adr_records` files before approval or packaging.

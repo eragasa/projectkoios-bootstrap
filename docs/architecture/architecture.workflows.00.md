@@ -27,6 +27,17 @@ This document is an index and navigation surface. It does not create new workflo
 
 Workflow architecture in this repository applies to bootstrap-held workflow surfaces unless a separate product-domain decision accepts it elsewhere.
 
+## Architecture-led slicing workflow
+
+The intended workflow is architecture-led:
+
+1. Architecture documents set the long-term vision and blueprint for a system surface.
+2. Implementation work is sliced from that blueprint into bounded briefs, plans, and patches.
+3. Implementation evidence is reconciled back into the architecture document.
+4. At the end of implementation, the architecture document becomes or is revised into the as-built documentation for the delivered system.
+
+Implementation briefs and reports are slice artifacts. They support the architecture surface but do not replace it as the long-term system document.
+
 ## Index
 
 | Architecture Decomposition | Applicable ADR |

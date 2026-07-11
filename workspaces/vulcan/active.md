@@ -2,8 +2,8 @@
 {
   "title": "Vulcan active work",
   "artifact_type": "workspace-active-priorities",
-  "status": "template-record-roundtrip-skill-reviewed-ready-to-package",
-  "datetime": "20260709.013100Z",
+  "status": "adr-json-database-pilot-control-surface-package-validated",
+  "datetime": "20260711.040819Z",
   "acting_as": "VULCAN",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/vulcan/",
@@ -11,17 +11,16 @@
   "priority_count": 3,
   "working_directory": "working/",
   "active_working_items": [
-    "agents/global/opencode/skills/template-record-roundtrip/SKILL.md",
-    "docs/skills/skill-register.md",
-    "docs/implementation/template-record-roundtrip-skill.20260709.012011.md",
-    "docs/AAR/aar.20260709.012011_template-record-roundtrip-skill.md",
-    "docs/reviews/architecture-conformance.20260709.012745_template-record-roundtrip-skill.md",
-    "docs/process-capture/pc.workflow.document-trace.20260709.012953Z.md",
-    "docs/process-capture/pc.workflow.document-trace.md"
+    "src/python/projectkoios/bootstrap/control_surface/adr/",
+    "tests/projectkoios/bootstrap/control_surface_adr/",
+    "dev/adr-json-database-one-adr-pilot/",
+    "docs/implementation/adr-json-database-one-adr-pilot.20260711.035759.md",
+    "docs/AAR/aar.20260711.035759_adr-json-database-one-adr-pilot.md"
   ],
   "scratch_directory": "scratch/",
-  "source_brief": "docs/plans/implementation-brief.20260709.010343_template-record-roundtrip-skill.md",
-  "related_conformance_review": "docs/reviews/architecture-conformance.20260709.012745_template-record-roundtrip-skill.md"
+  "source_brief": "docs/plans/adr-json-database-one-adr-pilot.implementation-brief.20260709.014124.md",
+  "implementation_plan": "docs/plans/implementation-plan.20260711.033558_adr-json-database-one-adr-pilot.md",
+  "latest_report": "docs/implementation/adr-json-database-one-adr-pilot.20260711.035759.md"
 }
 ```
 
@@ -29,36 +28,39 @@
 
 ## Current priority stack
 
-1. Package/commit/push the validated parser + draft skill slice per user/Hermes direction.
-2. Keep KOIOS ADR-lifecycle provenance-audit workspace material out of the skill-slice commit unless explicitly requested.
-3. Do not promote the skill to stable, expand to broad template migration, add CLI enforcement, or create ingestion systems without a new brief.
+1. Await user/Hermes decision on ADR revision/promotion/supersession, next architecture slice, or packaging direction.
+2. Preserve KOIOS terminology caveat: this was a SQLite operational adapter storing schema-backed ADR JSON records and exporting a JSON checkpoint, not a persistent/repository-authoritative JSON database service.
+3. Keep the pilot bounded to one ADR and do not overwrite `docs/adr/adr.json-database-for-adr-storage.draft.md` unless explicitly authorized.
 
 ## Latest working material
 
-- Skill source brief: `docs/plans/implementation-brief.20260709.010343_template-record-roundtrip-skill.md`.
-- Skill: `agents/global/opencode/skills/template-record-roundtrip/SKILL.md`.
-- Skill register: `docs/skills/skill-register.md`.
-- Latest skill report: `docs/implementation/template-record-roundtrip-skill.20260709.012011.md`.
-- Latest skill AAR: `docs/AAR/aar.20260709.012011_template-record-roundtrip-skill.md`.
-- Skill conformance review: `docs/reviews/architecture-conformance.20260709.012745_template-record-roundtrip-skill.md`.
-- KOIOS process trace: `docs/process-capture/pc.workflow.document-trace.20260709.012953Z.md` and aggregate `docs/process-capture/pc.workflow.document-trace.md`.
-- Parser report: `docs/implementation/template-representation-roundtrip.20260708.044531.md`.
-- Parser conformance review: `docs/reviews/architecture-conformance.20260709.011055_template-representation-schema-backed.md`.
+- Architecture blueprint: `docs/architecture/architecture.json-adr-storage-topology.md`.
+- Source brief: `docs/plans/adr-json-database-one-adr-pilot.implementation-brief.20260709.014124.md`.
+- Approved implementation plan: `docs/plans/implementation-plan.20260711.033558_adr-json-database-one-adr-pilot.md`.
+- Implementation report: `docs/implementation/adr-json-database-one-adr-pilot.20260711.035759.md`.
+- AAR: `docs/AAR/aar.20260711.035759_adr-json-database-one-adr-pilot.md`.
+- Pilot code: `src/python/projectkoios/bootstrap/control_surface/adr/`.
+- Pilot tests: `tests/projectkoios/bootstrap/control_surface_adr/`.
+- Pilot evidence: `dev/adr-json-database-one-adr-pilot/`.
 
 ## Latest validation evidence
 
-- VULCAN: `uv run pytest tests/projectkoios/bootstrap/template_representation tests/projectkoios/bootstrap/schema -q` => `34 passed in 0.16s`.
-- VULCAN: `uv run projectkoios bootstrap validate-python-policy agents/global/opencode/skills/template-record-roundtrip` => `summary: 0 finding(s), 0 file(s)`; Markdown-only skill path.
-- VULCAN: frontmatter/Markdown inspection script => `frontmatter/markdown inspection: ok`.
-- VULCAN: `git diff --check` => clean.
-- ATHENA review reran focused pytest, skill-path Python policy, and `git diff --check` with passing/clean results.
+- `uv run pytest tests/projectkoios/bootstrap/control_surface_adr tests/projectkoios/bootstrap/schema -q` => `24 passed in 0.17s`.
+- `uv run mypy src/python/projectkoios/bootstrap/control_surface/adr tests/projectkoios/bootstrap/control_surface_adr` => `Success: no issues found in 10 source files`.
+- `uv run projectkoios bootstrap validate-python-policy src/python/projectkoios/bootstrap/control_surface/adr tests/projectkoios/bootstrap/control_surface_adr` => `summary: 0 finding(s), 10 file(s)`.
+- `git diff --check` => clean.
+- `find dev/adr-json-database-one-adr-pilot -type f \( -name '*.sqlite' -o -name '*.db' \) -print` => no output.
 
 ## Implementation notes
 
-- New skill is draft/gated and VULCAN/opencode-owned.
-- Skill register row uses draft/supporting binding mode and matches skill ADR bindings.
-- Skill procedure requires schema-backed records, schema validation, deterministic rendering, re-parse, re-validation, semantic equality, focused validation, and deviation reporting on boundary failures.
-- ATHENA accepted the skill integration as conforming draft/gated work; no promotion to stable is authorized.
+- Implemented database-operational / JSON-checkpointed pilot mode.
+- Implemented status-free canonical identity: `id = adr.json-database-for-adr-storage`, `slug = json-database-for-adr-storage`, and `status = draft` inside record content.
+- Implemented committed pilot-local manifest/config and evidence index at `dev/adr-json-database-one-adr-pilot/manifest.json`.
+- Implemented narrow storage adapter boundary; SQLite is the selected pilot adapter implementation and not a direct dependency for ADR mapping, validation, projection, or equality logic.
+- Mutable SQLite `.sqlite`/`.db` files are generated/local only and are not committed.
+- Source `.draft.md` filename is preserved as legacy/source evidence in mapping and manifest.
+- KOIOS terminology update added to the implementation report and AAR.
+- Package-boundary update implemented after user approval: code now lives under `projectkoios.bootstrap.control_surface.adr`.
 
 ## Ignore for now
 
@@ -73,4 +75,4 @@
 
 ## Next expected artifact
 
-- Commit/push result for the coherent parser + draft skill integration slice, or user/Hermes packaging direction.
+- User/Hermes decision on ADR revision/promotion/supersession, next architecture slice, or packaging direction.

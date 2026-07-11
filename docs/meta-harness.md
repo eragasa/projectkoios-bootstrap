@@ -17,10 +17,27 @@ The harness enforces the following principles:
 
 * each agent has a bounded responsibility;
 * each agent consumes repository document state and produces a bounded state change;
+* architecture documents set the long-term system vision and blueprint;
+* implementation work is sliced from the architecture blueprint into bounded briefs and plans;
 * architectural decisions are separated from implementation changes;
 * implementation facts are separated from knowledge claims;
 * disagreements between document domains are reconciled by authority rules, not by compromise;
 * completion is gated by inspectable artifacts.
+
+## Architecture-led workflow
+
+Architecture documents are the primary long-term system blueprint. They describe the intended system shape, boundaries, invariants, and lifecycle expectations.
+
+Implementation proceeds by slicing bounded pieces from that architecture blueprint:
+
+1. Athena maintains or revises the architecture document as the vision/blueprint surface.
+2. Athena or Hermes identifies a bounded implementation slice from that architecture.
+3. Athena writes acceptance criteria or an implementation brief for the slice.
+4. Vulcan writes an implementation plan and patch for only the approved slice.
+5. Vulcan reports implementation evidence, validation results, and deviations from the architecture blueprint.
+6. Athena reconciles the evidence back into the architecture document as as-built documentation or records a correction/deviation path.
+
+The architecture document remains the durable system surface. Implementation briefs, plans, patches, and reports are supporting artifacts for slices of that surface. A patch must not silently redefine the architecture; it must either conform, request a deviation, or produce evidence that Athena uses to revise the architecture.
 
 ## Skill model
 
