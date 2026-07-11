@@ -2,8 +2,8 @@
 {
   "title": "Vulcan active work",
   "artifact_type": "workspace-active-priorities",
-  "status": "json-schemas-adr-conformance-implemented-validated",
-  "datetime": "20260711.065704Z",
+  "status": "operator-console-p0-implemented-validated",
+  "datetime": "20260711.081405Z",
   "acting_as": "VULCAN",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/vulcan/",
@@ -11,19 +11,16 @@
   "priority_count": 3,
   "working_directory": "working/",
   "active_working_items": [
-    "docs/adr/adr.json-schemas.draft.md",
-    "docs/schemas/adr.schema.json",
-    "docs/plans/implementation-plan.20260711.062654_json-schemas-adr-conformance.md",
-    "src/python/projectkoios/bootstrap/control_surface/adr/conformance.py",
-    "tests/projectkoios/bootstrap/control_surface_adr/test__AdrConformanceRunner__json_schemas.py",
-    "dev/adr-json-schemas-conformance/",
-    "docs/implementation/json-schemas-adr-conformance.20260711.065704.md",
-    "docs/AAR/aar.20260711.065704_json-schemas-adr-conformance.md"
+    "docs/architecture/architecture.operator-console.md",
+    "docs/plans/implementation-plan.20260711.073912_operator-console-review-one-proposal-fixture.md",
+    "src/typescript/projectkoios/ui/operator-console/",
+    "docs/implementation/operator-console-review-one-proposal-fixture.20260711.081405.md",
+    "docs/AAR/aar.20260711.081405_operator-console-review-one-proposal-fixture.md"
   ],
   "scratch_directory": "scratch/",
-  "implementation_plan": "docs/plans/implementation-plan.20260711.062654_json-schemas-adr-conformance.md",
-  "latest_report": "docs/implementation/json-schemas-adr-conformance.20260711.065704.md",
-  "latest_aar": "docs/AAR/aar.20260711.065704_json-schemas-adr-conformance.md"
+  "implementation_plan": "docs/plans/implementation-plan.20260711.073912_operator-console-review-one-proposal-fixture.md",
+  "latest_report": "docs/implementation/operator-console-review-one-proposal-fixture.20260711.081405.md",
+  "latest_aar": "docs/AAR/aar.20260711.081405_operator-console-review-one-proposal-fixture.md"
 }
 ```
 
@@ -31,51 +28,58 @@
 
 ## Current priority stack
 
-1. Await ATHENA/user/Hermes review of `docs/implementation/json-schemas-adr-conformance.20260711.065704.md` and `dev/adr-json-schemas-conformance/`.
-2. Preserve the hard constraints: do not mutate `docs/adr/adr.json-schemas.draft.md`, do not populate `routing` in the schema record, and preserve `routing.*` plus `links.related` in sidecar evidence.
-3. Keep the slice bounded to this one ADR-shaped source; no bulk migration, schema redesign, lifecycle redesign, reusable config, or storage-authority change.
+1. Await user/HERMES/ATHENA review of `docs/implementation/operator-console-review-one-proposal-fixture.20260711.081405.md` and `src/typescript/projectkoios/ui/operator-console/`.
+2. Preserve P0 boundaries: read-only, fixture-backed, browser/TypeScript, no backend, no live reads, no workflow activation/mutation, no Petri-net graph editor.
+3. Keep TypeScript policy draft status explicit: `docs/policies/typescript-coding.md` is not controlling unless accepted by user/HERMES/ATHENA.
 
 ## Latest working material
 
-- Target source: `docs/adr/adr.json-schemas.draft.md`.
-- Target schema: `docs/schemas/adr.schema.json`.
-- Approved plan: `docs/plans/implementation-plan.20260711.062654_json-schemas-adr-conformance.md`.
-- Implementation report: `docs/implementation/json-schemas-adr-conformance.20260711.065704.md`.
-- AAR: `docs/AAR/aar.20260711.065704_json-schemas-adr-conformance.md`.
-- Output directory: `dev/adr-json-schemas-conformance/`.
+- Source architecture: `docs/architecture/architecture.operator-console.md`.
+- Implementation plan: `docs/plans/implementation-plan.20260711.073912_operator-console-review-one-proposal-fixture.md`.
+- Implementation report: `docs/implementation/operator-console-review-one-proposal-fixture.20260711.081405.md`.
+- AAR: `docs/AAR/aar.20260711.081405_operator-console-review-one-proposal-fixture.md`.
+- Package: `src/typescript/projectkoios/ui/operator-console/`.
 
 ## Implemented outputs
 
-- `dev/adr-json-schemas-conformance/adr.json-schemas.json`
-- `dev/adr-json-schemas-conformance/adr.json-schemas.projected.md`
-- `dev/adr-json-schemas-conformance/conversion-evidence.json`
-- `dev/adr-json-schemas-conformance/mapping.json`
-- `dev/adr-json-schemas-conformance/manifest.json`
-- `dev/adr-json-schemas-conformance/database-evidence.md`
+- Package-local Vite + vanilla TypeScript + Vitest setup.
+- Deterministic fixture data from the completed `adr.json-schemas` conformance slice.
+- Static in-memory fixture provider and resolver.
+- Browser shell with incubation banner, agent summary, external status card, and three-panel ChangeReview.
+- Tests for fixture ref resolution, no live primitives, and no activate/apply/save controls.
+- Explicit ActionObject-style classes own behavior; DataObject contracts own durable state.
+- Scoped TypeScript enum classes own enum-like semantic values.
 
 ## Latest validation evidence
 
-- `uv run pytest tests/projectkoios/bootstrap/control_surface_adr/test__AdrConformanceRunner__json_schemas.py -q` => `4 passed in 0.09s`.
-- `uv run pytest tests/projectkoios/bootstrap/control_surface_adr tests/projectkoios/bootstrap/control_surface_storage tests/projectkoios/bootstrap/schema -q` => `33 passed in 0.20s`.
-- `uv run pytest -q` => `256 passed in 1.25s`.
-- `uv run mypy src/python/projectkoios/bootstrap/control_surface tests/projectkoios/bootstrap/control_surface_adr tests/projectkoios/bootstrap/control_surface_storage` => `Success: no issues found in 18 source files`.
-- `uv run ruff check src/python/projectkoios/bootstrap/control_surface tests/projectkoios/bootstrap/control_surface_adr tests/projectkoios/bootstrap/control_surface_storage` => `All checks passed!`.
-- `uv run projectkoios bootstrap validate-python-policy tests/projectkoios/bootstrap/control_surface_adr/test__AdrConformanceRunner__json_schemas.py` => `summary: 0 finding(s), 1 file(s)`.
-- `uv run projectkoios bootstrap validate-python-policy src/python/projectkoios/bootstrap/control_surface tests/projectkoios/bootstrap/control_surface_adr tests/projectkoios/bootstrap/control_surface_storage` => `summary: 0 finding(s), 18 file(s)`.
+From `src/typescript/projectkoios/ui/operator-console/`:
+
+- `npm install --ignore-scripts` => completed; `package-lock.json` created; local `node_modules/` removed after validation.
+- `npm run typecheck` => passed.
+- `npm test` => `3 test files passed, 4 tests passed`.
+- `npm run build` => passed; generated `dist/` removed after validation.
+- `npm audit --audit-level=moderate` => `found 0 vulnerabilities`.
+- `npm ls --depth=0` => `@types/node@26.1.1`, `typescript@7.0.2`, `vite@8.1.4`, `vitest@4.1.10`.
+- no-free-function grep over P0 TypeScript source/fixtures => no output.
+- enum-like string union/literal greps over P0 TypeScript source/fixtures => no output.
+
+From repository root:
+
 - `git diff --check` => clean.
-- `find dev/adr-json-schemas-conformance -type f \( -name '*.sqlite' -o -name '*.db' \) -print` => no output.
 - `git status --short -- docs/adr` => no output.
+- `find src/typescript/projectkoios/ui/operator-console -type d \( -name node_modules -o -name dist -o -name coverage \) -prune -print` => no output after cleanup.
 
 ## Ignore for now
 
-- Bulk ADR migration.
-- Source Markdown mutation under `docs/adr/`.
-- ADR schema redesign.
-- Lifecycle/workflow/routing redesign.
-- Projection policy redesign.
-- Reusable repository-level ADR storage config.
-- Database-authoritative repository policy.
+- Live intercom/session/terminal transcript adapters.
+- Backend/API server.
+- Network calls or live external status polling.
+- Workflow proposal creation.
+- Workflow activation/versioning service.
+- Petri-net graph visualization/editor.
+- TUI client.
+- Full design system/theming.
 
 ## Next expected artifact
 
-- ATHENA review or user/Hermes decision on the conformed record and provenance sidecars.
+- User/HERMES/ATHENA review decision on the P0 fixture-backed Operator Console slice.

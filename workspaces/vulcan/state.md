@@ -2,20 +2,20 @@
 {
   "title": "Vulcan workspace state",
   "artifact_type": "workspace-state",
-  "status": "json-schemas-adr-conformance-implemented-validated",
-  "datetime": "20260711.065704Z",
+  "status": "operator-console-p0-implemented-validated",
+  "datetime": "20260711.081405Z",
   "acting_as": "VULCAN",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/vulcan/",
   "branch": "master",
   "document_domain": "implementation, tests, validation, implementation reports, deviation reports",
-  "target_source": "docs/adr/adr.json-schemas.draft.md",
-  "schema": "docs/schemas/adr.schema.json",
-  "implementation_plan": "docs/plans/implementation-plan.20260711.062654_json-schemas-adr-conformance.md",
-  "latest_report": "docs/implementation/json-schemas-adr-conformance.20260711.065704.md",
-  "latest_aar": "docs/AAR/aar.20260711.065704_json-schemas-adr-conformance.md",
+  "source_architecture": "docs/architecture/architecture.operator-console.md",
+  "slice_name": "operator-console-review-one-proposal-fixture",
+  "implementation_plan": "docs/plans/implementation-plan.20260711.073912_operator-console-review-one-proposal-fixture.md",
+  "latest_report": "docs/implementation/operator-console-review-one-proposal-fixture.20260711.081405.md",
+  "latest_aar": "docs/AAR/aar.20260711.081405_operator-console-review-one-proposal-fixture.md",
   "control_files": ["state.md", "active.md"],
-  "next_owner": "ATHENA_OR_USER_OR_HERMES_REVIEW",
+  "next_owner": "USER_OR_HERMES_OR_ATHENA_REVIEW",
   "blockers": []
 }
 ```
@@ -24,55 +24,68 @@
 
 ## Current scope
 
-- Current scope: implemented and validated one-document active conformance slice targeting `docs/adr/adr.json-schemas.draft.md`.
-- Target schema: `docs/schemas/adr.schema.json` with no `routing` property.
-- Approved implementation plan: `docs/plans/implementation-plan.20260711.062654_json-schemas-adr-conformance.md`.
-- Implementation report: `docs/implementation/json-schemas-adr-conformance.20260711.065704.md`.
-- AAR: `docs/AAR/aar.20260711.065704_json-schemas-adr-conformance.md`.
+- Current scope: implemented and validated Operator Console P0 fixture-backed browser slice.
+- Source architecture: `docs/architecture/architecture.operator-console.md`.
+- Slice name: `operator-console-review-one-proposal-fixture`.
+- Incubation path: `src/typescript/projectkoios/ui/operator-console/`.
+- Implementation plan: `docs/plans/implementation-plan.20260711.073912_operator-console-review-one-proposal-fixture.md`.
+- Implementation report: `docs/implementation/operator-console-review-one-proposal-fixture.20260711.081405.md`.
+- AAR: `docs/AAR/aar.20260711.081405_operator-console-review-one-proposal-fixture.md`.
 
 ## Current status
 
-- VULCAN implemented `AdrConformanceRunner` and target-specific conformance paths for `adr.json-schemas`.
-- The conformed active record was generated at `dev/adr-json-schemas-conformance/adr.json-schemas.json`.
-- Projection, manifest, mapping, conversion evidence, and database evidence were generated under `dev/adr-json-schemas-conformance/`.
-- The source Markdown `docs/adr/adr.json-schemas.draft.md` was not mutated.
-- The JSON record does not populate `routing`.
-- Source `routing.owner`, `routing.next_phase`, `routing.notes`, and `links.related` are preserved in sidecar evidence outside the schema record.
-- Existing document/storage substrate was reused through `DocumentStoreAdrStorageAdapter` over the generic `DocumentStore` boundary.
-- No generated `.sqlite` or `.db` files are present under the conformance directory.
+- VULCAN implemented package-local Vite + vanilla TypeScript + Vitest tooling.
+- The browser app renders the completed `adr.json-schemas` conformance slice as a read-only fixture-backed proposal review.
+- Required panels are present: `What changed?`, `What is proposed?`, and `Why trust this evidence?`.
+- Static in-memory fixture provider/resolver is implemented.
+- Agent/external status cards are marked fixture/static/stale-by-design.
+- Tests cover fixture resolution, forbidden live primitive scanning, and absence of activate/apply/save controls in rendered UI and contract/action surfaces.
+- TypeScript behavior is owned by explicit ActionObject-style classes; no exported or top-level free functions remain in P0 source/fixtures.
+- Enum-like semantic values are represented with scoped TypeScript enum classes and fixture/test code uses enum members instead of free enum-like strings.
+- No backend service, live intercom/session/network/repo-state reads, workflow activation/mutation, or Petri-net graph editor were added.
+- `docs/policies/typescript-coding.md` remains VULCAN-owned draft implementation-policy guidance, not controlling authority unless accepted by user/HERMES/ATHENA.
 
 ## Latest validation evidence
 
-- `uv run pytest tests/projectkoios/bootstrap/control_surface_adr/test__AdrConformanceRunner__json_schemas.py -q` => `4 passed in 0.09s`.
-- `uv run pytest tests/projectkoios/bootstrap/control_surface_adr tests/projectkoios/bootstrap/control_surface_storage tests/projectkoios/bootstrap/schema -q` => `33 passed in 0.20s`.
-- `uv run pytest -q` => `256 passed in 1.25s`.
-- `uv run mypy src/python/projectkoios/bootstrap/control_surface tests/projectkoios/bootstrap/control_surface_adr tests/projectkoios/bootstrap/control_surface_storage` => `Success: no issues found in 18 source files`.
-- `uv run ruff check src/python/projectkoios/bootstrap/control_surface tests/projectkoios/bootstrap/control_surface_adr tests/projectkoios/bootstrap/control_surface_storage` => `All checks passed!`.
-- `uv run projectkoios bootstrap validate-python-policy tests/projectkoios/bootstrap/control_surface_adr/test__AdrConformanceRunner__json_schemas.py` => `summary: 0 finding(s), 1 file(s)`.
-- `uv run projectkoios bootstrap validate-python-policy src/python/projectkoios/bootstrap/control_surface tests/projectkoios/bootstrap/control_surface_adr tests/projectkoios/bootstrap/control_surface_storage` => `summary: 0 finding(s), 18 file(s)`.
+From `src/typescript/projectkoios/ui/operator-console/`:
+
+- `npm install --ignore-scripts` => completed; `package-lock.json` created; local `node_modules/` removed after validation.
+- `npm run typecheck` => passed.
+- `npm test` => `3 test files passed, 4 tests passed`.
+- `npm run build` => passed; generated `dist/` removed after validation.
+- `npm audit --audit-level=moderate` => `found 0 vulnerabilities`.
+- `npm ls --depth=0` => `@types/node@26.1.1`, `typescript@7.0.2`, `vite@8.1.4`, `vitest@4.1.10`.
+- `grep -R "^export function\\|^function " -n src/typescript/projectkoios/ui/operator-console/src src/typescript/projectkoios/ui/operator-console/fixtures` => no output.
+- enum-like string union/literal greps over P0 TypeScript source/fixtures => no output.
+
+From repository root:
+
 - `git diff --check` => clean.
-- `find dev/adr-json-schemas-conformance -type f \( -name '*.sqlite' -o -name '*.db' \) -print` => no output.
 - `git status --short -- docs/adr` => no output.
+- `find src/typescript/projectkoios/ui/operator-console -type d \( -name node_modules -o -name dist -o -name coverage \) -prune -print` => no output after cleanup.
 
 ## Dirty tree caution
 
 Treat VULCAN-owned changes for this slice as:
 
-- `src/python/projectkoios/bootstrap/control_surface/adr/conformance.py`
-- `src/python/projectkoios/bootstrap/control_surface/adr/markdown.py`
-- `src/python/projectkoios/bootstrap/control_surface/adr/__init__.py`
-- `tests/projectkoios/bootstrap/control_surface_adr/test__AdrConformanceRunner__json_schemas.py`
-- `dev/adr-json-schemas-conformance/`
-- `docs/plans/implementation-plan.20260711.062654_json-schemas-adr-conformance.md`
-- `docs/implementation/json-schemas-adr-conformance.20260711.065704.md`
-- `docs/AAR/aar.20260711.065704_json-schemas-adr-conformance.md`
+- `src/typescript/projectkoios/ui/operator-console/`
+- `docs/plans/implementation-plan.20260711.073912_operator-console-review-one-proposal-fixture.md`
+- `docs/implementation/operator-console-review-one-proposal-fixture.20260711.081405.md`
+- `docs/AAR/aar.20260711.081405_operator-console-review-one-proposal-fixture.md`
 - `workspaces/vulcan/state.md`
 - `workspaces/vulcan/active.md`
 
-Do not include unrelated ATHENA/KOIOS/HERMES workspace or architecture changes in a VULCAN implementation commit unless explicitly requested.
+Known concurrent/non-VULCAN architecture and policy surfaces remain in the dirty tree:
+
+- `docs/architecture/architecture.00.md`
+- `docs/architecture/architecture.operator-console.md`
+- `docs/policies/typescript-coding.md`
+- `workspaces/athena/working/operator-console-architecture-bootstrap.20260711.120000.md`
+
+Do not include unrelated ATHENA/HERMES/KOIOS changes in a VULCAN implementation commit unless explicitly requested.
 
 ## Next transition
 
-- Owner: ATHENA_OR_USER_OR_HERMES_REVIEW.
-- Expected action: review conformed record and sidecar evidence.
+- Owner: USER_OR_HERMES_OR_ATHENA_REVIEW.
+- Expected action: review the P0 fixture-backed browser slice.
 - Blockers: none from VULCAN.
