@@ -48,6 +48,7 @@ Captured/advisory artifacts in this workspace:
 - `../../docs/process-capture/pc.workflow.document-trace.20260709.012953Z.md`
 - `../../docs/process-capture/pc.aar-consolidation.20260711.091607Z.md`
 - `../../docs/process-capture/requirements.workflow-object.from-aar-synthesis.20260711.091607Z.md`
+- `../../docs/AAR/aar.20260711_review-gate-skip-slice10.md`
 
 ## Validated observations
 
@@ -102,6 +103,8 @@ KOIOS reviewed VULCAN `adr-json-authority-inventory-classification-slice-0` in `
 KOIOS completed `working/override-recommendations.20260711_adr-json-authority-inventory-slice-1.md` for `adr-json-authority-inventory-review-overrides-slice-1`. It recommends safer candidate-only authority labels, domain-review flags for product/future-system files, source-provenance handling for lifecycle/naming drafts, exclusions from automatic conversion, and messy canary candidates.
 
 KOIOS reviewed VULCAN `adr-json-authority-inventory-review-overrides-slice-1` in `working/provenance-review.20260711_adr-json-authority-inventory-review-overrides-slice-1.md`. Verdict: review-only override evidence faithfully applies core KOIOS recommendations and is provenance-safe with minor watchpoints around manifest validation-summary wording and remaining candidate category imperfections.
+
+KOIOS incorporated `../../docs/AAR/aar.20260711_review-gate-skip-slice10.md` into `../../docs/process-capture/pc.workflow.document-trace.md` as a process-review observation. The captured lesson is that correcting role-domain ownership is insufficient unless HERMES also preserves acceptance review gates; cross-domain slices should name expected reviews and avoid acceptance commits until reviews are present or USER explicitly waives them.
 
 ## Authority boundary
 

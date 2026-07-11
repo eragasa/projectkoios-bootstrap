@@ -3,13 +3,13 @@
   "title": "Hermes workspace state",
   "artifact_type": "workspace-state",
   "status": "active",
-  "datetime": "20260711.173500Z",
+  "datetime": "20260711.174500Z",
   "acting_as": "HERMES",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/hermes/",
   "document_domain": "orchestration, repo-state reconciliation, cross-domain consistency",
   "control_files": ["state.md", "active.md"],
-  "next_owner": "ATHENA",
+  "next_owner": "HERMES_USER",
   "blockers": []
 }
 ```
@@ -18,7 +18,7 @@
 
 ## Current focus
 
-Route `adr-template-schema-contract-successor-planning-slice-10` to ATHENA and stop at the handoff boundary.
+Close out accepted ATHENA-owned `adr-template-schema-contract-successor-planning-slice-10`, then choose whether to activate `adr-template-schema-contract-successor-draft-slice-11`.
 
 ## Current validated state
 
@@ -29,35 +29,42 @@ Route `adr-template-schema-contract-successor-planning-slice-10` to ATHENA and s
 - The unpushed improper Slice 10 completion commit `d197b3e5 Accept ADR template schema contract successor planning slice 10` was reset before push.
 - HERMES recorded a corrected Slice 10 handoff-only decision in `docs/reviews/hermes-decision.20260711.173500_adr-template-schema-contract-successor-planning-slice-10.md`.
 - HERMES recorded a process AAR in `docs/AAR/aar.20260711_hermes-athena-handoff-boundary.md`.
+- ATHENA produced the Slice 10 successor-planning brief in `docs/plans/successor-brief.20260711.172500_adr-template-schema-contract.md` and updated Athena workspace state.
+- KOIOS reviewed the brief in `workspaces/koios/working/provenance-review.20260711_adr-template-schema-contract-successor-planning-slice-10.md`, verdict provenance-adequate with one packaging watchpoint.
+- VULCAN reviewed the brief in `docs/reviews/implementation-reality.20260711_adr-template-schema-contract-successor-planning-slice-10.md`, verdict implementation-feasible with minor watchpoints.
+- HERMES addressed KOIOS's packaging watchpoint by correcting malformed top JSON punctuation in `workspaces/athena/active.md`.
+- HERMES accepted the ATHENA brief as proposal-only successor planning in `docs/reviews/hermes-acceptance.20260711.174500_adr-template-schema-contract-successor-planning-slice-10.md`.
+- Closeout validation passed:
+  - `git status --short -- docs/adr docs/schemas dev/adr-json-authority-corpus-dry-run-inventory-slice-4` produced no output.
+  - `git diff --check` passed.
 
-## Active Slice 10 handoff
+## Accepted Slice 10 meaning
 
-Slice name:
+Slice 10 defines requirements for a future successor ADR/template-schema contract draft without creating that draft or mutating source/schema authority.
 
-```text
-adr-template-schema-contract-successor-planning-slice-10
-```
-
-Next owner:
-
-```text
-ATHENA
-```
-
-Suggested ATHENA output:
+Accepted future draft path pattern:
 
 ```text
-docs/plans/successor-brief.20260711.172500_adr-template-schema-contract.md
+docs/adr/adr.adr-template-schema-contract.<YYYYMMDD.HHMMSSZ>.draft.md
 ```
+
+Accepted next slice recommendation:
+
+```text
+adr-template-schema-contract-successor-draft-slice-11
+```
+
+A future Slice 11 must explicitly authorize creating at most one new draft/proposal artifact and must preserve old-source and schema boundaries unless HERMES/USER separately approves mutation.
 
 ## Active boundaries
 
-HERMES has not produced or accepted the ATHENA planning artifact. Slice 10 handoff does not authorize creating a new ADR draft under `docs/adr/`, editing `docs/adr/`, editing `docs/schemas/`, changing source status or casing, supersession, acceptance, activation, rejection, promotion, demotion, file moves/renames/deletes/archives/splits, JSON conversion/projection generation, generated projection replacement, authoritative JSON ADR records, database/storage authority, migration, or cutover.
+Slice 10 does not authorize creating the successor ADR draft, editing existing `docs/adr/` files, editing `docs/schemas/`, changing source status or casing, supersession, acceptance, activation, rejection, promotion, demotion, file moves/renames/deletes/archives/splits, JSON conversion/projection generation, generated projection replacement, authoritative JSON ADR records, database/storage authority, migration, or cutover.
 
 ## Current blockers
 
-- ATHENA output is required before HERMES can review/accept Slice 10.
+- None for accepted Slice 10.
+- HERMES/USER decision is required to package/commit Slice 10 and activate any Slice 11 work.
 
 ## Next owner
 
-ATHENA for successor-planning brief production.
+HERMES_USER for packaging/commit and next bounded repair decision.

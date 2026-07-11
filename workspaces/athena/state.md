@@ -2,15 +2,15 @@
 {
   "title": "Athena workspace state",
   "artifact_type": "workspace-state",
-  "status": "adr-template-schema-contract-repair-planning-slice-6-plan-complete-pending-hermes-user-acceptance",
-  "datetime": "20260711.160500Z",
+  "status": "adr-template-schema-contract-successor-planning-slice-10-brief-complete-pending-hermes-user-acceptance",
+  "datetime": "20260711.173800Z",
   "acting_as": "ATHENA",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/athena/",
   "document_domain": "architecture, ADRs, specs, acceptance criteria, implementation briefs, conformance reviews",
   "control_files": ["state.md", "active.md"],
   "next_owner": "HERMES_USER",
-  "blockers": ["HERMES/USER acceptance decision pending for template/schema contract repair plan"]
+  "blockers": ["HERMES/USER acceptance decision pending for template/schema contract successor-planning brief"]
 }
 ```
 
@@ -178,13 +178,14 @@
 - HERMES approved `adr-semantic-rationalization-six-entry-slice-5` in `docs/reviews/hermes-decision.20260711.154700_adr-semantic-rationalization-six-entry-slice-5.md`. ATHENA executed the semantic rationalization review and wrote `docs/reviews/semantic-rationalization.20260711_adr-six-entry-slice-5.md`, classifying README as index/control, Petri-net ADR as current coherent bounded authority, template-contract as template/schema contract needing revision, json-schemas draft as draft schema-namespace candidate not ADR JSON authority, schema-base as current-but-needs-revision/missing-status schema-family material, and lifecycle draft as source-only/provenance. No source/schema/dev/code mutation occurred.
 - HERMES accepted Slice 5 with watchpoints in `docs/reviews/hermes-acceptance.20260711.155200_adr-semantic-rationalization-six-entry-slice-5.md` and relayed USER selection of template/schema contract repair planning. ATHENA drafted `docs/plans/architecture-brief.20260711.155500_adr-template-contract-repair-planning-slice-6.md` for a bounded review/planning slice focused exactly on `docs/adr/adr.adr-template-contract.md`, preserving no source mutation, no status normalization, no schema change, no supersession/promotion/demotion, no JSON conversion, and no cutover.
 - HERMES approved `adr-template-schema-contract-repair-planning-slice-6` in `docs/reviews/hermes-decision.20260711.160000_adr-template-schema-contract-repair-planning-slice-6.md`. ATHENA executed the planning review and wrote `docs/plans/repair-plan.20260711.155500_adr-template-schema-contract-slice-6.md`, recommending a future successor template/schema contract proposal as primary path and a review-only errata/reconciliation note as fallback. No source/schema/dev/code/lifecycle mutation occurred.
+- HERMES handed `adr-template-schema-contract-successor-planning-slice-10` to ATHENA in `docs/reviews/hermes-decision.20260711.173500_adr-template-schema-contract-successor-planning-slice-10.md` after resetting an improper HERMES-authored completion attempt. ATHENA produced `docs/plans/successor-brief.20260711.172500_adr-template-schema-contract.md`, defining the future successor draft contents, authority boundaries, and acceptance criteria without creating an ADR, editing `docs/adr/`, editing `docs/schemas/`, superseding, migrating, or cutting over authority.
 
 ## Current active item
 
-- `adr-template-schema-contract-repair-planning-slice-6`
+- `adr-template-schema-contract-successor-planning-slice-10`
   - Parent effort: ADR rationalization / JSON-authoritative ADR store staged migration.
-  - Status: ATHENA repair plan complete at `docs/plans/repair-plan.20260711.155500_adr-template-schema-contract-slice-6.md`; pending HERMES/USER acceptance consideration.
-  - Purpose: decide the next safe repair path for accepted-like but semantically mixed/stale `docs/adr/adr.adr-template-contract.md` without mutating the source yet.
+  - Status: ATHENA successor-planning brief complete at `docs/plans/successor-brief.20260711.172500_adr-template-schema-contract.md`; pending HERMES/USER acceptance consideration.
+  - Purpose: define what a future successor ADR/template-schema contract draft should contain before creating that draft, without source/schema mutation, supersession, migration, or cutover.
   - Key artifacts:
     - `docs/plans/architecture-intake.20260711.131140_adr-bidirectional-json-markdown-objects.md`
     - `workspaces/koios/working/provenance-intake.20260711_adr-rationalization-json-md-object-track.md`
@@ -242,6 +243,10 @@
     - `docs/plans/architecture-brief.20260711.155500_adr-template-contract-repair-planning-slice-6.md`
     - `docs/reviews/hermes-decision.20260711.160000_adr-template-schema-contract-repair-planning-slice-6.md`
     - `docs/plans/repair-plan.20260711.155500_adr-template-schema-contract-slice-6.md`
+    - `docs/plans/reconciliation-proposal.20260711.170000_adr-schema-family-contract.md`
+    - `docs/reviews/hermes-acceptance.20260711.172000_schema-family-doc-index-clarification-slice-9.md`
+    - `docs/reviews/hermes-decision.20260711.173500_adr-template-schema-contract-successor-planning-slice-10.md`
+    - `docs/plans/successor-brief.20260711.172500_adr-template-schema-contract.md`
 
 ## Queued/backlog items
 
@@ -261,7 +266,7 @@
 
 ## Waiting on / blocked items
 
-- HERMES/USER acceptance decision for `docs/plans/repair-plan.20260711.155500_adr-template-schema-contract-slice-6.md`.
+- HERMES/USER acceptance decision for `docs/plans/successor-brief.20260711.172500_adr-template-schema-contract.md`.
 - Slice 0 package is committed/pushed as `ad91148c`; later package boundaries remain separate unless HERMES reports committed/pushed.
 
 ## Open questions
@@ -278,7 +283,7 @@
 
 - Owner: HERMES/USER.
 - Recommended next actions:
-  1. HERMES/USER should review and accept/revise/reject the Slice 6 template/schema contract repair plan.
+  1. HERMES/USER should review and accept/revise/reject the Slice 10 template/schema contract successor-planning brief.
   2. Preserve `pi-skill-determinism-slice-0` as queued-only unless explicitly activated.
 - Operator Console P0/P1/P2 accepted boundaries: bootstrap incubation only; package-local lockfile only; behavior owned by ActionObject-style classes with data in typed interfaces/constants; `docs/policies/typescript-coding.md` remains draft/non-controlling; fixtures are static/stale-by-design; readability/navigation affordances are local browser inspection helpers only; no backend, live reads, messaging capability, activation/mutation, Petri-net graph editor, product UI authority, or bootstrap production-backend claim.
 - ADR conformance work remains available as a separate track: future slices should use updated `docs/schemas/adr.schema.json` without `routing`, preserve sidecar provenance, and avoid schema/lifecycle/workflow/storage-authority redesign unless repeated conformance pressure justifies it.

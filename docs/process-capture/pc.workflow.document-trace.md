@@ -8,7 +8,7 @@
 - Scope: workflow document traces mapped to Petri-net evolution vocabulary
 - Owner: KOIOS
 - Created: 20260706.025408Z
-- Updated: 20260711.091607Z
+- Updated: 20260711.174800Z
 - Authority: provenance/process observation only
 
 ## Non-authority statement
@@ -179,6 +179,37 @@ identity, artifact nodes, transitions/gates, role-domain guards, validation
 evidence, dirty-tree package boundaries, lifecycle markers, fixture provenance,
 user-preview validation, ephemeral-message promotion rules, dependency/tooling
 records, skill stability records, and process-capture links.
+
+### Slice 10 review-gate skip AAR intake
+
+KOIOS incorporated the process lesson from
+`docs/AAR/aar.20260711_review-gate-skip-slice10.md` as provenance/process
+observation only.
+
+The AAR records that HERMES prematurely accepted and locally committed ATHENA's
+`adr-template-schema-contract-successor-planning-slice-10` output before
+obtaining KOIOS provenance review and VULCAN implementation-reality review.
+USER challenged the acceptance-gate breach. HERMES reset the premature local
+acceptance commit before push, requested the missing reviews, corrected the
+workspace metadata formatting watchpoint, and produced final acceptance only
+after both review artifacts were available.
+
+Process lesson:
+
+- role-domain handoff correction is not sufficient by itself; HERMES acceptance
+  also needs explicit review-gate discipline;
+- cross-domain slices that touch architecture, schema, implementation reality,
+  migration, or authority boundaries should record expected reviewers before
+  acceptance;
+- HERMES should not commit acceptance artifacts until required role reviews are
+  present or explicitly waived by USER;
+- shorthand such as `next` should advance to the next workflow state, not skip
+  review gates or complete all gates implicitly.
+
+Candidate follow-up topics remain non-authoritative until promoted: reusable
+HERMES acceptance checklist, workflow-state fields for `required_reviews`,
+`received_reviews`, and `review_waivers`, and validation for top JSON metadata
+blocks in workspace state files before packaging.
 
 ## Recommendations
 

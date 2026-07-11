@@ -42,6 +42,7 @@ KOIOS completed ADR rationalization provenance intake in `working/provenance-int
 - `../../docs/process-capture/pc.workflow.document-trace.20260709.012953Z.md`
 - `../../docs/process-capture/pc.aar-consolidation.20260711.091607Z.md`
 - `../../docs/process-capture/requirements.workflow-object.from-aar-synthesis.20260711.091607Z.md`
+- `../../docs/AAR/aar.20260711_review-gate-skip-slice10.md`
 
 ## Next expected artifact
 
@@ -82,6 +83,8 @@ KOIOS completed `working/provenance-review.20260711_adr-json-authority-inventory
 KOIOS completed `working/override-recommendations.20260711_adr-json-authority-inventory-slice-1.md` for Slice 1 override planning. It recommends conservative candidate-only values, explicit domain-review/manual-review overrides, source-provenance handling, automatic-conversion exclusions, and messy canary candidates.
 
 KOIOS completed `working/provenance-review.20260711_adr-json-authority-inventory-review-overrides-slice-1.md`. Verdict: Slice 1 faithfully applies core KOIOS recommendations and is provenance-safe as review-only override evidence, with minor watchpoints; it still does not authorize conversion or cutover.
+
+KOIOS incorporated `../../docs/AAR/aar.20260711_review-gate-skip-slice10.md` into `../../docs/process-capture/pc.workflow.document-trace.md` as process-review provenance. The lesson is review-gate discipline: after a role-domain handoff correction, HERMES acceptance still must wait for required KOIOS/VULCAN or waived reviews before committing acceptance artifacts.
 
 ## KOIOS next actions
 

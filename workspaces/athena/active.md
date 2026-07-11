@@ -2,8 +2,8 @@
 {
   "title": "Athena active work",
   "artifact_type": "workspace-active-priorities",
-  "status": "adr-template-schema-contract-repair-planning-slice-6-plan-complete-pending-hermes-user-acceptance",
-  "datetime": "20260711.160500Z"},{
+  "status": "adr-template-schema-contract-successor-planning-slice-10-brief-complete-pending-hermes-user-acceptance",
+  "datetime": "20260711.173800Z",
   "acting_as": "ATHENA",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/athena/",
@@ -131,10 +131,10 @@
 
 ## Current active item
 
-- `adr-template-schema-contract-repair-planning-slice-6`
+- `adr-template-schema-contract-successor-planning-slice-10`
   - Parent effort: ADR rationalization / JSON-authoritative ADR store staged migration.
-  - Status: ATHENA repair plan complete at `docs/plans/repair-plan.20260711.155500_adr-template-schema-contract-slice-6.md`; pending HERMES/USER acceptance consideration.
-  - Purpose: decide the next safe repair path for accepted-like but semantically mixed/stale `docs/adr/adr.adr-template-contract.md` without mutating the source yet.
+  - Status: ATHENA successor-planning brief complete at `docs/plans/successor-brief.20260711.172500_adr-template-schema-contract.md`; pending HERMES/USER acceptance consideration.
+  - Purpose: define what a future successor ADR/template-schema contract draft should contain before creating that draft, without source/schema mutation, supersession, migration, or cutover.
   - Key artifacts:
     - `docs/plans/architecture-intake.20260711.131140_adr-bidirectional-json-markdown-objects.md`
     - `workspaces/koios/working/provenance-intake.20260711_adr-rationalization-json-md-object-track.md`
@@ -191,6 +191,10 @@
     - `docs/plans/architecture-brief.20260711.155500_adr-template-contract-repair-planning-slice-6.md`
     - `docs/reviews/hermes-decision.20260711.160000_adr-template-schema-contract-repair-planning-slice-6.md`
     - `docs/plans/repair-plan.20260711.155500_adr-template-schema-contract-slice-6.md`
+    - `docs/plans/reconciliation-proposal.20260711.170000_adr-schema-family-contract.md`
+    - `docs/reviews/hermes-acceptance.20260711.172000_schema-family-doc-index-clarification-slice-9.md`
+    - `docs/reviews/hermes-decision.20260711.173500_adr-template-schema-contract-successor-planning-slice-10.md`
+    - `docs/plans/successor-brief.20260711.172500_adr-template-schema-contract.md`
 
 ## Queued/backlog items
 
@@ -211,12 +215,12 @@
 
 ## Waiting on / blocked items
 
-- HERMES/USER acceptance decision for `docs/plans/repair-plan.20260711.155500_adr-template-schema-contract-slice-6.md`.
+- HERMES/USER acceptance decision for `docs/plans/successor-brief.20260711.172500_adr-template-schema-contract.md`.
 - Slice 0 package is committed/pushed as `ad91148c`; later package boundaries remain separate unless HERMES reports committed/pushed.
 
 ## Recommended next actions
 
-1. HERMES/USER should review and accept/revise/reject the Slice 6 template/schema contract repair plan.
+1. HERMES/USER should review and accept/revise/reject the Slice 10 template/schema contract successor-planning brief.
 2. Preserve `pi-skill-determinism-slice-0` as queued-only unless explicitly activated.
 
 ## Packaging watchpoints
