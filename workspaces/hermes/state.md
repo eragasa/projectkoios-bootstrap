@@ -3,13 +3,13 @@
   "title": "Hermes workspace state",
   "artifact_type": "workspace-state",
   "status": "active",
-  "datetime": "20260711.160700Z",
+  "datetime": "20260711.165218Z",
   "acting_as": "HERMES",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/hermes/",
   "document_domain": "orchestration, repo-state reconciliation, cross-domain consistency",
   "control_files": ["state.md", "active.md"],
-  "next_owner": "HERMES_OR_USER",
+  "next_owner": "ATHENA",
   "blockers": []
 }
 ```
@@ -18,64 +18,55 @@
 
 ## Current focus
 
-Close out accepted `adr-template-schema-contract-repair-planning-slice-6`, then choose the next bounded action.
+Advance USER-selected option 3: broader schema-family repair planning.
 
 ## Current validated state
 
 - Slice 5 is complete, committed, and pushed as `f2df856 Accept ADR semantic rationalization slice 5`.
-- USER selected template/schema contract repair planning.
-- KOIOS provided provenance input in `workspaces/koios/working/next-proof-input.20260711_template-schema-contract-repair-planning.md`.
-- ATHENA produced `docs/plans/repair-plan.20260711.155500_adr-template-schema-contract-slice-6.md`.
-- KOIOS reviewed Slice 6 provenance in `workspaces/koios/working/provenance-review.20260711_adr-template-schema-contract-repair-planning-slice-6.md` and found it adequate for proposal-only acceptance/packaging with minor watchpoints.
-- VULCAN provided implementation-reality input in `docs/reviews/implementation-reality.20260711_adr-template-schema-contract-repair-planning-slice-6.md`, supporting the plan and clarifying current code/schema/tooling constraints.
-- HERMES accepted Slice 6 as proposal-only repair planning in `docs/reviews/hermes-acceptance.20260711.160700_adr-template-schema-contract-repair-planning-slice-6.md`.
-- Closeout validation passed for planning-only scope:
-  - `git status --short -- docs/adr docs/schemas dev/adr-json-authority-corpus-dry-run-inventory-slice-4` produced no output.
-  - `git diff --check` passed.
+- Slice 6 is complete, accepted, packaged, and committed as `df4dedc2 Accept ADR template schema contract repair planning slice 6`.
+- `adr-template-schema-contract-repair-planning-slice-6` was accepted as proposal-only repair planning in `docs/reviews/hermes-acceptance.20260711.160700_adr-template-schema-contract-repair-planning-slice-6.md`.
+- Repo startup check on 20260711.1652Z found the working tree clean before Slice 7 activation.
+- Petri-net workflow status showed `current-slice` at `user_decision`, enabled transition `approve_next_slice`, and `user decision required: yes`.
+- USER selected option `3`: broader schema-family repair planning.
+- HERMES recorded approval for `schema-family-repair-planning-slice-7` in `docs/reviews/hermes-decision.20260711.165218_schema-family-repair-planning-slice-7.md`.
 
-## Accepted Slice 6 scope
+## Active Slice 7 scope
 
 Slice name:
 
 ```text
-adr-template-schema-contract-repair-planning-slice-6
+schema-family-repair-planning-slice-7
 ```
 
-Target source:
+Approved planning/review surfaces:
 
 ```text
 docs/adr/adr.adr-template-contract.md
+docs/adr/adr.schema-base.md
+docs/adr/adr.json-authoritative-adr-store.draft.md
+docs/plans/schema-base-adr-records-workplan.md
+docs/schemas/README.md
+docs/schemas/adr.schema.json
+docs/schemas/schema.record-base.json
+docs/schemas/adr-draft.schema.json
+docs/schemas/adr-active.schema.json
 ```
 
-Accepted repair plan:
+Preferred ATHENA output:
 
 ```text
-docs/plans/repair-plan.20260711.155500_adr-template-schema-contract-slice-6.md
+docs/plans/repair-plan.20260711.165300_schema-family-adr-contract-slice-7.md
 ```
 
-## Accepted recommendation
+## Active boundaries
 
-- Primary next path: draft a successor ADR/template-schema contract proposal in a future approved slice.
-- Fallback: create a review-only errata/reconciliation note first if HERMES/USER wants lower-risk staging.
-- Do not mutate `docs/adr/adr.adr-template-contract.md` in place as the first repair action.
-- VULCAN implementation-reality constraints for successor planning:
-  - current tooling treats `routing` as sidecar/provenance, not ADR content;
-  - current tooling does not implement `dcn`;
-  - `workflow_binding` is schema-supported but not operational workflow authority;
-  - hand-authored Markdown remains source/control for unmigrated records and generated projections are non-authoritative evidence.
-
-## Acceptance boundaries
-
-Slice 6 acceptance is proposal-only. It does not authorize editing `docs/adr/adr.adr-template-contract.md`, editing any source ADR, status normalization or lifecycle state changes, formal supersession/acceptance/activation/rejection/promotion/demotion, schema changes, file moves/renames/deletes/archives/splits, JSON conversion/projection generation, generated projection replacement, authoritative JSON ADR records, database/storage authority, migration, JSON authority cutover, or creating a successor ADR draft without future explicit approval.
+Slice 7 is planning/review only. It does not authorize editing `docs/adr/`, editing `docs/schemas/`, changing source status or casing, supersession, acceptance, activation, rejection, promotion, demotion, file moves/renames/deletes/archives/splits, JSON conversion/projection generation, generated projection replacement, authoritative JSON ADR records, database/storage authority, migration, or cutover.
 
 ## Current blockers
 
-- None for accepted Slice 6.
+- None for routing the planning slice.
+- ATHENA planning output is required before HERMES can accept or choose the next concrete repair action.
 
 ## Next owner
 
-- HERMES_OR_USER for packaging/commit and choosing the next bounded action.
-
-## Current status summary
-
-`adr-template-schema-contract-repair-planning-slice-6` is complete and accepted as proposal-only repair planning. The working tree contains Slice 6 planning/approval/review/acceptance artifacts plus role workspace state updates awaiting packaging/commit.
+ATHENA for schema-family repair planning/review under the approved Slice 7 scope.
