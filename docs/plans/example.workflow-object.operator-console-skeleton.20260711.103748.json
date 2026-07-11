@@ -1,0 +1,526 @@
+{
+  "record_type": "workflow_object",
+  "record_shape_version": "candidate-0",
+  "shape_authority": "candidate-only-not-schema-authority",
+  "record_id": "workflow-object.operator-console-bootstrap-bundle.20260711",
+  "title": "Operator Console bootstrap P0/P1/readability bundle",
+  "status": "accepted-static-projection",
+  "authority_boundary": {
+    "mode": "projection-index-only",
+    "non_authority_statement": "This candidate example indexes representative source artifacts only. It does not replace source artifacts, decide completion, create storage/schema authority, or execute workflow transitions.",
+    "source_authorities_preserved": true,
+    "completion_authority": "HERMES/user or owning domain artifact only",
+    "not_authority_for": [
+      "source-artifacts",
+      "completion",
+      "petri-net-runtime",
+      "storage",
+      "schema",
+      "product-ui"
+    ]
+  },
+  "non_authority_markers": [
+    "projection-index-only",
+    "not-source-authority",
+    "not-completion-authority",
+    "not-petri-net-runtime",
+    "not-storage-authority",
+    "not-schema-authority",
+    "static-fixture",
+    "representative-skeleton",
+    "static-record",
+    "bootstrap-incubation",
+    "fixture-only",
+    "non-live",
+    "stale-by-design",
+    "not-product-authority"
+  ],
+  "source_architecture_refs": [
+    "docs/architecture/architecture.workflow-object.md",
+    "docs/architecture/architecture.operator-console.md",
+    "docs/plans/implementation-brief.20260711.102123_workflow-object-static-operator-console-record.md",
+    "docs/plans/schema-proposal.workflow-object.static-record.20260711.102743.md"
+  ],
+  "work_item": {
+    "work_item_id": "workflow-object.operator-console-bootstrap-bundle.20260711",
+    "title": "Operator Console bootstrap P0/P1/readability bundle",
+    "slice_names": [
+      "operator-console-review-one-proposal-fixture",
+      "operator-console-fixture-interaction-visibility",
+      "operator-console-readability-navigation-fixture"
+    ],
+    "repository": "projectkoios-bootstrap",
+    "workspace_or_package_path": "src/typescript/projectkoios/ui/operator-console/",
+    "initiating_source_summary": "Accepted Operator Console bootstrap-incubation slices with implementation, review, validation, and preview evidence.",
+    "status": "accepted-static-projection",
+    "status_evidence_refs": [
+      "artifact:review.operator-console-p2-readability"
+    ],
+    "created_at": "20260711.103748Z",
+    "observed_at": "20260711.103748Z",
+    "producer_role": "VULCAN"
+  },
+  "artifact_records": [
+    {
+      "artifact_id": "artifact:architecture.workflow-object",
+      "locator": "docs/architecture/architecture.workflow-object.md",
+      "artifact_type": "architecture-note",
+      "owner_role": "ATHENA",
+      "owner_domain": "architecture",
+      "lifecycle_status": "accepted",
+      "status_evidence_refs": [],
+      "source_report_ref": null,
+      "authority_boundary": "source-authority",
+      "content_ref": {
+        "ref_type": "sha256",
+        "value": "TO_BE_FILLED_BY_VULCAN",
+        "availability": "present"
+      },
+      "provenance_summary": "Controlling architecture for workflow-object artifact/workflow separation and DataObject/ActionObject vocabulary."
+    },
+    {
+      "artifact_id": "artifact:architecture.operator-console",
+      "locator": "docs/architecture/architecture.operator-console.md",
+      "artifact_type": "architecture-note",
+      "owner_role": "ATHENA",
+      "owner_domain": "architecture",
+      "lifecycle_status": "accepted",
+      "status_evidence_refs": [
+        "artifact:review.operator-console-p2-readability"
+      ],
+      "source_report_ref": "artifact:review.operator-console-p2-readability",
+      "authority_boundary": "source-authority",
+      "content_ref": {
+        "ref_type": "sha256",
+        "value": "TO_BE_FILLED_BY_VULCAN",
+        "availability": "present"
+      },
+      "provenance_summary": "Bootstrap-incubation Operator Console architecture and as-built reconciliation."
+    },
+    {
+      "artifact_id": "artifact:implementation.operator-console-p0",
+      "locator": "docs/implementation/operator-console-review-one-proposal-fixture.20260711.081405.md",
+      "artifact_type": "implementation-report",
+      "owner_role": "VULCAN",
+      "owner_domain": "implementation",
+      "lifecycle_status": "implemented",
+      "status_evidence_refs": [
+        "artifact:review.operator-console-p0"
+      ],
+      "source_report_ref": "artifact:review.operator-console-p0",
+      "authority_boundary": "evidence-authority",
+      "content_ref": {
+        "ref_type": "sha256",
+        "value": "TO_BE_FILLED_BY_VULCAN",
+        "availability": "present"
+      },
+      "provenance_summary": "P0 Operator Console implementation report."
+    },
+    {
+      "artifact_id": "artifact:review.operator-console-p0",
+      "locator": "docs/reviews/architecture-conformance.20260711.081734_operator-console-review-one-proposal-fixture.md",
+      "artifact_type": "architecture-review",
+      "owner_role": "ATHENA",
+      "owner_domain": "review",
+      "lifecycle_status": "accepted",
+      "status_evidence_refs": [],
+      "source_report_ref": null,
+      "authority_boundary": "evidence-authority",
+      "content_ref": {
+        "ref_type": "sha256",
+        "value": "TO_BE_FILLED_BY_VULCAN",
+        "availability": "present"
+      },
+      "provenance_summary": "ATHENA conformance review accepting P0 evidence."
+    },
+    {
+      "artifact_id": "artifact:implementation.operator-console-p1-interaction-visibility",
+      "locator": "docs/implementation/operator-console-fixture-interaction-visibility.20260711.090601.md",
+      "artifact_type": "implementation-report",
+      "owner_role": "VULCAN",
+      "owner_domain": "implementation",
+      "lifecycle_status": "implemented",
+      "status_evidence_refs": [
+        "artifact:review.operator-console-p1-interaction-visibility"
+      ],
+      "source_report_ref": "artifact:review.operator-console-p1-interaction-visibility",
+      "authority_boundary": "evidence-authority",
+      "content_ref": {
+        "ref_type": "sha256",
+        "value": "TO_BE_FILLED_BY_VULCAN",
+        "availability": "present"
+      },
+      "provenance_summary": "P1 interaction visibility implementation report."
+    },
+    {
+      "artifact_id": "artifact:review.operator-console-p1-interaction-visibility",
+      "locator": "docs/reviews/architecture-conformance.20260711.091137_operator-console-fixture-interaction-visibility.md",
+      "artifact_type": "architecture-review",
+      "owner_role": "ATHENA",
+      "owner_domain": "review",
+      "lifecycle_status": "accepted",
+      "status_evidence_refs": [],
+      "source_report_ref": null,
+      "authority_boundary": "evidence-authority",
+      "content_ref": {
+        "ref_type": "sha256",
+        "value": "TO_BE_FILLED_BY_VULCAN",
+        "availability": "present"
+      },
+      "provenance_summary": "ATHENA conformance review accepting P1 interaction visibility evidence."
+    },
+    {
+      "artifact_id": "artifact:implementation.operator-console-p2-readability",
+      "locator": "docs/implementation/operator-console-readability-navigation-fixture.20260711.092524.md",
+      "artifact_type": "implementation-report",
+      "owner_role": "VULCAN",
+      "owner_domain": "implementation",
+      "lifecycle_status": "implemented",
+      "status_evidence_refs": [
+        "artifact:review.operator-console-p2-readability"
+      ],
+      "source_report_ref": "artifact:review.operator-console-p2-readability",
+      "authority_boundary": "evidence-authority",
+      "content_ref": {
+        "ref_type": "sha256",
+        "value": "TO_BE_FILLED_BY_VULCAN",
+        "availability": "present"
+      },
+      "provenance_summary": "P2 readability/navigation implementation report."
+    },
+    {
+      "artifact_id": "artifact:review.operator-console-p2-readability",
+      "locator": "docs/reviews/architecture-conformance.20260711.093009_operator-console-readability-navigation-fixture.md",
+      "artifact_type": "architecture-review",
+      "owner_role": "ATHENA",
+      "owner_domain": "review",
+      "lifecycle_status": "accepted",
+      "status_evidence_refs": [],
+      "source_report_ref": null,
+      "authority_boundary": "evidence-authority",
+      "content_ref": {
+        "ref_type": "sha256",
+        "value": "TO_BE_FILLED_BY_VULCAN",
+        "availability": "present"
+      },
+      "provenance_summary": "ATHENA conformance review accepting P2 readability/navigation evidence."
+    },
+    {
+      "artifact_id": "artifact:package.operator-console-package-json",
+      "locator": "src/typescript/projectkoios/ui/operator-console/package.json",
+      "artifact_type": "package-manifest",
+      "owner_role": "VULCAN",
+      "owner_domain": "source",
+      "lifecycle_status": "implemented",
+      "status_evidence_refs": [
+        "artifact:review.operator-console-p2-readability"
+      ],
+      "source_report_ref": "artifact:review.operator-console-p2-readability",
+      "authority_boundary": "fixture-only",
+      "content_ref": {
+        "ref_type": "sha256",
+        "value": "TO_BE_FILLED_BY_VULCAN",
+        "availability": "present"
+      },
+      "provenance_summary": "Minimal package/source ref for bootstrap-incubated Operator Console package; broader source tree indexing is intentionally deferred."
+    }
+  ],
+  "workflow_tokens": [
+    {
+      "token_id": "token:operator-console-bootstrap-bundle",
+      "work_item_id": "workflow-object.operator-console-bootstrap-bundle.20260711",
+      "current_place_ref": "place:accepted-static-projection",
+      "observed_place_refs": [
+        "place:architecture-accepted",
+        "place:implementation-reviewed"
+      ],
+      "artifact_record_refs": [
+        "artifact:architecture.workflow-object",
+        "artifact:architecture.operator-console",
+        "artifact:review.operator-console-p1-interaction-visibility",
+        "artifact:review.operator-console-p2-readability",
+        "artifact:package.operator-console-package-json"
+      ],
+      "status": "projection-only",
+      "authority_boundary": "not-runtime-token"
+    }
+  ],
+  "workflow_places": [
+    {
+      "place_id": "place:architecture-accepted",
+      "label": "Architecture accepted",
+      "meaning": "Architecture/source package has USER/HERMES acceptance for next gate.",
+      "source_vocabulary_ref": "local-first-record-vocabulary",
+      "not_a_document": true
+    },
+    {
+      "place_id": "place:implementation-reviewed",
+      "label": "Implementation reviewed",
+      "meaning": "Implementation report and architecture review evidence indicate accepted implementation behavior.",
+      "source_vocabulary_ref": "local-first-record-vocabulary",
+      "not_a_document": true
+    },
+    {
+      "place_id": "place:accepted-static-projection",
+      "label": "Accepted static projection",
+      "meaning": "Workflow-object record is a projection/index over accepted source evidence, not completion authority.",
+      "source_vocabulary_ref": "local-first-record-vocabulary",
+      "not_a_document": true
+    }
+  ],
+  "transition_gates": [
+    {
+      "gate_id": "gate:p0-implemented-and-reviewed",
+      "name": "P0 implemented and reviewed",
+      "required_predicates": [
+        {
+          "predicate_type": "artifact_status",
+          "target_ref": "artifact:implementation.operator-console-p0",
+          "expected": "implemented"
+        },
+        {
+          "predicate_type": "review_acceptance",
+          "target_ref": "artifact:review.operator-console-p0",
+          "expected": "accepted"
+        }
+      ],
+      "authority_boundary": "evaluation-template-only"
+    },
+    {
+      "gate_id": "gate:p1-interaction-visibility-implemented-reviewed",
+      "name": "P1 interaction visibility implemented and reviewed",
+      "required_predicates": [
+        {
+          "predicate_type": "artifact_status",
+          "target_ref": "artifact:implementation.operator-console-p1-interaction-visibility",
+          "expected": "implemented"
+        },
+        {
+          "predicate_type": "review_acceptance",
+          "target_ref": "artifact:review.operator-console-p1-interaction-visibility",
+          "expected": "accepted"
+        }
+      ],
+      "authority_boundary": "evaluation-template-only"
+    },
+    {
+      "gate_id": "gate:p2-readability-navigation-implemented-reviewed-previewed",
+      "name": "P2 readability/navigation implemented, reviewed, and previewed",
+      "required_predicates": [
+        {
+          "predicate_type": "artifact_status",
+          "target_ref": "artifact:implementation.operator-console-p2-readability",
+          "expected": "implemented"
+        },
+        {
+          "predicate_type": "review_acceptance",
+          "target_ref": "artifact:review.operator-console-p2-readability",
+          "expected": "accepted"
+        },
+        {
+          "predicate_type": "user_preview",
+          "target_ref": "preview:p2-readability-navigation",
+          "expected": "observed"
+        }
+      ],
+      "authority_boundary": "evaluation-template-only"
+    }
+  ],
+  "gate_evaluations": [
+    {
+      "evaluation_id": "evaluation:p0-implemented-and-reviewed",
+      "gate_id": "gate:p0-implemented-and-reviewed",
+      "observed_result": "passed",
+      "evaluated_predicates": [
+        {
+          "predicate_type": "artifact_status",
+          "target_ref": "artifact:implementation.operator-console-p0",
+          "expected": "implemented",
+          "observed": "implemented",
+          "result": "passed",
+          "evidence_refs": [
+            "artifact:implementation.operator-console-p0"
+          ]
+        },
+        {
+          "predicate_type": "review_acceptance",
+          "target_ref": "artifact:review.operator-console-p0",
+          "expected": "accepted",
+          "observed": "accepted",
+          "result": "passed",
+          "evidence_refs": [
+            "artifact:review.operator-console-p0"
+          ]
+        }
+      ],
+      "evidence_refs": [
+        "artifact:implementation.operator-console-p0",
+        "artifact:review.operator-console-p0"
+      ],
+      "evaluator_role": "ATHENA",
+      "source_artifact_ref": "artifact:review.operator-console-p0",
+      "observed_at": "20260711.103748Z",
+      "completion_authority_created": false,
+      "notes": [
+        "Candidate skeleton keeps representative gate evidence only."
+      ]
+    },
+    {
+      "evaluation_id": "evaluation:p1-interaction-visibility-implemented-reviewed",
+      "gate_id": "gate:p1-interaction-visibility-implemented-reviewed",
+      "observed_result": "passed",
+      "evaluated_predicates": [
+        {
+          "predicate_type": "artifact_status",
+          "target_ref": "artifact:implementation.operator-console-p1-interaction-visibility",
+          "expected": "implemented",
+          "observed": "implemented",
+          "result": "passed",
+          "evidence_refs": [
+            "artifact:implementation.operator-console-p1-interaction-visibility"
+          ]
+        },
+        {
+          "predicate_type": "review_acceptance",
+          "target_ref": "artifact:review.operator-console-p1-interaction-visibility",
+          "expected": "accepted",
+          "observed": "accepted",
+          "result": "passed",
+          "evidence_refs": [
+            "artifact:review.operator-console-p1-interaction-visibility"
+          ]
+        }
+      ],
+      "evidence_refs": [
+        "artifact:implementation.operator-console-p1-interaction-visibility",
+        "artifact:review.operator-console-p1-interaction-visibility"
+      ],
+      "evaluator_role": "ATHENA",
+      "source_artifact_ref": "artifact:review.operator-console-p1-interaction-visibility",
+      "observed_at": "20260711.103748Z",
+      "completion_authority_created": false,
+      "notes": [
+        "P1 preview/user inspection details are intentionally summarized through source review artifacts in this minimum skeleton."
+      ]
+    },
+    {
+      "evaluation_id": "evaluation:p2-readability-navigation-implemented-reviewed-previewed",
+      "gate_id": "gate:p2-readability-navigation-implemented-reviewed-previewed",
+      "observed_result": "passed",
+      "evaluated_predicates": [
+        {
+          "predicate_type": "artifact_status",
+          "target_ref": "artifact:implementation.operator-console-p2-readability",
+          "expected": "implemented",
+          "observed": "implemented",
+          "result": "passed",
+          "evidence_refs": [
+            "artifact:implementation.operator-console-p2-readability"
+          ]
+        },
+        {
+          "predicate_type": "review_acceptance",
+          "target_ref": "artifact:review.operator-console-p2-readability",
+          "expected": "accepted",
+          "observed": "accepted",
+          "result": "passed",
+          "evidence_refs": [
+            "artifact:review.operator-console-p2-readability"
+          ]
+        },
+        {
+          "predicate_type": "user_preview",
+          "target_ref": "preview:p2-readability-navigation",
+          "expected": "observed",
+          "observed": "observed",
+          "result": "passed",
+          "evidence_refs": [
+            "preview:p2-readability-navigation"
+          ]
+        }
+      ],
+      "evidence_refs": [
+        "artifact:implementation.operator-console-p2-readability",
+        "artifact:review.operator-console-p2-readability",
+        "preview:p2-readability-navigation"
+      ],
+      "evaluator_role": "ATHENA",
+      "source_artifact_ref": "artifact:review.operator-console-p2-readability",
+      "observed_at": "20260711.103748Z",
+      "completion_authority_created": false,
+      "notes": [
+        "Preview evidence is review evidence, not product activation authority."
+      ]
+    }
+  ],
+  "validation_evidence": [
+    {
+      "validation_id": "validation:p2.operator-console-package",
+      "source_report_ref": "artifact:review.operator-console-p2-readability",
+      "reported_command": "npm run typecheck && npm test && npm run build && npm audit --audit-level=moderate",
+      "working_directory": "src/typescript/projectkoios/ui/operator-console/",
+      "target_scope": "operator-console package",
+      "reported_result": "passed as reported by ATHENA review source artifact",
+      "status": "passed",
+      "limitations": [
+        "candidate skeleton does not rerun validation"
+      ],
+      "observed_at": "20260711.103748Z",
+      "reported_by_source_artifact": true
+    }
+  ],
+  "preview_evidence": [
+    {
+      "preview_id": "preview:p2-readability-navigation",
+      "source_report_ref": "artifact:review.operator-console-p2-readability",
+      "preview_command": "npm run preview -- --host 127.0.0.1",
+      "preview_url_or_method": "http://127.0.0.1:4173/",
+      "inspected_surface": "Operator Console static fixture UI",
+      "user_visible_question": "Can the user inspect readability/navigation affordances in the local browser preview?",
+      "observed_feedback_summary": "User inspected local preview; ATHENA accepted review evidence.",
+      "changed_scope": false,
+      "authority_boundary": "preview-evidence-only-not-product-activation"
+    }
+  ],
+  "process_links": [
+    {
+      "process_link_id": "process:aar.operator-console-readability-navigation",
+      "locator": "docs/AAR/aar.20260711.092524_operator-console-readability-navigation-fixture.md",
+      "link_type": "aar",
+      "owner_role": "VULCAN",
+      "authority_boundary": "process-provenance"
+    }
+  ],
+  "deferred_extensions": [
+    {
+      "extension_id": "extension:full-artifact-index",
+      "status": "deferred",
+      "reason": "Candidate skeleton intentionally uses representative artifacts plus one package manifest ref only to avoid quasi-bulk indexing."
+    },
+    {
+      "extension_id": "extension:dirty-tree-package-boundary",
+      "status": "deferred",
+      "reason": "Full closeout and packaging model is out of scope for first static record.",
+      "related_requirement": "R7"
+    },
+    {
+      "extension_id": "extension:schema-authority",
+      "status": "deferred",
+      "reason": "This example is a candidate shape, not docs/schemas authority."
+    },
+    {
+      "extension_id": "extension:storage-database-authority",
+      "status": "deferred",
+      "reason": "No storage/database adapter is authorized."
+    },
+    {
+      "extension_id": "extension:operator-console-ui-display",
+      "status": "deferred",
+      "reason": "Operator Console display of workflow-object records is a future slice."
+    }
+  ],
+  "open_questions": [
+    "Which additional artifacts, if any, should VULCAN include without turning the first record into a bulk index?",
+    "Should a later slice add a directory-summary package source ref, or is package.json sufficient for candidate-0?"
+  ]
+}

@@ -32,6 +32,13 @@
     "docs/architecture/architecture.workflow-object.md",
     "docs/reviews/architecture-intake.20260711.092400_workflow-object-aar-synthesis.md",
     "docs/reviews/architecture-review.20260711.093600_workflow-object-architecture-first-record.md",
+    "docs/plans/implementation-brief.20260711.102123_workflow-object-static-operator-console-record.md",
+    "docs/plans/schema-proposal.workflow-object.static-record.20260711.102743.md",
+    "docs/plans/example.workflow-object.operator-console-skeleton.20260711.103748.json",
+    "docs/plans/implementation-plan.20260711.103626_workflow-object-static-operator-console-record.md",
+    "docs/reviews/architecture-plan-review.20260711.104117_workflow-object-static-operator-console-record.md",
+    "docs/reviews/architecture-plan-review.20260711.104845_workflow-object-static-operator-console-record-revised.md",
+    "docs/plans/roadmap.20260711.102324_workflow-object-future-slices.md",
     "src/typescript/projectkoios/ui/operator-console/"
   ]
 }
@@ -43,7 +50,7 @@
 
 1. Operator Console P0 and P1 interaction visibility are implemented, user-previewed, ATHENA-reviewed/accepted, and reconciled into architecture as bootstrap-incubation as-built evidence.
 2. Operator Console readability/navigation fixture is implemented, VULCAN-validated, ATHENA-reviewed/accepted, and reconciled into architecture.
-3. USER selected review/accept for `docs/architecture/architecture.workflow-object.md`; ATHENA marked the first workflow-object architecture slice accepted and wrote `docs/reviews/architecture-review.20260711.093600_workflow-object-architecture-first-record.md`.
+3. VULCAN revised `docs/plans/implementation-plan.20260711.103626_workflow-object-static-operator-console-record.md`; ATHENA approved the revised plan in `docs/reviews/architecture-plan-review.20260711.104845_workflow-object-static-operator-console-record-revised.md` for USER/HERMES coding approval.
 
 ## Recently completed
 
@@ -75,12 +82,12 @@
 
 ## Waiting on
 
-- User/HERMES decision whether ATHENA should draft the workflow-object implementation brief for one static Operator Console P0/P1/P2 record.
-- User/HERMES decision to close/commit the accepted Operator Console bundle or select a new bounded slice.
+- USER/HERMES coding approval for VULCAN's `workflow-object-static-operator-console-record` plan, with ATHENA watchpoints.
+- User/HERMES decision to close/commit the accepted Operator Console/workflow-object architecture bundle or select another bounded slice.
 
 ## Recommended next action
 
-ATHENA can draft the implementation brief for one static Operator Console P0/P1/P2 workflow-object record if USER/HERMES wants to proceed. Operator Console P0/P1/P2 are accepted; if continuing UI work, select a new bounded slice.
+Route ATHENA's approve-with-watchpoints review of VULCAN's plan to USER/HERMES for coding approval. Operator Console P0/P1/P2 are accepted; if continuing UI work, select a new bounded slice.
 
 ## Do not do yet
 

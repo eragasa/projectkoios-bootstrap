@@ -3,7 +3,7 @@
   "title": "Workflow Object Architecture",
   "artifact_type": "architecture-note",
   "status": "accepted",
-  "datetime": "20260711.093600Z",
+  "datetime": "20260711.101744Z",
   "acting_as": "ATHENA",
   "repository": "projectkoios-bootstrap",
   "scope": "bootstrap workflow-object first record architecture",
@@ -19,6 +19,8 @@
 ## Status
 
 Accepted for the first workflow-object architecture slice by USER option 1 on `20260711.093600Z`.
+
+Amended on `20260711.101744Z` to record the document/artifact versus Petri-net place/token distinction after KOIOS, VULCAN, and HERMES consultation.
 
 This document promotes selected KOIOS AAR-synthesis requirements into ATHENA architecture language. It does not authorize implementation, storage, schema, CLI, UI, database, or live orchestration work.
 
@@ -49,6 +51,70 @@ A workflow object is a durable summary/projection of one bounded work item as it
 
 It exists to make cross-session workflow state inspectable without relying on hidden chat history or terminal-local context.
 
+## DataObject and ActionObject.method convention
+
+Workflow-object architecture uses DataObject names for durable JSON-compatible records and `ActionObject.method(...)` names for behavior.
+
+DataObjects contain record data only. ActionObjects may produce, validate, evaluate, serialize, or project DataObjects. The first static workflow-object slice may instantiate DataObjects manually and validate them; it does not authorize persistent storage, runtime orchestration, UI display, Petri-net execution, or reusable framework code.
+
+Core DataObject vocabulary:
+
+- `WorkflowObjectRecord` — top-level static projection/index record.
+- `WorkItemRecord` — bounded work item identity/status record.
+- `ArtifactRecord` — source artifact reference/provenance/status record, separate from documents and Petri-net places.
+- `ContentRef` — hash/ref/availability record.
+- `AuthorityBoundaryRecord` — source-authority and non-authority boundary record.
+- `WorkflowTokenRecord` — projection-only token record referencing work items/artifacts; not a live runtime token.
+- `WorkflowPlaceRecord` — workflow/lifecycle place vocabulary record; not a document/artifact.
+- `TransitionGateRecord` — inspectable gate predicate definition record.
+- `GatePredicateRecord` — required or observed predicate record.
+- `GateEvaluationRecord` — observed gate outcome record.
+- `ValidationEvidenceRecord` — reported validation evidence record.
+- `PreviewEvidenceRecord` — user-visible preview evidence record, not activation authority.
+- `ProcessLinkRecord` — AAR/process provenance link record.
+- `DeferredExtensionRecord` — explicit deferred scope record.
+
+Behavior vocabulary should be expressed as ActionObject methods, for example:
+
+- `WorkflowObjectRecordBuilder.buildFromSourceArtifacts(sourceRefs) -> WorkflowObjectRecord`
+- `ArtifactRefCollector.collectArtifactRecords(sourceRefs) -> ArtifactRecord[]`
+- `ContentRefHasher.hashFile(locator) -> ContentRef`
+- `ContentRefHasher.summarizeDirectory(locator) -> ContentRef`
+- `TransitionGateEvaluator.evaluate(gate, artifactRecords, evidenceRecords) -> GateEvaluationRecord`
+- `WorkflowObjectValidator.validateRecord(record) -> ValidationResultRecord`
+- `WorkflowObjectProjector.projectToPetriNetAdapterPayload(record) -> PetriNetAdapterPayload`
+- `WorkflowObjectProjector.projectToOperatorConsoleReadModel(record) -> OperatorConsoleWorkflowReadModel`
+- `WorkflowObjectSerializer.writeJson(record, locator)` and `WorkflowObjectLoader.loadJson(locator)`
+
+These names are architecture vocabulary unless separately implemented under an approved VULCAN plan.
+
+## Artifact records, workflow states, and token references
+
+A document or other durable source artifact is not itself a Petri-net place/node.
+
+Workflow-object records should preserve a separation between durable artifacts and workflow mechanics:
+
+- A durable document or artifact is modeled as an `ArtifactRecord` DataObject with identity, locator, type, status or lifecycle evidence, provenance, owner/domain, version/ref/hash when useful, and authority boundary.
+- A `WorkflowPlaceRecord` DataObject represents a workflow/process state such as `brief-ready`, `implementation-paused`, `review-needed`, `accepted`, or `captured`; it does not represent the document file itself.
+- A `WorkflowTokenRecord` DataObject represents a bounded work item or workflow instance and carries references to artifact records or artifact versions; it is not a live `PetriNetToken`.
+- A `TransitionGateRecord` describes required predicates as data; `TransitionGateEvaluator.evaluate(...)` is the behavior that evaluates artifact status, provenance, validation evidence, review records, preview evidence, approvals, or handoff evidence into `GateEvaluationRecord` DataObjects.
+- A workflow object is the projection/index that ties artifact records, workflow states, token references, transition gates, and evidence together. It does not create source authority for the referenced artifacts.
+
+The first implementation slice should treat `ArtifactRecord`, `WorkflowTokenRecord`, `WorkflowPlaceRecord`, `TransitionGateRecord`, and `GateEvaluationRecord` as architecture vocabulary unless a later approved plan defines concrete schema or code names. Existing documents are not thereby transformed into a canonical record store.
+
+Places should not be described as containing documents. Prefer: places describe workflow states; tokens reference artifact records or artifact versions.
+
+## Relationship to workflow and Petri-net architecture
+
+This note defines the document/artifact projection layer for workflow-object records. It does not change Petri-net runtime semantics or product/domain Petri-net authority.
+
+Related workflow and Petri-net architecture surfaces include:
+
+- `docs/architecture/architecture.workflows.00.md`
+- `docs/architecture/architecture.petrinet.00.md`
+
+Where those documents define accepted workflow-state or execution vocabulary, workflow-object records may reference that vocabulary. This architecture only states how workflow-object records should keep artifact authority separate from workflow-state projection.
+
 ## Non-purpose
 
 A workflow object is not:
@@ -61,7 +127,10 @@ A workflow object is not:
 - a UI/operator-console feature;
 - a bulk historical AAR backfill requirement;
 - a cross-repo product authority mechanism;
-- a skill lifecycle implementation.
+- a skill lifecycle implementation;
+- a rule that makes Petri-net places authoritative over documents;
+- a rule that makes token references supersede artifact-domain authority;
+- an automatic HERMES/user completion decision when a gate evaluation is recorded.
 
 A workflow object must point back to source artifacts rather than absorbing their authority.
 
@@ -129,22 +198,28 @@ The record should include:
 - status;
 - non-authority statement.
 
-### Artifact nodes
+### ArtifactRecord DataObjects
 
-Each artifact node should include:
+The first record may use `artifact node` language for graph/provenance visualization, but implementation-facing vocabulary should prefer `ArtifactRecord` or `ArtifactRef` to avoid confusion with Petri-net nodes/places.
 
-- path or locator;
+Each artifact record should include:
+
+- artifact id or path/locator;
 - artifact type;
 - owner role/domain;
-- status;
+- status or lifecycle value with source/evidence for the assertion;
 - authority boundary;
-- source hash when useful and cheap;
+- source hash, version, or ref when useful and cheap, and required when the artifact is generated, fixture-backed, or used as immutable review evidence unless explicitly unavailable;
+- provenance/source links;
 - created/updated timestamp when known;
-- links to prior/consumed artifacts when relevant.
+- links to prior/consumed artifacts when relevant;
+- produced-by or consumed-by transition references when useful.
 
-Artifact nodes represent source artifacts; they do not replace those artifacts.
+Artifact records represent source artifacts; they do not replace those artifacts. They are inputs and references for workflow tokens/gates, not Petri-net places.
 
-### Transition/gate records
+### TransitionGateRecord and GateEvaluationRecord DataObjects
+
+`TransitionGateRecord` describes required predicates as data. `GateEvaluationRecord` records observed predicate outcomes as data. The behavior that checks predicates belongs to `TransitionGateEvaluator.evaluate(...)`.
 
 A transition/gate record should include:
 
@@ -156,6 +231,17 @@ A transition/gate record should include:
 - pause/blocker state when applicable;
 - timestamp or observed ordering;
 - notes about scope boundaries.
+
+A `GateEvaluationRecord` should include:
+
+- gate id or name;
+- required artifact statuses, owner roles, evidence types, or approval predicates;
+- observed result such as passed, failed, warning, not-applicable, or not-yet-evaluated;
+- evidence references;
+- evaluator or owner role;
+- timestamp or source artifact.
+
+A gate pass/fail record is evidence. It is not automatically a completion decision unless the relevant HERMES/user orchestration authority or domain owner records that decision.
 
 Initial transition vocabulary:
 
@@ -203,7 +289,7 @@ Initial states:
 
 The first record should only use states evidenced by source artifacts.
 
-### Validation evidence
+### ValidationEvidenceRecord DataObjects
 
 Validation evidence should include:
 
@@ -218,7 +304,7 @@ Validation evidence should include:
 
 Implementation-level command details remain VULCAN-owned when produced by implementation reports.
 
-### Preview evidence
+### PreviewEvidenceRecord DataObjects
 
 For UI/operator-facing slices, preview evidence should include:
 
@@ -282,7 +368,7 @@ Dependency/tooling decisions should record:
 - audit/security findings;
 - whether the choice is implementation convenience, architecture baseline, or product decision.
 
-### Process-capture links
+### ProcessLinkRecord DataObjects
 
 The record may link to KOIOS process-capture observations and AARs.
 
@@ -299,6 +385,8 @@ The architecture note does not inline all 298 AAR sources. Representative eviden
 | Theme | Requirements | Representative AARs |
 |---|---|---|
 | Durable state and source packets | R1-R3 | `aar.20260702.020601_canonical-workspace-state-protocol.md`, `aar.20260705.111255_workspace-adr-consolidation.md`, `aar.20260708.041331_template-representation-vulcan-handoff.md` |
+| Artifact/version/provenance record distinction | R1-R4, R9 | `aar.20260711.035759_adr-json-database-one-adr-pilot.md`, `aar.20260711.065704_json-schemas-adr-conformance.md`, `aar.20260711.081405_operator-console-review-one-proposal-fixture.md` |
+| Places/tokens/gates workflow-state framing | R2-R5 | `aar.20260705.102506_workflow-petri-net-executor-first-slice.md`, `aar.20260705.173808_petrinet-followups.md`, `aar.20260706.045501_workflow-adapter-contract-hardening.md` |
 | Authority guard and non-authority markers | R4, R8, R14 | `aar.20260701.014145_promotion-review-routing.md`, `aar.20260702.023544_koios-comment-attribution-correction.md`, `aar.20260705.142149_petrinet-separation-adr-remediation.md` |
 | Approval, pause, and ephemeral-message promotion | R5, R11 | `aar.20260702.205545_prompt-iterate-vulcan-blocker-handling.md`, `aar.20260709.014124_adr-json-database-pilot-brief.md`, `aar.20260706.045501_workflow-adapter-contract-hardening.md` |
 | Validation evidence | R6 | `aar.20260704.193035_python-policy-validator-first-slice.md`, `aar.20260705.173808_petrinet-followups.md`, `aar.20260711.081405_operator-console-review-one-proposal-fixture.md` |
@@ -354,3 +442,4 @@ This architecture slice is complete when:
 ## Review record
 
 - `docs/reviews/architecture-review.20260711.093600_workflow-object-architecture-first-record.md`
+- `20260711.101744Z` amendment: USER asked whether documents are Petri-net nodes or documents have status/gates; KOIOS, VULCAN, and HERMES agreed documents/artifacts are durable records referenced by tokens and evaluated by gates, while Petri-net places represent workflow states.

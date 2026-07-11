@@ -7,11 +7,16 @@
   "acting_as": "VULCAN",
   "repository": "projectkoios-bootstrap",
   "slice_name": "operator-console-preview-cli",
-  "source_context": "user feedback after preview command/path friction"
+  "source_context": "user feedback after preview command/path friction",
+  "source_plan": "docs/plans/implementation-plan.20260711.094447_operator-console-preview-cli.md"
 }
 ```
 
 # Implementation report 20260711.093303: Operator Console preview CLI
+
+## Formalization note
+
+This convenience fix was implemented directly after user feedback and then formalized as bounded slice `operator-console-preview-cli` in `docs/plans/implementation-plan.20260711.094447_operator-console-preview-cli.md`.
 
 ## Summary
 

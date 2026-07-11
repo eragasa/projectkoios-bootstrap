@@ -2,8 +2,8 @@
 {
   "title": "Athena workspace state",
   "artifact_type": "workspace-state",
-  "status": "workflow-object-architecture-accepted",
-  "datetime": "20260711.093600Z",
+  "status": "workflow-object-static-record-revised-plan-athena-approved",
+  "datetime": "20260711.104845Z",
   "acting_as": "ATHENA",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/athena/",
@@ -93,12 +93,26 @@
 - USER/HERMES directed ATHENA to begin `workflow-object-architecture-first-record`. ATHENA created `docs/architecture/architecture.workflow-object.md` from KOIOS AAR synthesis/intake and indexed it in `docs/architecture/architecture.00.md`. The document defines workflow object purpose/non-purpose, requirement triage, first minimal record vocabulary, Operator Console P0/P1 as proving case, and implementation deferral pending separate plan/approval.
 - KOIOS reviewed ATHENA's workflow-object intake and requested provenance/authority clarifications. ATHENA incorporated them into `docs/architecture/architecture.workflow-object.md`: prominent non-authority/source-domain boundary, 298-AAR index caveat, Operator Console proving-case rationale, minimal R7/R9/R13 hooks, and representative evidence mapping.
 - USER selected review/accept for the workflow-object architecture direction. ATHENA marked `docs/architecture/architecture.workflow-object.md` accepted and wrote `docs/reviews/architecture-review.20260711.093600_workflow-object-architecture-first-record.md`.
+- USER asked whether documents are Petri-net nodes or whether documents have status/gates. KOIOS, VULCAN, and HERMES agreed: documents/artifacts are durable records with status/provenance/version/authority; Petri-net places are workflow states; tokens reference artifact versions; gates evaluate evidence/status; workflow object is projection/index, not source or completion authority.
+- ATHENA amended `docs/architecture/architecture.workflow-object.md` with that separation model. KOIOS completed focused review approve-with-watchpoints; ATHENA incorporated KOIOS wording tightenings around status source/evidence and required hashes/refs for generated, fixture-backed, or immutable review evidence.
+- USER/HERMES directed ATHENA to draft `workflow-object-static-operator-console-record-brief`. ATHENA wrote `docs/plans/implementation-brief.20260711.102123_workflow-object-static-operator-console-record.md` for VULCAN planning.
+- USER directed ATHENA to draft future workflow-object slices. ATHENA wrote `docs/plans/roadmap.20260711.102324_workflow-object-future-slices.md` with candidate slices for validator, second static record, vocabulary consolidation, schema proposal, manifest, Petri-net projection experiment, Operator Console display, handoff packet integration, and storage decision intake.
+- USER directed ATHENA to settle workflow-object model with KOIOS down to schema and JSON. KOIOS recommended a concrete candidate static JSON record shape without creating `docs/schemas/` authority. ATHENA wrote `docs/plans/schema-proposal.workflow-object.static-record.20260711.102743.md` and updated the Slice 0 brief/roadmap to require `dev/workflow-objects/operator-console-bootstrap-bundle.workflow-object.json` using the candidate shape.
+- USER requested VULCAN feedback on the candidate JSON shape. VULCAN found it implementable with minor consistency fixes. ATHENA incorporated VULCAN feedback: machine-visible `shape_authority`, `source_architecture_refs`, directory-summary content-ref guidance, explicit unavailable content-ref rule, status `source_report_ref`, owner-domain vocabulary, authority-boundary value consistency, projection marker consistency, and a test-only local validator recommendation.
+- USER clarified the workflow-object JSON should also map onto adapter libraries. ATHENA added adapter-library mapping guidance to `docs/plans/schema-proposal.workflow-object.static-record.20260711.102743.md` and added a future adapter-library projection contract slice to `docs/plans/roadmap.20260711.102324_workflow-object-future-slices.md`.
+- USER asked ATHENA to get VULCAN guidance on changing vocabulary to use DataObject / ActionObject.method in the architecture document. VULCAN recommended DataObject names for static records and ActionObject.method names for behavior. ATHENA updated `docs/architecture/architecture.workflow-object.md` and `docs/plans/schema-proposal.workflow-object.static-record.20260711.102743.md` accordingly.
+- USER/HERMES accepted the workflow-object architecture/brief/schema-candidate package for the next gate. HERMES routed VULCAN to plan exactly one static JSON workflow-object record with a small test-only validator.
+- KOIOS raised a pre-coding concern that prose shape alone could cause VULCAN to invent details or let the artifact list balloon into a quasi-bulk index. ATHENA added tiny candidate example skeleton `docs/plans/example.workflow-object.operator-console-skeleton.20260711.103748.json` and updated the Slice 0 brief/schema proposal to treat it as a non-authoritative representative minimum shape.
+- VULCAN produced `docs/plans/implementation-plan.20260711.103626_workflow-object-static-operator-console-record.md`. ATHENA reviewed it and wrote `docs/reviews/architecture-plan-review.20260711.104117_workflow-object-static-operator-console-record.md`, verdict approve-with-watchpoints. ATHENA found the plan conforms and the skeleton resolves the concrete-shape gate; watchpoints preserve representative/minimal scope, test-only validator boundary, no schema/storage/CLI/UI/Petri-net runtime/live adapter/bulk generation, and `completion_authority_created: false` gate evidence.
+- KOIOS completed full package review and returned approve-with-watchpoints. ATHENA incorporated KOIOS's two pre-coding clarifications: candidate-0 now requires exactly one minimal package/source ref (`src/typescript/projectkoios/ui/operator-console/package.json`) while deferring broader package/source indexing, and the required non-authority marker set is reconciled between brief/schema/skeleton. ATHENA also cleaned duplicate authority-boundary vocabulary and clarified status evidence refs.
+- VULCAN revised `docs/plans/implementation-plan.20260711.103626_workflow-object-static-operator-console-record.md` to incorporate ATHENA/KOIOS/HERMES watchpoints. ATHENA reviewed the revised plan and wrote `docs/reviews/architecture-plan-review.20260711.104845_workflow-object-static-operator-console-record-revised.md`, verdict approved for USER/HERMES coding approval.
 - VULCAN implemented `operator-console-readability-navigation-fixture`, reported `docs/implementation/operator-console-readability-navigation-fixture.20260711.092524.md`, and previewed it at `http://127.0.0.1:4173/`. ATHENA reviewed and accepted it, wrote `docs/reviews/architecture-conformance.20260711.093009_operator-console-readability-navigation-fixture.md`, reran validation, and reconciled as-built state into `docs/architecture/architecture.operator-console.md`.
 
 ## Open questions
 
-- Whether to proceed to a workflow-object implementation brief for one static Operator Console P0/P1/P2 record.
-- Whether to close/commit the accepted Operator Console P0/P1/P2 bundle or select another bounded UI slice.
+- USER/HERMES coding approval decision for VULCAN's revised `docs/plans/implementation-plan.20260711.103626_workflow-object-static-operator-console-record.md`, using ATHENA review `docs/reviews/architecture-plan-review.20260711.104845_workflow-object-static-operator-console-record-revised.md`.
+- USER/HERMES review of future-slice roadmap if desired; roadmap is advisory and does not authorize later slices.
+- Whether to close/commit the accepted Operator Console P0/P1/P2 plus workflow-object architecture/brief bundle or select another bounded UI slice.
 - When to extract `src/typescript/projectkoios/ui/operator-console/` to `projectkoios/ui/operator-console/` and promote product/mothership authority.
 - Which one-document active conformance target should follow `adr.json-schemas`, if any.
 - Which recurring ADR schema discomforts, if any, become concrete enough to justify later schema revision after conformance work.
@@ -107,7 +121,7 @@
 ## Next transition
 
 - Owner: HERMES/USER.
-- Recommended next state: ATHENA should draft a workflow-object implementation brief for a single static Operator Console P0/P1/P2 record if USER/HERMES wants to proceed. Operator Console UI incubation slices P0/P1/P2 are accepted; any additional UI work should be a new bounded slice.
+- Recommended next state: USER/HERMES may approve VULCAN coding for `workflow-object-static-operator-console-record` under the revised plan. Operator Console UI incubation slices P0/P1/P2 are accepted; any additional UI work should be a new bounded slice.
 - Operator Console P0/P1/P2 accepted boundaries: bootstrap incubation only; package-local lockfile only; behavior owned by ActionObject-style classes with data in typed interfaces/constants; `docs/policies/typescript-coding.md` remains draft/non-controlling; fixtures are static/stale-by-design; readability/navigation affordances are local browser inspection helpers only; no backend, live reads, messaging capability, activation/mutation, Petri-net graph editor, product UI authority, or bootstrap production-backend claim.
 - ADR conformance work remains available as a separate track: future slices should use updated `docs/schemas/adr.schema.json` without `routing`, preserve sidecar provenance, and avoid schema/lifecycle/workflow/storage-authority redesign unless repeated conformance pressure justifies it.
 
