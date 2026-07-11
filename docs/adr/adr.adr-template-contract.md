@@ -4,6 +4,18 @@
 
 Accepted
 
+## Source disposition
+
+HERMES source-disposition decision `docs/reviews/hermes-decision.20260711.183303_adr-template-contract-source-disposition.md` preserves this ADR as legacy/source provenance.
+
+Current ADR template/schema contract authority is:
+
+```text
+docs/adr/adr.adr-template-schema-contract.md
+```
+
+This disposition does not rename, move, archive, delete, split, normalize status casing, convert to JSON authority, or mutate schema files. It preserves the observed `Accepted` status/casing as historical provenance while preventing this older mixed contract from being treated as the current template/schema authority.
+
 ## Context
 
 Origin: user request

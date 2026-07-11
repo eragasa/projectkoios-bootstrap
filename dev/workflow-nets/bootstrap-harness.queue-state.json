@@ -20,13 +20,15 @@
   "completed_items": [
     {
       "name": "adr-template-schema-contract-successor-draft-slice-11",
-      "state": "accepted-committed-pending",
+      "state": "accepted-committed",
       "artifact_refs": [
         "docs/adr/adr.adr-template-schema-contract.md",
         "docs/reviews/hermes-acceptance.20260711.182653_adr-template-schema-contract-successor-draft-slice-11.md",
-        "docs/reviews/hermes-decision.20260711.181920_adr-template-schema-contract-successor-draft-slice-11.md"
+        "docs/reviews/hermes-decision.20260711.181920_adr-template-schema-contract-successor-draft-slice-11.md",
+        "docs/reviews/hermes-decision.20260711.183303_adr-template-contract-source-disposition.md"
       ],
-      "why": "HERMES/USER accepted the ATHENA-authored successor ADR; source-disposition for docs/adr/adr.adr-template-contract.md remains a separate ADR-track decision."
+      "why": "HERMES/USER accepted the ATHENA-authored successor ADR; source-disposition for docs/adr/adr.adr-template-contract.md was handled by HERMES decision 20260711.183303.",
+      "commit": "813478f5"
     },
     {
       "name": "petrinet-workflow-queue-state-slice-4",
@@ -89,5 +91,5 @@
     }
   ],
   "deferred_items": [],
-  "next_decision_needed": "Decide source disposition for docs/adr/adr.adr-template-contract.md or explicitly activate the next queued item."
+  "next_decision_needed": "Explicitly activate the next queued item or define another ADR-track slice."
 }

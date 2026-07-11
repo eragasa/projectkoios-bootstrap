@@ -18,8 +18,8 @@
 
 ## Current priority stack
 
-1. Commit Slice 11 successor ADR acceptance and queue/status reconciliation.
-2. Continue ADR-track source-disposition handling for `docs/adr/adr.adr-template-contract.md` unless USER/HERMES explicitly reprioritizes.
+1. Commit ADR template/schema old-source disposition.
+2. Keep `docs/adr/adr.adr-template-schema-contract.md` as current ADR template/schema contract authority.
 3. Preserve `pi-skill-determinism-slice-0` as queued unless USER/HERMES explicitly activates it.
 
 ## Active slice
@@ -82,7 +82,19 @@ dev/workflow-nets/bootstrap-harness.queue-state.json
 dev/workflow-nets/bootstrap-harness.workflow-net.json
 ```
 
-Current workflow status reports `active_slice=none`; queue reports active none and next decision needed: source disposition for `docs/adr/adr.adr-template-contract.md` or explicit activation of another queued item.
+Current workflow status reports `active_slice=none`; queue reports active none and next decision needed: explicitly activate the next queued item or define another ADR-track slice.
+
+Source disposition recorded:
+
+```text
+docs/reviews/hermes-decision.20260711.183303_adr-template-contract-source-disposition.md
+```
+
+Old source updated with disposition note:
+
+```text
+docs/adr/adr.adr-template-contract.md
+```
 
 ## Role-boundary correction
 
@@ -90,9 +102,9 @@ The successor ADR was created by the ATHENA session after HERMES routing and USE
 
 ## Waiting on
 
-- Commit of Slice 11 acceptance and workflow queue/status reconciliation.
-- Later USER/HERMES decision for source disposition of `docs/adr/adr.adr-template-contract.md`.
+- Commit of old-source disposition decision and queue/status update.
+- Later USER/HERMES explicit activation of next queued item or definition of another slice.
 
 ## Exit criteria
 
-Hermes state is stable when the Slice 11 successor ADR acceptance and queue/status reconciliation are committed, with old-source disposition explicitly unmade.
+Hermes state is stable when the ADR template/schema source-disposition decision is committed and no active queue item remains.

@@ -18,7 +18,7 @@
 
 ## Current focus
 
-Slice 11 successor ADR has been accepted; next ADR-track decision is source disposition for `docs/adr/adr.adr-template-contract.md`.
+ADR template/schema repair track source disposition is implemented; next decision is explicit activation of the next queued item or definition of another ADR-track slice.
 
 ## Current validated state
 
@@ -55,36 +55,42 @@ Slice 11 successor ADR has been accepted; next ADR-track decision is source disp
 - HERMES recorded acceptance:
   - `docs/reviews/hermes-acceptance.20260711.182653_adr-template-schema-contract-successor-draft-slice-11.md`
 - HERMES cleared the active queue item for Slice 11 and reconciled workflow status to `active_slice=none`.
+- HERMES applied source disposition for `docs/adr/adr.adr-template-contract.md`:
+  - added a bounded source-disposition note to the old source;
+  - recorded `docs/reviews/hermes-decision.20260711.183303_adr-template-contract-source-disposition.md`;
+  - preserved old-source `Accepted` status/casing;
+  - identified `docs/adr/adr.adr-template-schema-contract.md` as current authority.
 
 ## Current coherent state
 
-Uncommitted acceptance/queue reconciliation work:
+Uncommitted source-disposition work:
 
 ```text
-docs/adr/adr.adr-template-schema-contract.md
-docs/reviews/hermes-acceptance.20260711.182653_adr-template-schema-contract-successor-draft-slice-11.md
+docs/adr/adr.adr-template-contract.md
+docs/reviews/hermes-decision.20260711.183303_adr-template-contract-source-disposition.md
 dev/workflow-nets/bootstrap-harness.queue-state.json
 dev/workflow-nets/bootstrap-harness.workflow-net.json
 workspaces/hermes/state.md
 workspaces/hermes/active.md
 ```
 
-Previously packaged Slice 11 draft-only commit:
+Committed successor acceptance:
 
 ```text
-026147dd Package ADR template schema successor draft
+813478f5 Accept ADR template schema successor
 ```
 
-The workflow fixtures now show no active queue item and `active_slice=none`; the next decision remains user-gated.
+The workflow fixtures show no active queue item and `active_slice=none`; `next_decision_needed` is explicit activation of the next queued item or definition of another ADR-track slice.
 
 ## Active boundaries
 
-The successor ADR is accepted as the current ADR template/schema contract. This acceptance does not edit `docs/adr/adr.adr-template-contract.md`, edit `docs/schemas/`, change old-source status or casing, supersede the old source, migrate records, replace generated projections, create database/storage authority, or cut over JSON authority.
+The old source is preserved as legacy/source provenance with a disposition note. This does not rename, move, archive, delete, split, normalize status casing, edit schemas, migrate records, replace generated projections, create database/storage authority, or cut over JSON authority.
 
 ## Current blockers
 
-- USER/HERMES decision is required for source disposition of `docs/adr/adr.adr-template-contract.md` or explicit activation of another queued item.
+- No ADR template/schema repair blocker remains after source-disposition commit.
+- USER/HERMES decision is still required before activating `pi-skill-determinism-slice-0` or defining another slice.
 
 ## Next owner
 
-HERMES_USER for choosing the next transition: continue ADR source-disposition handling or explicitly activate another queued item.
+HERMES_USER for explicit activation of the next queued item or definition of another ADR-track slice.
