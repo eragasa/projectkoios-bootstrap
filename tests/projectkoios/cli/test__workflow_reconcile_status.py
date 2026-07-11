@@ -8,7 +8,7 @@ import sys
 import pytest
 
 from projectkoios.cli.main import main
-from projectkoios.cli.workflow import WorkflowStatusReconciliationResult, WorkflowStatusReconciler
+from projectkoios.workflow.fixtures import WorkflowStatusReconciliationResult, WorkflowStatusReconciler
 
 
 def test__workflow_reconcile_status__dry_run_prints_summary_without_writing(capsys: pytest.CaptureFixture[str], monkeypatch: pytest.MonkeyPatch) -> None:
@@ -47,6 +47,8 @@ def test__WorkflowStatusReconciler__reconcile__writes_status_from_queue_active_n
     status_path: Path = copied_status_fixture(tmp_path)
     # Queue fixture is copied and remains read-only source state.
     queue_path: Path = copied_queue_fixture(tmp_path)
+    # Temp fixture is cleared so this test covers explicit no-active reconciliation behavior.
+    clear_active_item(queue_path)
     # Reconciler performs the fixture-only status update.
     reconciler: WorkflowStatusReconciler = WorkflowStatusReconciler()
 
@@ -147,6 +149,19 @@ def copied_queue_fixture(tmp_path: Path) -> Path:
     destination_path: Path = tmp_path / "bootstrap-harness.queue-state.json"
     shutil.copyfile(source_path, destination_path)
     return destination_path
+
+
+def clear_active_item(fixture_path: Path) -> None:
+    """Clear active item in a copied queue fixture.
+
+    Args:
+        fixture_path: Temporary queue fixture path to modify.
+    """
+    # Fixture copy is normalized to the no-active state needed by reconciliation behavior tests.
+    fixture_data: dict[str, object] = json.loads(fixture_path.read_text(encoding="utf-8"))
+    fixture_data["active_item"] = None
+    fixture_path.write_text(json.dumps(fixture_data, indent=2) + "\n", encoding="utf-8")
+
 
 
 def status_token_color(status_data: dict[str, object]) -> dict[str, object]:

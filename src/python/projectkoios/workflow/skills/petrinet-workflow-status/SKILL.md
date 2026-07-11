@@ -38,9 +38,11 @@ This skill consumes the existing read-only status command. It does not create a 
    - recommendation: <one sentence>
    ```
 
-4. If `user decision required: yes`, stop and ask or await approval unless the user explicitly delegated the next action.
+4. If `user decision required: yes`, treat it as a workflow-state gate only. Stop before activating queued work, firing transitions, changing workflow fixtures, or choosing a next workflow slice. Do not stop unrelated user-delegated implementation, documentation, validation, review, or investigation work merely because the static workflow fixture is waiting on a decision.
 
-5. If the command fails or is unavailable, report the failure as an inspectability gap and do not invent an active workflow, token/place, enabled transition, or recommendation.
+5. If the current user request explicitly delegates a non-workflow-state task, continue that task after reporting the observed workflow status in one concise sentence.
+
+6. If the command fails or is unavailable, report the failure as an inspectability gap and do not invent an active workflow, token/place, enabled transition, or recommendation.
 
 ## Required boundaries
 
@@ -54,4 +56,4 @@ This skill consumes the existing read-only status command. It does not create a 
 
 ## Recommendation guidance
 
-The recommendation must be one clear sentence grounded in the observed status. For example, if user decision is required, recommend asking the user to approve or choose the next bounded workflow action. If no decision is required, recommend the next inspectable action only within the user's current request.
+The recommendation must be one clear sentence grounded in the observed status and scoped to the user's current request. If user decision is required, recommend asking the user to approve or choose the next bounded workflow action only when the user is asking to advance workflow state. For ordinary delegated work, state that the workflow fixture is decision-gated but does not block the requested non-workflow-state task.

@@ -6,7 +6,7 @@ import sys
 import pytest
 
 from projectkoios.cli.main import main
-from projectkoios.cli.workflow import WorkflowQueueStateFixture, WorkflowQueueStateFixtureLoader, WorkflowQueueStateReporter
+from projectkoios.workflow.fixtures import WorkflowQueueItem, WorkflowQueueStateFixture, WorkflowQueueStateFixtureLoader, WorkflowQueueStateReporter
 
 
 def test__workflow_queue__prints_static_queue_state(capsys: pytest.CaptureFixture[str], monkeypatch: pytest.MonkeyPatch) -> None:
@@ -39,7 +39,7 @@ def test__workflow_queue__prints_static_queue_state(capsys: pytest.CaptureFixtur
     assert "implementation-brief.20260711.121000_agent-skills-workflow-status-slice-0.md" in output
     assert "deferred:" in output
     assert "next decision needed:" in output
-    assert "do not activate queued" in output
+    assert "activate adr-schema-record-envelope-architecture-slice-14" in output
 
 
 def test__WorkflowQueueStateFixtureLoader__loads_static_fixture() -> None:
@@ -52,16 +52,17 @@ def test__WorkflowQueueStateFixtureLoader__loads_static_fixture() -> None:
     assert fixture.queue_id == "bootstrap-harness.queue-state"
     assert fixture.surface == "projectkoios.workflow.queue_state"
     assert fixture.status == "static-read-only-fixture"
-    assert fixture.active_item is not None
-    assert fixture.active_item.name == "adr-schema-base-source-disposition-planning-slice-12"
+    assert fixture.active_item is None
     assert fixture.queued_items[0].name == "pi-skill-determinism-slice-0"
     assert fixture.queued_items[0].state == "queued"
-    assert fixture.completed_items[0].name == "adr-template-schema-contract-successor-draft-slice-11"
-    assert fixture.completed_items[0].state == "accepted-committed"
-    assert fixture.completed_items[1].name == "petrinet-workflow-queue-state-slice-4"
-    assert fixture.completed_items[1].commit == "5f209114"
-    assert fixture.completed_items[2].commit == "b4de9c64"
-    assert fixture.completed_items[3].commit == "ed9110b9"
+    # Completed items are keyed by name so fixture queue order changes do not break this loader contract test.
+    completed_items_by_name: dict[str, WorkflowQueueItem] = {item.name: item for item in fixture.completed_items}
+    assert completed_items_by_name["adr-schema-base-architecture-extraction-planning-slice-13"].state == "accepted-committed-pending"
+    assert completed_items_by_name["adr-schema-base-source-disposition-planning-slice-12"].state == "accepted-committed"
+    assert completed_items_by_name["adr-template-schema-contract-successor-draft-slice-11"].state == "accepted-committed"
+    assert completed_items_by_name["petrinet-workflow-queue-state-slice-4"].commit == "5f209114"
+    assert completed_items_by_name["petrinet-workflow-interactive-control-skill-slice-3"].commit == "b4de9c64"
+    assert completed_items_by_name["vulcan-interactive-control-state-fix"].commit == "ed9110b9"
     assert len(fixture.superseded_items) == 4
     assert fixture.deferred_items == ()
 

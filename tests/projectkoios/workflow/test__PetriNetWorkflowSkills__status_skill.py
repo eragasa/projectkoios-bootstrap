@@ -32,7 +32,7 @@ def test__PetriNetWorkflowSkills__manifest_lists_status_skill() -> None:
 
 
 def test__PetriNetWorkflowSkills__status_skill_contains_required_instructions() -> None:
-    """Validate the status skill contains the required command, report fields, and stop rule."""
+    """Validate the status skill contains the required command, report fields, and workflow-state gate rule."""
     # Skill path is the manifest-listed status skill file.
     skill_path: Path = Path("src/python/projectkoios/workflow/skills/petrinet-workflow-status/SKILL.md")
     # Skill text is inspected for required frontmatter and operating instructions.
@@ -51,7 +51,9 @@ def test__PetriNetWorkflowSkills__status_skill_contains_required_instructions() 
     assert "- enabled transitions: <transition list>" in skill_text
     assert "- user decision required: yes/no" in skill_text
     assert "- recommendation: <one sentence>" in skill_text
-    assert "If `user decision required: yes`, stop and ask or await approval" in skill_text
+    assert "treat it as a workflow-state gate only" in skill_text
+    assert "Do not stop unrelated user-delegated implementation" in skill_text
+    assert "continue that task after reporting the observed workflow status" in skill_text
     assert "do not fabricate workflow state" in skill_text
 
 

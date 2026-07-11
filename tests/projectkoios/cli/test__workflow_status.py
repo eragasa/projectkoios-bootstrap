@@ -9,7 +9,8 @@ import sys
 import pytest
 
 from projectkoios.cli.main import main
-from projectkoios.cli.workflow import (
+from projectkoios.workflow import PetriNetExecutor, PetriNetState, PetriNetTransitionBinding
+from projectkoios.workflow.fixtures import (
     WorkflowQueueItem,
     WorkflowQueueStateFixture,
     WorkflowQueueStateReporter,
@@ -17,7 +18,6 @@ from projectkoios.cli.workflow import (
     WorkflowStatusFixtureLoader,
     WorkflowStatusReporter,
 )
-from projectkoios.workflow import PetriNetExecutor, PetriNetState, PetriNetTransitionBinding
 
 
 REPO_ROOT: Path = Path(__file__).resolve().parents[3]

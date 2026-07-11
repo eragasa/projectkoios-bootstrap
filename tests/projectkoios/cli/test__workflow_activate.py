@@ -4,13 +4,15 @@ import json
 from pathlib import Path
 import shutil
 
-from projectkoios.cli.workflow import WorkflowQueueActivationResult, WorkflowQueueStateActivator
+from projectkoios.workflow.fixtures import WorkflowQueueActivationResult, WorkflowQueueStateActivator
 
 
 def test__WorkflowQueueStateActivator__activate__moves_queued_item_to_active(tmp_path: Path) -> None:
     """Validate activation moves one queued item to active and writes deterministic JSON."""
     # Fixture path is a temp copy so the repository fixture is not mutated by tests.
     fixture_path: Path = copied_queue_fixture(tmp_path)
+    # Temp fixture is cleared so this test exercises successful activation independent of live active queue state.
+    clear_active_item(fixture_path)
     # Activator is the command service under test.
     activator: WorkflowQueueStateActivator = WorkflowQueueStateActivator()
 
@@ -39,8 +41,11 @@ def test__WorkflowQueueStateActivator__activate__moves_queued_item_to_active(tmp
     assert active_item["name"] == "pi-skill-determinism-slice-0"
     assert active_item["state"] == "active"
     assert queued_items == []
-    assert typed_mapping(completed_items[0])["name"] == "petrinet-workflow-queue-state-slice-4"
-    assert typed_mapping(completed_items[0])["commit"] == "5f209114"
+    # Completed items are keyed by name so queue order changes do not break activation assertions.
+    completed_items_by_name: dict[str, dict[str, object]] = {
+        str(typed_mapping(item)["name"]): typed_mapping(item) for item in completed_items
+    }
+    assert completed_items_by_name["petrinet-workflow-queue-state-slice-4"]["commit"] == "5f209114"
 
 
 def test__WorkflowQueueStateActivator__activate__fails_when_active_item_exists(tmp_path: Path) -> None:
@@ -74,6 +79,8 @@ def test__WorkflowQueueStateActivator__activate__fails_when_item_is_not_queued(t
     """Validate activation fails without writing when the requested item is absent."""
     # Fixture path is a temp copy so failure can prove no-write behavior.
     fixture_path: Path = copied_queue_fixture(tmp_path)
+    # Temp fixture is cleared so this test exercises missing-item failure rather than active-item blocking.
+    clear_active_item(fixture_path)
     # Original text is used to assert the command did not write on failure.
     before_text: str = fixture_path.read_text(encoding="utf-8")
 
@@ -93,6 +100,8 @@ def test__WorkflowQueueStateActivator__activate__dry_run_does_not_write(tmp_path
     """Validate dry-run computes activation without writing the fixture."""
     # Fixture path is a temp copy so dry-run can prove no-write behavior.
     fixture_path: Path = copied_queue_fixture(tmp_path)
+    # Temp fixture is cleared so dry-run computes a success independent of live active queue state.
+    clear_active_item(fixture_path)
     # Original text is used to assert dry-run did not write.
     before_text: str = fixture_path.read_text(encoding="utf-8")
 
@@ -125,6 +134,19 @@ def copied_queue_fixture(tmp_path: Path) -> Path:
     destination_path: Path = tmp_path / "bootstrap-harness.queue-state.json"
     shutil.copyfile(source_path, destination_path)
     return destination_path
+
+
+def clear_active_item(fixture_path: Path) -> None:
+    """Clear active item in a copied queue fixture.
+
+    Args:
+        fixture_path: Temporary queue fixture path to modify.
+    """
+    # Fixture copy is normalized to the no-active state needed by activation behavior tests.
+    fixture_data: dict[str, object] = json.loads(fixture_path.read_text(encoding="utf-8"))
+    fixture_data["active_item"] = None
+    fixture_path.write_text(json.dumps(fixture_data, indent=2) + "\n", encoding="utf-8")
+
 
 
 def typed_mapping(value: object) -> dict[str, object]:
