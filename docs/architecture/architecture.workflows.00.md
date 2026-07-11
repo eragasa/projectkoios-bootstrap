@@ -50,3 +50,16 @@ Implementation briefs and reports are slice artifacts. They support the architec
 ### Reports
 
 - [workflow-petri-net-executor-first-slice.20260705.102506](../implementation/workflow-petri-net-executor-first-slice.20260705.102506.md)
+- [live-petri-net-skeleton-slice-0.20260711.114916](../implementation/live-petri-net-skeleton-slice-0.20260711.114916.md)
+- [petrinet-workflow-current-slice-status-reconciliation-slice-2.20260711.122814](../implementation/petrinet-workflow-current-slice-status-reconciliation-slice-2.20260711.122814.md)
+- [petrinet-workflow-interactive-control-skill-slice-3.20260711.123801](../implementation/petrinet-workflow-interactive-control-skill-slice-3.20260711.123801.md)
+- [petrinet-workflow-queue-state-slice-4.20260711.124549](../implementation/petrinet-workflow-queue-state-slice-4.20260711.124549.md)
+- [petrinet-workflow-activate-slice-5.20260711.125832](../implementation/petrinet-workflow-activate-slice-5.20260711.125832.md)
+
+### Current bootstrap workflow command surfaces
+
+- `uv run projectkoios workflow status` — read-only Petri-net fixture status over `dev/workflow-nets/bootstrap-harness.workflow-net.json`.
+- `uv run projectkoios workflow queue` — read-only queue-state view over `dev/workflow-nets/bootstrap-harness.queue-state.json`.
+- `uv run projectkoios workflow activate <item> [--dry-run]` — conservative queue-fixture activation mutation; writes only `dev/workflow-nets/bootstrap-harness.queue-state.json` when not in dry-run mode.
+
+These command surfaces remain bootstrap-held workflow inspectability/control surfaces. They do not create product/mothership workflow authority, Operator Console integration, workflow-object runtime coupling, schema authority, or general workflow persistence.

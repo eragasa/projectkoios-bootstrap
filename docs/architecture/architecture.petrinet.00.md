@@ -166,6 +166,53 @@ This slice reconciled the static bootstrap workflow-net fixture with the current
 
 This slice did not change Petri-net runtime semantics, transition firing, persistence, live adapters, Operator Console integration, workflow-object runtime coupling, schema authority, role/permission expansion, or product/mothership workflow authority.
 
+#### Interactive-control skill slice 3
+
+ATHENA brief: `docs/plans/implementation-brief.20260711.123305_petrinet-workflow-interactive-control-skill-slice-3.md`.
+Implementation evidence: `docs/implementation/petrinet-workflow-interactive-control-skill-slice-3.20260711.123801.md`.
+Commit evidence: `b4de9c64 Add Petri net interactive control skill`; follow-up VULCAN state fix `ed9110b9 Update Vulcan interactive control state`.
+
+This slice adds a second workflow-local agent affordance under `src/python/projectkoios/workflow/skills/`: `petrinet-workflow-interactive-control`. The skill teaches agents the operator-facing pattern `inspect → summarize → recommend → ask/act` for moments when the user asks what is happening, expresses confusion, requests interactive operation, or needs the next Petri-net workflow action made explicit.
+
+As built, the skill requires inspection through `uv run projectkoios workflow status`, user-readable summarization, exactly one primary recommendation unless options are requested, and asking before file edits, routing, subagent launch, active/queued-state changes, or user-decision-gated actions. It preserves active/queued/superseded/deferred distinctions and leaves `pi-skill-determinism-slice-0` queued.
+
+This slice is an agent affordance only. It does not change Petri-net runtime behavior, status command behavior, workflow-net fixture content, transition firing or dry-run behavior, persistence, live adapters, Operator Console integration, workflow-object runtime coupling, schema/product authority, role/permission semantics, or global skill propagation.
+
+#### Queue-state slice 4
+
+ATHENA brief: `docs/plans/implementation-brief.20260711.124106_petrinet-workflow-queue-state-slice-4.md`.
+Implementation evidence: `docs/implementation/petrinet-workflow-queue-state-slice-4.20260711.124549.md`.
+Commit evidence: `5f209114`.
+
+This slice moves workflow queue discipline from chat/workspace-prose inference toward a mechanical, command-visible control surface:
+
+```bash
+uv run projectkoios workflow queue
+```
+
+As built, the command loads the explicit static fixture `dev/workflow-nets/bootstrap-harness.queue-state.json` and renders active, queued/proposed, completed/recent, superseded/rejected, deferred, and next-decision-needed sections. The fixture is labeled static/read-only and non-canonical workflow authority. The first fixture records `pi-skill-determinism-slice-0` as queued, recent completed workflow-engine slices with commit references, and the superseded agent-skill framing artifacts.
+
+This slice is read-only. It does not add transition firing, activation or queue mutation, persistence beyond the committed static fixture, generalized workflow database/storage, live intercom/session reads, git-history-derived state reconstruction, Operator Console integration, workflow-object runtime coupling, schema/product authority, global skill propagation, or implementation/supersession of `pi-skill-determinism-slice-0`.
+
+#### Activate slice 5
+
+ATHENA brief: `docs/plans/implementation-brief.20260711.124950_petrinet-workflow-activate-slice-5.md`.
+HERMES decision: `docs/reviews/hermes-decision.20260711.125800_petrinet-workflow-activate-slice-5.md`.
+Implementation evidence: `docs/implementation/petrinet-workflow-activate-slice-5.20260711.125832.md`.
+
+This slice adds the first conservative mechanical mutation surface for the workflow queue fixture:
+
+```bash
+uv run projectkoios workflow activate <item>
+uv run projectkoios workflow activate <item> --dry-run
+```
+
+As built, activation operates only on `dev/workflow-nets/bootstrap-harness.queue-state.json`. It loads the static queue fixture, requires `active_item` to be null, finds exactly one matching queued/proposed item by name, moves that item from `queued_items` to `active_item` with state `active`, preserves completed/recent, superseded/rejected, and deferred sections, updates `next_decision_needed`, writes deterministic pretty JSON, and prints a before/after summary. Safe no-write failure paths cover an existing active item and a missing/nonqueued item. `--dry-run` performs validation and summary rendering without writing.
+
+The implementation also reconciles the static queue baseline so `petrinet-workflow-queue-state-slice-4` is completed with commit `5f209114`, while `pi-skill-determinism-slice-0` remains queued and not superseded unless explicitly activated by USER/HERMES.
+
+This is a fixture-only mutation slice, not Petri-net runtime firing. It does not add Petri-net executor/runtime mutation, generalized persistence/database/storage, writes outside the queue fixture during command execution, git/chat/intercom reconstruction, Operator Console integration, workflow-object runtime coupling, schema/product authority, global skill propagation, or implementation/supersession of `pi-skill-determinism-slice-0`.
+
 ## Decomposition map
 
 | Section | Current state | Decomposes to | Trigger |
@@ -177,6 +224,8 @@ This slice did not change Petri-net runtime semantics, transition firing, persis
 | Dry-run execution | working | ADR/spec | when planning/simulation must be non-authoritative |
 | WorkflowNet domain wrapper | working | ADR/spec | when workflow-specific semantics exceed generic PetriNet |
 | Workflow adapter topology round trip | completed/validated | implementation brief + implementation report + conformance review | completed SNAKES topology-only round trip; expand only with new authority for PM4Py, markings/tokens, guards, runtime history, or persistence semantics |
+| Workflow queue state inspectability | completed/fixture-backed | implementation brief + implementation report | completed read-only `workflow queue` command over static queue-state fixture; expand only with approved authority for richer queue state, storage, or runtime coupling |
+| Workflow queue activation | completed/fixture-mutation | implementation brief + HERMES decision + implementation report | completed conservative `workflow activate <item>` command that mutates only static queue fixture; expand only with approved authority for completion/clearing, transition firing, storage, or runtime state mutation |
 | UI/Gantt/projection surfaces | incubating | architecture spec | when a projection target is selected |
 | Ingestion pipeline workflows | incubating | product/bootstrap boundary ADR | when a concrete pipeline fixture is selected |
 

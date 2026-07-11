@@ -2,8 +2,8 @@
 {
   "title": "Athena workspace state",
   "artifact_type": "workspace-state",
-  "status": "petrinet-workflow-activate-slice-5-approved-routed-no-athena-routing-pending",
-  "datetime": "20260711.125800Z",
+  "status": "petrinet-workflow-activate-slice-5-architecture-reconciled",
+  "datetime": "20260711.125832Z",
   "acting_as": "ATHENA",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/athena/",
@@ -137,12 +137,13 @@
 - HERMES reported `petrinet-workflow-interactive-control-skill-slice-3` accepted, committed, and pushed as `b4de9c64 Add Petri net interactive control skill`, with follow-up VULCAN state fix committed/pushed as `ed9110b9 Update Vulcan interactive control state`. USER delegated automatic mode to HERMES and clarified workflow engine work must be prioritized. ATHENA drafted `docs/plans/implementation-brief.20260711.124106_petrinet-workflow-queue-state-slice-4.md` to make active/queued/completed/superseded workflow state machine-visible via a read-only queue/status command surface, then paused.
 - HERMES reported Slice 4 accepted/pushed as `5f209114` and requested the next bounded mechanical activation control slice because the queue fixture still showed Slice 4 as proposed-next. ATHENA drafted `docs/plans/implementation-brief.20260711.124950_petrinet-workflow-activate-slice-5.md` for `petrinet-workflow-activate-slice-5`, requiring explicit fixture-only activation mechanics and baseline reconciliation of Slice 4 completion, then paused.
 - USER/HERMES approved and routed `petrinet-workflow-activate-slice-5` to VULCAN. HERMES recorded the routing/approval in `docs/reviews/hermes-decision.20260711.125800_petrinet-workflow-activate-slice-5.md`. No additional ATHENA routing is pending.
+- VULCAN implemented `petrinet-workflow-activate-slice-5` and ATHENA reviewed/accepted it technically after deterministic JSON fixture remediation. ATHENA reconciled slices 3, 4, and 5 into `docs/architecture/architecture.petrinet.00.md` and indexed current workflow command surfaces in `docs/architecture/architecture.workflows.00.md`.
 
 ## Current active item
 
 - `petrinet-workflow-activate-slice-5`
   - Parent effort: Petri-net workflow harness / workflow inspectability.
-  - Status: ATHENA brief approved by USER/HERMES and routed to VULCAN; no additional ATHENA routing is pending.
+  - Status: implemented by VULCAN; ATHENA technical review accepted after deterministic JSON remediation; architecture reconciled.
   - Purpose: add the first explicit mechanical activation/queue-update command operating only on the static queue fixture.
   - Key artifacts:
     - `docs/plans/implementation-brief.20260711.124950_petrinet-workflow-activate-slice-5.md`
@@ -166,12 +167,12 @@
 
 ## Waiting on / blocked items
 
-- VULCAN execution/reporting for `petrinet-workflow-activate-slice-5` after USER/HERMES approval and routing.
+- USER/HERMES final disposition/packaging for `petrinet-workflow-activate-slice-5` after ATHENA technical acceptance.
 - Commit/push boundary for accumulated accepted work remains a separate packaging decision.
 
 ## Open questions
 
-- USER/HERMES disposition after VULCAN execution/reporting for `petrinet-workflow-activate-slice-5`.
+- USER/HERMES final disposition/packaging for `petrinet-workflow-activate-slice-5` after ATHENA technical acceptance.
 - USER/HERMES review of future-slice roadmap if desired; roadmap is advisory and does not authorize later slices.
 - Whether to close/commit the accepted Operator Console P0/P1/P2 plus workflow-object architecture/brief bundle or select another bounded UI slice.
 - When to extract `src/typescript/projectkoios/ui/operator-console/` to `projectkoios/ui/operator-console/` and promote product/mothership authority.
@@ -184,8 +185,8 @@
 - Owner: HERMES/USER.
 - Recommended next actions:
   1. No further ATHENA routing action is pending for Slice 5.
-  2. Await VULCAN implementation/report or USER/HERMES disposition.
-  3. Preserve `pi-skill-determinism-slice-0` as queued-only.
+  2. Await USER/HERMES disposition/packaging for Slice 5.
+  3. Preserve `pi-skill-determinism-slice-0` as queued-only unless explicitly activated.
 - Operator Console P0/P1/P2 accepted boundaries: bootstrap incubation only; package-local lockfile only; behavior owned by ActionObject-style classes with data in typed interfaces/constants; `docs/policies/typescript-coding.md` remains draft/non-controlling; fixtures are static/stale-by-design; readability/navigation affordances are local browser inspection helpers only; no backend, live reads, messaging capability, activation/mutation, Petri-net graph editor, product UI authority, or bootstrap production-backend claim.
 - ADR conformance work remains available as a separate track: future slices should use updated `docs/schemas/adr.schema.json` without `routing`, preserve sidecar provenance, and avoid schema/lifecycle/workflow/storage-authority redesign unless repeated conformance pressure justifies it.
 

@@ -2,8 +2,8 @@
 {
   "title": "Athena active work",
   "artifact_type": "workspace-active-priorities",
-  "status": "petrinet-workflow-activate-slice-5-approved-routed-no-athena-routing-pending",
-  "datetime": "20260711.125800Z"},{
+  "status": "petrinet-workflow-activate-slice-5-architecture-reconciled",
+  "datetime": "20260711.125832Z"},{
   "acting_as": "ATHENA",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/athena/",
@@ -81,7 +81,7 @@
 
 1. Workflow-object Slice 0 is implemented, VULCAN-validated, ATHENA conformance-reviewed and implementation-reviewed/accepted, KOIOS-reviewed, and USER/HERMES-accepted with watchpoints.
 2. Operator Console P0/P1/P2 are implemented, user-previewed where required, ATHENA-reviewed/accepted, and reconciled into architecture as bootstrap-incubation as-built evidence.
-3. Active HERMES-recommended next priority is `petrinet-workflow-activate-slice-5`: ATHENA brief approved by USER/HERMES and routed to VULCAN; no additional ATHENA routing is pending.
+3. `petrinet-workflow-activate-slice-5` is implemented and ATHENA-reviewed technically; architecture documents are reconciled.
 
 ## Recently completed
 
@@ -123,7 +123,7 @@
 
 - `petrinet-workflow-activate-slice-5`
   - Parent effort: Petri-net workflow harness / workflow inspectability.
-  - Status: ATHENA brief approved by USER/HERMES and routed to VULCAN; no additional ATHENA routing is pending.
+  - Status: implemented by VULCAN; ATHENA technical review accepted after deterministic JSON remediation; architecture reconciled.
   - Purpose: add the first explicit mechanical activation/queue-update command operating only on the static queue fixture.
   - Key artifacts:
     - `docs/plans/implementation-brief.20260711.124950_petrinet-workflow-activate-slice-5.md`
@@ -148,14 +148,14 @@
 
 ## Waiting on / blocked items
 
-- VULCAN execution/reporting for `petrinet-workflow-activate-slice-5` after USER/HERMES approval and routing.
+- USER/HERMES final disposition/packaging for `petrinet-workflow-activate-slice-5` after ATHENA technical acceptance.
 - Commit/push boundary for accumulated accepted work remains a separate packaging decision.
 
 ## Recommended next actions
 
 1. No further ATHENA routing action is pending for Slice 5.
-2. Await VULCAN implementation/report or USER/HERMES disposition.
-3. Preserve `pi-skill-determinism-slice-0` as queued-only.
+2. Await USER/HERMES disposition/packaging for Slice 5.
+3. Preserve `pi-skill-determinism-slice-0` as queued-only unless explicitly activated.
 
 ## Packaging watchpoints
 
