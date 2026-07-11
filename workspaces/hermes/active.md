@@ -18,16 +18,16 @@
 
 ## Current priority stack
 
-1. Route `adr-schema-base-source-disposition-planning-slice-12` to ATHENA.
-2. Keep ADR track priority; do not activate `pi-skill-determinism-slice-0` while ADR active item remains set.
-3. Preserve `docs/adr/adr.adr-template-schema-contract.md` as current ADR template/schema contract authority.
+1. Commit Slice 12 proposal-only acceptance package.
+2. Prepare for explicit activation of `adr-schema-base-architecture-extraction-planning-slice-13` if USER/HERMES proceeds.
+3. Keep ADR track priority; do not activate `pi-skill-determinism-slice-0` unless explicitly reprioritized.
 
 ## Active slice
 
 Active queue item after reconciliation:
 
 ```text
-adr-schema-base-source-disposition-planning-slice-12
+none
 ```
 
 Target source:
@@ -88,7 +88,7 @@ dev/workflow-nets/bootstrap-harness.queue-state.json
 dev/workflow-nets/bootstrap-harness.workflow-net.json
 ```
 
-Current workflow status reports `active_slice=adr-schema-base-source-disposition-planning-slice-12`; queue reports active item set and warns not to activate queued non-ADR work.
+Current workflow status reports `active_slice=none`; queue reports no active item and next decision needed: explicitly activate `adr-schema-base-architecture-extraction-planning-slice-13` or define another ADR-track slice.
 
 Activation decision recorded:
 
@@ -96,11 +96,21 @@ Activation decision recorded:
 docs/reviews/hermes-decision.20260711.183536_adr-schema-base-source-disposition-planning-slice-12.md
 ```
 
-Expected ATHENA output:
+ATHENA output received:
 
 ```text
 docs/plans/source-disposition-brief.20260711.183536_adr-schema-base.md
 ```
+
+KOIOS comments received: provenance-adequate for HERMES proposal-only acceptance, no blockers, minor clarification watchpoints.
+
+HERMES acceptance recorded:
+
+```text
+docs/reviews/hermes-acceptance.20260711.184119_adr-schema-base-source-disposition-planning-slice-12.md
+```
+
+Accepted recommendation: keep `docs/adr/adr.schema-base.md` unchanged as draft architecture/source provenance and pursue a later architecture-extraction planning/extraction slice rather than in-place revision or successor ADR as first repair.
 
 ## Role-boundary correction
 
@@ -108,9 +118,9 @@ The successor ADR was created by the ATHENA session after HERMES routing and USE
 
 ## Waiting on
 
-- Commit of ADR-track Slice 12 activation/routing decision and queue/status update.
-- ATHENA proposal-only source-disposition brief for `docs/adr/adr.schema-base.md`.
+- Commit of Slice 12 proposal-only acceptance package.
+- Later USER/HERMES activation of `adr-schema-base-architecture-extraction-planning-slice-13` or another ADR-track slice.
 
 ## Exit criteria
 
-Hermes state is stable when Slice 12 activation/routing is committed and ATHENA is the explicit next owner.
+Hermes state is stable when Slice 12 proposal-only acceptance is committed and no active queue item remains.

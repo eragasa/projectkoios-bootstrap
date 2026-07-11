@@ -18,7 +18,7 @@
 
 ## Current focus
 
-ADR track remains priority. HERMES activated `adr-schema-base-source-disposition-planning-slice-12` for ATHENA handoff.
+ADR schema-base source-disposition planning Slice 12 is accepted as proposal-only planning after KOIOS review; next ADR-track decision is architecture-extraction planning Slice 13 activation.
 
 ## Current validated state
 
@@ -65,26 +65,34 @@ ADR track remains priority. HERMES activated `adr-schema-base-source-disposition
   - `adr-schema-base-source-disposition-planning-slice-12`
   - target source: `docs/adr/adr.schema-base.md`
   - decision: `docs/reviews/hermes-decision.20260711.183536_adr-schema-base-source-disposition-planning-slice-12.md`
+- ATHENA completed the Slice 12 proposal-only source-disposition brief:
+  - `docs/plans/source-disposition-brief.20260711.183536_adr-schema-base.md`
+  - recommendation: keep `docs/adr/adr.schema-base.md` unchanged as draft architecture/source provenance and pursue a later architecture-extraction planning/extraction slice rather than in-place revision or successor ADR as first repair.
+- KOIOS reviewed the Slice 12 brief and found it provenance-adequate for HERMES proposal-only acceptance with no blockers and minor clarification watchpoints.
+- HERMES accepted the Slice 12 brief as proposal-only planning:
+  - `docs/reviews/hermes-acceptance.20260711.184119_adr-schema-base-source-disposition-planning-slice-12.md`
+- HERMES cleared the active queue item and reconciled workflow status to `active_slice=none`; next decision is explicit activation of `adr-schema-base-architecture-extraction-planning-slice-13` or another ADR-track slice.
 
 ## Current coherent state
 
-Uncommitted ADR-track activation work:
+Uncommitted Slice 12 acceptance package:
 
 ```text
-docs/reviews/hermes-decision.20260711.183536_adr-schema-base-source-disposition-planning-slice-12.md
+docs/plans/source-disposition-brief.20260711.183536_adr-schema-base.md
+docs/reviews/hermes-acceptance.20260711.184119_adr-schema-base-source-disposition-planning-slice-12.md
 dev/workflow-nets/bootstrap-harness.queue-state.json
 dev/workflow-nets/bootstrap-harness.workflow-net.json
 workspaces/hermes/state.md
 workspaces/hermes/active.md
 ```
 
-Committed source disposition:
+Committed Slice 12 activation:
 
 ```text
-abef6bb Record ADR template contract source disposition
+40b160d Activate ADR schema-base source-disposition slice
 ```
 
-The workflow fixtures now show active item `adr-schema-base-source-disposition-planning-slice-12` and `active_slice=adr-schema-base-source-disposition-planning-slice-12`.
+The workflow fixtures now show no active item and `active_slice=none`; next decision is explicit activation of `adr-schema-base-architecture-extraction-planning-slice-13` or another ADR-track slice.
 
 ## Active boundaries
 
@@ -92,8 +100,9 @@ The old source is preserved as legacy/source provenance with a disposition note.
 
 ## Current blockers
 
-- ATHENA must produce the proposal-only source-disposition brief for `docs/adr/adr.schema-base.md` before any source/schema mutation or lifecycle change.
+- No Slice 12 blocker remains after committing the acceptance package.
+- USER/HERMES explicit activation is required before Slice 13 or any other next item proceeds.
 
 ## Next owner
 
-ATHENA for `docs/plans/source-disposition-brief.20260711.183536_adr-schema-base.md`.
+HERMES_USER for explicit activation of `adr-schema-base-architecture-extraction-planning-slice-13` or definition of another ADR-track slice.
