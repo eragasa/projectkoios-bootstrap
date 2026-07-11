@@ -4,7 +4,7 @@
 
 - Type: workspace-state
 - Status: active
-- Updated: 20260709T013735Z
+- Updated: 20260711T065332Z
 - Updated by: KOIOS
 - Repository: projectkoios-bootstrap
 - Workspace: `workspaces/koios/`
@@ -30,6 +30,7 @@ Captured/advisory artifacts in this workspace:
 - `working/provenance-note.20260705T100913Z_petrinet-followup-package.md`
 - `working/provenance-audit.20260709T012117Z_adr-lifecycle-followon-reconciliation.md`
 - `working/provenance-note.20260711T033323Z_architecture-led-workflow-doctrine.md`
+- `working/provenance-audit.20260711T065332Z_adr-json-schemas-conformance.md`
 - `../../docs/process-capture/pc.workflow.document-trace.md`
 - `../../docs/process-capture/pc.workflow.document-trace.20260706.025408Z.md`
 - `../../docs/process-capture/pc.workflow.document-trace.20260708.044950Z.md`
@@ -60,6 +61,8 @@ KOIOS added a process-review observation and partial document trace for the temp
 KOIOS captured the template record round-trip skill integration process trace after VULCAN implementation report and ATHENA conformance review existed. The trace records parser-gate evidence, ATHENA skill brief, VULCAN draft/gated skill implementation, skill-register update, VULCAN AAR, ATHENA conforms-draft-gated review, and residual constraints: the skill remains draft/gated, no stable skill/frontmatter validator exists yet, and no broad ingestion/all-template/product authority is created.
 
 KOIOS preserved ATHENA/user clarified architecture-led workflow doctrine for the ADR JSON/database pilot and meta-harness workflow surfaces. The note records that architecture documents are pre-implementation blueprints and later as-built documentation; implementation work is sliced into bounded briefs/plans/patches; and implementation evidence must reconcile back into architecture as as-built state or explicit deviation/correction. The inspected ATHENA surfaces align with this doctrine for the current pilot scope, with watchpoints that briefs, reports, patches, generated projections, and local database state must not replace architecture documents as durable system surfaces.
+
+KOIOS audited the current uncommitted `adr.json-schemas` active conformance slice. The audit found the slice provenance-safe for its bounded one-document scope: source Markdown and ADR schema were not mutated, the JSON checkpoint omits `routing` and `links.related`, sidecars preserve source path/date/hash/status plus omitted routing/related-link evidence, generated-local SQLite state is not committed, and focused tests passed. Residual watchpoints remain for the absence of a VULCAN implementation report specific to this completed conformance run, the `dev/` checkpoint's non-global authority, and the need for separate architecture authority before reusable conformance/storage policy or bulk migration.
 
 ## Authority boundary
 

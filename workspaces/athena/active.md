@@ -2,8 +2,8 @@
 {
   "title": "Athena active work",
   "artifact_type": "workspace-active-priorities",
-  "status": "adr-schema-routing-removed-yagni-conformance-next",
-  "datetime": "20260711.060447Z",
+  "status": "json-schemas-conformance-approved-for-vulcan-implementation",
+  "datetime": "20260711.063226Z",
   "acting_as": "ATHENA",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/athena/",
@@ -16,8 +16,10 @@
     "docs/plans/implementation-brief.20260711.045012_json-document-database-separation.md",
     "docs/plans/implementation-plan.20260711.050606_json-document-database-separation.md",
     "docs/implementation/json-document-database-separation.20260711.051951.md",
-    "dev/adr-json-database-one-adr-pilot/document-store-replacement-evidence.json",
-    "src/python/projectkoios/bootstrap/control_surface/document_store/"
+    "docs/implementation/control-surface-cleanup-and-schema-conformance.20260711.061724.md",
+    "dev/adr-json-database-one-adr-pilot/document-store-migration-evidence.json",
+    "src/python/projectkoios/bootstrap/control_surface/documents/",
+    "src/python/projectkoios/bootstrap/control_surface/storage/"
   ]
 }
 ```
@@ -26,9 +28,9 @@
 
 ## Current priority stack
 
-1. USER/HERMES review of VULCAN implementation evidence and architecture as-built reconciliation.
-2. Completed slice: generic JSON document database substrate separated from ADR-specific code; SQLite as first backend; one-ADR pilot evidence only; no backward compatibility shim; enumerated semantic values as enums/types; no dangling semantic constants reported.
-3. If accepted, next slice should be YAGNI ADR conformance to the updated schema without `routing`, not schema/lifecycle/workflow redesign.
+1. VULCAN implementation of approved plan: `docs/plans/implementation-plan.20260711.062654_json-schemas-adr-conformance.md`.
+2. Approved slice: one-document active YAGNI conformance for `docs/adr/adr.json-schemas.draft.md` against updated ADR schema without `routing`.
+3. Implementation must preserve `routing` and `links.related` as sidecar conversion evidence, treat the conformed record as active going forward, and avoid schema/lifecycle/workflow/storage-authority redesign.
 
 ## Recently completed
 
@@ -52,11 +54,11 @@
 
 ## Waiting on
 
-- USER/HERMES acceptance or revision request for the implementation evidence and architecture reconciliation.
+- VULCAN implementation report, validation evidence, and any deviation report.
 
 ## Recommended next action
 
-Review `docs/implementation/json-document-database-separation.20260711.051951.md`, `dev/adr-json-database-one-adr-pilot/document-store-migration-evidence.json`, the updated architecture as-built section, and `docs/schemas/adr.schema.json` routing removal. If accepted, proceed toward a YAGNI conformance slice that pushes ADRs toward the updated schema shape without redesigning lifecycle, workflow state, or storage authority.
+VULCAN may implement `docs/plans/implementation-plan.20260711.062654_json-schemas-adr-conformance.md` as approved. After coding, review implementation report, validation evidence, sidecar provenance, no source mutation, no committed DB files, and active-forward framing.
 
 ## Do not do yet
 
@@ -69,4 +71,4 @@ Review `docs/implementation/json-document-database-separation.20260711.051951.md
 
 ## Exit criteria
 
-The one-ADR pilot and the JSON document database separation slice are implemented, VULCAN-validated, and reconciled into the architecture document as as-built evidence. Routing has been removed from the ADR schema by user direction because it is not required for the Petri-net workflow. Durable ADR/database authority remains unresolved. KOIOS/user YAGNI direction points next toward updated-schema ADR conformance with sidecar provenance, pending explicit user/Hermes acceptance.
+The one-ADR pilot, JSON document database separation slice, and control-surface cleanup/schema conformance report are implemented, VULCAN-validated, ATHENA-accepted, and reconciled into architecture as as-built evidence. Routing has been removed from the ADR schema by user direction because it is not required for the Petri-net workflow. Durable ADR/database authority remains unresolved. User direction now says forward conformance entries are active; sidecars preserve conversion provenance without historical-only framing.

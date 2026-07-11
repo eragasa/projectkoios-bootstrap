@@ -265,7 +265,7 @@ class AdrMarkdownRecordParser:
             "acting_as": values["Acting-As"],
             "scope": values["Scope"],
             "repository": values["Repository"],
-            "delegated_operator": self.source_config.delegated_operator,
+            "delegated_operator": values.get("Delegated-Operator", self.source_config.delegated_operator),
             "architecture_domain": values["Architecture-Domain"],
         }
 
@@ -285,6 +285,27 @@ class AdrMarkdownRecordParser:
             "supersedes": self.none_value(values["supersedes"]),
             "superseded_by": self.none_value(values["superseded_by"]),
         }
+
+    def related_links(self, body: str) -> list[JsonObject]:
+        """Read related links preserved outside the schema record.
+
+        Args:
+            body: Links section body.
+
+        Returns:
+            Related link evidence entries.
+        """
+        # `links.related` is not in the ADR schema, so preserve it as sidecar evidence.
+        values: dict[str, str] = self.key_values(body)
+        # Related link text is source-only evidence because schema links exclude it.
+        related: str | None = values.get("related")
+        if related is None:
+            return []
+        # The current source form is `[label](path)`.
+        match: re.Match[str] | None = re.match(r"^\[(?P<label>.+)]\((?P<path>.+)\)$", related)
+        if match is None:
+            return [{"raw": related}]
+        return [{"label": match.group("label"), "path": match.group("path")}]
 
     def key_values(self, body: str) -> dict[str, str]:
         """Parse `Key: value` lines.
@@ -351,6 +372,14 @@ class AdrMarkdownRecordParser:
         Returns:
             Source conversion notes.
         """
+        # Context values drive both schema fields and provenance notes.
+        context_values: dict[str, str] = self.key_values(sections[self.section_key_for_schema_field("context")])
+        # Inferred fields document parser-supplied values when source fields are absent.
+        inferred_fields: JsonObject = {}
+        if "Delegated-Operator" not in context_values:
+            inferred_fields["context.delegated_operator"] = self.source_config.delegated_operator
+        # Routing values are preserved outside the schema after routing removal.
+        routing_values: dict[str, str] = self.key_values(sections.get("routing", ""))
         return {
             "status": "pilot-derived-non-authoritative",
             "source_path": self.source_config.source_path,
@@ -367,6 +396,7 @@ class AdrMarkdownRecordParser:
                 "context.acting_as",
                 "context.scope",
                 "context.repository",
+                "context.delegated_operator",
                 "context.architecture_domain",
                 "decision",
                 "consequences",
@@ -376,13 +406,26 @@ class AdrMarkdownRecordParser:
                 "resolved_open_questions",
                 "non_goals",
                 "validation_expectations",
-                "links",
+                "links.back_to",
+                "links.supersedes",
+                "links.superseded_by",
             ],
-            "inferred_fields": {"context.delegated_operator": "HERMES"},
-            "normalized_fields": {},
+            "inferred_fields": inferred_fields,
+            "normalized_fields": {
+                "title_heading": "removed ADR timestamp prefix",
+                "context_labels": "converted source labels to schema snake_case keys",
+                "none_links": "converted textual None values to JSON null",
+                "bullet_sections": "converted Markdown bullets to JSON arrays",
+            },
             "preserved_outside_schema": {
                 "source_date": self.source_config.source_date,
                 "routing_section": sections.get("routing", ""),
+                "routing": {
+                    "owner": routing_values.get("Owner"),
+                    "next_phase": routing_values.get("Next phase"),
+                    "notes": routing_values.get("Notes"),
+                },
+                "links.related": self.related_links(sections[self.section_key_for_schema_field("links")]),
             },
         }
 
@@ -401,14 +444,22 @@ class AdrProjectionRenderer:
         Returns:
             Generated Markdown projection.
         """
-        # Metadata lines make pilot authority boundaries visible to reviewers.
+        # Metadata lines make projection authority boundaries visible to reviewers.
+        status_block: object = manifest.get("pilot")
+        if not isinstance(status_block, dict):
+            status_block = manifest.get("conformance")
+        if not isinstance(status_block, dict):
+            status_block = {}
+        # Run status labels the projection's generating workflow.
+        run_status: str = str(status_block.get("status", "generated-projection"))
+        # Lines are assembled deterministically for stable projection diffs.
         lines: list[str] = [
             "<!-- GENERATED PILOT PROJECTION: non-authoritative; do not edit as ADR authority. -->",
             f"# ADR Projection: {record['title']}",
             "",
             "## Projection metadata",
             "",
-            f"- Pilot status: {manifest['pilot']['status']}",
+            f"- Projection status: {run_status}",
             f"- Source record ID: {record['id']}",
             f"- Canonical slug: {record['slug']}",
             f"- Record status: {record['status']}",

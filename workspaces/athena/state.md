@@ -2,8 +2,8 @@
 {
   "title": "Athena workspace state",
   "artifact_type": "workspace-state",
-  "status": "adr-schema-routing-removed-yagni-conformance-next",
-  "datetime": "20260711.060447Z",
+  "status": "json-schemas-conformance-approved-for-vulcan-implementation",
+  "datetime": "20260711.063226Z",
   "acting_as": "ATHENA",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/athena/",
@@ -67,11 +67,17 @@
 - ATHENA reconciled the implementation report into `docs/architecture/architecture.json-adr-storage-topology.md` as completed separation-slice as-built evidence; ATHENA has not rerun VULCAN's validation commands in this reconciliation pass.
 - KOIOS updated `docs/architecture/architecture.json-adr-storage-topology.md` per user YAGNI direction: residual gaps are observations, not authorization for schema/workflow expansion; the recommended next step is review of implementation evidence followed by a YAGNI conformance slice that pushes ADRs toward the existing `docs/schemas/adr.schema.json` shape; source date and extra metadata remain in sidecar evidence unless repeated conformance work proves that insufficient.
 - User clarified routing is not required for the Petri-net workflow and directed removal from the existing ADR schema. ATHENA removed `routing` from `docs/schemas/adr.schema.json` required fields/properties/defs and updated architecture/state to treat conformance as targeting the schema without routing.
+- VULCAN produced `docs/implementation/control-surface-cleanup-and-schema-conformance.20260711.061724.md` for ATHENA review. The report covers the package split into `documents/`, `storage`, and `adr/`, schema conformance after `routing` removal, protocol conformance tests, SQL DDL generation from `DocumentRecord`, YAGNI cleanup, regenerated pilot evidence, and whole-repo validation.
+- ATHENA reviewed and accepted the control-surface cleanup/schema conformance report as conforming to current architecture and user YAGNI direction, and reconciled it into `docs/architecture/architecture.json-adr-storage-topology.md`.
+- KOIOS recommended `docs/adr/adr.json-schemas.draft.md` as the next one-document YAGNI conformance target because it is small, already ADR-shaped, schema-adjacent, draft/non-authoritative, and contains useful canaries for sidecar preservation (`routing` and unsupported `links.related`).
+- User clarified forward policy: forget historical framing except for going forward; everything that goes in from here is treated as active. ATHENA recorded this as a forward-active conformance direction: sidecars may preserve source/conversion provenance, but newly conformed records should not be framed as historical-only or non-authoritative unless explicitly directed.
+- ATHENA prepared source intake/checklist at `workspaces/athena/working/adr-json-schemas-conformance-intake.20260711.063019.md`.
+- VULCAN produced `docs/plans/implementation-plan.20260711.062654_json-schemas-adr-conformance.md` and paused before coding. The plan uses `dev/adr-json-schemas-conformance/`, creates active conformed record `adr.json-schemas.json`, preserves `routing.*` and `links.related` only in sidecar evidence, does not mutate source Markdown, reuses the existing document/storage substrate, and includes pause triggers for schema/workflow/source-mutation scope expansion.
+- USER approved VULCAN's paused `adr.json-schemas` conformance implementation plan for coding.
 
 ## Open questions
 
-- Whether USER/HERMES accepts the VULCAN implementation evidence and ATHENA as-built reconciliation.
-- Which ADRs or ADR-like documents should be targeted first for existing-schema conformance.
+- VULCAN implementation of the approved `adr.json-schemas` active conformance slice.
 - Which source/projection metadata must remain in sidecar evidence while the existing ADR schema is used unchanged.
 - Which recurring schema discomforts, if any, become concrete enough to justify later schema revision after conformance work.
 - Whether future Markdown projections should be human-readable-only, JSON-embedded, or both, after conformance pressure exists.
@@ -80,9 +86,9 @@
 ## Next transition
 
 - Owner: USER.
-- Recommended next state: USER/HERMES review of `docs/implementation/json-document-database-separation.20260711.051951.md`, `docs/architecture/architecture.json-adr-storage-topology.md`, the pilot replacement evidence, and the ADR schema routing removal. If accepted, the next architecture/implementation slice should be YAGNI ADR conformance to the updated schema, not schema redesign, naming machinery, workflow-state modeling, reusable config, or storage-authority promotion.
+- Recommended next state: VULCAN implement `docs/plans/implementation-plan.20260711.062654_json-schemas-adr-conformance.md` as approved, then report validation evidence and deviations. Treat the new conformed record as active going forward; do not redesign schema, naming machinery, workflow-state modeling, reusable config, or storage-authority policy.
 - Separation brief watchpoints remain satisfied by VULCAN report unless review finds otherwise: generic JSON document database substrate stores opaque JSON documents with generic metadata only; SQLite remains behind the adapter; ADR logic stays in ADR-specific code; replacement evidence is explicit; no bulk ADR migration, reusable repo config, or database-authority promotion.
-- YAGNI conformance watchpoints: use updated `docs/schemas/adr.schema.json` without `routing`; preserve sidecar provenance for source/projection metadata; prefer general-to-specific identifiers only when new identifiers are actually produced; defer workflow-system assumptions and schema/lifecycle expansion until repeated conformance work creates concrete pressure.
+- YAGNI conformance watchpoints: use updated `docs/schemas/adr.schema.json` without `routing`; preserve sidecar provenance for source/projection metadata; preserve `routing.owner`, `routing.next_phase`, `routing.notes`, and `links.related` from `docs/adr/adr.json-schemas.draft.md` outside the schema record as conversion provenance; treat the newly conformed record as active going forward; prefer general-to-specific identifiers only when new identifiers are actually produced; defer workflow-system assumptions and schema/lifecycle expansion until repeated conformance work creates concrete pressure.
 
 ## Startup checklist
 

@@ -1,0 +1,65 @@
+{
+  "canonical_id": "adr.json-schemas",
+  "canonical_identity_rule": "status-free id and slug; lifecycle status lives in record content",
+  "canonical_slug": "json-schemas",
+  "copied_fields": [
+    "title",
+    "status",
+    "context.origin",
+    "context.from",
+    "context.acting_as",
+    "context.scope",
+    "context.repository",
+    "context.delegated_operator",
+    "context.architecture_domain",
+    "decision",
+    "consequences",
+    "architecture_spec",
+    "acceptance_criteria",
+    "implementation_brief",
+    "resolved_open_questions",
+    "non_goals",
+    "validation_expectations",
+    "links.back_to",
+    "links.supersedes",
+    "links.superseded_by"
+  ],
+  "inferred_fields": {},
+  "json_checkpoint_path": "dev/adr-json-schemas-conformance/adr.json-schemas.json",
+  "json_hash": "e5f8c6729ee120ae4a266e6d5d575df3b9ae6f9fb86158c92a29995386a89bfb",
+  "normalized_fields": {
+    "bullet_sections": "converted Markdown bullets to JSON arrays",
+    "context_labels": "converted source labels to schema snake_case keys",
+    "none_links": "converted textual None values to JSON null",
+    "title_heading": "removed ADR timestamp prefix"
+  },
+  "omitted_from_record": [
+    "routing.owner",
+    "routing.next_phase",
+    "routing.notes",
+    "links.related",
+    "source.date"
+  ],
+  "preserved_outside_schema": {
+    "links.related": [
+      {
+        "label": "ADR 20260702.213000Z: Shared UI Core Namespace",
+        "path": "adr.ui-core.draft.md"
+      }
+    ],
+    "routing": {
+      "next_phase": "proposed",
+      "notes": "JSON schema/contract surface for the UI/core family.",
+      "owner": "Athena"
+    },
+    "routing_section": "- Owner: Athena\n- Next phase: proposed\n- Notes: JSON schema/contract surface for the UI/core family.",
+    "source_date": "20260702.213000Z"
+  },
+  "projection_hash": "846f417f4615eeed76a446b41fffdf375bda65852e4422b80875093bc164ac1b",
+  "projection_path": "dev/adr-json-schemas-conformance/adr.json-schemas.projected.md",
+  "record_status": "draft",
+  "source_filename_status_suffix": ".draft",
+  "source_hash": "c95dfb0928ba1398eb058a7bb16b21f2dad77f4116169cbcc8075fb5186c2df5",
+  "source_path": "docs/adr/adr.json-schemas.draft.md",
+  "status": "active-conformance-record"
+}

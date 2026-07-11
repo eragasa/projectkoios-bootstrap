@@ -2,8 +2,8 @@
 {
   "title": "Vulcan active work",
   "artifact_type": "workspace-active-priorities",
-  "status": "json-document-database-separation-validated",
-  "datetime": "20260711.051951Z",
+  "status": "json-schemas-adr-conformance-planned-paused",
+  "datetime": "20260711.062654Z",
   "acting_as": "VULCAN",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/vulcan/",
@@ -11,19 +11,17 @@
   "priority_count": 3,
   "working_directory": "working/",
   "active_working_items": [
+    "docs/adr/adr.json-schemas.draft.md",
+    "docs/schemas/adr.schema.json",
+    "docs/plans/implementation-plan.20260711.062654_json-schemas-adr-conformance.md",
     "src/python/projectkoios/bootstrap/control_surface/documents/",
     "src/python/projectkoios/bootstrap/control_surface/storage/",
     "src/python/projectkoios/bootstrap/control_surface/adr/",
-    "tests/projectkoios/bootstrap/control_surface_storage/",
-    "tests/projectkoios/bootstrap/control_surface_adr/",
-    "dev/adr-json-database-one-adr-pilot/",
-    "docs/implementation/json-document-database-separation.20260711.051951.md",
-    "docs/AAR/aar.20260711.051951_json-document-database-separation.md"
+    "dev/adr-json-schemas-conformance/"
   ],
   "scratch_directory": "scratch/",
-  "source_brief": "docs/plans/implementation-brief.20260711.045012_json-document-database-separation.md",
-  "implementation_plan": "docs/plans/implementation-plan.20260711.050606_json-document-database-separation.md",
-  "latest_report": "docs/implementation/control-surface-cleanup-and-schema-conformance.20260711.061724.md"
+  "implementation_plan": "docs/plans/implementation-plan.20260711.062654_json-schemas-adr-conformance.md",
+  "previous_report": "docs/implementation/control-surface-cleanup-and-schema-conformance.20260711.061724.md"
 }
 ```
 
@@ -31,53 +29,37 @@
 
 ## Current priority stack
 
-1. Await ATHENA/user/Hermes review of the validated JSON document database separation slice.
-2. Preserve the explicit boundary: generic document store owns opaque JSON payload persistence; ADR layer owns ADR schema, projection, naming/lifecycle metadata, and evidence.
-3. Keep the pilot bounded to one ADR; do not bulk migrate, promote database authority, or add reusable repo-level config without a new brief.
+1. Await ATHENA/user/Hermes approval or revision of `docs/plans/implementation-plan.20260711.062654_json-schemas-adr-conformance.md`.
+2. Preserve the hard constraints: do not mutate `docs/adr/adr.json-schemas.draft.md`, do not populate `routing` in the schema record, and preserve `routing.*` plus `links.related` in sidecar evidence.
+3. If approved, implement only the YAGNI conformance slice for this one ADR-shaped source using the existing document/storage substrate.
 
 ## Latest working material
 
-- Architecture surface: `docs/architecture/architecture.json-adr-storage-topology.md`.
-- Source brief: `docs/plans/implementation-brief.20260711.045012_json-document-database-separation.md`.
-- Approved implementation plan: `docs/plans/implementation-plan.20260711.050606_json-document-database-separation.md`.
-- Implementation report: `docs/implementation/control-surface-cleanup-and-schema-conformance.20260711.061724.md`.
-- AAR: `docs/AAR/aar.20260711.051951_json-document-database-separation.md`.
-- Generic document/storage code: `src/python/projectkoios/bootstrap/control_surface/documents/`, `src/python/projectkoios/bootstrap/control_surface/storage/`.
-- ADR wrapper/code: `src/python/projectkoios/bootstrap/control_surface/adr/`.
-- Tests: `tests/projectkoios/bootstrap/control_surface_storage/`, `tests/projectkoios/bootstrap/control_surface_adr/`.
-- Pilot evidence: `dev/adr-json-database-one-adr-pilot/`.
+- Target source: `docs/adr/adr.json-schemas.draft.md`.
+- Target schema: `docs/schemas/adr.schema.json`.
+- Plan: `docs/plans/implementation-plan.20260711.062654_json-schemas-adr-conformance.md`.
+- Planned output directory: `dev/adr-json-schemas-conformance/`.
+- Prior validated substrate report: `docs/implementation/control-surface-cleanup-and-schema-conformance.20260711.061724.md`.
 
-## Latest validation evidence
+## Planned outputs if approved
 
-- `uv run pytest tests/projectkoios/bootstrap/control_surface_storage tests/projectkoios/bootstrap/control_surface_adr tests/projectkoios/bootstrap/schema -q` => `29 passed in 0.16s`.
-- `uv run mypy src/python/projectkoios/bootstrap/control_surface/documents src/python/projectkoios/bootstrap/control_surface/storage src/python/projectkoios/bootstrap/control_surface/adr tests/projectkoios/bootstrap/control_surface_storage tests/projectkoios/bootstrap/control_surface_adr` => `Success: no issues found in 15 source files`.
-- `uv run projectkoios bootstrap validate-python-policy src/python/projectkoios/bootstrap/control_surface/documents src/python/projectkoios/bootstrap/control_surface/storage src/python/projectkoios/bootstrap/control_surface/adr tests/projectkoios/bootstrap/control_surface_storage tests/projectkoios/bootstrap/control_surface_adr` => `summary: 0 finding(s), 15 file(s)`.
-- `git diff --check` => clean.
-- `find dev/adr-json-database-one-adr-pilot -type f \( -name '*.sqlite' -o -name '*.db' \) -print` => no output.
-- `git status --short -- docs/adr` => no output.
+- `dev/adr-json-schemas-conformance/adr.json-schemas.json`
+- `dev/adr-json-schemas-conformance/adr.json-schemas.projected.md`
+- `dev/adr-json-schemas-conformance/conversion-evidence.json`
+- `dev/adr-json-schemas-conformance/mapping.json`
+- `dev/adr-json-schemas-conformance/manifest.json`
+- `dev/adr-json-schemas-conformance/database-evidence.md`
 
-## Implementation notes
+## Pause state
 
-- Implemented `DocumentType.ADR` rather than a dangling document-kind constant.
-- Implemented enum/type ownership for introduced semantic evidence values.
-- Removed duplicate hashing helper modules and encapsulated JSON payload serialization/hash behavior on `DocumentRecord`.
-- Replaced Markdown parser constants with schema-derived section requirements and parser-owned legacy heading translation.
-- Replaced old ADR-specific `adr_records` DDL with generic `json_documents` DDL.
-- Removed ADR-specific query columns from the generic table.
-- Generated SQLite DDL from `DocumentRecord` through `DocumentStoreSqlSchema`.
-- Updated ADR parser/checkpoint behavior for the schema change that removed `routing`; source routing text is mapping evidence only.
-- Removed YAGNI `AdrRecordComparer`, moved pilot evidence building into `AdrPilotEvidenceBuilder`, and introduced `PilotAdrSourceConfig`.
-- Replaced `list_by_status` evidence with `list_by_kind(DocumentType.ADR)` evidence.
-- Preserved source `.draft.md` path/hash, old pilot identity, and mapping provenance in migration evidence.
+Coding is paused. Approval or requested revisions are required before implementation.
 
 ## Ignore for now
 
 - Bulk ADR migration.
-- Repository-level reusable ADR storage config.
+- Source Markdown mutation under `docs/adr/`.
+- ADR schema redesign.
+- Lifecycle/workflow/routing redesign.
+- Projection policy redesign.
+- Reusable repository-level ADR storage config.
 - Database-authoritative repository policy.
-- ADR naming/lifecycle policy changes.
-- Product-facing document database architecture.
-
-## Next expected artifact
-
-- ATHENA as-built review or user/Hermes decision on next slice.

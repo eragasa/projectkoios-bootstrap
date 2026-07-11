@@ -4,7 +4,7 @@
 
 - Type: workspace-active-state
 - Status: active
-- Updated: 20260709T013735Z
+- Updated: 20260711T065332Z
 - Updated by: KOIOS
 - Repository: projectkoios-bootstrap
 - Workspace: `workspaces/koios/`
@@ -24,6 +24,7 @@ ATHENA has accepted `docs/adr/adr.20260705.011836_adr-lifecycle-and-naming-conso
 - `working/provenance-note.20260705T100913Z_petrinet-followup-package.md`
 - `working/provenance-audit.20260709T012117Z_adr-lifecycle-followon-reconciliation.md`
 - `working/provenance-note.20260711T033323Z_architecture-led-workflow-doctrine.md`
+- `working/provenance-audit.20260711T065332Z_adr-json-schemas-conformance.md`
 - `../../docs/process-capture/pc.workflow.document-trace.md`
 - `../../docs/process-capture/pc.workflow.document-trace.20260706.025408Z.md`
 - `../../docs/process-capture/pc.workflow.document-trace.20260708.044950Z.md`
@@ -41,11 +42,14 @@ For workflow document traces, KOIOS captured partial traces for the workflow ada
 
 KOIOS preserved the ATHENA/user clarified architecture-led workflow doctrine: architecture documents are pre-implementation blueprints and later as-built documentation; implementation work is sliced into bounded briefs/plans/patches; implementation evidence must reconcile back into the architecture document as as-built state or explicit deviation/correction. KOIOS should watch that briefs, reports, patches, generated projections, and local database state do not replace architecture documents as durable system surfaces.
 
+KOIOS audited the uncommitted `adr.json-schemas` active conformance slice and found it provenance-safe for the bounded one-document scope. The audit confirms no `docs/adr/adr.json-schemas.draft.md` or `docs/schemas/adr.schema.json` mutation, no committed SQLite/DB file, sidecar preservation of omitted `routing.*` and `links.related`, and focused test pass. Watchpoints remain for a missing VULCAN implementation report for this completed conformance run and for preventing the `dev/` checkpoint from becoming global ADR storage authority without separate architecture approval.
+
 ## KOIOS next actions
 
 1. Re-audit any future architecture-document proposal against the captured control-surface criteria.
 2. Update or create provenance notes when accepted/proposed ADR surfaces change materially.
 3. Capture additional workflow document traces when multi-role slices expose document-state evolution worth preserving, especially after packaging decisions, stable-skill promotion decisions, or ADR/JSON migration pilots add new trace states.
+4. If the current conformance slice is packaged, ensure a VULCAN implementation report exists or explicitly record why the plan/tests/generated artifacts are sufficient for this small completed run.
 
 ## Blockers and cautions
 

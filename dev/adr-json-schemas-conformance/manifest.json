@@ -1,0 +1,83 @@
+{
+  "authority_mode": "active-json-checkpoint-with-sidecar-provenance",
+  "canonical_record": {
+    "document_type": "adr",
+    "id": "adr.json-schemas",
+    "slug": "json-schemas",
+    "status": "draft"
+  },
+  "conflict_rule": "The JSON checkpoint is the active conformed record for this target ADR; source Markdown remains unmutated source evidence; sidecars preserve conversion provenance; SQLite is generated local operational state.",
+  "conformance": {
+    "active_going_forward": true,
+    "name": "adr-json-schemas-conformance",
+    "status": "active-conformance-record"
+  },
+  "document_store": {
+    "document_kind_enum": "DocumentType.ADR",
+    "document_kind_value": "adr",
+    "documents_package": "projectkoios.bootstrap.control_surface.documents",
+    "generic_columns": [
+      "document_id",
+      "document_kind",
+      "payload_json",
+      "content_hash",
+      "created_at",
+      "updated_at"
+    ],
+    "memory_store": "MemoryDocumentStore",
+    "sqlite_store": "SqliteDocumentStore",
+    "storage_package": "projectkoios.bootstrap.control_surface.storage",
+    "table": "json_documents"
+  },
+  "evidence": {
+    "conversion": "dev/adr-json-schemas-conformance/conversion-evidence.json",
+    "database": "dev/adr-json-schemas-conformance/database-evidence.md",
+    "manifest": "dev/adr-json-schemas-conformance/manifest.json",
+    "mapping": "dev/adr-json-schemas-conformance/mapping.json",
+    "plan": "docs/plans/implementation-plan.20260711.062654_json-schemas-adr-conformance.md"
+  },
+  "generation": {
+    "method": "projectkoios.bootstrap.control_surface.adr.conformance.AdrConformanceRunner.run"
+  },
+  "json_checkpoint": {
+    "active_going_forward": true,
+    "content_hash": "e5f8c6729ee120ae4a266e6d5d575df3b9ae6f9fb86158c92a29995386a89bfb",
+    "path": "dev/adr-json-schemas-conformance/adr.json-schemas.json"
+  },
+  "markdown_projection": {
+    "path": "dev/adr-json-schemas-conformance/adr.json-schemas.projected.md",
+    "status": "generated-conformance-projection"
+  },
+  "schema": {
+    "content_hash": "0e98e297885d27d68acc15606f071d76f4e20b992cf7a8711e7d1c6fc6ac034f",
+    "id": "https://projectkoios.local/schemas/adr.schema.json",
+    "path": "docs/schemas/adr.schema.json",
+    "routing_allowed": false
+  },
+  "source_adr": {
+    "content_hash": "c95dfb0928ba1398eb058a7bb16b21f2dad77f4116169cbcc8075fb5186c2df5",
+    "date": "20260702.213000Z",
+    "legacy_filename_status_suffix": ".draft",
+    "mutated": false,
+    "path": "docs/adr/adr.json-schemas.draft.md",
+    "status": "draft"
+  },
+  "sqlite_operational_store": {
+    "committed_database_file": false,
+    "path": "dev/adr-json-schemas-conformance/generated-local/conformance.sqlite",
+    "policy": "Mutable .sqlite/.db files are local/generated and not committed."
+  },
+  "storage_adapter": {
+    "adr_wrapper": "projectkoios.bootstrap.control_surface.adr.storage.DocumentStoreAdrStorageAdapter",
+    "policy": "ADR conformance uses an ADR adapter wrapper over the generic JSON document store.",
+    "selected": "sqlite"
+  },
+  "watchpoints": {
+    "active_conformed_record": true,
+    "no_committed_sqlite_db": true,
+    "no_docs_adr_mutation": true,
+    "routing_absent_from_record": true,
+    "sidecar_preserves_links_related": true,
+    "sidecar_preserves_routing": true
+  }
+}

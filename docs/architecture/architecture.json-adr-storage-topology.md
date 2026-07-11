@@ -1,7 +1,7 @@
 ---
 status: pilot-as-built
 date: 20260711.032904Z
-last_updated: 20260711.060447Z
+last_updated: 20260711.062407Z
 back_to: architecture.00
 controlled_by: docs/adr/adr.json-database-for-adr-storage.draft.md
 ---
@@ -288,29 +288,29 @@ As-built manifest/config behavior:
 - The manifest declares non-authoritative pilot status, source/checkpoint/projection paths, hashes, storage adapter policy, selected SQLite adapter, local/generated DB policy, conflict rule, and architecture/brief/plan/report paths.
 - No reusable or global ADR storage configuration has been introduced.
 
-As-built validation evidence after separation slice:
+As-built validation evidence after cleanup/schema conformance:
 
 ```bash
-uv run pytest tests/projectkoios/bootstrap/control_surface_storage tests/projectkoios/bootstrap/control_surface_adr tests/projectkoios/bootstrap/schema -q
-# 26 passed in 0.16s
+uv run pytest -q
+# 253 passed in 1.27s
 
-uv run mypy src/python/projectkoios/bootstrap/control_surface/documents src/python/projectkoios/bootstrap/control_surface/storage src/python/projectkoios/bootstrap/control_surface/adr tests/projectkoios/bootstrap/control_surface_storage tests/projectkoios/bootstrap/control_surface_adr
-# Success: no issues found in 16 source files
+uv run mypy src/python tests
+# Success: no issues found in 139 source files
 
-uv run projectkoios bootstrap validate-python-policy src/python/projectkoios/bootstrap/control_surface/documents src/python/projectkoios/bootstrap/control_surface/storage src/python/projectkoios/bootstrap/control_surface/adr tests/projectkoios/bootstrap/control_surface_storage tests/projectkoios/bootstrap/control_surface_adr
-# summary: 0 finding(s), 16 file(s)
+uv run ruff check src/python tests
+# All checks passed!
+
+uv run projectkoios bootstrap validate-python-policy src/python tests
+# summary: 0 finding(s), 139 file(s)
 
 git diff --check
 # clean
 
 find dev/adr-json-database-one-adr-pilot -type f \( -name '*.sqlite' -o -name '*.db' \) -print
 # no output
-
-git status --short -- docs/adr
-# no output
 ```
 
-VULCAN reported this validation in `docs/implementation/json-document-database-separation.20260711.051951.md`. ATHENA has not rerun the validation commands in this reconciliation pass.
+VULCAN reported this whole-repo validation in `docs/implementation/control-surface-cleanup-and-schema-conformance.20260711.061724.md`. ATHENA has not rerun the full validation commands in this reconciliation pass.
 
 ## As-built conformance to architecture invariants
 
@@ -327,7 +327,7 @@ VULCAN reported this validation in `docs/implementation/json-document-database-s
 | Source and JSON hashes preserved | Manifest/mapping preserve source hash and JSON hash. | Conforms. |
 | Source date preserved despite schema gap | `mapping.json` preserves `20260702.121432Z` outside the plain ADR schema. | Conforms; schema gap remains. |
 | Validation and parser failures distinguishable | Mapping/test evidence records schema invalid-status failure separately from round-trip projection equality. | Conforms. |
-| Architecture evidence reconciled | This as-built section records delivered topology, separation slice evidence, and residual gaps. | Conforms for implementation-report reconciliation. |
+| Architecture evidence reconciled | This as-built section records delivered topology, cleanup/schema conformance evidence, and residual gaps. | Conforms for implementation-report reconciliation. |
 
 ## As-built residual gaps
 
@@ -343,16 +343,17 @@ Current residual gaps are observations, not authorization for schema expansion:
 - SQLite schema is now generic-document-store oriented and intentionally minimal; database-authoritative repository policy still requires a follow-up ADR.
 - Pilot-local manifest/config worked for this slice; reusable repository-level ADR storage config remains deferred.
 
-## Completed implementation slice: JSON document database separation of concerns
+## Completed implementation slice: JSON document database separation and schema conformance
 
 Active implementation evidence:
 
 - Brief: `docs/plans/implementation-brief.20260711.045012_json-document-database-separation.md`
 - Plan: `docs/plans/implementation-plan.20260711.050606_json-document-database-separation.md`
 - Report: `docs/implementation/json-document-database-separation.20260711.051951.md`
+- Cleanup/conformance report: `docs/implementation/control-surface-cleanup-and-schema-conformance.20260711.061724.md`
 - AAR: `docs/AAR/aar.20260711.051951_json-document-database-separation.md`
 
-The slice separated the generic JSON document database substrate from ADR-specific document behavior. The generalized substrate is piloted as SQLite storing canonical JSON payloads plus minimal generic metadata. ADR parsing, schema validation, naming/lifecycle preservation, Markdown projection, semantic equality, and pilot evidence remain in ADR-specific code.
+The slice separated generic document and storage concerns from ADR-specific document behavior. The generalized substrate is piloted as SQLite storing canonical JSON payloads plus minimal generic metadata. ADR parsing, schema validation, Markdown projection, record comparison, and pilot evidence remain in ADR-specific code. The cleanup/conformance pass updated generated ADR JSON to the schema without `routing`; source routing prose is preserved only in mapping/migration evidence.
 
 Migration evidence:
 
@@ -369,8 +370,11 @@ Boundaries preserved by the reported implementation:
 - No database-authority promotion was made.
 - No source `docs/adr/*.md` file was modified.
 - No mutable `.sqlite` or `.db` file is committed under the pilot directory.
+- `workflow_binding` remains untouched until a real Petri-net workflow integration brief exists.
 
-Recommended next state: user/Hermes review of the implementation evidence, then a YAGNI conformance slice that pushes ADRs toward the updated `docs/schemas/adr.schema.json` shape without `routing`. Do not expand naming/lifecycle metadata, state/event workflow semantics, reusable config, or durable storage-authority policy until actual workflow-system or conformance work creates a concrete need.
+ATHENA review result: accept the control-surface cleanup/schema conformance report as conforming to the current architecture and user YAGNI direction.
+
+Recommended next state: a bounded YAGNI conformance slice that pushes one additional ADR or ADR-like document toward the updated `docs/schemas/adr.schema.json` shape without `routing`. Going forward, records that enter the conformance flow are treated as active control-surface entries, not historical-only artifacts. Sidecar evidence may preserve prior source fields, source paths, and conversion facts, but the new conformed record is not framed as merely historical or non-authoritative unless the user explicitly says so. Do not expand naming/lifecycle metadata, state/event workflow semantics, reusable config, or durable storage-authority policy until actual workflow-system or conformance work creates a concrete need.
 
 ## Workflow lifecycle
 
@@ -404,7 +408,7 @@ The next slice should be a schema-conformance slice, not a schema-redesign, nami
 |---|---|---|---|
 | Existing ADR schema | Use updated `docs/schemas/adr.schema.json` without `routing`. | Current schema and user direction. | Convert or map ADRs to the current required shape before proposing further schema changes. |
 | `routing` field | Removed from ADR schema because it is not required for the Petri-net workflow. | User direction. | Do not populate `routing` for conformance and do not redesign it into state/event workflow metadata now. |
-| Source/projection metadata | Keep in sidecar mapping/manifest evidence unless the current schema already has a field. | KOIOS provenance requirements plus current schema. | Preserve source paths, hashes, copied/normalized/inferred fields, and old/new hashes for regenerated artifacts. |
+| Source/projection metadata | Keep conversion/provenance facts in sidecar mapping/manifest evidence unless the current schema already has a field. Going forward, sidecars preserve provenance but do not make newly conformed records historical-only. | KOIOS provenance requirements plus current schema and user active-forward direction. | Preserve source paths, hashes, copied/normalized/inferred fields, and old/new hashes for regenerated artifacts while treating the conformed record as active. |
 | Naming hierarchy | Prefer general-to-specific names when producing new identifiers, but do not build collision/repeated-topic machinery. | User direction plus existing naming/lifecycle surfaces. | If a pilot artifact identity changes, record old and new identity as migration evidence. |
 | Workflow system assumptions | Defer until a workflow system exists. | User/HERMES future workflow authority. | Do not add lifecycle transition graphs, event logs, or state machines to satisfy speculative future workflow design. |
 
