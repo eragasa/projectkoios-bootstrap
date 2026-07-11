@@ -60,6 +60,7 @@ The docs model is intentionally portable across Python 3, TypeScript, and Rust.
 | [architecture.json-schemas](architecture.json-schemas.md) | [adr.json-schemas](../adr/adr.json-schemas.draft.md) |
 | [architecture.agent-windows-with-on-message-triggers](architecture.agent-windows-with-on-message-triggers.md) | [adr.agent-windows-on-message-triggers](../adr/adr.agent-windows-on-message-triggers.draft.md) |
 | [architecture.json-adr-storage-topology](architecture.json-adr-storage-topology.md) | [adr.json-database-for-adr-storage](../adr/adr.json-database-for-adr-storage.draft.md) |
+| [architecture.adr-bidirectional-objects](architecture.adr-bidirectional-objects.md) | None |
 | [architecture.spike-entry-conditions](architecture.spike-entry-conditions.md) | [adr.spike-entry-conditions](../adr/adr.spike-entry-conditions.draft.md) |
 | [architecture.workspaces.00](architecture.workspaces.00.md) | None |
 | [architecture.workspaces.git](architecture.workspaces.git.md) | None |

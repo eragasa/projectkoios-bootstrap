@@ -2,8 +2,8 @@
 {
   "title": "Vulcan active work",
   "artifact_type": "workspace-active-priorities",
-  "status": "petrinet-workflow-status-queue-consistency-slice-6-implemented-validated",
-  "datetime": "20260711.131316Z",
+  "status": "adr-bidirectional-object-canary-slice-0-implemented-validated",
+  "datetime": "20260711.134900Z",
   "acting_as": "VULCAN",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/vulcan/",
@@ -11,17 +11,18 @@
   "priority_count": 1,
   "working_directory": "working/",
   "active_working_items": [
-    "docs/plans/implementation-brief.20260711.130723_petrinet-workflow-status-queue-consistency-slice-6.md",
-    "docs/reviews/hermes-decision.20260711.131000_petrinet-workflow-status-queue-consistency-slice-6.md",
-    "docs/implementation/petrinet-workflow-status-queue-consistency-slice-6.20260711.131316.md",
-    "dev/workflow-nets/bootstrap-harness.workflow-net.json",
-    "src/python/projectkoios/cli/workflow.py",
-    "tests/projectkoios/cli/test__workflow_reconcile_status.py"
+    "docs/architecture/architecture.adr-bidirectional-objects.md",
+    "docs/plans/implementation-brief.20260711.134200_adr-bidirectional-object-canary-slice-0.md",
+    "docs/reviews/hermes-decision.20260711.134500_adr-bidirectional-object-canary-slice-0.md",
+    "docs/implementation/adr-bidirectional-object-canary-slice-0.20260711.134900.md",
+    "dev/adr-bidirectional-object-canary-slice-0/",
+    "src/python/projectkoios/bootstrap/control_surface/adr/bidirectional.py",
+    "tests/projectkoios/bootstrap/control_surface_adr/test__AdrBidirectionalCanaryRunner__json_schemas.py"
   ],
   "scratch_directory": "scratch/",
   "implementation_plan": null,
-  "latest_report": "docs/implementation/petrinet-workflow-status-queue-consistency-slice-6.20260711.131316.md",
-  "latest_aar": "docs/AAR/aar.20260711.131316_petrinet-workflow-status-queue-consistency-slice-6.md"
+  "latest_report": "docs/implementation/adr-bidirectional-object-canary-slice-0.20260711.134900.md",
+  "latest_aar": "docs/AAR/aar.20260711.134900_adr-bidirectional-object-canary-slice-0.md"
 }
 ```
 
@@ -29,56 +30,55 @@
 
 ## Current priority stack
 
-1. `petrinet-workflow-status-queue-consistency-slice-6`: implemented and validated.
-2. Parent effort: Petri-net workflow harness / workflow inspectability.
-3. Boundaries preserved: `workflow status` remains read-only; reconciliation writes only `dev/workflow-nets/bootstrap-harness.workflow-net.json`; no queue activation, Petri-net firing/runtime mutation, generalized persistence/database/storage, git/chat/intercom/workspace reconstruction, Operator Console, workflow-object coupling, schema/product authority, global skill propagation, or `pi-skill-determinism-slice-0` implementation/supersession.
+1. `adr-bidirectional-object-canary-slice-0`: implemented and validated.
+2. Parent effort: ADR rationalization / bidirectional JSON-Markdown object architecture.
+3. Boundaries preserved: exactly one canary source; no `docs/adr` mutation; no `docs/schemas` mutation/publication; no database/storage authority; no committed `.sqlite`/`.db`; no bulk migration; no hand-authored Markdown ingest; no file moves/renames/status normalization/draft supersession; no Petri-net, Operator Console, or workflow-object integration.
 
 ## Latest working material
 
-- Brief: `docs/plans/implementation-brief.20260711.130723_petrinet-workflow-status-queue-consistency-slice-6.md`.
-- HERMES decision: `docs/reviews/hermes-decision.20260711.131000_petrinet-workflow-status-queue-consistency-slice-6.md`.
-- Implementation report: `docs/implementation/petrinet-workflow-status-queue-consistency-slice-6.20260711.131316.md`.
-- AAR: `docs/AAR/aar.20260711.131316_petrinet-workflow-status-queue-consistency-slice-6.md`.
+- Architecture: `docs/architecture/architecture.adr-bidirectional-objects.md`.
+- Brief: `docs/plans/implementation-brief.20260711.134200_adr-bidirectional-object-canary-slice-0.md`.
+- HERMES decision: `docs/reviews/hermes-decision.20260711.134500_adr-bidirectional-object-canary-slice-0.md`.
+- Implementation report: `docs/implementation/adr-bidirectional-object-canary-slice-0.20260711.134900.md`.
+- AAR: `docs/AAR/aar.20260711.134900_adr-bidirectional-object-canary-slice-0.md`.
 
 ## Implemented outputs
 
-- `uv run projectkoios workflow reconcile-status [--dry-run]`.
-- Status fixture reconciled to queue state: `active_slice=none` when queue `active_item` is null.
-- Status decision reason aligned with queue decision gate.
-- Focused reconciliation tests using temporary fixture copies.
+- `AdrBidirectionalCanaryRunner` and exported helper `run_adr_bidirectional_object_canary`.
+- Candidate canary evidence directory: `dev/adr-bidirectional-object-canary-slice-0/`.
+- Candidate envelope: `adr.json-schemas.bidirectional-object.json`.
+- Generated projection: `adr.json-schemas.projected.md`.
+- Sidecar/conversion evidence: `conversion-evidence.json`.
+- Manifest: `manifest.json`.
+- Focused tests covering candidate envelope, sidecar preservation, generated projection parse-back equality, source-mutation proof, and no database files.
 
 ## Validation results
 
 From repository root:
 
 ```bash
-uv run projectkoios workflow queue
-uv run projectkoios workflow reconcile-status --dry-run
-uv run projectkoios workflow status
+uv run pytest tests/projectkoios/bootstrap/control_surface_adr -q
 ```
 
-Passed. Status output shows `current-slice at user_decision`, `active_slice=none`, `requires_user_decision=true`, and `user decision required: yes`.
+Passed: `14 passed in 0.18s`.
 
 ```bash
-uv run pytest tests/projectkoios/cli/test__workflow_reconcile_status.py tests/projectkoios/cli/test__workflow_status.py tests/projectkoios/cli/test__workflow_queue.py tests/projectkoios/workflow -q
+uv run projectkoios bootstrap validate-python-policy src/python/projectkoios/bootstrap/control_surface/adr tests/projectkoios/bootstrap/control_surface_adr
 ```
 
-Passed: `28 passed in 0.08s`.
+Passed: `summary: 0 finding(s), 13 file(s)`.
 
 ```bash
-uv run projectkoios bootstrap validate-python-policy src/python/projectkoios/workflow src/python/projectkoios/cli tests/projectkoios/workflow tests/projectkoios/cli
-```
-
-Passed: `summary: 0 finding(s), 21 file(s)`.
-
-```bash
-uv run python -m json.tool dev/workflow-nets/bootstrap-harness.workflow-net.json >/dev/null
-uv run python -m json.tool dev/workflow-nets/bootstrap-harness.queue-state.json >/dev/null
+git status --short -- docs/adr/adr.json-schemas.draft.md
+git status --short -- docs/adr
+git status --short -- docs/schemas
+find dev/adr-bidirectional-object-canary-slice-0 -type f \( -name '*.sqlite' -o -name '*.db' \) -print
+uv run python -m json.tool dev/adr-bidirectional-object-canary-slice-0/adr.json-schemas.bidirectional-object.json >/dev/null
 git diff --check
 ```
 
-Passed.
+Passed for the exact canary source, `docs/schemas`, DB-file check, object JSON, and diff whitespace. At closeout, `git status --short -- docs/adr` also shows unrelated untracked `docs/adr/adr.json-authoritative-adr-store.draft.md`, which is not VULCAN-owned for this slice.
 
 ## Next expected artifact
 
-- USER/HERMES/ATHENA review or closeout/commit direction.
+- HERMES/USER review or closeout/commit direction.

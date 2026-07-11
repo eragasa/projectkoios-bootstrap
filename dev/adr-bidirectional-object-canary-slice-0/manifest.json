@@ -1,0 +1,37 @@
+{
+  "artifacts": {
+    "bidirectional_object": "dev/adr-bidirectional-object-canary-slice-0/adr.json-schemas.bidirectional-object.json",
+    "conversion_evidence": "dev/adr-bidirectional-object-canary-slice-0/conversion-evidence.json",
+    "manifest": "dev/adr-bidirectional-object-canary-slice-0/manifest.json",
+    "markdown_projection": "dev/adr-bidirectional-object-canary-slice-0/adr.json-schemas.projected.md"
+  },
+  "authority_mode": "candidate-evidence-only-not-repository-authority",
+  "boundaries": {
+    "bulk_migration": false,
+    "database_or_storage_authority": false,
+    "docs_adr_mutation": false,
+    "docs_schemas_mutation": false,
+    "hand_authored_markdown_ingest": false,
+    "mutable_database_files": false
+  },
+  "canary": {
+    "name": "adr-bidirectional-object-canary-slice-0",
+    "source_count": 1,
+    "status": "candidate-object-evidence-only"
+  },
+  "hashes": {
+    "content": "e5f8c6729ee120ae4a266e6d5d575df3b9ae6f9fb86158c92a29995386a89bfb",
+    "conversion_evidence": "520bfdd9bd70960a8bcd92f91597438a67c67b2bdc8329266a5fdafc63da471d",
+    "projection": "326ec086e69598cc90cb9d9059fe92325e7455409d3b834bf4bdffbed40058dc",
+    "schema": "0e98e297885d27d68acc15606f071d76f4e20b992cf7a8711e7d1c6fc6ac034f",
+    "source": "c95dfb0928ba1398eb058a7bb16b21f2dad77f4116169cbcc8075fb5186c2df5"
+  },
+  "source": {
+    "legacy_filename_status_suffix": ".draft",
+    "observed_date": "20260702.213000Z",
+    "observed_status": "draft",
+    "observed_status_casing": "draft",
+    "path": "docs/adr/adr.json-schemas.draft.md",
+    "sha256": "c95dfb0928ba1398eb058a7bb16b21f2dad77f4116169cbcc8075fb5186c2df5"
+  }
+}

@@ -1,0 +1,156 @@
+{
+  "authority_mode": "candidate-evidence-only-not-repository-authority",
+  "classification": {
+    "category": "template_schema_contract",
+    "disposition_note": "Envelope metadata only; does not change source status, filename, lifecycle authority, or schema authority.",
+    "secondary_aspect": "architecture_blueprint",
+    "source_authority_effect": "none",
+    "source_role": "canary_source"
+  },
+  "conflict_policy": {
+    "bulk_migration": false,
+    "hand_authored_markdown_ingest": false,
+    "json_vs_markdown": "projection_only_no_ingest",
+    "source_overwrite": false,
+    "unsupported_fields": "preserve_in_sidecar_evidence"
+  },
+  "content": {
+    "acceptance_criteria": [
+      "a reviewer can tell that the namespace holds schemas only",
+      "the UI/core concept remains defined elsewhere",
+      "workflow UI can consume the namespace without being defined by it",
+      "schema/contract validation remains separate from UI architecture decisions"
+    ],
+    "architecture_spec": "The JSON schemas namespace is a supporting surface for the UI/core family.\n\nIt should define:\n- schema files and contract files only\n- the machine-readable shapes used by the shared UI/core family\n- any constraints needed to validate those shapes\n\nIt should not define:\n- shared UI/core semantics\n- workflow UI behavior\n- rendering internals",
+    "consequences": "- schema and contract work stays separate from UI/core design\n- the shared UI/core ADR can remain renderer-agnostic\n- workflow UI can consume schemas without becoming the schema authority\n- future tooling can validate against one schema namespace",
+    "context": {
+      "acting_as": "user(Eugene)",
+      "architecture_domain": "software",
+      "delegated_operator": "pi",
+      "from": "HERMES",
+      "origin": "user request",
+      "repository": "projectkoios-bootstrap",
+      "scope": "projectkoios-bootstrap"
+    },
+    "decision": "Adopt a JSON schemas namespace for the UI/core family that holds schemas and contracts only.\n\nThe JSON schemas namespace:\n- defines machine-readable shapes and contracts\n- supports the shared UI/core family without replacing it\n- may be referenced by workflow UI or renderer layers\n- does not define the UI concept itself\n\nThe JSON schemas namespace does not cover:\n- the UI/core domain model\n- rendering implementation\n- marshalling or unmarshalling\n- framework choices\n- transport or runtime internals",
+    "id": "adr.json-schemas",
+    "implementation_brief": "If accepted, update UI architecture guidance so the JSON schemas namespace is linked as a separate adjacent surface next to `adr.ui-core` and `adr.workflow-ui`.\n\nverification_method: review a proposed schema note and confirm that it defines shapes only, not UI semantics or renderer behavior.",
+    "links": {
+      "back_to": "architecture.00",
+      "superseded_by": null,
+      "supersedes": null
+    },
+    "non_goals": [
+      "defining the shared UI/core model itself",
+      "choosing renderer implementation details",
+      "defining workflow UI behavior",
+      "merging schema work into UI core work"
+    ],
+    "resolved_open_questions": [
+      "Which schema files belong in the first version of the namespace?",
+      "Should the namespace be flat or grouped by family later?",
+      "Which tooling should validate the schema files?"
+    ],
+    "slug": "json-schemas",
+    "status": "draft",
+    "title": "JSON Schemas Namespace",
+    "validation_expectations": [
+      "schema documents can be identified as contracts only",
+      "the shared UI/core model remains separate and renderer-agnostic",
+      "workflow UI can reference schemas without losing its own boundary"
+    ]
+  },
+  "conversion_evidence": {
+    "inferred_fields": {},
+    "lossiness": "unsupported source fields preserved outside content in sidecar/evidence",
+    "normalized_fields": {
+      "bullet_sections": "converted Markdown bullets to JSON arrays",
+      "context_labels": "converted source labels to schema snake_case keys",
+      "none_links": "converted textual None values to JSON null",
+      "title_heading": "removed ADR timestamp prefix"
+    },
+    "notes": [
+      "Candidate object evidence only; source Markdown remains the source Markdown.",
+      "Classification and disposition metadata are outside content.",
+      "No docs/schemas publication or mutation is performed."
+    ],
+    "omitted_from_content_preserved_in_sidecar": [
+      "routing",
+      "links.related",
+      "source.date",
+      "source.filename_status_suffix"
+    ],
+    "projection_parse_back_semantic_equal": true,
+    "schema_valid": true,
+    "source_hash_after": "c95dfb0928ba1398eb058a7bb16b21f2dad77f4116169cbcc8075fb5186c2df5",
+    "source_hash_before": "c95dfb0928ba1398eb058a7bb16b21f2dad77f4116169cbcc8075fb5186c2df5",
+    "source_mutated": false
+  },
+  "markdown_projection": {
+    "hand_authored_markdown_ingest": false,
+    "mode": "generated_projection_evidence_only",
+    "parse_back_scope": "generated_projection_only",
+    "path": "dev/adr-bidirectional-object-canary-slice-0/adr.json-schemas.projected.md",
+    "sha256": "326ec086e69598cc90cb9d9059fe92325e7455409d3b834bf4bdffbed40058dc"
+  },
+  "object_type": "AdrBidirectionalObject",
+  "object_version": "candidate-0",
+  "sidecar": {
+    "links.related": [
+      {
+        "label": "ADR 20260702.213000Z: Shared UI Core Namespace",
+        "path": "adr.ui-core.draft.md"
+      }
+    ],
+    "observed_source_date": "20260702.213000Z",
+    "observed_source_status_text": "draft",
+    "routing": {
+      "next_phase": "proposed",
+      "notes": "JSON schema/contract surface for the UI/core family.",
+      "owner": "Athena"
+    },
+    "routing_section": "- Owner: Athena\n- Next phase: proposed\n- Notes: JSON schema/contract surface for the UI/core family.",
+    "scope": "canary-evidence-only-not-published-schema",
+    "source_hash": "c95dfb0928ba1398eb058a7bb16b21f2dad77f4116169cbcc8075fb5186c2df5",
+    "source_path": "docs/adr/adr.json-schemas.draft.md"
+  },
+  "source_refs": {
+    "architecture": {
+      "path": "docs/architecture/architecture.adr-bidirectional-objects.md"
+    },
+    "brief": {
+      "path": "docs/plans/implementation-brief.20260711.134200_adr-bidirectional-object-canary-slice-0.md"
+    },
+    "projection": {
+      "path": "dev/adr-bidirectional-object-canary-slice-0/adr.json-schemas.projected.md",
+      "sha256": "326ec086e69598cc90cb9d9059fe92325e7455409d3b834bf4bdffbed40058dc"
+    },
+    "schema": {
+      "id": "https://projectkoios.local/schemas/adr.schema.json",
+      "path": "docs/schemas/adr.schema.json",
+      "sha256": "0e98e297885d27d68acc15606f071d76f4e20b992cf7a8711e7d1c6fc6ac034f"
+    },
+    "source_markdown": {
+      "legacy_filename_status_suffix": ".draft",
+      "observed_date": "20260702.213000Z",
+      "observed_status": "draft",
+      "observed_status_casing": "draft",
+      "path": "docs/adr/adr.json-schemas.draft.md",
+      "sha256": "c95dfb0928ba1398eb058a7bb16b21f2dad77f4116169cbcc8075fb5186c2df5"
+    }
+  },
+  "validation": {
+    "content_schema_valid": true,
+    "no_docs_adr_mutation_intended": true,
+    "no_docs_schemas_mutation_intended": true,
+    "no_mutable_database_files_created": true,
+    "projection_parse_back_semantic_equal": true,
+    "schema_hash": "0e98e297885d27d68acc15606f071d76f4e20b992cf7a8711e7d1c6fc6ac034f",
+    "schema_path": "docs/schemas/adr.schema.json",
+    "source_mutation_proof": {
+      "mutated": false,
+      "source_hash_after": "c95dfb0928ba1398eb058a7bb16b21f2dad77f4116169cbcc8075fb5186c2df5",
+      "source_hash_before": "c95dfb0928ba1398eb058a7bb16b21f2dad77f4116169cbcc8075fb5186c2df5"
+    }
+  }
+}

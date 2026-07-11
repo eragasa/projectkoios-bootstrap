@@ -2,8 +2,8 @@
 {
   "title": "Athena active work",
   "artifact_type": "workspace-active-priorities",
-  "status": "petrinet-workflow-status-queue-consistency-slice-6-athena-and-hermes-accepted-with-watchpoints",
-  "datetime": "20260711.131900Z"},{
+  "status": "adr-bidirectional-object-canary-slice-0-athena-conformance-accepted-with-watchpoints",
+  "datetime": "20260711.135500Z"},{
   "acting_as": "ATHENA",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/athena/",
@@ -71,6 +71,7 @@
     "docs/plans/implementation-brief.20260711.124950_petrinet-workflow-activate-slice-5.md",
     "docs/plans/implementation-brief.20260711.130723_petrinet-workflow-status-queue-consistency-slice-6.md",
     "docs/plans/architecture-intake.20260711.131140_adr-bidirectional-json-markdown-objects.md",
+    "docs/architecture/architecture.adr-bidirectional-objects.md",
     "docs/plans/roadmap.20260711.102324_workflow-object-future-slices.md",
     "src/typescript/projectkoios/ui/operator-console/"
   ]
@@ -83,7 +84,7 @@
 
 1. Workflow-object Slice 0 is implemented, VULCAN-validated, ATHENA conformance-reviewed and implementation-reviewed/accepted, KOIOS-reviewed, and USER/HERMES-accepted with watchpoints.
 2. Operator Console P0/P1/P2 are implemented, user-previewed where required, ATHENA-reviewed/accepted, and reconciled into architecture as bootstrap-incubation as-built evidence.
-3. Active HERMES-selected workflow-engine slice `petrinet-workflow-status-queue-consistency-slice-6` is implemented by VULCAN and ATHENA/HERMES-accepted with watchpoints; pending next workflow decision or packaging.
+3. `adr-bidirectional-object-canary-slice-0` is implemented and ATHENA conformance-reviewed/accepted with watchpoints; JSON-authoritative authority-change ADR proposal remains pending HERMES/USER review.
 
 ## Recently completed
 
@@ -123,15 +124,21 @@
 
 ## Current active item
 
-- `petrinet-workflow-status-queue-consistency-slice-6`
-  - Parent effort: Petri-net workflow harness / workflow inspectability.
-  - Status: VULCAN implemented; ATHENA reviewed and accepted with watchpoints; HERMES acceptance exists; pending USER/HERMES next workflow decision/packaging.
-  - Purpose: reconcile `workflow status` with `workflow queue` through an explicit status-fixture update path, without activating queued work.
+- `adr-bidirectional-json-markdown-objects`
+  - Parent effort: ADR rationalization / JSON↔Markdown object architecture.
+  - Status: canary slice 0 implemented by VULCAN and ATHENA conformance-reviewed/accepted with watchpoints; JSON-authoritative authority-change ADR proposal remains pending HERMES/USER review.
+  - Purpose: use one-source canary as evidence/mechanics only while HERMES/USER decides JSON-authoritative migration authority.
   - Key artifacts:
-    - `docs/plans/implementation-brief.20260711.130723_petrinet-workflow-status-queue-consistency-slice-6.md`
-    - `docs/implementation/petrinet-workflow-status-queue-consistency-slice-6.20260711.131316.md`
-    - `docs/reviews/architecture-conformance.20260711.131900_petrinet-workflow-status-queue-consistency-slice-6.md`
-    - `docs/reviews/hermes-acceptance.20260711.131600_petrinet-workflow-status-queue-consistency-slice-6.md`
+    - `docs/plans/architecture-intake.20260711.131140_adr-bidirectional-json-markdown-objects.md`
+    - `workspaces/koios/working/provenance-intake.20260711_adr-rationalization-json-md-object-track.md`
+    - `workspaces/koios/working/candidate-schema.20260711_adr-bidirectional-json-md-object.md`
+    - `workspaces/koios/working/classification-proposal.20260711_adr-hierarchy-rationalization.md`
+    - `docs/architecture/architecture.adr-bidirectional-objects.md`
+    - `docs/architecture/architecture.json-adr-storage-topology.md`
+    - `docs/plans/implementation-brief.20260711.134200_adr-bidirectional-object-canary-slice-0.md`
+    - `docs/implementation/adr-bidirectional-object-canary-slice-0.20260711.134900.md`
+    - `docs/reviews/architecture-conformance.20260711.135500_adr-bidirectional-object-canary-slice-0.md`
+    - `docs/adr/adr.json-authoritative-adr-store.draft.md`
 
 ## Queued/backlog items
 
@@ -139,12 +146,9 @@
    - Queue artifact: `docs/plans/queued-slice.20260711.122000_pi-skill-determinism-slice-0.md`.
    - Ordering: queued; do not activate unless USER/HERMES explicitly selects it.
    - Boundary: must not replace, rename, reframe, or block Petri-net workflow work.
-2. `adr-bidirectional-json-markdown-objects`
-   - Intake artifact: `docs/plans/architecture-intake.20260711.131140_adr-bidirectional-json-markdown-objects.md`.
-   - Boundary: architecture/spec intake only; separate from active VULCAN Slice 6 workflow-engine work; no code, no ADR mutation, no bulk migration.
-3. `operator-console-review-orientation-copy-fixture`
+2. `operator-console-review-orientation-copy-fixture`
    - Deferred UI readability/provenance refinement.
-   - Boundary: not active while Petri-net workflow inspectability remains selected.
+   - Boundary: not active while ADR bidirectional object architecture awaits review.
 
 ## Superseded/rejected items
 
@@ -155,13 +159,16 @@
 
 ## Waiting on / blocked items
 
+- HERMES/USER review of ATHENA's conformance acceptance for `adr-bidirectional-object-canary-slice-0`.
+- HERMES/USER review of authority-change ADR proposal `docs/adr/adr.json-authoritative-adr-store.draft.md` before any mass conversion, schema publication, source mutation, or VULCAN routing for authority-changing work.
 - USER/HERMES next workflow decision after accepted `petrinet-workflow-status-queue-consistency-slice-6`: activate `pi-skill-determinism-slice-0`, define another workflow-engine control slice, or package/commit current work.
 - Commit/push boundary for accumulated accepted work remains a separate packaging decision.
 
 ## Recommended next actions
 
-1. USER/HERMES should decide packaging/commit handling for accepted Slice 6.
-2. Choose whether to activate `pi-skill-determinism-slice-0` or define another workflow-engine control slice.
+1. HERMES/USER should review ATHENA's canary conformance acceptance and decide final acceptance.
+2. HERMES/USER should review `docs/adr/adr.json-authoritative-adr-store.draft.md` as the authority-change proposal and decide whether to accept, revise, or defer it.
+2. USER/HERMES should decide packaging/commit handling for accepted Slice 6.
 3. Preserve `pi-skill-determinism-slice-0` as queued-only unless explicitly activated.
 
 ## Packaging watchpoints

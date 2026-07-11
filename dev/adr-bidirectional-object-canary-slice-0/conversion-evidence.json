@@ -1,0 +1,58 @@
+{
+  "authority_note": "Candidate object evidence only; does not change ADR source authority, schema authority, storage authority, or lifecycle status.",
+  "classification_outside_content": true,
+  "conflict_policy": {
+    "bulk_migration": false,
+    "hand_authored_markdown_ingest": false,
+    "json_vs_markdown": "projection_only_no_ingest",
+    "source_overwrite": false,
+    "unsupported_fields": "preserve_in_sidecar_evidence"
+  },
+  "projection": {
+    "path": "dev/adr-bidirectional-object-canary-slice-0/adr.json-schemas.projected.md",
+    "sha256": "326ec086e69598cc90cb9d9059fe92325e7455409d3b834bf4bdffbed40058dc"
+  },
+  "schema": {
+    "id": "https://projectkoios.local/schemas/adr.schema.json",
+    "path": "docs/schemas/adr.schema.json",
+    "sha256": "0e98e297885d27d68acc15606f071d76f4e20b992cf7a8711e7d1c6fc6ac034f"
+  },
+  "sidecar_preserves": {
+    "links.related": [
+      {
+        "label": "ADR 20260702.213000Z: Shared UI Core Namespace",
+        "path": "adr.ui-core.draft.md"
+      }
+    ],
+    "observed_source_date": "20260702.213000Z",
+    "observed_source_status_text": "draft",
+    "routing": {
+      "next_phase": "proposed",
+      "notes": "JSON schema/contract surface for the UI/core family.",
+      "owner": "Athena"
+    }
+  },
+  "source": {
+    "legacy_filename_status_suffix": ".draft",
+    "observed_date": "20260702.213000Z",
+    "observed_status": "draft",
+    "observed_status_casing": "draft",
+    "path": "docs/adr/adr.json-schemas.draft.md",
+    "sha256": "c95dfb0928ba1398eb058a7bb16b21f2dad77f4116169cbcc8075fb5186c2df5"
+  },
+  "status": "candidate-object-evidence-only",
+  "validation": {
+    "content_schema_valid": true,
+    "no_docs_adr_mutation_intended": true,
+    "no_docs_schemas_mutation_intended": true,
+    "no_mutable_database_files_created": true,
+    "projection_parse_back_semantic_equal": true,
+    "schema_hash": "0e98e297885d27d68acc15606f071d76f4e20b992cf7a8711e7d1c6fc6ac034f",
+    "schema_path": "docs/schemas/adr.schema.json",
+    "source_mutation_proof": {
+      "mutated": false,
+      "source_hash_after": "c95dfb0928ba1398eb058a7bb16b21f2dad77f4116169cbcc8075fb5186c2df5",
+      "source_hash_before": "c95dfb0928ba1398eb058a7bb16b21f2dad77f4116169cbcc8075fb5186c2df5"
+    }
+  }
+}

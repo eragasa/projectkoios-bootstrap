@@ -1,3 +1,9 @@
+from projectkoios.bootstrap.control_surface.adr.bidirectional import (
+    AdrBidirectionalCanaryPaths,
+    AdrBidirectionalCanaryResult,
+    AdrBidirectionalCanaryRunner,
+    run_adr_bidirectional_object_canary,
+)
 from projectkoios.bootstrap.control_surface.adr.conformance import (
     AdrConformancePaths,
     AdrConformanceResult,
@@ -18,6 +24,9 @@ from projectkoios.bootstrap.control_surface.adr.storage import AdrStorageAdapter
 from projectkoios.bootstrap.control_surface.adr.validation import AdrRecordValidator
 
 __all__ = [
+    "AdrBidirectionalCanaryPaths",
+    "AdrBidirectionalCanaryResult",
+    "AdrBidirectionalCanaryRunner",
     "AdrConformancePaths",
     "AdrConformanceResult",
     "AdrConformanceRunner",
@@ -34,6 +43,7 @@ __all__ = [
     "PilotResult",
     "ReplacementAction",
     "SourceOfTruthMode",
+    "run_adr_bidirectional_object_canary",
     "run_json_schemas_conformance",
     "run_pilot",
 ]

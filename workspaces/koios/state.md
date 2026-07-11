@@ -4,7 +4,7 @@
 
 - Type: workspace-state
 - Status: active
-- Updated: 20260711T132000Z
+- Updated: 20260711T132500Z
 - Updated by: KOIOS
 - Repository: projectkoios-bootstrap
 - Workspace: `workspaces/koios/`
@@ -37,6 +37,7 @@ Captured/advisory artifacts in this workspace:
 - `working/provenance-note.20260711_status-queue-consistency-slice.md`
 - `working/provenance-intake.20260711_adr-rationalization-json-md-object-track.md`
 - `working/candidate-schema.20260711_adr-bidirectional-json-md-object.md`
+- `working/classification-proposal.20260711_adr-hierarchy-rationalization.md`
 - `../../docs/process-capture/pc.workflow.document-trace.md`
 - `../../docs/process-capture/pc.workflow.document-trace.20260706.025408Z.md`
 - `../../docs/process-capture/pc.workflow.document-trace.20260708.044950Z.md`
@@ -87,6 +88,8 @@ KOIOS captured bounded provenance input for a status/queue consistency slice in 
 KOIOS completed ADR rationalization / bidirectional JSON↔Markdown object provenance intake in `working/provenance-intake.20260711_adr-rationalization-json-md-object-track.md`. The note validates ADR corpus messiness, inventories lifecycle/naming, storage topology, JSON/database pilot, and conformance surfaces, incorporates ATHENA intake, and preserves that authority/object semantics must remain architecture-owned before implementation or bulk migration.
 
 KOIOS added a non-authoritative candidate schema sketch in `working/candidate-schema.20260711_adr-bidirectional-json-md-object.md`. It proposes an envelope around existing ADR schema payloads with projection, conversion evidence, source refs, sidecar, validation, and conflict-policy sections. This requires ATHENA/USER promotion before any schema publication or implementation.
+
+KOIOS completed `working/classification-proposal.20260711_adr-hierarchy-rationalization.md` as non-authoritative hierarchy/classification input for existing `docs/adr/` files. It maps observed ADR-like files into proposed categories, parent/topic groups, uncertainty flags, and promotion boundaries for future ATHENA/HERMES decisions.
 
 ## Authority boundary
 

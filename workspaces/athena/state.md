@@ -2,8 +2,8 @@
 {
   "title": "Athena workspace state",
   "artifact_type": "workspace-state",
-  "status": "petrinet-workflow-status-queue-consistency-slice-6-athena-and-hermes-accepted-with-watchpoints",
-  "datetime": "20260711.131900Z",
+  "status": "adr-bidirectional-object-canary-slice-0-athena-conformance-accepted-with-watchpoints",
+  "datetime": "20260711.135500Z",
   "acting_as": "ATHENA",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/athena/",
@@ -140,18 +140,30 @@
 - VULCAN implemented `petrinet-workflow-activate-slice-5` and ATHENA reviewed/accepted it technically after deterministic JSON fixture remediation. ATHENA reconciled slices 3, 4, and 5 into `docs/architecture/architecture.petrinet.00.md` and indexed current workflow command surfaces in `docs/architecture/architecture.workflows.00.md`.
 - HERMES/USER selected next action 3: next workflow-engine slice. HERMES observed `workflow status` still reports `active_slice=petrinet-workflow-current-slice-status-reconciliation-slice-2`, while `workflow queue` shows active none, Slice 4 completed, Slice 5 accepted/pushed, and `pi-skill-determinism-slice-0` queued-only. ATHENA drafted `docs/plans/implementation-brief.20260711.130723_petrinet-workflow-status-queue-consistency-slice-6.md` to reconcile status/queue consistency through an explicit status-fixture update path, then paused.
 - HERMES relayed a separate USER architecture concern that ADRs are messy and could be rationalized into bidirectional JSON↔Markdown objects. ATHENA produced architecture/spec intake only at `docs/plans/architecture-intake.20260711.131140_adr-bidirectional-json-markdown-objects.md`; it is separate from active VULCAN workflow-engine Slice 6 work and does not authorize code, ADR mutation, schema change, or bulk migration.
+- HERMES relayed USER selection of option 1: promote ADR bidirectional JSON↔Markdown object work from intake toward architecture. ATHENA drafted `docs/architecture/architecture.adr-bidirectional-objects.md` as an architecture surface defining bounded object/envelope model, bidirectional semantics, authority boundaries, canary-first path, and schema-promotion rules. ATHENA updated `docs/architecture/architecture.00.md` to index the new surface and paused for HERMES/USER review.
+- HERMES relayed USER/HERMES GO on the recommended ADR rationalization architecture package with one more ATHENA architecture addendum before VULCAN implementation. ATHENA amended `docs/architecture/architecture.adr-bidirectional-objects.md` with a hierarchy/disposition model based on KOIOS classification, including category metadata rules, provenance-only vs canary evidence boundaries, first-canary classification for `docs/adr/adr.json-schemas.draft.md`, and explicit non-actions.
+- HERMES relayed USER question about where provenance proportionality and SQLite ACID clarification belong. ATHENA added provenance proportionality to `docs/architecture/architecture.adr-bidirectional-objects.md` and SQLite pilot storage guarantees to `docs/architecture/architecture.json-adr-storage-topology.md`, without code, schema, or ADR content changes.
+- HERMES relayed USER/HERMES direction to keep pushing toward implementation of the ADR bidirectional object path and treat the architecture as accepted enough for the next bounded brief. ATHENA drafted `docs/plans/implementation-brief.20260711.134200_adr-bidirectional-object-canary-slice-0.md` for one-source canary evidence using `docs/adr/adr.json-schemas.draft.md`, then paused for HERMES/USER approval before VULCAN routing.
+- HERMES relayed USER clarification that the desired end state is mass conversion of ADR Markdown to JSON with JSON as authority. ATHENA drafted authority-change ADR proposal `docs/adr/adr.json-authoritative-adr-store.draft.md`, covering JSON authority, Markdown projection disposition, migration phases/gates, conflict policy, status normalization, sidecar/provenance, schema/versioning, storage authority, rollback/audit trail, and `docs/adr/*.md` post-migration disposition. No code, schema changes, or existing ADR content mutation was performed.
+- VULCAN implemented `adr-bidirectional-object-canary-slice-0` and reported `docs/implementation/adr-bidirectional-object-canary-slice-0.20260711.134900.md`. ATHENA reviewed and accepted it with watchpoints in `docs/reviews/architecture-conformance.20260711.135500_adr-bidirectional-object-canary-slice-0.md`, reran focused validation, and confirmed it remains evidence-only with no ADR/source/schema/storage authority change.
 
 ## Current active item
 
-- `petrinet-workflow-status-queue-consistency-slice-6`
-  - Parent effort: Petri-net workflow harness / workflow inspectability.
-  - Status: VULCAN implemented; ATHENA reviewed and accepted with watchpoints; HERMES acceptance exists; pending USER/HERMES next workflow decision/packaging.
-  - Purpose: reconcile `workflow status` with `workflow queue` through an explicit status-fixture update path, without activating queued work.
+- `adr-bidirectional-json-markdown-objects`
+  - Parent effort: ADR rationalization / JSON↔Markdown object architecture.
+  - Status: canary slice 0 implemented by VULCAN and ATHENA conformance-reviewed/accepted with watchpoints; JSON-authoritative authority-change ADR proposal remains pending HERMES/USER review.
+  - Purpose: use one-source canary as evidence/mechanics only while HERMES/USER decides JSON-authoritative migration authority.
   - Key artifacts:
-    - `docs/plans/implementation-brief.20260711.130723_petrinet-workflow-status-queue-consistency-slice-6.md`
-    - `docs/implementation/petrinet-workflow-status-queue-consistency-slice-6.20260711.131316.md`
-    - `docs/reviews/architecture-conformance.20260711.131900_petrinet-workflow-status-queue-consistency-slice-6.md`
-    - `docs/reviews/hermes-acceptance.20260711.131600_petrinet-workflow-status-queue-consistency-slice-6.md`
+    - `docs/plans/architecture-intake.20260711.131140_adr-bidirectional-json-markdown-objects.md`
+    - `workspaces/koios/working/provenance-intake.20260711_adr-rationalization-json-md-object-track.md`
+    - `workspaces/koios/working/candidate-schema.20260711_adr-bidirectional-json-md-object.md`
+    - `workspaces/koios/working/classification-proposal.20260711_adr-hierarchy-rationalization.md`
+    - `docs/architecture/architecture.adr-bidirectional-objects.md`
+    - `docs/architecture/architecture.json-adr-storage-topology.md`
+    - `docs/plans/implementation-brief.20260711.134200_adr-bidirectional-object-canary-slice-0.md`
+    - `docs/implementation/adr-bidirectional-object-canary-slice-0.20260711.134900.md`
+    - `docs/reviews/architecture-conformance.20260711.135500_adr-bidirectional-object-canary-slice-0.md`
+    - `docs/adr/adr.json-authoritative-adr-store.draft.md`
 
 ## Queued/backlog items
 
@@ -159,10 +171,7 @@
    - Queue artifact: `docs/plans/queued-slice.20260711.122000_pi-skill-determinism-slice-0.md`.
    - Ordering: queued; do not activate unless USER/HERMES explicitly selects it.
    - Boundary: must not replace, rename, reframe, or block Petri-net workflow work.
-2. `adr-bidirectional-json-markdown-objects`
-   - Intake artifact: `docs/plans/architecture-intake.20260711.131140_adr-bidirectional-json-markdown-objects.md`.
-   - Boundary: architecture/spec intake only; separate from active VULCAN Slice 6 workflow-engine work; no code, no ADR mutation, no bulk migration.
-3. `operator-console-review-orientation-copy-fixture`
+2. `operator-console-review-orientation-copy-fixture`
    - Deferred UI readability/provenance refinement.
 
 ## Superseded/rejected items
@@ -174,12 +183,14 @@
 
 ## Waiting on / blocked items
 
+- HERMES/USER review of ATHENA's conformance acceptance for `adr-bidirectional-object-canary-slice-0`.
+- HERMES/USER review of authority-change ADR proposal `docs/adr/adr.json-authoritative-adr-store.draft.md` before any mass conversion, schema publication, source mutation, or VULCAN routing for authority-changing work.
 - USER/HERMES next workflow decision after accepted `petrinet-workflow-status-queue-consistency-slice-6`: activate `pi-skill-determinism-slice-0`, define another workflow-engine control slice, or package/commit current work.
 - Commit/push boundary for accumulated accepted work remains a separate packaging decision.
 
 ## Open questions
 
-- USER/HERMES review of `petrinet-workflow-status-queue-consistency-slice-6` brief and decision whether to route to VULCAN planning/implementation.
+- HERMES/USER review of `docs/architecture/architecture.adr-bidirectional-objects.md`.
 - USER/HERMES review of future-slice roadmap if desired; roadmap is advisory and does not authorize later slices.
 - Whether to close/commit the accepted Operator Console P0/P1/P2 plus workflow-object architecture/brief bundle or select another bounded UI slice.
 - When to extract `src/typescript/projectkoios/ui/operator-console/` to `projectkoios/ui/operator-console/` and promote product/mothership authority.
@@ -191,8 +202,9 @@
 
 - Owner: HERMES/USER.
 - Recommended next actions:
-  1. USER/HERMES should decide packaging/commit handling for accepted Slice 6.
-  2. Choose whether to activate `pi-skill-determinism-slice-0` or define another workflow-engine control slice.
+  1. HERMES/USER should review ATHENA's canary conformance acceptance and decide final acceptance.
+  2. HERMES/USER should review `docs/adr/adr.json-authoritative-adr-store.draft.md` as the authority-change proposal and decide whether to accept, revise, or defer it.
+  2. USER/HERMES should decide packaging/commit handling for accepted Slice 6.
   3. Preserve `pi-skill-determinism-slice-0` as queued-only unless explicitly activated.
 - Operator Console P0/P1/P2 accepted boundaries: bootstrap incubation only; package-local lockfile only; behavior owned by ActionObject-style classes with data in typed interfaces/constants; `docs/policies/typescript-coding.md` remains draft/non-controlling; fixtures are static/stale-by-design; readability/navigation affordances are local browser inspection helpers only; no backend, live reads, messaging capability, activation/mutation, Petri-net graph editor, product UI authority, or bootstrap production-backend claim.
 - ADR conformance work remains available as a separate track: future slices should use updated `docs/schemas/adr.schema.json` without `routing`, preserve sidecar provenance, and avoid schema/lifecycle/workflow/storage-authority redesign unless repeated conformance pressure justifies it.

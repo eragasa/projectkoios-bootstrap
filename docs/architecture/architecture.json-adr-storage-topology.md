@@ -1,7 +1,7 @@
 ---
 status: pilot-as-built
 date: 20260711.032904Z
-last_updated: 20260711.070254Z
+last_updated: 20260711.133600Z
 back_to: architecture.00
 controlled_by: docs/adr/adr.json-database-for-adr-storage.draft.md
 ---
@@ -129,6 +129,18 @@ For the current pilot, the adapter layer should be minimal and decision-evidence
 A generated local SQLite database used by the pilot storage adapter to exercise database ingest, query/update as needed, export, and projection workflows.
 
 For the current pilot, SQLite is operationally exercised behind the adapter boundary but not committed as mutable repository authority.
+
+## SQLite pilot storage guarantees
+
+SQLite is acceptable as the embedded pilot store because SQLite provides ACID transactions under normal configuration. That makes it suitable for bounded local pilot evidence behind the storage adapter boundary.
+
+Caveats:
+
+- Do not commit mutable `.sqlite` or `.db` files by default.
+- Do not weaken durability settings such as `synchronous=OFF` unless the deviation is explicit, documented, and approved for the slice.
+- Do not assume server-style or unconstrained multi-writer semantics from the embedded SQLite pilot.
+- Preserve the generic storage adapter boundary; SQLite behavior must not leak into ADR mapping, projection, validation, or workflow policy.
+- Repository authority remains reviewed JSON, Markdown, manifests, mappings, projections, and implementation evidence unless a later ADR explicitly promotes database authority.
 
 ### JSON checkpoint/export
 
