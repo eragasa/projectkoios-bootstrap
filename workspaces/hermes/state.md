@@ -3,7 +3,7 @@
   "title": "Hermes workspace state",
   "artifact_type": "workspace-state",
   "status": "active",
-  "datetime": "20260711.181500Z",
+  "datetime": "20260712",
   "acting_as": "HERMES",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/hermes/",
@@ -18,36 +18,42 @@
 
 ## Current focus
 
-Package Hermes control-surface guardrails after tightening `workspaces/hermes/AGENTS.md` to RFC-style normative language, then choose the next bounded action.
+Reconcile startup workflow queue/status visibility with accepted ADR successor-planning state, then choose whether to activate Slice 11.
 
 ## Current validated state
 
 - Stable ADR filename convention/control-surface corrections and corrected retrospective Slice 12 acceptance were committed and pushed as `d9aa360c Stabilize ADR filename convention and parser compatibility`.
 - Initial Hermes control-surface guardrails were committed and pushed as `92556ac9 Harden Hermes control-surface guardrails`.
-- USER asked to check whether control surfaces correspond with RFC normative language.
-- HERMES reviewed root `AGENTS.md`, Hermes `AGENTS.md`, `state.md`, and `active.md` without changing files.
-- Finding: root `AGENTS.md` uses uppercase normative keywords, while Hermes `AGENTS.md` used several non-RFC imperative/lowercase modal forms for guardrails.
-- USER said `go`.
-- HERMES updated `workspaces/hermes/AGENTS.md` in the working tree so the guardrails use uppercase normative language (`MUST`, `MUST NOT`, `SHOULD NOT`, `MAY`) where intended as durable policy.
+- Hermes normative-language guardrail tightening was committed as `4fba6224 Tighten Hermes guardrails with normative language`.
+- Accepted Slice 10 records proposal-only successor planning for the ADR template/schema contract:
+  - `docs/plans/successor-brief.20260711.172500_adr-template-schema-contract.md`
+  - `docs/reviews/hermes-acceptance.20260711.174500_adr-template-schema-contract-successor-planning-slice-10.md`
+- Accepted Slice 10 recommends the next bounded action `adr-template-schema-contract-successor-draft-slice-11`, with intended output `docs/adr/adr.adr-template-schema-contract.draft.md`.
+- User observed the Petri-net workflow status skill may be incomplete because the queue/status surface hid the ADR successor next action.
+- USER said `go` to HERMES recommendation to reconcile the queue/status gap before activating Slice 11.
 
 ## Current coherent state
 
-Current uncommitted work is a Hermes workspace policy/control-surface normative-language tightening only:
+Current working-tree reconciliation updates:
 
 ```text
-workspaces/hermes/AGENTS.md
+dev/workflow-nets/bootstrap-harness.queue-state.json
+tests/projectkoios/cli/test__workflow_queue.py
+docs/implementation/workflow-queue-adr-successor-reconciliation.20260712.md
 workspaces/hermes/state.md
 workspaces/hermes/active.md
 ```
 
+The queue fixture should now show `adr-template-schema-contract-successor-draft-slice-11` as `recommended-next` while preserving `pi-skill-determinism-slice-0` as queued.
+
 ## Active boundaries
 
-This guardrail language update does not authorize creating the successor ADR draft, editing existing `docs/adr/` files, editing `docs/schemas/`, changing source status or casing, supersession, lifecycle changes, migration, generated projection replacement, database/storage authority, or cutover.
+This reconciliation does not authorize creating the successor ADR draft, editing existing `docs/adr/` files, editing `docs/schemas/`, changing source status or casing, supersession, lifecycle changes, migration, generated projection replacement, database/storage authority, or cutover.
 
 ## Current blockers
 
-- HERMES_USER decision is required for packaging/commit.
+- Validation and packaging are pending.
 
 ## Next owner
 
-HERMES_USER for packaging and next bounded decision.
+HERMES for validation/package, then HERMES_USER for deciding whether to activate Slice 11.

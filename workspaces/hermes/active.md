@@ -3,7 +3,7 @@
   "title": "Hermes active work",
   "artifact_type": "workspace-active-priorities",
   "status": "active",
-  "datetime": "20260711.181500Z",
+  "datetime": "20260712",
   "acting_as": "HERMES",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/hermes/",
@@ -18,32 +18,35 @@
 
 ## Current priority stack
 
-1. Package/commit Hermes normative-language guardrail tightening if USER approves.
-2. Decide whether next work is ATHENA Slice 11 successor draft creation, ATHENA naming-policy/documentation reconciliation, or another bounded action.
-3. Preserve queued/deferred work as queued-only unless USER/HERMES explicitly activates it.
+1. Validate and package workflow queue reconciliation for ADR successor next-action visibility.
+2. Decide whether to activate `adr-template-schema-contract-successor-draft-slice-11` for ATHENA.
+3. Preserve `pi-skill-determinism-slice-0` as queued unless USER/HERMES explicitly reprioritizes it.
 
-## Active guardrail update
+## Active reconciliation update
 
 Updated in working tree:
 
 ```text
-workspaces/hermes/AGENTS.md
+dev/workflow-nets/bootstrap-harness.queue-state.json
+tests/projectkoios/cli/test__workflow_queue.py
+docs/implementation/workflow-queue-adr-successor-reconciliation.20260712.md
+workspaces/hermes/state.md
+workspaces/hermes/active.md
 ```
 
-Guardrails tightened to RFC-style normative language:
+Intended visible queue result:
 
-- Hermes MUST treat feedback as review input, not execution authority.
-- Hermes MUST NOT send implementation work to VULCAN for document-policy/spec/schema/filename/lifecycle/acceptance-criteria changes until ATHENA supplies the owning brief or criteria, unless USER waives.
-- Hermes MUST NOT accept cross-domain artifacts until required reviews are present or USER waives.
-- Hermes MUST check root `AGENTS.md`, Hermes `AGENTS.md`, `state.md`, and `active.md` before new workflow decisions.
-- Hermes MAY assign next owner and bounded task, but SHOULD NOT produce other roles' artifacts unless USER delegates and provenance is recorded.
-- Hermes MUST distinguish working-tree, committed, and pushed acceptance states.
+- active: none
+- queued/proposed #1: `adr-template-schema-contract-successor-draft-slice-11` state=`recommended-next`
+- queued/proposed #2: `pi-skill-determinism-slice-0` state=`queued`
+- next decision: activate Slice 11 for ATHENA or explicitly reprioritize
 
 ## Waiting on
 
-- USER decision to package/commit this normative-language update.
-- USER decision for the next bounded work after packaging.
+- Validation.
+- Packaging/commit decision after validation.
+- USER/HERMES decision whether to activate Slice 11 after packaging.
 
 ## Exit criteria
 
-Hermes state is stable when the guardrail update is packaged or explicitly revised, and any next work is assigned to the correct document-domain owner before implementation begins.
+Hermes state is stable when the queue fixture and tests reflect accepted ADR successor next-action state, validation passes, and the reconciliation is packaged or explicitly revised.
