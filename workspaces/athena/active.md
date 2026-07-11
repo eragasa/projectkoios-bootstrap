@@ -2,8 +2,8 @@
 {
   "title": "Athena active work",
   "artifact_type": "workspace-active-priorities",
-  "status": "adr-semantic-rationalization-six-entry-slice-5-review-complete-pending-hermes-user-acceptance",
-  "datetime": "20260711.155000Z"},{
+  "status": "adr-template-schema-contract-repair-planning-slice-6-plan-complete-pending-hermes-user-acceptance",
+  "datetime": "20260711.160500Z"},{
   "acting_as": "ATHENA",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/athena/",
@@ -131,10 +131,10 @@
 
 ## Current active item
 
-- `adr-semantic-rationalization-six-entry-slice-5`
+- `adr-template-schema-contract-repair-planning-slice-6`
   - Parent effort: ADR rationalization / JSON-authoritative ADR store staged migration.
-  - Status: ATHENA semantic rationalization review complete at `docs/reviews/semantic-rationalization.20260711_adr-six-entry-slice-5.md`; pending HERMES/USER acceptance consideration.
-  - Purpose: classify whether the six Slice 4 ADR/control-surface entries still make semantic sense as current/project authority, need revision, are source-only/provenance, template/control, excluded, or deferred, without source mutation or conversion mechanics.
+  - Status: ATHENA repair plan complete at `docs/plans/repair-plan.20260711.155500_adr-template-schema-contract-slice-6.md`; pending HERMES/USER acceptance consideration.
+  - Purpose: decide the next safe repair path for accepted-like but semantically mixed/stale `docs/adr/adr.adr-template-contract.md` without mutating the source yet.
   - Key artifacts:
     - `docs/plans/architecture-intake.20260711.131140_adr-bidirectional-json-markdown-objects.md`
     - `workspaces/koios/working/provenance-intake.20260711_adr-rationalization-json-md-object-track.md`
@@ -186,6 +186,11 @@
     - `docs/plans/architecture-review-brief.20260711.154300_adr-semantic-rationalization-slice-5.md`
     - `docs/reviews/hermes-decision.20260711.154700_adr-semantic-rationalization-six-entry-slice-5.md`
     - `docs/reviews/semantic-rationalization.20260711_adr-six-entry-slice-5.md`
+    - `docs/reviews/hermes-acceptance.20260711.155200_adr-semantic-rationalization-six-entry-slice-5.md`
+    - `workspaces/koios/working/provenance-review.20260711_adr-semantic-rationalization-six-entry-slice-5.md`
+    - `docs/plans/architecture-brief.20260711.155500_adr-template-contract-repair-planning-slice-6.md`
+    - `docs/reviews/hermes-decision.20260711.160000_adr-template-schema-contract-repair-planning-slice-6.md`
+    - `docs/plans/repair-plan.20260711.155500_adr-template-schema-contract-slice-6.md`
 
 ## Queued/backlog items
 
@@ -206,12 +211,12 @@
 
 ## Waiting on / blocked items
 
-- HERMES/USER acceptance decision for `docs/reviews/semantic-rationalization.20260711_adr-six-entry-slice-5.md`.
+- HERMES/USER acceptance decision for `docs/plans/repair-plan.20260711.155500_adr-template-schema-contract-slice-6.md`.
 - Slice 0 package is committed/pushed as `ad91148c`; later package boundaries remain separate unless HERMES reports committed/pushed.
 
 ## Recommended next actions
 
-1. HERMES/USER should review and accept/revise/reject the Slice 5 semantic rationalization review.
+1. HERMES/USER should review and accept/revise/reject the Slice 6 template/schema contract repair plan.
 2. Preserve `pi-skill-determinism-slice-0` as queued-only unless explicitly activated.
 
 ## Packaging watchpoints

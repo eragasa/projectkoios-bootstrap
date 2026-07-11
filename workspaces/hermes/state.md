@@ -3,7 +3,7 @@
   "title": "Hermes workspace state",
   "artifact_type": "workspace-state",
   "status": "active",
-  "datetime": "20260711.155200Z",
+  "datetime": "20260711.160700Z",
   "acting_as": "HERMES",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/hermes/",
@@ -18,53 +18,59 @@
 
 ## Current focus
 
-Close out accepted `adr-semantic-rationalization-six-entry-slice-5`, then choose the next bounded action.
+Close out accepted `adr-template-schema-contract-repair-planning-slice-6`, then choose the next bounded action.
 
 ## Current validated state
 
-- Slice 4 is complete, committed, and pushed as `14451818 Accept ADR JSON corpus dry-run inventory slice 4`.
-- USER selected ADR semantic rationalization after Slice 4.
-- KOIOS provided provenance input in `workspaces/koios/working/next-proof-input.20260711_adr-semantic-rationalization-after-slice-4.md`.
-- ATHENA produced `docs/reviews/semantic-rationalization.20260711_adr-six-entry-slice-5.md`.
-- KOIOS reviewed Slice 5 provenance in `workspaces/koios/working/provenance-review.20260711_adr-semantic-rationalization-six-entry-slice-5.md` and found it adequate for review-only acceptance/packaging with minor watchpoints.
-- HERMES accepted Slice 5 as review-only semantic disposition evidence in `docs/reviews/hermes-acceptance.20260711.155200_adr-semantic-rationalization-six-entry-slice-5.md`.
-- Closeout validation passed for review-only scope:
+- Slice 5 is complete, committed, and pushed as `f2df856 Accept ADR semantic rationalization slice 5`.
+- USER selected template/schema contract repair planning.
+- KOIOS provided provenance input in `workspaces/koios/working/next-proof-input.20260711_template-schema-contract-repair-planning.md`.
+- ATHENA produced `docs/plans/repair-plan.20260711.155500_adr-template-schema-contract-slice-6.md`.
+- KOIOS reviewed Slice 6 provenance in `workspaces/koios/working/provenance-review.20260711_adr-template-schema-contract-repair-planning-slice-6.md` and found it adequate for proposal-only acceptance/packaging with minor watchpoints.
+- VULCAN provided implementation-reality input in `docs/reviews/implementation-reality.20260711_adr-template-schema-contract-repair-planning-slice-6.md`, supporting the plan and clarifying current code/schema/tooling constraints.
+- HERMES accepted Slice 6 as proposal-only repair planning in `docs/reviews/hermes-acceptance.20260711.160700_adr-template-schema-contract-repair-planning-slice-6.md`.
+- Closeout validation passed for planning-only scope:
   - `git status --short -- docs/adr docs/schemas dev/adr-json-authority-corpus-dry-run-inventory-slice-4` produced no output.
   - `git diff --check` passed.
 
-## Accepted Slice 5 scope
+## Accepted Slice 6 scope
 
 Slice name:
 
 ```text
-adr-semantic-rationalization-six-entry-slice-5
+adr-template-schema-contract-repair-planning-slice-6
 ```
 
-Accepted entries/order:
+Target source:
 
-1. `docs/adr/README.md`
-2. `docs/adr/adr.petrinet.20260705.132740Z.md`
-3. `docs/adr/adr.adr-template-contract.md`
-4. `docs/adr/adr.json-schemas.draft.md`
-5. `docs/adr/adr.schema-base.md`
-6. `docs/adr/adr.adr-lifecycle.draft.md`
+```text
+docs/adr/adr.adr-template-contract.md
+```
 
-## Accepted semantic dispositions
+Accepted repair plan:
 
-- `docs/adr/README.md`: `index_or_control_surface_exclude`; control surface, not ADR decision authority.
-- `docs/adr/adr.petrinet.20260705.132740Z.md`: `current_coherent_authority_candidate`; current bounded bootstrap Petri-net authority, not product/runtime or JSON authority by implication.
-- `docs/adr/adr.adr-template-contract.md`: `template_or_schema_contract`; authority-relevant but needs revision before clean current schema/template authority.
-- `docs/adr/adr.json-schemas.draft.md`: draft schema namespace/template-contract candidate; not current ADR JSON authority.
-- `docs/adr/adr.schema-base.md`: schema-family concept pending status/surface review; `current_but_needs_revision` label must not be read as current ADR authority until lifecycle/status and surface placement are resolved.
-- `docs/adr/adr.adr-lifecycle.draft.md`: `source_only_provenance`; subordinate to accepted active lifecycle/naming ADR.
+```text
+docs/plans/repair-plan.20260711.155500_adr-template-schema-contract-slice-6.md
+```
+
+## Accepted recommendation
+
+- Primary next path: draft a successor ADR/template-schema contract proposal in a future approved slice.
+- Fallback: create a review-only errata/reconciliation note first if HERMES/USER wants lower-risk staging.
+- Do not mutate `docs/adr/adr.adr-template-contract.md` in place as the first repair action.
+- VULCAN implementation-reality constraints for successor planning:
+  - current tooling treats `routing` as sidecar/provenance, not ADR content;
+  - current tooling does not implement `dcn`;
+  - `workflow_binding` is schema-supported but not operational workflow authority;
+  - hand-authored Markdown remains source/control for unmigrated records and generated projections are non-authoritative evidence.
 
 ## Acceptance boundaries
 
-Slice 5 acceptance is review-only. It does not authorize source mutation, status changes/normalization, formal acceptance/activation/rejection/supersession/promotion/demotion, file moves/renames/deletes/archives, schema changes, JSON conversion/projection generation, authoritative JSON ADR records, database/storage authority, bulk/corpus migration, authority cutover, or treating Slice 4 `dev/` evidence as semantic authority.
+Slice 6 acceptance is proposal-only. It does not authorize editing `docs/adr/adr.adr-template-contract.md`, editing any source ADR, status normalization or lifecycle state changes, formal supersession/acceptance/activation/rejection/promotion/demotion, schema changes, file moves/renames/deletes/archives/splits, JSON conversion/projection generation, generated projection replacement, authoritative JSON ADR records, database/storage authority, migration, JSON authority cutover, or creating a successor ADR draft without future explicit approval.
 
 ## Current blockers
 
-- None for accepted Slice 5.
+- None for accepted Slice 6.
 
 ## Next owner
 
@@ -72,4 +78,4 @@ Slice 5 acceptance is review-only. It does not authorize source mutation, status
 
 ## Current status summary
 
-`adr-semantic-rationalization-six-entry-slice-5` is complete and accepted as review-only semantic disposition evidence. The working tree contains Slice 5 planning/approval/review/acceptance artifacts plus role workspace state updates awaiting packaging/commit.
+`adr-template-schema-contract-repair-planning-slice-6` is complete and accepted as proposal-only repair planning. The working tree contains Slice 6 planning/approval/review/acceptance artifacts plus role workspace state updates awaiting packaging/commit.
