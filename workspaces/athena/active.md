@@ -2,8 +2,8 @@
 {
   "title": "Athena active work",
   "artifact_type": "workspace-active-priorities",
-  "status": "adr-json-authority-corpus-dry-run-inventory-slice-4-brief-drafted-pending-hermes-user-approval",
-  "datetime": "20260711.151500Z"},{
+  "status": "adr-semantic-rationalization-six-entry-slice-5-review-complete-pending-hermes-user-acceptance",
+  "datetime": "20260711.155000Z"},{
   "acting_as": "ATHENA",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/athena/",
@@ -131,10 +131,10 @@
 
 ## Current active item
 
-- `adr-json-authority-corpus-dry-run-inventory-slice-4`
+- `adr-semantic-rationalization-six-entry-slice-5`
   - Parent effort: ADR rationalization / JSON-authoritative ADR store staged migration.
-  - Status: VULCAN implemented, corrected KOIOS omission-reporting blocker, and ATHENA architecture/conformance-reviewed as accepted-with-watchpoints after correction in `docs/reviews/architecture-conformance.20260711.153400_adr-json-authority-corpus-dry-run-inventory-slice-4.md`; pending KOIOS provenance review and HERMES/USER final acceptance.
-  - Purpose: run a candidate-only dry-run over exactly six selected ADR/index entries to test multi-file reporting and lossiness/conflict aggregation without authority cutover, source mutation, schema changes, DB/storage authority, or bulk migration.
+  - Status: ATHENA semantic rationalization review complete at `docs/reviews/semantic-rationalization.20260711_adr-six-entry-slice-5.md`; pending HERMES/USER acceptance consideration.
+  - Purpose: classify whether the six Slice 4 ADR/control-surface entries still make semantic sense as current/project authority, need revision, are source-only/provenance, template/control, excluded, or deferred, without source mutation or conversion mechanics.
   - Key artifacts:
     - `docs/plans/architecture-intake.20260711.131140_adr-bidirectional-json-markdown-objects.md`
     - `workspaces/koios/working/provenance-intake.20260711_adr-rationalization-json-md-object-track.md`
@@ -181,7 +181,11 @@
     - `docs/reviews/hermes-decision.20260711.152000_adr-json-authority-corpus-dry-run-inventory-slice-4.md`
     - `docs/implementation/adr-json-authority-corpus-dry-run-inventory-slice-4.20260711.153000.md`
     - `docs/reviews/architecture-conformance.20260711.153400_adr-json-authority-corpus-dry-run-inventory-slice-4.md`
+    - `docs/reviews/hermes-acceptance.20260711.154100_adr-json-authority-corpus-dry-run-inventory-slice-4.md`
     - `dev/adr-json-authority-corpus-dry-run-inventory-slice-4/`
+    - `docs/plans/architecture-review-brief.20260711.154300_adr-semantic-rationalization-slice-5.md`
+    - `docs/reviews/hermes-decision.20260711.154700_adr-semantic-rationalization-six-entry-slice-5.md`
+    - `docs/reviews/semantic-rationalization.20260711_adr-six-entry-slice-5.md`
 
 ## Queued/backlog items
 
@@ -202,12 +206,12 @@
 
 ## Waiting on / blocked items
 
-- KOIOS provenance review and HERMES/USER final acceptance for `adr-json-authority-corpus-dry-run-inventory-slice-4`.
+- HERMES/USER acceptance decision for `docs/reviews/semantic-rationalization.20260711_adr-six-entry-slice-5.md`.
 - Slice 0 package is committed/pushed as `ad91148c`; later package boundaries remain separate unless HERMES reports committed/pushed.
 
 ## Recommended next actions
 
-1. HERMES should wait for/obtain KOIOS provenance review, then decide final acceptance for Slice 4.
+1. HERMES/USER should review and accept/revise/reject the Slice 5 semantic rationalization review.
 2. Preserve `pi-skill-determinism-slice-0` as queued-only unless explicitly activated.
 
 ## Packaging watchpoints
