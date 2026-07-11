@@ -1,0 +1,17 @@
+{
+  "hand_authored_source_parsed_as_replacement": false,
+  "normalized_status_candidate": "accepted",
+  "observed_status_text": "Accepted",
+  "parseback_source": "generated_projection_only",
+  "parseback_status_text": "Accepted",
+  "projection_hash": "d13ab9acbba3bdedfaeb34e97dbdc36ad8cada7391740fabc0434a629de5f848",
+  "projection_introduced_authority": false,
+  "projection_path": "dev/adr-json-authority-projectable-messy-canary-slice-3/generated-projection.md",
+  "projection_resolves_review_blockers": false,
+  "requires_review": true,
+  "semantic_equal_for_candidate_fields": true,
+  "slice_name": "adr-json-authority-projectable-messy-canary-slice-3",
+  "source_path": "docs/adr/adr.adr-template-contract.md",
+  "status_casing_preserved_in_projection_record": true,
+  "status_normalized_by_projection_or_parseback": false
+}

@@ -1,0 +1,48 @@
+{
+  "artifact_hashes": {
+    "candidate_object": "a7a3e10b0dc5186d02f4e08b3b744651d1f63c07bd7a151d868a1a6b3cbf6d9f",
+    "conflict_lossiness_report": "ccce0d7cd653648cbfe2fc812cb9a7f741ad9ca72afb94832044ba8698705a80",
+    "conversion_evidence": "373fb1eb455996358ced740021606819968fb69d08512bc0fc7a84f187cf411f",
+    "generated_projection_sha256": "d13ab9acbba3bdedfaeb34e97dbdc36ad8cada7391740fabc0434a629de5f848",
+    "projection_parseback_evidence": "ef69b01d6e5e9a4166622ff09b16a611e74e83bba89cc93ecf6a7021aa57eaec",
+    "sidecar_provenance": "ade102e7f283957d0278283d9a8aeaf1beb711b00a984a994de268eabc2e0c98"
+  },
+  "artifacts": {
+    "candidate_object": "dev/adr-json-authority-projectable-messy-canary-slice-3/candidate-object.json",
+    "conflict_lossiness_report": "dev/adr-json-authority-projectable-messy-canary-slice-3/conflict-lossiness-report.json",
+    "conversion_evidence": "dev/adr-json-authority-projectable-messy-canary-slice-3/conversion-evidence.json",
+    "generated_projection": "dev/adr-json-authority-projectable-messy-canary-slice-3/generated-projection.md",
+    "manifest": "dev/adr-json-authority-projectable-messy-canary-slice-3/manifest.json",
+    "projection_parseback_evidence": "dev/adr-json-authority-projectable-messy-canary-slice-3/projection-parseback-evidence.json",
+    "sidecar_provenance": "dev/adr-json-authority-projectable-messy-canary-slice-3/sidecar-provenance.json"
+  },
+  "authority_change": false,
+  "candidate_only": true,
+  "conversion_scope": "exactly-one-source",
+  "database_authority": false,
+  "generated_at": "20260711.145600Z",
+  "mode": "candidate projectable messy canary evidence only",
+  "outcome": "projectable_candidate_blocked_pending_template_contract_and_status_review",
+  "schema_change_allowed": false,
+  "slice_name": "adr-json-authority-projectable-messy-canary-slice-3",
+  "source": {
+    "path": "docs/adr/adr.adr-template-contract.md",
+    "sha256": "2876dfbe031105d383fa9e33cec7d5dd49cf569cea6f43eae59e8fa1da502895"
+  },
+  "source_mutation_allowed": false,
+  "source_refs": {
+    "brief": "docs/plans/implementation-brief.20260711.145300_adr-json-authority-projectable-messy-canary-slice-3.md",
+    "hermes_decision": "docs/reviews/hermes-decision.20260711.145600_adr-json-authority-projectable-messy-canary-slice-3.md",
+    "koios_input": "workspaces/koios/working/next-proof-input.20260711_adr-json-authority-after-messy-canary-slice-2.md",
+    "reviewed_inventory": "dev/adr-json-authority-inventory-review-overrides-slice-1/reviewed-inventory.json",
+    "slice_1_acceptance": "docs/reviews/hermes-acceptance.20260711.143600_adr-json-authority-inventory-review-overrides-slice-1.md",
+    "slice_2_acceptance": "docs/reviews/hermes-acceptance.20260711.145000_adr-json-authority-messy-canary-slice-2.md"
+  },
+  "validation_command_summary": {
+    "exactly_one_source": "docs/adr/adr.adr-template-contract.md",
+    "json_validity": "pending closeout validation",
+    "no_database_files": "pending closeout validation",
+    "projection_location": "dev/adr-json-authority-projectable-messy-canary-slice-3/generated-projection.md only",
+    "source_schema_non_mutation": "pending closeout validation"
+  }
+}

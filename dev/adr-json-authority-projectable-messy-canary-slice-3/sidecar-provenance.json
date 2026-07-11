@@ -1,0 +1,51 @@
+{
+  "authority_change": false,
+  "candidate_only": true,
+  "normalized_status_candidate": "accepted",
+  "observed_source_status_text": "Accepted",
+  "parseback_reference": {
+    "parseback_source": "generated_projection_only",
+    "path": "dev/adr-json-authority-projectable-messy-canary-slice-3/projection-parseback-evidence.json",
+    "payload_hash": "ef69b01d6e5e9a4166622ff09b16a611e74e83bba89cc93ecf6a7021aa57eaec"
+  },
+  "projection_reference": {
+    "hash": "d13ab9acbba3bdedfaeb34e97dbdc36ad8cada7391740fabc0434a629de5f848",
+    "non_authoritative_generated_evidence": true,
+    "path": "dev/adr-json-authority-projectable-messy-canary-slice-3/generated-projection.md"
+  },
+  "reviewed_inventory_reference": {
+    "authority_change": false,
+    "automatic_conversion_eligibility_candidate": false,
+    "candidate_only": true,
+    "exclusion_blocking_reasons": [
+      "manual_review_required",
+      "status_casing_or_text_would_normalize"
+    ],
+    "owner_domain_review_flags": {
+      "domain_review_required": false,
+      "manual_review_required": true,
+      "owner_review_required": true
+    },
+    "reviewed_authority_effect": "candidate",
+    "reviewed_category": "template_schema_contract",
+    "reviewed_disposition": "manual_review_required",
+    "source_hash": "2876dfbe031105d383fa9e33cec7d5dd49cf569cea6f43eae59e8fa1da502895"
+  },
+  "routing_preserved_outside_content_candidate": {
+    "next_phase": "accepted",
+    "notes": "This ADR governs the JSON ADR source-of-truth surface.",
+    "owner": "Athena"
+  },
+  "slice_name": "adr-json-authority-projectable-messy-canary-slice-3",
+  "source_hash_after": "2876dfbe031105d383fa9e33cec7d5dd49cf569cea6f43eae59e8fa1da502895",
+  "source_hash_before": "2876dfbe031105d383fa9e33cec7d5dd49cf569cea6f43eae59e8fa1da502895",
+  "source_path": "docs/adr/adr.adr-template-contract.md",
+  "source_title": "Canonical ADR proposal template",
+  "status_casing_preserved_separately": true,
+  "unsupported_or_domain_sensitive_material": [
+    "template/schema-contract classification",
+    "status casing normalization policy",
+    "manual-review and owner-review blocking flags",
+    "routing/lifecycle notes outside current content candidate"
+  ]
+}

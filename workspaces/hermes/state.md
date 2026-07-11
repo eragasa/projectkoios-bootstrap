@@ -3,7 +3,7 @@
   "title": "Hermes workspace state",
   "artifact_type": "workspace-state",
   "status": "active",
-  "datetime": "20260711.145000Z",
+  "datetime": "20260711.151000Z",
   "acting_as": "HERMES",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/hermes/",
@@ -18,52 +18,54 @@
 
 ## Current focus
 
-Close out accepted `adr-json-authority-messy-canary-slice-2`, then decide the next bounded ADR JSON authority proof point or workflow-engine action.
+Close out accepted `adr-json-authority-projectable-messy-canary-slice-3`, then decide the next bounded ADR JSON authority proof point or workflow-engine action.
 
 ## Current validated state
 
-- Petri-net workflow Slice 6 remains accepted: `workflow status` and `workflow queue` agree that no slice is active.
-- Petri-net status inspected before advancing work:
+- Petri-net workflow status inspected before acceptance:
   - workflow: `bootstrap-harness.slice-0`
   - current token/place: `current-slice` at `user_decision`
   - enabled transitions: `approve_next_slice`
   - user decision required: yes
-  - recommendation: choose or approve the next bounded slice before further workflow-state advancement.
+  - recommendation: approve or choose the next bounded workflow action before workflow-state advancement.
 - ADR JSON authority prior slices are accepted:
   - Slice 0: bidirectional object canary accepted.
   - JSON authoritative ADR store architecture accepted.
   - Inventory classification Slice 0 accepted.
   - Inventory review overrides Slice 1 accepted.
-- `adr-json-authority-messy-canary-slice-2` is now HERMES-accepted with watchpoints in `docs/reviews/hermes-acceptance.20260711.145000_adr-json-authority-messy-canary-slice-2.md`.
-- Slice 2 accepted evidence:
-  - Implementation report: `docs/implementation/adr-json-authority-messy-canary-slice-2.20260711.144500.md`
-  - ATHENA review: `docs/reviews/architecture-conformance.20260711.144800_adr-json-authority-messy-canary-slice-2.md`
-  - KOIOS review: `workspaces/koios/working/provenance-review.20260711_adr-json-authority-messy-canary-slice-2.md`
-  - Evidence dir: `dev/adr-json-authority-messy-canary-slice-2/`
-- HERMES independently reran:
+  - Messy canary Slice 2 accepted and committed as `d015083e Accept ADR JSON messy canary slice 2`.
+  - Projectable messy canary Slice 3 accepted with watchpoints in `docs/reviews/hermes-acceptance.20260711.151000_adr-json-authority-projectable-messy-canary-slice-3.md`.
+- Slice 3 accepted evidence:
+  - Implementation report: `docs/implementation/adr-json-authority-projectable-messy-canary-slice-3.20260711.150000.md`
+  - ATHENA prior review: `docs/reviews/architecture-conformance.20260711.150300_adr-json-authority-projectable-messy-canary-slice-3.md`
+  - ATHENA post-remediation review: `docs/reviews/architecture-conformance.20260711.150700_adr-json-authority-projectable-messy-canary-slice-3-post-remediation.md`
+  - KOIOS review: `workspaces/koios/working/provenance-review.20260711_adr-json-authority-projectable-messy-canary-slice-3.md`
+  - Evidence dir: `dev/adr-json-authority-projectable-messy-canary-slice-3/`
+- HERMES independently reran/observed:
   - `uv run projectkoios workflow status`
   - `uv run pytest tests/projectkoios/bootstrap/control_surface_adr -q`
   - `uv run mypy src/python/projectkoios/bootstrap/control_surface/adr tests/projectkoios/bootstrap/control_surface_adr`
   - `uv run projectkoios bootstrap validate-python-policy src/python/projectkoios/bootstrap/control_surface/adr tests/projectkoios/bootstrap/control_surface_adr`
-  - JSON validity for `dev/adr-json-authority-messy-canary-slice-2/*.json`
-  - DB-file scan under Slice 2 evidence dir
+  - JSON validity for Slice 3 evidence JSON files
+  - DB-file scan under Slice 3 evidence dir
   - `git status --short -- docs/adr docs/schemas`
   - `git diff --check`
-- Validation passed: 26 tests, mypy clean, 0 policy findings, JSON valid, no DB files, no `docs/adr` or `docs/schemas` mutation, diff-check clean.
+- Validation passed: 30 tests, mypy clean, 0 policy findings, JSON valid, no DB files, no `docs/adr` or `docs/schemas` mutation, diff-check clean.
 
 ## Acceptance boundaries
 
-- Slice 2 is accepted because it blocks conversion pending review; it is not a completed conversion.
-- Exactly one source was attempted: `docs/adr/adr.schema-base.md`.
-- Missing Markdown/ADR status remains missing; no status was invented.
-- Embedded JSON `status: draft` remains sidecar/source metadata only unless ATHENA/USER later defines a mapping.
-- Evidence remains `candidate_only` and non-authoritative.
-- No projection was generated; this is an accepted conservative outcome for this source.
-- No bulk ADR migration, source mutation, schema publication, authoritative JSON ADR record, status normalization, draft supersession, database/storage authority, or authority cutover is accepted.
+- Slice 3 is accepted as a one-source candidate-only projectable messy canary, not as a completed conversion or authority promotion.
+- Exactly one source was attempted: `docs/adr/adr.adr-template-contract.md`.
+- Observed status `Accepted` remains separate from normalized candidate `accepted`.
+- Status normalization remains review-only and did not mutate source Markdown.
+- Template/schema-contract ambiguity and manual-review blockers remain active.
+- Projection and parse-back evidence are generated evidence only under `dev/`.
+- The prior source-to-candidate wrapped-list lossiness blocker is resolved by preserving `Workflow-bound ADRs can render optional gate fields without losing schema consistency.`
+- No bulk ADR migration, source mutation, schema publication/change, authoritative JSON ADR record, file move/rename/delete/archive, status normalization, draft supersession, database/storage authority, corpus conversion, or authority cutover is accepted.
 
 ## Current blockers
 
-- None for accepted Slice 2.
+- None for accepted Slice 3.
 
 ## Next owner
 
@@ -71,4 +73,4 @@ Close out accepted `adr-json-authority-messy-canary-slice-2`, then decide the ne
 
 ## Current status summary
 
-`adr-json-authority-messy-canary-slice-2` is implemented, reviewed by ATHENA and KOIOS, independently validated by HERMES, and accepted with watchpoints. The working tree contains Slice 2 implementation/evidence/review artifacts plus role workspace state updates awaiting packaging/commit.
+`adr-json-authority-projectable-messy-canary-slice-3` is implemented, corrected after KOIOS blocker, reviewed by ATHENA and KOIOS, independently validated by HERMES, and accepted with watchpoints. The working tree contains Slice 3 implementation/evidence/review artifacts plus role workspace state updates awaiting packaging/commit.

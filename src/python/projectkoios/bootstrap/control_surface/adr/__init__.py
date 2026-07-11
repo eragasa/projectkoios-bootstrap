@@ -30,6 +30,12 @@ from projectkoios.bootstrap.control_surface.adr.overrides import (
     AdrInventoryOverrideRunner,
     run_adr_json_authority_inventory_overrides,
 )
+from projectkoios.bootstrap.control_surface.adr.projectable_messy_canary import (
+    AdrProjectableMessyCanaryPaths,
+    AdrProjectableMessyCanaryResult,
+    AdrProjectableMessyCanaryRunner,
+    run_adr_json_authority_projectable_messy_canary,
+)
 from projectkoios.bootstrap.control_surface.adr.models import (
     ArtifactDisposition,
     PilotPaths,
@@ -54,6 +60,9 @@ __all__ = [
     "AdrMessyCanaryPaths",
     "AdrMessyCanaryResult",
     "AdrMessyCanaryRunner",
+    "AdrProjectableMessyCanaryPaths",
+    "AdrProjectableMessyCanaryResult",
+    "AdrProjectableMessyCanaryRunner",
     "AdrInventoryOverridePaths",
     "AdrInventoryOverrideResult",
     "AdrInventoryOverrideRunner",
@@ -74,6 +83,7 @@ __all__ = [
     "run_adr_json_authority_inventory",
     "run_adr_json_authority_inventory_overrides",
     "run_adr_json_authority_messy_canary",
+    "run_adr_json_authority_projectable_messy_canary",
     "run_json_schemas_conformance",
     "run_pilot",
 ]

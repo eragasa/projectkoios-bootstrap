@@ -1,0 +1,25 @@
+{
+  "authority_change": false,
+  "blocked_reasons": [
+    "manual_review_required",
+    "template_schema_contract_ambiguity",
+    "status_casing_or_text_would_normalize"
+  ],
+  "candidate_only": true,
+  "conversion_attempted": true,
+  "conversion_completed_as_authoritative_record": false,
+  "normalized_status_candidate": "accepted",
+  "observed_status_text": "Accepted",
+  "outcome": "projectable_candidate_blocked_pending_template_contract_and_status_review",
+  "projection_generated": true,
+  "review_required_before_promotion": true,
+  "slice_name": "adr-json-authority-projectable-messy-canary-slice-3",
+  "source_hash": "2876dfbe031105d383fa9e33cec7d5dd49cf569cea6f43eae59e8fa1da502895",
+  "source_non_mutation_proof": {
+    "source_hash_after": "2876dfbe031105d383fa9e33cec7d5dd49cf569cea6f43eae59e8fa1da502895",
+    "source_hash_before": "2876dfbe031105d383fa9e33cec7d5dd49cf569cea6f43eae59e8fa1da502895",
+    "source_mutated": false
+  },
+  "source_path": "docs/adr/adr.adr-template-contract.md",
+  "status_normalized_in_source": false
+}

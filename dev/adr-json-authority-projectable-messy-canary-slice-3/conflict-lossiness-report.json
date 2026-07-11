@@ -1,0 +1,64 @@
+{
+  "authority_change": false,
+  "automatic_conversion_eligible": false,
+  "blocked_from_authority_promotion": true,
+  "candidate_only": true,
+  "inferred_fields": [
+    {
+      "field": "id",
+      "rationale": "candidate identifier derived from source filename for evidence only",
+      "requires_review": true,
+      "value": "adr.adr-template-contract"
+    },
+    {
+      "field": "slug",
+      "rationale": "candidate slug derived from source title for evidence only",
+      "requires_review": true,
+      "value": "canonical-adr-proposal-template"
+    }
+  ],
+  "lossiness_findings": [
+    "observed source status uses noncanonical casing and is preserved as Accepted",
+    "normalized status candidate accepted is review-only and not a source rewrite",
+    "template/schema-contract classification is preserved outside ADR content candidate",
+    "manual review remains blocking before any authority promotion",
+    "projection parse-back equality does not resolve template-contract or status-casing authority questions"
+  ],
+  "manual_review_required": true,
+  "normalized_status_candidate": "accepted",
+  "observed_status_text": "Accepted",
+  "omitted_or_sidecar_preserved_fields": [
+    "reviewed category/disposition/authority-effect",
+    "manual-review and owner-review flags",
+    "status-casing normalization warning",
+    "routing section"
+  ],
+  "outcome": "projectable_candidate_blocked_pending_template_contract_and_status_review",
+  "projection_parseback": {
+    "semantic_equal_for_candidate_fields": true,
+    "status_casing_preserved_in_projection_record": true,
+    "status_normalized_by_projection_or_parseback": false
+  },
+  "requires_review": true,
+  "reviewed_inventory_values": {
+    "authority_effect": "candidate",
+    "automatic_conversion_eligibility_candidate": false,
+    "category_candidate": "template_schema_contract",
+    "disposition_candidate": "manual_review_required",
+    "exclusion_blocking_reasons": [
+      "manual_review_required",
+      "status_casing_or_text_would_normalize"
+    ],
+    "owner_domain_review_flags": {
+      "domain_review_required": false,
+      "manual_review_required": true,
+      "owner_review_required": true
+    }
+  },
+  "slice_name": "adr-json-authority-projectable-messy-canary-slice-3",
+  "source_hash": "2876dfbe031105d383fa9e33cec7d5dd49cf569cea6f43eae59e8fa1da502895",
+  "source_path": "docs/adr/adr.adr-template-contract.md",
+  "status_casing_normalization_sensitive": true,
+  "status_normalization_inserted_into_source": false,
+  "template_schema_contract_ambiguity": true
+}
