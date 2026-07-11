@@ -4,7 +4,7 @@
 
 - Type: workspace-active-state
 - Status: active
-- Updated: 20260711T132500Z
+- Updated: 20260711T141500Z
 - Updated by: KOIOS
 - Repository: projectkoios-bootstrap
 - Workspace: `workspaces/koios/`
@@ -32,6 +32,8 @@ KOIOS completed ADR rationalization provenance intake in `working/provenance-int
 - `working/provenance-intake.20260711_adr-rationalization-json-md-object-track.md`
 - `working/candidate-schema.20260711_adr-bidirectional-json-md-object.md`
 - `working/classification-proposal.20260711_adr-hierarchy-rationalization.md`
+- `working/provenance-risk.20260711_adr-json-authority-mass-conversion.md`
+- `working/provenance-review.20260711_adr-json-authority-inventory-classification-slice-0.md`
 - `../../docs/process-capture/pc.workflow.document-trace.md`
 - `../../docs/process-capture/pc.workflow.document-trace.20260706.025408Z.md`
 - `../../docs/process-capture/pc.workflow.document-trace.20260708.044950Z.md`
@@ -71,11 +73,15 @@ KOIOS added `working/candidate-schema.20260711_adr-bidirectional-json-md-object.
 
 KOIOS completed `working/classification-proposal.20260711_adr-hierarchy-rationalization.md` as non-authoritative classification/provenance input for ADR hierarchy rationalization. It maps `docs/adr/` files to proposed categories and topic groups with uncertainty flags, and identifies what remains provenance-only versus requiring ATHENA/USER promotion.
 
+KOIOS completed `working/provenance-risk.20260711_adr-json-authority-mass-conversion.md` for the JSON-authoritative ADR store path.
+
+KOIOS completed `working/provenance-review.20260711_adr-json-authority-inventory-classification-slice-0.md`. Verdict: review-only evidence is provenance-adequate with watchpoints; do not consume generated `proposed_authority` / `json_authority_candidate` labels as final conversion authority without HERMES/USER review and likely overrides.
+
 ## KOIOS next actions
 
 1. Stay available for bounded provenance review if HERMES/ATHENA/VULCAN request it.
 2. For ADR rationalization, do not edit ADRs, schemas, architecture, source code, or generated artifacts unless explicitly requested by the owning role.
-3. If the ADR rationalization track proceeds, KOIOS should review provenance boundaries: source refs/hashes preserved, object/sidecar authority clear, hierarchy categories promoted by ATHENA/USER, no bulk migration, no silent schema/storage authority, no mutation/move/rename of `docs/adr/` without explicit approval, and candidate schema sketches promoted only by ATHENA/USER.
+3. If the ADR rationalization track proceeds, KOIOS should review provenance boundaries: source refs/hashes preserved, object/sidecar authority clear, hierarchy categories promoted by ATHENA/USER, no bulk migration, no silent schema/storage authority, no mutation/move/rename of `docs/adr/` without explicit approval, candidate schema sketches promoted only by ATHENA/USER, and inventory candidate labels reviewed before conversion.
 
 ## Blockers and cautions
 

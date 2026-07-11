@@ -11,6 +11,12 @@ from projectkoios.bootstrap.control_surface.adr.conformance import (
     run_json_schemas_conformance,
 )
 from projectkoios.bootstrap.control_surface.adr.evidence import AdrPilotEvidenceBuilder
+from projectkoios.bootstrap.control_surface.adr.inventory import (
+    AdrInventoryPaths,
+    AdrInventoryResult,
+    AdrInventoryRunner,
+    run_adr_json_authority_inventory,
+)
 from projectkoios.bootstrap.control_surface.adr.markdown import AdrMarkdownError, AdrMarkdownRecordParser, AdrProjectionRenderer
 from projectkoios.bootstrap.control_surface.adr.models import (
     ArtifactDisposition,
@@ -30,6 +36,9 @@ __all__ = [
     "AdrConformancePaths",
     "AdrConformanceResult",
     "AdrConformanceRunner",
+    "AdrInventoryPaths",
+    "AdrInventoryResult",
+    "AdrInventoryRunner",
     "AdrStoragePilot",
     "AdrMarkdownError",
     "AdrMarkdownRecordParser",
@@ -44,6 +53,7 @@ __all__ = [
     "ReplacementAction",
     "SourceOfTruthMode",
     "run_adr_bidirectional_object_canary",
+    "run_adr_json_authority_inventory",
     "run_json_schemas_conformance",
     "run_pilot",
 ]

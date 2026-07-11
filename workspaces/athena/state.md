@@ -2,8 +2,8 @@
 {
   "title": "Athena workspace state",
   "artifact_type": "workspace-state",
-  "status": "adr-bidirectional-object-canary-slice-0-athena-conformance-accepted-with-watchpoints",
-  "datetime": "20260711.135500Z",
+  "status": "adr-json-authority-inventory-athena-reviewed-pending-hermes-final-acceptance",
+  "datetime": "20260711.140200Z",
   "acting_as": "ATHENA",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/athena/",
@@ -146,13 +146,20 @@
 - HERMES relayed USER/HERMES direction to keep pushing toward implementation of the ADR bidirectional object path and treat the architecture as accepted enough for the next bounded brief. ATHENA drafted `docs/plans/implementation-brief.20260711.134200_adr-bidirectional-object-canary-slice-0.md` for one-source canary evidence using `docs/adr/adr.json-schemas.draft.md`, then paused for HERMES/USER approval before VULCAN routing.
 - HERMES relayed USER clarification that the desired end state is mass conversion of ADR Markdown to JSON with JSON as authority. ATHENA drafted authority-change ADR proposal `docs/adr/adr.json-authoritative-adr-store.draft.md`, covering JSON authority, Markdown projection disposition, migration phases/gates, conflict policy, status normalization, sidecar/provenance, schema/versioning, storage authority, rollback/audit trail, and `docs/adr/*.md` post-migration disposition. No code, schema changes, or existing ADR content mutation was performed.
 - VULCAN implemented `adr-bidirectional-object-canary-slice-0` and reported `docs/implementation/adr-bidirectional-object-canary-slice-0.20260711.134900.md`. ATHENA reviewed and accepted it with watchpoints in `docs/reviews/architecture-conformance.20260711.135500_adr-bidirectional-object-canary-slice-0.md`, reran focused validation, and confirmed it remains evidence-only with no ADR/source/schema/storage authority change.
+- HERMES relayed USER/HERMES GO on revising `docs/adr/adr.json-authoritative-adr-store.draft.md` before acceptance. ATHENA revised the draft with KOIOS provenance-risk watchpoints and HERMES review: staged path now requires inventory/classification manifest, current canary evidence, messy/ambiguous canary, corpus conversion dry-run under review path, authority cutover decision, and bounded migration; it states not every `docs/adr/*.md` becomes authoritative JSON; adds authoritative JSON location as a cutover decision; hard-gates conflicts/lossy conversions per record; preserves observed status/casing separately; keeps file JSON default and DB authority deferred; and removes ambiguous active-ADR wording.
+- HERMES/USER accepted `docs/adr/adr.json-authoritative-adr-store.draft.md` as controlling staged direction with watchpoints in `docs/reviews/hermes-acceptance.20260711.140500_json-authoritative-adr-store.md`; ADR status text is now `accepted-staged-direction`.
+- ATHENA drafted Phase 0 inventory/classification implementation brief `docs/plans/implementation-brief.20260711.140700_adr-json-authority-inventory-classification-slice-0.md` for `adr-json-authority-inventory-classification-slice-0` and paused for HERMES/USER approval before VULCAN routing.
+- HERMES approved the brief for VULCAN implementation in `docs/reviews/hermes-decision.20260711.141000_adr-json-authority-inventory-classification-slice-0.md`.
+- VULCAN implemented Phase 0 inventory/classification and reported `docs/implementation/adr-json-authority-inventory-classification-slice-0.20260711.141200.md`, `docs/AAR/aar.20260711.141200_adr-json-authority-inventory-classification-slice-0.md`, and review-only evidence under `dev/adr-json-authority-inventory-classification-slice-0/`.
+- ATHENA reviewed and accepted the implementation with watchpoints in `docs/reviews/architecture-conformance.20260711.141500_adr-json-authority-inventory-classification-slice-0.md`; ATHENA reran focused pytest, mypy, python policy, JSON validity, DB-file scan, and `git diff --check` successfully.
+- KOIOS completed provenance review at `workspaces/koios/working/provenance-review.20260711_adr-json-authority-inventory-classification-slice-0.md`, finding the slice provenance-adequate as review-only inventory/classification evidence but not sufficient for direct conversion/cutover authority. ATHENA incorporated KOIOS watchpoints into the conformance review addendum: candidate authority labels require HERMES/USER review, domain/product ambiguity may be under-flagged, architecture/policy/template distinctions need human review/overrides, manifest validation summary has pre-closeout pending labels, and later conversion/canary evidence is still required.
 
 ## Current active item
 
-- `adr-bidirectional-json-markdown-objects`
-  - Parent effort: ADR rationalization / JSON↔Markdown object architecture.
-  - Status: canary slice 0 implemented by VULCAN and ATHENA conformance-reviewed/accepted with watchpoints; JSON-authoritative authority-change ADR proposal remains pending HERMES/USER review.
-  - Purpose: use one-source canary as evidence/mechanics only while HERMES/USER decides JSON-authoritative migration authority.
+- `adr-json-authority-inventory-classification-slice-0`
+  - Parent effort: ADR rationalization / JSON-authoritative ADR store staged migration.
+  - Status: VULCAN implemented and ATHENA conformance-reviewed/accepted with watchpoints; pending HERMES/USER final acceptance.
+  - Purpose: review Phase 0 review-only inventory/classification manifest for `docs/adr/*.md` and ADR index/control surfaces before conversion or authority changes.
   - Key artifacts:
     - `docs/plans/architecture-intake.20260711.131140_adr-bidirectional-json-markdown-objects.md`
     - `workspaces/koios/working/provenance-intake.20260711_adr-rationalization-json-md-object-track.md`
@@ -164,6 +171,13 @@
     - `docs/implementation/adr-bidirectional-object-canary-slice-0.20260711.134900.md`
     - `docs/reviews/architecture-conformance.20260711.135500_adr-bidirectional-object-canary-slice-0.md`
     - `docs/adr/adr.json-authoritative-adr-store.draft.md`
+    - `docs/reviews/hermes-acceptance.20260711.140500_json-authoritative-adr-store.md`
+    - `docs/plans/implementation-brief.20260711.140700_adr-json-authority-inventory-classification-slice-0.md`
+    - `docs/reviews/hermes-decision.20260711.141000_adr-json-authority-inventory-classification-slice-0.md`
+    - `docs/implementation/adr-json-authority-inventory-classification-slice-0.20260711.141200.md`
+    - `docs/reviews/architecture-conformance.20260711.141500_adr-json-authority-inventory-classification-slice-0.md`
+    - `workspaces/koios/working/provenance-review.20260711_adr-json-authority-inventory-classification-slice-0.md`
+    - `dev/adr-json-authority-inventory-classification-slice-0/`
 
 ## Queued/backlog items
 
@@ -183,9 +197,7 @@
 
 ## Waiting on / blocked items
 
-- HERMES/USER review of ATHENA's conformance acceptance for `adr-bidirectional-object-canary-slice-0`.
-- HERMES/USER review of authority-change ADR proposal `docs/adr/adr.json-authoritative-adr-store.draft.md` before any mass conversion, schema publication, source mutation, or VULCAN routing for authority-changing work.
-- USER/HERMES next workflow decision after accepted `petrinet-workflow-status-queue-consistency-slice-6`: activate `pi-skill-determinism-slice-0`, define another workflow-engine control slice, or package/commit current work.
+- HERMES/USER final acceptance of `docs/reviews/architecture-conformance.20260711.141500_adr-json-authority-inventory-classification-slice-0.md`, KOIOS provenance review `workspaces/koios/working/provenance-review.20260711_adr-json-authority-inventory-classification-slice-0.md`, and review-only inventory evidence before any follow-on migration work.
 - Commit/push boundary for accumulated accepted work remains a separate packaging decision.
 
 ## Open questions
@@ -202,10 +214,8 @@
 
 - Owner: HERMES/USER.
 - Recommended next actions:
-  1. HERMES/USER should review ATHENA's canary conformance acceptance and decide final acceptance.
-  2. HERMES/USER should review `docs/adr/adr.json-authoritative-adr-store.draft.md` as the authority-change proposal and decide whether to accept, revise, or defer it.
-  2. USER/HERMES should decide packaging/commit handling for accepted Slice 6.
-  3. Preserve `pi-skill-determinism-slice-0` as queued-only unless explicitly activated.
+  1. HERMES/USER should review ATHENA conformance review `docs/reviews/architecture-conformance.20260711.141500_adr-json-authority-inventory-classification-slice-0.md`, KOIOS provenance review `workspaces/koios/working/provenance-review.20260711_adr-json-authority-inventory-classification-slice-0.md`, and `dev/adr-json-authority-inventory-classification-slice-0/` evidence, then decide final acceptance.
+  2. Preserve `pi-skill-determinism-slice-0` as queued-only unless explicitly activated.
 - Operator Console P0/P1/P2 accepted boundaries: bootstrap incubation only; package-local lockfile only; behavior owned by ActionObject-style classes with data in typed interfaces/constants; `docs/policies/typescript-coding.md` remains draft/non-controlling; fixtures are static/stale-by-design; readability/navigation affordances are local browser inspection helpers only; no backend, live reads, messaging capability, activation/mutation, Petri-net graph editor, product UI authority, or bootstrap production-backend claim.
 - ADR conformance work remains available as a separate track: future slices should use updated `docs/schemas/adr.schema.json` without `routing`, preserve sidecar provenance, and avoid schema/lifecycle/workflow/storage-authority redesign unless repeated conformance pressure justifies it.
 

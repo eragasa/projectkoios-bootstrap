@@ -4,7 +4,7 @@
 
 - Type: workspace-state
 - Status: active
-- Updated: 20260711T132500Z
+- Updated: 20260711T141500Z
 - Updated by: KOIOS
 - Repository: projectkoios-bootstrap
 - Workspace: `workspaces/koios/`
@@ -38,6 +38,8 @@ Captured/advisory artifacts in this workspace:
 - `working/provenance-intake.20260711_adr-rationalization-json-md-object-track.md`
 - `working/candidate-schema.20260711_adr-bidirectional-json-md-object.md`
 - `working/classification-proposal.20260711_adr-hierarchy-rationalization.md`
+- `working/provenance-risk.20260711_adr-json-authority-mass-conversion.md`
+- `working/provenance-review.20260711_adr-json-authority-inventory-classification-slice-0.md`
 - `../../docs/process-capture/pc.workflow.document-trace.md`
 - `../../docs/process-capture/pc.workflow.document-trace.20260706.025408Z.md`
 - `../../docs/process-capture/pc.workflow.document-trace.20260708.044950Z.md`
@@ -90,6 +92,10 @@ KOIOS completed ADR rationalization / bidirectional JSON↔Markdown object prove
 KOIOS added a non-authoritative candidate schema sketch in `working/candidate-schema.20260711_adr-bidirectional-json-md-object.md`. It proposes an envelope around existing ADR schema payloads with projection, conversion evidence, source refs, sidecar, validation, and conflict-policy sections. This requires ATHENA/USER promotion before any schema publication or implementation.
 
 KOIOS completed `working/classification-proposal.20260711_adr-hierarchy-rationalization.md` as non-authoritative hierarchy/classification input for existing `docs/adr/` files. It maps observed ADR-like files into proposed categories, parent/topic groups, uncertainty flags, and promotion boundaries for future ATHENA/HERMES decisions.
+
+KOIOS completed `working/provenance-risk.20260711_adr-json-authority-mass-conversion.md` for the JSON-authoritative ADR store path. It records risks around mass conversion, status/lifecycle ambiguity, unsupported fields, source/projection conflict policy, provenance/audit trail, and validation gates before JSON authority.
+
+KOIOS reviewed VULCAN `adr-json-authority-inventory-classification-slice-0` in `working/provenance-review.20260711_adr-json-authority-inventory-classification-slice-0.md`. Verdict: provenance-adequate as review-only inventory/classification evidence, with watchpoints that candidate labels are too authority-forward for automatic consumption and domain/mixed-document classifications need HERMES/USER review before conversion.
 
 ## Authority boundary
 

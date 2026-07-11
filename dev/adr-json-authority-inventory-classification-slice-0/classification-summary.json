@@ -1,0 +1,35 @@
+{
+  "automatic_conversion_eligibility_candidate_count": 39,
+  "counts": {
+    "by_authority_effect": {
+      "candidate": 3,
+      "none": 1,
+      "proposed_authority": 39
+    },
+    "by_category_candidate": {
+      "architecture_blueprint": 1,
+      "implementation_workflow_support": 17,
+      "index_or_control_surface": 1,
+      "policy_process": 3,
+      "template_schema_contract": 21
+    },
+    "by_disposition_candidate": {
+      "index_or_control_surface": 1,
+      "json_authority_candidate": 39,
+      "manual_review_required": 3
+    },
+    "by_file_kind": {
+      "adr_source_candidate": 42,
+      "index_or_control_surface": 1
+    },
+    "by_parse_confidence": {
+      "high": 39,
+      "medium": 4
+    },
+    "total": 43
+  },
+  "mode": "review-only summary",
+  "review_only": true,
+  "review_required_count": 4,
+  "slice_name": "adr-json-authority-inventory-classification-slice-0"
+}

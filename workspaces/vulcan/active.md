@@ -2,8 +2,8 @@
 {
   "title": "Vulcan active work",
   "artifact_type": "workspace-active-priorities",
-  "status": "adr-bidirectional-object-canary-slice-0-implemented-validated",
-  "datetime": "20260711.134900Z",
+  "status": "adr-json-authority-inventory-classification-slice-0-implemented-validated",
+  "datetime": "20260711.141200Z",
   "acting_as": "VULCAN",
   "repository": "projectkoios-bootstrap",
   "workspace": "workspaces/vulcan/",
@@ -11,18 +11,19 @@
   "priority_count": 1,
   "working_directory": "working/",
   "active_working_items": [
-    "docs/architecture/architecture.adr-bidirectional-objects.md",
-    "docs/plans/implementation-brief.20260711.134200_adr-bidirectional-object-canary-slice-0.md",
-    "docs/reviews/hermes-decision.20260711.134500_adr-bidirectional-object-canary-slice-0.md",
-    "docs/implementation/adr-bidirectional-object-canary-slice-0.20260711.134900.md",
-    "dev/adr-bidirectional-object-canary-slice-0/",
-    "src/python/projectkoios/bootstrap/control_surface/adr/bidirectional.py",
-    "tests/projectkoios/bootstrap/control_surface_adr/test__AdrBidirectionalCanaryRunner__json_schemas.py"
+    "docs/adr/adr.json-authoritative-adr-store.draft.md",
+    "docs/reviews/hermes-acceptance.20260711.140500_json-authoritative-adr-store.md",
+    "docs/plans/implementation-brief.20260711.140700_adr-json-authority-inventory-classification-slice-0.md",
+    "docs/reviews/hermes-decision.20260711.141000_adr-json-authority-inventory-classification-slice-0.md",
+    "docs/implementation/adr-json-authority-inventory-classification-slice-0.20260711.141200.md",
+    "dev/adr-json-authority-inventory-classification-slice-0/",
+    "src/python/projectkoios/bootstrap/control_surface/adr/inventory.py",
+    "tests/projectkoios/bootstrap/control_surface_adr/test__AdrInventoryRunner__classification.py"
   ],
   "scratch_directory": "scratch/",
   "implementation_plan": null,
-  "latest_report": "docs/implementation/adr-bidirectional-object-canary-slice-0.20260711.134900.md",
-  "latest_aar": "docs/AAR/aar.20260711.134900_adr-bidirectional-object-canary-slice-0.md"
+  "latest_report": "docs/implementation/adr-json-authority-inventory-classification-slice-0.20260711.141200.md",
+  "latest_aar": "docs/AAR/aar.20260711.141200_adr-json-authority-inventory-classification-slice-0.md"
 }
 ```
 
@@ -30,27 +31,27 @@
 
 ## Current priority stack
 
-1. `adr-bidirectional-object-canary-slice-0`: implemented and validated.
-2. Parent effort: ADR rationalization / bidirectional JSON-Markdown object architecture.
-3. Boundaries preserved: exactly one canary source; no `docs/adr` mutation; no `docs/schemas` mutation/publication; no database/storage authority; no committed `.sqlite`/`.db`; no bulk migration; no hand-authored Markdown ingest; no file moves/renames/status normalization/draft supersession; no Petri-net, Operator Console, or workflow-object integration.
+1. `adr-json-authority-inventory-classification-slice-0`: implemented and validated.
+2. Parent effort: ADR rationalization / JSON-authoritative ADR store.
+3. Boundaries preserved: no `docs/adr` mutation by inventory generation; no `docs/schemas` mutation; no file moves/renames/deletes/archives; no source status normalization; no draft supersession; no authoritative JSON records; no corpus conversion; no replacement Markdown projections; no database/storage authority; no committed `.sqlite`/`.db`.
 
 ## Latest working material
 
-- Architecture: `docs/architecture/architecture.adr-bidirectional-objects.md`.
-- Brief: `docs/plans/implementation-brief.20260711.134200_adr-bidirectional-object-canary-slice-0.md`.
-- HERMES decision: `docs/reviews/hermes-decision.20260711.134500_adr-bidirectional-object-canary-slice-0.md`.
-- Implementation report: `docs/implementation/adr-bidirectional-object-canary-slice-0.20260711.134900.md`.
-- AAR: `docs/AAR/aar.20260711.134900_adr-bidirectional-object-canary-slice-0.md`.
+- Source ADR: `docs/adr/adr.json-authoritative-adr-store.draft.md`.
+- HERMES acceptance: `docs/reviews/hermes-acceptance.20260711.140500_json-authoritative-adr-store.md`.
+- Brief: `docs/plans/implementation-brief.20260711.140700_adr-json-authority-inventory-classification-slice-0.md`.
+- HERMES decision: `docs/reviews/hermes-decision.20260711.141000_adr-json-authority-inventory-classification-slice-0.md`.
+- Implementation report: `docs/implementation/adr-json-authority-inventory-classification-slice-0.20260711.141200.md`.
+- AAR: `docs/AAR/aar.20260711.141200_adr-json-authority-inventory-classification-slice-0.md`.
 
 ## Implemented outputs
 
-- `AdrBidirectionalCanaryRunner` and exported helper `run_adr_bidirectional_object_canary`.
-- Candidate canary evidence directory: `dev/adr-bidirectional-object-canary-slice-0/`.
-- Candidate envelope: `adr.json-schemas.bidirectional-object.json`.
-- Generated projection: `adr.json-schemas.projected.md`.
-- Sidecar/conversion evidence: `conversion-evidence.json`.
+- `AdrInventoryRunner` and exported helper `run_adr_json_authority_inventory`.
+- Review-only inventory evidence directory: `dev/adr-json-authority-inventory-classification-slice-0/`.
 - Manifest: `manifest.json`.
-- Focused tests covering candidate envelope, sidecar preservation, generated projection parse-back equality, source-mutation proof, and no database files.
+- Per-source inventory: `source-inventory.json`.
+- Aggregate classification summary: `classification-summary.json`.
+- Focused tests for review-only markers, required per-file fields, status preservation, index/control classification, deterministic generation, source non-mutation assumptions, and no database files.
 
 ## Validation results
 
@@ -60,25 +61,31 @@ From repository root:
 uv run pytest tests/projectkoios/bootstrap/control_surface_adr -q
 ```
 
-Passed: `14 passed in 0.18s`.
+Passed: `18 passed in 0.21s`.
 
 ```bash
 uv run projectkoios bootstrap validate-python-policy src/python/projectkoios/bootstrap/control_surface/adr tests/projectkoios/bootstrap/control_surface_adr
 ```
 
-Passed: `summary: 0 finding(s), 13 file(s)`.
+Passed: `summary: 0 finding(s), 15 file(s)`.
 
 ```bash
-git status --short -- docs/adr/adr.json-schemas.draft.md
-git status --short -- docs/adr
-git status --short -- docs/schemas
-find dev/adr-bidirectional-object-canary-slice-0 -type f \( -name '*.sqlite' -o -name '*.db' \) -print
-uv run python -m json.tool dev/adr-bidirectional-object-canary-slice-0/adr.json-schemas.bidirectional-object.json >/dev/null
+find dev/adr-json-authority-inventory-classification-slice-0 -name '*.json' -print -exec uv run python -m json.tool {} \; >/dev/null
+find dev/adr-json-authority-inventory-classification-slice-0 \( -name '*.sqlite' -o -name '*.db' \) -print
 git diff --check
 ```
 
-Passed for the exact canary source, `docs/schemas`, DB-file check, object JSON, and diff whitespace. At closeout, `git status --short -- docs/adr` also shows unrelated untracked `docs/adr/adr.json-authoritative-adr-store.draft.md`, which is not VULCAN-owned for this slice.
+Passed. DB-file check produced no output.
+
+Source/schema and evidence stability:
+
+```text
+stable_source_schema_hash=yes
+stable_evidence_hash=yes
+```
+
+`git status --short -- docs/adr docs/schemas` currently includes `M docs/adr/adr.json-authoritative-adr-store.draft.md` as existing authorizing state; `docs/schemas` has no output.
 
 ## Next expected artifact
 
-- HERMES/USER review or closeout/commit direction.
+- HERMES/USER review of `dev/adr-json-authority-inventory-classification-slice-0/` before any conversion or authority-changing slice.

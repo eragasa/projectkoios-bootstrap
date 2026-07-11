@@ -1,0 +1,35 @@
+{
+  "artifact_hashes": {
+    "classification_summary": "d8f97038ef83a4c71da66a41f848b2a7b9f1d741310cacadbef2a748c0a114ed",
+    "source_inventory": "dbb5558ce332c74396c7bc21b3196ed57cbc85da99b4d89c1b1afe290476f421"
+  },
+  "artifacts": {
+    "classification_summary": "dev/adr-json-authority-inventory-classification-slice-0/classification-summary.json",
+    "manifest": "dev/adr-json-authority-inventory-classification-slice-0/manifest.json",
+    "source_inventory": "dev/adr-json-authority-inventory-classification-slice-0/source-inventory.json"
+  },
+  "authority_change": false,
+  "database_authority": false,
+  "generated_at": "20260711.141000Z",
+  "inspected_count": 43,
+  "inspected_paths": [
+    "docs/adr/*.md"
+  ],
+  "mode": "review-only inventory/classification",
+  "review_only": true,
+  "schema_change_allowed": false,
+  "slice_name": "adr-json-authority-inventory-classification-slice-0",
+  "source_mutation_allowed": false,
+  "source_refs": {
+    "source_acceptance": "docs/reviews/hermes-acceptance.20260711.140500_json-authoritative-adr-store.md",
+    "source_adr": "docs/adr/adr.json-authoritative-adr-store.draft.md",
+    "source_brief": "docs/plans/implementation-brief.20260711.140700_adr-json-authority-inventory-classification-slice-0.md",
+    "source_decision": "docs/reviews/hermes-decision.20260711.141000_adr-json-authority-inventory-classification-slice-0.md"
+  },
+  "validation_command_summary": {
+    "deterministic_generation": "canonical JSON with sorted source paths and stable generated_at",
+    "json_validity": "pending closeout validation",
+    "no_database_files": "pending closeout validation",
+    "source_schema_non_mutation": "pending closeout validation"
+  }
+}

@@ -2,8 +2,8 @@
 {
   "title": "JSON-Authoritative ADR Store",
   "artifact_type": "adr-proposal",
-  "status": "draft",
-  "datetime": "20260711.135000Z",
+  "status": "accepted-staged-direction",
+  "datetime": "20260711.140200Z",
   "acting_as": "ATHENA",
   "repository": "projectkoios-bootstrap",
   "scope": "docs/adr authority, JSON ADR records, Markdown projections, migration policy",
@@ -20,7 +20,9 @@
 
 ## Status
 
-draft
+accepted-staged-direction
+
+Accepted by HERMES/USER as the controlling staged direction for JSON-authoritative ADR migration planning. This status does not execute migration, publish schemas, mutate `docs/adr/`, demote Markdown authority for any record, or authorize authority cutover without the gated phases below.
 
 ## Context
 
@@ -72,13 +74,36 @@ After acceptance, the canary becomes Phase 0 evidence for the migration path rat
 
 ## Migration phases and gates
 
-### Phase 0: One-source canary
+The migration path SHALL be staged. JSON authority MUST NOT be flipped by a one-shot conversion.
 
-Purpose: prove one ADR source can become a candidate JSON object plus generated projection without mutating source authority.
+### Phase 0: Inventory/classification manifest
 
-Candidate source:
+Purpose: classify every Markdown file before conversion or authority changes.
+
+Required outputs:
+
+- inventory manifest for `docs/adr/*.md` and non-ADR index/control files such as `README.md`;
+- observed status/casing and parse confidence;
+- proposed hierarchy category/disposition;
+- source/provenance vs current decision vs policy/process vs architecture blueprint vs template/schema/contract vs implementation workflow support vs product/future-system draft;
+- uncertainty flags and required owner/domain review;
+- proposed `authority_effect` per file: none, candidate, proposed authority, accepted authority, excluded, or domain review required;
+- list of files excluded from automatic conversion.
+
+Gate: HERMES/USER acceptance of the inventory/classification manifest before any corpus conversion or source mutation.
+
+### Phase 1: Current canary evidence
+
+Purpose: use the current one-source canary as evidence for the envelope/projection mechanics.
+
+Current canary source:
 
 - `docs/adr/adr.json-schemas.draft.md`
+
+Evidence:
+
+- `docs/implementation/adr-bidirectional-object-canary-slice-0.20260711.134900.md`
+- `dev/adr-bidirectional-object-canary-slice-0/`
 
 Gates:
 
@@ -92,38 +117,33 @@ Gates:
 - no mutable DB commit;
 - no repository authority change.
 
-### Phase 1: Corpus inventory and classification
+### Phase 2: Messy/ambiguous canary
 
-Purpose: classify every ADR Markdown file before migration.
+Purpose: prove lossiness, uncertainty, and exclusion behavior before corpus conversion.
 
-Required outputs:
+The messy canary SHOULD use one high-ambiguity draft, unknown-status file, architecture/policy/template-like file, or product/future-system draft selected from the accepted inventory manifest.
 
-- inventory of `docs/adr/*.md` and non-ADR index/control files such as `README.md`;
-- observed status/casing and parse confidence;
-- proposed hierarchy category/disposition;
-- source/provenance vs current decision vs policy/process vs architecture blueprint vs template/schema/contract vs implementation workflow support vs product/future-system draft;
-- uncertainty flags and required owner/domain review;
-- list of files excluded from automatic conversion.
+Required evidence:
 
-Gate: HERMES/USER acceptance of inventory/classification before any corpus mutation.
+- conversion attempt or classification-only exclusion;
+- observed status/casing preservation;
+- lossiness and unsupported-field report;
+- domain/owner-review flag where applicable;
+- proof that conflicts block authority promotion for that record.
 
-### Phase 2: Schema and envelope authority proposal
+Gate: HERMES/USER and KOIOS review of messy-canary risk handling.
 
-Purpose: decide the JSON record and envelope schema surfaces before mass conversion.
+### Phase 3: Corpus conversion dry-run under review path
 
-Required decisions:
+Purpose: generate JSON records, projections, sidecars, and manifests for the selected corpus without source mutation.
 
-- whether `AdrBidirectionalObject` envelope schema is published under `docs/schemas/` or remains implementation-local;
-- how `content` references `docs/schemas/adr.schema.json` and schema versions;
-- how classification/disposition metadata is represented outside `content`;
-- how sidecar/provenance fields are versioned;
-- compatibility rules for existing conformance artifacts.
+The dry-run output SHALL live under an explicit review-only path, such as:
 
-Gate: accepted schema/versioning decision before generated JSON records are treated as authoritative.
+```text
+dev/adr-json-authority-migration-dry-run/
+```
 
-### Phase 3: Dry-run corpus conversion
-
-Purpose: generate JSON records and projections for the selected corpus without source mutation.
+or another HERMES/USER-approved review path.
 
 Required evidence:
 
@@ -134,29 +154,32 @@ Required evidence:
 - validation status;
 - sidecar/provenance status;
 - conflict classifications;
-- excluded/blocked records.
+- excluded/blocked records;
+- manifest proving no `docs/adr/` source mutation during dry-run.
 
-Gate: HERMES/USER review of dry-run evidence and conflicts.
+Gate: HERMES/USER review of dry-run evidence, conflicts, exclusions, and proposed authority effects.
 
-### Phase 4: Authority cutover package
+### Phase 4: Authority cutover decision
 
-Purpose: prepare the actual authority transition.
+Purpose: decide the actual authority transition before migration.
 
 Required decisions:
 
-- JSON record directory/path convention;
+- authoritative JSON location/path convention;
 - Markdown projection path convention;
 - where source-only/provenance Markdown remains;
 - how generated projections are marked;
+- schema/envelope/versioning authority;
 - update plan for indexes and architecture references;
 - rollback plan;
-- package-level validation commands.
+- package-level validation commands;
+- per-record disposition for conflicted, lossy, ambiguous, excluded, or domain-review records.
 
-Gate: explicit HERMES/USER approval of cutover package.
+Gate: explicit HERMES/USER approval of the authority cutover decision package.
 
-### Phase 5: Committed migration
+### Phase 5: Bounded migration
 
-Purpose: execute the approved conversion/migration package.
+Purpose: execute only the approved migration package.
 
 Rules:
 
@@ -166,7 +189,8 @@ Rules:
 - record old/new paths and authority modes;
 - generate projections deterministically;
 - validate JSON records and projection equality;
-- prove no unapproved ADR source mutation occurred.
+- prove no unapproved ADR source mutation occurred;
+- keep conflicted or lossy records out of authority cutover until reviewed/resolved/excluded.
 
 Gate: post-migration ATHENA/KOIOS/HERMES review before acceptance.
 
@@ -186,11 +210,12 @@ Conflict states SHALL include at least:
 
 Conflict resolution rules:
 
-1. JSON MUST NOT replace Markdown authority for a conflicted record until the conflict is resolved or the record is explicitly excluded.
-2. Unsupported fields SHOULD be preserved in sidecar/evidence rather than forced into ADR `content`.
-3. Lossy conversion MUST require human review.
+1. JSON MUST NOT replace Markdown authority for a conflicted record until the conflict is reviewed and resolved, or the record is explicitly excluded.
+2. Lossy conversion MUST block authority promotion for that record until reviewed and resolved or excluded.
+3. Unsupported fields SHOULD be preserved in sidecar/evidence rather than forced into ADR `content`.
 4. Existing hand-authored Markdown edits MUST be preserved as source evidence even when JSON becomes authority.
 5. Generated projections MUST be visibly marked so they are not mistaken for hand-authored source ADRs.
+6. A record with `source_ambiguous`, `domain_review_required`, `status_normalization_required`, `lossy_requires_review`, or `authority_conflict` MUST NOT enter authority cutover until the specific finding is resolved or that record is excluded.
 
 ## Status and lifecycle normalization
 
@@ -198,10 +223,10 @@ This ADR does not itself rewrite statuses.
 
 Migration tooling and evidence SHALL:
 
-- preserve observed status text and casing in source refs or sidecar evidence;
+- preserve observed status text and exact casing in source refs or sidecar evidence separately from any normalized JSON status;
 - map statuses to canonical lifecycle vocabulary only through an approved migration map;
 - distinguish ADR lifecycle status from workspace active work state;
-- avoid ambiguous phrases such as `active ADRs` unless referring specifically to documents whose ADR lifecycle status is `active`;
+- avoid shorthand that uses `active` without saying whether it means ADR lifecycle status, workspace live-work state, or current conformance evidence;
 - prefer precise language such as `documents marked active/accepted pending hierarchy review`, `current conformance artifact`, `source Markdown`, `generated projection`, or `JSON authority candidate`.
 
 The initial canonical vocabulary remains controlled by `docs/adr/adr.adr-lifecycle.20260705.011836Z.md` unless a later accepted ADR changes it.
@@ -254,11 +279,21 @@ Default until accepted otherwise:
 
 ## Storage authority relationship
 
-The target authority is file JSON authority unless later changed.
+The target authority is file JSON authority unless later changed. The authoritative JSON location is a required cutover decision and is not chosen by this draft.
+
+Before cutover, HERMES/USER MUST choose or approve a JSON authority location/path convention. Placeholder candidates include:
+
+```text
+docs/adr-json/
+docs/adr/records/
+dev/<migration-review>/records/   # review-only, not final authority unless promoted
+```
+
+The selected location MUST make source/provenance Markdown, generated projections, and authoritative JSON records distinguishable.
 
 | Surface | Authority after accepted migration | Notes |
 |---|---|---|
-| JSON ADR record files | Authoritative for migrated records | Path convention to be decided in migration package. |
+| JSON ADR record files | Authoritative for migrated records only after cutover | Final path convention is a required cutover decision. |
 | Markdown projections | Generated review/navigation surface | Not source authority unless explicitly marked source-only/provenance. |
 | Source/provenance Markdown | Audit/provenance evidence | May remain in place or move only under approved plan. |
 | SQLite/database | Operational index/cache/import-export store by default | ACID under normal configuration, but not authority unless later ADR promotes. |
@@ -274,7 +309,9 @@ SQLite/database caveats from storage topology remain controlling:
 
 ## What happens to `docs/adr/*.md` after migration
 
-The final Markdown disposition must be explicit per category.
+The final Markdown disposition must be explicit per category. Not every `docs/adr/*.md` file automatically becomes an authoritative JSON ADR.
+
+Architecture blueprints, policy/process surfaces, template/schema/contract documents, implementation workflow support documents, index/control files, source/provenance drafts, and product/future-system drafts may be excluded, classified as source/provenance, or require owner/domain review before authority cutover.
 
 Allowed target dispositions:
 
@@ -342,13 +379,16 @@ This draft does not authorize:
 
 This ADR may be accepted only if HERMES/USER agrees that:
 
-1. JSON file records are the intended authority target for migrated ADRs.
-2. Markdown projections become generated review/navigation surfaces for migrated ADRs unless explicitly marked source-only/provenance.
-3. File JSON authority is the default storage authority, not SQLite/database authority.
-4. Mass conversion requires inventory, dry-run evidence, conflict resolution, schema/version decisions, and cutover approval.
-5. Observed status/casing and unsupported source fields remain preserved in sidecar/provenance evidence.
-6. Existing Markdown files are not silently deleted, overwritten, moved, renamed, status-normalized, or superseded.
-7. The prior canary-first work becomes Phase 0 evidence, not a substitute for authority approval.
+1. JSON file records are the intended authority target for migrated records.
+2. Not every `docs/adr/*.md` file automatically becomes an authoritative JSON ADR; excluded, source/provenance, architecture/policy/template/product-ish, and domain-review dispositions are allowed.
+3. Markdown projections become generated review/navigation surfaces for migrated records unless explicitly marked source-only/provenance.
+4. File JSON authority is the default storage authority, not SQLite/database authority.
+5. The authoritative JSON location/path convention is a required cutover decision if not accepted in this ADR.
+6. Mass conversion requires an inventory/classification manifest, current canary evidence, a messy/ambiguous canary, corpus conversion dry-run under review path, authority cutover decision, and bounded migration.
+7. Conflicts and lossy conversions block per-record authority promotion until reviewed/resolved/excluded.
+8. Observed status/casing and unsupported source fields remain preserved in sidecar/provenance evidence separately from normalized status.
+9. Existing Markdown files are not silently deleted, overwritten, moved, renamed, status-normalized, or superseded.
+10. The prior canary-first work becomes staged evidence, not a substitute for authority approval.
 
 ## Implementation brief, if accepted
 
@@ -363,14 +403,16 @@ json-authoritative-adr-store-migration-plan-slice-0
 Scope of that brief:
 
 - no source mutation;
-- inventory and classification only;
+- inventory and classification manifest only;
 - proposed JSON record path convention;
 - proposed projection path convention;
+- proposed review-only dry-run path;
 - schema/envelope versioning proposal;
 - conflict taxonomy validation on the corpus;
+- selection criteria for the messy/ambiguous canary;
 - dry-run migration plan.
 
-The existing `adr-bidirectional-object-canary-slice-0` may remain a prerequisite or be folded into Phase 0 depending on HERMES/USER decision.
+The existing `adr-bidirectional-object-canary-slice-0` is current canary evidence in the staged path. It is not an authority cutover.
 
 ## Review request
 
