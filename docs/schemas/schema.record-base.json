@@ -3,6 +3,7 @@
   "$id": "https://projectkoios.local/schemas/schema.record-base.json",
   "title": "SchemaRecordBase",
   "description": "Base envelope for schema-backed Project Koios records. Family schemas constrain content.",
+  "$comment": "Draft record-envelope direction. See docs/architecture/architecture.schema-record-envelope.md for accepted architecture context and docs/schemas/README.md for schema index context. This annotation is contextual only and does not change validation semantics.",
   "type": "object",
   "additionalProperties": false,
   "required": [

@@ -19,6 +19,17 @@
   ],
   "completed_items": [
     {
+      "name": "schema-record-envelope-reference-comment-slice-17",
+      "state": "accepted",
+      "artifact_refs": [
+        "docs/schemas/schema.record-base.json",
+        "docs/reviews/hermes-acceptance.20260712.024700_schema-record-envelope-reference-comment-slice-17.md",
+        "docs/reviews/hermes-decision.20260712.024500_schema-record-envelope-reference-comment-slice-17.md"
+      ],
+      "why": "HERMES accepted ATHENA non-semantic top-level $comment annotation after VULCAN no-blocker implementation review and KOIOS no-blocker provenance review; schema.record-base.json remains draft direction with unchanged validation semantics.",
+      "commit": "pending"
+    },
+    {
       "name": "schema-record-envelope-schema-change-planning-slice-16",
       "state": "accepted-committed",
       "artifact_refs": [
@@ -146,5 +157,5 @@
     }
   ],
   "deferred_items": [],
-  "next_decision_needed": "HERMES/USER should choose whether to stop the ADR/schema planning track here, activate a minimal non-semantic schema reference/comment slice, or defer schema reconciliation until implementation/migration evidence exists."
+  "next_decision_needed": "HERMES/USER should choose whether to stop the ADR/schema planning track here, defer schema reconciliation until implementation/migration evidence exists, or activate another explicitly bounded workflow item."
 }

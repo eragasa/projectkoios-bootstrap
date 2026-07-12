@@ -18,7 +18,7 @@
 
 ## Current focus
 
-ADR/schema architecture track reached a decision point after HERMES accepted `schema-record-envelope-schema-change-planning-slice-16` as proposal-only planning. `schema.record-base.json` remains unchanged draft direction pending HERMES/USER next decision.
+ADR/schema architecture track reached a decision point after HERMES accepted `schema-record-envelope-reference-comment-slice-17`. `schema.record-base.json` now has a non-semantic `$comment` annotation and remains draft direction pending HERMES/USER next decision.
 
 ## Current validated state
 
@@ -130,16 +130,24 @@ Review basis:
 - ATHENA completed proposal-only schema-change planning.
 - KOIOS reviewed and found the brief provenance-adequate for HERMES proposal-only acceptance, with no blockers.
 - VULCAN reviewed and found Option A/F implementation-safe with no blockers, adding watchpoints for future validators, `$comment`/`description` wording, and avoiding accidental semantic schema edits.
-- HERMES accepted and committed the brief:
+- HERMES accepted and committed the Slice 16 brief:
   - `docs/reviews/hermes-acceptance.20260712.023900_schema-record-envelope-schema-change-planning-slice-16.md`
   - commit `9841508`
-- HERMES cleared the active queue item and reconciled workflow status to `active_slice=none`.
+- USER directed HERMES to ask ATHENA to make the minimal reference/comment change.
+- HERMES recorded Slice 17 authorization:
+  - `docs/reviews/hermes-decision.20260712.024500_schema-record-envelope-reference-comment-slice-17.md`
+- ATHENA added only a top-level `$comment` to `docs/schemas/schema.record-base.json`.
+- VULCAN reviewed the actual Slice 17 edit, ran focused schema registry tests, and found no implementation blockers.
+- KOIOS reviewed the actual Slice 17 edit and found no provenance/authority blockers.
+- HERMES accepted Slice 17:
+  - `docs/reviews/hermes-acceptance.20260712.024700_schema-record-envelope-reference-comment-slice-17.md`
+- HERMES left workflow status at `active_slice=none`.
 
 ## Active boundaries
 
 The old source is preserved as legacy/source provenance with a disposition note. This does not rename, move, archive, delete, split, normalize status casing, edit schemas, migrate records, replace generated projections, create database/storage authority, or cut over JSON authority.
 
-Slice 16 acceptance also does not approve any schema JSON edit, schema authority promotion, renderer/ingester implementation, migration, or JSON authority cutover. `docs/schemas/schema.record-base.json` remains unchanged draft direction.
+Slice 17 acceptance approves only the non-semantic top-level `$comment` annotation in `docs/schemas/schema.record-base.json`. It does not approve schema authority promotion, validation semantics changes, renderer/ingester implementation, migration, or JSON authority cutover. `docs/schemas/schema.record-base.json` remains draft direction.
 
 ## Current blockers
 
@@ -148,4 +156,4 @@ Slice 16 acceptance also does not approve any schema JSON edit, schema authority
 
 ## Next owner
 
-HERMES_USER to choose whether to stop the ADR/schema planning track here, activate a minimal non-semantic schema reference/comment slice, or defer schema reconciliation until implementation/migration evidence exists.
+HERMES_USER to choose whether to stop the ADR/schema planning track here, defer substantive schema reconciliation until implementation/migration evidence exists, or activate another explicitly bounded workflow item.

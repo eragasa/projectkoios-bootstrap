@@ -18,8 +18,8 @@
 
 ## Current priority stack
 
-1. Hold at HERMES/USER decision after accepting `schema-record-envelope-schema-change-planning-slice-16` as proposal-only planning.
-2. Preserve schema authority boundaries: `docs/schemas/schema.record-base.json` remains unchanged draft direction.
+1. Hold at HERMES/USER decision after accepting `schema-record-envelope-reference-comment-slice-17`.
+2. Preserve schema authority boundaries: `docs/schemas/schema.record-base.json` has only a non-semantic `$comment` annotation and remains draft direction.
 3. Do not activate `pi-skill-determinism-slice-0` unless HERMES/USER explicitly chooses to leave or pause the ADR/schema track.
 
 ## Active slice
@@ -32,16 +32,23 @@ Workflow fixture token:
 active_slice=none
 ```
 
-Completed Slice 16 artifact:
+Completed Slice 17 artifact:
+
+```text
+docs/schemas/schema.record-base.json
+```
+
+HERMES decision and acceptance:
+
+```text
+docs/reviews/hermes-decision.20260712.024500_schema-record-envelope-reference-comment-slice-17.md
+docs/reviews/hermes-acceptance.20260712.024700_schema-record-envelope-reference-comment-slice-17.md
+```
+
+Prior Slice 16 planning artifact remains:
 
 ```text
 docs/plans/schema-change-brief.20260712.023116_schema-record-envelope.md
-```
-
-HERMES acceptance:
-
-```text
-docs/reviews/hermes-acceptance.20260712.023900_schema-record-envelope-schema-change-planning-slice-16.md
 ```
 
 ## Validation and review observed
@@ -75,15 +82,15 @@ Keep `docs/schemas/schema.record-base.json` unchanged as draft record-envelope d
 
 Defer substantive schema changes until renderer/ingester, family-schema composition, or migration needs become concrete.
 
-If HERMES/USER wants a minimal next schema-edit slice, limit it to non-semantic reference/description/comment changes linking `docs/architecture/architecture.schema-record-envelope.md` while preserving validation semantics.
+Slice 17 added a top-level `$comment` that links the accepted architecture context and schema README context while explicitly stating the annotation is contextual only and does not change validation semantics.
 
 ## Waiting on
 
 HERMES/USER next decision:
 
-1. Stop the ADR/schema planning track here and leave `schema.record-base.json` unchanged until implementation or migration pressure appears.
-2. Activate a minimal non-semantic `schema-record-envelope-reference-comment-slice-17`.
-3. Defer schema reconciliation and return to another explicitly chosen workflow item.
+1. Stop the ADR/schema planning track here.
+2. Defer substantive schema reconciliation until implementation or migration pressure appears.
+3. Return to another explicitly chosen workflow item.
 
 ## Exit criteria
 
