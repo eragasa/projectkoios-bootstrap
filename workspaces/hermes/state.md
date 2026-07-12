@@ -20,6 +20,8 @@
 
 ADR/schema architecture track reached a decision point after HERMES accepted `schema-record-envelope-architecture-housekeeping-slice-18`. The schema record-envelope architecture now has accepted-surface status/provenance housekeeping, while schema-envelope JSON authority and validation semantics remain unchanged.
 
+HERMES also captured USER initial alignment for a filesystem-backed Petri-net/Gantt project-management system in `docs/plans/project-alignment.20260712_filesystem-petrinet-gantt-project-management.md`; KOIOS reviewed it as provenance-adequate draft alignment/intake with no blockers to a later ATHENA architecture-framing request.
+
 ## Current validated state
 
 - Hermes normative-language guardrail tightening was committed as `4fba6224 Tighten Hermes guardrails with normative language`.
@@ -168,4 +170,4 @@ Slice 17 acceptance approves only the non-semantic top-level `$comment` annotati
 
 ## Next owner
 
-HERMES_USER to choose whether to stop the ADR/schema planning track here, defer substantive schema reconciliation until implementation/migration evidence exists, or activate another explicitly bounded workflow item.
+HERMES_USER to choose whether to route the filesystem-backed Petri-net/Gantt project-management alignment note to ATHENA for bounded architecture framing, stop/defer the ADR/schema planning track, or activate another explicitly bounded workflow item.
