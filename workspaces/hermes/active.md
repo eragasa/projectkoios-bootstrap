@@ -69,6 +69,8 @@ KOIOS provenance review: provenance-adequate for HERMES proposal-only acceptance
 
 KOIOS post-Slice 17 consistency review: `docs/architecture/architecture.schema-record-envelope.md` remains consistent/current for architecture direction after Slices 14-17; no blockers. Do not infer schema JSON authority, universal emitted-record authority, status mirroring, projection policy, migration, source rewrite, renderer/ingester behavior, or cutover from it. Minor watchpoint: frontmatter still says `status: draft-architecture`, which is not blocking but could be cleaned up later as bounded metadata/doc cleanup.
 
+ATHENA post-Slice 17 consistency review: accepted architecture surface remains materially consistent with relevant ADR/source surfaces after Slices 14-17; no blockers and no required architecture update. Optional housekeeping could update frontmatter/status/provenance and add a short post-Slice-17 note that README/schema `$comment` references were added without validation-semantics or authority change.
+
 VULCAN implementation-reality comments: no blockers for accepting proposal-only Option A/F. Keeping `schema.record-base.json` unchanged is implementation-safe and preserves current validator behavior. Main unchanged-schema risk is operator/agent authority confusion, not code breakage.
 
 VULCAN watchpoints integrated:
@@ -92,7 +94,7 @@ HERMES/USER next decision:
 
 1. Stop the ADR/schema planning track here.
 2. Defer substantive schema reconciliation until implementation or migration pressure appears.
-3. Optionally activate a bounded metadata/doc cleanup for the architecture frontmatter `status: draft-architecture` watchpoint.
+3. Optionally activate a bounded metadata/doc cleanup for the architecture frontmatter/provenance/post-Slice-17 note watchpoints.
 4. Return to another explicitly chosen workflow item.
 
 ## Exit criteria

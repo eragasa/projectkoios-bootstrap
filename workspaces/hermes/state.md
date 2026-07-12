@@ -140,6 +140,7 @@ Review basis:
 - VULCAN reviewed the actual Slice 17 edit, ran focused schema registry tests, and found no implementation blockers.
 - KOIOS reviewed the actual Slice 17 edit and found no provenance/authority blockers.
 - KOIOS later confirmed `docs/architecture/architecture.schema-record-envelope.md` remains consistent with relevant ADR/source surfaces after Slices 14-17, with no blockers; minor watchpoints are frontmatter `status: draft-architecture` wording, avoiding over-reading Slice 17's contextual `$comment`, and preserving the distinction between schema namespace/index guidance and unaccepted universal record-envelope authority.
+- ATHENA later confirmed the accepted architecture surface remains materially consistent with relevant ADR/source surfaces after Slices 14-17, with no blockers; optional housekeeping could update frontmatter/status/provenance and add a short post-Slice-17 note, but no substantive architecture rewrite is needed.
 - HERMES accepted and committed Slice 17:
   - `docs/reviews/hermes-acceptance.20260712.024700_schema-record-envelope-reference-comment-slice-17.md`
   - commit `9a0e9f4`
@@ -155,6 +156,7 @@ Slice 17 acceptance approves only the non-semantic top-level `$comment` annotati
 
 - No active slice blocker remains after Slice 17 acceptance.
 - KOIOS post-Slice 17 consistency review found no architecture/provenance-authority blocker.
+- ATHENA post-Slice 17 consistency review found no current architecture/ADR/schema authority conflict and no required architecture update.
 - Any future schema edit requires explicit HERMES/USER activation and must preserve or explicitly test validation semantics according to the accepted brief and VULCAN watchpoints.
 
 ## Next owner
