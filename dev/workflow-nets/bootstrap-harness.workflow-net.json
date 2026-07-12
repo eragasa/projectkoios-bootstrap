@@ -57,7 +57,7 @@
         "color": {
           "kind": "workflow-slice",
           "requires_user_decision": "true",
-          "active_slice": "none"
+          "active_slice": "schema-record-envelope-doc-index-slice-15"
         }
       }
     ]
