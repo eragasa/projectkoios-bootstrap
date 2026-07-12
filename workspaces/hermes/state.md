@@ -18,7 +18,7 @@
 
 ## Current focus
 
-ADR/schema architecture track remains priority. HERMES activated `schema-record-envelope-schema-change-planning-slice-16` for ATHENA handoff.
+ADR/schema architecture track reached a decision point after HERMES accepted `schema-record-envelope-schema-change-planning-slice-16` as proposal-only planning. `schema.record-base.json` remains unchanged draft direction pending HERMES/USER next decision.
 
 ## Current validated state
 
@@ -106,37 +106,46 @@ ADR/schema architecture track remains priority. HERMES activated `schema-record-
 
 ## Current coherent state
 
-Uncommitted Slice 15 acceptance package:
+Committed Slice 15 acceptance and Slice 16 activation are present in repo history. Slice 16 output has now been received and accepted as proposal-only planning.
+
+Slice 16 accepted artifact:
 
 ```text
-docs/schemas/README.md
-docs/reviews/hermes-acceptance.20260712.021113_schema-record-envelope-doc-index-slice-15.md
+docs/plans/schema-change-brief.20260712.023116_schema-record-envelope.md
+```
+
+Slice 16 acceptance package committed:
+
+```text
+docs/plans/schema-change-brief.20260712.023116_schema-record-envelope.md
+docs/reviews/hermes-acceptance.20260712.023900_schema-record-envelope-schema-change-planning-slice-16.md
 dev/workflow-nets/bootstrap-harness.queue-state.json
 dev/workflow-nets/bootstrap-harness.workflow-net.json
 workspaces/hermes/state.md
 workspaces/hermes/active.md
 ```
 
-Committed Slice 15 activation:
+Review basis:
 
-```text
-27d57d3 Activate schema record envelope doc index slice
-```
-
-The workflow fixtures showed no active item and `active_slice=none` after Slice 15 acceptance.
-- USER said `proceed` after push and recommendations.
-- HERMES activated Slice 16 for proposal-only schema-change planning:
-  - `docs/reviews/hermes-decision.20260712.023116_schema-record-envelope-schema-change-planning-slice-16.md`
-- HERMES reconciled queue/status to active item and `active_slice=schema-record-envelope-schema-change-planning-slice-16`.
+- ATHENA completed proposal-only schema-change planning.
+- KOIOS reviewed and found the brief provenance-adequate for HERMES proposal-only acceptance, with no blockers.
+- VULCAN reviewed and found Option A/F implementation-safe with no blockers, adding watchpoints for future validators, `$comment`/`description` wording, and avoiding accidental semantic schema edits.
+- HERMES accepted and committed the brief:
+  - `docs/reviews/hermes-acceptance.20260712.023900_schema-record-envelope-schema-change-planning-slice-16.md`
+  - commit `f7862ac`
+- HERMES cleared the active queue item and reconciled workflow status to `active_slice=none`.
 
 ## Active boundaries
 
 The old source is preserved as legacy/source provenance with a disposition note. This does not rename, move, archive, delete, split, normalize status casing, edit schemas, migrate records, replace generated projections, create database/storage authority, or cut over JSON authority.
 
+Slice 16 acceptance also does not approve any schema JSON edit, schema authority promotion, renderer/ingester implementation, migration, or JSON authority cutover. `docs/schemas/schema.record-base.json` remains unchanged draft direction.
+
 ## Current blockers
 
-- ATHENA must produce the proposal-only schema-change planning brief before any `docs/schemas` mutation or schema authority change.
+- No active slice blocker remains after Slice 16 proposal-only acceptance.
+- Any future schema edit requires explicit HERMES/USER activation and must preserve or explicitly test validation semantics according to the accepted brief and VULCAN watchpoints.
 
 ## Next owner
 
-ATHENA for `docs/plans/schema-change-brief.20260712.023116_schema-record-envelope.md`.
+HERMES_USER to choose whether to stop the ADR/schema planning track here, activate a minimal non-semantic schema reference/comment slice, or defer schema reconciliation until implementation/migration evidence exists.
