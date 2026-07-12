@@ -18,7 +18,7 @@
 
 ## Current focus
 
-ADR/schema architecture track remains priority. HERMES activated `schema-record-envelope-doc-index-slice-15` for ATHENA handoff.
+Schema record-envelope doc index Slice 15 is accepted; next decision is explicit activation of the next ADR-track slice or definition of another workflow slice.
 
 ## Current validated state
 
@@ -99,26 +99,31 @@ ADR/schema architecture track remains priority. HERMES activated `schema-record-
 - HERMES activated Slice 15 for a bounded `docs/schemas/README.md` index clarification:
   - `docs/reviews/hermes-decision.20260712.020911_schema-record-envelope-doc-index-slice-15.md`
 - HERMES reconciled queue/status to active item and `active_slice=schema-record-envelope-doc-index-slice-15`.
+- ATHENA completed Slice 15 by editing only `docs/schemas/README.md` to reference `docs/architecture/architecture.schema-record-envelope.md` under schema-family layering.
+- HERMES accepted Slice 15:
+  - `docs/reviews/hermes-acceptance.20260712.021113_schema-record-envelope-doc-index-slice-15.md`
+- HERMES cleared the active queue item and reconciled workflow status to `active_slice=none`.
 
 ## Current coherent state
 
-Uncommitted Slice 15 activation package:
+Uncommitted Slice 15 acceptance package:
 
 ```text
-docs/reviews/hermes-decision.20260712.020911_schema-record-envelope-doc-index-slice-15.md
+docs/schemas/README.md
+docs/reviews/hermes-acceptance.20260712.021113_schema-record-envelope-doc-index-slice-15.md
 dev/workflow-nets/bootstrap-harness.queue-state.json
 dev/workflow-nets/bootstrap-harness.workflow-net.json
 workspaces/hermes/state.md
 workspaces/hermes/active.md
 ```
 
-Committed Slice 14 acceptance:
+Committed Slice 15 activation:
 
 ```text
-cc1c76a Accept schema record envelope architecture
+27d57d3 Activate schema record envelope doc index slice
 ```
 
-The workflow fixtures now show active item `schema-record-envelope-doc-index-slice-15` and `active_slice=schema-record-envelope-doc-index-slice-15`.
+The workflow fixtures now show no active item and `active_slice=none`.
 
 ## Active boundaries
 
@@ -126,8 +131,9 @@ The old source is preserved as legacy/source provenance with a disposition note.
 
 ## Current blockers
 
-- ATHENA must update `docs/schemas/README.md` before HERMES/USER acceptance of Slice 15.
+- No Slice 15 blocker remains after committing the acceptance package.
+- USER/HERMES explicit activation is required before the next slice proceeds.
 
 ## Next owner
 
-ATHENA for bounded `docs/schemas/README.md` schema-index clarification.
+HERMES_USER for explicit activation of the next ADR-track slice or definition of another workflow slice.

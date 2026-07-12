@@ -4,19 +4,7 @@
   "parent_effort": "petri-net-workflow-inspectability",
   "status": "static-read-only-fixture",
   "authority": "Static read-only fixture; not canonical workflow authority and not product authority.",
-  "active_item": {
-    "name": "schema-record-envelope-doc-index-slice-15",
-    "state": "active",
-    "artifact_refs": [
-      "docs/reviews/hermes-decision.20260712.020911_schema-record-envelope-doc-index-slice-15.md",
-      "docs/reviews/hermes-acceptance.20260712.020742_adr-schema-record-envelope-architecture-slice-14.md",
-      "docs/architecture/architecture.schema-record-envelope.md",
-      "docs/schemas/README.md"
-    ],
-    "why": "ADR/schema architecture track remains priority. Slice 14 accepted schema record-envelope architecture; KOIOS noted README linking should be a separate doc/index slice.",
-    "dependency_or_blocker": "Requires ATHENA bounded docs/schemas/README.md clarification before HERMES/USER acceptance; must not edit JSON schemas or change schema authority.",
-    "recommendation": "Route to ATHENA for schema README index clarification; do not activate non-ADR queued work while this active item remains set."
-  },
+  "active_item": null,
   "queued_items": [
     {
       "name": "pi-skill-determinism-slice-0",
@@ -30,6 +18,16 @@
     }
   ],
   "completed_items": [
+    {
+      "name": "schema-record-envelope-doc-index-slice-15",
+      "state": "accepted-committed-pending",
+      "artifact_refs": [
+        "docs/schemas/README.md",
+        "docs/reviews/hermes-acceptance.20260712.021113_schema-record-envelope-doc-index-slice-15.md",
+        "docs/reviews/hermes-decision.20260712.020911_schema-record-envelope-doc-index-slice-15.md"
+      ],
+      "why": "HERMES accepted bounded schema README index clarification for the schema record-envelope architecture surface."
+    },
     {
       "name": "adr-schema-record-envelope-architecture-slice-14",
       "state": "accepted-committed",
@@ -136,5 +134,5 @@
     }
   ],
   "deferred_items": [],
-  "next_decision_needed": "ATHENA should update docs/schemas/README.md for Slice 15; do not activate queued non-ADR work until active_item is cleared."
+  "next_decision_needed": "Explicitly activate the next ADR-track slice or define another workflow slice."
 }

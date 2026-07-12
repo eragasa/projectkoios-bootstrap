@@ -26,6 +26,8 @@ The current ADR schema-family boundary is layered:
 3. `adr-draft.schema.json` demonstrates ADR-family composition with the base envelope.
 4. `adr-active.schema.json` is a compatibility/reconciliation candidate, not co-authoritative with the newer base-envelope family by implication.
 
+`docs/architecture/architecture.schema-record-envelope.md` records the architecture direction for the record-envelope model. It is architecture direction only, not machine-readable schema authority; it does not make `schema.record-base.json` accepted record-envelope authority or make `metadata` + `content` the current universal emitted-record shape.
+
 Markdown under `docs/adr/` remains source/control for unmigrated records. Generated projections remain evidence or review/navigation surfaces unless a later accepted migration/cutover package changes the specific file's disposition.
 
 `routing` and `dcn` are not current ADR content-schema fields. `routing` defaults to sidecar/provenance preservation unless later promoted by workflow/envelope decision. `dcn` remains unresolved namespace/control metadata. `workflow_binding` is optional schema content, not operational workflow authority.

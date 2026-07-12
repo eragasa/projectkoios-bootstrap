@@ -18,16 +18,16 @@
 
 ## Current priority stack
 
-1. Route `schema-record-envelope-doc-index-slice-15` to ATHENA.
-2. Keep ADR/schema architecture track priority; do not activate `pi-skill-determinism-slice-0` while active item remains set.
-3. Preserve schema authority boundaries while ATHENA edits `docs/schemas/README.md`.
+1. Commit Slice 15 schema-index acceptance package.
+2. Decide the next ADR-track slice or explicitly define another workflow slice.
+3. Keep `pi-skill-determinism-slice-0` queued unless USER/HERMES explicitly reprioritizes.
 
 ## Active slice
 
 Active queue item after reconciliation:
 
 ```text
-schema-record-envelope-doc-index-slice-15
+none
 ```
 
 Target source:
@@ -88,7 +88,7 @@ dev/workflow-nets/bootstrap-harness.queue-state.json
 dev/workflow-nets/bootstrap-harness.workflow-net.json
 ```
 
-Current workflow status reports `active_slice=schema-record-envelope-doc-index-slice-15`; queue reports active item set and warns not to activate queued non-ADR work.
+Current workflow status reports `active_slice=none`; queue reports no active item and next decision needed: explicitly activate the next ADR-track slice or define another workflow slice.
 
 Activation decision recorded:
 
@@ -172,11 +172,18 @@ Expected ATHENA output:
 docs/schemas/README.md
 ```
 
+ATHENA Slice 15 output received and accepted:
+
+```text
+docs/schemas/README.md
+docs/reviews/hermes-acceptance.20260712.021113_schema-record-envelope-doc-index-slice-15.md
+```
+
 ## Waiting on
 
-- Commit of Slice 15 activation/routing decision and queue/status update.
-- ATHENA bounded schema-index clarification in `docs/schemas/README.md`.
+- Commit of Slice 15 schema-index acceptance package.
+- Later USER/HERMES activation of the next ADR-track slice or another workflow slice.
 
 ## Exit criteria
 
-Hermes state is stable when Slice 15 activation/routing is committed and ATHENA is the explicit next owner.
+Hermes state is stable when Slice 15 schema-index acceptance is committed and no active queue item remains.
