@@ -18,7 +18,7 @@
 
 ## Current priority stack
 
-1. Hold at HERMES/USER decision after USER clarified the project-management system should be bootstrapped through the working process outside the ADR process.
+1. Hold at HERMES/USER decision after USER clarified ATHENA owns the long-term architecture and phase decomposition for the project-management system.
 2. Preserve schema authority boundaries: `docs/schemas/schema.record-base.json` has only a non-semantic `$comment` annotation and remains draft direction.
 3. Do not activate `pi-skill-determinism-slice-0` unless HERMES/USER explicitly chooses to leave or pause the current project-management alignment / ADR-schema context.
 
@@ -86,9 +86,9 @@ Slice 17 added a top-level `$comment` that links the accepted architecture conte
 
 HERMES/USER next decision:
 
-1. Define a non-ADR, multi-phase waterfall-like project brief for `docs/plans/petrinet-projectmanagement.20260712.project-alignment.md`, with explicit phase gates, reuse of existing workflow/Petri-net code, preserved `petrinet -> workflow -> pm` separation, adapter-backed validation, and Operator Console fixture as the primary projection-only visibility surface.
-2. Route to ATHENA only later if a bounded architecture question is explicitly needed.
-3. Stop/defer the ADR/schema planning track here or return to another explicitly chosen workflow item.
+1. Route `docs/plans/petrinet-projectmanagement.20260712.project-alignment.md` to ATHENA for long-term architecture and phase decomposition.
+2. ATHENA should define increasing technology-maturity phases and component dependencies sufficient to support a Gantt chart.
+3. HERMES should not author the architecture or phase plan; HERMES owns only the user-alignment handoff.
 
 ## Exit criteria
 

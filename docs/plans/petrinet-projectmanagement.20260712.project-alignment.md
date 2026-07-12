@@ -64,6 +64,9 @@ USER later clarified:
 - The Operator Console fixture should be the user's primary visibility surface for system state.
 - The Operator Console fixture should initially be projection-only, not source/control.
 - Later, the Operator Console may become a source of interactive user input through a separately approved interaction/mutation design.
+- ATHENA, not HERMES, should write the long-term architecture.
+- ATHENA should decompose the architecture into multiple phases of increasing technology maturity.
+- The phased architecture should support producing a Gantt chart of the different components to develop and their dependencies.
 - The project should be set up as a multi-phase project resembling waterfall, not scrum.
 - Work should proceed through explicit phases and phase gates rather than scrum-style sprint slicing.
 - External Petri-net engines such as SNAKES may be used as initial execution engines if their APIs are encapsulated.
@@ -176,7 +179,7 @@ This does not authorize uncontrolled implementation. It means the first concrete
 
 KOIOS reviewed this alignment note and found it provenance-adequate as draft alignment/intake, with no blockers to HERMES using it as input for a later bounded workflow decision.
 
-HERMES/USER can next decide whether to define a non-ADR, multi-phase project brief for the project-management system. The brief should use waterfall-like phases and phase gates rather than scrum-style slices, while still starting with the smallest operational phase that reuses existing workflow/Petri-net code, preserves `petrinet -> workflow -> pm` separation, includes adapter-backed validation, and uses the Operator Console fixture as the primary projection-only visibility surface.
+HERMES/USER can next route this alignment note to ATHENA for long-term architecture. ATHENA should define the multi-phase technology-maturity path and component dependency structure needed to produce a Gantt chart. HERMES should not author that architecture or decompose the project phases itself.
 
 KOIOS watchpoints for any later architecture or workflow request:
 
@@ -195,6 +198,8 @@ Additional USER alignment for pilot framing:
 - Use the Operator Console fixture as the user's primary visibility surface for state.
 - Treat the Operator Console fixture as projection-only at first.
 - Defer interactive user input through the Operator Console to a later separately approved design.
-- Frame the pilot as a multi-phase/waterfall-like project with explicit phase gates, not as a scrum backlog or sprint sequence.
+- ATHENA owns the long-term architecture and phase decomposition.
+- HERMES owns the user-alignment handoff and should not author the architecture or phase plan.
+- Frame the future ATHENA output as a multi-phase/waterfall-like project with explicit phase gates, not as a scrum backlog or sprint sequence.
 - Encapsulate external Petri-net execution engines such as SNAKES behind adapters.
 - Use external engine outputs/images as known-good references for validating Project Koios visualizers.
