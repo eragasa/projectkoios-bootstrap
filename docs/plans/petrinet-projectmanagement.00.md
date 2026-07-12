@@ -60,6 +60,7 @@ The PM-0 files were normalized to this convention from earlier names on 20260712
 | Architecture framing | `docs/architecture/architecture.petrinet-projectmanagement.20260712.pm-0.architecture-framing.md` | ATHENA long-term architecture and phase decomposition |
 | HERMES acceptance | `docs/reviews/petrinet-projectmanagement.20260712.122927.pm-0.hermes-acceptance.md` | HERMES acceptance of PM-0 architecture framing |
 | HERMES acceptance | `docs/reviews/petrinet-projectmanagement.20260712.131949.pm-0.hermes-acceptance.md` | HERMES acceptance of PM-0 PM-1/PM-2 question refinement |
+| HERMES acceptance | `docs/reviews/petrinet-projectmanagement.20260712.132754.pm-0.hermes-acceptance.md` | HERMES acceptance of PM-0 hybrid Gantt refinement |
 | AAR | `docs/AAR/petrinet-projectmanagement.20260712.032653.pm-0.aar.md` | Process observations from alignment session |
 
 ## Current status

@@ -179,19 +179,32 @@ The phases are waterfall-like maturity stages. They are not scrum sprints. A lat
 
 | Phase | Maturity | Goal | Source/control maturity | Projection maturity | Exit criteria |
 |---|---|---|---|---|---|
-| PM-0 | Alignment and architecture baseline | Establish architecture, layering, and phase plan | No new runtime authority | Gantt exists as dependency plan only | Architecture and phase dependency map accepted for implementation planning |
-| PM-1 | Layered read-only foundation | Cleanly separate/reuse existing Petri-net and workflow code while preserving behavior | Existing fixtures are loaded through layer-respecting boundaries | Existing status/queue surfaces continue to work | Validation proves no behavior regression and no upward dependencies |
+| PM-0 | Alignment and architecture baseline | Establish architecture, layering, and phase plan | No new runtime authority | Early Gantt-style planning projection may be generated from the architecture component map | Architecture, phase dependency map, and planning projection accepted for implementation planning |
+| PM-1 | Layered read-only foundation | Cleanly separate/reuse existing Petri-net and workflow code while preserving behavior | Existing fixtures are loaded through layer-respecting boundaries | Existing status/queue surfaces continue to work; early planning Gantt may be revised from PM-1 findings | Validation proves no behavior regression and no upward dependencies |
 | PM-2 | Filesystem source/control pilot | Introduce a minimal self-tracking project-management pilot over explicit files | Petri-net definition, marking/state, transition payload, and thin trace are explicit files | Deterministic `koios pm status` read model and Operator Console projection fixture exist | Pilot tracks itself read-only and can be inspected from CLI and projection fixture |
 | PM-3 | Adapter-backed validation | Validate pilot Petri-net/workflow state through adapter seams | Source/control files can be validated against native and external/reference semantics | Reference images or reports may be generated as projections | Adapter validation is deterministic, optional-backend-safe, and isolated in `petrinet` |
 | PM-4 | Operator Console projection | Make the pilot visible in the Operator Console as projection-only primary visibility | No UI mutation authority | Console shows workflow/Petri-net/PM/Gantt-ready status from fixtures/read models | User can inspect current state without confusing projection for authority |
-| PM-5 | Gantt projection and dependency analysis | Produce Gantt-ready planning view from PM/workflow read models | Source remains Petri-net/workflow/PM files | Gantt shows components, dependencies, planned/current/actual state, and critical path where available | Gantt output is reproducible and labeled as projection |
+| PM-5 | Operational Gantt projection and dependency analysis | Produce Gantt-ready operational view from PM/workflow source/control read models | Source remains Petri-net/workflow/project-management files | Operational Gantt shows components, dependencies, planned/current/actual state, and critical path where available | Operational Gantt output is reproducible, source-linked, and labeled as projection |
 | PM-6 | Controlled transition execution | Add approved filesystem mutation for transitions | Transition firing writes explicit state/payload/trace files with dry-run and optimistic checks | Projections refresh from written source/control files | Mutation reports exact files written and blocks unsafe concurrent writes |
 | PM-7 | Recursive project/template extraction | Generalize self-tracking pilot into reusable project template | Source/control package is portable and parameterized | Projection package can be generated for new projects | Template can instantiate a new project without bootstrap-specific hidden dependencies |
 | PM-8 | Cross-repo/product expansion | Apply the template to product/vault and cross-repo coordination | Source/control boundaries across repos are explicit | Cross-repo visibility is projected without central hidden authority | Product/vault adoption is separately approved in the appropriate document domain |
 
+## Hybrid Gantt planning approach
+
+Use Gantt in two different maturity roles:
+
+1. Early planning Gantt projection in PM-0/PM-1.
+2. Operational/live Gantt projection in PM-5.
+
+The early planning Gantt is allowed before PM source/control files exist. It should be derived from this architecture's phase table and component dependency map. Its purpose is to reveal sequencing, likely critical path, missing dependencies, and required work products before VULCAN implementation planning. It may help back-propagate discoveries into the Petri-net/workflow/project-management source/control design for PM-1/PM-2.
+
+The early planning Gantt is not source/control authority. It must not become the state machine, workflow truth, implementation authorization, or replacement for Petri-net/workflow/project-management files. Any dependency or work-product gaps found through the planning Gantt must be incorporated back into the architecture or later source/control design before they become implementation requirements.
+
+PM-5 is different: PM-5 is the later operational Gantt projection generated from PM/workflow source/control read models after the project-management source/control surfaces exist. PM-5 may show planned/current/actual state and critical path from live or current filesystem state, but it remains a projection.
+
 ## Component dependency map for Gantt projection
 
-The following component IDs are intended to be machine-readable enough for a later Gantt/read-model fixture while remaining architecture prose here.
+The following component IDs are intended to be machine-readable enough for early planning Gantt projection and later operational Gantt/read-model fixtures while remaining architecture prose here.
 
 | Component ID | Component | Layer | Depends on | Earliest phase | Notes |
 |---|---|---|---|---|---|
@@ -207,7 +220,8 @@ The following component IDs are intended to be machine-readable enough for a lat
 | PM-TEMPLATE | Template extraction model | `project_management` | PM-TASK, PM-DEPEND, WF-STATE | PM-7 | Must remove bootstrap-specific assumptions. |
 | PROJ-CLI | CLI/read-model inspection | projection | WF-INSTANCE, PM-TASK | PM-2 | Read-only before PM-6. |
 | PROJ-CONSOLE | Operator Console projection fixture | projection/ui | PROJ-CLI, PM-TASK | PM-4 | Projection-only until separate interaction design. |
-| PROJ-GANTT | Gantt projection | projection/ui | PM-DEPEND, PM-TASK | PM-5 | Gantt is never source/control in this architecture. |
+| PROJ-GANTT-PLAN | Early Gantt planning projection | projection/ui | PM-0 phase table, component dependency map | PM-0 | Planning/design projection only; used to reveal sequencing, critical path, missing dependencies, and required work products before source/control design is complete. |
+| PROJ-GANTT-OPS | Operational Gantt projection | projection/ui | PM-DEPEND, PM-TASK | PM-5 | Generated from PM/workflow source-control read models; never source/control in this architecture. |
 | XREPO | Cross-repo visibility | `project_management`/projection | PM-TEMPLATE | PM-8 | Requires separate repo/domain acceptance. |
 
 ## Phase dependency graph
@@ -224,7 +238,9 @@ PM-0 Architecture baseline
               -> PM-8 Cross-repo/product expansion
 ```
 
-PM-3 may start after PM-2 source/control files exist. PM-4 may start once a stable read model exists. PM-5 requires at least a minimal task/dependency model from PM-2 and visibility from PM-4 if the user-facing Gantt is in the Operator Console.
+PM-3 may start after PM-2 source/control files exist. PM-4 may start once a stable read model exists. PM-5 requires at least a minimal task/dependency model from PM-2 and visibility from PM-4 if the user-facing operational Gantt is in the Operator Console.
+
+PM-0/PM-1 may still produce an early planning Gantt from architecture-owned phases/components. That early planning Gantt is a design projection used to improve the PM-1/PM-2 source/control design; it is not the PM-5 operational Gantt.
 
 ## Implementation outlook and phase risks
 
@@ -237,7 +253,8 @@ Phase risk controls:
 - PM-2 must avoid premature schema or file-format lock-in; first pilot model should be tiny, filesystem-backed, and read-only.
 - PM-3 external adapters should be integrated while they are working and useful, but must remain optional, lazy, adapter-owned, and fail-soft when unavailable or blocking.
 - PM-4 Operator Console projection must be visibly labeled as projection/non-source/non-control.
-- PM-5 must avoid full Gantt duration, calendar, resource, and critical-path semantics until the dependency model is proven.
+- PM-0/PM-1 early Gantt planning projection must not be mistaken for source/control authority or live operational status.
+- PM-5 operational Gantt must avoid full duration, calendar, resource, and critical-path semantics until the dependency model is proven.
 - PM-6 mutation is the highest-risk phase and must address stale reads, race conditions, partial writes, event/state divergence, dry-run behavior, exact file-write reporting, and failure recovery before it is authorized.
 - PM-7 template extraction must include portability checks that prevent bootstrap path assumptions from leaking into reusable templates.
 - PM-8 product/vault/cross-repo expansion requires separate domain acceptance.
@@ -289,7 +306,8 @@ Recommended scope:
 - expose a deterministic read-only `koios pm status` surface or the read-model needed by that command;
 - produce an immediate Operator Console projection fixture/read-model with clear non-source/non-control labels and update rules;
 - integrate adapter validation while it works and remains encapsulated, but treat adapter breakage as non-blocking for the PM-1/PM-2 foundation;
-- leave Gantt rendering and transition mutation out of the required slice unless separately scoped as optional non-blocking outputs.
+- allow an early planning Gantt projection derived from the PM-0 phase/component map if it is explicitly labeled non-authoritative and used to refine source/control design;
+- leave operational/live Gantt rendering and transition mutation out of the required slice unless separately scoped as optional non-blocking outputs.
 
 Recommended non-goals for the first slice:
 
@@ -302,8 +320,8 @@ Recommended non-goals for the first slice:
 - no hard external-engine dependency requirement; external adapters must be encapsulated and non-blocking if broken;
 - no Operator Console interactive rendering beyond a projection fixture/read-model with exact non-source labels;
 - no Operator Console interactive input;
-- no Gantt engine commitment;
-- no duration/calendar/resource/critical-path semantics;
+- no operational/live Gantt engine commitment;
+- no duration/calendar/resource/critical-path semantics beyond early planning projection hints;
 - no cross-repo writes;
 - no product/vault authority;
 - no broad migration, replacement, or behavior redesign beyond the package-boundary establishment explicitly required for `projectkoios.petrinet`, `projectkoios.workflow`, and `projectkoios.project_management`.
@@ -378,7 +396,8 @@ Projection/read-model in PM-2:
 
 - `koios pm status` output/read model.
 - Operator Console fixture/read model.
-- Gantt-ready dependency/component projection, if produced.
+- Early Gantt planning projection derived from PM-0/PM-1 architecture components, if produced.
+- Later operational Gantt projection generated from PM source/control read models, deferred to PM-5.
 - Petri-net diagrams, external-engine reference images, reports, and dashboards.
 
 Test/evidence in PM-2:
@@ -388,7 +407,7 @@ Test/evidence in PM-2:
 - implementation reports and review artifacts;
 - generated comparison reports.
 
-Projection files must visibly say they are projections, not source/control. Source/control files must not be generated from projections.
+Projection files must visibly say they are projections, not source/control. Source/control files must not be generated from projections. If an early Gantt planning projection reveals missing sequencing or work-product requirements, those discoveries must be back-propagated into architecture or source/control design rather than treated as Gantt authority.
 
 ### Transition payload YAGNI baseline
 
