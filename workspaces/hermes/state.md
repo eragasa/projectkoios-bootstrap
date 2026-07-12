@@ -20,7 +20,7 @@
 
 ADR/schema architecture track reached a decision point after HERMES accepted `schema-record-envelope-architecture-housekeeping-slice-18`. The schema record-envelope architecture now has accepted-surface status/provenance housekeeping, while schema-envelope JSON authority and validation semantics remain unchanged.
 
-HERMES also captured USER initial alignment for a filesystem-backed Petri-net/Gantt project-management system in `docs/plans/petrinet-projectmanagement.20260712.project-alignment.md`; KOIOS reviewed it as provenance-adequate draft alignment/intake with no blockers to a later ATHENA architecture-framing request.
+HERMES also captured USER initial alignment for a filesystem-backed Petri-net/Gantt project-management system in `docs/plans/petrinet-projectmanagement.20260712.project-alignment.md`; KOIOS reviewed it as provenance-adequate draft alignment/intake. USER later clarified that the system should be bootstrapped through the working process outside the ADR process, so the next recommended path is a bounded non-ADR workflow-bootstrap pilot rather than an ADR-first architecture route.
 
 ## Current validated state
 
@@ -170,4 +170,4 @@ Slice 17 acceptance approves only the non-semantic top-level `$comment` annotati
 
 ## Next owner
 
-HERMES_USER to choose whether to route the filesystem-backed Petri-net/Gantt project-management alignment note to ATHENA for bounded architecture framing, stop/defer the ADR/schema planning track, or activate another explicitly bounded workflow item.
+HERMES_USER to choose whether to define a bounded non-ADR workflow-bootstrap pilot for the filesystem-backed Petri-net/Gantt project-management alignment note, route a later explicit architecture question to ATHENA, stop/defer the ADR/schema planning track, or activate another explicitly bounded workflow item.

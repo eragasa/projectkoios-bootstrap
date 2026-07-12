@@ -10,8 +10,9 @@
   "source": "USER interview with HERMES",
   "not_a_spec": true,
   "not_architecture_authority": true,
-  "next_recommended_owner": "ATHENA",
-  "koios_review": "subagent-chat-019f51a8 intercom reply 20260712: provenance-adequate as draft alignment/intake; no blockers"
+  "next_recommended_owner": "HERMES",
+  "koios_review": "subagent-chat-019f51a8 intercom reply 20260712: provenance-adequate as draft alignment/intake; no blockers",
+  "user_process_update": "USER wants project management bootstrapped through the operational process, outside the ADR process"
 }
 ```
 
@@ -51,6 +52,8 @@ USER later clarified:
 - The design should stay YAGNI but not brittle.
 - Almost everything produced in code development can be treated as a work product.
 - Approvals can be human or agent/process approvals, but some gates should explicitly require human approval.
+- The project-management system should be bootstrapped using the Project Koios working process itself.
+- The bootstrap path should produce a working workflow system outside the ADR process rather than depending on ADR production as the primary path.
 
 ## Current aligned framing
 
@@ -108,6 +111,8 @@ Agent/process approvals are allowed where the gate policy permits them.
 
 This note does not decide:
 
+- an ADR;
+- an ADR-driven architecture path;
 - a schema;
 - a storage namespace;
 - a file format;
@@ -143,13 +148,21 @@ From KOIOS and VULCAN implementation/provenance input, future work should preser
 7. How should the system preserve visibility when a task moves to another subproject or repository?
 8. Which existing workflow surfaces should coexist unchanged in the first slice?
 
+## Process-bootstrap update
+
+USER later clarified that project management should be bootstrapped using the Project Koios process itself to produce a working workflow system outside the ADR process.
+
+HERMES interpretation: the next path should not be an ADR-first architecture route. It should be a bounded operational process/pilot route that preserves alignment, provenance, and review gates while avoiding ADR process overhead as the primary mechanism.
+
+This does not authorize uncontrolled implementation. It means the first concrete workflow should be framed as a working-process bootstrap/pilot with explicit artifacts, gates, review, and rollback boundaries.
+
 ## Recommended next action
 
-KOIOS reviewed this alignment note and found it provenance-adequate as draft alignment/intake, with no blockers to HERMES using it as input for a later ATHENA architecture-framing request.
+KOIOS reviewed this alignment note and found it provenance-adequate as draft alignment/intake, with no blockers to HERMES using it as input for a later bounded workflow decision.
 
-HERMES/USER can next decide whether to route a bounded architecture-framing request to ATHENA.
+HERMES/USER can next decide whether to define a small non-ADR workflow-bootstrap pilot for the project-management system.
 
-KOIOS watchpoints for any ATHENA request:
+KOIOS watchpoints for any later architecture or workflow request:
 
 - Treat Petri-net state and transition payloads as captured USER intent, not accepted architecture authority.
 - Test the task-as-place mapping explicitly, because conventional Petri-net modeling may map tasks differently.
