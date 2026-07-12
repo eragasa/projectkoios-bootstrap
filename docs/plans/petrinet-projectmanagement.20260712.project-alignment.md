@@ -62,6 +62,8 @@ USER later clarified:
 - The dependency/protocol flow should be one-way: `petrinet -> workflow -> pm`.
 - The pilot should track itself and later be extracted as a template for other projects.
 - The Operator Console fixture should be the user's primary visibility surface for system state.
+- The Operator Console fixture should initially be projection-only, not source/control.
+- Later, the Operator Console may become a source of interactive user input through a separately approved interaction/mutation design.
 - External Petri-net engines such as SNAKES may be used as initial execution engines if their APIs are encapsulated.
 - External engines may also produce reference images so Project Koios can validate its visualizer against a known-good implementation.
 
@@ -189,5 +191,7 @@ Additional USER alignment for pilot framing:
 - Keep dependency/protocol flow strict: `petrinet -> workflow -> pm`.
 - Use the pilot to track itself, then extract the pilot as a template for other projects.
 - Use the Operator Console fixture as the user's primary visibility surface for state.
+- Treat the Operator Console fixture as projection-only at first.
+- Defer interactive user input through the Operator Console to a later separately approved design.
 - Encapsulate external Petri-net execution engines such as SNAKES behind adapters.
 - Use external engine outputs/images as known-good references for validating Project Koios visualizers.
