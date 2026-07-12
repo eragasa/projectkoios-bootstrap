@@ -54,6 +54,10 @@ USER later clarified:
 - Approvals can be human or agent/process approvals, but some gates should explicitly require human approval.
 - The project-management system should be bootstrapped using the Project Koios working process itself.
 - The bootstrap path should produce a working workflow system outside the ADR process rather than depending on ADR production as the primary path.
+- The pilot should leverage existing workflow/Petri-net code rather than starting from scratch.
+- The pilot should be used to clean up existing workflow/Petri-net code as needed while preserving current working behavior.
+- There should be a UI renderer of the workflow and of the Petri net at each step.
+- Petri-net adapters should be used for validation.
 
 ## Current aligned framing
 
@@ -154,13 +158,15 @@ USER later clarified that project management should be bootstrapped using the Pr
 
 HERMES interpretation: the next path should not be an ADR-first architecture route. It should be a bounded operational process/pilot route that preserves alignment, provenance, and review gates while avoiding ADR process overhead as the primary mechanism.
 
-This does not authorize uncontrolled implementation. It means the first concrete workflow should be framed as a working-process bootstrap/pilot with explicit artifacts, gates, review, and rollback boundaries.
+USER further clarified that the pilot should leverage existing code, use the project-management work to clean up that code where appropriate, render both the workflow and Petri net in a UI at each step, and use Petri-net adapters for validation.
+
+This does not authorize uncontrolled implementation. It means the first concrete workflow should be framed as a working-process bootstrap/pilot with explicit artifacts, gates, review, validation adapters, UI-rendering expectations, and rollback boundaries.
 
 ## Recommended next action
 
 KOIOS reviewed this alignment note and found it provenance-adequate as draft alignment/intake, with no blockers to HERMES using it as input for a later bounded workflow decision.
 
-HERMES/USER can next decide whether to define a small non-ADR workflow-bootstrap pilot for the project-management system.
+HERMES/USER can next decide whether to define a small non-ADR workflow-bootstrap pilot for the project-management system that reuses existing workflow/Petri-net code, includes adapter-backed validation, and defines a lightweight UI rendering path for workflow/Petri-net state at each step.
 
 KOIOS watchpoints for any later architecture or workflow request:
 
