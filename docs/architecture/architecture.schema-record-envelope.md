@@ -1,16 +1,19 @@
 ---
-status: draft-architecture
+status: accepted-architecture-surface
 created: 20260711.190407Z
+accepted: 20260712.020742Z
 acting_as: ATHENA
 source_slice: adr-schema-record-envelope-architecture-slice-14
 source_provenance: docs/adr/adr.schema-base.md
+acceptance: docs/reviews/hermes-acceptance.20260712.020742_adr-schema-record-envelope-architecture-slice-14.md
+housekeeping_slice: schema-record-envelope-architecture-housekeeping-slice-18
 ---
 
 # Architecture: Schema Record Envelope
 
 ## Status and non-authority boundary
 
-This is an ATHENA architecture surface for schema-family record-envelope direction.
+This is an ATHENA architecture surface for schema-family record-envelope direction. HERMES accepted this architecture surface in Slice 14 as architecture direction only.
 
 It extracts still-current concepts from `docs/adr/adr.schema-base.md` while preserving that file as unchanged source/provenance. It does not make `docs/adr/adr.schema-base.md` current ADR authority, infer its top-level lifecycle status, or mutate it.
 
@@ -29,6 +32,11 @@ Planning and acceptance basis:
 - `docs/plans/architecture-extraction-brief.20260711.184325_adr-schema-base.md`
 - `docs/reviews/hermes-acceptance.20260711.185430_adr-schema-base-architecture-extraction-planning-slice-13.md`
 - `docs/reviews/hermes-decision.20260711.190407_adr-schema-record-envelope-architecture-slice-14.md`
+- `docs/reviews/hermes-acceptance.20260712.020742_adr-schema-record-envelope-architecture-slice-14.md`
+- `docs/reviews/hermes-acceptance.20260712.021113_schema-record-envelope-doc-index-slice-15.md`
+- `docs/reviews/hermes-acceptance.20260712.023900_schema-record-envelope-schema-change-planning-slice-16.md`
+- `docs/reviews/hermes-acceptance.20260712.024700_schema-record-envelope-reference-comment-slice-17.md`
+- `docs/reviews/hermes-decision.20260712.030127_schema-record-envelope-architecture-housekeeping-slice-18.md`
 - `docs/plans/source-disposition-brief.20260711.183536_adr-schema-base.md`
 - `docs/reviews/semantic-rationalization.20260711_adr-six-entry-slice-5.md`
 - `docs/schemas/README.md`
@@ -36,6 +44,8 @@ Planning and acceptance basis:
 - `docs/adr/adr.adr-lifecycle.20260705.011836Z.md`
 
 The embedded JSON `"status": "draft"` in `docs/adr/adr.schema-base.md` is observed source metadata only, not inferred top-level ADR lifecycle status.
+
+Post-Slice-17 ATHENA and KOIOS consistency reviews found no blocker or authority conflict among this architecture surface, the relevant ADRs, the schema README, and the bounded `$comment` annotation in `docs/schemas/schema.record-base.json`.
 
 ## Current schema-family control surfaces
 
@@ -125,7 +135,7 @@ The future target of JSON-authoritative records may use projection metadata to t
 
 Machine-readable schema authority lives in JSON schema files under `docs/schemas/` only when those files are explicitly accepted or preserved as current/draft/candidate by the schema namespace rules.
 
-This architecture does not edit `docs/schemas/README.md` or any JSON schema. A future schema-change slice must decide whether to revise, wrap, replace, retire, or promote `schema.record-base.json` and related family schemas.
+This architecture artifact itself did not edit `docs/schemas/README.md` or any JSON schema. Later bounded Slices 15 and 17 added README and schema `$comment` references back to this architecture surface without changing validation semantics or promoting schema authority. A future schema-change slice must decide whether to revise, wrap, replace, retire, or promote `schema.record-base.json` and related family schemas.
 
 ## Deferred renderer/ingester requirements
 
@@ -147,7 +157,7 @@ Those requirements need a separate implementation brief and approval before VULC
 This architecture does not authorize:
 
 - editing `docs/adr/adr.schema-base.md`;
-- editing `docs/schemas/`;
+- editing `docs/schemas/` without a separate approved slice;
 - changing lifecycle state;
 - accepting, activating, superseding, rejecting, promoting, or demoting existing sources;
 - moving, renaming, deleting, archiving, or splitting files;

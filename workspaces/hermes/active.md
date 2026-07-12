@@ -9,7 +9,7 @@
   "workspace": "workspaces/hermes/",
   "document_domain": "orchestration, repo-state reconciliation, cross-domain consistency",
   "control_files": ["state.md", "active.md"],
-  "next_owner": "ATHENA",
+  "next_owner": "HERMES_USER",
   "blockers": []
 }
 ```
@@ -18,40 +18,31 @@
 
 ## Current priority stack
 
-1. Active: `schema-record-envelope-architecture-housekeeping-slice-18` is authorized for ATHENA.
+1. Hold at HERMES/USER decision after accepting `schema-record-envelope-architecture-housekeeping-slice-18`.
 2. Preserve schema authority boundaries: `docs/schemas/schema.record-base.json` has only a non-semantic `$comment` annotation and remains draft direction.
-3. Do not activate `pi-skill-determinism-slice-0` while Slice 18 is active.
+3. Do not activate `pi-skill-determinism-slice-0` unless HERMES/USER explicitly chooses to leave or pause the ADR/schema track.
 
 ## Active slice
 
-Active queue item:
-
-```text
-schema-record-envelope-architecture-housekeeping-slice-18
-```
+No active queue item remains after Slice 18 acceptance.
 
 Workflow fixture token:
 
 ```text
-active_slice=schema-record-envelope-architecture-housekeeping-slice-18
+active_slice=none
 ```
 
-Target artifact:
+Completed Slice 18 artifact:
 
 ```text
 docs/architecture/architecture.schema-record-envelope.md
 ```
 
-HERMES decision:
+HERMES decision and acceptance:
 
 ```text
 docs/reviews/hermes-decision.20260712.030127_schema-record-envelope-architecture-housekeeping-slice-18.md
-```
-
-Required next owner:
-
-```text
-ATHENA
+docs/reviews/hermes-acceptance.20260712.030430_schema-record-envelope-architecture-housekeeping-slice-18.md
 ```
 
 ## Validation and review observed
@@ -93,14 +84,12 @@ Slice 17 added a top-level `$comment` that links the accepted architecture conte
 
 ## Waiting on
 
-ATHENA to make only bounded metadata/provenance/doc-boundary housekeeping edits to:
+HERMES/USER next decision:
 
-```text
-docs/architecture/architecture.schema-record-envelope.md
-```
-
-Then KOIOS should review the resulting edit for provenance and authority-boundary consistency before HERMES acceptance.
+1. Stop the ADR/schema planning track here.
+2. Defer substantive schema reconciliation until implementation or migration pressure appears.
+3. Return to another explicitly chosen workflow item.
 
 ## Exit criteria
 
-Slice 18 can be accepted only after ATHENA completes the bounded architecture housekeeping edit, KOIOS reports no provenance/authority blockers, HERMES verifies the diff and `git diff --check`, and workflow fixtures can return to no active queue item / `active_slice=none`.
+Hermes state is stable: Slice 18 is accepted, and the workflow fixtures report no active queue item / `active_slice=none`.

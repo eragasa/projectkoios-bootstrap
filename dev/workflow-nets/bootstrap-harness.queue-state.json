@@ -4,17 +4,7 @@
   "parent_effort": "petri-net-workflow-inspectability",
   "status": "static-read-only-fixture",
   "authority": "Static read-only fixture; not canonical workflow authority and not product authority.",
-  "active_item": {
-    "name": "schema-record-envelope-architecture-housekeeping-slice-18",
-    "state": "active",
-    "artifact_refs": [
-      "docs/architecture/architecture.schema-record-envelope.md",
-      "docs/reviews/hermes-decision.20260712.030127_schema-record-envelope-architecture-housekeeping-slice-18.md"
-    ],
-    "why": "USER/HERMES activated bounded ATHENA housekeeping for the accepted schema record-envelope architecture surface after ATHENA and KOIOS post-Slice 17 no-blocker consistency reviews.",
-    "dependency_or_blocker": "Requires ATHENA architecture edit and KOIOS provenance/authority-boundary review before HERMES acceptance.",
-    "recommendation": "ATHENA should make only metadata/provenance/doc-boundary clarifications; no schema, validation, migration, renderer/ingester, projection, or cutover authority changes."
-  },
+  "active_item": null,
   "queued_items": [
     {
       "name": "pi-skill-determinism-slice-0",
@@ -28,6 +18,17 @@
     }
   ],
   "completed_items": [
+    {
+      "name": "schema-record-envelope-architecture-housekeeping-slice-18",
+      "state": "accepted-committed",
+      "artifact_refs": [
+        "docs/architecture/architecture.schema-record-envelope.md",
+        "docs/reviews/hermes-acceptance.20260712.030430_schema-record-envelope-architecture-housekeeping-slice-18.md",
+        "docs/reviews/hermes-decision.20260712.030127_schema-record-envelope-architecture-housekeeping-slice-18.md"
+      ],
+      "why": "HERMES accepted ATHENA bounded metadata/provenance/doc housekeeping for the schema record-envelope architecture surface after KOIOS no-blocker provenance/authority-boundary review; no schema authority or validation semantics changed.",
+      "commit": "ac019c4"
+    },
     {
       "name": "schema-record-envelope-reference-comment-slice-17",
       "state": "accepted-committed",
@@ -167,5 +168,5 @@
     }
   ],
   "deferred_items": [],
-  "next_decision_needed": "Active slice schema-record-envelope-architecture-housekeeping-slice-18 requires ATHENA completion and KOIOS review before HERMES acceptance."
+  "next_decision_needed": "HERMES/USER should choose whether to stop the ADR/schema planning track here, defer schema reconciliation until implementation/migration evidence exists, or activate another explicitly bounded workflow item."
 }
