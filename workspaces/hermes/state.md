@@ -18,7 +18,7 @@
 
 ## Current focus
 
-ADR track remains priority. HERMES activated `adr-schema-record-envelope-architecture-slice-14` for ATHENA handoff.
+ADR schema record-envelope architecture Slice 14 is accepted after KOIOS review; next decision is explicit activation of the next ADR-track slice or definition of another workflow slice.
 
 ## Current validated state
 
@@ -87,26 +87,35 @@ ADR track remains priority. HERMES activated `adr-schema-record-envelope-archite
 - HERMES activated Slice 14 and recorded:
   - `docs/reviews/hermes-decision.20260711.190407_adr-schema-record-envelope-architecture-slice-14.md`
 - HERMES reconciled queue/status to active item and `active_slice=adr-schema-record-envelope-architecture-slice-14`.
+- ATHENA completed Slice 14 and created:
+  - `docs/architecture/architecture.schema-record-envelope.md`
+- ATHENA reported only that architecture artifact changed for the slice, no `docs/adr`, `docs/schemas`, or dry-run evidence mutation, and `git diff --check` passed.
+- HERMES observed current scoped status shows only the new architecture artifact on relevant surfaces, and requested KOIOS provenance review before acceptance.
+- KOIOS reviewed `docs/architecture/architecture.schema-record-envelope.md` and found it provenance-adequate for HERMES acceptance as an architecture surface with no blockers.
+- HERMES accepted Slice 14:
+  - `docs/reviews/hermes-acceptance.20260712.020742_adr-schema-record-envelope-architecture-slice-14.md`
+- HERMES cleared the active queue item and reconciled workflow status to `active_slice=none`.
 
 ## Current coherent state
 
-Uncommitted Slice 14 activation package:
+Uncommitted Slice 14 acceptance package:
 
 ```text
-docs/reviews/hermes-decision.20260711.190407_adr-schema-record-envelope-architecture-slice-14.md
+docs/architecture/architecture.schema-record-envelope.md
+docs/reviews/hermes-acceptance.20260712.020742_adr-schema-record-envelope-architecture-slice-14.md
 dev/workflow-nets/bootstrap-harness.queue-state.json
 dev/workflow-nets/bootstrap-harness.workflow-net.json
 workspaces/hermes/state.md
 workspaces/hermes/active.md
 ```
 
-Committed Slice 13 acceptance:
+Committed Slice 14 activation:
 
 ```text
-564651c Accept ADR schema-base architecture extraction planning
+a502cab Activate ADR schema record envelope architecture slice
 ```
 
-The workflow fixtures now show active item `adr-schema-record-envelope-architecture-slice-14` and `active_slice=adr-schema-record-envelope-architecture-slice-14`.
+The workflow fixtures now show no active item and `active_slice=none`; next decision is explicit activation of the next ADR-track slice or definition of another workflow slice.
 
 ## Active boundaries
 
@@ -114,8 +123,9 @@ The old source is preserved as legacy/source provenance with a disposition note.
 
 ## Current blockers
 
-- ATHENA must create `docs/architecture/architecture.schema-record-envelope.md` before HERMES/USER acceptance of Slice 14.
+- No Slice 14 blocker remains after committing the acceptance package.
+- USER/HERMES explicit activation is required before the next slice proceeds.
 
 ## Next owner
 
-ATHENA for `docs/architecture/architecture.schema-record-envelope.md`.
+HERMES_USER for explicit activation of the next ADR-track slice or definition of another workflow slice.

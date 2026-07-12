@@ -18,16 +18,16 @@
 
 ## Current priority stack
 
-1. Route `adr-schema-record-envelope-architecture-slice-14` to ATHENA.
-2. Keep ADR track priority; do not activate `pi-skill-determinism-slice-0` while ADR active item remains set.
-3. Preserve source/schema boundaries while ATHENA creates the architecture artifact.
+1. Commit Slice 14 architecture acceptance package.
+2. Decide the next ADR-track slice or explicitly define another workflow slice.
+3. Keep `pi-skill-determinism-slice-0` queued unless USER/HERMES explicitly reprioritizes.
 
 ## Active slice
 
 Active queue item after reconciliation:
 
 ```text
-adr-schema-record-envelope-architecture-slice-14
+none
 ```
 
 Target source:
@@ -88,7 +88,7 @@ dev/workflow-nets/bootstrap-harness.queue-state.json
 dev/workflow-nets/bootstrap-harness.workflow-net.json
 ```
 
-Current workflow status reports `active_slice=adr-schema-record-envelope-architecture-slice-14`; queue reports active item set and warns not to activate queued non-ADR work.
+Current workflow status reports `active_slice=none`; queue reports no active item and next decision needed: explicitly activate the next ADR-track slice or define another workflow slice.
 
 Activation decision recorded:
 
@@ -138,7 +138,23 @@ Slice 14 activation decision recorded:
 docs/reviews/hermes-decision.20260711.190407_adr-schema-record-envelope-architecture-slice-14.md
 ```
 
-Expected ATHENA output:
+ATHENA output received:
+
+```text
+docs/architecture/architecture.schema-record-envelope.md
+```
+
+ATHENA reports no `docs/adr`, `docs/schemas`, projection, migration, or cutover mutation; HERMES observed only the new architecture artifact on scoped status.
+
+KOIOS comments received: provenance-adequate for HERMES acceptance as an architecture surface, no blockers.
+
+HERMES acceptance recorded:
+
+```text
+docs/reviews/hermes-acceptance.20260712.020742_adr-schema-record-envelope-architecture-slice-14.md
+```
+
+Accepted artifact:
 
 ```text
 docs/architecture/architecture.schema-record-envelope.md
@@ -146,9 +162,9 @@ docs/architecture/architecture.schema-record-envelope.md
 
 ## Waiting on
 
-- Commit of Slice 14 activation/routing decision and queue/status update.
-- ATHENA creation of `docs/architecture/architecture.schema-record-envelope.md`.
+- Commit of Slice 14 architecture acceptance package.
+- Later USER/HERMES activation of the next ADR-track slice or another workflow slice.
 
 ## Exit criteria
 
-Hermes state is stable when Slice 14 activation/routing is committed and ATHENA is the explicit next owner.
+Hermes state is stable when Slice 14 architecture acceptance is committed and no active queue item remains.

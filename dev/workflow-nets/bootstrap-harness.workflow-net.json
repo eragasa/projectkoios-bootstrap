@@ -57,7 +57,7 @@
         "color": {
           "kind": "workflow-slice",
           "requires_user_decision": "true",
-          "active_slice": "adr-schema-record-envelope-architecture-slice-14"
+          "active_slice": "none"
         }
       }
     ]
