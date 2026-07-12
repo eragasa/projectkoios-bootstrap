@@ -51,20 +51,20 @@
     }
   ],
   "marking": {
-    "user_decision": [
+    "implementation": [
       {
         "token_id": "current-slice",
         "color": {
           "kind": "workflow-slice",
-          "requires_user_decision": "true",
-          "active_slice": "none"
+          "requires_user_decision": "false",
+          "active_slice": "schema-record-envelope-architecture-housekeeping-slice-18"
         }
       }
     ]
   },
   "decision": {
-    "requires_user_decision": true,
-    "reason": "USER/HERMES decision is required to activate a queued item, defer further ADR/schema work, or define the next workflow-engine control slice."
+    "requires_user_decision": false,
+    "reason": "USER/HERMES approved schema-record-envelope-architecture-housekeeping-slice-18 for ATHENA architecture housekeeping."
   },
   "fixture_note": "Static bootstrap fixture for CLI inspectability only; not canonical workflow authority."
 }

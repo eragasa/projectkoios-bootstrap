@@ -9,7 +9,7 @@
   "workspace": "workspaces/hermes/",
   "document_domain": "orchestration, repo-state reconciliation, cross-domain consistency",
   "control_files": ["state.md", "active.md"],
-  "next_owner": "HERMES_USER",
+  "next_owner": "ATHENA",
   "blockers": []
 }
 ```
@@ -18,7 +18,7 @@
 
 ## Current focus
 
-ADR/schema architecture track reached a decision point after HERMES accepted `schema-record-envelope-reference-comment-slice-17`. `schema.record-base.json` now has a non-semantic `$comment` annotation and remains draft direction pending HERMES/USER next decision.
+ADR/schema architecture track has active Slice 18: `schema-record-envelope-architecture-housekeeping-slice-18`. HERMES/USER authorized ATHENA to make bounded metadata/provenance/doc-boundary housekeeping edits to `docs/architecture/architecture.schema-record-envelope.md` after ATHENA and KOIOS post-Slice 17 consistency reviews found no blockers.
 
 ## Current validated state
 
@@ -145,6 +145,10 @@ Review basis:
   - `docs/reviews/hermes-acceptance.20260712.024700_schema-record-envelope-reference-comment-slice-17.md`
   - commit `9a0e9f4`
 - HERMES left workflow status at `active_slice=none`.
+- USER said `proceed` after HERMES recommended a bounded housekeeping slice for the architecture frontmatter/provenance/post-Slice-17 note watchpoints.
+- HERMES activated Slice 18 and recorded:
+  - `docs/reviews/hermes-decision.20260712.030127_schema-record-envelope-architecture-housekeeping-slice-18.md`
+- HERMES reconciled queue/status to active item and `active_slice=schema-record-envelope-architecture-housekeeping-slice-18`.
 
 ## Active boundaries
 
@@ -154,11 +158,11 @@ Slice 17 acceptance approves only the non-semantic top-level `$comment` annotati
 
 ## Current blockers
 
-- No active slice blocker remains after Slice 17 acceptance.
-- KOIOS post-Slice 17 consistency review found no architecture/provenance-authority blocker.
-- ATHENA post-Slice 17 consistency review found no current architecture/ADR/schema authority conflict and no required architecture update.
+- No blocker to ATHENA starting Slice 18.
+- Slice 18 is bounded to `docs/architecture/architecture.schema-record-envelope.md` housekeeping only.
+- KOIOS review is required before HERMES acceptance.
 - Any future schema edit requires explicit HERMES/USER activation and must preserve or explicitly test validation semantics according to the accepted brief and VULCAN watchpoints.
 
 ## Next owner
 
-HERMES_USER to choose whether to stop the ADR/schema planning track here, defer substantive schema reconciliation until implementation/migration evidence exists, or activate another explicitly bounded workflow item.
+ATHENA to complete Slice 18 architecture housekeeping, then KOIOS to review before HERMES acceptance.
