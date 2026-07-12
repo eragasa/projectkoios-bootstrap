@@ -86,7 +86,7 @@ Slice 17 added a top-level `$comment` that links the accepted architecture conte
 
 HERMES/USER next decision:
 
-1. Define a small non-ADR workflow-bootstrap pilot for `docs/plans/petrinet-projectmanagement.20260712.project-alignment.md`, reusing existing workflow/Petri-net code, adding adapter-backed validation, and identifying a lightweight UI rendering path for workflow/Petri-net state.
+1. Define a small non-ADR workflow-bootstrap pilot for `docs/plans/petrinet-projectmanagement.20260712.project-alignment.md`, reusing existing workflow/Petri-net code, preserving `petrinet -> workflow -> pm` separation, adding adapter-backed validation, and using the Operator Console fixture as the primary visibility surface.
 2. Route to ATHENA only later if a bounded architecture question is explicitly needed.
 3. Stop/defer the ADR/schema planning track here or return to another explicitly chosen workflow item.
 

@@ -58,6 +58,12 @@ USER later clarified:
 - The pilot should be used to clean up existing workflow/Petri-net code as needed while preserving current working behavior.
 - There should be a UI renderer of the workflow and of the Petri net at each step.
 - Petri-net adapters should be used for validation.
+- There should be strict separation of concerns among a Petri-net subpackage, workflow subpackage, and project-management layer.
+- The dependency/protocol flow should be one-way: `petrinet -> workflow -> pm`.
+- The pilot should track itself and later be extracted as a template for other projects.
+- The Operator Console fixture should be the user's primary visibility surface for system state.
+- External Petri-net engines such as SNAKES may be used as initial execution engines if their APIs are encapsulated.
+- External engines may also produce reference images so Project Koios can validate its visualizer against a known-good implementation.
 
 ## Current aligned framing
 
@@ -166,7 +172,7 @@ This does not authorize uncontrolled implementation. It means the first concrete
 
 KOIOS reviewed this alignment note and found it provenance-adequate as draft alignment/intake, with no blockers to HERMES using it as input for a later bounded workflow decision.
 
-HERMES/USER can next decide whether to define a small non-ADR workflow-bootstrap pilot for the project-management system that reuses existing workflow/Petri-net code, includes adapter-backed validation, and defines a lightweight UI rendering path for workflow/Petri-net state at each step.
+HERMES/USER can next decide whether to define a small non-ADR workflow-bootstrap pilot for the project-management system that reuses existing workflow/Petri-net code, preserves `petrinet -> workflow -> pm` separation, includes adapter-backed validation, and uses the Operator Console fixture as the primary visibility surface.
 
 KOIOS watchpoints for any later architecture or workflow request:
 
@@ -176,3 +182,12 @@ KOIOS watchpoints for any later architecture or workflow request:
 - Sharpen the filesystem-only definition.
 - Separate transition payloads from event logs, approvals, work-product references, and generated projections.
 - Define identity/provenance rules before mutation commands exist.
+
+Additional USER alignment for pilot framing:
+
+- Separate the Petri-net subpackage from the workflow subpackage and the project-management layer.
+- Keep dependency/protocol flow strict: `petrinet -> workflow -> pm`.
+- Use the pilot to track itself, then extract the pilot as a template for other projects.
+- Use the Operator Console fixture as the user's primary visibility surface for state.
+- Encapsulate external Petri-net execution engines such as SNAKES behind adapters.
+- Use external engine outputs/images as known-good references for validating Project Koios visualizers.
