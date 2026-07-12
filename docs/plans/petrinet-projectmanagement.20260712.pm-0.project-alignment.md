@@ -194,6 +194,10 @@ Additional USER alignment for pilot framing:
 
 - Separate the Petri-net subpackage from the workflow subpackage and the project-management layer.
 - Keep dependency/protocol flow strict: `petrinet -> workflow -> pm`.
+- Use concrete package paths for separation of concerns:
+  - `projectkoios/petrinet`
+  - `projectkoios/workflow`
+  - `projectkoios/project_management`
 - Use the pilot to track itself, then extract the pilot as a template for other projects.
 - Use the Operator Console fixture as the user's primary visibility surface for state.
 - Treat the Operator Console fixture as projection-only at first.
@@ -203,3 +207,17 @@ Additional USER alignment for pilot framing:
 - Frame the future ATHENA output as a multi-phase/waterfall-like project with explicit phase gates, not as a scrum backlog or sprint sequence.
 - Encapsulate external Petri-net execution engines such as SNAKES behind adapters.
 - Use external engine outputs/images as known-good references for validating Project Koios visualizers.
+
+## PM-1/PM-2 implementation-brief alignment answers
+
+USER answered the current open questions for the next ATHENA brief as follows:
+
+1. Package separation should be concrete: Petri-net code in `projectkoios/petrinet`, workflow code in `projectkoios/workflow`, and project-management code in `projectkoios/project_management`.
+2. Minimal source/control file set needs an ATHENA recommendation.
+3. Source/control versus projection classification needs an ATHENA recommendation.
+4. Transition payload fields should start YAGNI and add more fields as necessary.
+5. CLI/read-model surface should use `koios pm *`.
+6. Cleanup/refactor allowance was unclear to USER and should be reframed by ATHENA in concrete terms.
+7. Validator criteria should be based on a concrete use-case example, initially self-project management of this project.
+8. Operator Console fixture/read-model should be immediate and update as the system changes.
+9. External engine/adapters should be integrated until they become broken or blocking, while preserving encapsulation.
