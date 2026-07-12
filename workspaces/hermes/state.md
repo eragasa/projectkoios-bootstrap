@@ -132,7 +132,7 @@ Review basis:
 - VULCAN reviewed and found Option A/F implementation-safe with no blockers, adding watchpoints for future validators, `$comment`/`description` wording, and avoiding accidental semantic schema edits.
 - HERMES accepted and committed the brief:
   - `docs/reviews/hermes-acceptance.20260712.023900_schema-record-envelope-schema-change-planning-slice-16.md`
-  - commit `f7862ac`
+  - commit `9841508`
 - HERMES cleared the active queue item and reconciled workflow status to `active_slice=none`.
 
 ## Active boundaries

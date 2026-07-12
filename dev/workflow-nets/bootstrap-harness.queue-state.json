@@ -27,7 +27,7 @@
         "docs/reviews/hermes-decision.20260712.023116_schema-record-envelope-schema-change-planning-slice-16.md"
       ],
       "why": "HERMES accepted ATHENA proposal-only schema-change planning after KOIOS no-blocker provenance review and VULCAN no-blocker implementation-reality comments; schema.record-base.json remains unchanged draft direction.",
-      "commit": "f7862ac"
+      "commit": "9841508"
     },
     {
       "name": "schema-record-envelope-doc-index-slice-15",
