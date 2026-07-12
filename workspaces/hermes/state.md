@@ -139,8 +139,9 @@ Review basis:
 - ATHENA added only a top-level `$comment` to `docs/schemas/schema.record-base.json`.
 - VULCAN reviewed the actual Slice 17 edit, ran focused schema registry tests, and found no implementation blockers.
 - KOIOS reviewed the actual Slice 17 edit and found no provenance/authority blockers.
-- HERMES accepted Slice 17:
+- HERMES accepted and committed Slice 17:
   - `docs/reviews/hermes-acceptance.20260712.024700_schema-record-envelope-reference-comment-slice-17.md`
+  - commit `9a0e9f4`
 - HERMES left workflow status at `active_slice=none`.
 
 ## Active boundaries
