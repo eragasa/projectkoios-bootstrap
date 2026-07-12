@@ -64,6 +64,8 @@ USER later clarified:
 - The Operator Console fixture should be the user's primary visibility surface for system state.
 - The Operator Console fixture should initially be projection-only, not source/control.
 - Later, the Operator Console may become a source of interactive user input through a separately approved interaction/mutation design.
+- The project should be set up as a multi-phase project resembling waterfall, not scrum.
+- Work should proceed through explicit phases and phase gates rather than scrum-style sprint slicing.
 - External Petri-net engines such as SNAKES may be used as initial execution engines if their APIs are encapsulated.
 - External engines may also produce reference images so Project Koios can validate its visualizer against a known-good implementation.
 
@@ -174,7 +176,7 @@ This does not authorize uncontrolled implementation. It means the first concrete
 
 KOIOS reviewed this alignment note and found it provenance-adequate as draft alignment/intake, with no blockers to HERMES using it as input for a later bounded workflow decision.
 
-HERMES/USER can next decide whether to define a small non-ADR workflow-bootstrap pilot for the project-management system that reuses existing workflow/Petri-net code, preserves `petrinet -> workflow -> pm` separation, includes adapter-backed validation, and uses the Operator Console fixture as the primary visibility surface.
+HERMES/USER can next decide whether to define a non-ADR, multi-phase project brief for the project-management system. The brief should use waterfall-like phases and phase gates rather than scrum-style slices, while still starting with the smallest operational phase that reuses existing workflow/Petri-net code, preserves `petrinet -> workflow -> pm` separation, includes adapter-backed validation, and uses the Operator Console fixture as the primary projection-only visibility surface.
 
 KOIOS watchpoints for any later architecture or workflow request:
 
@@ -193,5 +195,6 @@ Additional USER alignment for pilot framing:
 - Use the Operator Console fixture as the user's primary visibility surface for state.
 - Treat the Operator Console fixture as projection-only at first.
 - Defer interactive user input through the Operator Console to a later separately approved design.
+- Frame the pilot as a multi-phase/waterfall-like project with explicit phase gates, not as a scrum backlog or sprint sequence.
 - Encapsulate external Petri-net execution engines such as SNAKES behind adapters.
 - Use external engine outputs/images as known-good references for validating Project Koios visualizers.
