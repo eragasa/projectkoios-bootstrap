@@ -18,16 +18,16 @@
 
 ## Current priority stack
 
-1. Commit Slice 15 schema-index acceptance package.
-2. Decide the next ADR-track slice or explicitly define another workflow slice.
-3. Keep `pi-skill-determinism-slice-0` queued unless USER/HERMES explicitly reprioritizes.
+1. Route `schema-record-envelope-schema-change-planning-slice-16` to ATHENA.
+2. Keep ADR/schema architecture track priority; do not activate `pi-skill-determinism-slice-0` while active item remains set.
+3. Preserve schema authority boundaries while ATHENA plans schema-record-envelope schema disposition/change.
 
 ## Active slice
 
 Active queue item after reconciliation:
 
 ```text
-none
+schema-record-envelope-schema-change-planning-slice-16
 ```
 
 Target source:
@@ -88,7 +88,7 @@ dev/workflow-nets/bootstrap-harness.queue-state.json
 dev/workflow-nets/bootstrap-harness.workflow-net.json
 ```
 
-Current workflow status reports `active_slice=none`; queue reports no active item and next decision needed: explicitly activate the next ADR-track slice or define another workflow slice.
+Current workflow status reports `active_slice=schema-record-envelope-schema-change-planning-slice-16`; queue reports active item set and warns not to activate queued non-ADR work.
 
 Activation decision recorded:
 
@@ -179,11 +179,23 @@ docs/schemas/README.md
 docs/reviews/hermes-acceptance.20260712.021113_schema-record-envelope-doc-index-slice-15.md
 ```
 
+Slice 16 activation decision recorded:
+
+```text
+docs/reviews/hermes-decision.20260712.023116_schema-record-envelope-schema-change-planning-slice-16.md
+```
+
+Expected ATHENA output:
+
+```text
+docs/plans/schema-change-brief.20260712.023116_schema-record-envelope.md
+```
+
 ## Waiting on
 
-- Commit of Slice 15 schema-index acceptance package.
-- Later USER/HERMES activation of the next ADR-track slice or another workflow slice.
+- Commit of Slice 16 activation/routing decision and queue/status update.
+- ATHENA proposal-only schema-change planning brief.
 
 ## Exit criteria
 
-Hermes state is stable when Slice 15 schema-index acceptance is committed and no active queue item remains.
+Hermes state is stable when Slice 16 activation/routing is committed and ATHENA is the explicit next owner.

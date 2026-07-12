@@ -4,7 +4,20 @@
   "parent_effort": "petri-net-workflow-inspectability",
   "status": "static-read-only-fixture",
   "authority": "Static read-only fixture; not canonical workflow authority and not product authority.",
-  "active_item": null,
+  "active_item": {
+    "name": "schema-record-envelope-schema-change-planning-slice-16",
+    "state": "active",
+    "artifact_refs": [
+      "docs/reviews/hermes-decision.20260712.023116_schema-record-envelope-schema-change-planning-slice-16.md",
+      "docs/reviews/hermes-acceptance.20260712.021113_schema-record-envelope-doc-index-slice-15.md",
+      "docs/architecture/architecture.schema-record-envelope.md",
+      "docs/schemas/schema.record-base.json",
+      "docs/schemas/README.md"
+    ],
+    "why": "ADR/schema architecture track remains priority. Slice 14 accepted record-envelope architecture and Slice 15 linked it from the schema README; next step is proposal-only planning for schema JSON disposition/change.",
+    "dependency_or_blocker": "Requires ATHENA proposal-only schema-change planning brief before any docs/schemas mutation or schema authority change.",
+    "recommendation": "Route to ATHENA for schema-change planning; do not activate non-ADR queued work while this active item remains set."
+  },
   "queued_items": [
     {
       "name": "pi-skill-determinism-slice-0",
@@ -20,13 +33,14 @@
   "completed_items": [
     {
       "name": "schema-record-envelope-doc-index-slice-15",
-      "state": "accepted-committed-pending",
+      "state": "accepted-committed",
       "artifact_refs": [
         "docs/schemas/README.md",
         "docs/reviews/hermes-acceptance.20260712.021113_schema-record-envelope-doc-index-slice-15.md",
         "docs/reviews/hermes-decision.20260712.020911_schema-record-envelope-doc-index-slice-15.md"
       ],
-      "why": "HERMES accepted bounded schema README index clarification for the schema record-envelope architecture surface."
+      "why": "HERMES accepted bounded schema README index clarification for the schema record-envelope architecture surface.",
+      "commit": "628ee88"
     },
     {
       "name": "adr-schema-record-envelope-architecture-slice-14",
@@ -134,5 +148,5 @@
     }
   ],
   "deferred_items": [],
-  "next_decision_needed": "Explicitly activate the next ADR-track slice or define another workflow slice."
+  "next_decision_needed": "ATHENA should produce the proposal-only schema-change brief for schema.record-base.json; do not activate queued non-ADR work until active_item is cleared."
 }

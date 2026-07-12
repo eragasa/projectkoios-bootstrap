@@ -18,7 +18,7 @@
 
 ## Current focus
 
-Schema record-envelope doc index Slice 15 is accepted; next decision is explicit activation of the next ADR-track slice or definition of another workflow slice.
+ADR/schema architecture track remains priority. HERMES activated `schema-record-envelope-schema-change-planning-slice-16` for ATHENA handoff.
 
 ## Current validated state
 
@@ -123,7 +123,11 @@ Committed Slice 15 activation:
 27d57d3 Activate schema record envelope doc index slice
 ```
 
-The workflow fixtures now show no active item and `active_slice=none`.
+The workflow fixtures showed no active item and `active_slice=none` after Slice 15 acceptance.
+- USER said `proceed` after push and recommendations.
+- HERMES activated Slice 16 for proposal-only schema-change planning:
+  - `docs/reviews/hermes-decision.20260712.023116_schema-record-envelope-schema-change-planning-slice-16.md`
+- HERMES reconciled queue/status to active item and `active_slice=schema-record-envelope-schema-change-planning-slice-16`.
 
 ## Active boundaries
 
@@ -131,9 +135,8 @@ The old source is preserved as legacy/source provenance with a disposition note.
 
 ## Current blockers
 
-- No Slice 15 blocker remains after committing the acceptance package.
-- USER/HERMES explicit activation is required before the next slice proceeds.
+- ATHENA must produce the proposal-only schema-change planning brief before any `docs/schemas` mutation or schema authority change.
 
 ## Next owner
 
-HERMES_USER for explicit activation of the next ADR-track slice or definition of another workflow slice.
+ATHENA for `docs/plans/schema-change-brief.20260712.023116_schema-record-envelope.md`.
