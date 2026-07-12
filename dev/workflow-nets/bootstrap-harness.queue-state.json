@@ -27,7 +27,7 @@
         "docs/reviews/hermes-decision.20260712.030127_schema-record-envelope-architecture-housekeeping-slice-18.md"
       ],
       "why": "HERMES accepted ATHENA bounded metadata/provenance/doc housekeeping for the schema record-envelope architecture surface after KOIOS no-blocker provenance/authority-boundary review; no schema authority or validation semantics changed.",
-      "commit": "ac019c4"
+      "commit": "050d946"
     },
     {
       "name": "schema-record-envelope-reference-comment-slice-17",
