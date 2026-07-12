@@ -18,7 +18,7 @@
 
 ## Current priority stack
 
-1. Hold at HERMES/USER decision after USER clarified ATHENA owns the long-term architecture and phase decomposition for the project-management system.
+1. Hold at HERMES/USER decision after accepting ATHENA's `docs/architecture/architecture.project-management.md` as PM-0 architecture framing.
 2. Preserve schema authority boundaries: `docs/schemas/schema.record-base.json` has only a non-semantic `$comment` annotation and remains draft direction.
 3. Do not activate `pi-skill-determinism-slice-0` unless HERMES/USER explicitly chooses to leave or pause the current project-management alignment / ADR-schema context.
 
@@ -86,9 +86,9 @@ Slice 17 added a top-level `$comment` that links the accepted architecture conte
 
 HERMES/USER next decision:
 
-1. Route `docs/plans/petrinet-projectmanagement.20260712.project-alignment.md` to ATHENA for long-term architecture and phase decomposition.
-2. ATHENA should define increasing technology-maturity phases and component dependencies sufficient to support a Gantt chart.
-3. HERMES should not author the architecture or phase plan; HERMES owns only the user-alignment handoff.
+1. Ask ATHENA for a bounded PM-1/PM-2 implementation brief based on `docs/architecture/architecture.project-management.md`.
+2. Pause the project-management track after PM-0 acceptance.
+3. Stop/defer the ADR/schema planning track or activate another explicitly bounded workflow item.
 
 ## Exit criteria
 
