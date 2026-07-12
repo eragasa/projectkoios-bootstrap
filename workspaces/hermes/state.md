@@ -20,7 +20,7 @@
 
 ADR/schema architecture track reached a decision point after HERMES accepted `schema-record-envelope-architecture-housekeeping-slice-18`. The schema record-envelope architecture now has accepted-surface status/provenance housekeeping, while schema-envelope JSON authority and validation semantics remain unchanged.
 
-HERMES also captured USER initial alignment for a filesystem-backed Petri-net/Gantt project-management system in `docs/plans/project-alignment.20260712_filesystem-petrinet-gantt-project-management.md`; KOIOS reviewed it as provenance-adequate draft alignment/intake with no blockers to a later ATHENA architecture-framing request.
+HERMES also captured USER initial alignment for a filesystem-backed Petri-net/Gantt project-management system in `docs/plans/petrinet-projectmanagement.20260712.project-alignment.md`; KOIOS reviewed it as provenance-adequate draft alignment/intake with no blockers to a later ATHENA architecture-framing request.
 
 ## Current validated state
 

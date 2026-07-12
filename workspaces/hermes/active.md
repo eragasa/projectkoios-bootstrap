@@ -18,7 +18,7 @@
 
 ## Current priority stack
 
-1. Hold at HERMES/USER decision after creating `docs/plans/project-alignment.20260712_filesystem-petrinet-gantt-project-management.md` and receiving KOIOS no-blocker provenance review.
+1. Hold at HERMES/USER decision after creating `docs/plans/petrinet-projectmanagement.20260712.project-alignment.md` and receiving KOIOS no-blocker provenance review.
 2. Preserve schema authority boundaries: `docs/schemas/schema.record-base.json` has only a non-semantic `$comment` annotation and remains draft direction.
 3. Do not activate `pi-skill-determinism-slice-0` unless HERMES/USER explicitly chooses to leave or pause the current project-management alignment / ADR-schema context.
 
@@ -86,7 +86,7 @@ Slice 17 added a top-level `$comment` that links the accepted architecture conte
 
 HERMES/USER next decision:
 
-1. Route `docs/plans/project-alignment.20260712_filesystem-petrinet-gantt-project-management.md` to ATHENA for bounded architecture framing.
+1. Route `docs/plans/petrinet-projectmanagement.20260712.project-alignment.md` to ATHENA for bounded architecture framing.
 2. Stop/defer the ADR/schema planning track here.
 3. Return to another explicitly chosen workflow item.
 
