@@ -7,8 +7,8 @@
   "acting_as": "ATHENA",
   "repository": "projectkoios-bootstrap",
   "scope": "bootstrap-incubated project-management architecture and phase decomposition",
-  "canonical_location": "docs/architecture/architecture.project-management.md",
-  "source_alignment": "docs/plans/petrinet-projectmanagement.20260712.project-alignment.md",
+  "canonical_location": "docs/architecture/architecture.petrinet-projectmanagement.20260712.pm-0.architecture-framing.md",
+  "source_alignment": "docs/plans/petrinet-projectmanagement.20260712.pm-0.project-alignment.md",
   "source_handoff": "HERMES/USER handoff via intercom 20260712",
   "not_an_adr": true,
   "not_implementation_authorization": true
@@ -33,7 +33,7 @@ The architecture decomposes the system into technology-maturity phases and compo
 
 Primary alignment input:
 
-- `docs/plans/petrinet-projectmanagement.20260712.project-alignment.md`
+- `docs/plans/petrinet-projectmanagement.20260712.pm-0.project-alignment.md`
 
 Current USER direction captured there and in the HERMES handoff:
 

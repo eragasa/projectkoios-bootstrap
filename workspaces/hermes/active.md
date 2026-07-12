@@ -18,7 +18,7 @@
 
 ## Current priority stack
 
-1. Hold at HERMES/USER decision after accepting ATHENA's `docs/architecture/architecture.project-management.md` as PM-0 architecture framing.
+1. Hold at HERMES/USER decision after accepting ATHENA's `docs/architecture/architecture.petrinet-projectmanagement.20260712.pm-0.architecture-framing.md` as PM-0 architecture framing.
 2. Preserve schema authority boundaries: `docs/schemas/schema.record-base.json` has only a non-semantic `$comment` annotation and remains draft direction.
 3. Do not activate `pi-skill-determinism-slice-0` unless HERMES/USER explicitly chooses to leave or pause the current project-management alignment / ADR-schema context.
 
@@ -86,7 +86,7 @@ Slice 17 added a top-level `$comment` that links the accepted architecture conte
 
 HERMES/USER next decision:
 
-1. Ask ATHENA for a bounded PM-1/PM-2 implementation brief based on `docs/architecture/architecture.project-management.md`.
+1. Ask ATHENA for a bounded PM-1/PM-2 implementation brief based on `docs/architecture/architecture.petrinet-projectmanagement.20260712.pm-0.architecture-framing.md`.
 2. Pause the project-management track after PM-0 acceptance.
 3. Stop/defer the ADR/schema planning track or activate another explicitly bounded workflow item.
 

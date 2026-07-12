@@ -7,8 +7,8 @@
   "acting_as": "HERMES",
   "repository": "projectkoios-bootstrap",
   "scope": "project-management-architecture-framing",
-  "source_alignment": "docs/plans/petrinet-projectmanagement.20260712.project-alignment.md",
-  "accepted_artifact": "docs/architecture/architecture.project-management.md",
+  "source_alignment": "docs/plans/petrinet-projectmanagement.20260712.pm-0.project-alignment.md",
+  "accepted_artifact": "docs/architecture/architecture.petrinet-projectmanagement.20260712.pm-0.architecture-framing.md",
   "index_update": "docs/architecture/architecture.00.md",
   "athena_author": "subagent-chat-019f5470 intercom reply 20260712",
   "koios_review": "subagent-chat-019f51a8 intercom reply 20260712",
@@ -28,7 +28,7 @@
 HERMES accepts ATHENA's project-management architecture framing and phase decomposition as an ATHENA-owned working-draft architecture surface:
 
 ```text
-docs/architecture/architecture.project-management.md
+docs/architecture/architecture.petrinet-projectmanagement.20260712.pm-0.architecture-framing.md
 ```
 
 HERMES also accepts the navigation-only index update:

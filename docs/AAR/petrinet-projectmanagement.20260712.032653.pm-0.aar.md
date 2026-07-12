@@ -8,7 +8,7 @@
   "repository": "projectkoios-bootstrap",
   "scope": "filesystem-backed Petri-net/Gantt project-management alignment note and role-boundary clarification",
   "related_artifacts": [
-    "docs/plans/petrinet-projectmanagement.20260712.project-alignment.md"
+    "docs/plans/petrinet-projectmanagement.20260712.pm-0.project-alignment.md"
   ]
 }
 ```
@@ -22,7 +22,7 @@ This AAR covers the HERMES-led initial alignment interview for a filesystem-back
 Primary durable artifact:
 
 ```text
-docs/plans/petrinet-projectmanagement.20260712.project-alignment.md
+docs/plans/petrinet-projectmanagement.20260712.pm-0.project-alignment.md
 ```
 
 ## What happened
@@ -42,7 +42,7 @@ HERMES created a project-alignment note, got KOIOS provenance/terminology review
 Final artifact path:
 
 ```text
-docs/plans/petrinet-projectmanagement.20260712.project-alignment.md
+docs/plans/petrinet-projectmanagement.20260712.pm-0.project-alignment.md
 ```
 
 ## Process issues
@@ -67,7 +67,7 @@ docs/plans/petrinet-projectmanagement.20260712.project-alignment.md
 Example:
 
 ```text
-petrinet-projectmanagement.20260712.project-alignment.md
+petrinet-projectmanagement.20260712.pm-0.project-alignment.md
 ```
 
 - When HERMES proposes a new durable artifact type, ask the USER about naming before writing if the convention is not already established.
@@ -77,7 +77,7 @@ petrinet-projectmanagement.20260712.project-alignment.md
 - Workflow/policy decision: separate initial project alignment, specification, architecture, implementation, and provenance ownership.
 - Artifact model update: add `project-alignment-note` as a HERMES-owned artifact.
 - Naming convention policy: define stable filename patterns for project-alignment notes.
-- Architecture-framing request: route `docs/plans/petrinet-projectmanagement.20260712.project-alignment.md` to ATHENA after HERMES/USER approval.
+- Architecture-framing request: route `docs/plans/petrinet-projectmanagement.20260712.pm-0.project-alignment.md` to ATHENA after HERMES/USER approval.
 - Future architecture question: evaluate USER's current mental model that Gantt tasks map to Petri-net places, because conventional Petri-net modeling may map tasks to transitions instead.
 
 ## Current status
