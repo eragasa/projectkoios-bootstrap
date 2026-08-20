@@ -13,6 +13,7 @@ For vault directories, see `maps/vault_paths.md`.
 | projectkoios-ingestion | source ingestion and document processing pipeline |
 | projectkoios-search | full-text and semantic search infrastructure |
 | projectkoios-workflow | Petri-net workflow execution engine |
+| projectkoios-web | reusable browser interface |
 | projectkoios-references | reference management and citation handling |
 | projectkoios-obsidian | Obsidian vault management and knowledge curation |
 
