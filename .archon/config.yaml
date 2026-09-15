@@ -1,6 +1,0 @@
-assistant: pi
-worktree:
-  baseBranch: master
-  enabled: true
-skills:
-  - archon/skills/.agents/skills

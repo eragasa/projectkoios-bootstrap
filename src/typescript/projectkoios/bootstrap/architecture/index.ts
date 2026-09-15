@@ -1,1 +1,0 @@
-export { ArchitectureDocumentStatus } from './documents';

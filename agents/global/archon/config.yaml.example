@@ -1,3 +1,0 @@
-assistants:
-  pi:
-    model: "openai-codex/gpt-5.4"

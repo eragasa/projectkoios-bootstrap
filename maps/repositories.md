@@ -1,23 +1,29 @@
-# Repository map
+# Project Koios repository map
 
-Authoritative list of Project Koios git repositories in this workspace.
-Use this with `docs/agent-charter.md` for harness routing.
-For vault directories, see `maps/vault_paths.md`.
+Project Koios Git repositories are sibling directories beneath one operator
+workspace. Resolve paths relative to this repository's parent directory; do not
+encode a machine-specific absolute path.
 
-| Repository | Purpose |
+| Repository | Coordination purpose |
 |---|---|
-| projectkoios | mothership — shared kernel, architecture docs, ADRs, examples |
-| projectkoios-bootstrap | meta-harness — routing, shared harness config, maps |
-| projectkoios-agent | agent harness and workflow orchestration |
-| projectkoios-api | FastAPI HTTP interface |
-| projectkoios-ingestion | source ingestion and document processing pipeline |
-| projectkoios-search | full-text and semantic search infrastructure |
-| projectkoios-workflow | Petri-net workflow execution engine |
-| projectkoios-web | reusable browser interface |
-| projectkoios-references | reference management and citation handling |
-| projectkoios-obsidian | Obsidian vault management and knowledge curation |
+| `projectkoios` | Mothership: product architecture and cross-repository decisions |
+| `projectkoios-bootstrap` | Multi-repository operational coordination |
+| `projectkoios-agent` | Deferred reusable agent-domain components |
+| `projectkoios-api` | HTTP API and runtime boundary |
+| `projectkoios-courses` | Course-related functionality and content |
+| `projectkoios-ingestion` | Source ingestion and document processing |
+| `projectkoios-obsidian` | Obsidian integration and vault management |
+| `projectkoios-references` | References and citations |
+| `projectkoios-research` | Research workflows and artifacts |
+| `projectkoios-search` | Search and indexing |
+| `projectkoios-web` | Browser interface |
+| `projectkoios-workflow` | Reusable workflow execution |
 
-Note: `projectkoios-notes` is the Obsidian vault directory, not a git repo.
-See `maps/vault_paths.md` for vault locations.
+The following sibling directories may exist but are not Git repositories:
 
-Update this file when repos are added, removed, or renamed.
+- `projectkoios-notes` — local Obsidian vault;
+- `projectkoios-spec` — local specification material; and
+- `projectkoios.com` — local website material.
+
+Update this map only when repository topology changes. Runtime session status
+belongs to Pi, not this file.
