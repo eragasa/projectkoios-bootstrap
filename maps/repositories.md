@@ -14,7 +14,7 @@ encode a machine-specific absolute path.
 | `projectkoios-ingestion` | Source ingestion and document processing |
 | `projectkoios-obsidian` | Obsidian integration and vault management |
 | `projectkoios-references` | References and citations |
-| `projectkoios-research` | Research workflows and artifacts |
+| `projectkoios-research` | Research-portfolio identity, discovery, and external-project relationships |
 | `projectkoios-search` | Search and indexing |
 | `projectkoios-web` | Browser interface |
 | `projectkoios-workflow` | Reusable workflow execution |
