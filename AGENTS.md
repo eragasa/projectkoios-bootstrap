@@ -21,6 +21,13 @@ them.
 
 ## Coordination
 
+- For multi-repository execution, run the coordinator inside a Herdr-managed
+  pane and use one Herdr-hosted Pi session per active repository.
+- Verify `HERDR_ENV=1` before trying to open visible project panes. A Pi process
+  started outside Herdr cannot acquire pane context retroactively; stop and ask
+  the operator to start a managed session or explicitly authorize a fallback.
+- Do not invent an alternate terminal/session launcher when Herdr is
+  unavailable.
 - Use one Pi session per active repository.
 - Identify sessions by repository or task, not by fictional roles.
 - Use visible Herdr project panes for long-lived work.

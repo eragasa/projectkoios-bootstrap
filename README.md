@@ -12,10 +12,24 @@ GitHub, and the owning repositories provide durable product and task state.
 
 ## Start the coordinator
 
+Start Herdr **before** Pi so the coordinator inherits the pane context required
+to open visible repository sessions:
+
 ```bash
-cd ~/repos/projectkoios-bootstrap
+cd path/to/projectkoios-bootstrap
+herdr
+```
+
+Then, inside the Herdr pane:
+
+```bash
 pi
 ```
+
+See the [operator environment guide](docs/operator-environment.md) for setup,
+verification, repository-pane conventions, and recovery guidance. Starting Pi
+outside Herdr cannot be repaired by installing or launching Herdr afterward;
+start a new Pi session inside a managed pane instead.
 
 Optionally name the session:
 
@@ -57,6 +71,7 @@ is for status and communication rather than transcript replication.
 AGENTS.md
 README.md
 docs/harness-incubation.md
+docs/operator-environment.md
 maps/repositories.md
 ```
 
