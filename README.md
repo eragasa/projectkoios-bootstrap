@@ -1,11 +1,14 @@
 # Project Koios Bootstrap
 
 A minimal operational cockpit for coordinating work across Project Koios
-repositories.
+repositories and incubating the Project Koios-specific Pi coordination
+harness.
 
-This repository contains no product code, workflow engine, named agent roles,
-or persistent orchestration state. Pi provides sessions and tools; Git and the
-owning repositories provide durable state.
+This repository may contain bounded coordination helpers, project-specific Pi
+skills or prompt templates, sanitized fixtures, tests, and experimental harness
+candidates. It contains no product code, generic workflow engine, named agent
+roles, or persistent orchestration state. Pi provides sessions and tools; Git,
+GitHub, and the owning repositories provide durable product and task state.
 
 ## Start the coordinator
 
@@ -40,6 +43,9 @@ Reconcile the resulting commits against the mothership decision.
 5. Each repository validates and commits its own changes.
 6. Cross-repository architecture and decisions are recorded in the
    `projectkoios` mothership.
+7. Bounded coordination patterns may be preserved as harness candidates under
+   the [incubation policy](docs/harness-incubation.md); one observation does not
+   establish recurrence or production readiness.
 
 `pi-intercom` shows each connected session's repository and live state. Full
 independent-session transcripts remain visible in their Herdr panes; intercom
@@ -50,9 +56,11 @@ is for status and communication rather than transcript replication.
 ```text
 AGENTS.md
 README.md
+docs/harness-incubation.md
 maps/repositories.md
 ```
 
 `LICENSE` and `.gitignore` are retained as repository metadata. Historical
 bootstrap machinery remains recoverable from Git history but is not part of the
-active working tree.
+active working tree. The incubation boundary permits small evidence-driven
+coordination candidates; it does not restore the former meta-harness monolith.

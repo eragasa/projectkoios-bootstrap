@@ -7,7 +7,7 @@ encode a machine-specific absolute path.
 | Repository | Coordination purpose |
 |---|---|
 | `projectkoios` | Mothership: product architecture and cross-repository decisions |
-| `projectkoios-bootstrap` | Multi-repository operational coordination |
+| `projectkoios-bootstrap` | Multi-repository operational coordination and Project Koios-specific Pi harness incubation |
 | `projectkoios-agent` | Deferred reusable agent-domain components |
 | `projectkoios-api` | HTTP API and runtime boundary |
 | `projectkoios-courses` | Course-related functionality and content |

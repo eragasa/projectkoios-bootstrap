@@ -1,11 +1,15 @@
 # Project Koios coordination bootstrap
 
 This repository is the operational coordination point for work that spans
-multiple Project Koios repositories.
+multiple Project Koios repositories and the incubation owner for the Project
+Koios-specific Pi coordination harness.
 
-It does not own product architecture, implementation, knowledge, workflow
-state, or a named-role system. Durable decisions and artifacts belong in the
-repository that owns them.
+It owns bounded coordination helpers, project-specific Pi skills or prompt
+templates, sanitized fixtures, tests, and experimental harness candidates. It
+does not own product architecture, component or scientific-domain
+implementation, knowledge, live workflow state, or a named-role system.
+Durable product decisions and artifacts belong in the repository that owns
+them.
 
 ## Start
 
@@ -28,23 +32,42 @@ repository that owns them.
 - Treat session reports as evidence. Verify repository state before reporting
   completion.
 
+## Harness incubation
+
+- Treat versioned harness source, sanitized fixtures, and tests as development
+  artifacts, not runtime state.
+- Use the lifecycle `observed → candidate → repeated → validated →
+  extracted/retained`.
+- One occurrence may be preserved as a candidate; it does not establish
+  recurrence or authorize production promotion.
+- Project Koios-specific coordination tooling may remain here after validation.
+  Stable generic Pi extensions belong in the operator's Pi installation or an
+  explicitly accepted extracted owner repository.
+- Keep candidates bounded, deterministic, reviewable, and independent of
+  hidden session context.
+
 ## Durable state
 
 - Product and cross-repository architecture belongs in `projectkoios`.
 - Component implementation and validation belongs in the component repository.
 - Commit hashes, pull requests, issues, and owning-repository documents are the
   durable coordination record.
+- Tracked harness source, sanitized fixtures, tests, and candidate limitations
+  are allowed here.
 - This repository must not store session transcripts, replicated work queues,
-  generated state, checkpoints, handoffs, or status databases.
+  generated runtime state, checkpoints, generated handoffs, telemetry, or
+  status databases. Private harness observations belong in managed operational
+  state and may be referenced by content identity.
 
 ## Boundaries
 
 - Do not recreate the Hermes/Athena/Vulcan/Koios role system.
 - Do not add a workflow engine, daemon, custom package manager, installer,
   schema catalog, operator console, or telemetry system here.
-- Generic Pi extensions and credentials belong in the operator's Pi
+- Stable generic Pi extensions and credentials belong in the operator's Pi
   installation, not this repository.
 - Repository-specific instructions belong in each repository's `AGENTS.md` and
   optional `.pi/` directory.
-- Add shared machinery only after a concrete recurring coordination failure is
-  demonstrated and native Pi or Git cannot solve it.
+- Preserve a bounded first observation before generalizing it. Add production
+  shared machinery only after independent reuse evidence or a concrete
+  recurring coordination failure shows that native Pi or Git is insufficient.
