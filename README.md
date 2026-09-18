@@ -61,6 +61,17 @@ Reconcile the resulting commits against the mothership decision.
    the [incubation policy](docs/harness-incubation.md); one observation does not
    establish recurrence or production readiness.
 
+The optional, observed issue-inventory candidate can check all mapped GitHub
+repositories without treating a failed query as zero issues:
+
+```bash
+./scripts/koios_issues.py
+```
+
+It is not yet mandatory coordination infrastructure. See its
+[candidate documentation](docs/candidates/issue-inventory.md) for prerequisites,
+JSON and replay modes, exit behavior, and limitations.
+
 `pi-intercom` shows each connected session's repository and live state. Full
 independent-session transcripts remain visible in their Herdr panes; intercom
 is for status and communication rather than transcript replication.
@@ -72,7 +83,10 @@ AGENTS.md
 README.md
 docs/harness-incubation.md
 docs/operator-environment.md
+docs/candidates/issue-inventory.md
 maps/repositories.md
+scripts/koios_issues.py
+tests/test_koios_issues.py
 ```
 
 `LICENSE` and `.gitignore` are retained as repository metadata. Historical

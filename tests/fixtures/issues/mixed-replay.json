@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "observed_at": "2026-01-02T03:04:05Z",
+  "repositories": [
+    {
+      "repository": "projectkoios",
+      "github_host": "github.com",
+      "github_repository": "example/projectkoios",
+      "pages": [
+        [
+          {
+            "number": 2,
+            "title": "Second synthetic issue",
+            "url": "https://github.com/example/projectkoios/issues/2"
+          }
+        ],
+        [
+          {
+            "number": 1,
+            "title": "First synthetic issue",
+            "url": "https://github.com/example/projectkoios/issues/1"
+          }
+        ]
+      ]
+    },
+    {
+      "repository": "projectkoios-bootstrap",
+      "github_host": "github.com",
+      "github_repository": "example/projectkoios-bootstrap",
+      "pages": [
+        []
+      ]
+    }
+  ]
+}

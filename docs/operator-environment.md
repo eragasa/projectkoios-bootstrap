@@ -19,6 +19,11 @@ For generic Herdr installation and operation, use the upstream documentation:
 - Pi with the `pi-intercom` extension available; and
 - sibling Project Koios repositories matching `../maps/repositories.md`.
 
+The optional issue-inventory candidate additionally requires Python 3 and an
+authenticated GitHub CLI with GraphQL API support. The candidate performs its
+own preflight and reports authentication or API failures rather than treating
+them as zero issues.
+
 On a Homebrew system, Herdr is provided by the official `herdr` formula. This
 repository does not install, update, pin, or start Herdr.
 
