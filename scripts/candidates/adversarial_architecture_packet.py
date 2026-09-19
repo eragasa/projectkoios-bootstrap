@@ -11,7 +11,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Final, Iterable
 
-SCHEMA_VERSION: Final = 1
+SCHEMA_VERSION: Final = 2
+REVIEW_DOMAINS: Final = frozenset({"software_architecture", "systems_architecture"})
 MAX_ARTIFACTS: Final = 16
 MAX_ARTIFACT_BYTES: Final = 131_072
 MAX_TOTAL_ARTIFACT_BYTES: Final = 262_144
@@ -21,7 +22,9 @@ READ_CHUNK_BYTES: Final = 65_536
 OPEN_DELIMITER: Final = "<architecture-review-packet>"
 CLOSE_DELIMITER: Final = "</architecture-review-packet>"
 SHA256_PATTERN: Final = re.compile(r"[0-9a-f]{64}\Z")
-TOP_LEVEL_FIELDS: Final = frozenset({"artifacts", "schema_version", "scope"})
+TOP_LEVEL_FIELDS: Final = frozenset(
+    {"artifacts", "review_domain", "schema_version", "scope"}
+)
 ARTIFACT_FIELDS: Final = frozenset({"byte_length", "content", "locator", "sha256"})
 
 
@@ -119,7 +122,12 @@ def _serialize(packet: dict[str, object]) -> str:
     return text.replace("<", "\\u003c").replace(">", "\\u003e")
 
 
-def build_packet(repository: Path, locators: Iterable[str], scope: str) -> BuiltPacket:
+def build_packet(
+    repository: Path,
+    locators: Iterable[str],
+    scope: str,
+    review_domain: str,
+) -> BuiltPacket:
     """Read one closed allowlist through descriptor-confined no-follow opens."""
 
     locator_list = list(locators)
@@ -133,6 +141,8 @@ def build_packet(repository: Path, locators: Iterable[str], scope: str) -> Built
         or len(_utf8_bytes(scope, "scope")) > MAX_SCOPE_BYTES
     ):
         raise PacketError("scope is empty or exceeds its byte limit")
+    if review_domain not in REVIEW_DOMAINS:
+        raise PacketError("review domain is unsupported")
     if repository.is_symlink():
         raise PacketError("repository root must not be a symlink")
 
@@ -154,6 +164,7 @@ def build_packet(repository: Path, locators: Iterable[str], scope: str) -> Built
 
     packet: dict[str, object] = {
         "artifacts": artifacts,
+        "review_domain": review_domain,
         "schema_version": SCHEMA_VERSION,
         "scope": scope,
     }
@@ -197,6 +208,10 @@ def validate_packet_text(text: str) -> dict[str, object]:
         or value["schema_version"] != SCHEMA_VERSION
     ):
         raise PacketError("unsupported packet schema version")
+
+    review_domain = value["review_domain"]
+    if not isinstance(review_domain, str) or review_domain not in REVIEW_DOMAINS:
+        raise PacketError("review domain is unsupported")
 
     scope = value["scope"]
     if (

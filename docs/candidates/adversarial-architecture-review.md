@@ -2,14 +2,24 @@
 
 ## Status
 
-`CANDIDATE` owned by
+`CANDIDATE`
+
+Invocation and promotion are paused. A workflow-architecture application
+exposed recursive scope expansion: implementation-deferred questions could be
+promoted into current blockers, and each correction created more normative
+surface for the next review. The source now contains a scope and complexity
+brake, but only deterministic synthetic contract checks have validated that
+revision. Do not invoke this candidate on live architecture until the owner
+explicitly lifts the pause.
+
+The candidate is owned by
 [`ADVERSARIAL-ARCH-REVIEW-01`](https://github.com/eragasa/projectkoios-bootstrap/issues/4),
 based on one Project Koios architecture-design observation, six adversarial
-design trials, and one bounded application to a separate candidate. It is not
+design trials, and bounded applications to other candidates. It is not
 installed automatically, validated harness infrastructure, or an accepted
 architecture authority. The owner issue and remaining promotion evidence in
-[`harness-incubation.md`](../harness-incubation.md) remain required; this
-application does not change lifecycle status automatically.
+[`harness-incubation.md`](../harness-incubation.md) remain required; prior
+applications do not change lifecycle status automatically.
 
 ## Observation
 
@@ -25,17 +35,25 @@ coordinator has materialized and bounded the proposal evidence.
 
 ## Candidate component
 
-[`agents/adversarial-architecture-reviewer.md`](agents/adversarial-architecture-reviewer.md)
-defines one dormant, Project Koios-specific, tool-less subagent candidate.
+Two separate dormant, Project Koios-specific, tool-less subagent candidates
+prevent review-domain bleed:
+
+- [`agents/adversarial-software-architecture-reviewer.md`](agents/adversarial-software-architecture-reviewer.md)
+  reviews code, module, interface, dependency, state, and runtime design; and
+- [`agents/adversarial-systems-architecture-reviewer.md`](agents/adversarial-systems-architecture-reviewer.md)
+  reviews actor, authority, trust, topology, workspace, operational, lifecycle,
+  and recovery design.
+
 [`../../scripts/candidates/adversarial_architecture_packet.py`](../../scripts/candidates/adversarial_architecture_packet.py)
 is a dormant candidate helper for descriptor-confined packet construction,
-deterministic validation, and task rendering. Neither is installed or invoked
-automatically.
+deterministic validation, domain binding, and task rendering. None is installed
+or invoked automatically. A single review cannot mix the two domains.
 
 There is deliberately no slash-command template. Pi prompt templates cannot
 safely combine delegated execution with a deterministic host step that reads,
 validates, and embeds a variable evidence allowlist. The coordinator invokes
-the candidate agent only after constructing the complete bounded packet.
+the matching candidate agent only after constructing the complete bounded
+single-domain packet.
 
 The coordinator remains responsible for authoring, evidence selection, packet
 preflight, effective-capability inspection, checking reviewer output, resolving
@@ -86,7 +104,8 @@ normalized shape is:
       "sha256": "64 lowercase hexadecimal characters"
     }
   ],
-  "schema_version": 1,
+  "review_domain": "software_architecture",
+  "schema_version": 2,
   "scope": "Bounded review objective and applicable invariants"
 }
 ```
@@ -94,12 +113,15 @@ normalized shape is:
 The task serialization is compact JSON with every literal `<` and `>` in JSON
 strings encoded as `\u003c` and `\u003e`. The reviewer counts the one lexical
 delimiter pair before decoding JSON. This prevents packet content—including the
-candidate agent source—from creating a second envelope while preserving the
+candidate agent sources—from creating a second envelope while preserving the
 exact decoded artifact bytes covered by each identity.
 
 Candidate-stage limits are:
 
-- exactly schema version `1`;
+- exactly schema version `2`;
+- exactly one review domain: `software_architecture` or
+  `systems_architecture`; mixed-domain packets are rejected rather than
+  silently broadening the review;
 - at most 16 unique artifacts;
 - at most 131,072 UTF-8 bytes in one artifact;
 - at most 262,144 UTF-8 artifact bytes in aggregate;
@@ -139,7 +161,7 @@ resumed as though it completed.
 
 ## Agent contract
 
-The candidate agent configuration requires:
+Each candidate agent configuration requires:
 
 - `tools:` empty and `extensions:` empty;
 - replacement system prompt with no inherited project, global, skill, or parent
@@ -159,6 +181,18 @@ and performs semantic review. The prompt also embeds the adversarial lenses and
 actionable output enums, refuses visibly malformed or insufficient packets, and
 makes no architecture-acceptance claim.
 
+The revised prompt requires one current decision and definition of done. Each
+packet also selects exactly one domain. `software_architecture` covers code,
+modules, interfaces, dependencies, state, and runtime qualities;
+`systems_architecture` covers actors, authority, trust and data boundaries,
+deployment topology, workspaces, operations, lifecycle, and recovery. Mixed
+reviews must be split. A `MUST_FIX` must contradict a current criterion, be
+reachable in the current stage, and admit a defense at the same abstraction
+level. Deferred or hypothetical implementation details are `SAFE_TO_DEFER`.
+Rechecks primarily verify supplied findings and direct regressions; they do not
+complete the proposal's future design. The reviewer prefers deleting or
+narrowing claims to adding machinery and reports at most eight findings.
+
 The launch task contains the delimited packet and may state one optional bounded
 review focus outside it. That focus cannot name additional evidence, enable
 tools, mutate the packet, or authorize actions. The launch does not pin a model,
@@ -166,9 +200,13 @@ loop, run parallel agents, create a worktree, or contain an apply phase.
 
 ## Manual trial protocol
 
-A manual candidate trial must:
+Live manual trials are paused. If the owner explicitly lifts the pause, one
+trial campaign may contain at most one initial review and one focused recheck;
+additional review passes require a new operator authorization. A manual
+candidate trial must:
 
-1. inspect the dormant candidate agent source;
+1. inspect the selected dormant candidate agent source and verify that its
+   domain exactly matches the packet domain;
 2. list executable agents and effective capabilities;
 3. inspect the parsed effective agent configuration and write a sanitized,
    content-identified operational preflight record that declares how the final
@@ -177,7 +215,8 @@ A manual candidate trial must:
    descriptor-confined candidate helper;
 5. verify packet schema, bounds, identities, privacy, delimiter-safe
    serialization, and exactly one lexical envelope before delegation;
-6. copy or create the exact candidate agent in ignored project-local Pi state;
+6. copy or create only the selected candidate agent in ignored project-local Pi
+   state;
 7. reload discovery and fail unless the effective agent has no tools,
    extensions, inherited contexts, skills, or default reads;
 8. embed the complete canonical packet once in the launch task and start one
@@ -308,6 +347,23 @@ well as semantic defect discovery on a separate candidate. It remains
 operational reuse evidence, not installation, architecture acceptance, or an
 automatic lifecycle transition.
 
+### Workflow architecture application and pause
+
+A later workflow-architecture campaign exposed a design failure not detected by
+the self-design trials. The reviewer was asked to challenge a proposed transfer
+and contract. It repeatedly treated deferred implementation choices as current
+blocking defects; corrections then enlarged the contract and supplied new
+attack surface. Although a final review returned `NO_BLOCKING_FINDINGS`, the
+campaign produced disproportionate specification and lifecycle machinery rather
+than the smallest current decision. The published expansion and architecture
+acceptance were reverted.
+
+This falsifies the assumption that a bounded evidence packet alone bounds the
+semantic scope of review. The candidate therefore remains `CANDIDATE`, with
+invocation and promotion paused. Its revised scope brake is covered only by
+synthetic prompt-contract tests; the reviewer was not invoked to review its own
+correction.
+
 ## Dependencies
 
 A manual trial requires:
@@ -336,6 +392,9 @@ external skills, a workflow engine, an installer, or a persistent agent.
   silently discard the nonblocking final-open requirement.
 - A single tool-less reviewer is not consensus, scientific validation, security
   certification, or human architecture acceptance.
+- Prior versions did not adequately constrain semantic scope, abstraction
+  level, or recursive recheck expansion. The revised guardrail has only
+  synthetic contract coverage and remains behaviorally unvalidated.
 - This first observation does not establish recurrence or justify promotion.
 
 ## Trial and promotion conditions
@@ -347,9 +406,12 @@ blocking finding. Terminal cleanup and unchanged-Git validation are coordinator
 postconditions, not reviewer authority. This result remains operational
 evidence and does not advance the candidate lifecycle by itself.
 
-Promotion requires the general gate in `docs/harness-incubation.md`, including
-an independent second use, a normalized evidence record containing no private
-runtime state, deterministic packet and output validation, a failure or
-incomplete-evidence case, privacy review, owner routing, and an explicit
-retain-or-extract decision. Promotion would move accepted source into active Pi
-configuration; candidate status alone does not.
+Promotion is blocked while invocation is paused. Lifting the pause requires an
+explicit owner decision after reviewing the workflow-architecture failure and
+the synthetic scope-contract checks. Any later promotion also requires the
+general gate in `docs/harness-incubation.md`, including an independent second
+use, a normalized evidence record containing no private runtime state,
+deterministic packet and output validation, a failure or incomplete-evidence
+case, privacy review, owner routing, and an explicit retain-or-extract decision.
+Promotion would move accepted source into active Pi configuration; candidate
+status alone does not.

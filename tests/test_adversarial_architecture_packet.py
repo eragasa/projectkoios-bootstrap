@@ -34,7 +34,8 @@ def serialized_packet(**overrides: object) -> str:
                 "sha256": hashlib.sha256(content.encode()).hexdigest(),
             }
         ],
-        "schema_version": 1,
+        "review_domain": "software_architecture",
+        "schema_version": 2,
         "scope": "Review one bounded proposal.",
     }
     packet.update(overrides)
@@ -53,7 +54,12 @@ def test_builder_reads_closed_allowlist_and_renders_one_envelope(
     proposal = docs / "proposal.md"
     proposal.write_text("proposal <untrusted>\n", encoding="utf-8")
 
-    built = build_packet(tmp_path, ["docs/proposal.md"], "Review the proposal.")
+    built = build_packet(
+        tmp_path,
+        ["docs/proposal.md"],
+        "Review the proposal.",
+        "software_architecture",
+    )
     value = validate_packet_text(built.text)
     task = render_task(built.text, "Review only the supplied packet.")
 
@@ -78,7 +84,9 @@ def test_builder_reads_closed_allowlist_and_renders_one_envelope(
 )
 def test_builder_rejects_non_normalized_locator(tmp_path: Path, locator: str) -> None:
     with pytest.raises(PacketError):
-        build_packet(tmp_path, [locator], "Review scope.")
+        build_packet(
+            tmp_path, [locator], "Review scope.", "software_architecture"
+        )
 
 
 def test_builder_rejects_symlink_components(tmp_path: Path) -> None:
@@ -88,14 +96,21 @@ def test_builder_rejects_symlink_components(tmp_path: Path) -> None:
     (tmp_path / "linked").symlink_to(outside, target_is_directory=True)
 
     with pytest.raises(PacketError, match="cannot be opened safely"):
-        build_packet(tmp_path, ["linked/secret.md"], "Review scope.")
+        build_packet(
+            tmp_path,
+            ["linked/secret.md"],
+            "Review scope.",
+            "software_architecture",
+        )
 
 
 def test_builder_rejects_oversized_artifact(tmp_path: Path) -> None:
     (tmp_path / "large.md").write_bytes(b"x" * (MAX_ARTIFACT_BYTES + 1))
 
     with pytest.raises(PacketError, match="exceeds byte limit"):
-        build_packet(tmp_path, ["large.md"], "Review scope.")
+        build_packet(
+            tmp_path, ["large.md"], "Review scope.", "software_architecture"
+        )
 
 
 def test_builder_rejects_fifo_without_blocking(tmp_path: Path) -> None:
@@ -107,7 +122,12 @@ from pathlib import Path
 sys.path.insert(0, sys.argv[2])
 from scripts.candidates.adversarial_architecture_packet import PacketError, build_packet
 try:
-    build_packet(Path(sys.argv[1]), ["artifact.fifo"], "Review scope.")
+    build_packet(
+        Path(sys.argv[1]),
+        ["artifact.fifo"],
+        "Review scope.",
+        "software_architecture",
+    )
 except PacketError:
     print("rejected")
 else:
@@ -126,14 +146,29 @@ else:
 def test_builder_rejects_non_utf8_scope_value(tmp_path: Path) -> None:
     (tmp_path / "artifact.md").write_text("evidence", encoding="utf-8")
     with pytest.raises(PacketError, match="scope is not valid UTF-8"):
-        build_packet(tmp_path, ["artifact.md"], "\ud800")
+        build_packet(
+            tmp_path, ["artifact.md"], "\ud800", "software_architecture"
+        )
+
+
+def test_builder_requires_one_architecture_domain(tmp_path: Path) -> None:
+    (tmp_path / "artifact.md").write_text("evidence", encoding="utf-8")
+
+    for domain in ("software_architecture", "systems_architecture"):
+        built = build_packet(tmp_path, ["artifact.md"], "Review scope.", domain)
+        assert validate_packet_text(built.text)["review_domain"] == domain
+
+    with pytest.raises(PacketError, match="review domain"):
+        build_packet(tmp_path, ["artifact.md"], "Review scope.", "mixed")
 
 
 @pytest.mark.parametrize(
     ("mutation", "message"),
     [
-        ({"schema_version": 2}, "schema version"),
+        ({"schema_version": 1}, "schema version"),
         ({"schema_version": True}, "schema version"),
+        ({"review_domain": "mixed"}, "review domain"),
+        ({"review_domain": True}, "review domain"),
         ({"extra": True}, "missing or unknown fields"),
         ({"scope": ""}, "scope"),
         ({"artifacts": []}, "artifact count"),
@@ -148,7 +183,7 @@ def test_validator_rejects_invalid_top_level_contract(
 
 def test_validator_rejects_duplicate_json_fields_and_noncanonical_text() -> None:
     duplicate = serialized_packet().replace(
-        '"schema_version":1', '"schema_version":1,"schema_version":1'
+        '"schema_version":2', '"schema_version":2,"schema_version":2'
     )
     with pytest.raises(PacketError, match="duplicate field"):
         validate_packet_text(duplicate)

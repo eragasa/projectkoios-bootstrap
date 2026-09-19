@@ -75,8 +75,10 @@ JSON and replay modes, exit behavior, and limitations.
 A separate
 [adversarial architecture review agent candidate](docs/candidates/adversarial-architecture-review.md)
 preserves one fresh-context, tool-less review pattern without introducing a
-persistent architect role or second writer. Its agent source remains under
-`docs/candidates/` and is not installed automatically.
+persistent architect role or second writer. It distinguishes software
+architecture from systems architecture and rejects mixed-domain packets. Its
+invocation and promotion are paused after a scope-expansion failure; the agent
+source remains under `docs/candidates/` and is not installed automatically.
 
 `pi-intercom` shows each connected session's repository and live state. Full
 independent-session transcripts remain visible in their Herdr panes; intercom
@@ -91,7 +93,8 @@ docs/harness-incubation.md
 docs/operator-environment.md
 docs/candidates/issue-inventory.md
 docs/candidates/adversarial-architecture-review.md
-docs/candidates/agents/adversarial-architecture-reviewer.md
+docs/candidates/agents/adversarial-software-architecture-reviewer.md
+docs/candidates/agents/adversarial-systems-architecture-reviewer.md
 maps/repositories.md
 scripts/candidates/adversarial_architecture_packet.py
 scripts/koios_issues.py
