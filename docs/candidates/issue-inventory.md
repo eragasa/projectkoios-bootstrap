@@ -25,12 +25,25 @@ API support.
 ./scripts/koios_issues.py --json
 ```
 
-The command reads repository names from `maps/repositories.md`, resolves each
-sibling checkout's `origin`, and queries every resolved GitHub repository. It
-uses the GraphQL issue connection to retrieve only issue numbers, titles, URLs,
-and pagination metadata; pull requests are excluded by construction. Queries
-are read-only, fetch at most 10,000 issues per repository, write no cache, and
-store no generated inventory.
+The command reads canonical GitHub host/owner/repository identities from
+`maps/repositories.md`, verifies that each sibling checkout's `origin` matches,
+and queries only those canonical repositories. A local origin is consistency
+evidence, not authority. The command uses the GraphQL issue connection to
+retrieve only issue numbers, titles, URLs, and pagination metadata; pull
+requests are excluded by construction. Queries
+are read-only, fetch at most 10,000 issues per repository, reject repeated
+pagination cursors and inconsistent totals, write no cache, and store no
+generated inventory.
+
+Live and replay JSON reject duplicate fields throughout. Replay objects and
+normalized issue records also reject unknown fields; extra fields in the live
+GraphQL envelope are ignored because the query selects and validates only the
+required connection values. Every issue URL must be an HTTPS URL for the
+resolved host, owner, repository, issue path, and
+issue number, with no controls, credentials, port, query, or fragment. Output
+uses a canonical URL reconstructed from the validated identity rather than the
+supplied string. Human-readable summary output points to `--details` whenever
+issue rows are omitted.
 
 ## Completeness and exit behavior
 
@@ -70,9 +83,14 @@ GitHub calls:
   --json
 ```
 
-A replay fixture must exactly cover its selected map, carry a fixed observation
-time, and provide either paginated API-shaped issue data or one bounded error
-kind for every repository. The command has no capture or record mode. Live
+A replay fixture must exactly cover its selected map, carry a canonical UTC
+observation time (`YYYY-MM-DDTHH:MM:SSZ`), use an integer schema version, and
+provide either one or more normalized page arrays of issue records (an empty
+result is `[[]]`) or one bounded error kind for every repository. It is not a
+raw live GraphQL capture format. The file is
+limited to 16 MiB; page, issue, title, and URL bounds mirror the live contract.
+Duplicate or unknown fields, boolean schema values, mismatched issue URLs, and
+malformed timestamps fail closed. The command has no capture or record mode. Live
 responses and generated reports must not be committed as fixtures; tracked
 fixtures must remain synthetic or sanitized.
 
@@ -80,13 +98,17 @@ fixtures must remain synthetic or sanitized.
 
 - This inventories open issues; it does not infer priority, dependencies, or the
   next task.
-- Live mode requires every mapped sibling checkout and a matching GitHub
-  `origin`. Missing or divergent checkouts make the report incomplete even when
-  GitHub itself is reachable.
+- Live mode requires every mapped sibling checkout and an `origin` matching the
+  map's canonical GitHub identity. Missing or divergent checkouts make the
+  report incomplete even when GitHub itself is reachable.
 - GitHub issue visibility follows the operator's existing `gh` authentication.
 - Sequential per-repository queries favor simple failure attribution over speed.
+  `observed_at` is collection start, and `COMPLETE` means full protocol coverage,
+  not a transactionally atomic cross-repository snapshot.
 - A repository with more than 10,000 open issues is reported as incomplete
-  rather than consuming unbounded API and memory resources.
+  rather than consuming unbounded normalized issue memory. The human-reviewed
+  map and trusted local `gh` process output are not process-level byte-stream
+  capped; add such caps before accepting arbitrary maps, executables, or hosts.
 - This first observation does not establish recurrence or production readiness.
 
 ## Promotion condition

@@ -72,6 +72,12 @@ It is not yet mandatory coordination infrastructure. See its
 [candidate documentation](docs/candidates/issue-inventory.md) for prerequisites,
 JSON and replay modes, exit behavior, and limitations.
 
+A separate
+[adversarial architecture review agent candidate](docs/candidates/adversarial-architecture-review.md)
+preserves one fresh-context, tool-less review pattern without introducing a
+persistent architect role or second writer. Its agent source remains under
+`docs/candidates/` and is not installed automatically.
+
 `pi-intercom` shows each connected session's repository and live state. Full
 independent-session transcripts remain visible in their Herdr panes; intercom
 is for status and communication rather than transcript replication.
@@ -84,8 +90,13 @@ README.md
 docs/harness-incubation.md
 docs/operator-environment.md
 docs/candidates/issue-inventory.md
+docs/candidates/adversarial-architecture-review.md
+docs/candidates/agents/adversarial-architecture-reviewer.md
 maps/repositories.md
+scripts/candidates/adversarial_architecture_packet.py
 scripts/koios_issues.py
+tests/test_adversarial_architecture_packet.py
+tests/test_adversarial_architecture_review_agent.py
 tests/test_koios_issues.py
 ```
 

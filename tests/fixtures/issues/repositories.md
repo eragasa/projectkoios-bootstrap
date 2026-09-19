@@ -1,6 +1,6 @@
 # Synthetic repository map
 
-| Repository | Coordination purpose |
-|---|---|
-| `projectkoios` | Synthetic mothership fixture |
-| `projectkoios-bootstrap` | Synthetic bootstrap fixture |
+| Repository | GitHub identity | Coordination purpose |
+|---|---|---|
+| `projectkoios` | `github.com/example/projectkoios` | Synthetic mothership fixture |
+| `projectkoios-bootstrap` | `github.com/example/projectkoios-bootstrap` | Synthetic bootstrap fixture |

@@ -24,17 +24,34 @@ EXIT_COMPLETE = 0
 EXIT_SETUP_ERROR = 2
 EXIT_INCOMPLETE = 3
 
-MAP_HEADER_PATTERN = re.compile(r"^\|\s*Repository\s*\|", re.IGNORECASE)
-MAP_SEPARATOR_PATTERN = re.compile(r"^\|\s*:?-{3,}:?\s*\|")
-MAP_ROW_PATTERN = re.compile(r"^\|\s*`(?P<name>[A-Za-z0-9][A-Za-z0-9._-]*)`\s*\|")
+MAP_HEADER_PATTERN = re.compile(
+    r"^\|\s*Repository\s*\|\s*GitHub identity\s*\|"
+    r"\s*Coordination purpose\s*\|\s*$",
+    re.IGNORECASE,
+)
+MAP_SEPARATOR_PATTERN = re.compile(
+    r"^\|\s*:?-{3,}:?\s*\|\s*:?-{3,}:?\s*\|\s*:?-{3,}:?\s*\|\s*$"
+)
+MAP_ROW_PATTERN = re.compile(
+    r"^\|\s*`(?P<name>[A-Za-z0-9][A-Za-z0-9._-]*)`\s*\|"
+    r"\s*`(?P<host>[A-Za-z0-9.-]+)/(?P<owner>[A-Za-z0-9_.-]+)/"
+    r"(?P<repository>[A-Za-z0-9_.-]+)`\s*\|[^|]+\|\s*$"
+)
 SCP_REMOTE_PATTERN = re.compile(
     r"^(?:[^@/\s]+@)?(?P<host>[A-Za-z0-9.-]+):"
     r"(?P<owner>[A-Za-z0-9_.-]+)/(?P<repository>[A-Za-z0-9_.-]+?)(?:\.git)?$"
 )
 GITHUB_COMPONENT_PATTERN = re.compile(r"^[A-Za-z0-9_.-]+$")
+OBSERVED_AT_PATTERN = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$")
 PAGE_SIZE = 100
 MAX_OPEN_ISSUES_PER_REPOSITORY = 10_000
 MAX_PAGES = MAX_OPEN_ISSUES_PER_REPOSITORY // PAGE_SIZE
+MAX_REPLAY_BYTES = 16 * 1024 * 1024
+MAX_TITLE_BYTES = 1_024
+MAX_URL_BYTES = 2_048
+REPLAY_TOP_LEVEL_FIELDS = frozenset({"observed_at", "repositories", "schema_version"})
+REPLAY_REPOSITORY_FIELDS = frozenset({"github_host", "github_repository", "repository"})
+ISSUE_FIELDS = frozenset({"number", "title", "url"})
 ISSUES_QUERY = """
 query($endCursor: String, $owner: String!, $name: String!) {
   repository(owner: $owner, name: $name) {
@@ -89,6 +106,7 @@ class ResponseError(Exception):
 class RepositorySpec:
     name: str
     path: Path
+    identity: GitHubIdentity
 
 
 @dataclass(frozen=True)
@@ -155,11 +173,62 @@ def observed_at_now() -> str:
     return value.replace("+00:00", "Z")
 
 
+def validate_observed_at(value: Any) -> str:
+    if not isinstance(value, str) or OBSERVED_AT_PATTERN.fullmatch(value) is None:
+        raise ValueError("observation time must be canonical UTC")
+    try:
+        datetime.strptime(value, "%Y-%m-%dT%H:%M:%SZ")
+    except ValueError as exc:
+        raise ValueError("observation time is invalid") from exc
+    return value
+
+
+def _object_without_duplicate_fields(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
+    value: dict[str, Any] = {}
+    for key, item in pairs:
+        if key in value:
+            raise ResponseError(f"duplicate JSON field: {key}")
+        value[key] = item
+    return value
+
+
+def parse_json_document(text: str) -> Any:
+    return json.loads(text, object_pairs_hook=_object_without_duplicate_fields)
+
+
+def read_bounded_utf8(path: Path, byte_limit: int) -> str:
+    try:
+        with path.open("rb") as stream:
+            raw = stream.read(byte_limit + 1)
+    except OSError as exc:
+        raise SetupError("replay_unreadable", f"cannot read {path}") from exc
+    if len(raw) > byte_limit:
+        raise SetupError("replay_invalid", "replay file exceeds its byte limit")
+    try:
+        return raw.decode("utf-8", errors="strict")
+    except UnicodeDecodeError as exc:
+        raise SetupError("replay_invalid", "replay file is not UTF-8") from exc
+
+
+def require_exact_fields(value: dict[str, Any], expected: frozenset[str]) -> None:
+    if set(value) != expected:
+        raise ResponseError("object contains missing or unknown fields")
+
+
+def utf8_length(value: str, field: str) -> int:
+    try:
+        return len(value.encode("utf-8", errors="strict"))
+    except UnicodeEncodeError as exc:
+        raise ResponseError(f"{field} is not valid UTF-8") from exc
+
+
 def parse_repository_map(map_path: Path, workspace: Path) -> list[RepositorySpec]:
     try:
         text = map_path.read_text(encoding="utf-8")
     except OSError as exc:
         raise SetupError("map_unreadable", f"cannot read {map_path}") from exc
+    except UnicodeDecodeError as exc:
+        raise SetupError("map_invalid", "repository map is not UTF-8") from exc
 
     lines = text.splitlines()
     header_index = next(
@@ -171,8 +240,9 @@ def parse_repository_map(map_path: Path, workspace: Path) -> list[RepositorySpec
     if not MAP_SEPARATOR_PATTERN.match(lines[header_index + 1]):
         raise SetupError("map_invalid", "repository map table separator is invalid")
 
-    names: list[str] = []
-    seen: set[str] = set()
+    specs: list[RepositorySpec] = []
+    seen_names: set[str] = set()
+    seen_identities: set[tuple[str, str, str]] = set()
     for line in lines[header_index + 2 :]:
         if not line.startswith("|"):
             break
@@ -180,15 +250,37 @@ def parse_repository_map(map_path: Path, workspace: Path) -> list[RepositorySpec
         if match is None:
             raise SetupError("map_invalid", "repository map contains an invalid row")
         name = match.group("name")
-        if name in seen:
+        try:
+            identity = _validated_identity(
+                match.group("host"),
+                match.group("owner"),
+                match.group("repository"),
+            )
+        except ValueError as exc:
+            raise SetupError(
+                "map_invalid", f"invalid GitHub identity for {name}"
+            ) from exc
+        if identity.repository.casefold() != name.casefold():
+            raise SetupError("map_invalid", f"GitHub repository mismatch for {name}")
+        identity_key = (
+            identity.host.casefold(),
+            identity.owner.casefold(),
+            identity.repository.casefold(),
+        )
+        if name in seen_names:
             raise SetupError("map_invalid", f"duplicate mapped repository: {name}")
-        names.append(name)
-        seen.add(name)
+        if identity_key in seen_identities:
+            raise SetupError(
+                "map_invalid", f"duplicate mapped GitHub identity: {identity.slug}"
+            )
+        specs.append(RepositorySpec(name, workspace / name, identity))
+        seen_names.add(name)
+        seen_identities.add(identity_key)
 
-    if not names:
+    if not specs:
         raise SetupError("map_invalid", "repository map contains no repository rows")
 
-    return [RepositorySpec(name, workspace / name) for name in names]
+    return specs
 
 
 def parse_github_remote(remote: str) -> GitHubIdentity:
@@ -228,7 +320,7 @@ def resolve_repository(
     spec: RepositorySpec, runner: CommandRunner = default_runner
 ) -> RepositoryResult | GitHubIdentity:
     if not spec.path.is_dir():
-        return RepositoryResult.error(spec.name, "missing_checkout")
+        return RepositoryResult.error(spec.name, "missing_checkout", spec.identity)
 
     try:
         completed = runner(
@@ -237,19 +329,23 @@ def resolve_repository(
     except FileNotFoundError:
         raise SetupError("git_unavailable", "git executable is unavailable") from None
     except subprocess.TimeoutExpired:
-        return RepositoryResult.error(spec.name, "command_timeout")
+        return RepositoryResult.error(spec.name, "command_timeout", spec.identity)
 
     if completed.returncode != 0 or not completed.stdout.strip():
-        return RepositoryResult.error(spec.name, "missing_origin")
+        return RepositoryResult.error(spec.name, "missing_origin", spec.identity)
 
     try:
         identity = parse_github_remote(completed.stdout)
     except ValueError:
-        return RepositoryResult.error(spec.name, "unsupported_remote")
+        return RepositoryResult.error(spec.name, "unsupported_remote", spec.identity)
 
-    if identity.repository.casefold() != spec.name.casefold():
-        return RepositoryResult.error(spec.name, "remote_mismatch", identity)
-    return identity
+    if (
+        identity.host.casefold() != spec.identity.host.casefold()
+        or identity.owner.casefold() != spec.identity.owner.casefold()
+        or identity.repository.casefold() != spec.identity.repository.casefold()
+    ):
+        return RepositoryResult.error(spec.name, "remote_mismatch", spec.identity)
+    return spec.identity
 
 
 def validate_gh(runner: CommandRunner = default_runner) -> None:
@@ -299,6 +395,8 @@ def query_open_issues(
     pages: list[list[dict[str, Any]]] = []
     expected_total: int | None = None
     cursor: str | None = None
+    seen_cursors: set[str] = set()
+    received = 0
 
     for _ in range(MAX_PAGES):
         args = [
@@ -328,9 +426,9 @@ def query_open_issues(
             return classify_gh_failure(completed.stderr)
 
         try:
-            payload = json.loads(completed.stdout)
-            nodes, total, cursor = normalize_graphql_page(payload)
-        except (json.JSONDecodeError, ResponseError):
+            payload = parse_json_document(completed.stdout)
+            nodes, total, next_cursor = normalize_graphql_page(payload)
+        except (json.JSONDecodeError, RecursionError, ResponseError):
             return "invalid_response"
 
         if expected_total is None:
@@ -339,11 +437,20 @@ def query_open_issues(
                 return "limit_exceeded"
         elif total != expected_total:
             return "inconsistent_response"
+
+        received += len(nodes)
+        if received > expected_total:
+            return "inconsistent_response"
+        if next_cursor is not None:
+            if not nodes or received >= expected_total or next_cursor in seen_cursors:
+                return "inconsistent_response"
+            seen_cursors.add(next_cursor)
         pages.append(nodes)
+        cursor = next_cursor
 
         if cursor is None:
             try:
-                issues = normalize_issue_pages(pages)
+                issues = normalize_issue_pages(pages, identity)
             except ResponseError:
                 return "invalid_response"
             if len(issues) != expected_total:
@@ -387,15 +494,20 @@ def normalize_graphql_page(
     return nodes, total, end_cursor
 
 
-def normalize_issue_pages(pages: Any) -> tuple[Issue, ...]:
-    if not isinstance(pages, list) or any(not isinstance(page, list) for page in pages):
-        raise ResponseError("paginated response must be a list of page arrays")
+def normalize_issue_pages(pages: Any, identity: GitHubIdentity) -> tuple[Issue, ...]:
+    if (
+        not isinstance(pages, list)
+        or not 1 <= len(pages) <= MAX_PAGES
+        or any(not isinstance(page, list) or len(page) > PAGE_SIZE for page in pages)
+    ):
+        raise ResponseError("paginated response exceeds page bounds")
 
     issues: dict[int, Issue] = {}
     for page in pages:
         for item in page:
             if not isinstance(item, dict):
                 raise ResponseError("issue entry must be an object")
+            require_exact_fields(item, ISSUE_FIELDS)
             number = item.get("number")
             title = item.get("title")
             url = item.get("url")
@@ -404,15 +516,42 @@ def normalize_issue_pages(pages: Any) -> tuple[Issue, ...]:
                 or isinstance(number, bool)
                 or number <= 0
                 or not isinstance(title, str)
+                or utf8_length(title, "issue title") > MAX_TITLE_BYTES
                 or not isinstance(url, str)
-                or not url.startswith(("https://", "http://"))
+                or utf8_length(url, "issue URL") > MAX_URL_BYTES
             ):
                 raise ResponseError("issue entry has invalid required fields")
             if number in issues:
                 raise ResponseError("duplicate issue number across pages")
-            issues[number] = Issue(number, safe_title(title), url)
+            validated_url = validate_issue_url(url, identity, number)
+            issues[number] = Issue(number, safe_title(title), validated_url)
 
     return tuple(issues[number] for number in sorted(issues))
+
+
+def validate_issue_url(value: str, identity: GitHubIdentity, issue_number: int) -> str:
+    if any(unicodedata.category(character).startswith("C") for character in value):
+        raise ResponseError("issue URL contains control or format characters")
+    expected_path = f"/{identity.owner}/{identity.repository}/issues/{issue_number}"
+    try:
+        parsed = urlparse(value)
+        valid = (
+            parsed.scheme == "https"
+            and parsed.hostname is not None
+            and parsed.hostname.casefold() == identity.host.casefold()
+            and parsed.username is None
+            and parsed.password is None
+            and parsed.port is None
+            and parsed.path.casefold() == expected_path.casefold()
+            and not parsed.params
+            and not parsed.query
+            and not parsed.fragment
+        )
+    except ValueError as exc:
+        raise ResponseError("issue URL is malformed") from exc
+    if not valid:
+        raise ResponseError("issue URL does not match its GitHub identity")
+    return f"https://{identity.host}{expected_path}"
 
 
 def safe_title(title: str) -> str:
@@ -455,18 +594,27 @@ def load_replay(
     replay_path: Path, specs: Sequence[RepositorySpec]
 ) -> tuple[str, list[RepositoryResult]]:
     try:
-        payload = json.loads(replay_path.read_text(encoding="utf-8"))
-    except OSError as exc:
-        raise SetupError("replay_unreadable", f"cannot read {replay_path}") from exc
-    except json.JSONDecodeError as exc:
+        payload = parse_json_document(read_bounded_utf8(replay_path, MAX_REPLAY_BYTES))
+    except (json.JSONDecodeError, RecursionError, ResponseError) as exc:
         raise SetupError("replay_invalid", "replay file is not valid JSON") from exc
 
-    if not isinstance(payload, dict) or payload.get("schema_version") != SCHEMA_VERSION:
+    if not isinstance(payload, dict):
+        raise SetupError("replay_invalid", "replay must be a JSON object")
+    try:
+        require_exact_fields(payload, REPLAY_TOP_LEVEL_FIELDS)
+    except ResponseError as exc:
+        raise SetupError("replay_invalid", "invalid replay top-level fields") from exc
+    if (
+        type(payload.get("schema_version")) is not int
+        or payload.get("schema_version") != SCHEMA_VERSION
+    ):
         raise SetupError("replay_invalid", "unsupported replay schema")
     observed_at = payload.get("observed_at")
     entries = payload.get("repositories")
-    if not isinstance(observed_at, str) or not observed_at:
-        raise SetupError("replay_invalid", "replay observed_at is required")
+    try:
+        observed_at = validate_observed_at(observed_at)
+    except ValueError as exc:
+        raise SetupError("replay_invalid", "replay observed_at is invalid") from exc
     if not isinstance(entries, list):
         raise SetupError("replay_invalid", "replay repositories must be a list")
 
@@ -476,7 +624,7 @@ def load_replay(
             raise SetupError("replay_invalid", "invalid replay repository entry")
         name = entry["repository"]
         if name in by_name:
-            raise SetupError("replay_invalid", f"duplicate replay repository: {name}")
+            raise SetupError("replay_invalid", "duplicate replay repository entry")
         by_name[name] = entry
 
     expected = [spec.name for spec in specs]
@@ -487,9 +635,9 @@ def load_replay(
         )
 
     results: list[RepositoryResult] = []
-    for name in expected:
+    for spec in specs:
+        name = spec.name
         entry = by_name[name]
-        identity = _replay_identity(entry, name)
         has_pages = "pages" in entry
         has_error = "error_kind" in entry
         if has_pages == has_error:
@@ -497,14 +645,24 @@ def load_replay(
                 "replay_invalid",
                 f"{name} must contain exactly one of pages or error_kind",
             )
+        expected_fields = REPLAY_REPOSITORY_FIELDS | frozenset(
+            {"pages" if has_pages else "error_kind"}
+        )
+        try:
+            require_exact_fields(entry, expected_fields)
+        except ResponseError as exc:
+            raise SetupError(
+                "replay_invalid", f"invalid replay fields for {name}"
+            ) from exc
+        identity = _replay_identity(entry, spec)
         if has_error:
             error_kind = entry["error_kind"]
-            if error_kind not in ERROR_KINDS:
+            if not isinstance(error_kind, str) or error_kind not in ERROR_KINDS:
                 raise SetupError("replay_invalid", f"invalid error kind for {name}")
             results.append(RepositoryResult.error(name, error_kind, identity))
             continue
         try:
-            issues = normalize_issue_pages(entry["pages"])
+            issues = normalize_issue_pages(entry["pages"], identity)
         except ResponseError as exc:
             raise SetupError(
                 "replay_invalid", f"invalid replay response for {name}"
@@ -514,25 +672,37 @@ def load_replay(
     return observed_at, results
 
 
-def _replay_identity(entry: dict[str, Any], expected_name: str) -> GitHubIdentity:
+def _replay_identity(
+    entry: dict[str, Any], expected_spec: RepositorySpec
+) -> GitHubIdentity:
     host = entry.get("github_host")
     slug = entry.get("github_repository")
     if not isinstance(host, str) or not isinstance(slug, str):
         raise SetupError(
-            "replay_invalid", f"missing GitHub identity for {expected_name}"
+            "replay_invalid", f"missing GitHub identity for {expected_spec.name}"
         )
     parts = slug.split("/")
     if len(parts) != 2:
-        raise SetupError("replay_invalid", f"invalid GitHub slug for {expected_name}")
+        raise SetupError(
+            "replay_invalid", f"invalid GitHub slug for {expected_spec.name}"
+        )
     try:
         identity = _validated_identity(host, parts[0], parts[1])
     except ValueError as exc:
         raise SetupError(
-            "replay_invalid", f"invalid GitHub identity for {expected_name}"
+            "replay_invalid", f"invalid GitHub identity for {expected_spec.name}"
         ) from exc
-    if identity.repository.casefold() != expected_name.casefold():
-        raise SetupError("replay_invalid", f"GitHub slug mismatch for {expected_name}")
-    return identity
+    if (
+        identity.host.casefold() != expected_spec.identity.host.casefold()
+        or identity.owner.casefold() != expected_spec.identity.owner.casefold()
+        or identity.repository.casefold()
+        != expected_spec.identity.repository.casefold()
+    ):
+        raise SetupError(
+            "replay_invalid",
+            f"GitHub identity mismatch for {expected_spec.name}",
+        )
+    return expected_spec.identity
 
 
 def build_report(
@@ -581,7 +751,7 @@ def build_report(
 def render_text(report: dict[str, Any], details: bool = False) -> str:
     lines = [
         "Project Koios open issue inventory",
-        f"Observed: {report['observed_at']}",
+        f"Observed (collection start; non-atomic): {report['observed_at']}",
         f"Source: {str(report['source_mode']).upper()}",
     ]
     if report["source_mode"] == "replay":
@@ -610,6 +780,11 @@ def render_text(report: dict[str, Any], details: bool = False) -> str:
             f"Inventory: {'COMPLETE' if report['complete'] else 'INCOMPLETE'}",
         ]
     )
+
+    if not details and totals["known_open_issues"]:
+        lines.append(
+            "Issue details omitted; rerun with --details to list titles and URLs."
+        )
 
     if details:
         lines.append("")
