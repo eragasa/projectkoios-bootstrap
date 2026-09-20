@@ -80,6 +80,14 @@ architecture from systems architecture and rejects mixed-domain packets. Its
 invocation and promotion are paused after a scope-expansion failure; the agent
 source remains under `docs/candidates/` and is not installed automatically.
 
+A documentation-only
+[software-development workflow candidate](docs/candidates/software-workflow.md)
+preserves one bounded observation of recommendation, authorization,
+validation, review, commit, push, and pull-request boundaries. It is not
+executable, installed, validated, or a workflow engine; a second independent
+use or concrete recurring failure is required before implementation is
+reconsidered.
+
 `pi-intercom` shows each connected session's repository and live state. Full
 independent-session transcripts remain visible in their Herdr panes; intercom
 is for status and communication rather than transcript replication.
@@ -93,6 +101,7 @@ docs/harness-incubation.md
 docs/operator-environment.md
 docs/candidates/issue-inventory.md
 docs/candidates/adversarial-architecture-review.md
+docs/candidates/software-workflow.md
 docs/candidates/agents/adversarial-software-architecture-reviewer.md
 docs/candidates/agents/adversarial-systems-architecture-reviewer.md
 maps/repositories.md
