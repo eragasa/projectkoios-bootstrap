@@ -1,31 +1,23 @@
-# Local editor and operating-system state
+# Operating-system and editor state
 .DS_Store
 *.swp
 *.swo
 .idea/
 .vscode/
 
-# Local Pi and analysis state
+# Local Pi and repository-analysis state
 .pi/
+.obsidian/
 graphify-out/
+workspaces/
 
-# Legacy generated state that may remain in existing checkouts
+# Generated development state
 .venv/
-uv.lock
 *.egg-info/
 __pycache__/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
-node_modules/
 dist/
 coverage/
-.archon-runs/
-.archon/mcp/
-.obsidian/
-pi/agent/
-opencode/sandbox/
-opencode/sessions/
-goose/sessions/
-workspaces/*/.pi-subagents/
-workspaces/*/.mypy_cache/
+docs/_build/
