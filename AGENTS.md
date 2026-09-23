@@ -2,27 +2,63 @@
 
 This repository is the operational coordination point for work that spans
 multiple Project Koios repositories and the incubation owner for the Project
-Koios-specific Pi coordination harness.
+Koios-specific Pi coordination harness. It is also the bounded extraction point
+for operator-provided, often LLM-generated source drops used to discover and
+build reusable tools.
 
 It owns bounded coordination helpers, project-specific Pi skills or prompt
-templates, sanitized fixtures, tests, and experimental harness candidates. It
-does not own product architecture, component or scientific-domain
-implementation, knowledge, live workflow state, or a named-role system.
-Durable product decisions and artifacts belong in the repository that owns
-them.
+templates, sanitized fixtures, tests, and experimental harness candidates. A
+raw intake is observational source material: it is not presumed to be a
+complete patch, an authoritative implementation, or code intended for this
+repository. This repository does not own product architecture, component or
+scientific-domain implementation, knowledge, live workflow state, or a
+named-role system. Durable product decisions and artifacts belong in the
+repository that owns them.
 
 ## Start
 
 1. Read `maps/repositories.md`.
 2. Use `pi-intercom` to list the live Pi sessions.
-3. Inspect only the repositories relevant to the operator's request.
-4. Ask before opening sessions or delegating work unless the operator already
+3. Classify the request as local intake/extraction work, owner-repository work,
+   or multi-repository coordination.
+4. Inspect only the repositories relevant to the operator's request.
+5. Ask before opening sessions or delegating work unless the operator already
    requested multi-repository execution.
+
+## Intake and tool extraction
+
+- Local intake convention:
+  `python/projectkoios/bootstrap/development/<topic>/intake/`.
+- Keep raw drops untracked. They may contain product code, incomplete excerpts,
+  generated artifacts, or machine-specific assumptions and must not become a
+  durable bootstrap artifact by accident.
+- Treat a drop as examples from which to extract behavior, not as a patch to
+  merge. Missing manifests, dependencies, or companion files are contextual
+  facts unless the operator identifies the drop as a complete handoff.
+- Do not create owner-repository issues, modify owner documentation, or request
+  product changes solely because an observational intake differs from a patch.
+  Those actions require an explicit routing objective and owner-relevant
+  evidence.
+- Begin with bounded static inspection. Do not import or execute dropped code
+  merely to inventory it.
+- Execute intake code only for an explicit bounded validation need after its
+  dependencies, effects, and target environment are understood. Do not install
+  dependencies or transmit content without the separately required authority.
+- Extract the smallest reusable contract. Replace source-specific material with
+  sanitized fixtures, include an awkward or failure case, and document limits,
+  owner routing, replay behavior, and stop conditions.
+- Product behavior goes to its component owner. Project Koios-specific
+  coordination candidates may incubate here. Stable generic Pi tooling moves to
+  the operator's Pi installation or another explicitly accepted owner after the
+  promotion gate is met.
+- One source drop establishes an observation, not recurrence or validation.
 
 ## Coordination
 
-- For multi-repository execution, run the coordinator inside a Herdr-managed
-  pane and use one Herdr-hosted Pi session per active repository.
+- Single-repository static intake analysis and harness extraction may run in
+  the current Pi session. For multi-repository execution, run the coordinator
+  inside a Herdr-managed pane and use one Herdr-hosted Pi session per active
+  repository.
 - Verify `HERDR_ENV=1` before trying to open visible project panes. A Pi process
   started outside Herdr cannot acquire pane context retroactively; stop and ask
   the operator to start a managed session or explicitly authorize a fallback.

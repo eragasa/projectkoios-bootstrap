@@ -8,9 +8,25 @@ Accepted boundary. See
 ## Purpose
 
 This repository may incubate bounded Project Koios-specific Pi coordination
-capabilities until their reuse and ownership are understood. Incubation must
-not turn bootstrap into a workflow engine, runtime-state store, or owner of
-component behavior.
+capabilities and tool candidates extracted from operator-provided source drops
+until their reuse and ownership are understood. Incubation must not turn
+bootstrap into a workflow engine, runtime-state store, generic tool warehouse,
+or owner of component behavior.
+
+## Intake boundary
+
+A raw intake is a local, untracked observation used to discover reusable
+mechanics. It may be incomplete, generated, product-specific, or unsuitable for
+execution. Its presence does not make bootstrap its owner and does not imply
+that missing packaging or companion files are defects. Initial inspection is
+static and bounded. Execution, dependency installation, external transmission,
+and owner-repository mutation remain separate operations subject to their own
+trust and authority checks.
+
+Do not promote or copy a raw intake wholesale. Extract a normalized behavior,
+replace source-specific material with sanitized fixtures, and route product
+behavior to its component owner. Raw intake paths are ignored by Git and are
+not durable records.
 
 ## Candidate boundary
 
@@ -26,8 +42,13 @@ systems, or stable generic Pi extensions.
 
 ## Lifecycle
 
-- **Observed:** one bounded instance exists; recurrence is unproven.
-- **Candidate:** intent, limitations, and sanitized artifacts are reviewable.
+A local intake precedes the lifecycle and is not itself a lifecycle status or
+artifact.
+
+- **Observed:** one bounded reusable mechanic has been identified; recurrence is
+  unproven.
+- **Candidate:** intent, limitations, sanitized artifacts, and owner routing are
+  reviewable independently of the intake.
 - **Repeated:** an independent task exercises substantially the same mechanics.
 - **Validated:** deterministic normal and failure/recovery checks pass, with
   privacy, idempotence, authority, and owner routing explicit.
@@ -46,7 +67,8 @@ repository artifacts remain authoritative for implementation.
 
 ## Promotion gate
 
-Before reusable harness code is promoted, its owner issue must show:
+Before reusable harness code is promoted beyond candidate status, its owner
+issue must show:
 
 1. two independent bounded uses or one concrete recurring failure;
 2. a normalized contract excluding private runtime state;

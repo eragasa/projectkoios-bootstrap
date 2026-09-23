@@ -10,6 +10,9 @@
 .obsidian/
 workspaces/
 
+# Local operator-provided source drops
+python/projectkoios/bootstrap/development/**/intake/
+
 # Generated development state
 .venv/
 *.egg-info/

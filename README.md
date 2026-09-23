@@ -1,37 +1,77 @@
 # Project Koios Bootstrap
 
-A minimal coordination entry point for work spanning Project Koios
-repositories. It may incubate bounded Project Koios-specific Pi coordination
-candidates, but it owns no product code, architecture, live workflow state, or
-persistent orchestration system.
+A minimal coordination and tool-extraction entry point for Project Koios.
+It coordinates work spanning owner repositories and turns bounded,
+operator-provided source drops into reviewable reusable-tool candidates. It
+owns no product code, product architecture, live workflow state, or persistent
+orchestration system.
 
 ## Start
 
-Follow the upstream [Herdr quick start](https://herdr.dev/docs/quick-start/),
-then start Pi from a Herdr-managed pane:
+Local static intake analysis and single-repository candidate extraction can run
+in an ordinary Pi session:
+
+```bash
+cd path/to/projectkoios-bootstrap
+pi
+```
+
+For multi-repository execution, follow the upstream
+[Herdr quick start](https://herdr.dev/docs/quick-start/) and start Pi from a
+Herdr-managed pane:
 
 ```bash
 cd path/to/projectkoios-bootstrap
 herdr
 ```
 
-Inside the managed pane:
-
-```bash
-pi
-```
-
-Pi must inherit `HERDR_ENV=1`. If it does not, stop and start a new Pi session
-inside Herdr; pane context cannot be added afterward.
+Inside the managed pane, run `pi`. Before opening or coordinating repository
+panes, verify that Pi inherited `HERDR_ENV=1`; pane context cannot be added to an
+already-running process.
 
 ## Operating model
 
 1. Read the [repository map](maps/repositories.md).
 2. Use `pi-intercom` to discover or contact repository sessions.
-3. Use one visible Herdr-hosted Pi session per active repository.
-4. Keep implementation, validation, and Git history in the owning repository.
-5. Record cross-repository architecture in the `projectkoios` mothership.
+3. Distinguish local intake/tool extraction from owner-repository execution.
+4. Use one visible Herdr-hosted Pi session per active repository when work spans
+   repositories.
+5. Keep product implementation, validation, and Git history in the owning
+   repository.
+6. Record cross-repository architecture in the `projectkoios` mothership.
 
-See [AGENTS.md](AGENTS.md) for coordination rules and the
+## Drop-to-tool workflow
+
+Place local source material under:
+
+```text
+python/projectkoios/bootstrap/development/<topic>/intake/
+```
+
+Raw intake directories are ignored by Git. A drop is treated as observational
+source material, not as a complete patch or code to merge. Pi first performs a
+bounded static inspection, identifies reusable behavior, then implements the
+smallest candidate with sanitized fixtures, deterministic tests, limitations,
+and an explicit future owner. Product behavior is routed to its component
+repository rather than retained here.
+
+The bounded [Python intake analysis candidate](docs/candidates/python-intake-analysis.md)
+provides the first reusable helper for this workflow. It inventories dropped
+Python trees, extracts dependency and test facts, plans validation, and can
+compare a declared patch relationship without importing or executing intake
+code.
+
+The tracked harness candidate targets Python 3.14 and has no runtime package
+dependencies. Its tests use the standard library:
+
+```bash
+PYTHONPATH=python python3.14 -m unittest discover -s tests -p 'test_*.py'
+```
+
+Ruff and Mypy are optional development dependencies declared in
+`pyproject.toml`; installing them is an explicit local environment operation,
+not part of intake analysis.
+
+See [AGENTS.md](AGENTS.md) for operating rules and the
 [harness-incubation policy](docs/harness-incubation.md) for candidate
 boundaries. Git, GitHub, and owner repositories remain the durable record.

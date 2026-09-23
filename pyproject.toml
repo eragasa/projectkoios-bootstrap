@@ -1,0 +1,44 @@
+[project]
+name = "projectkoios-bootstrap"
+version = "0.0.0"
+description = "Project Koios coordination and reusable-tool incubation"
+readme = "README.md"
+requires-python = ">=3.14"
+license = "Apache-2.0"
+authors = [
+    { name = "Eugene Ragasa", email = "eugene@projectkoios.com" },
+]
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["mypy>=1.13", "ruff>=0.8"]
+
+[build-system]
+requires = ["setuptools>=61.0.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["python"]
+namespaces = true
+include = ["projectkoios.bootstrap*"]
+exclude = ["projectkoios.bootstrap.development*"]
+
+[tool.setuptools.package-data]
+"projectkoios.bootstrap" = ["py.typed"]
+
+[tool.ruff]
+line-length = 80
+target-version = "py314"
+extend-exclude = ["tests/fixtures/python-intake/malformed"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.mypy]
+mypy_path = "python"
+namespace_packages = true
+explicit_package_bases = true
