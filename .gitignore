@@ -5,10 +5,9 @@
 .idea/
 .vscode/
 
-# Local Pi and repository-analysis state
+# Local Pi state
 .pi/
 .obsidian/
-graphify-out/
 workspaces/
 
 # Generated development state
