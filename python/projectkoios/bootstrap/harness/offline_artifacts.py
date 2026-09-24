@@ -75,6 +75,16 @@ class ArchiveResult:
     artifact_bytes: int
 
 
+@dataclass(frozen=True)
+class RestoreResult:
+    """Identity and location of one completed artifact recovery."""
+
+    directory: Path
+    archive_sha256: str
+    artifact_count: int
+    artifact_bytes: int
+
+
 def read_manifest(
     manifest: Path,
     *,
@@ -339,6 +349,213 @@ def create_archive(
     )
 
 
+def restore_archive(
+    *,
+    archive: Path,
+    archive_checksum: Path,
+    manifest: Path,
+    destination_directory: Path,
+    limits: ArtifactLimits = _DEFAULT_LIMITS,
+) -> RestoreResult:
+    """Recover and verify manifest-bound artifacts into one new directory."""
+    archive_path = archive.expanduser()
+    records = read_manifest(manifest, limits=limits)
+    expected_archive_digest = _read_archive_checksum(
+        archive_checksum,
+        archive_path.name,
+    )
+    max_archive_bytes = (
+        limits.max_total_bytes
+        + limits.max_manifest_bytes
+        + limits.max_artifacts * 2_048
+        + 20 * 1_024
+    )
+    archive_digest, _archive_size = _regular_file_identity(
+        archive_path,
+        max_bytes=max_archive_bytes,
+    )
+    if archive_digest != expected_archive_digest:
+        raise OfflineArtifactError("archive SHA-256 does not match checksum")
+
+    evidence_directory = archive_path.parent.resolve(strict=True)
+    destination = destination_directory.expanduser().resolve(strict=False)
+    if destination.is_relative_to(evidence_directory):
+        raise OfflineArtifactError(
+            "recovery destination must be outside the evidence directory"
+        )
+    if destination.exists() or destination.is_symlink():
+        raise OfflineArtifactError(
+            f"recovery destination already exists: {destination}"
+        )
+
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    temporary = Path(
+        tempfile.mkdtemp(
+            prefix=f".{destination.name}-",
+            dir=destination.parent,
+        )
+    )
+    artifact_bytes = 0
+    try:
+        with _open_regular_file(archive_path) as archive_stream:
+            before = os.fstat(archive_stream.fileno())
+            with tarfile.open(fileobj=archive_stream, mode="r:") as tar:
+                members = _verified_archive_members(tar, records)
+                manifest_payload = render_manifest(records)
+                manifest_stream = tar.extractfile(members["MANIFEST.tsv"])
+                if manifest_stream is None:
+                    raise OfflineArtifactError(
+                        "archive manifest cannot be read"
+                    )
+                with manifest_stream:
+                    archived_manifest = manifest_stream.read(
+                        len(manifest_payload) + 1
+                    )
+                if archived_manifest != manifest_payload:
+                    raise OfflineArtifactError(
+                        "archive manifest does not match canonical records"
+                    )
+                for record in records:
+                    source = tar.extractfile(members[record.path.as_posix()])
+                    if source is None:
+                        raise OfflineArtifactError(
+                            f"archive member cannot be read: {record.path}"
+                        )
+                    target = temporary.joinpath(*record.path.parts)
+                    target.parent.mkdir(
+                        mode=0o700,
+                        parents=True,
+                        exist_ok=True,
+                    )
+                    digest = hashlib.sha256()
+                    byte_size = 0
+                    descriptor = os.open(
+                        target,
+                        os.O_WRONLY | os.O_CREAT | os.O_EXCL,
+                        0o600,
+                    )
+                    with source, os.fdopen(descriptor, "wb") as output:
+                        while chunk := source.read(1024 * 1024):
+                            byte_size += len(chunk)
+                            if byte_size > record.byte_size:
+                                raise OfflineArtifactError(
+                                    "recovered artifact exceeds manifest size: "
+                                    f"{record.path}"
+                                )
+                            output.write(chunk)
+                            digest.update(chunk)
+                    target.chmod(0o600)
+                    if (digest.hexdigest(), byte_size) != (
+                        record.sha256,
+                        record.byte_size,
+                    ):
+                        raise OfflineArtifactError(
+                            "recovered artifact identity mismatch: "
+                            f"{record.path}"
+                        )
+                    artifact_bytes += byte_size
+            after = os.fstat(archive_stream.fileno())
+            if _stat_identity(before) != _stat_identity(after):
+                raise OfflineArtifactError("archive mutated during recovery")
+        if _inventory_regular_files(temporary) != {
+            record.path for record in records
+        }:
+            raise OfflineArtifactError(
+                "recovered file set does not match manifest"
+            )
+        for path in temporary.rglob("*"):
+            if path.is_dir():
+                path.chmod(0o700)
+        os.replace(temporary, destination)
+    except BaseException:
+        shutil.rmtree(temporary, ignore_errors=True)
+        raise
+
+    return RestoreResult(
+        directory=destination,
+        archive_sha256=archive_digest,
+        artifact_count=len(records),
+        artifact_bytes=artifact_bytes,
+    )
+
+
+def _read_archive_checksum(path: Path, archive_name: str) -> str:
+    payload = _read_regular_file(
+        path,
+        max_bytes=1_024,
+        label="archive checksum",
+    )
+    try:
+        line = payload.decode("utf-8", errors="strict")
+    except UnicodeDecodeError as error:
+        raise OfflineArtifactError("archive checksum must be UTF-8") from error
+    expected_suffix = f"  {archive_name}\n"
+    if not line.endswith(expected_suffix):
+        raise OfflineArtifactError(
+            "archive checksum does not name the selected archive"
+        )
+    digest = line[: -len(expected_suffix)]
+    if _SHA256.fullmatch(digest) is None:
+        raise OfflineArtifactError("archive checksum SHA-256 is invalid")
+    return digest
+
+
+def _verified_archive_members(
+    archive: tarfile.TarFile,
+    records: Sequence[ArtifactRecord],
+) -> dict[str, tarfile.TarInfo]:
+    expected_files = {record.path.as_posix() for record in records}
+    expected_files.add("MANIFEST.tsv")
+    expected_directories = {
+        parent.as_posix()
+        for record in records
+        for parent in record.path.parents
+        if parent.as_posix() != "."
+    }
+    members: dict[str, tarfile.TarInfo] = {}
+    actual_files: set[str] = set()
+    actual_directories: set[str] = set()
+    records_by_path = {record.path.as_posix(): record for record in records}
+    for member in archive.getmembers():
+        path = PurePosixPath(member.name)
+        if (
+            not member.name
+            or path.is_absolute()
+            or path.as_posix() != member.name
+            or "." in path.parts
+            or ".." in path.parts
+        ):
+            raise OfflineArtifactError(
+                f"archive contains an unsafe path: {member.name}"
+            )
+        if member.name in members:
+            raise OfflineArtifactError(
+                f"archive contains a duplicate path: {member.name}"
+            )
+        members[member.name] = member
+        if member.isfile():
+            actual_files.add(member.name)
+            if member.name in records_by_path:
+                expected_size = records_by_path[member.name].byte_size
+                if member.size != expected_size:
+                    raise OfflineArtifactError(
+                        f"archive member size mismatch: {member.name}"
+                    )
+        elif member.isdir():
+            actual_directories.add(member.name)
+        else:
+            raise OfflineArtifactError(
+                f"archive contains a non-regular entry: {member.name}"
+            )
+    if actual_files != expected_files:
+        raise OfflineArtifactError("archive file set does not match manifest")
+    if actual_directories != expected_directories:
+        raise OfflineArtifactError(
+            "archive directory set does not match manifest"
+        )
+    return members
+
+
 def _write_archive(
     destination: Path,
     staging_root: Path,
@@ -462,14 +679,24 @@ def _inventory_regular_files(root: Path) -> set[PurePosixPath]:
     return files
 
 
-def _regular_file_identity(path: Path) -> tuple[str, int]:
+def _regular_file_identity(
+    path: Path,
+    *,
+    max_bytes: int | None = None,
+) -> tuple[str, int]:
     with _open_regular_file(path) as stream:
         before = os.fstat(stream.fileno())
+        if max_bytes is not None and before.st_size > max_bytes:
+            raise OfflineArtifactError(f"file exceeds its byte limit: {path}")
         digest = hashlib.sha256()
         byte_size = 0
         while chunk := stream.read(1024 * 1024):
             digest.update(chunk)
             byte_size += len(chunk)
+            if max_bytes is not None and byte_size > max_bytes:
+                raise OfflineArtifactError(
+                    f"file exceeds its byte limit: {path}"
+                )
         after = os.fstat(stream.fileno())
     if _stat_identity(before) != _stat_identity(after):
         raise OfflineArtifactError(f"file mutated while reading: {path}")
@@ -653,6 +880,12 @@ def parser() -> argparse.ArgumentParser:
     archive.add_argument("--source-checkout", type=Path, required=True)
     archive.add_argument("--source-revision", required=True)
     archive.add_argument("--source-repository-url", required=True)
+
+    restore = commands.add_parser("restore")
+    restore.add_argument("--archive", type=Path, required=True)
+    restore.add_argument("--archive-checksum", type=Path, required=True)
+    restore.add_argument("--manifest", type=Path, required=True)
+    restore.add_argument("--destination-directory", type=Path, required=True)
     return result
 
 
@@ -671,7 +904,7 @@ def main(arguments: Sequence[str] | None = None) -> int:
                 "Git verification requires checkout, revision, and URL"
             )
         payload = _verify_command(args)
-    else:
+    elif args.command == "archive":
         archived = create_archive(
             staging_root=args.staging_root,
             manifest=args.manifest,
@@ -688,6 +921,19 @@ def main(arguments: Sequence[str] | None = None) -> int:
             "artifact_count": archived.artifact_count,
             "source_commit": archived.source.commit,
             "source_tree": archived.source.tree,
+        }
+    else:
+        restored = restore_archive(
+            archive=args.archive,
+            archive_checksum=args.archive_checksum,
+            manifest=args.manifest,
+            destination_directory=args.destination_directory,
+        )
+        payload = {
+            "archive_sha256": restored.archive_sha256,
+            "artifact_bytes": restored.artifact_bytes,
+            "artifact_count": restored.artifact_count,
+            "destination": str(restored.directory),
         }
     print(json.dumps(payload, indent=2, sort_keys=True))
     return 0

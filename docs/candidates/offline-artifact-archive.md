@@ -31,8 +31,9 @@ points are:
 
 - `read_manifest(...)`;
 - `verify_staging(...)`;
-- `verify_git_source(...)`; and
-- `create_archive(...)`.
+- `verify_git_source(...)`;
+- `create_archive(...)`; and
+- `restore_archive(...)`.
 
 The canonical manifest is path-sorted TSV:
 
@@ -73,6 +74,26 @@ The destination must not already exist and must be outside both staging and the
 source checkout. The candidate creates a sibling temporary directory and
 atomically publishes the completed destination.
 
+Recover into a new directory outside the evidence bundle:
+
+```bash
+PYTHONPATH=python python3.14 -m \
+  projectkoios.bootstrap.harness.offline_artifacts restore \
+  --archive /explicit/bundle/source-offline-artifacts-git-0123456789ab.tar \
+  --archive-checksum \
+    /explicit/bundle/source-offline-artifacts-git-0123456789ab.tar.sha256 \
+  --manifest /explicit/bundle/MANIFEST.tsv \
+  --destination-directory /explicit/new/recovery-directory
+```
+
+Recovery requires an absent destination and refuses to write inside the
+evidence directory. It verifies the archive SHA-256, canonical manifest,
+complete archive member set, safe relative paths, entry types, declared sizes,
+and every recovered file identity. Artifacts are written as `0600`, directories
+as `0700`, and the completed recovery directory is published atomically. It
+never uses a general-purpose tar extraction operation and never writes into a
+source checkout automatically.
+
 ## Output contract
 
 A completed destination contains:
@@ -112,8 +133,10 @@ or executes source content.
 
 Archive creation performs full staging and Git verification first. While
 writing, each artifact is hashed again and descriptor metadata is checked for
-mutation. Publication is atomic at the destination-directory boundary. The
-candidate never removes source or staged bytes.
+mutation. Recovery performs an independent archive-to-new-directory round trip
+and rechecks every identity. Publication is atomic at each destination-directory
+boundary. The candidate never removes source, staged, archive, or recovered
+bytes.
 
 The archive is private preservation evidence, not proof of redistribution
 rights, reproducibility, numerical correctness, or scientific validity.
@@ -122,8 +145,9 @@ rights, reproducibility, numerical correctness, or scientific validity.
 
 For identical artifact bytes, manifest records, source identity, and archive
 prefix, archive bytes are deterministic. Tests construct sanitized temporary
-Git history and synthetic artifacts; no PyFlamestk, calculator, or private data
-is retained in this repository.
+Git history and synthetic artifacts, perform a complete archive-and-recovery
+round trip, and reject a mismatched archive checksum. No PyFlamestk, calculator,
+or private data is retained in this repository.
 
 Run:
 
@@ -143,7 +167,10 @@ PYTHONPATH=python mypy \
 - Git SHA-1 and SHA-256 object IDs are accepted; other version-control systems
   are unsupported.
 - The archive is intentionally uncompressed and unencrypted.
-- Staging must remain quiescent. Descriptor checks detect file mutation, but the
+- Recovery restores selected artifact bytes and relative paths only; it does not
+  restore Git tracking, repository history, original timestamps, ownership, or
+  source-specific execution context.
+- Staging and recovery evidence must remain quiescent. Descriptor checks detect file mutation, but the
   candidate does not claim protection against hostile concurrent replacement
   of parent directories.
 - The candidate does not confirm that a cloud client completed remote sync.

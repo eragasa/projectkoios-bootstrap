@@ -63,8 +63,9 @@ code.
 
 The observed
 [offline artifact archive candidate](docs/candidates/offline-artifact-archive.md)
-verifies an explicitly selected staging tree against exact Git evidence and
-creates a deterministic external tar bundle. Source-specific selection,
+verifies an explicitly selected staging tree against exact Git evidence,
+creates a deterministic external tar bundle, and recovers it into a new
+identity-checked directory. Source-specific selection,
 licensing decisions, uploads, and storage management remain outside that tool.
 
 The tracked harness candidates target Python 3.14 and have no runtime package

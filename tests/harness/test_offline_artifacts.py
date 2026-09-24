@@ -17,6 +17,7 @@ from projectkoios.bootstrap.harness.offline_artifacts import (
     create_archive,
     read_manifest,
     render_manifest,
+    restore_archive,
     verify_git_source,
     verify_staging,
 )
@@ -83,6 +84,57 @@ class OfflineArtifactTests(unittest.TestCase):
                         self.assertEqual(member.mode, 0o700)
                     else:
                         self.assertEqual(member.mode, 0o600)
+
+            recovered = restore_archive(
+                archive=first.archive,
+                archive_checksum=(
+                    first.directory / f"{first.archive.name}.sha256"
+                ),
+                manifest=first.directory / "MANIFEST.tsv",
+                destination_directory=workspace / "recovered",
+            )
+            self.assertEqual(recovered.artifact_count, len(records))
+            self.assertEqual(recovered.artifact_bytes, first.artifact_bytes)
+            for record in records:
+                restored_file = recovered.directory.joinpath(*record.path.parts)
+                original_file = staging.joinpath(*record.path.parts)
+                self.assertEqual(
+                    restored_file.read_bytes(),
+                    original_file.read_bytes(),
+                )
+                self.assertEqual(restored_file.stat().st_mode & 0o777, 0o600)
+
+    def test__restore__rejects_incorrect_archive_checksum(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            workspace = Path(directory)
+            source, revision = self._source_repository(workspace)
+            staging, manifest, _records = self._staging(workspace, source)
+            archived = create_archive(
+                staging_root=staging,
+                manifest=manifest,
+                destination_directory=workspace / "archive",
+                archive_prefix="example-offline-artifacts",
+                source_checkout=source,
+                source_revision=revision,
+                source_repository_url="https://example.invalid/source.git",
+            )
+            incorrect = workspace / "incorrect.sha256"
+            incorrect.write_text(
+                f"{'0' * 64}  {archived.archive.name}\n",
+                encoding="utf-8",
+            )
+
+            with self.assertRaisesRegex(
+                OfflineArtifactError,
+                "archive SHA-256 does not match",
+            ):
+                restore_archive(
+                    archive=archived.archive,
+                    archive_checksum=incorrect,
+                    manifest=archived.directory / "MANIFEST.tsv",
+                    destination_directory=workspace / "recovered",
+                )
+            self.assertFalse((workspace / "recovered").exists())
 
     def test__verify__accepts_exact_staging_and_git_identity(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
