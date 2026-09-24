@@ -2,9 +2,12 @@
 
 ## Lifecycle
 
-**Observed.** One PyFlamestk release-readiness cleanup motivated this
-extraction. The source-specific selection policy remains in PyFlamestk;
-independent reuse has not yet established recurrence.
+**Repeated.** PyFlamestk first exercised exact staging verification,
+deterministic private archive creation, and complete recovery for 161 artifacts
+and 250,836,932 bytes. PyPosPack independently exercised the generic
+declarative staging policy, verification, archive, and recovery path for 5,396
+artifacts and 637,072,563 bytes. Both repositories retained source-specific
+selection and licensing decisions.
 
 ## Purpose
 
@@ -161,9 +164,10 @@ or executes source content.
 Archive creation performs full staging and Git verification first. While
 writing, each artifact is hashed again and descriptor metadata is checked for
 mutation. Recovery performs an independent archive-to-new-directory round trip
-and rechecks every identity. Publication is atomic at each destination-directory
-boundary. The candidate never removes source, staged, archive, or recovered
-bytes.
+and rechecks every identity. Publication is atomic at each destination-directory boundary. Source removal
+occurs only when the staging caller supplies `--remove-originals`, and only
+after verified staging and checksum manifests exist. The candidate never
+removes staged, archive, or recovered bytes.
 
 The archive is private preservation evidence, not proof of redistribution
 rights, reproducibility, numerical correctness, or scientific validity.
@@ -200,17 +204,19 @@ PYTHONPATH=python mypy \
 - Recovery restores selected artifact bytes and relative paths only; it does not
   restore Git tracking, repository history, original timestamps, ownership, or
   source-specific execution context.
-- Staging and recovery evidence must remain quiescent. Descriptor checks detect file mutation, but the
-  candidate does not claim protection against hostile concurrent replacement
-  of parent directories.
+- Staging and recovery evidence must remain quiescent. Descriptor checks detect
+  file mutation, but the candidate does not claim protection against hostile
+  concurrent replacement of parent directories.
 - The candidate does not confirm that a cloud client completed remote sync.
 - Do not add automatic uploads, credential handling, source fetching, history
   rewriting, workflow state, or artifact discovery.
 
 ## Revisit and extraction criteria
 
-Use with PyPosPack or another independent repository is required before marking
-this candidate `repeated`. Revisit limits and manifest semantics only when that
-reuse produces concrete evidence. If the mechanics become useful outside
-Project Koios, promotion requires an explicitly accepted generic-tool owner;
-the bootstrap repository must not become a package manager or storage service.
+Independent PyPosPack reuse established recurrence. The full generic staging
+path still has one production use, so the candidate remains `repeated` rather
+than `validated`. Revisit validation after another independent repository uses
+policy-driven staging and completes recovery, or after a concrete failure
+changes the contract. If the mechanics become useful outside Project Koios,
+promotion requires an explicitly accepted generic-tool owner; the bootstrap
+repository must not become a package manager or storage service.
