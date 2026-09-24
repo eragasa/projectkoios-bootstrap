@@ -16,14 +16,111 @@ from projectkoios.bootstrap.harness.offline_artifacts import (
     OfflineArtifactError,
     create_archive,
     read_manifest,
+    read_selection_policy,
     render_manifest,
     restore_archive,
+    stage_artifacts,
     verify_git_source,
     verify_staging,
 )
 
 
 class OfflineArtifactTests(unittest.TestCase):
+    def test__stage__uses_declarative_policy_and_preserves_unselected_files(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            repository = Path(directory)
+            self._git_init(repository)
+            (repository / ".gitignore").write_text(
+                ".offline/\n",
+                encoding="utf-8",
+            )
+            (repository / "docs/build").mkdir(parents=True)
+            (repository / "docs/build/index.html").write_text(
+                "generated documentation\n",
+                encoding="utf-8",
+            )
+            (repository / "data").mkdir()
+            (repository / "data/output.log").write_text(
+                "generated log\n",
+                encoding="utf-8",
+            )
+            (repository / "results_001.out").write_text(
+                "generated result\n",
+                encoding="utf-8",
+            )
+            retained = repository / "data/input.config"
+            retained.write_text("authored input\n", encoding="utf-8")
+            policy = repository / "offline-artifacts.toml"
+            policy.write_text(
+                "schema_version = 1\n"
+                "\n"
+                "[[rules]]\n"
+                "kind = 'path-prefix'\n"
+                "reason = 'generated-documentation'\n"
+                "values = ['docs/build']\n"
+                "\n"
+                "[[rules]]\n"
+                "kind = 'exact-name'\n"
+                "reason = 'generated-log'\n"
+                "values = ['output.log']\n"
+                "\n"
+                "[[rules]]\n"
+                "kind = 'name-regex'\n"
+                "reason = 'generated-result'\n"
+                "values = ['^results_[0-9]+\\.out$']\n",
+                encoding="utf-8",
+            )
+            self._git(repository, "add", ".")
+            self._git(repository, "commit", "-qm", "source")
+
+            staged = stage_artifacts(
+                repository_root=repository,
+                policy_path=Path("offline-artifacts.toml"),
+                destination_relative=PurePosixPath(
+                    ".offline/release-readiness"
+                ),
+                checksum_manifest_relative=PurePosixPath(
+                    "OFFLINE_ARTIFACT_SHA256SUMS"
+                ),
+                remove_originals=True,
+            )
+
+            self.assertEqual(staged.artifact_count, 3)
+            self.assertTrue(staged.removed_originals)
+            self.assertTrue(retained.is_file())
+            self.assertFalse((repository / "data/output.log").exists())
+            manifest = staged.directory / "MANIFEST.tsv"
+            records = read_manifest(manifest)
+            self.assertEqual(verify_staging(staged.directory, records), 55)
+            self.assertEqual(
+                {record.classification for record in records},
+                {
+                    "generated-documentation",
+                    "generated-log",
+                    "generated-result",
+                },
+            )
+
+    def test__selection_policy__rejects_invalid_regex(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            policy = Path(directory) / "policy.toml"
+            policy.write_text(
+                "schema_version = 1\n"
+                "[[rules]]\n"
+                "kind = 'name-regex'\n"
+                "reason = 'generated'\n"
+                "values = ['[']\n",
+                encoding="utf-8",
+            )
+
+            with self.assertRaisesRegex(
+                OfflineArtifactError,
+                "regex is invalid",
+            ):
+                read_selection_policy(policy)
+
     def test__archive__is_deterministic_and_provenance_complete(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             workspace = Path(directory)
@@ -233,29 +330,32 @@ class OfflineArtifactTests(unittest.TestCase):
                     limits=ArtifactLimits(max_artifact_bytes=1),
                 )
 
+    @classmethod
+    def _git_init(cls, repository: Path) -> None:
+        repository.mkdir(exist_ok=True)
+        subprocess.run(
+            ["git", "init", "-q", "-b", "main", str(repository)],
+            check=True,
+        )
+        cls._git(repository, "config", "user.name", "Test User")
+        cls._git(
+            repository,
+            "config",
+            "user.email",
+            "test@example.invalid",
+        )
+
     @staticmethod
-    def _source_repository(workspace: Path) -> tuple[Path, str]:
+    def _git(repository: Path, *arguments: str) -> None:
+        subprocess.run(
+            ["git", "-C", str(repository), *arguments],
+            check=True,
+        )
+
+    @classmethod
+    def _source_repository(cls, workspace: Path) -> tuple[Path, str]:
         source = workspace / "source"
-        source.mkdir()
-        subprocess.run(
-            ["git", "init", "-q", "-b", "main", str(source)],
-            check=True,
-        )
-        subprocess.run(
-            ["git", "-C", str(source), "config", "user.name", "Test User"],
-            check=True,
-        )
-        subprocess.run(
-            [
-                "git",
-                "-C",
-                str(source),
-                "config",
-                "user.email",
-                "test@example.invalid",
-            ],
-            check=True,
-        )
+        cls._git_init(source)
         (source / "nested").mkdir()
         (source / "nested/result.dat").write_bytes(b"result\x00data\n")
         (source / "plain.out").write_bytes(b"plain output\n")

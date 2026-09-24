@@ -8,9 +8,10 @@ independent reuse has not yet established recurrence.
 
 ## Purpose
 
-This candidate verifies an explicitly selected offline-artifact staging tree
-and publishes a deterministic tar bundle outside the source repository. It
-preserves:
+This candidate applies a repository-owned declarative selection policy, stages
+selected tracked artifacts, verifies an offline-artifact tree, publishes a
+deterministic tar bundle outside the source repository, and safely recovers the
+bundle. It preserves:
 
 - original repository-relative paths;
 - SHA-256 and byte-size identities;
@@ -22,6 +23,9 @@ preserves:
 The candidate does not decide which files should leave a repository. That
 policy belongs to the source repository and may depend on authorship,
 licensing, calculator behavior, generated-file conventions, and release scope.
+A policy can select exact basenames, path prefixes, basename regular
+expressions, or path regular expressions. Rules are ordered and the first match
+owns the classification.
 
 ## Interface
 
@@ -29,11 +33,32 @@ The implementation is
 `python/projectkoios/bootstrap/harness/offline_artifacts.py`. Its primary entry
 points are:
 
+- `read_selection_policy(...)`;
+- `select_tracked_artifacts(...)`;
+- `stage_artifacts(...)`;
 - `read_manifest(...)`;
 - `verify_staging(...)`;
 - `verify_git_source(...)`;
 - `create_archive(...)`; and
 - `restore_archive(...)`.
+
+Stage a clean source checkout using its tracked TOML policy:
+
+```bash
+PYTHONPATH=python python3.14 -m \
+  projectkoios.bootstrap.harness.offline_artifacts stage \
+  --repository-root /explicit/source/checkout \
+  --policy offline-artifacts.toml \
+  --destination .offline/release-readiness \
+  --checksum-manifest OFFLINE_ARTIFACT_SHA256SUMS \
+  --remove-originals
+```
+
+The destination must be ignored, absent, and repository-relative. Staging
+copies and verifies every selected regular file before publishing the complete
+staging tree and checksum manifest. `--remove-originals` is explicit; without
+it, source files remain. Removal begins only after the verified copies and both
+manifests exist.
 
 The canonical manifest is path-sorted TSV:
 
@@ -124,8 +149,10 @@ Default limits are:
 - 10,000,000 manifest bytes; and
 - 4,096 UTF-8 bytes per relative path.
 
-The candidate rejects symlink roots, symlink entries, non-regular entries,
-extra or missing staged files, path traversal, duplicate records, identity
+The candidate requires a clean repository before staging and rejects invalid
+or ambiguous policy structures, symlink roots, symlink entries, non-regular
+entries, extra or missing staged files, path traversal, duplicate records,
+identity
 mismatches, and mutation detected during descriptor-bound reads. Git access is
 limited to fixed `rev-parse` and `cat-file` commands against an explicit local
 checkout and exact object ID. It never fetches, checks out, imports, evaluates,
@@ -162,7 +189,10 @@ PYTHONPATH=python mypy \
 
 ## Limitations and stop conditions
 
-- Artifact selection and movement remain source-repository responsibilities.
+- The source repository owns and reviews the declarative selection policy; the
+  generic tool applies it but cannot determine authorship or licensing.
+- Original removal is multi-file and cannot be filesystem-atomic. Verified
+  staging remains available if removal is interrupted.
 - The verifier requires artifact paths to exist at the selected Git commit.
 - Git SHA-1 and SHA-256 object IDs are accepted; other version-control systems
   are unsupported.

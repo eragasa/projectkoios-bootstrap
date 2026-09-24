@@ -10,6 +10,7 @@ import stat
 import subprocess
 import tarfile
 import tempfile
+import tomllib
 from collections.abc import Sequence
 from dataclasses import dataclass
 from pathlib import Path, PurePosixPath
@@ -42,6 +43,33 @@ class ArtifactLimits:
 
 
 _DEFAULT_LIMITS = ArtifactLimits()
+
+
+@dataclass(frozen=True)
+class ArtifactSelectionRule:
+    """One ordered declarative rule for selecting tracked artifacts."""
+
+    kind: str
+    classification: str
+    values: tuple[str, ...]
+
+
+@dataclass(frozen=True)
+class ArtifactSelectionPolicy:
+    """Repository-owned ordered artifact-selection policy."""
+
+    rules: tuple[ArtifactSelectionRule, ...]
+
+
+@dataclass(frozen=True)
+class StagingResult:
+    """Identity and location of one completed offline staging operation."""
+
+    directory: Path
+    checksum_manifest: Path
+    artifact_count: int
+    artifact_bytes: int
+    removed_originals: bool
 
 
 @dataclass(frozen=True)
@@ -83,6 +111,316 @@ class RestoreResult:
     archive_sha256: str
     artifact_count: int
     artifact_bytes: int
+
+
+def read_selection_policy(
+    policy: Path,
+    *,
+    limits: ArtifactLimits = _DEFAULT_LIMITS,
+) -> ArtifactSelectionPolicy:
+    """Read a strict declarative policy without importing repository code."""
+    payload = _read_regular_file(
+        policy,
+        max_bytes=limits.max_manifest_bytes,
+        label="selection policy",
+    )
+    try:
+        document = tomllib.loads(payload.decode("utf-8", errors="strict"))
+    except (UnicodeDecodeError, tomllib.TOMLDecodeError) as error:
+        raise OfflineArtifactError(
+            "selection policy must be valid UTF-8 TOML"
+        ) from error
+    if set(document) != {"schema_version", "rules"}:
+        raise OfflineArtifactError("selection policy keys are invalid")
+    if document["schema_version"] != 1:
+        raise OfflineArtifactError(
+            "selection policy schema_version must equal 1"
+        )
+    raw_rules = document["rules"]
+    if not isinstance(raw_rules, list) or not raw_rules:
+        raise OfflineArtifactError(
+            "selection policy rules must be a non-empty array"
+        )
+
+    supported_kinds = {
+        "exact-name",
+        "name-regex",
+        "path-prefix",
+        "path-regex",
+    }
+    rules: list[ArtifactSelectionRule] = []
+    for index, raw_rule in enumerate(raw_rules):
+        if not isinstance(raw_rule, dict) or set(raw_rule) != {
+            "kind",
+            "reason",
+            "values",
+        }:
+            raise OfflineArtifactError(
+                f"selection rule {index} keys are invalid"
+            )
+        kind = raw_rule["kind"]
+        classification = raw_rule["reason"]
+        raw_values = raw_rule["values"]
+        if kind not in supported_kinds:
+            raise OfflineArtifactError(
+                f"selection rule {index} kind is unsupported"
+            )
+        if (
+            not isinstance(classification, str)
+            or not classification
+            or any(character in classification for character in "\r\n\t")
+        ):
+            raise OfflineArtifactError(
+                f"selection rule {index} reason is invalid"
+            )
+        if (
+            not isinstance(raw_values, list)
+            or not raw_values
+            or not all(isinstance(value, str) and value for value in raw_values)
+        ):
+            raise OfflineArtifactError(
+                f"selection rule {index} values are invalid"
+            )
+        values = tuple(raw_values)
+        if len(values) != len(set(values)):
+            raise OfflineArtifactError(
+                f"selection rule {index} contains duplicate values"
+            )
+        if kind == "exact-name":
+            for value in values:
+                if (
+                    PurePosixPath(value).name != value
+                    or value in {".", ".."}
+                    or "\\" in value
+                ):
+                    raise OfflineArtifactError(
+                        f"selection rule {index} filename is invalid"
+                    )
+        elif kind == "path-prefix":
+            for value in values:
+                _parse_relative_path(value, limits=limits)
+        else:
+            for value in values:
+                if len(value.encode("utf-8")) > limits.max_path_bytes:
+                    raise OfflineArtifactError(
+                        f"selection rule {index} regex is too long"
+                    )
+                try:
+                    re.compile(value)
+                except re.error as error:
+                    raise OfflineArtifactError(
+                        f"selection rule {index} regex is invalid"
+                    ) from error
+        rules.append(
+            ArtifactSelectionRule(
+                kind=kind,
+                classification=classification,
+                values=values,
+            )
+        )
+    return ArtifactSelectionPolicy(rules=tuple(rules))
+
+
+def select_tracked_artifacts(
+    repository_root: Path,
+    policy: ArtifactSelectionPolicy,
+    *,
+    limits: ArtifactLimits = _DEFAULT_LIMITS,
+) -> tuple[tuple[PurePosixPath, str], ...]:
+    """Select tracked paths with first-matching-rule classification."""
+    root = _regular_directory(repository_root, label="repository root")
+    result = subprocess.run(
+        ["git", "-C", str(root), "ls-files", "-z"],
+        check=True,
+        capture_output=True,
+        timeout=30,
+    )
+    selections: list[tuple[PurePosixPath, str]] = []
+    for raw_path in result.stdout.split(b"\0"):
+        if not raw_path:
+            continue
+        try:
+            decoded = raw_path.decode("utf-8", errors="strict")
+        except UnicodeDecodeError as error:
+            raise OfflineArtifactError(
+                "tracked artifact path must be UTF-8"
+            ) from error
+        path = _parse_relative_path(decoded, limits=limits)
+        classification = _selection_classification(path, policy)
+        if classification is not None:
+            selections.append((path, classification))
+            if len(selections) > limits.max_artifacts:
+                raise OfflineArtifactError("selection exceeds max_artifacts")
+    if not selections:
+        raise OfflineArtifactError(
+            "selection policy found no tracked artifacts"
+        )
+    return tuple(sorted(selections, key=lambda item: item[0].as_posix()))
+
+
+def stage_artifacts(
+    *,
+    repository_root: Path,
+    policy_path: Path,
+    destination_relative: PurePosixPath,
+    checksum_manifest_relative: PurePosixPath,
+    remove_originals: bool = False,
+    limits: ArtifactLimits = _DEFAULT_LIMITS,
+) -> StagingResult:
+    """Copy selected tracked files safely and optionally remove originals."""
+    root = _regular_directory(repository_root, label="repository root")
+    _require_normalized_relative(destination_relative, limits=limits)
+    _require_normalized_relative(checksum_manifest_relative, limits=limits)
+    destination = root.joinpath(*destination_relative.parts)
+    checksum_manifest = root.joinpath(*checksum_manifest_relative.parts)
+    if destination.exists() or destination.is_symlink():
+        raise OfflineArtifactError(
+            f"staging destination already exists: {destination}"
+        )
+    if checksum_manifest.exists() or checksum_manifest.is_symlink():
+        raise OfflineArtifactError(
+            f"checksum manifest already exists: {checksum_manifest}"
+        )
+    status = subprocess.run(
+        ["git", "-C", str(root), "status", "--porcelain"],
+        check=True,
+        capture_output=True,
+        timeout=30,
+    )
+    if status.stdout:
+        raise OfflineArtifactError(
+            "repository must be clean before staging artifacts"
+        )
+    ignored = subprocess.run(
+        [
+            "git",
+            "-C",
+            str(root),
+            "check-ignore",
+            "--quiet",
+            str(destination),
+        ],
+        check=False,
+        timeout=30,
+    )
+    if ignored.returncode != 0:
+        raise OfflineArtifactError(
+            "staging destination must be ignored by repository policy"
+        )
+
+    policy_location = (
+        policy_path if policy_path.is_absolute() else root / policy_path
+    )
+    policy = read_selection_policy(policy_location, limits=limits)
+    selections = select_tracked_artifacts(root, policy, limits=limits)
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    temporary = Path(
+        tempfile.mkdtemp(
+            prefix="offline-artifacts-",
+            dir=destination.parent,
+        )
+    )
+    records: list[ArtifactRecord] = []
+    total_bytes = 0
+    try:
+        for relative_path, classification in selections:
+            source = root.joinpath(*relative_path.parts)
+            target = temporary.joinpath(*relative_path.parts)
+            target.parent.mkdir(mode=0o700, parents=True, exist_ok=True)
+            with _open_regular_file(source) as input_stream:
+                before = os.fstat(input_stream.fileno())
+                if before.st_size > limits.max_artifact_bytes:
+                    raise OfflineArtifactError(
+                        f"artifact exceeds max_artifact_bytes: {relative_path}"
+                    )
+                descriptor = os.open(
+                    target,
+                    os.O_WRONLY | os.O_CREAT | os.O_EXCL,
+                    0o600,
+                )
+                digest = hashlib.sha256()
+                byte_size = 0
+                with os.fdopen(descriptor, "wb") as output_stream:
+                    while chunk := input_stream.read(1024 * 1024):
+                        byte_size += len(chunk)
+                        if byte_size > limits.max_artifact_bytes:
+                            raise OfflineArtifactError(
+                                "artifact exceeds max_artifact_bytes: "
+                                f"{relative_path}"
+                            )
+                        output_stream.write(chunk)
+                        digest.update(chunk)
+                after = os.fstat(input_stream.fileno())
+                if _stat_identity(before) != _stat_identity(after):
+                    raise OfflineArtifactError(
+                        f"artifact mutated during staging: {relative_path}"
+                    )
+            total_bytes += byte_size
+            if total_bytes > limits.max_total_bytes:
+                raise OfflineArtifactError(
+                    "staging selection exceeds max_total_bytes"
+                )
+            records.append(
+                ArtifactRecord(
+                    path=relative_path,
+                    sha256=digest.hexdigest(),
+                    byte_size=byte_size,
+                    classification=classification,
+                )
+            )
+        temporary.joinpath("MANIFEST.tsv").write_bytes(render_manifest(records))
+        os.replace(temporary, destination)
+    except BaseException:
+        shutil.rmtree(temporary, ignore_errors=True)
+        raise
+
+    checksum_payload = "".join(
+        f"{record.sha256}  {record.path.as_posix()}\n" for record in records
+    ).encode("utf-8")
+    descriptor = os.open(
+        checksum_manifest,
+        os.O_WRONLY | os.O_CREAT | os.O_EXCL,
+        0o644,
+    )
+    with os.fdopen(descriptor, "wb") as output_stream:
+        output_stream.write(checksum_payload)
+    if remove_originals:
+        for record in records:
+            root.joinpath(*record.path.parts).unlink()
+    return StagingResult(
+        directory=destination,
+        checksum_manifest=checksum_manifest,
+        artifact_count=len(records),
+        artifact_bytes=total_bytes,
+        removed_originals=remove_originals,
+    )
+
+
+def _selection_classification(
+    path: PurePosixPath,
+    policy: ArtifactSelectionPolicy,
+) -> str | None:
+    path_value = path.as_posix()
+    for rule in policy.rules:
+        if rule.kind == "exact-name" and path.name in rule.values:
+            return rule.classification
+        if rule.kind == "path-prefix":
+            for value in rule.values:
+                prefix = PurePosixPath(value)
+                if (
+                    path == prefix
+                    or path.parts[: len(prefix.parts)] == prefix.parts
+                ):
+                    return rule.classification
+        if rule.kind == "name-regex" and any(
+            re.fullmatch(pattern, path.name) for pattern in rule.values
+        ):
+            return rule.classification
+        if rule.kind == "path-regex" and any(
+            re.fullmatch(pattern, path_value) for pattern in rule.values
+        ):
+            return rule.classification
+    return None
 
 
 def read_manifest(
@@ -745,6 +1083,18 @@ def _regular_directory(path: Path, *, label: str) -> Path:
     return expanded.resolve(strict=True)
 
 
+def _require_normalized_relative(
+    path: PurePosixPath,
+    *,
+    limits: ArtifactLimits,
+) -> None:
+    parsed = _parse_relative_path(path.as_posix(), limits=limits)
+    if parsed != path:
+        raise OfflineArtifactError(
+            "path must be a normalized relative POSIX path"
+        )
+
+
 def _parse_relative_path(
     raw_path: str,
     *,
@@ -865,6 +1215,21 @@ def parser() -> argparse.ArgumentParser:
         description="Verify and archive manifest-bound offline artifacts."
     )
     commands = result.add_subparsers(dest="command", required=True)
+    stage = commands.add_parser("stage")
+    stage.add_argument("--repository-root", type=Path, required=True)
+    stage.add_argument("--policy", type=Path, required=True)
+    stage.add_argument(
+        "--destination",
+        type=PurePosixPath,
+        default=PurePosixPath(".offline/release-readiness"),
+    )
+    stage.add_argument(
+        "--checksum-manifest",
+        type=PurePosixPath,
+        default=PurePosixPath("OFFLINE_ARTIFACT_SHA256SUMS"),
+    )
+    stage.add_argument("--remove-originals", action="store_true")
+
     verify = commands.add_parser("verify")
     verify.add_argument("--staging-root", type=Path, required=True)
     verify.add_argument("--manifest", type=Path, required=True)
@@ -891,7 +1256,22 @@ def parser() -> argparse.ArgumentParser:
 
 def main(arguments: Sequence[str] | None = None) -> int:
     args = parser().parse_args(arguments)
-    if args.command == "verify":
+    if args.command == "stage":
+        staged = stage_artifacts(
+            repository_root=args.repository_root,
+            policy_path=args.policy,
+            destination_relative=args.destination,
+            checksum_manifest_relative=args.checksum_manifest,
+            remove_originals=args.remove_originals,
+        )
+        payload = {
+            "artifact_bytes": staged.artifact_bytes,
+            "artifact_count": staged.artifact_count,
+            "checksum_manifest": str(staged.checksum_manifest),
+            "destination": str(staged.directory),
+            "removed_originals": staged.removed_originals,
+        }
+    elif args.command == "verify":
         source_values = (
             args.source_checkout,
             args.source_revision,
