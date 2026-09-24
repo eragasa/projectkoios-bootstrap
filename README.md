@@ -61,7 +61,7 @@ Python trees, extracts dependency and test facts, plans validation, and can
 compare a declared patch relationship without importing or executing intake
 code.
 
-The repeated
+The validated
 [offline artifact archive candidate](docs/candidates/offline-artifact-archive.md)
 applies a repository-owned declarative selection policy, verifies staging
 against exact Git evidence, creates a deterministic external tar bundle, and

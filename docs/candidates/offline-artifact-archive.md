@@ -2,12 +2,15 @@
 
 ## Lifecycle
 
-**Repeated.** PyFlamestk first exercised exact staging verification,
+**Validated.** PyFlamestk first exercised exact staging verification,
 deterministic private archive creation, and complete recovery for 161 artifacts
 and 250,836,932 bytes. PyPosPack independently exercised the generic
 declarative staging policy, verification, archive, and recovery path for 5,396
-artifacts and 637,072,563 bytes. Both repositories retained source-specific
-selection and licensing decisions.
+artifacts and 637,072,563 bytes. pymatmc2 then exercised the full policy-driven
+path from a disposable historical checkout for 3,191 artifacts and
+3,166,798,699 bytes, including 30 private `POTCAR` files, and completed
+archive-to-new-directory recovery plus Git re-verification. All three
+repositories retained source-specific selection and licensing decisions.
 
 ## Purpose
 
@@ -213,10 +216,11 @@ PYTHONPATH=python mypy \
 
 ## Revisit and extraction criteria
 
-Independent PyPosPack reuse established recurrence. The full generic staging
-path still has one production use, so the candidate remains `repeated` rather
-than `validated`. Revisit validation after another independent repository uses
-policy-driven staging and completes recovery, or after a concrete failure
-changes the contract. If the mechanics become useful outside Project Koios,
-promotion requires an explicitly accepted generic-tool owner; the bootstrap
-repository must not become a package manager or storage service.
+Independent PyPosPack reuse established recurrence. The subsequent pymatmc2
+historical-checkout preservation exercised the full generic staging,
+verification, archive, recovery, and Git re-verification path at a larger scale,
+advancing the candidate to `validated`. Revisit the contract after a concrete
+failure, a new storage boundary, or a materially different source policy. If
+the mechanics become useful outside Project Koios, promotion requires an
+explicitly accepted generic-tool owner; the bootstrap repository must not
+become a package manager or storage service.
