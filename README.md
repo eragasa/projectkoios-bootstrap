@@ -61,8 +61,14 @@ Python trees, extracts dependency and test facts, plans validation, and can
 compare a declared patch relationship without importing or executing intake
 code.
 
-The tracked harness candidate targets Python 3.14 and has no runtime package
-dependencies. Its tests use the standard library:
+The observed
+[offline artifact archive candidate](docs/candidates/offline-artifact-archive.md)
+verifies an explicitly selected staging tree against exact Git evidence and
+creates a deterministic external tar bundle. Source-specific selection,
+licensing decisions, uploads, and storage management remain outside that tool.
+
+The tracked harness candidates target Python 3.14 and have no runtime package
+dependencies. Their tests use the standard library:
 
 ```bash
 PYTHONPATH=python python3.14 -m unittest discover -s tests -p 'test_*.py'
