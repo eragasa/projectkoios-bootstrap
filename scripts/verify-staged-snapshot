@@ -1,0 +1,82 @@
+#!/usr/bin/env python3.14
+
+from __future__ import annotations
+
+import argparse
+import sys
+from pathlib import Path
+
+
+def _parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(
+        description="Verify the exact staged bootstrap snapshot",
+    )
+    parser.add_argument(
+        "--repository",
+        type=Path,
+        default=Path.cwd(),
+        help="absolute canonical Git worktree root",
+    )
+    parser.add_argument(
+        "--python",
+        type=Path,
+        default=Path(sys.executable),
+        help="Python executable containing the development dependencies",
+    )
+    return parser
+
+
+def _main(arguments: list[str] | None = None) -> int:
+    options = _parser().parse_args(arguments)
+    repository_root = Path(__file__).resolve().parents[1]
+    sys.path.insert(0, str(repository_root / "python"))
+
+    from projectkoios.bootstrap.git.staged_snapshot import (
+        StagedSnapshotVerification,
+        StagedSnapshotVerificationError,
+        StagedSnapshotVerifier,
+        VerificationCommand,
+    )
+
+    python = str(options.python.absolute())
+    verification = StagedSnapshotVerification(
+        repository_root=options.repository,
+        commands=(
+            VerificationCommand(
+                label="tests",
+                arguments=(python, "-m", "pytest", "-q"),
+            ),
+            VerificationCommand(
+                label="lint",
+                arguments=(python, "-m", "ruff", "check", "python", "tests"),
+            ),
+            VerificationCommand(
+                label="format",
+                arguments=(
+                    python,
+                    "-m",
+                    "ruff",
+                    "format",
+                    "--check",
+                    "python",
+                    "tests",
+                ),
+            ),
+            VerificationCommand(
+                label="types",
+                arguments=(python, "-m", "mypy", "python", "tests"),
+                environment=(("PYTHONPATH", "python"),),
+            ),
+        ),
+    )
+    try:
+        result = StagedSnapshotVerifier().verify(verification)
+    except StagedSnapshotVerificationError as error:
+        print(f"staged verification error: {error}", file=sys.stderr)
+        return 1
+    print(f"verified staged tree {result.staged_tree}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(_main())
