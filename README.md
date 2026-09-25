@@ -25,9 +25,23 @@ cd path/to/projectkoios-bootstrap
 herdr
 ```
 
-Inside the managed pane, run `pi`. Before opening or coordinating repository
-panes, verify that Pi inherited `HERDR_ENV=1`; pane context cannot be added to an
-already-running process.
+Inside the managed pane, start the named coordination session with:
+
+```bash
+./scripts/start-coordinator
+```
+
+The launcher verifies that it inherited `HERDR_ENV=1`, starts Pi from this
+repository, and supplies a bounded coordination startup prompt. Its behavior
+lives in the tested
+[coordinator startup candidate](docs/candidates/coordinator-startup.md).
+Additional Pi arguments are forwarded as explicit operator overrides, for
+example `./scripts/start-coordinator --model sonnet:high`; options that change
+Pi's mode may also change the interactive startup behavior. The launcher
+rejects a caller-provided `--` terminator because it supplies that boundary
+after its fixed options. Set `PROJECTKOIOS_COORDINATOR_NAME` to override the
+default session name. Pane context cannot be added to an already-running Pi
+process.
 
 ## Operating model
 
