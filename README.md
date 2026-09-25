@@ -54,6 +54,29 @@ process.
    repository.
 6. Record cross-repository architecture in the `projectkoios` mothership.
 
+## Repository evidence tools
+
+The repository provides bounded command-line helpers for recurring Git
+coordination operations:
+
+```bash
+./scripts/inventory-git-worktrees /absolute/path/to/repository
+./scripts/summarize-project-worktrees \
+  /absolute/path/to/repository-a \
+  /absolute/path/to/repository-b
+./scripts/migrate-default-branch --help
+./scripts/verify-staged-snapshot \
+  --repository "$PWD" \
+  --python "$PWD/.venv/bin/python"
+```
+
+The inventory command emits complete evidence for one repository. The summary
+command emits deterministic factual counts across an explicit repository set;
+it does not assess deletion, GitHub, or migration safety. Mutation decisions
+remain with the applicable operation-specific preflight. The staged-snapshot
+command validates the exact Git index rather than unrelated working-tree
+changes.
+
 ## Drop-to-tool workflow
 
 Place local source material under:

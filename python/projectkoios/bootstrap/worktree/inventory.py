@@ -501,18 +501,14 @@ def collect(repo: str) -> tuple[dict[str, Any], dict[str, Any]]:
     return inventory, witness
 
 
-def inventory(argv: list[str]) -> int:
-    if len(argv) != 2:
-        raise InventoryError(
-            "Usage: inventory-git-worktrees /absolute/path/to/repository"
-        )
-    supplied = argv[1]
-    if not os.path.isabs(supplied):
+def inventory_repository(supplied: str | Path) -> dict[str, Any]:
+    supplied_path = os.fspath(supplied)
+    if not os.path.isabs(supplied_path):
         raise InventoryError("Repository path must be absolute")
-    if not os.path.isdir(supplied):
+    if not os.path.isdir(supplied_path):
         raise InventoryError("Repository path must name an existing directory")
     try:
-        repo = str(Path(supplied).resolve(strict=True))
+        repo = str(Path(supplied_path).resolve(strict=True))
     except OSError as error:
         raise RepositoryChanged(
             "Repository path changed during inspection"
@@ -536,9 +532,16 @@ def inventory(argv: list[str]) -> int:
         raise RepositoryChanged(
             "Repository state changed during inspection; no inventory emitted"
         )
-    json.dump(
-        first_inventory, sys.stdout, ensure_ascii=True, indent=2, sort_keys=True
-    )
+    return first_inventory
+
+
+def inventory(argv: list[str]) -> int:
+    if len(argv) != 2:
+        raise InventoryError(
+            "Usage: inventory-git-worktrees /absolute/path/to/repository"
+        )
+    result = inventory_repository(argv[1])
+    json.dump(result, sys.stdout, ensure_ascii=True, indent=2, sort_keys=True)
     sys.stdout.write("\n")
     return 0
 
