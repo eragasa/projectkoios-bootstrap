@@ -124,7 +124,7 @@ manifest change, and an absent module-to-package rename.
 Run:
 
 ```bash
-PYTHONPATH=python python3.14 -m unittest discover -s tests -p 'test_*.py'
+python3.14 -m pytest -q tests/harness/test_python_intake.py
 ```
 
 Optional style checks, when Ruff and Mypy are available:

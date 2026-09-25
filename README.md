@@ -69,15 +69,16 @@ recovers it into a new identity-checked directory. Source-specific selection,
 licensing decisions, uploads, and storage management remain outside that tool.
 
 The tracked harness candidates target Python 3.14 and have no runtime package
-dependencies. Their tests use the standard library:
+dependencies. Pytest, Ruff, and Mypy are optional development dependencies
+declared in `pyproject.toml`; installing them is an explicit local environment
+operation, not part of intake analysis. Run the complete test suite with:
 
 ```bash
-PYTHONPATH=python python3.14 -m unittest discover -s tests -p 'test_*.py'
+python3.14 -m pytest -q
 ```
 
-Ruff and Mypy are optional development dependencies declared in
-`pyproject.toml`; installing them is an explicit local environment operation,
-not part of intake analysis.
+Pytest also collects the existing `unittest.TestCase` suites, so those tests can
+be migrated incrementally.
 
 See [AGENTS.md](AGENTS.md) for operating rules and the
 [harness-incubation policy](docs/harness-incubation.md) for candidate

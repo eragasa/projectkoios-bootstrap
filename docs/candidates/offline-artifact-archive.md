@@ -186,8 +186,7 @@ or private data is retained in this repository.
 Run:
 
 ```bash
-PYTHONPATH=python python3.14 -m unittest \
-  tests.harness.test_offline_artifacts
+python3.14 -m pytest -q tests/harness/test_offline_artifacts.py
 ruff check python tests
 ruff format --check python tests
 PYTHONPATH=python mypy \
