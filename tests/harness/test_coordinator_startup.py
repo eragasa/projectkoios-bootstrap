@@ -107,6 +107,12 @@ def test_plan_builds_exact_customized_pi_invocation(tmp_path: Path) -> None:
     )
     assert launch.argv[6] == coordinator_startup.STARTUP_PROMPT
     assert "Use pi-intercom to list the live Pi sessions." in launch.argv[6]
+    assert "run ./scripts/inspect-herdr-session" in launch.argv[6]
+    assert "Herdr client detach and pane termination" in launch.argv[6]
+    assert "Never close a" in launch.argv[6]
+    assert "pane, tab, workspace, or server" in launch.argv[6]
+    assert "substitute for client detach" in launch.argv[6]
+    assert "does not prove pi-intercom connectivity" in launch.argv[6]
     assert "resolve every deferred finding" in launch.argv[6]
     assert "Do not create a local deferred-decision" in launch.argv[6]
     assert "prioritize an executable deterministic" in launch.argv[6]

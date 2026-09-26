@@ -35,6 +35,25 @@ The launcher verifies that it inherited `HERDR_ENV=1`, starts Pi from this
 repository, and supplies a bounded coordination startup prompt. Its behavior
 lives in the tested
 [coordinator startup candidate](docs/candidates/coordinator-startup.md).
+After Pi starts, inspect the live session and its native Pi session evidence
+with:
+
+```bash
+./scripts/inspect-herdr-session
+```
+
+The read-only
+[Herdr session-continuity candidate](docs/candidates/herdr-session-continuity.md)
+is pinned to the installed and reviewed Herdr `0.9.1` behavior. Detach the
+Herdr **client** with `Ctrl-b`, then `q`; reattach with `herdr` or the exact
+absolute reattach argv in the inspector output. Do not use pane,
+tab, workspace, or server close commands as substitutes for client detach:
+they end affected pane processes. See Herdr's official
+[quick start](https://herdr.dev/docs/quick-start/),
+[persistence guide](https://herdr.dev/docs/persistence-remote/),
+[session-state guide](https://herdr.dev/docs/session-state/),
+[CLI reference](https://herdr.dev/docs/cli-reference/), and
+[integration guide](https://herdr.dev/docs/integrations/).
 Additional Pi arguments are forwarded as explicit operator overrides, for
 example `./scripts/start-coordinator --model sonnet:high`; options that change
 Pi's mode may also change the interactive startup behavior. The launcher
@@ -56,10 +75,11 @@ process.
 
 ## Repository evidence tools
 
-The repository provides bounded command-line helpers for recurring Git
-coordination operations:
+The repository provides bounded command-line helpers for recurring Git and
+session-evidence operations:
 
 ```bash
+./scripts/inspect-herdr-session
 ./scripts/inventory-git-worktrees /absolute/path/to/repository
 ./scripts/summarize-project-worktrees \
   /absolute/path/to/repository-a \

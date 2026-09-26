@@ -16,7 +16,9 @@ invocation for the Project Koios multi-repository coordination session. It:
 - applies a recognizable, operator-overridable session name;
 - forwards explicit Pi command-line options while preserving the launcher's
   fixed option boundary;
-- supplies the Project Koios coordination startup prompt; and
+- supplies the Project Koios coordination startup prompt;
+- directs the running coordinator to inspect Herdr session evidence and keep
+  client detach distinct from pane or server termination; and
 - encodes the rule that every deferred finding is fixed, routed to justified
   owner work with authority, or explicitly closed untracked.
 
@@ -51,7 +53,10 @@ operations.
 
 Startup stops before invoking Pi when the process is not Herdr-managed, the
 repository markers are absent, or `pi` cannot be resolved. Pi and Herdr retain
-ownership of session and pane behavior.
+ownership of session and pane behavior. The separate read-only
+[Herdr session-continuity candidate](herdr-session-continuity.md) checks the
+running pane after Pi starts; the launcher does not pretend to prove future
+pane survival or pi-intercom connectivity.
 
 ## Replay and state
 
@@ -80,6 +85,12 @@ python3.14 -m pytest -q tests/harness/test_coordinator_startup.py
 The tests mock process replacement. They do not claim that Herdr is attached,
 Pi authentication is ready, pi-intercom loaded successfully, or a model will
 follow the prompt. Those remain visible startup and operational checks.
+Detach, reattach, server restart, pane closure, and native Pi restore semantics
+are sourced from Herdr's official [persistence](https://herdr.dev/docs/persistence-remote/),
+[session-state](https://herdr.dev/docs/session-state/),
+[CLI](https://herdr.dev/docs/cli-reference/), and
+[integration](https://herdr.dev/docs/integrations/) documentation. Immutable
+`v0.9.1` source links are recorded in the continuity candidate and its code.
 
 ## Owner routing and revisit criteria
 

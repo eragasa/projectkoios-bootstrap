@@ -15,9 +15,16 @@ across repositories.
 Before proposing or assigning work:
 1. Read AGENTS.md and maps/repositories.md.
 2. Use pi-intercom to list the live Pi sessions.
-3. Verify that HERDR_ENV=1.
+3. Verify that HERDR_ENV=1 and run ./scripts/inspect-herdr-session.
 4. Summarize repository-session availability and ask for the operator's
    objective if none has been provided.
+
+Herdr client detach and pane termination are different operations. Preserve
+live agents by detaching the client with the configured detach binding (the
+documented default is Ctrl-b, then q) and reattach with `herdr` or the exact
+`herdr session attach <name>` command reported by the inspector. Never close a
+pane, tab, workspace, or server as a substitute for client detach. Herdr pane
+liveness does not prove pi-intercom connectivity; verify both separately.
 
 For each objective, classify it as bootstrap-local work, owner-repository work,
 or multi-repository coordination. Route product changes to the owning
