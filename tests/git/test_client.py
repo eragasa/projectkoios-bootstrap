@@ -1,7 +1,10 @@
 from __future__ import annotations
 
 import os
+import subprocess
+import tempfile
 import unittest
+from pathlib import Path
 
 from projectkoios.bootstrap.git.client import (
     GitClient,
@@ -40,8 +43,100 @@ class GitClientTests(unittest.TestCase):
         self.assertNotIn("GIT_TRACE2_EVENT", environment)
         self.assertEqual(environment["GIT_CONFIG_GLOBAL"], os.devnull)
         self.assertEqual(environment["GIT_CONFIG_NOSYSTEM"], "1")
+        self.assertEqual(environment["GIT_NO_LAZY_FETCH"], "1")
         self.assertEqual(environment["GIT_OPTIONAL_LOCKS"], "0")
         self.assertEqual(environment["PATH"], "/test/bin")
+
+    def test_input_bytes_are_sent_without_an_interactive_stdin(self) -> None:
+        client = GitClient(
+            disable_optional_locks=True,
+            preserve_global_config=False,
+        )
+
+        result = client.run(
+            None,
+            "hash-object",
+            "--stdin",
+            input_bytes=b"preservation evidence\n",
+        )
+
+        self.assertEqual(result.returncode, 0)
+        self.assertEqual(len(result.stdout.strip()), 40)
+
+    def test_lazy_fetch_is_disabled_for_promisor_repositories(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            root = Path(temporary_directory)
+            repository = root / "repository"
+            binary_directory = root / "bin"
+            marker = root / "remote-helper-ran"
+            repository.mkdir()
+            binary_directory.mkdir()
+            subprocess.run(
+                ("git", "-C", str(repository), "init", "--quiet"),
+                check=True,
+                timeout=10,
+            )
+            for key, value in (
+                ("extensions.partialClone", "origin"),
+                ("remote.origin.promisor", "true"),
+                ("remote.origin.url", "attempt::target"),
+            ):
+                subprocess.run(
+                    (
+                        "git",
+                        "-C",
+                        str(repository),
+                        "config",
+                        key,
+                        value,
+                    ),
+                    check=True,
+                    timeout=10,
+                )
+            helper = binary_directory / "git-remote-attempt"
+            helper.write_text(
+                f"#!/bin/sh\nprintf attempted > {str(marker)!r}\nexit 1\n",
+                encoding="utf-8",
+            )
+            helper.chmod(0o755)
+            environment = os.environ.copy()
+            environment["PATH"] = (
+                f"{binary_directory}{os.pathsep}{environment['PATH']}"
+            )
+            missing_oid = "f" * 40
+
+            subprocess.run(
+                (
+                    "git",
+                    "-C",
+                    str(repository),
+                    "cat-file",
+                    "-e",
+                    missing_oid,
+                ),
+                env={**environment, "GIT_NO_LAZY_FETCH": "0"},
+                capture_output=True,
+                check=False,
+                timeout=10,
+            )
+            self.assertTrue(marker.is_file())
+            marker.unlink()
+
+            client = GitClient(
+                disable_optional_locks=True,
+                preserve_global_config=False,
+            )
+            result = client.run(
+                repository,
+                "cat-file",
+                "-e",
+                missing_oid,
+                allowed=(1, 128),
+                environment=environment,
+            )
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertFalse(marker.exists())
 
     def test_mutating_environment_preserves_credentials_but_not_lock_override(
         self,
@@ -64,6 +159,7 @@ class GitClientTests(unittest.TestCase):
             "/credentials/config",
         )
         self.assertNotIn("GIT_CONFIG_NOSYSTEM", environment)
+        self.assertEqual(environment["GIT_NO_LAZY_FETCH"], "1")
         self.assertNotIn("GIT_OPTIONAL_LOCKS", environment)
 
 

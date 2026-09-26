@@ -53,6 +53,7 @@ class GitClient:
         allowed: Iterable[int] = (0,),
         environment: Mapping[str, str] | None = None,
         configuration: Mapping[str, str] | None = None,
+        input_bytes: bytes | None = None,
     ) -> subprocess.CompletedProcess[bytes]:
         command = ["git", *_GIT_CONFIG]
         for key, value in (configuration or {}).items():
@@ -64,7 +65,8 @@ class GitClient:
         try:
             result = subprocess.run(
                 command,
-                stdin=subprocess.DEVNULL,
+                input=input_bytes,
+                stdin=subprocess.DEVNULL if input_bytes is None else None,
                 capture_output=True,
                 check=False,
                 env=self.environment(environment),
@@ -96,6 +98,7 @@ class GitClient:
         }
         result.update(
             {
+                "GIT_NO_LAZY_FETCH": "1",
                 "GIT_TERMINAL_PROMPT": "0",
                 "LANG": "C",
                 "LC_ALL": "C",

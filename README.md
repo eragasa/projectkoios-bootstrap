@@ -80,6 +80,9 @@ session-evidence operations:
 
 ```bash
 ./scripts/inspect-herdr-session
+./scripts/inspect-project-preservation \
+  /absolute/path/to/repository-a \
+  /absolute/path/to/repository-b
 ./scripts/inventory-git-worktrees /absolute/path/to/repository
 ./scripts/summarize-project-worktrees \
   /absolute/path/to/repository-a \
@@ -90,12 +93,15 @@ session-evidence operations:
   --python "$PWD/.venv/bin/python"
 ```
 
-The inventory command emits complete evidence for one repository. The summary
-command emits deterministic factual counts across an explicit repository set;
-it does not assess deletion, GitHub, or migration safety. Mutation decisions
-remain with the applicable operation-specific preflight. The staged-snapshot
-command validates the exact Git index rather than unrelated working-tree
-changes.
+The preservation command emits deterministic path-level status, local remote
+reachability, and preservation signals across an explicit repository set. Its
+[documented candidate contract](docs/candidates/project-preservation-inspection.md)
+does not interpret content or authorize cleanup. The inventory command emits
+complete evidence for one repository. The summary command emits deterministic
+factual counts across an explicit repository set; it does not assess deletion,
+GitHub, or migration safety. Mutation decisions remain with the applicable
+operation-specific preflight. The staged-snapshot command validates the exact
+Git index rather than unrelated working-tree changes.
 
 ## Drop-to-tool workflow
 
