@@ -44,6 +44,8 @@ def _completed(
 
 
 def _tab_created(command: tuple[str, ...]) -> subprocess.CompletedProcess[str]:
+    workspace_index = command.index("--workspace") + 1
+    workspace_id = command[workspace_index]
     return _completed(
         command,
         stdout=json.dumps(
@@ -51,8 +53,8 @@ def _tab_created(command: tuple[str, ...]) -> subprocess.CompletedProcess[str]:
                 "id": "cli:tab:create",
                 "result": {
                     "type": "tab_created",
-                    "tab": {"tab_id": "w4:tA"},
-                    "root_pane": {"pane_id": "w4:pA"},
+                    "tab": {"tab_id": f"{workspace_id}:tA"},
+                    "root_pane": {"pane_id": f"{workspace_id}:pA"},
                 },
             }
         ),
@@ -82,8 +84,8 @@ def test_open_runs_named_pi_in_new_herdr_tab(tmp_path: Path) -> None:
     launch = spawner.open(RepositorySessionRequest(root, "domain-packages"))
 
     assert launch.session_name == "projectkoios-example:domain-packages"
-    assert launch.tab_id == "w4:tA"
-    assert launch.pane_id == "w4:pA"
+    assert launch.tab_id == "w1:tA"
+    assert launch.pane_id == "w1:pA"
     assert calls == [
         (
             "/test/bin/herdr",
@@ -101,7 +103,7 @@ def test_open_runs_named_pi_in_new_herdr_tab(tmp_path: Path) -> None:
             "/test/bin/herdr",
             "pane",
             "run",
-            "w4:pA",
+            "w1:pA",
             "/test/bin/pi",
             "--name",
             "projectkoios-example:domain-packages",
@@ -233,6 +235,45 @@ def test_invalid_tab_evidence_stops_before_run(tmp_path: Path) -> None:
     assert len(calls) == 1
 
 
+def test_other_workspace_evidence_stops_before_pane_run(
+    tmp_path: Path,
+) -> None:
+    root = _repository(tmp_path)
+    calls: list[tuple[str, ...]] = []
+
+    def run(
+        command: tuple[str, ...],
+        _environment: object,
+        _timeout: float,
+    ) -> subprocess.CompletedProcess[str]:
+        calls.append(command)
+        return _completed(
+            command,
+            stdout=json.dumps(
+                {
+                    "result": {
+                        "tab": {"tab_id": "w2:tA"},
+                        "root_pane": {"pane_id": "w2:pA"},
+                    }
+                }
+            ),
+        )
+
+    spawner = RepositorySessionSpawner.from_environment(
+        environ=_herdr_environment(),
+        find_executable=lambda _command: "/test/bin/pi",
+        runner=run,
+    )
+
+    with pytest.raises(
+        RepositorySessionError,
+        match="different workspace",
+    ):
+        spawner.open(RepositorySessionRequest(root, "task"))
+
+    assert len(calls) == 1
+
+
 def test_executable_launcher_exposes_help() -> None:
     result = subprocess.run(
         [str(_REPOSITORY / "scripts/open-repository-session"), "--help"],
@@ -274,7 +315,7 @@ def test_run_failure_preserves_new_tab_and_bounds_error(
     with pytest.raises(RepositorySessionError, match="left intact") as raised:
         spawner.open(RepositorySessionRequest(root, "task"))
 
-    assert "w4:tA" in str(raised.value)
-    assert "w4:pA" in str(raised.value)
+    assert "w1:tA" in str(raised.value)
+    assert "w1:pA" in str(raised.value)
     assert len(str(raised.value)) < 600
     assert all("close" not in command for command in calls)

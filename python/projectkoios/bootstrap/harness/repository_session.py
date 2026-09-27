@@ -15,6 +15,7 @@ from typing import Any
 
 _TASK_PATTERN = re.compile(r"^[a-z0-9][a-z0-9-]{0,63}$")
 _REPOSITORY_PATTERN = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$")
+_WORKSPACE_PATTERN = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]*$")
 _PANE_PATTERN = re.compile(
     r"^[A-Za-z0-9][A-Za-z0-9_.-]*:p[A-Za-z0-9][A-Za-z0-9_.-]*$"
 )
@@ -139,12 +140,20 @@ class RepositorySessionSpawner:
                 "repository directory name cannot form a safe session name"
             )
         session_name = f"{repository_name}:{task}"
+        workspace_id = self.environment.get("HERDR_WORKSPACE_ID")
+        if (
+            workspace_id is None
+            or _WORKSPACE_PATTERN.fullmatch(workspace_id) is None
+        ):
+            raise RepositorySessionError(
+                "HERDR_WORKSPACE_ID has an invalid format"
+            )
         create_arguments = [
             str(self.herdr_executable),
             "tab",
             "create",
             "--workspace",
-            self.environment["HERDR_WORKSPACE_ID"],
+            workspace_id,
             "--cwd",
             str(root),
             "--label",
@@ -152,7 +161,10 @@ class RepositorySessionSpawner:
             "--focus" if request.focus else "--no-focus",
         ]
         created = self._invoke(tuple(create_arguments), operation="tab create")
-        tab_id, pane_id = _parse_tab_creation(created.stdout)
+        tab_id, pane_id = _parse_tab_creation(
+            created.stdout,
+            expected_workspace_id=workspace_id,
+        )
 
         run_arguments = (
             str(self.herdr_executable),
@@ -235,7 +247,11 @@ def _validate_task(task: str) -> str:
     return normalized
 
 
-def _parse_tab_creation(output: str) -> tuple[str, str]:
+def _parse_tab_creation(
+    output: str,
+    *,
+    expected_workspace_id: str,
+) -> tuple[str, str]:
     try:
         payload: Any = json.loads(output)
     except json.JSONDecodeError as error:
@@ -266,6 +282,13 @@ def _parse_tab_creation(output: str) -> tuple[str, str]:
     if not isinstance(pane_id, str) or _PANE_PATTERN.fullmatch(pane_id) is None:
         raise RepositorySessionError(
             "Herdr tab create did not return a valid pane id"
+        )
+    if (
+        tab_id.partition(":")[0] != expected_workspace_id
+        or pane_id.partition(":")[0] != expected_workspace_id
+    ):
+        raise RepositorySessionError(
+            "Herdr tab create returned evidence from a different workspace"
         )
     return tab_id, pane_id
 
