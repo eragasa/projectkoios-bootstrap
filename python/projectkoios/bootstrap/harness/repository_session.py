@@ -1,3 +1,5 @@
+#!/usr/bin/env python3.14
+
 from __future__ import annotations
 
 import json
@@ -157,7 +159,8 @@ class RepositorySessionSpawner:
             self._invoke(run_arguments, operation="pane run")
         except RepositorySessionError as error:
             raise RepositorySessionError(
-                f"{error}; newly created pane {pane_id} was left intact"
+                f"{error}; newly created pane {pane_id} was left intact",
+                exit_code=error.exit_code,
             ) from error
 
         return RepositorySessionLaunch(

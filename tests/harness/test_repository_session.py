@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import json
-import os
 import subprocess
 from pathlib import Path
 
@@ -228,13 +227,9 @@ def test_invalid_split_evidence_stops_before_run(tmp_path: Path) -> None:
 
 
 def test_executable_launcher_exposes_help() -> None:
-    environment = os.environ.copy()
-    environment["PYTHONPATH"] = str(_REPOSITORY / "python")
-
     result = subprocess.run(
         [str(_REPOSITORY / "scripts/open-repository-session"), "--help"],
         cwd=_REPOSITORY,
-        env=environment,
         check=False,
         capture_output=True,
         text=True,
