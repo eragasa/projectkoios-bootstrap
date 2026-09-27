@@ -15,7 +15,12 @@ from typing import Any
 
 _TASK_PATTERN = re.compile(r"^[a-z0-9][a-z0-9-]{0,63}$")
 _REPOSITORY_PATTERN = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$")
-_PANE_PATTERN = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]*:p[1-9][0-9]*$")
+_PANE_PATTERN = re.compile(
+    r"^[A-Za-z0-9][A-Za-z0-9_.-]*:p[A-Za-z0-9][A-Za-z0-9_.-]*$"
+)
+_TAB_PATTERN = re.compile(
+    r"^[A-Za-z0-9][A-Za-z0-9_.-]*:t[A-Za-z0-9][A-Za-z0-9_.-]*$"
+)
 _ERROR_LIMIT = 500
 
 CommandRunner = Callable[
@@ -48,6 +53,7 @@ class RepositorySessionLaunch:
     repository_root: Path
     task: str
     session_name: str
+    tab_id: str
     pane_id: str
     herdr_executable: Path
     pi_executable: Path
@@ -57,6 +63,7 @@ class RepositorySessionLaunch:
             "repository_root": str(self.repository_root),
             "task": self.task,
             "session_name": self.session_name,
+            "tab_id": self.tab_id,
             "pane_id": self.pane_id,
             "herdr_executable": str(self.herdr_executable),
             "pi_executable": str(self.pi_executable),
@@ -65,7 +72,7 @@ class RepositorySessionLaunch:
 
 @dataclass(frozen=True, slots=True)
 class RepositorySessionSpawner:
-    """Open a Herdr pane and run Pi with a deterministic session name."""
+    """Open a Herdr tab and run Pi with a deterministic session name."""
 
     herdr_executable: Path
     pi_executable: Path
@@ -132,19 +139,20 @@ class RepositorySessionSpawner:
                 "repository directory name cannot form a safe session name"
             )
         session_name = f"{repository_name}:{task}"
-        split_arguments = [
+        create_arguments = [
             str(self.herdr_executable),
-            "pane",
-            "split",
-            "--current",
-            "--direction",
-            "right",
+            "tab",
+            "create",
+            "--workspace",
+            self.environment["HERDR_WORKSPACE_ID"],
             "--cwd",
             str(root),
+            "--label",
+            session_name,
             "--focus" if request.focus else "--no-focus",
         ]
-        split = self._invoke(tuple(split_arguments), operation="pane split")
-        pane_id = _parse_pane_id(split.stdout)
+        created = self._invoke(tuple(create_arguments), operation="tab create")
+        tab_id, pane_id = _parse_tab_creation(created.stdout)
 
         run_arguments = (
             str(self.herdr_executable),
@@ -159,7 +167,8 @@ class RepositorySessionSpawner:
             self._invoke(run_arguments, operation="pane run")
         except RepositorySessionError as error:
             raise RepositorySessionError(
-                f"{error}; newly created pane {pane_id} was left intact",
+                f"{error}; newly created tab {tab_id} with pane {pane_id} "
+                "was left intact",
                 exit_code=error.exit_code,
             ) from error
 
@@ -167,6 +176,7 @@ class RepositorySessionSpawner:
             repository_root=root,
             task=task,
             session_name=session_name,
+            tab_id=tab_id,
             pane_id=pane_id,
             herdr_executable=self.herdr_executable,
             pi_executable=self.pi_executable,
@@ -225,33 +235,39 @@ def _validate_task(task: str) -> str:
     return normalized
 
 
-def _parse_pane_id(output: str) -> str:
+def _parse_tab_creation(output: str) -> tuple[str, str]:
     try:
         payload: Any = json.loads(output)
     except json.JSONDecodeError as error:
         raise RepositorySessionError(
-            "Herdr pane split returned invalid JSON"
+            "Herdr tab create returned invalid JSON"
         ) from error
     if not isinstance(payload, dict):
         raise RepositorySessionError(
-            "Herdr pane split returned invalid evidence"
+            "Herdr tab create returned invalid evidence"
         )
     result = payload.get("result", payload)
     if not isinstance(result, dict):
         raise RepositorySessionError(
-            "Herdr pane split returned invalid evidence"
+            "Herdr tab create returned invalid evidence"
         )
-    pane = result.get("pane", result)
-    if not isinstance(pane, dict):
+    tab = result.get("tab")
+    pane = result.get("root_pane")
+    if not isinstance(tab, dict) or not isinstance(pane, dict):
         raise RepositorySessionError(
-            "Herdr pane split returned invalid evidence"
+            "Herdr tab create returned invalid evidence"
         )
-    pane_id = pane.get("pane_id", pane.get("paneId", pane.get("id")))
+    tab_id = tab.get("tab_id")
+    pane_id = pane.get("pane_id")
+    if not isinstance(tab_id, str) or _TAB_PATTERN.fullmatch(tab_id) is None:
+        raise RepositorySessionError(
+            "Herdr tab create did not return a valid tab id"
+        )
     if not isinstance(pane_id, str) or _PANE_PATTERN.fullmatch(pane_id) is None:
         raise RepositorySessionError(
-            "Herdr pane split did not return a valid pane id"
+            "Herdr tab create did not return a valid pane id"
         )
-    return pane_id
+    return tab_id, pane_id
 
 
 def _run_command(

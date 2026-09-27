@@ -80,8 +80,9 @@ already-running Pi process.
      --task bounded-task
    ```
 
-   The launcher asks Herdr to create the pane and runs Pi as the deterministic
-   session name `projectkoios-component:bounded-task`. Automatic project-pane
+   The launcher asks Herdr to create a labeled tab and runs Pi in its root pane
+   as the deterministic session name `projectkoios-component:bounded-task`.
+   Automatic project-pane
    spawning through pi-intercom is blocked in this repository. Every intercom
    send or ask must include both that exact name and the repository cwd.
 6. Keep product implementation, validation, and Git history in the owning

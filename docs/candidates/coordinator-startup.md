@@ -52,8 +52,8 @@ because the launcher supplies it after the fixed session option.
 
 The launcher starts only the coordinator. The separate
 [named repository-session candidate](named-repository-sessions.md) opens an
-explicitly requested repository pane after startup. The coordinator launcher
-does not open repository panes, start workers, delegate tasks, modify
+explicitly requested labeled repository tab after startup. The coordinator
+launcher does not open repository tabs, start workers, delegate tasks, modify
 repositories, create issues, install
 dependencies, or infer an operator objective. The prompt requires the
 coordinator to discover live sessions and obtain authority before those

@@ -11,7 +11,7 @@ export function coordinationViolation(input) {
   if (input.action !== "send" && input.action !== "ask") return undefined;
 
   if (input.openProjectPaneIfMissing === true) {
-    return "Automatic project-pane spawning is disabled; use scripts/open-repository-session so Herdr launches a named Pi session";
+    return "Automatic project-pane spawning is disabled; use scripts/open-repository-session so Herdr launches a named Pi session in a labeled tab";
   }
   if (!nonEmptyString(input.cwd) || !isAbsolute(input.cwd.trim())) {
     return "Intercom send/ask requires an explicit absolute repository cwd";
