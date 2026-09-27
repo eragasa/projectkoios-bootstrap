@@ -17,6 +17,9 @@ invocation for the Project Koios multi-repository coordination session. It:
 - forwards explicit Pi command-line options while preserving the launcher's
   fixed option boundary;
 - supplies the Project Koios coordination startup prompt;
+- requires repository sessions to be opened with the deterministic
+  `open-repository-session` helper and addressed by exact name plus cwd;
+- blocks reliance on pi-intercom automatic project-pane spawning;
 - directs the running coordinator to inspect Herdr session evidence and keep
   client detach distinct from pane or server termination; and
 - encodes the rule that every deferred finding is fixed, routed to justified
@@ -45,8 +48,11 @@ because the launcher supplies it after the fixed session option.
 
 ## Authority and stop conditions
 
-The launcher starts only the coordinator. It does not open repository panes,
-start workers, delegate tasks, modify repositories, create issues, install
+The launcher starts only the coordinator. The separate
+[named repository-session candidate](named-repository-sessions.md) opens an
+explicitly requested repository pane after startup. The coordinator launcher
+does not open repository panes, start workers, delegate tasks, modify
+repositories, create issues, install
 dependencies, or infer an operator objective. The prompt requires the
 coordinator to discover live sessions and obtain authority before those
 operations.

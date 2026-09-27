@@ -5,8 +5,12 @@
 .idea/
 .vscode/
 
-# Local Pi state
-.pi/
+# Local Pi state; keep only the reviewed project coordination guard.
+.pi/*
+!.pi/extensions/
+.pi/extensions/*
+!.pi/extensions/coordination-guard.js
+!.pi/extensions/package.json
 .obsidian/
 workspaces/
 
