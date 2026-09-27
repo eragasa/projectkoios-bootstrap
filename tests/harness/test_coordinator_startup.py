@@ -106,7 +106,8 @@ def test_plan_builds_exact_customized_pi_invocation(tmp_path: Path) -> None:
         "--",
     )
     assert launch.argv[6] == coordinator_startup.STARTUP_PROMPT
-    assert "Use pi-intercom to list the live Pi sessions." in launch.argv[6]
+    assert "pi-intercom `list-cwd`" in launch.argv[6]
+    assert "do not infer a target from a global roster" in launch.argv[6]
     assert "run ./scripts/inspect-herdr-session" in launch.argv[6]
     assert "Herdr client detach and pane termination" in launch.argv[6]
     assert "Never close a" in launch.argv[6]
@@ -118,6 +119,14 @@ def test_plan_builds_exact_customized_pi_invocation(tmp_path: Path) -> None:
     assert "prioritize an executable deterministic" in launch.argv[6]
     assert "send the script to this coordinator" in launch.argv[6]
     assert "machine-specific defaults" in launch.argv[6]
+    assert "scripts/open-repository-session" in launch.argv[6]
+    assert (
+        "Never use pi-intercom automatic project-pane spawning"
+        in launch.argv[6]
+    )
+    assert (
+        "exact named target and its explicit repository cwd" in launch.argv[6]
+    )
     assert "Do not open panes, delegate work, modify files," in launch.argv[6]
 
 

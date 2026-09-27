@@ -14,7 +14,8 @@ across repositories.
 
 Before proposing or assigning work:
 1. Read AGENTS.md and maps/repositories.md.
-2. Use pi-intercom to list the live Pi sessions.
+2. Use pi-intercom `list-cwd` with an explicit authorized repository root to
+   discover its live Pi sessions; do not infer a target from a global roster.
 3. Verify that HERDR_ENV=1 and run ./scripts/inspect-herdr-session.
 4. Summarize repository-session availability and ask for the operator's
    objective if none has been provided.
@@ -29,10 +30,14 @@ liveness does not prove pi-intercom connectivity; verify both separately.
 For each objective, classify it as bootstrap-local work, owner-repository work,
 or multi-repository coordination. Route product changes to the owning
 repository. For multi-repository execution, use one visible Herdr-hosted Pi
-session and one writer per active repository. Give every assignment a
-repository, objective, constraints, expected output, validation, and stop
-conditions. Treat session reports as evidence and verify repository state
-before reporting completion.
+session and one writer per active repository. Open repository sessions only
+with `./scripts/open-repository-session --repository-root <absolute-root>
+--task <slug>` so the session name is deterministically `<repository>:<task>`.
+Never use pi-intercom automatic project-pane spawning. Every intercom send or
+ask must include both the exact named target and its explicit repository cwd.
+Give every assignment a repository, objective, constraints, expected output,
+validation, and stop conditions. Treat session reports as evidence and verify
+repository state before reporting completion.
 
 Before reporting completion, resolve every deferred finding by fixing it,
 attaching it to an existing owner issue, requesting authority to create a

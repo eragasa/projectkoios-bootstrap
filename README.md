@@ -65,13 +65,26 @@ process.
 ## Operating model
 
 1. Read the [repository map](maps/repositories.md).
-2. Use `pi-intercom` to discover or contact repository sessions.
+2. Use `pi-intercom list-cwd` with an explicit authorized repository root.
 3. Distinguish local intake/tool extraction from owner-repository execution.
 4. Use one visible Herdr-hosted Pi session per active repository when work spans
    repositories.
-5. Keep product implementation, validation, and Git history in the owning
+5. Open each repository session from the coordinator with an explicit root and
+   task slug:
+
+   ```bash
+   ./scripts/open-repository-session \
+     --repository-root /absolute/path/to/projectkoios-component \
+     --task bounded-task
+   ```
+
+   The launcher asks Herdr to create the pane and runs Pi as the deterministic
+   session name `projectkoios-component:bounded-task`. Automatic project-pane
+   spawning through pi-intercom is blocked in this repository. Every intercom
+   send or ask must include both that exact name and the repository cwd.
+6. Keep product implementation, validation, and Git history in the owning
    repository.
-6. Record cross-repository architecture in the `projectkoios` mothership.
+7. Record cross-repository architecture in `projectkoios`.
 
 ## Repository evidence tools
 
@@ -79,6 +92,7 @@ The repository provides bounded command-line helpers for recurring Git and
 session-evidence operations:
 
 ```bash
+./scripts/open-repository-session --help
 ./scripts/inspect-herdr-session
 ./scripts/inspect-project-preservation \
   /absolute/path/to/repository-a \

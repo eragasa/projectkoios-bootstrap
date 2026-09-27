@@ -10,6 +10,9 @@ authors = [
 ]
 dependencies = []
 
+[project.scripts]
+projectkoios-open-repository-session = "projectkoios.bootstrap.harness.repository_session:main"
+
 [project.optional-dependencies]
 dev = ["mypy>=1.13", "pytest>=8.0", "ruff>=0.8"]
 
