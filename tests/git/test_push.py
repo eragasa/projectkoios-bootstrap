@@ -191,7 +191,7 @@ def test_unsupported_fetch_mapping_stops_before_push(
     assert _remote_commit(remote) is None
 
 
-def test_nonmatching_negative_fetch_refspec_is_allowed(
+def test_nonmatching_and_overlapping_fetch_refspecs_are_allowed(
     repository: tuple[Path, Path, str],
 ) -> None:
     root, remote, expected = repository
@@ -201,6 +201,20 @@ def test_nonmatching_negative_fetch_refspec_is_allowed(
         "--add",
         "remote.origin.fetch",
         "^refs/heads/archive/*",
+    )
+    _git(
+        root,
+        "config",
+        "--add",
+        "remote.origin.fetch",
+        "^refs/heads/feature/shared-*shared-push",
+    )
+    _git(
+        root,
+        "config",
+        "--add",
+        "remote.origin.fetch",
+        "+refs/heads/feature/shared-*shared-push:refs/remotes/other/*",
     )
 
     result = _pusher(root, expected, apply=True).execute()

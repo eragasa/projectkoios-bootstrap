@@ -413,7 +413,11 @@ def _refspec_source_matches(source_pattern: str, source: str) -> bool:
     if "*" not in source_pattern:
         return source_pattern == source
     prefix, suffix = source_pattern.split("*", 1)
-    return source.startswith(prefix) and source.endswith(suffix)
+    return (
+        len(prefix) + len(suffix) <= len(source)
+        and source.startswith(prefix)
+        and source.endswith(suffix)
+    )
 
 
 def _map_fetch_refspec(refspec: str, source: str) -> str | None:
@@ -430,7 +434,7 @@ def _map_fetch_refspec(refspec: str, source: str) -> str | None:
             "multiple fetch refspec wildcards are unsupported"
         )
     prefix, suffix = source_pattern.split("*", 1)
-    if not source.startswith(prefix) or not source.endswith(suffix):
+    if not _refspec_source_matches(source_pattern, source):
         return None
     end = len(source) - len(suffix) if suffix else len(source)
     wildcard = source[len(prefix) : end]
