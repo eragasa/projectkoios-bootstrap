@@ -58,9 +58,11 @@ Additional Pi arguments are forwarded as explicit operator overrides, for
 example `./scripts/start-coordinator --model sonnet:high`; options that change
 Pi's mode may also change the interactive startup behavior. The launcher
 rejects a caller-provided `--` terminator because it supplies that boundary
-after its fixed options. Set `PROJECTKOIOS_COORDINATOR_NAME` to override the
-default session name. Pane context cannot be added to an already-running Pi
-process.
+after its fixed options. The default session name is
+`projectkoios-bootstrap:coordination`. `PROJECTKOIOS_COORDINATOR_NAME` may
+override it only with another `<repository>:<task>` name whose repository
+component matches the bootstrap root. Pane context cannot be added to an
+already-running Pi process.
 
 ## Operating model
 

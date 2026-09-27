@@ -41,8 +41,10 @@ Arguments are passed to Pi before the fixed session name and startup prompt:
 ./scripts/start-coordinator --model sonnet:high
 ```
 
-Set `PROJECTKOIOS_COORDINATOR_NAME` to use another session display name.
-Arguments are explicit operator overrides, so mode-changing Pi options may
+The default name is `projectkoios-bootstrap:coordination`. Set
+`PROJECTKOIOS_COORDINATOR_NAME` only to another `<repository>:<task>` name whose
+repository component matches the canonical bootstrap root. Arguments are
+explicit operator overrides, so mode-changing Pi options may
 change interactive behavior. A caller-provided `--` terminator is rejected
 because the launcher supplies it after the fixed session option.
 
