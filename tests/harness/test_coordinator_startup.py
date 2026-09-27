@@ -85,12 +85,13 @@ def test_plan_reports_missing_pi_with_command_not_found_status(
 def test_plan_builds_exact_customized_pi_invocation(tmp_path: Path) -> None:
     root = _repository_root(tmp_path)
 
+    session_name = "projectkoios-bootstrap:test-coordinator"
     launch = plan_coordinator_startup(
         root,
         ("--model", "test-model"),
         environ={
             "HERDR_ENV": "1",
-            "PROJECTKOIOS_COORDINATOR_NAME": "test-coordinator",
+            "PROJECTKOIOS_COORDINATOR_NAME": session_name,
         },
         find_executable=lambda _command: "/test/bin/pi",
     )
@@ -102,7 +103,7 @@ def test_plan_builds_exact_customized_pi_invocation(tmp_path: Path) -> None:
         "--model",
         "test-model",
         "--name",
-        "test-coordinator",
+        session_name,
         "--",
     )
     assert launch.argv[6] == coordinator_startup.STARTUP_PROMPT
@@ -165,8 +166,30 @@ def test_plan_uses_default_name_when_override_is_empty(tmp_path: Path) -> None:
 
     assert launch.argv[1:3] == (
         "--name",
-        coordinator_startup.DEFAULT_SESSION_NAME,
+        (
+            f"{coordinator_startup.COORDINATOR_REPOSITORY_NAME}:"
+            f"{coordinator_startup.DEFAULT_SESSION_TASK}"
+        ),
     )
+
+
+def test_plan_rejects_coordinator_name_for_another_repository(
+    tmp_path: Path,
+) -> None:
+    root = _repository_root(tmp_path)
+
+    with pytest.raises(
+        CoordinatorStartupError,
+        match="identify the bootstrap root",
+    ):
+        plan_coordinator_startup(
+            root,
+            environ={
+                "HERDR_ENV": "1",
+                "PROJECTKOIOS_COORDINATOR_NAME": "other-repository:task",
+            },
+            find_executable=lambda _command: "/test/bin/pi",
+        )
 
 
 def test_execute_changes_directory_then_replaces_process(
@@ -234,7 +257,9 @@ def test_executable_launcher_resolves_repository_from_another_directory(
         {
             "HERDR_ENV": "1",
             "PATH": f"{binary_directory}{os.pathsep}{environment['PATH']}",
-            "PROJECTKOIOS_COORDINATOR_NAME": "integration-coordinator",
+            "PROJECTKOIOS_COORDINATOR_NAME": (
+                "projectkoios-bootstrap:integration"
+            ),
         }
     )
 
@@ -256,7 +281,7 @@ def test_executable_launcher_resolves_repository_from_another_directory(
         "--model",
         "test",
         "--name",
-        "integration-coordinator",
+        "projectkoios-bootstrap:integration",
         "--",
     ]
     assert output["argv"][5] == coordinator_startup.STARTUP_PROMPT

@@ -1,13 +1,18 @@
 from __future__ import annotations
 
 import os
+import re
 import shutil
 import sys
 from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass
 from pathlib import Path
 
-DEFAULT_SESSION_NAME = "projectkoios-coordinator"
+COORDINATOR_REPOSITORY_NAME = "projectkoios-bootstrap"
+DEFAULT_SESSION_TASK = "coordination"
+_SESSION_NAME_PATTERN = re.compile(
+    r"^[A-Za-z0-9][A-Za-z0-9._-]{0,127}:[a-z0-9][a-z0-9-]{0,63}$"
+)
 STARTUP_PROMPT = """\
 Start as the main coordination session for Project Koios software development
 across repositories.
@@ -119,9 +124,17 @@ def plan_coordinator_startup(
         )
     executable = str(Path(executable).resolve())
 
-    session_name = (
-        environment.get("PROJECTKOIOS_COORDINATOR_NAME") or DEFAULT_SESSION_NAME
+    session_name = environment.get("PROJECTKOIOS_COORDINATOR_NAME") or (
+        f"{COORDINATOR_REPOSITORY_NAME}:{DEFAULT_SESSION_TASK}"
     )
+    if (
+        _SESSION_NAME_PATTERN.fullmatch(session_name) is None
+        or session_name.partition(":")[0] != COORDINATOR_REPOSITORY_NAME
+    ):
+        raise CoordinatorStartupError(
+            "PROJECTKOIOS_COORDINATOR_NAME must have the exact "
+            "<repository>:<task> form and identify the bootstrap root"
+        )
     argv = (
         executable,
         *pi_arguments,
