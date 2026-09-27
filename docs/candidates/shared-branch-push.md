@@ -101,9 +101,10 @@ Git 2.45 or newer and is validated with both SHA-1 and SHA-256 repositories.
 Tests use temporary repositories and local bare remotes. They cover dry-run
 behavior, exact push and upstream evidence, dirty worktrees, expected-commit
 mismatch, rejected and explicitly authorized upstream replacement, concurrent
-upstream changes, mismatched push URLs, unsupported fetch mappings,
-non-fast-forward rejection, hook bypass, configured push-signing suppression,
-tag non-publication, canonical roots, bounded CLI
+upstream changes, mismatched push URLs, positive and negative fetch mappings,
+slash-containing remote names, non-fast-forward rejection, hook bypass,
+configured push-signing suppression, tag non-publication, canonical roots,
+bounded CLI
 errors, and real SHA-1 and SHA-256 pushes.
 
 Run:

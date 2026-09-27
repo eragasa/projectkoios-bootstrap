@@ -17,7 +17,6 @@ from projectkoios.bootstrap.git.client import (
 _COMMIT_ID = re.compile(r"^(?:[0-9a-f]{40}|[0-9a-f]{64})$")
 _GIT_VERSION = re.compile(r"^git version (\d+)\.(\d+)(?:[.\s].*)?$")
 _MINIMUM_GIT_VERSION = (2, 45)
-_REMOTE_NAME = re.compile(r"^[A-Za-z0-9._-]+$")
 _REMOTE_CONFIGURATION = {"credential.interactive": "false"}
 
 
@@ -300,10 +299,12 @@ class GitBranchPusher:
         destinations: list[str] = []
         for refspec in refspecs:
             if refspec.startswith("^"):
-                raise BranchPushError(
-                    self._stage,
-                    "negative remote fetch refspecs are unsupported",
-                )
+                if _refspec_source_matches(refspec[1:], source):
+                    raise BranchPushError(
+                        self._stage,
+                        "remote fetch refspec excludes the branch",
+                    )
+                continue
             destination = _map_fetch_refspec(refspec, source)
             if destination is not None:
                 destinations.append(destination)
@@ -402,6 +403,19 @@ def _decode_lines(payload: bytes, label: str) -> tuple[str, ...]:
     return lines
 
 
+def _refspec_source_matches(source_pattern: str, source: str) -> bool:
+    if (
+        not source_pattern
+        or ":" in source_pattern
+        or source_pattern.count("*") > 1
+    ):
+        raise GitCommandError("remote fetch refspec source is malformed")
+    if "*" not in source_pattern:
+        return source_pattern == source
+    prefix, suffix = source_pattern.split("*", 1)
+    return source.startswith(prefix) and source.endswith(suffix)
+
+
 def _map_fetch_refspec(refspec: str, source: str) -> str | None:
     value = refspec.removeprefix("+")
     if value.count(":") != 1:
@@ -431,8 +445,8 @@ def _validate_request(request: BranchPush) -> None:
         raise ValueError(f"repository root is not a directory: {root}")
     if root.resolve() != root:
         raise ValueError(f"repository root must be canonical: {root.resolve()}")
-    if not _REMOTE_NAME.fullmatch(request.remote):
-        raise ValueError("remote contains unsupported characters")
+    if not request.remote or request.remote.startswith("-"):
+        raise ValueError("remote must be nonempty and not start with '-'")
     if not request.branch or request.branch.startswith("-"):
         raise ValueError("branch must be nonempty and not start with '-'")
     if not _COMMIT_ID.fullmatch(request.expected_commit):
@@ -444,14 +458,22 @@ def _validate_request(request: BranchPush) -> None:
     if shutil.which("git") is None:
         raise ValueError("required command not found: git")
     git = GitClient(disable_optional_locks=True, preserve_global_config=True)
-    version = decode(git.run(None, "--version").stdout, "Git version").strip()
+    try:
+        version = decode(
+            git.run(None, "--version").stdout,
+            "Git version",
+        ).strip()
+        git.run(None, "check-ref-format", f"refs/heads/{request.branch}")
+        git.run(
+            None,
+            "check-ref-format",
+            f"refs/remotes/{request.remote}/{request.branch}",
+        )
+    except GitCommandError as error:
+        raise ValueError(f"Git validation failed: {error}") from error
     match = _GIT_VERSION.fullmatch(version)
     if match is None or tuple(map(int, match.groups())) < _MINIMUM_GIT_VERSION:
         raise ValueError("Git 2.45 or newer is required")
-    try:
-        git.run(None, "check-ref-format", f"refs/heads/{request.branch}")
-    except GitCommandError as error:
-        raise ValueError(f"invalid branch: {request.branch}") from error
 
 
 def parse_pusher(argv: Sequence[str] | None = None) -> GitBranchPusher:

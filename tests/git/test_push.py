@@ -4,6 +4,7 @@ import subprocess
 from pathlib import Path
 
 import pytest
+from projectkoios.bootstrap.git.client import GitClient, GitCommandError
 from projectkoios.bootstrap.git.push import (
     BranchPush,
     BranchPushError,
@@ -54,11 +55,12 @@ def _pusher(
     *,
     apply: bool,
     replace_upstream: bool = False,
+    remote: str = "origin",
 ) -> GitBranchPusher:
     return GitBranchPusher(
         BranchPush(
             repository_root=root,
-            remote="origin",
+            remote=remote,
             branch=_BRANCH,
             expected_commit=expected,
             apply=apply,
@@ -187,6 +189,59 @@ def test_unsupported_fetch_mapping_stops_before_push(
         _pusher(root, expected, apply=True).execute()
 
     assert _remote_commit(remote) is None
+
+
+def test_nonmatching_negative_fetch_refspec_is_allowed(
+    repository: tuple[Path, Path, str],
+) -> None:
+    root, remote, expected = repository
+    _git(
+        root,
+        "config",
+        "--add",
+        "remote.origin.fetch",
+        "^refs/heads/archive/*",
+    )
+
+    result = _pusher(root, expected, apply=True).execute()
+
+    assert result.remote_commit_after == expected
+    assert _remote_commit(remote) == expected
+
+
+def test_matching_negative_fetch_refspec_stops_before_push(
+    repository: tuple[Path, Path, str],
+) -> None:
+    root, remote, expected = repository
+    _git(
+        root,
+        "config",
+        "--add",
+        "remote.origin.fetch",
+        "^refs/heads/feature/*",
+    )
+
+    with pytest.raises(BranchPushError, match="excludes the branch"):
+        _pusher(root, expected, apply=True).execute()
+
+    assert _remote_commit(remote) is None
+
+
+def test_slash_containing_remote_name_is_supported(
+    repository: tuple[Path, Path, str],
+) -> None:
+    root, remote, expected = repository
+    _git(root, "remote", "rename", "origin", "team/origin")
+
+    result = _pusher(
+        root,
+        expected,
+        apply=True,
+        remote="team/origin",
+    ).execute()
+
+    assert result.remote_commit_after == expected
+    assert _remote_commit(remote) == expected
 
 
 def test_distinct_push_endpoint_stops_before_push(
@@ -385,6 +440,46 @@ def test_cli_dry_run_reports_bounded_evidence(
     assert "Preflight passed." in captured.out
     assert captured.err == ""
     assert _remote_commit(remote) is None
+
+
+def test_cli_version_failure_has_no_traceback(
+    repository: tuple[Path, Path, str],
+    capsys: pytest.CaptureFixture[str],
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    root, _, expected = repository
+
+    def fail_version(
+        client: GitClient,
+        repository_root: Path | None,
+        *arguments: str,
+        **kwargs: object,
+    ) -> subprocess.CompletedProcess[bytes]:
+        assert client
+        assert repository_root is None
+        assert arguments == ("--version",)
+        assert not kwargs
+        raise GitCommandError("synthetic version failure")
+
+    monkeypatch.setattr(GitClient, "run", fail_version)
+    status = main(
+        [
+            "--repo-path",
+            str(root),
+            "--remote",
+            "origin",
+            "--branch",
+            _BRANCH,
+            "--expected-commit",
+            expected,
+        ]
+    )
+
+    captured = capsys.readouterr()
+    assert status == 1
+    assert captured.out == ""
+    assert "synthetic version failure" in captured.err
+    assert "Traceback" not in captured.err
 
 
 def test_cli_failure_has_no_traceback(
