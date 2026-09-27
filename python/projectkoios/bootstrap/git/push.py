@@ -15,7 +15,10 @@ from projectkoios.bootstrap.git.client import (
 )
 
 _COMMIT_ID = re.compile(r"^(?:[0-9a-f]{40}|[0-9a-f]{64})$")
+_GIT_VERSION = re.compile(r"^git version (\d+)\.(\d+)(?:[.\s].*)?$")
+_MINIMUM_GIT_VERSION = (2, 45)
 _REMOTE_NAME = re.compile(r"^[A-Za-z0-9._-]+$")
+_REMOTE_CONFIGURATION = {"credential.interactive": "false"}
 
 
 class BranchPushError(RuntimeError):
@@ -35,6 +38,7 @@ class BranchPush:
     branch: str
     expected_commit: str
     apply: bool = False
+    replace_upstream: bool = False
     timeout_seconds: int = 120
 
 
@@ -95,6 +99,7 @@ class GitBranchPusher:
             timeout_seconds=request.timeout_seconds,
         )
         self._stage = "preflight"
+        self._initial_upstream: str | None = None
 
     @property
     def request(self) -> BranchPush:
@@ -103,7 +108,7 @@ class GitBranchPusher:
     def execute(self) -> BranchPushResult:
         try:
             self._stage = "local preflight"
-            self._assert_local_preflight()
+            self._assert_local_preflight(capture_upstream=True)
             self._stage = "remote preflight"
             before = self._remote_commit()
             if not self._request.apply:
@@ -125,7 +130,9 @@ class GitBranchPusher:
                 request.remote,
                 f"{request.expected_commit}:refs/heads/{request.branch}",
                 configuration={
+                    **_REMOTE_CONFIGURATION,
                     "push.followTags": "false",
+                    "push.gpgSign": "false",
                     "push.pushOption": "",
                 },
             )
@@ -141,6 +148,9 @@ class GitBranchPusher:
             self._stage = "verify unchanged local branch"
             self._assert_local_identity()
 
+            self._stage = "recheck upstream authority"
+            self._assert_upstream_unchanged()
+
             self._stage = "set upstream"
             self._mutate.run(
                 request.repository_root,
@@ -152,7 +162,7 @@ class GitBranchPusher:
             )
 
             self._stage = "final validation"
-            self._assert_local_preflight()
+            self._assert_local_preflight(capture_upstream=False)
             upstream = self._line(
                 "for-each-ref",
                 "--format=%(upstream:short)",
@@ -187,7 +197,7 @@ class GitBranchPusher:
         except GitCommandError as error:
             raise BranchPushError(self._stage, str(error)) from error
 
-    def _assert_local_preflight(self) -> None:
+    def _assert_local_preflight(self, *, capture_upstream: bool) -> None:
         request = self._request
         root = self._line(
             "rev-parse",
@@ -221,24 +231,9 @@ class GitBranchPusher:
         ).stdout
         if status:
             raise BranchPushError(self._stage, "worktree is not clean")
-        self._read.run(
-            request.repository_root,
-            "remote",
-            "get-url",
-            "--",
-            request.remote,
-        )
-        upstream = self._line(
-            "for-each-ref",
-            "--format=%(upstream:short)",
-            f"refs/heads/{request.branch}",
-            label="branch upstream",
-        )
-        if upstream and upstream != f"{request.remote}/{request.branch}":
-            raise BranchPushError(
-                self._stage,
-                f"branch already tracks a different upstream: {upstream}",
-            )
+        self._assert_remote_configuration()
+        if capture_upstream:
+            self._capture_upstream_authority()
 
     def _assert_local_identity(self) -> None:
         request = self._request
@@ -261,6 +256,91 @@ class GitBranchPusher:
                 "HEAD and local branch must both identify the expected commit",
             )
 
+    def _assert_remote_configuration(self) -> None:
+        request = self._request
+        fetch_urls = self._lines(
+            "remote",
+            "get-url",
+            "--all",
+            "--",
+            request.remote,
+            label="remote fetch URL set",
+            configuration=_REMOTE_CONFIGURATION,
+        )
+        push_urls = self._lines(
+            "remote",
+            "get-url",
+            "--push",
+            "--all",
+            "--",
+            request.remote,
+            label="remote push URL set",
+            configuration=_REMOTE_CONFIGURATION,
+        )
+        if (
+            len(fetch_urls) != 1
+            or len(push_urls) != 1
+            or fetch_urls != push_urls
+        ):
+            raise BranchPushError(
+                self._stage,
+                "remote must have one identical fetch and push endpoint",
+            )
+
+        result = self._read.run(
+            request.repository_root,
+            "config",
+            "--get-all",
+            f"remote.{request.remote}.fetch",
+            allowed=(0, 1),
+        )
+        refspecs = _decode_lines(result.stdout, "remote fetch refspecs")
+        source = f"refs/heads/{request.branch}"
+        expected_tracking = f"refs/remotes/{request.remote}/{request.branch}"
+        destinations: list[str] = []
+        for refspec in refspecs:
+            if refspec.startswith("^"):
+                raise BranchPushError(
+                    self._stage,
+                    "negative remote fetch refspecs are unsupported",
+                )
+            destination = _map_fetch_refspec(refspec, source)
+            if destination is not None:
+                destinations.append(destination)
+        if destinations != [expected_tracking]:
+            raise BranchPushError(
+                self._stage,
+                "remote fetch refspec must map the branch to its standard "
+                "remote-tracking ref",
+            )
+
+    def _upstream(self) -> str:
+        request = self._request
+        return self._line(
+            "for-each-ref",
+            "--format=%(upstream:short)",
+            f"refs/heads/{request.branch}",
+            label="branch upstream",
+        )
+
+    def _capture_upstream_authority(self) -> None:
+        request = self._request
+        upstream = self._upstream()
+        target = f"{request.remote}/{request.branch}"
+        if upstream and upstream != target and not request.replace_upstream:
+            raise BranchPushError(
+                self._stage,
+                f"branch already tracks a different upstream: {upstream}",
+            )
+        self._initial_upstream = upstream
+
+    def _assert_upstream_unchanged(self) -> None:
+        if self._upstream() != self._initial_upstream:
+            raise BranchPushError(
+                self._stage,
+                "branch upstream changed during push",
+            )
+
     def _remote_commit(self) -> str | None:
         request = self._request
         result = self._read.run(
@@ -269,6 +349,7 @@ class GitBranchPusher:
             "--refs",
             request.remote,
             f"refs/heads/{request.branch}",
+            configuration=_REMOTE_CONFIGURATION,
         )
         if not result.stdout:
             return None
@@ -291,12 +372,55 @@ class GitBranchPusher:
             )
         return fields[0]
 
+    def _lines(
+        self,
+        *arguments: str,
+        label: str,
+        configuration: dict[str, str] | None = None,
+    ) -> tuple[str, ...]:
+        result = self._read.run(
+            self._request.repository_root,
+            *arguments,
+            configuration=configuration,
+        )
+        return _decode_lines(result.stdout, label)
+
     def _line(self, *arguments: str, label: str) -> str:
         result = self._read.run(self._request.repository_root, *arguments)
         value = decode(result.stdout, label).rstrip("\n")
         if "\n" in value or "\0" in value:
             raise BranchPushError(self._stage, f"{label} is not one line")
         return value
+
+
+def _decode_lines(payload: bytes, label: str) -> tuple[str, ...]:
+    if b"\0" in payload:
+        raise GitCommandError(f"{label} contains NUL framing")
+    lines = tuple(decode(payload, label).splitlines())
+    if any(not line for line in lines):
+        raise GitCommandError(f"{label} contains an empty line")
+    return lines
+
+
+def _map_fetch_refspec(refspec: str, source: str) -> str | None:
+    value = refspec.removeprefix("+")
+    if value.count(":") != 1:
+        raise GitCommandError("remote fetch refspec is malformed")
+    source_pattern, destination_pattern = value.split(":", 1)
+    if source_pattern.count("*") != destination_pattern.count("*"):
+        raise GitCommandError("remote fetch refspec wildcard is malformed")
+    if "*" not in source_pattern:
+        return destination_pattern if source_pattern == source else None
+    if source_pattern.count("*") != 1:
+        raise GitCommandError(
+            "multiple fetch refspec wildcards are unsupported"
+        )
+    prefix, suffix = source_pattern.split("*", 1)
+    if not source.startswith(prefix) or not source.endswith(suffix):
+        return None
+    end = len(source) - len(suffix) if suffix else len(source)
+    wildcard = source[len(prefix) : end]
+    return destination_pattern.replace("*", wildcard)
 
 
 def _validate_request(request: BranchPush) -> None:
@@ -320,6 +444,10 @@ def _validate_request(request: BranchPush) -> None:
     if shutil.which("git") is None:
         raise ValueError("required command not found: git")
     git = GitClient(disable_optional_locks=True, preserve_global_config=True)
+    version = decode(git.run(None, "--version").stdout, "Git version").strip()
+    match = _GIT_VERSION.fullmatch(version)
+    if match is None or tuple(map(int, match.groups())) < _MINIMUM_GIT_VERSION:
+        raise ValueError("Git 2.45 or newer is required")
     try:
         git.run(None, "check-ref-format", f"refs/heads/{request.branch}")
     except GitCommandError as error:
@@ -336,6 +464,7 @@ def parse_pusher(argv: Sequence[str] | None = None) -> GitBranchPusher:
     parser.add_argument("--expected-commit", required=True)
     parser.add_argument("--timeout-seconds", type=int, default=120)
     parser.add_argument("--apply", action="store_true")
+    parser.add_argument("--replace-upstream", action="store_true")
     arguments = parser.parse_args(argv)
     try:
         return GitBranchPusher(
@@ -345,6 +474,7 @@ def parse_pusher(argv: Sequence[str] | None = None) -> GitBranchPusher:
                 branch=arguments.branch,
                 expected_commit=arguments.expected_commit,
                 apply=arguments.apply,
+                replace_upstream=arguments.replace_upstream,
                 timeout_seconds=arguments.timeout_seconds,
             )
         )

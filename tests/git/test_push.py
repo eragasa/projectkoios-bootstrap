@@ -53,6 +53,7 @@ def _pusher(
     expected: str,
     *,
     apply: bool,
+    replace_upstream: bool = False,
 ) -> GitBranchPusher:
     return GitBranchPusher(
         BranchPush(
@@ -61,6 +62,7 @@ def _pusher(
             branch=_BRANCH,
             expected_commit=expected,
             apply=apply,
+            replace_upstream=replace_upstream,
         )
     )
 
@@ -107,6 +109,7 @@ def test_apply_pushes_exact_commit_and_sets_upstream(
     hook.write_text("#!/bin/sh\nexit 91\n", encoding="utf-8")
     hook.chmod(0o755)
     _git(root, "tag", "-a", "unrelated-tag", "-m", "not pushed")
+    _git(root, "config", "push.gpgSign", "true")
 
     result = _pusher(root, expected, apply=True).execute()
 
@@ -161,6 +164,51 @@ def test_expected_commit_must_match_head_and_branch(
     assert _remote_commit(remote) is None
 
 
+@pytest.mark.parametrize(
+    "configuration",
+    ["missing", "custom"],
+)
+def test_unsupported_fetch_mapping_stops_before_push(
+    repository: tuple[Path, Path, str],
+    configuration: str,
+) -> None:
+    root, remote, expected = repository
+    _git(root, "config", "--unset-all", "remote.origin.fetch")
+    if configuration == "custom":
+        _git(
+            root,
+            "config",
+            "--add",
+            "remote.origin.fetch",
+            "+refs/heads/*:refs/remotes/cache/*",
+        )
+
+    with pytest.raises(BranchPushError, match="fetch refspec"):
+        _pusher(root, expected, apply=True).execute()
+
+    assert _remote_commit(remote) is None
+
+
+def test_distinct_push_endpoint_stops_before_push(
+    repository: tuple[Path, Path, str],
+    tmp_path: Path,
+) -> None:
+    root, remote, expected = repository
+    other = tmp_path / "other.git"
+    subprocess.run(
+        ["git", "init", "--bare", "--quiet", str(other)],
+        check=True,
+        timeout=10,
+    )
+    _git(root, "remote", "set-url", "--add", "--push", "origin", str(other))
+
+    with pytest.raises(BranchPushError, match="identical fetch and push"):
+        _pusher(root, expected, apply=True).execute()
+
+    assert _remote_commit(remote) is None
+    assert _remote_commit(other) is None
+
+
 def test_existing_different_upstream_stops_before_push(
     repository: tuple[Path, Path, str],
 ) -> None:
@@ -178,6 +226,95 @@ def test_existing_different_upstream_stops_before_push(
         _pusher(root, expected, apply=True).execute()
 
     assert _remote_commit(remote) is None
+
+
+def test_explicit_upstream_replacement_allows_new_feature_branch(
+    repository: tuple[Path, Path, str],
+    tmp_path: Path,
+) -> None:
+    root, remote, expected = repository
+    base = tmp_path / "base.git"
+    subprocess.run(
+        ["git", "init", "--bare", "--quiet", str(base)],
+        check=True,
+        timeout=10,
+    )
+    _git(root, "remote", "add", "base", str(base))
+    _git(root, "push", "--quiet", "-u", "base", _BRANCH)
+
+    result = _pusher(
+        root,
+        expected,
+        apply=True,
+        replace_upstream=True,
+    ).execute()
+
+    assert result.remote_commit_after == expected
+    assert _remote_commit(remote) == expected
+    assert (
+        _git(
+            root,
+            "for-each-ref",
+            "--format=%(upstream:short)",
+            f"refs/heads/{_BRANCH}",
+        )
+        == f"origin/{_BRANCH}"
+    )
+
+
+def test_upstream_race_stops_after_push_without_overwrite(
+    repository: tuple[Path, Path, str],
+    tmp_path: Path,
+) -> None:
+    root, remote, expected = repository
+    backup = tmp_path / "backup-race.git"
+    subprocess.run(
+        ["git", "init", "--bare", "--quiet", str(backup)],
+        check=True,
+        timeout=10,
+    )
+    _git(root, "remote", "add", "backup-race", str(backup))
+    _git(root, "push", "--quiet", "backup-race", _BRANCH)
+    _git(root, "fetch", "--quiet", "backup-race")
+
+    class RacingPusher(GitBranchPusher):
+        remote_checks = 0
+
+        def _remote_commit(self) -> str | None:
+            result = super()._remote_commit()
+            self.remote_checks += 1
+            if self.remote_checks == 2:
+                _git(
+                    root,
+                    "branch",
+                    "--set-upstream-to",
+                    f"backup-race/{_BRANCH}",
+                    _BRANCH,
+                )
+            return result
+
+    pusher = RacingPusher(
+        BranchPush(
+            repository_root=root,
+            remote="origin",
+            branch=_BRANCH,
+            expected_commit=expected,
+            apply=True,
+        )
+    )
+    with pytest.raises(BranchPushError, match="upstream changed during push"):
+        pusher.execute()
+
+    assert _remote_commit(remote) == expected
+    assert (
+        _git(
+            root,
+            "for-each-ref",
+            "--format=%(upstream:short)",
+            f"refs/heads/{_BRANCH}",
+        )
+        == f"backup-race/{_BRANCH}"
+    )
 
 
 def test_non_fast_forward_is_not_forced(
@@ -278,16 +415,53 @@ def test_cli_failure_has_no_traceback(
     assert "Traceback" not in captured.err
 
 
-def test_request_accepts_full_sha256_object_id(
-    repository: tuple[Path, Path, str],
-) -> None:
-    root, _, _ = repository
-
-    request = BranchPush(
-        repository_root=root,
-        remote="origin",
-        branch=_BRANCH,
-        expected_commit="a" * 64,
+def test_sha256_repository_pushes_and_verifies(tmp_path: Path) -> None:
+    remote = tmp_path / "sha256-remote.git"
+    root = tmp_path / "sha256-repository"
+    commands = (
+        [
+            "git",
+            "init",
+            "--bare",
+            "--quiet",
+            "--object-format=sha256",
+            str(remote),
+        ],
+        [
+            "git",
+            "init",
+            "--quiet",
+            "--object-format=sha256",
+            "-b",
+            _BRANCH,
+            str(root),
+        ],
     )
+    for command in commands:
+        command_result = subprocess.run(
+            command,
+            check=False,
+            capture_output=True,
+            text=True,
+            timeout=10,
+        )
+        if command_result.returncode != 0:
+            pytest.skip(
+                "installed Git lacks SHA-256 repository support: "
+                f"{command_result.stderr}"
+            )
+    root = root.resolve()
+    remote = remote.resolve()
+    _git(root, "config", "user.name", "Test User")
+    _git(root, "config", "user.email", "test@example.invalid")
+    (root / "tracked.txt").write_text("sha256\n", encoding="utf-8")
+    _git(root, "add", "tracked.txt")
+    _git(root, "commit", "--quiet", "-m", "sha256")
+    _git(root, "remote", "add", "origin", str(remote))
+    expected = _git(root, "rev-parse", "HEAD")
 
-    assert request.expected_commit == "a" * 64
+    push_result = _pusher(root, expected, apply=True).execute()
+
+    assert len(expected) == 64
+    assert push_result.remote_commit_after == expected
+    assert _remote_commit(remote) == expected
