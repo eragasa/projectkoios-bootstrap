@@ -10,9 +10,6 @@ authors = [
 ]
 dependencies = []
 
-[project.scripts]
-push-git-branch = "projectkoios.bootstrap.git.push:main"
-
 [project.optional-dependencies]
 dev = ["mypy>=1.13", "pytest>=8.0", "ruff>=0.8"]
 
