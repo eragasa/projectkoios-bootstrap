@@ -39,7 +39,9 @@ _INTEGRATION_STATUS_PATTERN = re.compile(
     re.MULTILINE,
 )
 _VERSION_PATTERN = re.compile(r"^herdr (?P<version>[0-9]+\.[0-9]+\.[0-9]+)$")
-_PANE_ID_PATTERN = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]*:p[1-9][0-9]*$")
+_PANE_ID_PATTERN = re.compile(
+    r"^[A-Za-z0-9][A-Za-z0-9_.-]*:p[A-Za-z0-9][A-Za-z0-9_.-]*$"
+)
 _ERROR_OUTPUT_LIMIT = 500
 
 CommandRunner = Callable[

@@ -245,11 +245,11 @@ def test_inspection_emits_versioned_evidence_and_official_references() -> None:
     ]
 
 
-def test_explicit_pane_uses_documented_get_command() -> None:
-    selected_pane = _pane(pane_id="w4:p2")
+def test_explicit_opaque_pane_id_uses_documented_get_command() -> None:
+    selected_pane = _pane(pane_id="w4:pA")
     responses = _responses(pane=selected_pane)
     responses.pop(("pane", "current", "--current"))
-    responses[("pane", "get", "w4:p2")] = _result(
+    responses[("pane", "get", "w4:pA")] = _result(
         stdout=json.dumps(
             {
                 "id": "cli:pane:get",
@@ -259,12 +259,12 @@ def test_explicit_pane_uses_documented_get_command() -> None:
     )
     integration, runner = _integration(responses)
 
-    evidence = integration.inspect_session(pane_id="w4:p2").to_dict()
+    evidence = integration.inspect_session(pane_id="w4:pA").to_dict()
 
-    assert ("pane", "get", "w4:p2") in runner.calls
+    assert ("pane", "get", "w4:pA") in runner.calls
     assert evidence["inspection_target"] == {
-        "requested_pane_id": "w4:p2",
-        "resolved_pane_id": "w4:p2",
+        "requested_pane_id": "w4:pA",
+        "resolved_pane_id": "w4:pA",
         "resolved_via_pane_alias": False,
     }
 
